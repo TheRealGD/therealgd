@@ -1,24 +1,30 @@
-# To get started with security, check out the documentation:
-# http://symfony.com/doc/current/security.html
 security:
+    encoders:
+        Raddit\AppBundle\Entity\User:
+            algorithm: bcrypt
 
-    # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
-        in_memory:
-            memory: ~
+        user_provider:
+            entity:
+                class: Raddit\AppBundle\Entity\User
 
     firewalls:
-        # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
         main:
-            anonymous: ~
-            # activate different ways to authenticate
+            anonymous: true
 
-            # http_basic: ~
-            # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
+            # this is enabled for unit tests
+            http_basic: ~
 
-            # form_login: ~
-            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+            form_login:
+                csrf_token_generator: security.csrf.token_manager
+                check_path: raddit_app_login_check
+                login_path: raddit_app_login
+
+            logout:
+                csrf_parameter: token
+                csrf_token_generator: security.csrf.token_manager
+                path: raddit_app_log_out

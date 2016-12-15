@@ -7,3 +7,15 @@ raddit_app_comments:
     defaults: { _controller: RadditAppBundle:Submission:commentPage }
     path: /submission/{id}
     methods: [GET]
+
+raddit_app_login:
+    defaults: { _controller: RadditAppBundle:Security:login }
+    path: /login
+    methods: [GET]
+
+raddit_app_login_check:
+    path: /login_check
+    methods: [POST]
+
+raddit_app_log_out:
+    path: /log_out
