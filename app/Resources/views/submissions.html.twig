@@ -1,0 +1,31 @@
+{%- macro submission(submission) -%}
+  {{- block('submission') -}}
+{%- endmacro -%}
+
+{%- block submission -%}
+  {%- spaceless -%}
+  <article class="submission submission-{{ submission.submissionType }}">
+    <h1 class="submission-title">
+      <a href="{{ block('submission_url') }}" class="submission-link">
+        {{- submission.title -}}
+      </a>
+    </h1>
+
+    <p>Submitted by <a href="#">not implemented</a>
+      at {{ submission.timestamp|date }}
+      in <a href="#">not implemented</a>.</p>
+
+    <ul class="submission-nav">
+      <li><a href="#">Permalink</a></li>
+    </ul>
+  </article>
+  {%- endspaceless -%}
+{% endblock %}
+
+{%- block submission_url -%}
+  {%- if submission.submissionType == 'post' -%}
+    {{- '#TODO' -}}
+  {%- elseif submission.submissionType == 'url' -%}
+    {{- submission.url -}}
+  {%- endif -%}
+{%- endblock -%}

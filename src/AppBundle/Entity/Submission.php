@@ -24,7 +24,15 @@ abstract class Submission {
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="Comment", mappedBy="submission")
+     * @ORM\Column(type="text")
+     *
+     * @var string
+     */
+    private $title;
+
+    /**
+     * @ORM\OneToMany(targetEntity="TopLevelComment", mappedBy="submission")
+     *
      * @var Comment[]|Collection
      */
     private $comments;
@@ -53,6 +61,20 @@ abstract class Submission {
      */
     public function setId($id) {
         $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle() {
+        return $this->title;
+    }
+
+    /**
+     * @param string $title
+     */
+    public function setTitle($title) {
+        $this->title = $title;
     }
 
     /**
