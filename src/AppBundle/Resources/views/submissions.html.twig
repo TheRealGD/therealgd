@@ -15,9 +15,9 @@
       </a>
     </h1>
 
-    <p>Submitted by <a href="#">{{ submission.user.username }}</a>
+    <p>Submitted by <a href="#TODO">{{ submission.user.username }}</a>
       at {{ submission.timestamp|date }}
-      in <a href="#">not implemented</a>.</p>
+      in <a href="#TODO">{{ submission.forum.name }}</a>.</p>
 
     {%- if options.show_body -%}
       <div class="submission-body">{{ block('submission_body') }}</div>

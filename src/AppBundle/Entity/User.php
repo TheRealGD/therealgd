@@ -2,6 +2,8 @@
 
 namespace Raddit\AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -47,8 +49,16 @@ class User implements UserInterface {
      */
     private $created;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Moderator", mappedBy="user")
+     *
+     * @var Moderator[]|Collection
+     */
+    private $moderatorTokens;
+
     public function __construct() {
         $this->created = new \DateTime('@'.time());
+        $this->moderatorTokens = new ArrayCollection();
     }
 
     /**
@@ -119,6 +129,20 @@ class User implements UserInterface {
      */
     public function setCreated($created) {
         $this->created = $created;
+    }
+
+    /**
+     * @return Collection|Moderator[]
+     */
+    public function getModeratorTokens() {
+        return $this->moderatorTokens;
+    }
+
+    /**
+     * @param Collection|Moderator[] $moderatorTokens
+     */
+    public function setModeratorTokens($moderatorTokens) {
+        $this->moderatorTokens = $moderatorTokens;
     }
 
     /**

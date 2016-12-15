@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Comment {
     /**
      * @ORM\Column(type="bigint")
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Id()
      *
      * @var int

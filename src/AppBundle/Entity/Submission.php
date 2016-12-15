@@ -47,6 +47,14 @@ abstract class Submission {
 
     /**
      * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="Forum", inversedBy="submissions")
+     *
+     * @var Forum
+     */
+    private $forum;
+
+    /**
+     * @ORM\JoinColumn(nullable=false)
      * @ORM\ManyToOne(targetEntity="User")
      *
      * @var User
@@ -122,6 +130,20 @@ abstract class Submission {
      */
     public function setTimestamp($timestamp) {
         $this->timestamp = $timestamp;
+    }
+
+    /**
+     * @return Forum
+     */
+    public function getForum() {
+        return $this->forum;
+    }
+
+    /**
+     * @param Forum $forum
+     */
+    public function setForum($forum) {
+        $this->forum = $forum;
     }
 
     /**
