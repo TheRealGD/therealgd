@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
 {% from 'submissions.html.twig' import submission %}
+
 {% block body %}
   {% for submission in submissions %}
     {{ submission(submission) }}
