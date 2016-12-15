@@ -1,0 +1,33 @@
+{% extends '@RadditApp/base.html.twig' %}
+{% from '@RadditApp/submissions.html.twig' import submission %}
+{% from _self import comment %}
+
+{% macro comment(comment) %}
+  {% from _self import comment %}
+
+  <article class="comment">
+    <h3 class="comment-info">{{ comment.user.username }} wrote at {{ comment.timestamp|date }}:</h3>
+
+    <div class="comment-body">
+      {{ comment.body|raw }}
+    </div>
+
+    <div class="comment-replies">
+      {% for reply in comment.children %}
+        {{ comment(reply) }}
+      {% endfor %}
+    </div>
+  </article>
+{% endmacro %}
+
+{% block body %}
+  {{ submission(submission, {show_body: true}) }}
+
+  <h2>Comments</h2>
+
+  <div class="submission-comments">
+    {% for comment in submission.topLevelComments %}
+      {{ comment(comment) }}
+    {% endfor %}
+  </div>
+{% endblock %}

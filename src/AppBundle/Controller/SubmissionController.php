@@ -20,4 +20,15 @@ final class SubmissionController extends Controller {
             'submissions' => $submissions,
         ]);
     }
+
+    /**
+     * @param Submission $submission
+     *
+     * @return Response
+     */
+    public function commentPageAction(Submission $submission) {
+        return $this->render('@RadditApp/comments.html.twig', [
+            'submission' => $submission,
+        ]);
+    }
 }

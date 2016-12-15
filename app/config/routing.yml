@@ -2,3 +2,8 @@ raddit_app_front:
     defaults: { _controller: RadditAppBundle:Submission:frontPage }
     path: /
     methods: [GET]
+
+raddit_app_comments:
+    defaults: { _controller: RadditAppBundle:Submission:commentPage }
+    path: /submission/{id}
+    methods: [GET]

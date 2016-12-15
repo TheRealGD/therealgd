@@ -4,6 +4,7 @@ namespace Raddit\AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -97,6 +98,16 @@ abstract class Submission {
      */
     public function setComments($comments) {
         $this->comments = $comments;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getTopLevelComments() {
+        $criteria = Criteria::create();
+        $criteria->where(Criteria::expr()->isNull('parent'));
+
+        return $this->comments->matching($criteria);
     }
 
     /**

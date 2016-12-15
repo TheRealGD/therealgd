@@ -13,41 +13,41 @@ class Post extends Submission {
      *
      * @var string
      */
-    private $source;
+    private $body;
 
     /**
      * @ORM\Column(type="text")
      *
      * @var string
      */
-    private $rendered;
+    private $rawBody;
 
     /**
      * @return string
      */
-    public function getSource() {
-        return $this->source;
+    public function getBody() {
+        return $this->body;
     }
 
     /**
-     * @param string $source
+     * @param string $body
      */
-    public function setSource($source) {
-        $this->source = $source;
+    public function setBody($body) {
+        $this->body = $body;
     }
 
     /**
      * @return string
      */
-    public function getRendered() {
-        return $this->rendered;
+    public function getRawBody() {
+        return $this->rawBody;
     }
 
     /**
-     * @param string $rendered
+     * @param string $rawBody
      */
-    public function setRendered($rendered) {
-        $this->rendered = $rendered;
+    public function setRawBody($rawBody) {
+        $this->rawBody = $rawBody;
     }
 
     /**

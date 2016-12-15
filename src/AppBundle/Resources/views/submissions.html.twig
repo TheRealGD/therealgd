@@ -1,4 +1,8 @@
-{%- macro submission(submission) -%}
+{%- macro submission(submission, options) -%}
+  {%- set options = {
+    show_body: false,
+  }|merge(options|default({})) -%}
+
   {{- block('submission') -}}
 {%- endmacro -%}
 
@@ -15,8 +19,12 @@
       at {{ submission.timestamp|date }}
       in <a href="#">not implemented</a>.</p>
 
+    {%- if options.show_body -%}
+      <div class="submission-body">{{ block('submission_body') }}</div>
+    {%- endif -%}
+
     <ul class="submission-nav">
-      <li><a href="">Comments ({{ submission.comments|length }})</a></li>
+      <li><a href="{{ path('raddit_app_comments', {id: submission.id}) }}">Comments ({{ submission.comments|length }})</a></li>
     </ul>
   </article>
   {%- endspaceless -%}
@@ -24,8 +32,16 @@
 
 {%- block submission_url -%}
   {%- if submission.submissionType == 'post' -%}
-    {{- '#TODO' -}}
+    {{- path('raddit_app_comments', {id: submission.id}) -}}
   {%- elseif submission.submissionType == 'url' -%}
     {{- submission.url -}}
+  {%- endif -%}
+{%- endblock -%}
+
+{%- block submission_body -%}
+  {%- if submission.submissionType == 'post' -%}
+    {{- submission.body -}}
+  {%- elseif submission.submissionType == 'url' -%}
+    {#- TODO: show embeddded media -#}
   {%- endif -%}
 {%- endblock -%}
