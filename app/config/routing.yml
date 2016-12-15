@@ -1,0 +1,4 @@
+raddit_app_front:
+    defaults: { _controller: RadditAppBundle:Default:index }
+    path: /
+    methods: [GET]
