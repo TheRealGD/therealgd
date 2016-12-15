@@ -2,6 +2,7 @@
 
 namespace Raddit\AppBundle\Controller;
 
+use Raddit\AppBundle\Entity\Forum;
 use Raddit\AppBundle\Entity\Submission;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,6 +30,21 @@ final class SubmissionController extends Controller {
     public function commentPageAction(Submission $submission) {
         return $this->render('@RadditApp/comments.html.twig', [
             'submission' => $submission,
+        ]);
+    }
+
+    /**
+     * @param Forum $forum
+     *
+     * @return Response
+     */
+    public function forumAction(Forum $forum) {
+        $submissions = $this->getDoctrine()->getRepository(Submission::class)
+            ->findBy(['forum' => $forum], ['id' => 'DESC'], 20);
+
+        return $this->render('@RadditApp/forum.html.twig', [
+            'forum' => $forum,
+            'submissions' => $submissions,
         ]);
     }
 }

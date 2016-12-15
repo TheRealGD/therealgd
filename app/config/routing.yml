@@ -8,7 +8,12 @@ raddit_app_comments:
     path: /submission/{id}
     methods: [GET]
 
-reddit_app_user:
+raddit_app_forum:
+    defaults: { _controller: RadditAppBundle:Submission:forum }
+    path: /f/{name}
+    methods: [GET]
+
+raddit_app_user:
     defaults: { _controller: RadditAppBundle:User:userPage }
     path: /user/{username}
     methods: [GET]

@@ -1,6 +1,7 @@
 {%- macro submission(submission, options) -%}
   {%- set options = {
     show_body: false,
+    show_forum_name: true,
   }|merge(options|default({})) -%}
 
   {{- block('submission') -}}
@@ -15,9 +16,14 @@
       </a>
     </h1>
 
-    <p>Submitted by <a href="#TODO">{{ submission.user.username }}</a>
+    <p>
+      Submitted by <a href="{{ path('raddit_app_user', {username: submission.user.username}) }}">{{ submission.user.username }}</a>
       at {{ submission.timestamp|date }}
-      in <a href="#TODO">{{ submission.forum.name }}</a>.</p>
+      {%- if options.show_forum_name -%}
+        {{- ' ' -}}
+        in <a href="{{ path('raddit_app_forum', {name: submission.forum.name}) }}">{{ submission.forum.name }}</a>
+      {%- endif -%}.
+    </p>
 
     {%- if options.show_body -%}
       <div class="submission-body">{{ block('submission_body') }}</div>
