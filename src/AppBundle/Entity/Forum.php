@@ -23,7 +23,7 @@ class Forum {
     private $id;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", unique=true)
      *
      * @var string
      */
