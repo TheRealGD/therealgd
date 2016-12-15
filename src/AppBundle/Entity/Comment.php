@@ -43,6 +43,14 @@ class Comment {
 
     /**
      * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="User")
+     *
+     * @var User
+     */
+    private $user;
+
+    /**
+     * @ORM\JoinColumn(nullable=false)
      * @ORM\ManyToOne(targetEntity="Submission", inversedBy="comments")
      *
      * @var Submission
@@ -122,6 +130,20 @@ class Comment {
      */
     public function setTimestamp(\DateTime $timestamp) {
         $this->timestamp = $timestamp;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser() {
+        return $this->user;
+    }
+
+    /**
+     * @param User $user
+     */
+    public function setUser($user) {
+        $this->user = $user;
     }
 
     /**

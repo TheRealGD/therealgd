@@ -44,6 +44,14 @@ abstract class Submission {
      */
     private $timestamp;
 
+    /**
+     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="User")
+     *
+     * @var User
+     */
+    private $user;
+
     public function __construct() {
         $this->comments = new ArrayCollection();
         $this->timestamp = new \DateTime('@'.time());
@@ -103,6 +111,20 @@ abstract class Submission {
      */
     public function setTimestamp($timestamp) {
         $this->timestamp = $timestamp;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser() {
+        return $this->user;
+    }
+
+    /**
+     * @param User $user
+     */
+    public function setUser($user) {
+        $this->user = $user;
     }
 
     /**

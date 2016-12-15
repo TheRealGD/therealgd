@@ -47,6 +47,10 @@ class User implements UserInterface {
      */
     private $created;
 
+    public function __construct() {
+        $this->created = new \DateTime('@'.time());
+    }
+
     /**
      * @return int
      */
