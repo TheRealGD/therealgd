@@ -2,7 +2,7 @@
 {% from '@RadditApp/submissions.html.twig' import submission %}
 {% from _self import comment %}
 
-{% macro comment(comment) %}
+{% macro comment(comment, recurse) %}
   {% from _self import comment %}
 
   <article class="comment">
@@ -12,11 +12,13 @@
       {{ comment.body|raw }}
     </div>
 
-    <div class="comment-replies">
-      {% for reply in comment.children %}
-        {{ comment(reply) }}
-      {% endfor %}
-    </div>
+    {% if recurse|default(false) and comment.children|length %}
+      <div class="comment-replies">
+        {% for reply in comment.children %}
+          {{ comment(reply) }}
+        {% endfor %}
+      </div>
+    {% endif %}
   </article>
 {% endmacro %}
 

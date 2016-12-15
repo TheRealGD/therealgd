@@ -1,0 +1,33 @@
+{% extends '@RadditApp/base.html.twig' %}
+
+{% from '@RadditApp/submissions.html.twig' import submission %}
+{% from '@RadditApp/comments.html.twig' import comment %}
+
+{% block title %}Showing {% endblock %}
+
+{% block body %}
+  <div class="container user-submissions">
+    <h2>Submissions</h2>
+    {% for submission in submissions %}
+      {{ submission(submission) }}
+    {% endfor %}
+  </div>
+
+  <div class="container user-comments">
+    <h2>Comments</h2>
+    {% for comment in comments %}
+      {{ comment(comment, false) }}
+    {% endfor %}
+  </div>
+
+  {% if user.moderatorTokens|length %}
+    <div class="container">
+      <h2>{{ user.username }} is a moderator on:</h2>
+      <ul>
+        {% for token in user.moderatorTokens %}
+          <li><a href="#TODO">{{ token.forum.name }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+{% endblock %}
