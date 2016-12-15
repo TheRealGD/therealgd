@@ -14,10 +14,12 @@ class LoadExampleSubmissions implements FixtureInterface, OrderedFixtureInterfac
      */
     public function load(ObjectManager $manager) {
         $url = new Url();
+        $url->setTitle('This is a submitted URL');
         $url->setUrl('http://www.example.com');
         $manager->persist($url);
 
         $post = new Post();
+        $post->setTitle('This is a test submission');
         $post->setRendered('<p>Hi</p>');
         $post->setSource('Hi');
         $manager->persist($post);
