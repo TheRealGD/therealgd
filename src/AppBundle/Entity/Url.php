@@ -1,0 +1,37 @@
+<?php
+
+namespace Raddit\AppBundle\Entity;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity()
+ */
+class Url extends Submission {
+    /**
+     * @ORM\Column(type="text")
+     *
+     * @var string
+     */
+    private $url;
+
+    /**
+     * @return string
+     */
+    public function getUrl() {
+        return $this->url;
+    }
+
+    /**
+     * @param string $url
+     */
+    public function setUrl($url) {
+        $this->url = $url;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getSubmissionType() {
+        return 'url';
+    }
+}
