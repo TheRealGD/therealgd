@@ -31,7 +31,7 @@ abstract class Submission {
     private $title;
 
     /**
-     * @ORM\OneToMany(targetEntity="TopLevelComment", mappedBy="submission")
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="submission")
      *
      * @var Comment[]|Collection
      */

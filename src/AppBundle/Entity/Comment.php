@@ -9,11 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="comments")
- * @ORM\InheritanceType("SINGLE_TABLE")
- * @ORM\DiscriminatorColumn(name="comment_type", type="string")
- * @ORM\DiscriminatorMap({"top": "TopLevelComment", "reply": "ReplyComment"})
  */
-abstract class Comment {
+class Comment {
     /**
      * @ORM\Column(type="bigint")
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -45,9 +42,24 @@ abstract class Comment {
     private $timestamp;
 
     /**
-     * @ORM\OneToMany(targetEntity="ReplyComment", mappedBy="parent")
+     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="Submission", inversedBy="comments")
      *
-     * @var ReplyComment[]|Collection
+     * @var Submission
+     */
+    private $submission;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Comment", inversedBy="children")
+     *
+     * @var Comment|null
+     */
+    private $parent;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="parent")
+     *
+     * @var Comment[]|Collection
      */
     private $children;
 
@@ -113,23 +125,44 @@ abstract class Comment {
     }
 
     /**
-     * @return ReplyComment[]
+     * @return Submission
+     */
+    public function getSubmission() {
+        return $this->submission;
+    }
+
+    /**
+     * @param Submission $submission
+     */
+    public function setSubmission($submission) {
+        $this->submission = $submission;
+    }
+
+    /**
+     * @return Comment
+     */
+    public function getParent() {
+        return $this->parent;
+    }
+
+    /**
+     * @param Comment $parent
+     */
+    public function setParent(Comment $parent) {
+        $this->parent = $parent;
+    }
+
+    /**
+     * @return Comment[]
      */
     public function getChildren() {
         return $this->children;
     }
 
     /**
-     * @param ReplyComment[] $children
+     * @param Comment[] $children
      */
     public function setChildren($children) {
         $this->children = $children;
     }
-
-    /**
-     * Must return either 'top' or 'reply'.
-     *
-     * @return string
-     */
-    abstract public function getCommentType();
 }
