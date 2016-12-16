@@ -97,7 +97,7 @@ final class SubmissionController extends Controller {
             $em->flush();
         }
 
-        return $this->render('comment.html.twig', [
+        return $this->render('@RadditApp/comment.html.twig', [
             'comment' => $comment,
             'form' => $form->createView(),
         ]);

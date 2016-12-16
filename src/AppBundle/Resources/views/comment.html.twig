@@ -1,0 +1,14 @@
+{% extends '@RadditApp/base.html.twig' %}
+{% from '@RadditApp/comments.html.twig' import comment %}
+
+{% block page_classes %}
+  {{ parent() }}
+  single-comment-page
+{% endblock %}
+
+{% block body %}
+  {{ form_start(form) }}
+  {{ form_end(form) }}
+
+  {{ comment(comment) }}
+{% endblock %}
