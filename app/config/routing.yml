@@ -3,20 +3,20 @@ raddit_app_front:
     path: /
     methods: [GET]
 
+raddit_app_forum:
+    defaults: { _controller: RadditAppBundle:Submission:forum }
+    path: /f/{name}/
+    methods: [GET]
+
 raddit_app_comments:
     defaults: { _controller: RadditAppBundle:Submission:commentPage }
-    path: /submission/{id}
+    path: /f/{forum_name}/{submission_id}/
     methods: [GET]
 
 raddit_app_comment:
     defaults: { _controller: RadditAppBundle:Submission:commentPermalink }
-    path: /comment/{id}
+    path: /f/{forum_name}/{submission_id}/comment/{comment_id}/
     methods: [GET, POST]
-
-raddit_app_forum:
-    defaults: { _controller: RadditAppBundle:Submission:forum }
-    path: /f/{name}
-    methods: [GET]
 
 raddit_app_user:
     defaults: { _controller: RadditAppBundle:User:userPage }

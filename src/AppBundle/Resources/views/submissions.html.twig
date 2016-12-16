@@ -30,7 +30,7 @@
     {%- endif -%}
 
     <ul class="submission-nav">
-      <li><a href="{{ path('raddit_app_comments', {id: submission.id}) }}">Comments ({{ submission.comments|length }})</a></li>
+      <li><a href="{{ path('raddit_app_comments', {forum_name: submission.forum.name, submission_id: submission.id}) }}">Comments ({{ submission.comments|length }})</a></li>
     </ul>
   </article>
   {%- endspaceless -%}
@@ -38,7 +38,7 @@
 
 {%- block submission_url -%}
   {%- if submission.submissionType == 'post' -%}
-    {{- path('raddit_app_comments', {id: submission.id}) -}}
+    {{- path('raddit_app_comments', {forum_name: submission.forum.name, submission_id: submission.id}) -}}
   {%- elseif submission.submissionType == 'url' -%}
     {{- submission.url -}}
   {%- endif -%}

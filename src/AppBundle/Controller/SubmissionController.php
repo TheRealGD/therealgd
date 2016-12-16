@@ -6,6 +6,7 @@ use Raddit\AppBundle\Entity\Comment;
 use Raddit\AppBundle\Entity\Forum;
 use Raddit\AppBundle\Entity\Submission;
 use Raddit\AppBundle\Form\CommentType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,17 +27,8 @@ final class SubmissionController extends Controller {
     }
 
     /**
-     * @param Submission $submission
+     * Show the front page of a given forum.
      *
-     * @return Response
-     */
-    public function commentPageAction(Submission $submission) {
-        return $this->render('@RadditApp/comments.html.twig', [
-            'submission' => $submission,
-        ]);
-    }
-
-    /**
      * @param Forum $forum
      *
      * @return Response
@@ -52,22 +44,50 @@ final class SubmissionController extends Controller {
     }
 
     /**
-     * Show a single comment and its replies. The form created here will reply
-     * to that comment.
+     * Show a submission's comment page.
      *
-     * @param Comment $comment
-     * @param Request $request
+     * @ParamConverter("forum", options={"mapping": {"forum_name": "name"}})
+     * @ParamConverter("submission", options={"mapping": {"forum": "forum", "submission_id": "id"}})
+     *
+     * @param Forum      $forum
+     * @param Submission $submission
      *
      * @return Response
      */
-    public function commentPermalinkAction(Comment $comment, Request $request) {
+    public function commentPageAction(Forum $forum, Submission $submission) {
+        return $this->render('@RadditApp/comments.html.twig', [
+            'submission' => $submission,
+        ]);
+    }
+
+    /**
+     * Show a single comment and its replies. The form created here will reply
+     * to that comment.
+     *
+     * @ParamConverter("forum", options={"mapping": {"forum_name": "name"}})
+     * @ParamConverter("submission", options={"mapping": {"forum": "forum", "submission_id": "id"}})
+     * @ParamConverter("comment", options={"mapping": {"submission": "submission", "comment_id": "id"}})
+     *
+     * @param Forum      $forum
+     * @param Submission $submission
+     * @param Comment    $comment
+     * @param Request    $request
+     *
+     * @return Response
+     */
+    public function commentPermalinkAction(
+        Forum $forum,
+        Submission $submission,
+        Comment $comment,
+        Request $request
+    ) {
         $reply = new Comment();
 
         $form = $this->createForm(CommentType::class, $reply);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $reply->setSubmission($comment->getSubmission());
+            $reply->setSubmission($submission);
             $reply->setParent($comment);
             $reply->setUser($this->getUser());
 
