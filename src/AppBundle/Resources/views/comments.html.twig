@@ -2,10 +2,10 @@
 {% from '@RadditApp/submissions.html.twig' import submission %}
 {% from _self import comment %}
 
-{% macro comment(comment, recurse) %}
+{% macro comment(comment, recurse, level) %}
   {% from _self import comment %}
 
-  <article class="comment">
+  <article class="comment {{ level|default(0) ? 'comment-level-'~level : 'comment-top-level' }}">
     <h3 class="comment-info">{{ comment.user.username }} wrote at {{ comment.timestamp|date }}:</h3>
 
     <div class="comment-body">
@@ -21,7 +21,7 @@
     {% if recurse ?? true and comment.children|length %}
       <div class="comment-replies">
         {% for reply in comment.children %}
-          {{ comment(reply) }}
+          {{ comment(reply, true, level|default(0) + 1) }}
         {% endfor %}
       </div>
     {% endif %}
