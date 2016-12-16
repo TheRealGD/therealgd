@@ -5,11 +5,15 @@ namespace Raddit\AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="Raddit\AppBundle\Repository\UserRepository")
  * @ORM\Table(name="users")
+ *
+ * @UniqueEntity({"username"})
  */
 class User implements UserInterface {
     /**
@@ -24,6 +28,10 @@ class User implements UserInterface {
     /**
      * @ORM\Column(type="text", unique=true)
      *
+     * @Assert\Length(min=3, max=25)
+     * @Assert\NotBlank()
+     * @Assert\Regex("/^\w+$/")
+     *
      * @var string
      */
     private $username;
@@ -36,7 +44,19 @@ class User implements UserInterface {
     private $password;
 
     /**
+     * // bcrypt cannot handle more than 72 bytes
+     * @Assert\Length(min=8, max=72, charset="8bit")
+     * @Assert\NotBlank()
+     *
+     * @var string
+     */
+    private $plainPassword;
+
+    /**
      * @ORM\Column(type="text")
+     *
+     * @Assert\NotBlank()
+     * @Assert\Email()
      *
      * @var string
      */
@@ -106,6 +126,20 @@ class User implements UserInterface {
     /**
      * @return string
      */
+    public function getPlainPassword() {
+        return $this->plainPassword;
+    }
+
+    /**
+     * @param string $plainPassword
+     */
+    public function setPlainPassword($plainPassword) {
+        $this->plainPassword = $plainPassword;
+    }
+
+    /**
+     * @return string
+     */
     public function getEmail() {
         return $this->email;
     }
@@ -166,6 +200,6 @@ class User implements UserInterface {
      * {@inheritdoc}
      */
     public function eraseCredentials() {
-        // noop
+        $this->plainPassword = null;
     }
 }

@@ -23,6 +23,11 @@ raddit_app_user:
     path: /user/{username}
     methods: [GET]
 
+raddit_app_registration:
+    defaults: { _controller: RadditAppBundle:User:registration }
+    path: /registration
+    methods: [GET, POST]
+
 raddit_app_login:
     defaults: { _controller: RadditAppBundle:Security:login }
     path: /login
