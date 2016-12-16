@@ -2,14 +2,29 @@
 
 {% from '@RadditApp/submissions.html.twig' import submission %}
 
-{% block title %}{{ forum.name }}{% endblock %}
+{% block title %}{{ forum.title }}{% endblock %}
 
-{% block page_classes %}
-  {{ parent() }}
-  forum-front
+{% block head %}
+  <link rel="canonical" href="{{ url('raddit_app_forum', {name: forum.name}) }}">
+
+  {% if forum.description %}
+    <meta name="description" content="{{ forum.description }}">
+  {% endif %}
 {% endblock %}
 
+{% block page_classes %}forum-front{% endblock %}
+
 {% block body %}
+  <header class="forum-header">
+    <h1 class="forum-heading">
+      <a href="{{ path('raddit_app_forum', {name: forum.name}) }}">{{ forum.title }}</a>
+    </h1>
+
+    {% if forum.description %}
+      <p class="forum-description">{{ forum.description }}</p>
+    {% endif %}
+  </header>
+
   {% for submission in submissions %}
     {{ submission(submission, {show_forum_name: false}) }}
   {% endfor %}

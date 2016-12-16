@@ -30,6 +30,20 @@ class Forum {
     private $name;
 
     /**
+     * @ORM\Column(type="text")
+     *
+     * @var string
+     */
+    private $title;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     *
+     * @var string|null
+     */
+    private $description;
+
+    /**
      * @ORM\OneToMany(targetEntity="Moderator", mappedBy="forum", cascade={"persist"})
      *
      * @var Moderator[]|Collection
@@ -82,6 +96,34 @@ class Forum {
      */
     public function setName($name) {
         $this->name = $name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle() {
+        return $this->title;
+    }
+
+    /**
+     * @param string $title
+     */
+    public function setTitle($title) {
+        $this->title = $title;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription() {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription($description) {
+        $this->description = $description;
     }
 
     /**
