@@ -12,6 +12,12 @@
       {{ comment.body|raw }}
     </div>
 
+    <nav class="comment-nav">
+      <ul>
+        <li><a href="{{ path('raddit_app_comment', {id: comment.id}) }}">Permalink</a></li>
+      </ul>
+    </nav>
+
     {% if recurse ?? true and comment.children|length %}
       <div class="comment-replies">
         {% for reply in comment.children %}

@@ -8,6 +8,11 @@ raddit_app_comments:
     path: /submission/{id}
     methods: [GET]
 
+raddit_app_comment:
+    defaults: { _controller: RadditAppBundle:Submission:commentPermalink }
+    path: /comment/{id}
+    methods: [GET, POST]
+
 raddit_app_forum:
     defaults: { _controller: RadditAppBundle:Submission:forum }
     path: /f/{name}
