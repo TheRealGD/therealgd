@@ -1,5 +1,10 @@
 {% extends '@RadditApp/base.html.twig' %}
 
+{% block page_classes %}
+  {{ parent() }}
+  login-page
+{% endblock %}
+
 {% block body %}
   <form action="{{ path('raddit_app_login_check') }}" method="POST" class="login-form">
     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">

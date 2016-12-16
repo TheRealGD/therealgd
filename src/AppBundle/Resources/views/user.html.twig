@@ -5,6 +5,11 @@
 
 {% block title %}Showing {% endblock %}
 
+{% block page_classes %}
+  {{ parent() }}
+  user-page
+{% endblock %}
+
 {% block body %}
   <div class="container user-submissions">
     <h2>Submissions</h2>

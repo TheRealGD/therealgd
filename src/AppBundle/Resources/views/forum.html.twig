@@ -4,6 +4,11 @@
 
 {% block title %}{{ forum.name }}{% endblock %}
 
+{% block page_classes %}
+  {{ parent() }}
+  forum-front
+{% endblock %}
+
 {% block body %}
   {% for submission in submissions %}
     {{ submission(submission, {show_forum_name: false}) }}

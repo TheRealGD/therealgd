@@ -7,8 +7,10 @@
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
   </head>
-  <body>
+
+  <body class="{{ block('page_classes')|replace({'\n': ''}) }}">
     {% include '@RadditApp/nav.html.twig' %}
+
     {% block body %}{% endblock %}
     {% block javascripts %}{% endblock %}
   </body>

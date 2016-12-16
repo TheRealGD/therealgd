@@ -22,6 +22,11 @@
   </article>
 {% endmacro %}
 
+{% block page_classes %}
+  {{- parent() }}
+  comments-page
+{% endblock %}
+
 {% block body %}
   {{ submission(submission, {show_body: true}) }}
 

@@ -1,6 +1,11 @@
 {% extends '@RadditApp/base.html.twig' %}
 {% from '@RadditApp/submissions.html.twig' import submission %}
 
+{% block page_classes %}
+  {{ parent() }}
+  front-page
+{% endblock %}
+
 {% block body %}
   {% for submission in submissions %}
     {{ submission(submission) }}
