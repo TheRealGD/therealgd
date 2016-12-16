@@ -59,6 +59,8 @@ final class UserController extends Controller {
 
             $em->persist($user);
             $em->flush();
+
+            return $this->redirectToRoute('raddit_app_login');
         }
 
         return $this->render('@RadditApp/registration.html.twig', [
