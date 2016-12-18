@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity()
  */
-class Post extends Submission {
+class Post extends Submission implements BodyInterface {
     /**
      * @ORM\Column(type="text")
      *
@@ -23,28 +23,28 @@ class Post extends Submission {
     private $rawBody;
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getBody() {
         return $this->body;
     }
 
     /**
-     * @param string $body
+     * {@inheritdoc}
      */
     public function setBody($body) {
         $this->body = $body;
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getRawBody() {
         return $this->rawBody;
     }
 
     /**
-     * @param string $rawBody
+     * {@inheritdoc}
      */
     public function setRawBody($rawBody) {
         $this->rawBody = $rawBody;

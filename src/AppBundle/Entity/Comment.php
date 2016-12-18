@@ -95,28 +95,28 @@ class Comment {
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getRawBody() {
         return $this->rawBody;
     }
 
     /**
-     * @param string $rawBody
+     * {@inheritdoc}
      */
     public function setRawBody($rawBody) {
         $this->rawBody = $rawBody;
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getBody() {
         return $this->body;
     }
 
     /**
-     * @param string $body
+     * {@inheritdoc}
      */
     public function setBody($body) {
         $this->body = $body;

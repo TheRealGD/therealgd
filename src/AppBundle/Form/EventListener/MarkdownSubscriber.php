@@ -3,6 +3,7 @@
 namespace Raddit\AppBundle\Form\EventListener;
 
 use League\CommonMark\CommonMarkConverter;
+use Raddit\AppBundle\Entity\BodyInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -18,7 +19,7 @@ final class MarkdownSubscriber implements EventSubscriberInterface {
 
         $entity = $event->getForm()->getData();
 
-        if (strlen($entity->getBody()) > 0) {
+        if (!$entity instanceof BodyInterface || strlen($entity->getBody()) > 0) {
             return;
         }
 
