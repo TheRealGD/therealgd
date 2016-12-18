@@ -42,6 +42,9 @@
 
   <h2>Comments</h2>
 
+  {{ form_start(form) }}
+  {{ form_end(form) }}
+
   <div class="submission-comments">
     {% for comment in submission.topLevelComments %}
       {{ comment(comment) }}

@@ -11,7 +11,7 @@ raddit_app_forum:
 raddit_app_comments:
     defaults: { _controller: RadditAppBundle:Submission:commentPage }
     path: /f/{forum_name}/{submission_id}/
-    methods: [GET]
+    methods: [GET, POST]
 
 raddit_app_comment:
     defaults: { _controller: RadditAppBundle:Submission:commentPermalink }
