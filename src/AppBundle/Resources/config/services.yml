@@ -1,0 +1,11 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/service_container.html
+parameters:
+#    parameter_name: value
+
+services:
+    raddit_app.form.registration_type:
+        class: Raddit\AppBundle\Form\RegistrationType
+        arguments: ["@security.password_encoder"]
+        tags:
+            - { name: form.type }
