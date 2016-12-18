@@ -33,6 +33,11 @@ raddit_app_login:
     path: /login
     methods: [GET]
 
+raddit_app_create_forum:
+    defaults: { _controller: RadditAppBundle:Forum:createForum }
+    path: /create_forum
+    methods: [GET, POST]
+
 raddit_app_login_check:
     path: /login_check
     methods: [POST]

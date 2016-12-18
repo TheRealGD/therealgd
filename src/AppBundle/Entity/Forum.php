@@ -5,6 +5,7 @@ namespace Raddit\AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * aka Subraddit
@@ -25,6 +26,10 @@ class Forum {
     /**
      * @ORM\Column(type="text", unique=true)
      *
+     * @Assert\NotBlank()
+     * @Assert\Length(min=3, max=25)
+     * @Assert\Regex("/^\w+$/")
+     *
      * @var string
      */
     private $name;
@@ -32,12 +37,18 @@ class Forum {
     /**
      * @ORM\Column(type="text")
      *
+     * @Assert\Length(max=100)
+     * @Assert\NotBlank()
+     *
      * @var string
      */
     private $title;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     *
+     * @Assert\Length(max=1500)
+     * @Assert\NotBlank()
      *
      * @var string|null
      */
