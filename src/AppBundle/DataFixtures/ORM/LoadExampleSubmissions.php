@@ -27,8 +27,8 @@ class LoadExampleSubmissions implements FixtureInterface, OrderedFixtureInterfac
 
         $post = new Post();
         $post->setTitle('This is a test submission');
-        $post->setRawBody('<p>Hi</p>');
-        $post->setBody('Hi');
+        $post->setBody('<p>Hi</p>');
+        $post->setRawBody('Hi');
         $post->setUser($user);
         $post->setForum($forum);
         $manager->persist($post);

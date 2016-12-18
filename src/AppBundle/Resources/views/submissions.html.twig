@@ -46,7 +46,7 @@
 
 {%- block submission_body -%}
   {%- if submission.submissionType == 'post' -%}
-    {{- submission.body -}}
+    {{- submission.body|raw -}}
   {%- elseif submission.submissionType == 'url' -%}
     {#- TODO: show embeddded media -#}
   {%- endif -%}

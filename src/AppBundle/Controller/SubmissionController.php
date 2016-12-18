@@ -4,9 +4,14 @@ namespace Raddit\AppBundle\Controller;
 
 use Raddit\AppBundle\Entity\Comment;
 use Raddit\AppBundle\Entity\Forum;
+use Raddit\AppBundle\Entity\Post;
 use Raddit\AppBundle\Entity\Submission;
+use Raddit\AppBundle\Entity\Url;
 use Raddit\AppBundle\Form\CommentType;
+use Raddit\AppBundle\Form\PostType;
+use Raddit\AppBundle\Form\UrlType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -132,6 +137,45 @@ final class SubmissionController extends Controller {
         return $this->render('@RadditApp/comment.html.twig', [
             'comment' => $comment,
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * Create a new submission.
+     *
+     * @Security("is_granted('ROLE_USER')")
+     *
+     * @param Forum   $forum
+     * @param Request $request
+     * @param string  $typeClass
+     * @param string  $entityClass
+     *
+     * @return Response
+     */
+    public function submitAction(Forum $forum, Request $request, $typeClass, $entityClass) {
+        /** @var Submission $submission */
+        $submission = new $entityClass();
+
+        $form = $this->createForm($typeClass, $submission);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $submission->setForum($forum);
+            $submission->setUser($this->getUser());
+            $em = $this->getDoctrine()->getManager();
+
+            $em->persist($submission);
+            $em->flush();
+
+            return $this->redirectToRoute('raddit_app_comments', [
+                'forum_name' => $forum->getName(),
+                'submission_id' => $submission->getId(),
+            ]);
+        }
+
+        return $this->render('@RadditApp/submit.html.twig', [
+            'form' => $form->createView(),
+            'submission_type' => $submission->getSubmissionType(),
         ]);
     }
 }

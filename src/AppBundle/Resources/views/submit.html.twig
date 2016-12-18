@@ -1,0 +1,11 @@
+{% extends '@RadditApp/base.html.twig' %}
+
+{% block page_classes %}
+  submit-page
+  {{ submission_type }}
+{% endblock %}
+
+{% block body %}
+  {{ form_start(form) }}
+  {{ form_end(form) }}
+{% endblock %}
