@@ -1,7 +1,9 @@
 <?php
 
 namespace Raddit\AppBundle\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity()
@@ -9,6 +11,12 @@ use Doctrine\ORM\Mapping as ORM;
 class Url extends Submission {
     /**
      * @ORM\Column(type="text")
+     *
+     * @Assert\Length(max=2000, charset="8bit")
+     * @Assert\NotBlank()
+     * @Assert\Url(protocols={"http", "https"})
+     *
+     * @see https://stackoverflow.com/questions/417142/
      *
      * @var string
      */

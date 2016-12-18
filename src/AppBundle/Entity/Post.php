@@ -3,6 +3,7 @@
 namespace Raddit\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity()
@@ -17,6 +18,9 @@ class Post extends Submission implements BodyInterface {
 
     /**
      * @ORM\Column(type="text")
+     *
+     * @Assert\NotBlank()
+     * @Assert\Length(max=25000)
      *
      * @var string
      */
