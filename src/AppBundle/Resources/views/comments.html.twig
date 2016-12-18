@@ -19,6 +19,13 @@
             submission_id: comment.submission.id,
             comment_id: comment.id
           }) }}">Permalink</a></li>
+        {% if comment.parent %}
+          <li><a href="{{ path('raddit_app_comment', {
+              forum_name: comment.parent.submission.forum.name,
+              submission_id: comment.parent.submission.id,
+              comment_id: comment.parent.id,
+            }) }}">Parent</a></li>
+        {% endif %}
       </ul>
     </nav>
 
