@@ -75,6 +75,11 @@ class Comment implements BodyInterface {
      */
     private $children;
 
+    /**
+     * @var CommentVote[]|Collection
+     */
+    private $votes;
+
     public function __construct() {
         $this->timestamp = new \DateTime('@'.time());
         $this->children = new ArrayCollection();
@@ -190,5 +195,19 @@ class Comment implements BodyInterface {
      */
     public function setChildren($children) {
         $this->children = $children;
+    }
+
+    /**
+     * @return Collection|CommentVote[]
+     */
+    public function getVotes() {
+        return $this->votes;
+    }
+
+    /**
+     * @param Collection|CommentVote[] $votes
+     */
+    public function setVotes($votes) {
+        $this->votes = $votes;
     }
 }

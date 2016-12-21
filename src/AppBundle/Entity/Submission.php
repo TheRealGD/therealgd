@@ -65,9 +65,17 @@ abstract class Submission {
      */
     private $user;
 
+    /**
+     * @ORM\OneToMany(targetEntity="SubmissionVote", mappedBy="submission")
+     *
+     * @var SubmissionVote[]|Collection
+     */
+    private $votes;
+
     public function __construct() {
         $this->comments = new ArrayCollection();
         $this->timestamp = new \DateTime('@'.time());
+        $this->votes = new ArrayCollection();
     }
 
     /**
@@ -162,6 +170,20 @@ abstract class Submission {
      */
     public function setUser($user) {
         $this->user = $user;
+    }
+
+    /**
+     * @return SubmissionVote[]|Collection
+     */
+    public function getVotes() {
+        return $this->votes;
+    }
+
+    /**
+     * @param SubmissionVote[]|Collection $votes
+     */
+    public function setVotes($votes) {
+        $this->votes = $votes;
     }
 
     /**
