@@ -19,6 +19,7 @@ class LoadExampleForums implements FixtureInterface, OrderedFixtureInterface {
 
         $forum = new Forum();
         $forum->setName('liberalwithdulledge');
+        $forum->setTitle('Liberals in action');
         $moderator = new Moderator();
         $moderator->setUser($user);
         $moderator->setForum($forum);
