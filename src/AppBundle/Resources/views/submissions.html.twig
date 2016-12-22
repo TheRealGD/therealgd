@@ -8,8 +8,11 @@
 {%- endmacro -%}
 
 {%- block submission -%}
+  {%- from '@RadditApp/votes.html.twig' import vote -%}
   {%- spaceless -%}
   <article class="submission submission-{{ submission.submissionType }}">
+    {{- vote(submission) -}}
+
     <h1 class="submission-title">
       <a href="{{ block('submission_url') }}" class="submission-link">
         {{- submission.title -}}

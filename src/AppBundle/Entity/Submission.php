@@ -5,6 +5,7 @@ namespace Raddit\AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Selectable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -16,6 +17,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\DiscriminatorMap({"url": "Url", "post": "Post"})
  */
 abstract class Submission {
+    use VotableTrait;
+
     /**
      * @ORM\Column(type="bigint")
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -36,7 +39,7 @@ abstract class Submission {
     private $title;
 
     /**
-     * @ORM\OneToMany(targetEntity="Comment", mappedBy="submission")
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="submission", fetch="EXTRA_LAZY")
      *
      * @var Comment[]|Collection
      */
@@ -66,7 +69,7 @@ abstract class Submission {
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="SubmissionVote", mappedBy="submission")
+     * @ORM\OneToMany(targetEntity="SubmissionVote", mappedBy="submission", fetch="EAGER")
      *
      * @var SubmissionVote[]|Collection
      */
@@ -173,7 +176,7 @@ abstract class Submission {
     }
 
     /**
-     * @return SubmissionVote[]|Collection
+     * @return SubmissionVote[]|Collection|Selectable
      */
     public function getVotes() {
         return $this->votes;

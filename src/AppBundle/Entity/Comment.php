@@ -4,6 +4,7 @@ namespace Raddit\AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Selectable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -12,6 +13,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="comments")
  */
 class Comment implements BodyInterface {
+    use VotableTrait;
+
     /**
      * @ORM\Column(type="bigint")
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -76,6 +79,8 @@ class Comment implements BodyInterface {
     private $children;
 
     /**
+     * @ORM\OneToMany(targetEntity="CommentVote", mappedBy="comment", fetch="EAGER")
+     *
      * @var CommentVote[]|Collection
      */
     private $votes;
@@ -83,6 +88,7 @@ class Comment implements BodyInterface {
     public function __construct() {
         $this->timestamp = new \DateTime('@'.time());
         $this->children = new ArrayCollection();
+        $this->votes = new ArrayCollection();
     }
 
     /**
@@ -184,21 +190,21 @@ class Comment implements BodyInterface {
     }
 
     /**
-     * @return Comment[]
+     * @return Comment[]|Collection
      */
     public function getChildren() {
         return $this->children;
     }
 
     /**
-     * @param Comment[] $children
+     * @param Comment[]|Collection $children
      */
     public function setChildren($children) {
         $this->children = $children;
     }
 
     /**
-     * @return Collection|CommentVote[]
+     * @return Collection|CommentVote[]|Selectable
      */
     public function getVotes() {
         return $this->votes;
