@@ -5,7 +5,15 @@
     <title>{% block title %}Welcome!{% endblock %}</title>
     {% block stylesheets %}{% endblock %}
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
-    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+
+    {% if app.environment == 'dev' %}
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+      <link rel="stylesheet/less" href="{{ asset('css/main.less') }}">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/2.7.1/less.min.js"></script>
+    {% else %}
+      <link rel="stylesheet" href="{{ asset('css/main.min.css') }}">
+    {% endif %}
+
     {% block head %}{% endblock %}
   </head>
 

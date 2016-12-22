@@ -1,9 +1,9 @@
 {%- macro vote(entity) -%}
   {%- spaceless -%}
     <div class="vote">
-      <a href="#" class="vote-up-link"><span class="inner">&uparrow;</span></a>
+      <a href="#" class="vote-up-link"><span class="inner">&#x2B06;</span></a>
       <span class="vote-score" data-score="{{ entity.netScore }}">{{ entity.netScore }}</span>
-      <a href="#" class="vote-down-link"><span class="inner">&downarrow;</span></a>
+      <a href="#" class="vote-down-link"><span class="inner">&#x2B07;</span></a>
     </div>
   {%- endspaceless -%}
 {% endmacro %}

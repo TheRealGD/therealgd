@@ -1,0 +1,199 @@
+@page-background-color: white;
+@page-color: black;
+@page-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+@page-font-size: 14px;
+@page-line-height: 1.5em;
+@page-link-color: #c00;
+@nav-background-color: #c00;
+@nav-link-color: #fff;
+@vote-arrow-color: lightslategrey;
+@submission-link-color: #c00;
+@meta-color: slategrey;
+
+html {
+  background: @page-background-color;
+  color: @page-color;
+  font-family: @page-font-family;
+  .font-size(@page-font-size);
+}
+
+a {
+  color: @page-link-color;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+
+//
+// Navigation
+//
+
+.site-nav {
+  .clear-fix();
+  .horizontal-menu();
+
+  background-color: @nav-background-color;
+  margin-bottom: 1em;
+
+  ul {
+    margin: 0;
+  }
+
+  a {
+    .font-size(larger);
+    color: @nav-link-color;
+    display: block;
+    padding: 1rem;
+  }
+}
+
+.user-nav {
+  float: right;
+}
+
+
+//
+// Votes
+//
+
+/**
+ * 1. The container of the .vote element must have display:table styling.
+ */
+.vote {
+  display: table-cell; /* 1 */
+  padding: 0 1.5em;
+  text-align: center;
+  overflow: hidden;
+  width: 1px;
+}
+
+.vote * {
+  display: block;
+}
+
+.vote-score {
+  font-weight: bold;
+}
+
+a.vote-up-link,
+a.vote-down-link {
+  color: @vote-arrow-color;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+//
+// Submissions
+//
+
+.submission {
+  display: table;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 1em;
+}
+
+.submission-title {
+  .font-size(1.33em);
+  font-weight: normal;
+  margin: 0;
+}
+
+.submission-link:visited {
+  color: multiply(@submission-link-color, darkgrey);
+}
+
+.submission-info,
+.submission-nav ul {
+  .meta();
+}
+
+.submission-nav {
+  .horizontal-menu();
+}
+
+
+//
+// Comments
+//
+
+.comment-inner {
+  display: table;
+}
+
+/**
+ * 1. Indent nested comments.
+ */
+.comment-replies {
+  .comment {
+    margin-left: 1em; /* 1 */
+  }
+}
+
+.comment-nav {
+  .horizontal-menu();
+  .meta();
+}
+
+
+//
+// Mixins
+//
+
+/**
+ * http://nicolasgallagher.com/micro-clearfix-hack/
+ *
+ * 1. We don't care about legacy Opera browsers, so no space. We don't care
+ *    about legacy IE either for that matter.
+ */
+.clear-fix() {
+  &::before,
+  &::after {
+    content: ''; /* 1 */
+    display: table;
+  }
+
+  &::after {
+    clear: both;
+  }
+}
+
+/**
+ * Mixin for setting the font size that always resets the line height for the
+ * element in question.
+ */
+.font-size(@size) {
+  font-size: @size;
+  line-height: @page-line-height;
+}
+
+/**
+ * Make certain things boring and grey.
+ */
+.meta() {
+  color: @meta-color;
+  .font-size(0.85em);
+  margin: 0.075rem;
+
+  a {
+    color: inherit;
+    font-weight: bold;
+  }
+}
+
+/**
+ * Turn a <nav> that holds <ul> and <li> elements into horizontal menus.
+ */
+.horizontal-menu() {
+  & > ul {
+    padding: 0;
+  }
+
+  & > ul > li {
+    display: inline-block;
+    padding: 0;
+  }
+}

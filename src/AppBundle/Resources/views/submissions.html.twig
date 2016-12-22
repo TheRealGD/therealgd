@@ -10,7 +10,7 @@
 {%- block submission -%}
   {%- from '@RadditApp/votes.html.twig' import vote -%}
   {%- spaceless -%}
-  <article class="submission submission-{{ submission.submissionType }}">
+  <article class="submission submission-type-{{ submission.submissionType }}">
     {{- vote(submission) -}}
 
     <h1 class="submission-title">
@@ -19,7 +19,7 @@
       </a>
     </h1>
 
-    <p>
+    <p class="submission-info">
       Submitted by <a href="{{ path('raddit_app_user', {username: submission.user.username}) }}">{{ submission.user.username }}</a>
       at {{ submission.timestamp|date }}
       {%- if options.show_forum_name -%}
@@ -32,9 +32,11 @@
       <div class="submission-body">{{ block('submission_body') }}</div>
     {%- endif -%}
 
-    <ul class="submission-nav">
-      <li><a href="{{ path('raddit_app_comments', {forum_name: submission.forum.name, submission_id: submission.id}) }}">Comments ({{ submission.comments|length }})</a></li>
-    </ul>
+    <nav class="submission-nav">
+      <ul>
+        <li><a href="{{ path('raddit_app_comments', {forum_name: submission.forum.name, submission_id: submission.id}) }}">Comments ({{ submission.comments|length }})</a></li>
+      </ul>
+    </nav>
   </article>
   {%- endspaceless -%}
 {% endblock %}
