@@ -21,7 +21,11 @@
   <body class="{{ block('page_classes')|replace({'\n': ''}) }}">
     {% include '@RadditApp/nav.html.twig' %}
 
-    {% block body %}{% endblock %}
+    <div class="content-wrapper">
+      <aside class="sidebar">{% block sidebar %}{% endblock %}</aside>
+      <section class="body">{% block body %}{% endblock %}</section>
+    </div>
+
     {% block javascripts %}{% endblock %}
   </body>
 </html>

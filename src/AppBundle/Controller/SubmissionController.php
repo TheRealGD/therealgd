@@ -4,12 +4,8 @@ namespace Raddit\AppBundle\Controller;
 
 use Raddit\AppBundle\Entity\Comment;
 use Raddit\AppBundle\Entity\Forum;
-use Raddit\AppBundle\Entity\Post;
 use Raddit\AppBundle\Entity\Submission;
-use Raddit\AppBundle\Entity\Url;
 use Raddit\AppBundle\Form\CommentType;
-use Raddit\AppBundle\Form\PostType;
-use Raddit\AppBundle\Form\UrlType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -86,6 +82,7 @@ final class SubmissionController extends Controller {
 
         return $this->render('@RadditApp/comments.html.twig', [
             'form' => $form->createView(),
+            'forum' => $forum,
             'submission' => $submission,
         ]);
     }
@@ -137,6 +134,7 @@ final class SubmissionController extends Controller {
         return $this->render('@RadditApp/comment.html.twig', [
             'comment' => $comment,
             'form' => $form->createView(),
+            'forum' => $forum,
         ]);
     }
 
@@ -175,6 +173,7 @@ final class SubmissionController extends Controller {
 
         return $this->render('@RadditApp/submit.html.twig', [
             'form' => $form->createView(),
+            'forum' => $forum,
             'submission_type' => $submission->getSubmissionType(),
         ]);
     }

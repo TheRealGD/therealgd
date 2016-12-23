@@ -1,0 +1,28 @@
+{% extends '@RadditApp/base.html.twig' %}
+
+{% block sidebar %}
+  {% spaceless %}
+    <section class="forum-meta">
+      <h1 class="forum-title"><a href="{{ path('raddit_app_forum', {name: forum.name}) }}">{{ forum.title }}</a></h1>
+
+      {% if forum.description %}
+        <p class="forum-description">{{ forum.description }}</p>
+      {% endif %}
+    </section>
+
+    {% if forum.moderators|length > 0 %}
+      <section class="forum-moderators">
+        <h1>Moderators</h1>
+        <ul>
+          {% for moderator in forum.moderators %}
+            <li>
+              <a href="{{ path('raddit_app_user', {username: moderator.user.username}) }}">
+                {{- moderator.user.username -}}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </section>
+    {% endif %}
+  {% endspaceless %}
+{% endblock %}

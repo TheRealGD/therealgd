@@ -9,6 +9,7 @@
 @vote-arrow-color: lightslategrey;
 @submission-link-color: #c00;
 @meta-color: slategrey;
+@sidebar-background-color: #efe;
 
 html {
   background: @page-background-color;
@@ -26,6 +27,10 @@ a:hover {
   text-decoration: underline;
 }
 
+.content-wrapper {
+  .clear-fix();
+  margin: 0 1em;
+}
 
 //
 // Navigation
@@ -52,6 +57,33 @@ a:hover {
 
 .user-nav {
   float: right;
+}
+
+
+//
+// Sidebar
+//
+
+// todo - smaller headings
+.sidebar {
+  background: @sidebar-background-color;
+  box-sizing: border-box;
+  padding: 1em;
+
+  @media screen and (min-width: 768px) {
+    margin-left: 1em;
+    float: right;
+    min-width: 25%;
+    max-width: 400px;
+  }
+
+  & > section:not(:last-child) {
+    border-bottom: dotted 1px;
+  }
+}
+
+.sidebar:empty {
+  display: none;
 }
 
 
@@ -92,8 +124,7 @@ a.vote-down-link {
 .submission {
   display: table;
   box-sizing: border-box;
-  width: 100%;
-  padding: 1em;
+  padding: 1em 0;
 }
 
 .submission-title {

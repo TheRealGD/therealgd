@@ -1,4 +1,4 @@
-{% extends '@RadditApp/base.html.twig' %}
+{% extends '@RadditApp/forum-base.html.twig' %}
 
 {% from '@RadditApp/submissions.html.twig' import submission %}
 
@@ -15,16 +15,6 @@
 {% block page_classes %}forum-front{% endblock %}
 
 {% block body %}
-  <header class="forum-header">
-    <h1 class="forum-heading">
-      <a href="{{ path('raddit_app_forum', {name: forum.name}) }}">{{ forum.title }}</a>
-    </h1>
-
-    {% if forum.description %}
-      <p class="forum-description">{{ forum.description }}</p>
-    {% endif %}
-  </header>
-
   {% for submission in submissions %}
     {{ submission(submission, {show_forum_name: false}) }}
   {% endfor %}
