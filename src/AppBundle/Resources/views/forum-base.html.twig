@@ -1,7 +1,16 @@
 {% extends '@RadditApp/base.html.twig' %}
 
-{% block sidebar %}
-  {% spaceless %}
+{% spaceless %}
+  {% block site_nav_right %}
+    {% if is_granted('ROLE_USER') %}
+      <li><a href="{{ path('raddit_app_submit_url', {name: forum.name}) }}">Submit Link</a></li>
+      <li><a href="{{ path('raddit_app_submit_post', {name: forum.name}) }}">Submit Post</a></li>
+    {% endif %}
+
+    {{- parent() -}}
+  {% endblock %}
+
+  {% block sidebar %}
     <section class="forum-meta">
       <h1 class="forum-title"><a href="{{ path('raddit_app_forum', {name: forum.name}) }}">{{ forum.title }}</a></h1>
 
@@ -24,5 +33,5 @@
         </ul>
       </section>
     {% endif %}
-  {% endspaceless %}
-{% endblock %}
+  {% endblock %}
+{% endspaceless %}
