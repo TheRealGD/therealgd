@@ -70,7 +70,7 @@
 
 {%- block comment_info_user -%}
   <a href="{{ path('raddit_app_user', {username: comment.user.username}) }}" class="comment-user">
-    {{ comment.user.username }}
+    {{- comment.user.username -}}
   </a>
 {%- endblock -%}
 
