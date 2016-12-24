@@ -38,22 +38,24 @@
         {{ comment.body|raw }}
       </div>
 
-      <nav class="comment-nav">
-        <ul>
-          <li><a href="{{ path('raddit_app_comment', {
-              forum_name: comment.submission.forum.name,
-              submission_id: comment.submission.id,
-              comment_id: comment.id
-            }) }}">{{ 'comments.permalink'|trans }}</a></li>
-          {% if comment.parent %}
+      {% spaceless %}
+        <nav class="comment-nav">
+          <ul>
             <li><a href="{{ path('raddit_app_comment', {
-                forum_name: comment.parent.submission.forum.name,
-                submission_id: comment.parent.submission.id,
-                comment_id: comment.parent.id,
-              }) }}">{{ 'comments.parent'|trans }}</a></li>
-          {% endif %}
-        </ul>
-      </nav>
+                forum_name: comment.submission.forum.name,
+                submission_id: comment.submission.id,
+                comment_id: comment.id
+              }) }}">{{ 'comments.permalink'|trans }}</a></li>
+            {% if comment.parent %}
+              <li><a href="{{ path('raddit_app_comment', {
+                  forum_name: comment.parent.submission.forum.name,
+                  submission_id: comment.parent.submission.id,
+                  comment_id: comment.parent.id,
+                }) }}">{{ 'comments.parent'|trans }}</a></li>
+            {% endif %}
+          </ul>
+        </nav>
+      {% endspaceless %}
     </div>
 
     {% if recurse ?? true and comment.children|length > 0 %}
