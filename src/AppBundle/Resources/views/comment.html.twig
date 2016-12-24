@@ -1,6 +1,6 @@
 {% extends '@RadditApp/forum-base.html.twig' %}
 
-{% from '@RadditApp/macros/comments.html.twig' import comment %}
+{% from '@RadditApp/macros/comments.html.twig' import comment, comment_form %}
 
 {% block page_classes %}
   {{ parent() }}
@@ -10,11 +10,5 @@
 {% block body %}
   {{ comment(comment) }}
 
-  {% if is_granted('ROLE_USER') %}
-    {{ render(controller('RadditAppBundle:Comment:commentForm', {
-      forumName: forum.name,
-      submissionId: submission.id,
-      commentId: comment.id,
-    })) }}
-  {% endif %}
+  {{ comment_form(submission, comment) }}
 {% endblock %}

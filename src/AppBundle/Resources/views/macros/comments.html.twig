@@ -1,19 +1,30 @@
-{%- block comment_info_user -%}
-  <a href="{{ path('raddit_app_user', {username: comment.user.username}) }}" class="comment-user">
-    {{ comment.user.username }}
-  </a>
-{%- endblock -%}
+{% macro comment(comment, recurse) %}
+  {{- block('comment') -}}
+{% endmacro %}
 
-{%- block comment_info_timestamp -%}
-  <time datetime="{{ comment.timestamp|date('c') }}" title="{{ comment.timestamp|date }}" class="comment-timestamp">
-    {{- 'comments.info_at_timestamp'|trans({'%timestamp%': comment.timestamp|date}) -}}
-  </time>
-{%- endblock -%}
+{% macro comment_form(submission, comment) %}
+  {% if is_granted('ROLE_USER') %}
+    {{ render(controller('RadditAppBundle:Comment:commentForm', {
+      forumName: submission.forum.name,
+      submissionId: submission.id,
+      commentId: comment.id|default(null)
+    })) }}
+  {% else %}
+    <p class="must-log-in">{{ 'comments.not_logged_in'|trans({
+        '%login_link%': '<a href="%s">%s</a>'|format(
+          path('raddit_app_login'),
+          'comments.not_logged_in_login_link_label'|trans
+        ),
+        '%register_link%': '<a href="%s">%s</a>'|format(
+          path('raddit_app_registration'),
+          'comments.not_logged_in_register_link_label'|trans
+        ),
+      })|raw }}</p>
+  {% endif %}
+{% endmacro %}
 
-{% macro comment(comment, recurse, level) %}
-  {% from '@RadditApp/macros/votes.html.twig' import vote %}
-  {% from _self import comment %}
-
+{%- block comment -%}
+  {%- from '@RadditApp/macros/votes.html.twig' import vote -%}
   <article class="comment {{ level|default(0) ? 'comment-level-'~level : 'comment-top-level' }}">
     <div class="comment-inner">
       {{ vote(comment) }}
@@ -45,12 +56,26 @@
       </nav>
     </div>
 
-    {% if recurse ?? true and comment.children|length %}
+    {% if recurse ?? true and comment.children|length > 0 %}
       <div class="comment-replies">
-        {% for reply in comment.children %}
-          {{ comment(reply, true, level|default(0) + 1) }}
-        {% endfor %}
+        {%- for reply in comment.children -%}
+          {%- with { comment: reply, level: level|default(0) + 1} only -%}
+            {{- block('comment') -}}
+          {%- endwith -%}
+        {%- endfor -%}
       </div>
     {% endif %}
   </article>
-{% endmacro %}
+{%- endblock -%}
+
+{%- block comment_info_user -%}
+  <a href="{{ path('raddit_app_user', {username: comment.user.username}) }}" class="comment-user">
+    {{ comment.user.username }}
+  </a>
+{%- endblock -%}
+
+{%- block comment_info_timestamp -%}
+  <time datetime="{{ comment.timestamp|date('c') }}" title="{{ comment.timestamp|date }}" class="comment-timestamp">
+    {{- 'comments.info_at_timestamp'|trans({'%timestamp%': comment.timestamp|date}) -}}
+  </time>
+{%- endblock -%}
