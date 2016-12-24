@@ -27,6 +27,7 @@ final class UrlType extends AbstractType {
     public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults([
             'data_class' => Url::class,
+            'label_format' => 'submission_form.%name%',
         ]);
     }
 }

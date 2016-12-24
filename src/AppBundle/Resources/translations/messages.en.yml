@@ -1,0 +1,57 @@
+comments:
+    comments: Comments
+    permalink: Permalink
+    parent: Parent
+    info: '%user% wrote %timestamp%:'
+    info_at_timestamp: at %timestamp%
+
+comment_form:
+    comment: Comment
+    submit: Submit
+
+create_forum:
+    create_new_forum: Create new forum
+
+forum:
+    moderators: Moderators
+    submit_url: Submit Link
+    submit_post: Submit Post
+
+forum_form:
+    name: Name
+    title: Title
+    description: Description
+    submit: Submit
+
+login_form:
+    log_in: Log in
+    username: Username
+    password: Password
+
+registration_form:
+    username: Username
+    password: Password
+    email: Email
+    submit: Submit
+
+site_nav:
+    log_in: Log in
+    log_out: Log out
+    register: Register
+
+submission_form:
+    title: Title
+    url: URL
+    body: Body
+    submit: Submit
+
+submissions:
+    comments: '{0} No comments|{1} %count% comment|[1,Inf[ %count% comments'
+    info_with_forum_name: Submitted by %submitter% %timestamp% in %forum%
+    info_without_forum_name: Submitted by %submitter% %timestamp%
+    info_at_timestamp: at %timestamp%
+
+user:
+    submissions: Submissions
+    comments: Comments
+    moderates: '%username% is a moderator on:'

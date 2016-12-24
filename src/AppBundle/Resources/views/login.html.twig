@@ -10,24 +10,24 @@
     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
     <fieldset>
-      <legend>Log in</legend>
+      <legend>{{ 'login_form.log_in'|trans }}</legend>
 
       {% if error %}
         <p class="error">{{ error.messageKey|trans(error.messageData, 'security') }}</p>
       {% endif %}
 
       <div class="row">
-        <label for="login-username">Username</label>
+        <label for="login-username">{{ 'login_form.username'|trans }}</label>
         <input type="text" name="_username" autocomplete="off" id="login-username">
       </div>
 
       <div class="row">
-        <label for="login-password">Password</label>
+        <label for="login-password">{{ 'login_form.password'|trans }}</label>
         <input type="password" name="_password" autocomplete="off" id="login-password">
       </div>
 
       <div class="row">
-        <button type="submit">Log in</button>
+        <button type="submit">{{ 'login_form.log_in'|trans }}</button>
       </div>
     </fieldset>
   </form>

@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>{% block title %}Welcome!{% endblock %}</title>
+    <title>{% block title %}{{ raddit_app_site_name() }}{% endblock %}</title>
     {% block stylesheets %}{% endblock %}
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -30,10 +30,10 @@
         <ul class="right-nav">
           {% block site_nav_right %}
             {% if not is_granted('ROLE_USER') %}
-              <li><a href="{{ path('raddit_app_login') }}">Log in</a></li>
-              <li><a href="{{ path('raddit_app_registration') }}">Register</a></li>
+              <li><a href="{{ path('raddit_app_login') }}">{{ 'site_nav.log_in'|trans }}</a></li>
+              <li><a href="{{ path('raddit_app_registration') }}">{{ 'site_nav.register'|trans }}</a></li>
             {% else %}
-              <li><a href="{{ logout_path() }}">Log out</a></li>
+              <li><a href="{{ logout_path() }}">{{ 'site_nav.log_out'|trans }}</a></li>
             {% endif %}
           {% endblock %}
         </ul>

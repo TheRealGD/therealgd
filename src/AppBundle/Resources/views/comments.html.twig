@@ -3,6 +3,18 @@
 {% from '@RadditApp/submissions.html.twig' import submission %}
 {% from _self import comment %}
 
+{%- block comment_info_user -%}
+  <a href="{{ path('raddit_app_user', {username: comment.user.username}) }}" class="comment-user">
+    {{ comment.user.username }}
+  </a>
+{%- endblock -%}
+
+{%- block comment_info_timestamp -%}
+  <time datetime="{{ comment.timestamp|date('c') }}" title="{{ comment.timestamp|date }}" class="comment-timestamp">
+    {{- 'comments.info_at_timestamp'|trans({'%timestamp%': comment.timestamp|date}) -}}
+  </time>
+{%- endblock -%}
+
 {% macro comment(comment, recurse, level) %}
   {% from '@RadditApp/votes.html.twig' import vote %}
   {% from _self import comment %}
@@ -11,7 +23,10 @@
     <div class="comment-inner">
       {{ vote(comment) }}
 
-      <h3 class="comment-info">{{ comment.user.username }} wrote at {{ comment.timestamp|date }}:</h3>
+      <h3 class="comment-info">{{ 'comments.info'|trans({
+          '%user%': block('comment_info_user'),
+          '%timestamp%': block('comment_info_timestamp'),
+        })|raw }}</h3>
 
       <div class="comment-body">
         {{ comment.body|raw }}
@@ -23,13 +38,13 @@
               forum_name: comment.submission.forum.name,
               submission_id: comment.submission.id,
               comment_id: comment.id
-            }) }}">Permalink</a></li>
+            }) }}">{{ 'comments.permalink'|trans }}</a></li>
           {% if comment.parent %}
             <li><a href="{{ path('raddit_app_comment', {
                 forum_name: comment.parent.submission.forum.name,
                 submission_id: comment.parent.submission.id,
                 comment_id: comment.parent.id,
-              }) }}">Parent</a></li>
+              }) }}">{{ 'comments.parent'|trans }}</a></li>
           {% endif %}
         </ul>
       </nav>
@@ -53,7 +68,7 @@
 {% block body %}
   {{ submission(submission, {show_body: true}) }}
 
-  <h2>Comments</h2>
+  <h2>{{ 'comments.comments'|trans }}</h2>
 
   {{ form_start(form) }}
   {{ form_end(form) }}

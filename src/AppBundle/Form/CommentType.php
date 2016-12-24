@@ -30,6 +30,7 @@ final class CommentType extends AbstractType {
     public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults([
             'data_class' => Comment::class,
+            'label_format' => 'comment_form.%name%',
         ]);
     }
 }
