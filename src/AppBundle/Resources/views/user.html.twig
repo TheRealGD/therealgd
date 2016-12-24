@@ -1,7 +1,7 @@
 {% extends '@RadditApp/base.html.twig' %}
 
-{% from '@RadditApp/submissions.html.twig' import submission %}
-{% from '@RadditApp/comments.html.twig' import comment %}
+{% from '@RadditApp/macros/submissions.html.twig' import submission %}
+{% from '@RadditApp/macros/comments.html.twig' import comment %}
 
 {% block title %}{{ user.username }}{% endblock %}
 

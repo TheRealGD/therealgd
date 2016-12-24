@@ -1,64 +1,7 @@
 {% extends '@RadditApp/forum-base.html.twig' %}
 
-{% from '@RadditApp/submissions.html.twig' import submission %}
-{% from _self import comment %}
-
-{%- block comment_info_user -%}
-  <a href="{{ path('raddit_app_user', {username: comment.user.username}) }}" class="comment-user">
-    {{ comment.user.username }}
-  </a>
-{%- endblock -%}
-
-{%- block comment_info_timestamp -%}
-  <time datetime="{{ comment.timestamp|date('c') }}" title="{{ comment.timestamp|date }}" class="comment-timestamp">
-    {{- 'comments.info_at_timestamp'|trans({'%timestamp%': comment.timestamp|date}) -}}
-  </time>
-{%- endblock -%}
-
-{% macro comment(comment, recurse, level) %}
-  {% from '@RadditApp/votes.html.twig' import vote %}
-  {% from _self import comment %}
-
-  <article class="comment {{ level|default(0) ? 'comment-level-'~level : 'comment-top-level' }}">
-    <div class="comment-inner">
-      {{ vote(comment) }}
-
-      <h3 class="comment-info">{{ 'comments.info'|trans({
-          '%user%': block('comment_info_user'),
-          '%timestamp%': block('comment_info_timestamp'),
-        })|raw }}</h3>
-
-      <div class="comment-body">
-        {{ comment.body|raw }}
-      </div>
-
-      <nav class="comment-nav">
-        <ul>
-          <li><a href="{{ path('raddit_app_comment', {
-              forum_name: comment.submission.forum.name,
-              submission_id: comment.submission.id,
-              comment_id: comment.id
-            }) }}">{{ 'comments.permalink'|trans }}</a></li>
-          {% if comment.parent %}
-            <li><a href="{{ path('raddit_app_comment', {
-                forum_name: comment.parent.submission.forum.name,
-                submission_id: comment.parent.submission.id,
-                comment_id: comment.parent.id,
-              }) }}">{{ 'comments.parent'|trans }}</a></li>
-          {% endif %}
-        </ul>
-      </nav>
-    </div>
-
-    {% if recurse ?? true and comment.children|length %}
-      <div class="comment-replies">
-        {% for reply in comment.children %}
-          {{ comment(reply, true, level|default(0) + 1) }}
-        {% endfor %}
-      </div>
-    {% endif %}
-  </article>
-{% endmacro %}
+{% from '@RadditApp/macros/submissions.html.twig' import submission %}
+{% from '@RadditApp/macros/comments.html.twig' import comment %}
 
 {% block page_classes %}
   {{- parent() }}

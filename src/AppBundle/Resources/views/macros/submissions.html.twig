@@ -26,7 +26,7 @@
 {%- endblock -%}
 
 {%- block submission -%}
-  {%- from '@RadditApp/votes.html.twig' import vote -%}
+  {%- from '@RadditApp/macros/votes.html.twig' import vote -%}
   <article class="submission submission-type-{{ submission.submissionType }}">
     {{- vote(submission) -}}
 
