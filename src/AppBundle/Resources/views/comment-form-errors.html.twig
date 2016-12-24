@@ -7,9 +7,10 @@
 {% endblock %}
 
 {% block body %}
-  {{ comment(comment, false) }}
+  {% if comment %}
+    {{ comment(comment, false) }}
+  {% endif %}
 
-  {{ form_start(form) }}
-  {{ form_end(form) }}
+  {% include '@RadditApp/forms/comment-form.html.twig' with { form: form } only %}
 {% endblock %}
 
