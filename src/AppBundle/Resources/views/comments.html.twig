@@ -13,8 +13,12 @@
 
   <h2>{{ 'comments.comments'|trans }}</h2>
 
-  {{ form_start(form) }}
-  {{ form_end(form) }}
+  {% if is_granted('ROLE_USER') %}
+    {{ render(controller('RadditAppBundle:Comment:commentForm', {
+      forumName: forum.name,
+      submissionId: submission.id,
+    })) }}
+  {% endif %}
 
   <div class="submission-comments">
     {% for comment in submission.topLevelComments %}

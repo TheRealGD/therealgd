@@ -5,7 +5,6 @@ namespace Raddit\AppBundle\Controller;
 use Raddit\AppBundle\Entity\Comment;
 use Raddit\AppBundle\Entity\Forum;
 use Raddit\AppBundle\Entity\Submission;
-use Raddit\AppBundle\Form\CommentType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -45,51 +44,25 @@ final class SubmissionController extends Controller {
     }
 
     /**
-     * Show a submission's comment page. The form creates a new top-level
-     * comment.
+     * Show a submission's comment page.
      *
      * @ParamConverter("forum", options={"mapping": {"forum_name": "name"}})
      * @ParamConverter("submission", options={"mapping": {"forum": "forum", "submission_id": "id"}})
      *
      * @param Forum      $forum
      * @param Submission $submission
-     * @param Request    $request
      *
      * @return Response
      */
-    public function commentPageAction(Forum $forum, Submission $submission, Request $request) {
-        $comment = new Comment();
-
-        // todo - only show comment form for logged-in users
-        $form = $this->createForm(CommentType::class, $comment);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $comment->setSubmission($submission);
-            $comment->setUser($this->getUser());
-
-            $em = $this->getDoctrine()->getManager();
-
-            $em->persist($comment);
-            $em->flush();
-
-            return $this->redirectToRoute('raddit_app_comment', [
-                'forum_name' => $forum->getName(),
-                'submission_id' => $submission->getId(),
-                'comment_id' => $comment->getId(),
-            ]);
-        }
-
+    public function commentPageAction(Forum $forum, Submission $submission) {
         return $this->render('@RadditApp/comments.html.twig', [
-            'form' => $form->createView(),
             'forum' => $forum,
             'submission' => $submission,
         ]);
     }
 
     /**
-     * Show a single comment and its replies. The form created here will reply
-     * to that comment.
+     * Show a single comment and its replies.
      *
      * @ParamConverter("forum", options={"mapping": {"forum_name": "name"}})
      * @ParamConverter("submission", options={"mapping": {"forum": "forum", "submission_id": "id"}})
@@ -98,43 +71,18 @@ final class SubmissionController extends Controller {
      * @param Forum      $forum
      * @param Submission $submission
      * @param Comment    $comment
-     * @param Request    $request
      *
      * @return Response
      */
     public function commentPermalinkAction(
         Forum $forum,
         Submission $submission,
-        Comment $comment,
-        Request $request
+        Comment $comment
     ) {
-        $reply = new Comment();
-
-        // todo - only show comment form for logged-in users
-        $form = $this->createForm(CommentType::class, $reply);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $reply->setSubmission($submission);
-            $reply->setParent($comment);
-            $reply->setUser($this->getUser());
-
-            $em = $this->getDoctrine()->getManager();
-
-            $em->persist($reply);
-            $em->flush();
-
-            return $this->redirectToRoute('raddit_app_comment', [
-                'forum_name' => $forum->getName(),
-                'submission_id' => $submission->getId(),
-                'comment_id' => $reply->getId(),
-            ]);
-        }
-
         return $this->render('@RadditApp/comment.html.twig', [
             'comment' => $comment,
-            'form' => $form->createView(),
             'forum' => $forum,
+            'submission' => $submission,
         ]);
     }
 

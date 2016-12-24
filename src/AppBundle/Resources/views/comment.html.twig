@@ -8,8 +8,13 @@
 {% endblock %}
 
 {% block body %}
-  {{ form_start(form) }}
-  {{ form_end(form) }}
-
   {{ comment(comment) }}
+
+  {% if is_granted('ROLE_USER') %}
+    {{ render(controller('RadditAppBundle:Comment:commentForm', {
+      forumName: forum.name,
+      submissionId: submission.id,
+      commentId: comment.id,
+    })) }}
+  {% endif %}
 {% endblock %}

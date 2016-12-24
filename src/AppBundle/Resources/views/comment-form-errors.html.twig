@@ -1,0 +1,15 @@
+{% extends '@RadditApp/forum-base.html.twig' %}
+
+{% from '@RadditApp/macros/comments.html.twig' import comment %}
+
+{% block page_classes %}
+  comment-form-error-page
+{% endblock %}
+
+{% block body %}
+  {{ comment(comment, false) }}
+
+  {{ form_start(form) }}
+  {{ form_end(form) }}
+{% endblock %}
+

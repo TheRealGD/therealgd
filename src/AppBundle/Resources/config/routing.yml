@@ -11,14 +11,14 @@ raddit_app_forum:
 raddit_app_comments:
     defaults: { _controller: RadditAppBundle:Submission:commentPage }
     path: /f/{forum_name}/{submission_id}/
-    methods: [GET, POST]
+    methods: [GET]
     requirements:
         submission_id: \d+
 
 raddit_app_comment:
     defaults: { _controller: RadditAppBundle:Submission:commentPermalink }
     path: /f/{forum_name}/{submission_id}/comment/{comment_id}/
-    methods: [GET, POST]
+    methods: [GET]
 
 raddit_app_user:
     defaults: { _controller: RadditAppBundle:User:userPage }
@@ -39,6 +39,13 @@ raddit_app_create_forum:
     defaults: { _controller: RadditAppBundle:Forum:createForum }
     path: /create_forum
     methods: [GET, POST]
+
+raddit_app_comment_post:
+    defaults:
+        _controller: RadditAppBundle:Comment:comment
+        comment_id: ~
+    path: /f/{forum_name}/{submission_id}/comment_post/{comment_id}
+    methods: [POST]
 
 raddit_app_submit_url:
     defaults:
