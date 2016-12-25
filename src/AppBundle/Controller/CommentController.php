@@ -67,19 +67,12 @@ final class CommentController extends Controller {
         Request $request,
         Comment $comment = null
     ) {
-        $reply = new Comment();
+        $reply = Comment::create($submission, $this->getUser(), $comment);
 
         $form = $this->createForm(CommentType::class, $reply);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $reply->setSubmission($submission);
-            $reply->setUser($this->getUser());
-
-            if ($comment) {
-                $reply->setParent($comment);
-            }
-
             $em = $this->getDoctrine()->getManager();
 
             $em->persist($reply);

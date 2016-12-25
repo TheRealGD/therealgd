@@ -100,14 +100,13 @@ final class SubmissionController extends Controller {
      */
     public function submitAction(Forum $forum, Request $request, $typeClass, $entityClass) {
         /** @var Submission $submission */
-        $submission = new $entityClass();
+        /** @noinspection PhpUndefinedMethodInspection */
+        $submission = $entityClass::create($forum, $this->getUser());
 
         $form = $this->createForm($typeClass, $submission);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $submission->setForum($forum);
-            $submission->setUser($this->getUser());
             $em = $this->getDoctrine()->getManager();
 
             $em->persist($submission);

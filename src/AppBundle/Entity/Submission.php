@@ -69,11 +69,41 @@ abstract class Submission {
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="SubmissionVote", mappedBy="submission", fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="SubmissionVote", mappedBy="submission", fetch="EAGER", cascade={"persist"})
      *
      * @var SubmissionVote[]|Collection
      */
     private $votes;
+
+    /**
+     * Creates a new submission with an implicit upvote from the comment author.
+     *
+     * @param Forum $forum
+     * @param User  $user
+     *
+     * @return static
+     */
+    public static function create(Forum $forum, User $user) {
+        if (static::class === self::class) {
+            throw new \BadMethodCallException(
+                'This method must be called on an implementing class'
+            );
+        }
+
+        $submission = new static();
+        $submission->setForum($forum);
+        $submission->setUser($user);
+
+        $vote = new SubmissionVote();
+        $vote->setUser($user);
+        $vote->setSubmission($submission);
+        $vote->setUpvote(true);
+
+        /** @noinspection PhpUndefinedMethodInspection */
+        $submission->getVotes()->add($vote);
+
+        return $submission;
+    }
 
     public function __construct() {
         $this->comments = new ArrayCollection();

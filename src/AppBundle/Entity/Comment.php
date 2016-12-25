@@ -79,11 +79,36 @@ class Comment implements BodyInterface {
     private $children;
 
     /**
-     * @ORM\OneToMany(targetEntity="CommentVote", mappedBy="comment", fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="CommentVote", mappedBy="comment", fetch="EAGER", cascade={"persist"})
      *
      * @var CommentVote[]|Collection
      */
     private $votes;
+
+    /**
+     * Creates a new comment with an implicit upvote from the comment author.
+     *
+     * @param Submission   $submission
+     * @param User         $user
+     * @param Comment|null $parent
+     *
+     * @return Comment
+     */
+    public static function create(Submission $submission, User $user, Comment $parent = null) {
+        $comment = new self();
+        $comment->user = $user;
+        $comment->submission = $submission;
+        $comment->parent = $parent;
+
+        $vote = new CommentVote();
+        $vote->setUser($user);
+        $vote->setComment($comment);
+        $vote->setUpvote(true);
+
+        $comment->votes->add($vote);
+
+        return $comment;
+    }
 
     public function __construct() {
         $this->timestamp = new \DateTime('@'.time());
