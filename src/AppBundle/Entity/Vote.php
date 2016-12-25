@@ -36,6 +36,7 @@ abstract class Vote {
     private $timestamp;
 
     /**
+     * @ORM\JoinColumn(name="user_id", nullable=false)
      * @ORM\ManyToOne(targetEntity="User")
      *
      * @var User

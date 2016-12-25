@@ -6,11 +6,16 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="submission_votes")
+ * @ORM\Table(name="submission_votes", uniqueConstraints={
+ *     @ORM\UniqueConstraint(
+ *         name="submission_user_vote_idx",
+ *         columns={"submission_id", "user_id"}
+ *     )
+ * })
  */
 class SubmissionVote extends Vote {
     /**
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(name="submission_id", nullable=false)
      * @ORM\ManyToOne(targetEntity="Submission", inversedBy="votes")
      *
      * @var Submission
