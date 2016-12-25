@@ -1,10 +1,10 @@
 {%- macro vote(entity) -%}
   {%- spaceless -%}
-    {#- FIXME - these arrows appear as emojis on iOS (Android too, probably), making them uncolourable -#}
+    {#- http://mts.io/2015/04/21/unicode-symbol-render-text-emoji/ -#}
     <div class="vote {{ block('vote_class') }}">
-      <a href="#" class="vote-up-link"><span class="inner">&#x2B06;</span></a>
+      <a href="#" class="vote-up-link"><span class="inner">&#x2B06;&#xFE0E;</span></a>
       <span class="vote-score" data-score="{{ entity.netScore }}">{{ entity.netScore }}</span>
-      <a href="#" class="vote-down-link"><span class="inner">&#x2B07;</span></a>
+      <a href="#" class="vote-down-link"><span class="inner">&#x2B07;&#xFE0E;</span></a>
     </div>
   {%- endspaceless -%}
 {% endmacro %}
