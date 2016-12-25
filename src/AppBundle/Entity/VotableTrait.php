@@ -32,4 +32,16 @@ trait VotableTrait {
 
         return $upvotes - $downvotes;
     }
+
+    /**
+     * @param User $user
+     *
+     * @return Vote|null
+     */
+    public function getUserVote(User $user) {
+        $criteria = Criteria::create();
+        $criteria->where(Criteria::expr()->eq('user', $user));
+
+        return $this->getVotes()->matching($criteria)->first();
+    }
 }

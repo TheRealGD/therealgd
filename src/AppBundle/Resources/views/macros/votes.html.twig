@@ -1,9 +1,24 @@
 {%- macro vote(entity) -%}
   {%- spaceless -%}
-    <div class="vote">
+    {#- FIXME - these arrows appear as emojis on iOS (Android too, probably), making them uncolourable -#}
+    <div class="vote {{ block('vote_class') }}">
       <a href="#" class="vote-up-link"><span class="inner">&#x2B06;</span></a>
       <span class="vote-score" data-score="{{ entity.netScore }}">{{ entity.netScore }}</span>
       <a href="#" class="vote-down-link"><span class="inner">&#x2B07;</span></a>
     </div>
   {%- endspaceless -%}
 {% endmacro %}
+
+{%- block vote_class -%}
+  {%- if is_granted('ROLE_USER') -%}
+    {%- with { user_vote: entity.userVote(app.user) } -%}
+      {%- if not user_vote -%}
+        {#- nothing -#}
+      {%- elseif user_vote.upvote -%}
+        vote-user-upvoted
+      {%- else -%}
+        vote-user-downvoted
+      {%- endif -%}
+    {%- endwith -%}
+  {%- endif -%}
+{%- endblock -%}
