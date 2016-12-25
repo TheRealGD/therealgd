@@ -1,2 +1,6 @@
 raddit_app_routing:
     resource: "@RadditAppBundle/Resources/config/routing.yml"
+
+raddit_app_forum_routing:
+    resource: "@RadditAppBundle/Resources/config/forum_routing.yml"
+    prefix: /f

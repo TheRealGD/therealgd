@@ -1,0 +1,49 @@
+#
+# This file describes forum routes, i.e. routes that have an /f/ prefix. You can
+# change this prefix by importing these routes with a prefix of your choice in
+# your AppBundle's routing.yml:
+#
+# raddit_app_forum_routing:
+#     resource: "@RadditAppBundle/Resources/config/forum_routing.yml"
+#     prefix: /your_prefix_here
+#
+
+raddit_app_forum:
+    defaults: { _controller: RadditAppBundle:Submission:forum }
+    path: /{name}/
+    methods: [GET]
+
+raddit_app_comments:
+    defaults: { _controller: RadditAppBundle:Submission:commentPage }
+    path: /{forum_name}/{submission_id}/
+    methods: [GET]
+    requirements:
+        submission_id: \d+
+
+raddit_app_comment:
+    defaults: { _controller: RadditAppBundle:Submission:commentPermalink }
+    path: /{forum_name}/{submission_id}/comment/{comment_id}/
+    methods: [GET]
+
+raddit_app_comment_post:
+    defaults:
+        _controller: RadditAppBundle:Comment:comment
+        comment_id: ~
+    path: /{forum_name}/{submission_id}/comment_post/{comment_id}
+    methods: [POST]
+
+raddit_app_submit_url:
+    defaults:
+        _controller: RadditAppBundle:Submission:submit
+        typeClass: Raddit\AppBundle\Form\UrlType
+        entityClass: Raddit\AppBundle\Entity\Url
+    path: /{name}/submit_url
+    methods: [GET, POST]
+
+raddit_app_submit_post:
+    defaults:
+        _controller: RadditAppBundle:Submission:submit
+        typeClass: Raddit\AppBundle\Form\PostType
+        entityClass: Raddit\AppBundle\Entity\Post
+    path: /{name}/submit_post
+    methods: [GET, POST]
