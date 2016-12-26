@@ -18,19 +18,30 @@ trait VotableTrait {
     abstract public function setVotes($votes);
 
     /**
-     * Get the net score for this entity.
-     *
+     * @return int
+     */
+    public function getUpvotes() {
+        $criteria = Criteria::create();
+        $criteria->where(Criteria::expr()->eq('upvote', true));
+
+        return count($this->getVotes()->matching($criteria));
+    }
+
+    /**
+     * @return int
+     */
+    public function getDownvotes() {
+        $criteria = Criteria::create();
+        $criteria->where(Criteria::expr()->eq('upvote', false));
+
+        return count($this->getVotes()->matching($criteria));
+    }
+
+    /**
      * @return int
      */
     public function getNetScore() {
-        $criteria = Criteria::create();
-        $criteria->where(Criteria::expr()->eq('upvote', true));
-        $upvotes = count($this->getVotes()->matching($criteria));
-
-        $criteria->where(Criteria::expr()->eq('upvote', false));
-        $downvotes = count($this->getVotes()->matching($criteria));
-
-        return $upvotes - $downvotes;
+        return $this->getUpvotes() - $this->getDownvotes();
     }
 
     /**

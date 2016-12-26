@@ -54,6 +54,7 @@ submissions:
     info_without_forum_name: Submitted by %submitter% %timestamp%
     info_at_timestamp: at %timestamp%
     total_votes: '{1} %count% vote|[0,Inf[ %count% votes'
+    vote_stats: (+%up%, −%down%)
 
 user:
     submissions: Submissions

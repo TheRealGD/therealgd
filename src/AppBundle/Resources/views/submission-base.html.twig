@@ -3,7 +3,11 @@
 {% block sidebar %}
   <section class="sidebar-submission-meta">
     <p class="sidebar-submission-meta-score">
-      {{- 'submissions.total_votes'|transchoice(submission.votes|length) -}}
+      <strong class="vote-total">{{- 'submissions.total_votes'|transchoice(submission.votes|length) -}}</strong>
+      <span class="vote-stats">{{ 'submissions.vote_stats'|trans({
+          '%up%': submission.upvotes,
+          '%down%': submission.downvotes,
+        }) }}</span>
     </p>
   </section>
 
