@@ -1,0 +1,11 @@
+{% extends '@RadditApp/forum-base.html.twig' %}
+
+{% block sidebar %}
+  <section class="sidebar-submission-meta">
+    <p class="sidebar-submission-meta-score">
+      {{- 'submissions.total_votes'|transchoice(submission.votes|length) -}}
+    </p>
+  </section>
+
+  {{ parent() }}
+{% endblock %}
