@@ -1,15 +1,10 @@
 raddit
 ======
 
-raddit is a reddit clone made with [Symfony](https://symfony.com/).
-
-This might end up being the backend for <http://raddit.me>. If not, the project
-will be renamed and most likely abandoned.
-
-## Status
-
-This is an unfinished pre-release version. Functionality is missing and 
-backwards compatibility will break.
+**raddit** is a web-based forum with voting and threaded comments. It is built
+on the [Symfony](https://symfony.com/) framework. Any similarities between this
+software and that of a large community symbolised by an alien logo are purely
+coincidental.
 
 ## Requirements
 

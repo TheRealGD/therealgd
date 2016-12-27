@@ -1,6 +1,6 @@
 {
-    "name": "unnamed/unnamed",
-    "license": "proprietary",
+    "name": "raddit/raddit",
+    "license": "Zlib",
     "type": "project",
     "autoload": {
         "psr-4": {
@@ -61,6 +61,8 @@
         "incenteev-parameters": {
             "file": "app/config/parameters.yml"
         },
-        "branch-alias": null
+        "branch-alias": {
+            "dev-master": "0.1-dev"
+        }
     }
 }
