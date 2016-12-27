@@ -28,6 +28,20 @@ raddit_app_create_forum:
     path: /create_forum
     methods: [GET, POST]
 
+raddit_app_comment_vote:
+    defaults:
+        _controller: RadditAppBundle:Vote:vote
+        entityClass: Raddit\AppBundle\Entity\Comment
+    path: /cv/{id}
+    methods: [POST]
+
+raddit_app_submission_vote:
+    defaults:
+        _controller: RadditAppBundle:Vote:vote
+        entityClass: Raddit\AppBundle\Entity\Submission
+    path: /sv/{id}
+    methods: [POST]
+
 raddit_app_login_check:
     path: /login_check
     methods: [POST]

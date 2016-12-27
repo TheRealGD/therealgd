@@ -28,7 +28,7 @@
 {%- block submission -%}
   {%- from '@RadditApp/macros/votes.html.twig' import vote -%}
   <article class="submission submission-type-{{ submission.submissionType }}">
-    {{- vote(submission) -}}
+    {{- vote(submission, path('raddit_app_submission_vote', {id: submission.id})) -}}
 
     {% spaceless %}
       <h1 class="submission-title">

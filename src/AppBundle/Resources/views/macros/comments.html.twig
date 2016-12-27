@@ -27,7 +27,7 @@
   {%- from '@RadditApp/macros/votes.html.twig' import vote -%}
   <article class="comment {{ level|default(0) ? 'comment-level-'~level : 'comment-top-level' }}">
     <div class="comment-inner">
-      {{ vote(comment) }}
+      {{ vote(comment, path('raddit_app_comment_vote', {id: comment.id})) }}
 
       <h3 class="comment-info">{{ 'comments.info'|trans({
           '%user%': block('comment_info_user'),

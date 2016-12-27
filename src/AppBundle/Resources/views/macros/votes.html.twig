@@ -1,24 +1,43 @@
-{%- macro vote(entity) -%}
+{%- macro vote(entity, vote_path) -%}
+  {{- block('vote') -}}
+{%- endmacro -%}
+
+{%- block vote -%}
+  {%- set user_vote = is_granted('ROLE_USER') ? entity.userVote(app.user) : null -%}
   {%- spaceless -%}
-    {#- http://mts.io/2015/04/21/unicode-symbol-render-text-emoji/ -#}
-    <div class="vote {{ block('vote_class') }}">
-      <a href="#" class="vote-up-link"><span class="inner">&#x2B06;&#xFE0E;</span></a>
-      <span class="vote-score" data-score="{{ entity.netScore }}">{{ entity.netScore }}</span>
-      <a href="#" class="vote-down-link"><span class="inner">&#x2B07;&#xFE0E;</span></a>
-    </div>
+    <form action="{{ vote_path }}" method="post" class="vote {{ block('vote_class') }}">
+      <input type="hidden" name="token" value="{{ csrf_token('vote') }}">
+
+      <button type="submit" name="choice" value="{{ block('vote_choice_up') }}" class="vote-button vote-up">
+        {#- http://mts.io/2015/04/21/unicode-symbol-render-text-emoji/ -#}
+        <span class="inner">&#x2B06;&#xFE0E;</span>
+      </button>
+
+      <span class="vote-score" data-score="{{ entity.netScore }}">
+        {{- entity.netScore -}}
+      </span>
+
+      <button type="submit" name="choice" value="{{ block('vote_choice_down') }}" class="vote-button vote-down">
+        <span class="inner">&#x2B07;&#xFE0E;</span>
+      </button>
+    </form>
   {%- endspaceless -%}
-{% endmacro %}
+{%- endblock -%}
 
 {%- block vote_class -%}
-  {%- if is_granted('ROLE_USER') -%}
-    {%- with { user_vote: entity.userVote(app.user) } -%}
-      {%- if not user_vote -%}
-        {#- nothing -#}
-      {%- elseif user_vote.upvote -%}
-        vote-user-upvoted
-      {%- else -%}
-        vote-user-downvoted
-      {%- endif -%}
-    {%- endwith -%}
+  {%- if not user_vote -%}
+    {#- nothing -#}
+  {%- elseif user_vote.upvote -%}
+    vote-user-upvoted
+  {%- else -%}
+    vote-user-downvoted
   {%- endif -%}
+{%- endblock -%}
+
+{%- block vote_choice_up -%}
+  {{- user_vote and user_vote.upvote ? 0 : 1 -}}
+{%- endblock -%}
+
+{%- block vote_choice_down -%}
+  {{- user_vote and not user_vote.upvote ? 0 : -1 -}}
 {%- endblock -%}

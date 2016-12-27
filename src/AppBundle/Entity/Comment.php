@@ -4,7 +4,6 @@ namespace Raddit\AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\Selectable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -12,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity()
  * @ORM\Table(name="comments")
  */
-class Comment implements BodyInterface {
+class Comment implements BodyInterface, VotableInterface {
     use VotableTrait;
 
     /**
@@ -229,16 +228,26 @@ class Comment implements BodyInterface {
     }
 
     /**
-     * @return Collection|CommentVote[]|Selectable
+     * {@inheritdoc}
      */
     public function getVotes() {
         return $this->votes;
     }
 
     /**
-     * @param Collection|CommentVote[] $votes
+     * {@inheritdoc}
      */
     public function setVotes($votes) {
         $this->votes = $votes;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function createVote() {
+        $vote = new CommentVote();
+        $vote->setComment($this);
+
+        return $vote;
     }
 }

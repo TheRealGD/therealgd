@@ -5,7 +5,6 @@ namespace Raddit\AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
-use Doctrine\Common\Collections\Selectable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -16,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\DiscriminatorColumn(name="submission_type", type="string")
  * @ORM\DiscriminatorMap({"url": "Url", "post": "Post"})
  */
-abstract class Submission {
+abstract class Submission implements VotableInterface {
     use VotableTrait;
 
     /**
@@ -206,17 +205,27 @@ abstract class Submission {
     }
 
     /**
-     * @return SubmissionVote[]|Collection|Selectable
+     * {@inheritdoc}
      */
     public function getVotes() {
         return $this->votes;
     }
 
     /**
-     * @param SubmissionVote[]|Collection $votes
+     * {@inheritdoc}
      */
     public function setVotes($votes) {
         $this->votes = $votes;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function createVote() {
+        $vote = new SubmissionVote();
+        $vote->setSubmission($this);
+
+        return $vote;
     }
 
     /**

@@ -112,18 +112,17 @@ a:hover {
   font-weight: bold;
 }
 
-a.vote-up-link,
-a.vote-down-link {
+.vote-button {
+  .unbuttonize();
   color: @vote-arrow-color;
   white-space: nowrap;
-  text-decoration: none;
 }
 
-.vote-user-upvoted a.vote-up-link {
+.vote-user-upvoted .vote-up {
   color: orange;
 }
 
-.vote-user-downvoted a.vote-down-link {
+.vote-user-downvoted .vote-down {
   color: blue;
 }
 
@@ -261,5 +260,18 @@ a.vote-down-link {
   & > ul > li {
     display: inline-block;
     padding: 0;
+  }
+}
+
+/**
+ * Remove button styles.
+ */
+.unbuttonize() {
+  border: none;
+  background: transparent;
+  padding: 0;
+
+  &:focus:not(:active) {
+    outline: unset;
   }
 }
