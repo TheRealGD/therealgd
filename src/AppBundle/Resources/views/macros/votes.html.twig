@@ -8,7 +8,8 @@
     <form action="{{ vote_path }}" method="post" class="vote {{ block('vote_class') }}">
       <input type="hidden" name="token" value="{{ csrf_token('vote') }}">
 
-      <button type="submit" name="choice" value="{{ block('vote_choice_up') }}" class="vote-button vote-up">
+      <button type="submit" name="choice" value="{{ block('vote_choice_up') }}"
+              class="vote-button vote-up" title="{{ block('vote_up_label') }}">
         {#- http://mts.io/2015/04/21/unicode-symbol-render-text-emoji/ -#}
         <span class="inner">&#x2B06;&#xFE0E;</span>
       </button>
@@ -17,7 +18,8 @@
         {{- entity.netScore -}}
       </span>
 
-      <button type="submit" name="choice" value="{{ block('vote_choice_down') }}" class="vote-button vote-down">
+      <button type="submit" name="choice" value="{{ block('vote_choice_down') }}"
+              class="vote-button vote-down" title="{{ block('vote_down_label') }}">
         <span class="inner">&#x2B07;&#xFE0E;</span>
       </button>
     </form>
@@ -40,4 +42,12 @@
 
 {%- block vote_choice_down -%}
   {{- user_vote and not user_vote.upvote ? 0 : -1 -}}
+{%- endblock -%}
+
+{%- block vote_up_label -%}
+  {{- (user_vote and user_vote.upvote ? 'votes.retract_upvote' : 'votes.upvote')|trans -}}
+{%- endblock -%}
+
+{%- block vote_down_label -%}
+  {{- (user_vote and not user_vote.upvote ? 'votes.retract_downvote' : 'votes.downvote')|trans -}}
 {%- endblock -%}

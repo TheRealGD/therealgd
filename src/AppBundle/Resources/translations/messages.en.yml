@@ -56,6 +56,12 @@ submissions:
     total_votes: '{1} %count% vote|[0,Inf[ %count% votes'
     vote_stats: (+%up%, −%down%)
 
+votes:
+    upvote: Upvote
+    downvote: Downvote
+    retract_upvote: Retract upvote
+    retract_downvote: Retract downvote
+
 user:
     submissions: Submissions
     comments: Comments
