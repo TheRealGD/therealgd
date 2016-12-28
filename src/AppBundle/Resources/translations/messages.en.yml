@@ -53,6 +53,10 @@ submissions:
     info_with_forum_name: Submitted by %submitter% %timestamp% in %forum%
     info_without_forum_name: Submitted by %submitter% %timestamp%
     info_at_timestamp: at %timestamp%
+    sort_by_hot: Hot
+    sort_by_new: New
+    sort_by_top: Top
+    sort_by_controversial: Controversial
     total_votes: '{1} %count% vote|[0,Inf[ %count% votes'
     vote_stats: (+%up%, −%down%)
 

@@ -5,6 +5,7 @@ namespace Raddit\AppBundle\Controller;
 use Raddit\AppBundle\Entity\Comment;
 use Raddit\AppBundle\Entity\Forum;
 use Raddit\AppBundle\Entity\Submission;
+use Raddit\AppBundle\Repository\SubmissionRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -15,13 +16,21 @@ final class SubmissionController extends Controller {
     /**
      * View submissions on the front page.
      *
+     * @param Request $request
+     *
      * @return Response
      */
-    public function frontPageAction() {
+    public function frontPageAction(Request $request) {
+        $sortBy = $this->getSortBy($request);
+
         $submissions = $this->getDoctrine()->getRepository(Submission::class)
-            ->findBy([], ['id' => 'DESC'], 20);
+            ->findSortedQb($sortBy)
+            ->setMaxResults(20)
+            ->getQuery()
+            ->execute();
 
         return $this->render('@RadditApp/front.html.twig', [
+            'sort_by' => $sortBy,
             'submissions' => $submissions,
         ]);
     }
@@ -29,16 +38,24 @@ final class SubmissionController extends Controller {
     /**
      * Show the front page of a given forum.
      *
-     * @param Forum $forum
+     * @param Forum   $forum
+     * @param Request $request
      *
      * @return Response
      */
-    public function forumAction(Forum $forum) {
+    public function forumAction(Forum $forum, Request $request) {
+        $sortBy = $this->getSortBy($request);
+
         $submissions = $this->getDoctrine()->getRepository(Submission::class)
-            ->findBy(['forum' => $forum], ['id' => 'DESC'], 20);
+            ->findSortedQb($sortBy)
+            ->andWhere('s.forum = :forum')
+            ->setParameter('forum', $forum)
+            ->getQuery()
+            ->execute();
 
         return $this->render('@RadditApp/forum.html.twig', [
             'forum' => $forum,
+            'sort_by' => $sortBy,
             'submissions' => $submissions,
         ]);
     }
@@ -123,5 +140,20 @@ final class SubmissionController extends Controller {
             'forum' => $forum,
             'submission_type' => $submission->getSubmissionType(),
         ]);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return mixed|string
+     */
+    private function getSortBy(Request $request) {
+        $sortBy = $request->query->get('sort');
+
+        if (!in_array($sortBy, SubmissionRepository::SORT_TYPES)) {
+            return 'hot';
+        }
+
+        return $sortBy;
     }
 }
