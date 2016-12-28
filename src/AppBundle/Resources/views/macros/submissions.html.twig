@@ -7,6 +7,22 @@
   {{- block('submission') -}}
 {%- endmacro -%}
 
+{%- macro submission_sort(current) -%}
+  {%- spaceless -%}
+  <nav class="submission-sort">
+    <ul>
+      {%- for type in constant('Raddit\\AppBundle\\Repository\\SubmissionRepository::SORT_TYPES') -%}
+        <li>
+          <a href="?sort={{ type }}" class="{% if type == current %}active{% endif %}">
+            {{- ('submissions.sort_by_'~type)|trans -}}
+          </a>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </nav>
+  {%- endspaceless -%}
+{%- endmacro -%}
+
 {%- block submission_info_submitter -%}
   <a href="{{ path('raddit_app_user', {username: submission.user.username}) }}" class="submission-submitter">
     {{- submission.user.username -}}

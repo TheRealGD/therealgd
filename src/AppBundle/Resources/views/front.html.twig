@@ -1,11 +1,13 @@
 {% extends '@RadditApp/base.html.twig' %}
-{% from '@RadditApp/macros/submissions.html.twig' import submission %}
+{% from '@RadditApp/macros/submissions.html.twig' import submission, submission_sort %}
 
 {% block page_classes %}
   front-page
 {% endblock %}
 
 {% block body %}
+  {{ submission_sort(sort_by) }}
+
   {% for submission in submissions %}
     {{ submission(submission) }}
   {% endfor %}
