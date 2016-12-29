@@ -1,6 +1,8 @@
+{% form_theme form '@RadditApp/forms/standard-form-theme.html.twig' %}
+
 {{ form_start(form, {attr: {class: 'comment-form'}}) }}
   <div class="comment-row">
-    {{ form_row(form.comment) }}
+    {{ form_row(form.comment, {attr: {rows: 8}}) }}
   </div>
 
   {{ form_row(form.submit) }}

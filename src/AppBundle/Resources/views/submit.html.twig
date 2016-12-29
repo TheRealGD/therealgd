@@ -1,5 +1,7 @@
 {% extends '@RadditApp/forum-base.html.twig' %}
 
+{% form_theme form '@RadditApp/forms/standard-form-theme.html.twig' %}
+
 {% block page_classes %}
   submit-page
   {{ submission_type }}
@@ -7,5 +9,10 @@
 
 {% block body %}
   {{ form_start(form) }}
+    {{ form_row(form.title, {attr: {rows: 4}}) }}
+
+    {% if form.body is defined %}
+      {{ form_row(form.body, {attr: {rows: 16}}) }}
+    {% endif %}
   {{ form_end(form) }}
 {% endblock %}

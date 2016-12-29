@@ -4,6 +4,7 @@
 
 * Make use of Doctrine migrations.
 * Add missing 'create forum' link in the menu on the front page.
+* Add a form theme and CSS so all forms look OK.
 
 ## v0.1.1 (2016-12-29)
 
