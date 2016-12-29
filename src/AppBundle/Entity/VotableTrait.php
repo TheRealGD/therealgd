@@ -55,4 +55,25 @@ trait VotableTrait {
 
         return $this->getVotes()->matching($criteria)->first();
     }
+
+    /**
+     * @param VotableInterface $a
+     * @param VotableInterface $b
+     *
+     * @return int
+     */
+    public function descendingNetScoreCmp(VotableInterface $a, VotableInterface $b) {
+        $as = $a->getNetScore();
+        $bs = $b->getNetScore();
+
+        if ($bs > $as) {
+            return 1;
+        }
+
+        if ($as > $bs) {
+            return -1;
+        }
+
+        return 0;
+    }
 }

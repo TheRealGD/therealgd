@@ -214,10 +214,20 @@ class Comment implements BodyInterface, VotableInterface {
     }
 
     /**
-     * @return Comment[]|Collection
+     * Get replies, ordered by descending net score.
+     *
+     * Note: This method returns an actual array and not a {@link Collection}.
+     *
+     * @return Comment[]
      */
     public function getChildren() {
-        return $this->children;
+        $children = $this->children->toArray();
+
+        if ($children) {
+            usort($children, [$this, 'descendingNetScoreCmp']);
+        }
+
+        return $children;
     }
 
     /**

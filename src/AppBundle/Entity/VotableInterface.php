@@ -42,4 +42,12 @@ interface VotableInterface {
      * @return Vote
      */
     public function createVote();
+
+    /**
+     * @param VotableInterface $a
+     * @param VotableInterface $b
+     *
+     * @return int
+     */
+    public function descendingNetScoreCmp(self $a, self $b);
 }

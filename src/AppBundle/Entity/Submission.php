@@ -153,13 +153,23 @@ abstract class Submission implements VotableInterface {
     }
 
     /**
-     * @return Collection|Comment[]
+     * Get top-level comments, ordered by descending net score.
+     *
+     * Note: This method returns an actual array and not a {@link Collection}.
+     *
+     * @return Comment[]
      */
     public function getTopLevelComments() {
         $criteria = Criteria::create();
         $criteria->where(Criteria::expr()->isNull('parent'));
 
-        return $this->comments->matching($criteria);
+        $comments = $this->comments->matching($criteria)->toArray();
+
+        if ($comments) {
+            usort($comments, [$this, 'descendingNetScoreCmp']);
+        }
+
+        return $comments;
     }
 
     /**

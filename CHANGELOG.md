@@ -2,7 +2,7 @@
 
 ## v0.2.0 (201x-xx-xx)
 
-* (Not released yet)
+* Sort comments by descending net score (breaks BC).
 
 ## v0.1.1 (2016-12-29)
 
