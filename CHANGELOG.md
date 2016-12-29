@@ -3,6 +3,7 @@
 ## v0.1.2 (201x-xx-xx)
 
 * Make use of Doctrine migrations.
+* Add missing 'create forum' link in the menu on the front page.
 
 ## v0.1.1 (2016-12-29)
 

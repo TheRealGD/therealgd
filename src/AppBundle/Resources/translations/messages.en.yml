@@ -14,6 +14,7 @@ comment_form:
 
 create_forum:
     create_new_forum: Create new forum
+    nav_link: Create forum
 
 forum:
     moderators: Moderators
