@@ -2,8 +2,8 @@
 
 namespace Raddit\AppBundle\Form\EventListener;
 
-use League\CommonMark\CommonMarkConverter;
 use Raddit\AppBundle\Entity\BodyInterface;
+use Raddit\AppBundle\Utils\MarkdownConverter;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -23,12 +23,8 @@ final class MarkdownSubscriber implements EventSubscriberInterface {
             return;
         }
 
-        $converter = new CommonMarkConverter([
-            'allow_unsafe_links' => false,
-            'html_input' => 'escape',
-        ]);
+        $html = MarkdownConverter::convert($entity->getRawBody());
 
-        $html = $converter->convertToHtml($entity->getRawBody());
         $entity->setBody($html);
     }
 
