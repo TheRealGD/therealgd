@@ -1,5 +1,9 @@
 # Change Log
 
+## v0.1.2 (201x-xx-xx)
+
+* Make use of Doctrine migrations.
+
 ## v0.1.1 (2016-12-29)
 
 * Added the ability for the user to choose how to sort submission listings.
