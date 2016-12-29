@@ -11,7 +11,7 @@
       <button type="submit" name="choice" value="{{ block('vote_choice_up') }}"
               class="vote-button vote-up" title="{{ block('vote_up_label') }}">
         {#- http://mts.io/2015/04/21/unicode-symbol-render-text-emoji/ -#}
-        <span class="inner">&#x2B06;&#xFE0E;</span>
+        <span class="inner" aria-hidden="true">&#x2B06;&#xFE0E;</span>
       </button>
 
       <span class="vote-score" data-score="{{ entity.netScore }}">
@@ -20,7 +20,7 @@
 
       <button type="submit" name="choice" value="{{ block('vote_choice_down') }}"
               class="vote-button vote-down" title="{{ block('vote_down_label') }}">
-        <span class="inner">&#x2B07;&#xFE0E;</span>
+        <span class="inner" aria-hidden="true">&#x2B07;&#xFE0E;</span>
       </button>
     </form>
   {%- endspaceless -%}
