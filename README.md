@@ -27,7 +27,7 @@ arise, a bug report would be most appreciated.
    run `composer install` to try again.
 3. Run `bin/symfony_requirements` to check that your environment meets the
    requirements needed to run the software. Fix any errors that arise.
-4. Run `bin/console doctrine:schema:create` to load the database schema.
+4. Run `bin/console doctrine:migrations:migrate` to load the database schema.
 5. Run `bin/console doctrine:fixtures:load` to load example data to play around
    with.
 6. Run `bin/console server:run` to start the application.

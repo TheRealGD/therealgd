@@ -69,3 +69,8 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+doctrine_migrations:
+    dir_name: "%kernel.root_dir%/../src/AppBundle/DoctrineMigrations"
+    namespace: Raddit\AppBundle\DoctrineMigrations
+    name: Raddit migrations

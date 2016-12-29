@@ -204,24 +204,54 @@ a:hover {
   }
 }
 
-.comment-form {
+/**
+ * 1. Hide label in comment form.
+ */
+.comment-form .comment-row label {
+  display: none; /* 1 */
+}
+
+
+//
+// Standard, vertical, non-weird forms
+//
+
+/**
+ * 1. Keep label from being larger than its inner text.
+ * 2. Give text inputs a width of 100%.
+ */
+.form {
   max-width: 40em;
 
-  div {
+  .row {
     margin: 1em 0;
   }
 
-  .comment-row {
-    label {
-      display: none;
-    }
+  label {
+    display: table; /* 1 */
+  }
 
-    textarea {
-      box-sizing: border-box;
-      display: block;
-      width: 100%;
-      height: 8em;
-    }
+  button,
+  input,
+  select,
+  textarea {
+    box-sizing: border-box;
+    display: block;
+  }
+
+  // TODO - this list is incomplete
+  input:not([type]),
+  input[type="text"],
+  input[type="password"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="number"],
+  input[type="search"],
+  input[type="datetime"],
+  input[type="datetime-local"],
+  input[type="url"],
+  textarea {
+    width: 100%; /* 2 */
   }
 }
 
