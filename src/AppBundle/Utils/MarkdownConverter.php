@@ -41,6 +41,8 @@ final class MarkdownConverter {
             'AutoFormat.Linkify' => true,
             // Disable cache
             'Cache.DefinitionImpl' => null,
+            // Add rel="nofollow" to outgoing links.
+            'HTML.Nofollow' => true,
             // Add target="_blank" to outgoing links.
             'HTML.TargetBlank' => true,
             // Disable embedding of external resources like images.
