@@ -7,13 +7,10 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Raddit\AppBundle\Entity\User;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 class LoadExampleUsers implements FixtureInterface, OrderedFixtureInterface, ContainerAwareInterface {
-    /**
-     * @var ContainerInterface
-     */
-    private $container;
+    use ContainerAwareTrait;
 
     /**
      * {@inheritdoc}
@@ -34,12 +31,5 @@ class LoadExampleUsers implements FixtureInterface, OrderedFixtureInterface, Con
      */
     public function getOrder() {
         return 0;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setContainer(ContainerInterface $container = null) {
-        $this->container = $container;
     }
 }
