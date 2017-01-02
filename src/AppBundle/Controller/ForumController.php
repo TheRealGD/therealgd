@@ -39,7 +39,7 @@ final class ForumController extends Controller {
             $em->flush();
 
             return $this->redirectToRoute('raddit_app_forum', [
-                'name' => $forum->getName(),
+                'forum_name' => $forum->getName(),
             ]);
         }
 

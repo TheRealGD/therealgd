@@ -12,6 +12,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @ParamConverter("forum", options={"mapping": {"forum_name": "name"}})
+ * @ParamConverter("submission", options={"mapping": {"forum": "forum", "submission_id": "id"}})
+ * @ParamConverter("comment", options={"mapping": {"submission": "submission", "comment_id": "id"}})
+ */
 final class CommentController extends Controller {
     /**
      * Render the comment form only (no layout).
@@ -45,14 +50,6 @@ final class CommentController extends Controller {
      * Submit a comment. This is intended for users without JS enabled.
      *
      * @Security("is_granted('ROLE_USER')")
-     *
-     * @ParamConverter("forum", options={"mapping": {"forum_name": "name"}})
-     * @ParamConverter("submission", options={
-     *     "mapping": {"forum": "forum", "submission_id": "id"}
-     * })
-     * @ParamConverter("comment", options={
-     *     "mapping": {"submission": "submission", "comment_id": "id"}
-     * })
      *
      * @param Forum        $forum
      * @param Submission   $submission

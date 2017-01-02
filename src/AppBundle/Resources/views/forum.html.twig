@@ -5,7 +5,7 @@
 {% block title %}{{ forum.title }}{% endblock %}
 
 {% block head %}
-  <link rel="canonical" href="{{ url('raddit_app_forum', {name: forum.name}) }}">
+  <link rel="canonical" href="{{ url('raddit_app_forum', {forum_name: forum.name}) }}">
 
   {% if forum.description %}
     <meta name="description" content="{{ forum.description }}">

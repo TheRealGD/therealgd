@@ -36,7 +36,7 @@
 {%- endblock -%}
 
 {%- block submission_info_forum_name -%}
-  <a href="{{ path('raddit_app_forum', {'name': submission.forum.name}) }}" class="submission-forum">
+  <a href="{{ path('raddit_app_forum', {forum_name: submission.forum.name}) }}" class="submission-forum">
     {{- submission.forum.name -}}
   </a>
 {%- endblock -%}

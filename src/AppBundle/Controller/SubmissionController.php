@@ -12,6 +12,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @ParamConverter("forum", options={"mapping": {"forum_name": "name"}})
+ * @ParamConverter("submission", options={"mapping": {"forum": "forum", "submission_id": "id"}})
+ * @ParamConverter("comment", options={"mapping": {"submission": "submission", "comment_id": "id"}})
+ */
 final class SubmissionController extends Controller {
     /**
      * View submissions on the front page.
@@ -63,9 +68,6 @@ final class SubmissionController extends Controller {
     /**
      * Show a submission's comment page.
      *
-     * @ParamConverter("forum", options={"mapping": {"forum_name": "name"}})
-     * @ParamConverter("submission", options={"mapping": {"forum": "forum", "submission_id": "id"}})
-     *
      * @param Forum      $forum
      * @param Submission $submission
      *
@@ -80,10 +82,6 @@ final class SubmissionController extends Controller {
 
     /**
      * Show a single comment and its replies.
-     *
-     * @ParamConverter("forum", options={"mapping": {"forum_name": "name"}})
-     * @ParamConverter("submission", options={"mapping": {"forum": "forum", "submission_id": "id"}})
-     * @ParamConverter("comment", options={"mapping": {"submission": "submission", "comment_id": "id"}})
      *
      * @param Forum      $forum
      * @param Submission $submission

@@ -30,7 +30,7 @@
       <ul>
         {% for token in user.moderatorTokens %}
           <li>
-            <a href="{{ path('raddit_app_forum', {name: token.forum.name}) }}">
+            <a href="{{ path('raddit_app_forum', {forum_name: token.forum.name}) }}">
               {{- token.forum.name -}}
             </a>
           </li>
