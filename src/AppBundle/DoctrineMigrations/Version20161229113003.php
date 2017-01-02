@@ -60,7 +60,6 @@ class Version20161229113003 extends AbstractMigration {
     public function down(Schema $schema) {
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'postgresql', 'Migration can only be executed safely on \'postgresql\'.');
 
-        $this->addSql('CREATE SCHEMA public');
         $this->addSql('ALTER TABLE comments DROP CONSTRAINT FK_5F9E962A727ACA70');
         $this->addSql('ALTER TABLE comment_votes DROP CONSTRAINT FK_F811E23EF8697D13');
         $this->addSql('ALTER TABLE moderators DROP CONSTRAINT FK_580D16D329CCBAD0');
