@@ -3,6 +3,10 @@
 ## v0.2.0 (201x-xx-xx)
 
 * Sort comments by descending net score (breaks BC).
+* Canonical forum names (forums with duplicate lower-case names are renamed).
+* Canonical usernames and user emails (**users with duplicate lower-case
+  usernames are renamed and must reset their passwords, which of course is not
+  implemented**).
 
 ## v0.1.2 (2017-01-02)
 

@@ -3,6 +3,7 @@
 namespace Raddit\AppBundle\Form;
 
 use Raddit\AppBundle\Entity\User;
+use Raddit\AppBundle\Form\EventListener\CanonicalizationSubscriber;
 use Raddit\AppBundle\Form\EventListener\PasswordEncodingSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -41,6 +42,7 @@ final class RegistrationType extends AbstractType {
             ->add('submit', SubmitType::class);
 
         $builder->addEventSubscriber(new PasswordEncodingSubscriber($this->encoder));
+        $builder->addEventSubscriber(new CanonicalizationSubscriber());
     }
 
     /**
