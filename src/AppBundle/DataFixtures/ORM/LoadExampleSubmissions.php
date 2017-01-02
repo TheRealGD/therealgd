@@ -9,28 +9,25 @@ use Raddit\AppBundle\Entity\Forum;
 use Raddit\AppBundle\Entity\Post;
 use Raddit\AppBundle\Entity\Url;
 use Raddit\AppBundle\Entity\User;
+use Raddit\AppBundle\Utils\MarkdownConverter;
 
 class LoadExampleSubmissions implements FixtureInterface, OrderedFixtureInterface {
     /**
      * {@inheritdoc}
      */
     public function load(ObjectManager $manager) {
-        $user = $manager->getRepository(User::class)->findOneByUsername('emma');
         $forum = $manager->getRepository(Forum::class)->findOneBy(['name' => 'liberalwithdulledge']);
+        $user = $manager->getRepository(User::class)->findOneByUsername('emma');
 
-        $url = new Url();
+        $url = Url::create($forum, $user);
         $url->setTitle('This is a submitted URL');
         $url->setUrl('http://www.example.com');
-        $url->setUser($user);
-        $url->setForum($forum);
         $manager->persist($url);
 
-        $post = new Post();
+        $post = Post::create($forum, $user);
         $post->setTitle('This is a test submission');
-        $post->setBody('<p>Hi</p>');
         $post->setRawBody('Hi');
-        $post->setUser($user);
-        $post->setForum($forum);
+        $post->setBody(MarkdownConverter::convert($post->getRawBody()));
         $manager->persist($post);
 
         $manager->flush();

@@ -4,11 +4,13 @@
 
 * Sort comments by descending net score (breaks BC).
 
-## v0.1.2 (201x-xx-xx)
+## v0.1.2 (2017-01-02)
 
 * Make use of Doctrine migrations.
 * Add missing 'create forum' link in the menu on the front page.
 * Add a form theme and CSS so all forms look OK.
+* Have `rel="nofollow` added to link elements in user-submitted Markdown.
+* Update fixtures to have the author upvote their contributions.
 
 ## v0.1.1 (2016-12-29)
 
