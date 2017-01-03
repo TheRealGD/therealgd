@@ -85,6 +85,13 @@ class Comment implements BodyInterface, VotableInterface {
     private $votes;
 
     /**
+     * @ORM\Column(type="boolean")
+     *
+     * @var bool
+     */
+    private $softDeleted = false;
+
+    /**
      * Creates a new comment with an implicit upvote from the comment author.
      *
      * @param Submission   $submission
@@ -259,5 +266,28 @@ class Comment implements BodyInterface, VotableInterface {
         $vote->setComment($this);
 
         return $vote;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSoftDeleted() {
+        return $this->softDeleted;
+    }
+
+    /**
+     * @param bool $softDeleted
+     */
+    public function setSoftDeleted($softDeleted) {
+        $this->softDeleted = $softDeleted;
+    }
+
+    /**
+     * Delete a comment without deleting its replies.
+     */
+    public function softDelete() {
+        $this->softDeleted = true;
+        $this->body = '';
+        $this->rawBody = '';
     }
 }

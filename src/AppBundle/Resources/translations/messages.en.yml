@@ -1,4 +1,5 @@
 comments:
+    author_deleted: '[deleted]'
     comments: Comments
     permalink: Permalink
     parent: Parent

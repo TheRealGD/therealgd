@@ -25,7 +25,7 @@
 
 {%- block comment -%}
   {%- from '@RadditApp/macros/votes.html.twig' import vote -%}
-  <article class="comment {{ level|default(0) ? 'comment-level-'~level : 'comment-top-level' }}">
+  <article class="comment {{ level|default(0) ? 'comment-level-'~level : 'comment-top-level' }} {{ comment.softDeleted ? 'comment-soft-deleted' }}">
     <div class="comment-inner">
       {{ vote(comment, path('raddit_app_comment_vote', {id: comment.id})) }}
 
@@ -71,9 +71,13 @@
 {%- endblock -%}
 
 {%- block comment_info_user -%}
-  <a href="{{ path('raddit_app_user', {username: comment.user.username}) }}" class="comment-user">
-    {{- comment.user.username -}}
-  </a>
+  {%- if not comment.softDeleted -%}
+    <a href="{{ path('raddit_app_user', {username: comment.user.username}) }}" class="comment-user">
+      {{- comment.user.username -}}
+    </a>
+  {%- else -%}
+    {{- 'comments.author_deleted'|trans -}}
+  {%- endif -%}
 {%- endblock -%}
 
 {%- block comment_info_timestamp -%}
