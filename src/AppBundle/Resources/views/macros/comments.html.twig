@@ -106,25 +106,34 @@
 {# Forms are used here because we need to support JS-less browsing and because
  # GET requests should never mutate the state of the application. #}
 {%- block comment_nav_delete -%}
-  {%- spaceless -%}
-    {%- if comment.children|length > 0 and is_granted('delete_thread', comment) and is_granted('softdelete', comment) -%}
-      <li class="comment-nav-softdelete">
-        <form action="{{ path('raddit_app_softdelete_comment', {id: comment.id}) }}" method="POST">
-          <input type="hidden" name="token" value="{{ csrf_token('softdelete_comment') }}">
-          <button type="submit">{{ 'comments.delete'|trans }}</button>
-        </form>
-      </li>
-    {%- endif -%}
+  {%- if comment.children|length > 0 and is_granted('delete_thread', comment) -%}
+    {%- set delete_thread_label = 'comments.delete_thread' -%}
+    {{- block('comment_nav_delete_thread') -}}
+    {{- block('comment_nav_delete_softdelete') -}}
+  {%- elseif is_granted('delete', comment) -%}
+    {%- set delete_thread_label = 'comments.delete' -%}
+    {{- block('comment_nav_delete_thread') -}}
+  {%- endif -%}
+{%- endblock -%}
 
-    {%- if is_granted('delete_thread', comment) -%}
-      <li class="comment-nav-delete{{ comment.children|length > 0 ? '-thread' }}">
-        <form action="{{ path('raddit_app_delete_comment', {id: comment.id}) }}" method="POST">
-          <input type="hidden" name="token" value="{{ csrf_token('delete_comment') }}">
-          <button type="submit">
-            {{- (comment.children|length > 0 ? 'comments.delete_thread' : 'comments.delete')|trans -}}
-          </button>
-        </form>
-      </li>
-    {%- endif -%}
+{%- block comment_nav_delete_softdelete -%}
+  {%- spaceless -%}
+    <li class="comment-nav-softdelete">
+      <form action="{{ path('raddit_app_softdelete_comment', {id: comment.id}) }}" method="POST">
+        <input type="hidden" name="token" value="{{ csrf_token('softdelete_comment') }}">
+        <button type="submit">{{ 'comments.delete'|trans }}</button>
+      </form>
+    </li>
+  {%- endspaceless -%}
+{%- endblock -%}
+
+{%- block comment_nav_delete_thread -%}
+  {%- spaceless -%}
+    <li class="comment-nav-delete-thread">
+      <form action="{{ path('raddit_app_delete_comment', {id: comment.id}) }}" method="POST">
+        <input type="hidden" name="token" value="{{ csrf_token('delete_comment') }}">
+        <button type="submit">{{ delete_thread_label|trans }}</button>
+      </form>
+    </li>
   {%- endspaceless -%}
 {%- endblock -%}
