@@ -15,6 +15,12 @@ services:
         tags:
             - { name: doctrine.event_subscriber }
 
+    raddit_app.security.voter.comment_voter:
+        class: Raddit\AppBundle\Security\Voter\CommentVoter
+        arguments: ["@security.access.decision_manager"]
+        tags:
+            - { name: security.voter }
+
     raddit_app.twig.app_extension:
         class: Raddit\AppBundle\Twig\AppExtension
         calls:

@@ -1,6 +1,8 @@
 comments:
     author_deleted: '[deleted]'
     comments: Comments
+    delete: Delete
+    delete_thread: Delete with replies
     permalink: Permalink
     parent: Parent
     info: '%user% wrote %timestamp%:'

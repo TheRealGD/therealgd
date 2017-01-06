@@ -38,24 +38,9 @@
         {{ comment.body|raw }}
       </div>
 
-      {% spaceless %}
-        <nav class="comment-nav">
-          <ul>
-            <li><a href="{{ path('raddit_app_comment', {
-                forum_name: comment.submission.forum.name,
-                submission_id: comment.submission.id,
-                comment_id: comment.id
-              }) }}">{{ 'comments.permalink'|trans }}</a></li>
-            {% if comment.parent %}
-              <li><a href="{{ path('raddit_app_comment', {
-                  forum_name: comment.parent.submission.forum.name,
-                  submission_id: comment.parent.submission.id,
-                  comment_id: comment.parent.id,
-                }) }}">{{ 'comments.parent'|trans }}</a></li>
-            {% endif %}
-          </ul>
-        </nav>
-      {% endspaceless %}
+      <nav class="comment-nav">
+        <ul>{{ block('comment_nav') }}</ul>
+      </nav>
     </div>
 
     {% if recurse ?? true and comment.children|length > 0 %}
@@ -84,4 +69,49 @@
   <time datetime="{{ comment.timestamp|date('c') }}" title="{{ comment.timestamp|date }}" class="comment-timestamp relative-time">
     {{- 'comments.info_at_timestamp'|trans({'%timestamp%': comment.timestamp|date}) -}}
   </time>
+{%- endblock -%}
+
+{%- block comment_nav -%}
+  {%- spaceless -%}
+    <li>
+      <a href="{{ path('raddit_app_comment', {
+        forum_name: comment.submission.forum.name,
+        submission_id: comment.submission.id,
+        comment_id: comment.id
+      }) }}">{{ 'comments.permalink'|trans }}</a>
+    </li>
+
+    {%- if comment.parent -%}
+      <li>
+        <a href="{{ path('raddit_app_comment', {
+          forum_name: comment.parent.submission.forum.name,
+          submission_id: comment.parent.submission.id,
+          comment_id: comment.parent.id,
+        }) }}">{{ 'comments.parent'|trans }}</a>
+      </li>
+    {%- endif -%}
+
+    {%- if comment.children|length > 0 and is_granted('delete_thread', comment) -%}
+      <li>
+        <a href="{{ path('raddit_app_softdelete_comment', {
+          id: comment.id,
+          token: csrf_token('softdelete_comment')
+        }) }}">{{- 'comments.delete'|trans -}}</a>
+      </li>
+
+      <li>
+        <a href="{{ path('raddit_app_delete_comment', {
+          id: comment.id,
+          token: csrf_token('delete_comment'),
+        }) }}">{{- 'comments.delete_thread'|trans -}}</a>
+      </li>
+    {%- elseif is_granted('delete', comment) -%}
+      <li>
+        <a href="{{ path('raddit_app_delete_comment', {
+          id: comment.id,
+          token: csrf_token('delete_comment')
+        }) }}">{{- 'comments.delete'|trans -}}</a>
+      </li>
+    {%- endif -%}
+  {% endspaceless %}
 {%- endblock -%}

@@ -71,21 +71,21 @@ class Comment implements BodyInterface, VotableInterface {
     private $parent;
 
     /**
-     * @ORM\OneToMany(targetEntity="Comment", mappedBy="parent")
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="parent", cascade={"remove"})
      *
      * @var Comment[]|Collection
      */
     private $children;
 
     /**
-     * @ORM\OneToMany(targetEntity="CommentVote", mappedBy="comment", fetch="EAGER", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="CommentVote", mappedBy="comment", fetch="EAGER", cascade={"persist", "remove"})
      *
      * @var CommentVote[]|Collection
      */
     private $votes;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", options={"default": false})
      *
      * @var bool
      */

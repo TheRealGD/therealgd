@@ -4,6 +4,7 @@ namespace Raddit\AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 use Raddit\AppBundle\Utils\CanonicalizableInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -254,5 +255,19 @@ class User implements UserInterface, CanonicalizableInterface {
             'username' => 'canonicalUsername',
             'email' => 'canonicalEmail',
         ];
+    }
+
+    /**
+     * Check if a user is a moderator on the given forum.
+     *
+     * @param Forum $forum
+     *
+     * @return bool
+     */
+    public function isModeratorOfForum(Forum $forum) {
+        $criteria = Criteria::create();
+        $criteria->where(Criteria::expr()->eq('forum', $forum));
+
+        return count($this->moderatorTokens->matching($criteria)) > 0;
     }
 }

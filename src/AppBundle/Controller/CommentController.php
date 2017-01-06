@@ -89,4 +89,77 @@ final class CommentController extends Controller {
             'comment' => $comment,
         ]);
     }
+
+    /**
+     * Delete a comment.
+     *
+     * @ParamConverter("comment", options={"mapping": {"id": "id"}})
+     * @Security("is_granted('delete', comment)")
+     *
+     * @param Comment $comment
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function deleteCommentAction(Comment $comment, Request $request) {
+        if (!$this->isCsrfTokenValid('delete_comment', $request->query->get('token'))) {
+            throw $this->createAccessDeniedException('Bad CSRF token');
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        if ($this->isGranted('delete_thread', $comment)) {
+            $em->refresh($comment);
+            $em->remove($comment);
+        } elseif ($this->isGranted('softdelete', $comment)) {
+            $comment->softDelete();
+        } else {
+            throw new \RuntimeException("This shouldn't happen");
+        }
+
+        $em->flush();
+
+        return $this->redirectAfterAction($comment, $request);
+    }
+
+    /**
+     * "Soft deletes" a comment by blanking its body.
+     *
+     * @ParamConverter("comment", options={"mapping": {"id": "id"}})
+     * @Security("is_granted('softdelete', comment)")
+     *
+     * @param Comment $comment
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function softDeleteCommentAction(Comment $comment, Request $request) {
+        if (!$this->isCsrfTokenValid('softdelete_comment', $request->query->get('token'))) {
+            throw $this->createAccessDeniedException('Bad CSRF token');
+        }
+
+        $comment->softDelete();
+
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
+
+        return $this->redirectAfterAction($comment, $request);
+    }
+
+    /**
+     * @param Comment $comment
+     * @param Request $request
+     *
+     * @return Response
+     */
+    private function redirectAfterAction(Comment $comment, Request $request) {
+        if ($request->headers->has('Referer')) {
+            return $this->redirect($request->headers->get('Referer'));
+        }
+
+        return $this->redirectToRoute('raddit_app_comments', [
+            'forum_name' => $comment->getSubmission()->getForum()->getName(),
+            'submission_id' => $comment->getSubmission()->getId(),
+        ]);
+    }
 }
