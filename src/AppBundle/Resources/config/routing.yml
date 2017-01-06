@@ -45,12 +45,12 @@ raddit_app_submission_vote:
 raddit_app_delete_comment:
     defaults: { _controller: RadditAppBundle:Comment:deleteComment }
     path: /dc/{id}
-    methods: [GET]
+    methods: [POST]
 
 raddit_app_softdelete_comment:
     defaults: { _controller: RadditAppBundle:Comment:softDeleteComment }
     path: /sdc/{id}
-    methods: [GET]
+    methods: [POST]
 
 raddit_app_login_check:
     path: /login_check

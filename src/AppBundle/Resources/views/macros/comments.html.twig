@@ -72,46 +72,59 @@
 {%- endblock -%}
 
 {%- block comment_nav -%}
+  {{- block('comment_nav_permalink') -}}
+  {{- block('comment_nav_parent') -}}
+  {{- block('comment_nav_delete') -}}
+{%- endblock -%}
+
+{%- block comment_nav_permalink -%}
   {%- spaceless -%}
-    <li>
+    <li class="comment-nav-permalink">
       <a href="{{ path('raddit_app_comment', {
         forum_name: comment.submission.forum.name,
         submission_id: comment.submission.id,
         comment_id: comment.id
       }) }}">{{ 'comments.permalink'|trans }}</a>
     </li>
+  {%- endspaceless -%}
+{%- endblock -%}
 
+{%- block comment_nav_parent -%}
+  {%- spaceless -%}
     {%- if comment.parent -%}
-      <li>
+      <li class="comment-nav-parent">
         <a href="{{ path('raddit_app_comment', {
-          forum_name: comment.parent.submission.forum.name,
-          submission_id: comment.parent.submission.id,
-          comment_id: comment.parent.id,
+          forum_name: comment.submission.forum.name,
+          submission_id: comment.submission.id,
+          comment_id: comment.parent.id
         }) }}">{{ 'comments.parent'|trans }}</a>
       </li>
     {%- endif -%}
+  {%- endspaceless -%}
+{%- endblock -%}
 
-    {%- if comment.children|length > 0 and is_granted('delete_thread', comment) -%}
-      <li>
-        <a href="{{ path('raddit_app_softdelete_comment', {
-          id: comment.id,
-          token: csrf_token('softdelete_comment')
-        }) }}">{{- 'comments.delete'|trans -}}</a>
-      </li>
-
-      <li>
-        <a href="{{ path('raddit_app_delete_comment', {
-          id: comment.id,
-          token: csrf_token('delete_comment'),
-        }) }}">{{- 'comments.delete_thread'|trans -}}</a>
-      </li>
-    {%- elseif is_granted('delete', comment) -%}
-      <li>
-        <a href="{{ path('raddit_app_delete_comment', {
-          id: comment.id,
-          token: csrf_token('delete_comment')
-        }) }}">{{- 'comments.delete'|trans -}}</a>
+{# Forms are used here because we need to support JS-less browsing and because
+ # GET requests should never mutate the state of the application. #}
+{%- block comment_nav_delete -%}
+  {%- spaceless -%}
+    {%- if comment.children|length > 0 and is_granted('delete_thread', comment) and is_granted('softdelete', comment) -%}
+      <li class="comment-nav-softdelete">
+        <form action="{{ path('raddit_app_softdelete_comment', {id: comment.id}) }}" method="POST">
+          <input type="hidden" name="token" value="{{ csrf_token('softdelete_comment') }}">
+          <button type="submit">{{ 'comments.delete'|trans }}</button>
+        </form>
       </li>
     {%- endif -%}
-  {% endspaceless %}
+
+    {%- if is_granted('delete_thread', comment) -%}
+      <li class="comment-nav-delete{{ comment.children|length > 0 ? '-thread' }}">
+        <form action="{{ path('raddit_app_delete_comment', {id: comment.id}) }}" method="POST">
+          <input type="hidden" name="token" value="{{ csrf_token('delete_comment') }}">
+          <button type="submit">
+            {{- (comment.children|length > 0 ? 'comments.delete_thread' : 'comments.delete')|trans -}}
+          </button>
+        </form>
+      </li>
+    {%- endif -%}
+  {%- endspaceless -%}
 {%- endblock -%}

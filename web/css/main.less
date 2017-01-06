@@ -289,15 +289,30 @@ a:hover {
 
 /**
  * Make certain things boring and grey.
+ *
+ * This should be applied to paragraphs or navs only, never entire containers.
  */
 .meta() {
   color: @meta-color;
   .font-size(0.85em);
   margin: 0.075rem;
 
-  a {
+  form {
+    display: inline;
+  }
+
+  a, button {
     color: inherit;
+    cursor: pointer;
     font-weight: bold;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  button {
+    .unbuttonize();
   }
 }
 

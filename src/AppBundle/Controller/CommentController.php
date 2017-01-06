@@ -102,7 +102,7 @@ final class CommentController extends Controller {
      * @return Response
      */
     public function deleteCommentAction(Comment $comment, Request $request) {
-        if (!$this->isCsrfTokenValid('delete_comment', $request->query->get('token'))) {
+        if (!$this->isCsrfTokenValid('delete_comment', $request->request->get('token'))) {
             throw $this->createAccessDeniedException('Bad CSRF token');
         }
 
@@ -134,7 +134,7 @@ final class CommentController extends Controller {
      * @return Response
      */
     public function softDeleteCommentAction(Comment $comment, Request $request) {
-        if (!$this->isCsrfTokenValid('softdelete_comment', $request->query->get('token'))) {
+        if (!$this->isCsrfTokenValid('softdelete_comment', $request->request->get('token'))) {
             throw $this->createAccessDeniedException('Bad CSRF token');
         }
 
