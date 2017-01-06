@@ -1,12 +1,18 @@
 # Change Log
 
-## v0.2.0 (201x-xx-xx)
+## v0.2.0 (2017-01-06)
 
-* Sort comments by descending net score (breaks BC).
-* Canonical forum names (forums with duplicate lower-case names are renamed).
-* Canonical usernames and user emails (**users with duplicate lower-case
-  usernames are renamed and must reset their passwords, which of course is not
-  implemented**).
+* Sort comments by descending net score.
+* Usernames and forum names must now be case-insensitively unique. Duplicates
+  are renamed upon running database migrations.
+* Ability to delete comments.
+    * Users can delete their own comments, but they will not disappear entirely
+      if they have replies. These partially deleted comments are to be called
+      *soft-deleted*, i.e. their entry remains in the database, but the comment
+      body is blanked out.
+    * Forum moderators and site administrators can delete comments in their
+      respective realms. If a comment has replies, they can choose to delete the
+      entire comment thread, or to merely soft-delete the original post.
 
 ## v0.1.2 (2017-01-02)
 
