@@ -25,7 +25,7 @@
 
 {%- block comment -%}
   {%- from '@RadditApp/macros/votes.html.twig' import vote -%}
-  <article class="comment {{ level|default(0) ? 'comment-level-'~level : 'comment-top-level' }} {{ comment.softDeleted ? 'comment-soft-deleted' }}">
+  <article class="comment comment-{{ level|default(0) ? 'level-'~level : 'top-level' }} {{ comment.softDeleted ? 'comment-soft-deleted' }}" id="comment_{{ comment.id }}">
     <div class="comment-row">
       <div class="comment-vote">
         {{ vote(comment, path('raddit_app_comment_vote', {id: comment.id})) }}

@@ -10,6 +10,7 @@
 @submission-link-color: #c00;
 @meta-color: slategrey;
 @sidebar-background-color: #efe;
+@comment-highlight-background: #fff0f0;
 
 html {
   background: @page-background-color;
@@ -179,7 +180,13 @@ a:hover {
 //
 
 .comment {
+  box-sizing: border-box;
   margin: 1em 0;
+
+  &:target > .comment-row {
+    background: @comment-highlight-background;
+    border: dotted 1px;
+  }
 }
 
 .comment-row {
