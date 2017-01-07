@@ -44,46 +44,52 @@
 {%- block submission -%}
   {%- from '@RadditApp/macros/votes.html.twig' import vote -%}
   <article class="submission submission-type-{{ submission.submissionType }}">
-    {{- vote(submission, path('raddit_app_submission_vote', {id: submission.id})) -}}
+    <div class="submission-row">
+      <div class="submission-vote">
+        {{- vote(submission, path('raddit_app_submission_vote', {id: submission.id})) -}}
+      </div>
 
-    {% spaceless %}
-      <h1 class="submission-title">
-        <a href="{{ block('submission_url') }}" class="submission-link">
-          {{- submission.title -}}
-        </a>
-      </h1>
-    {% endspaceless %}
-
-    <p class="submission-info">
-      {%- if options.show_forum_name -%}
-        {{ 'submissions.info_with_forum_name'|trans({
-          '%submitter%': block('submission_info_submitter'),
-          '%timestamp%': block('submission_info_timestamp'),
-          '%forum%': block('submission_info_forum_name'),
-        })|raw }}
-      {%- else -%}
-        {{ 'submissions.info_without_forum_name'|trans({
-          '%submitter%': block('submission_info_submitter'),
-          '%timestamp%': block('submission_info_timestamp'),
-        })|raw }}
-      {%- endif -%}
-    </p>
-
-    {%- if options.show_body -%}
-      <div class="submission-body">{{ block('submission_body') }}</div>
-    {%- endif -%}
-
-    {%- spaceless -%}
-      <nav class="submission-nav">
-        <ul>
-          <li>
-            <a href="{{ path('raddit_app_comments', {forum_name: submission.forum.name, submission_id: submission.id}) }}">
-              {{- 'submissions.comments'|transchoice(submission.comments|length) -}}
+      <div class="submission-inner">
+        {% spaceless %}
+          <h1 class="submission-title">
+            <a href="{{ block('submission_url') }}" class="submission-link">
+              {{- submission.title -}}
             </a>
-          </li>
-        </ul>
-      </nav>
-    {%- endspaceless -%}
+          </h1>
+        {% endspaceless %}
+
+        <p class="submission-info">
+          {%- if options.show_forum_name -%}
+            {{ 'submissions.info_with_forum_name'|trans({
+              '%submitter%': block('submission_info_submitter'),
+              '%timestamp%': block('submission_info_timestamp'),
+              '%forum%': block('submission_info_forum_name'),
+            })|raw }}
+          {%- else -%}
+            {{ 'submissions.info_without_forum_name'|trans({
+              '%submitter%': block('submission_info_submitter'),
+              '%timestamp%': block('submission_info_timestamp'),
+            })|raw }}
+          {%- endif -%}
+        </p>
+
+        {%- if options.show_body -%}
+          <div class="submission-body">{{ block('submission_body') }}</div>
+        {%- endif -%}
+
+        {%- spaceless -%}
+          <nav class="submission-nav">
+            <ul>
+              <li>
+                <a href="{{ path('raddit_app_comments', {forum_name: submission.forum.name, submission_id: submission.id}) }}">
+                  {{- 'submissions.comments'|transchoice(submission.comments|length) -}}
+                </a>
+              </li>
+            </ul>
+          </nav>
+        {%- endspaceless -%}
+      </div>
+    </div>
   </article>
 {% endblock %}
 

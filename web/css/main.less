@@ -93,15 +93,9 @@ a:hover {
 // Votes
 //
 
-/**
- * 1. The container of the .vote element must have display:table styling.
- */
 .vote {
-  display: table-cell; /* 1 */
-  padding: 0 1.5em;
+  padding: 0.5em 1.5em;
   text-align: center;
-  overflow: hidden;
-  width: 1px;
 }
 
 .vote * {
@@ -131,9 +125,11 @@ a:hover {
 //
 
 .submission {
-  display: table;
-  box-sizing: border-box;
   padding: 1em 0;
+}
+
+.submission-row {
+  .vote-flex;
 }
 
 .submission-title {
@@ -182,8 +178,16 @@ a:hover {
 // Comments
 //
 
-.comment-inner {
-  display: table;
+.comment {
+  margin: 1em 0;
+}
+
+.comment-row {
+  .vote-flex;
+}
+
+.comment-info {
+  margin-top: 0;
 }
 
 /**
@@ -337,4 +341,17 @@ a:hover {
   border: none;
   background: transparent;
   padding: 0;
+}
+
+.vote-flex() {
+  display: flex;
+  flex-flow: row nowrap;
+
+  & > :first-child {
+    flex: 0 1 auto;
+  }
+
+  & > :last-child {
+    flex: 1 1 auto;
+  }
 }

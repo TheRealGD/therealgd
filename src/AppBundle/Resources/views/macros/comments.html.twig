@@ -26,21 +26,25 @@
 {%- block comment -%}
   {%- from '@RadditApp/macros/votes.html.twig' import vote -%}
   <article class="comment {{ level|default(0) ? 'comment-level-'~level : 'comment-top-level' }} {{ comment.softDeleted ? 'comment-soft-deleted' }}">
-    <div class="comment-inner">
-      {{ vote(comment, path('raddit_app_comment_vote', {id: comment.id})) }}
-
-      <h3 class="comment-info">{{ 'comments.info'|trans({
-          '%user%': block('comment_info_user'),
-          '%timestamp%': block('comment_info_timestamp'),
-        })|raw }}</h3>
-
-      <div class="comment-body">
-        {{ comment.body|raw }}
+    <div class="comment-row">
+      <div class="comment-vote">
+        {{ vote(comment, path('raddit_app_comment_vote', {id: comment.id})) }}
       </div>
 
-      <nav class="comment-nav">
-        <ul>{{ block('comment_nav') }}</ul>
-      </nav>
+      <div class="comment-inner">
+        <h3 class="comment-info">{{ 'comments.info'|trans({
+            '%user%': block('comment_info_user'),
+            '%timestamp%': block('comment_info_timestamp'),
+          })|raw }}</h3>
+
+        <div class="comment-body">
+          {{ comment.body|raw }}
+        </div>
+
+        <nav class="comment-nav">
+          <ul>{{ block('comment_nav') }}</ul>
+        </nav>
+      </div>
     </div>
 
     {% if recurse ?? true and comment.children|length > 0 %}
