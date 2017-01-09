@@ -1,5 +1,9 @@
 # Change Log
 
+## v0.3.0 (2017-xx-xx)
+
+Work in progress.
+
 ## v0.2.0 (2017-01-06)
 
 * Sort comments by descending net score.
