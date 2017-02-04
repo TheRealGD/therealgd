@@ -1,0 +1,27 @@
+@import (reference) 'mixins';
+@import (reference) 'settings';
+
+.site-nav {
+  .clear-fix();
+  .horizontal-menu();
+
+  background-color: @nav-background-color;
+  margin-bottom: 1em;
+  padding: 0 1em;
+
+  & > ul {
+    margin: 0;
+    float: left;
+  }
+
+  & > ul.right-nav {
+    float: right;
+  }
+
+  a {
+    .font-size(larger);
+    color: @nav-link-color;
+    display: block;
+    padding: 1rem;
+  }
+}

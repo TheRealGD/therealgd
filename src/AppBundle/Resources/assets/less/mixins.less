@@ -1,0 +1,86 @@
+@import (reference) 'settings';
+
+/*
+ * http://cssmojo.com/the-very-latest-clearfix-reloaded/
+ */
+.clear-fix() {
+  &::after {
+    clear: both;
+    content: '';
+    display: table;
+  }
+}
+
+/*
+ * Mixin for setting the font size that always resets the line height for the
+ * element in question.
+ */
+.font-size(@size) {
+  font-size: @size;
+  line-height: @page-line-height;
+}
+
+/*
+ * Make certain things boring and grey.
+ *
+ * This should be applied to paragraphs or navs only, never entire containers.
+ */
+.meta() {
+  color: @meta-color;
+  .font-size(0.85em);
+  margin: 0.075rem;
+
+  form {
+    display: inline;
+  }
+
+  a, button {
+    color: inherit;
+    cursor: pointer;
+    font-weight: bold;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  button {
+    .unbuttonize();
+  }
+}
+
+/*
+ * Turn a <nav> that holds <ul> and <li> elements into horizontal menus.
+ */
+.horizontal-menu() {
+  & > ul {
+    padding: 0;
+  }
+
+  & > ul > li {
+    display: inline-block;
+    padding: 0;
+  }
+}
+
+/*
+ * Remove button styles.
+ */
+.unbuttonize() {
+  border: none;
+  background: transparent;
+  padding: 0;
+}
+
+.vote-flex() {
+  display: flex;
+  flex-flow: row nowrap;
+
+  & > :first-child {
+    flex: 0 1 auto;
+  }
+
+  & > :last-child {
+    flex: 1 1 auto;
+  }
+}

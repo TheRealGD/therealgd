@@ -1,0 +1,51 @@
+@import (reference) 'mixins';
+@import (reference) 'settings';
+
+.submission {
+  padding: 1em 0;
+}
+
+.submission-row {
+  .vote-flex;
+}
+
+.submission-title {
+  .font-size(1.33em);
+  font-weight: normal;
+  margin: 0;
+}
+
+.submission-link:visited {
+  color: multiply(@submission-link-color, darkgrey);
+}
+
+.submission-info,
+.submission-nav ul {
+  .meta();
+}
+
+.submission-nav {
+  .horizontal-menu();
+}
+
+.submission-sort {
+  .horizontal-menu();
+
+  ul {
+    display: table;
+    margin: 0.25em 0;
+  }
+
+  li {
+    display: table-cell;
+  }
+
+  a {
+    display: block;
+    padding: 0.5em 1em;
+  }
+
+  .active {
+    box-shadow: 0 0 0 1px;
+  }
+}

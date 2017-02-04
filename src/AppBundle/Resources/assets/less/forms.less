@@ -1,0 +1,42 @@
+//
+// Standard, vertical, non-weird forms
+//
+
+/*
+ * 1. Keep label from being larger than its inner text.
+ */
+.form {
+  margin-top: 1em;
+  max-width: 40em;
+
+  .row {
+    margin: 0 0 1em;
+  }
+
+  label {
+    display: table; /* 1 */
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    box-sizing: border-box;
+    display: block;
+  }
+
+  // TODO - this list is incomplete
+  input:not([type]),
+  input[type="text"],
+  input[type="password"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="number"],
+  input[type="search"],
+  input[type="datetime"],
+  input[type="datetime-local"],
+  input[type="url"],
+  textarea {
+    width: 100%;
+  }
+}

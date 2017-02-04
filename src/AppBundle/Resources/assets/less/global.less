@@ -1,0 +1,19 @@
+@import (reference) 'mixins';
+@import (reference) 'settings';
+
+html {
+  background: @page-background-color;
+  color: @page-color;
+  font-family: @page-font-family;
+  .font-size(@page-font-size);
+}
+
+a {
+  color: @page-link-color;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+

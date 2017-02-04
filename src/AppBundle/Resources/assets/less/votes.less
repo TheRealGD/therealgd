@@ -1,0 +1,29 @@
+@import (reference) 'mixins';
+@import (reference) 'settings';
+
+.vote {
+  padding: 0.5em 1.5em;
+  text-align: center;
+}
+
+.vote * {
+  display: block;
+}
+
+.vote-score {
+  font-weight: bold;
+}
+
+.vote-button {
+  .unbuttonize();
+  color: @vote-arrow-color;
+  white-space: nowrap;
+}
+
+.vote-user-upvoted .vote-up {
+  color: orange;
+}
+
+.vote-user-downvoted .vote-down {
+  color: blue;
+}
