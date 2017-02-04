@@ -6,7 +6,7 @@
 {% endblock %}
 
 {%- block site_nav_right -%}
-  {%- if is_granted('ROLE_USER') -%}
+  {%- if is_granted('create_forum') -%}
     <li><a href="{{ path('raddit_app_create_forum') }}">{{ 'create_forum.nav_link'|trans }}</a></li>
   {%- endif -%}
   {{- parent() -}}

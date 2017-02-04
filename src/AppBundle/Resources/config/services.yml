@@ -21,6 +21,12 @@ services:
         tags:
             - { name: security.voter }
 
+    raddit_app.security.voter.token_voter:
+        class: Raddit\AppBundle\Security\Voter\TokenVoter
+        arguments: ["@security.access.decision_manager"]
+        tags:
+            - { name: security.voter }
+
     raddit_app.twig.app_extension:
         class: Raddit\AppBundle\Twig\AppExtension
         calls:
