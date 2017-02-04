@@ -2,7 +2,7 @@
 
 ## v0.3.0 (2017-xx-xx)
 
-Work in progress.
+* Added a build system for frontend assets.
 
 ## v0.2.0 (2017-01-06)
 
