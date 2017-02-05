@@ -62,6 +62,10 @@ final class VoteController extends Controller {
 
         $em->flush();
 
+        if ($request->isXmlHttpRequest()) {
+            return $this->json([]);
+        }
+
         if (!$request->headers->has('Referer')) {
             return $this->redirectToRoute('raddit_app_front');
         }

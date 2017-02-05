@@ -5,7 +5,7 @@
 {%- block vote -%}
   {%- set user_vote = is_granted('ROLE_USER') ? entity.userVote(app.user) : null -%}
   {%- spaceless -%}
-    <form action="{{ vote_path }}" method="post" class="vote {{ block('vote_class') }}">
+    <form action="{{ vote_path }}" method="post" class="vote {{ block('vote_class') }}" data-score="{{ entity.netScore }}">
       <input type="hidden" name="token" value="{{ csrf_token('vote') }}">
 
       <button type="submit" name="choice" value="{{ block('vote_choice_up') }}"
@@ -14,9 +14,7 @@
         <span class="inner" aria-hidden="true">&#x2B06;&#xFE0E;</span>
       </button>
 
-      <span class="vote-score" data-score="{{ entity.netScore }}">
-        {{- entity.netScore -}}
-      </span>
+      <span class="vote-score">{{ entity.netScore }}</span>
 
       <button type="submit" name="choice" value="{{ block('vote_choice_down') }}"
               class="vote-button vote-down" title="{{ block('vote_down_label') }}">

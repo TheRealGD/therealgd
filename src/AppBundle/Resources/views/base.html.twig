@@ -13,7 +13,7 @@
     {% block head %}{% endblock %}
   </head>
 
-  <body class="{{ block('page_classes')|replace({'\n': ''}) }}">
+  <body class="{{ block('page_classes')|replace({'\n': ''}) }} {{ app.user ? 'user-logged-in' : 'user-anonymous' }}">
     {% spaceless %}
       <nav class="site-nav">
         <ul>

@@ -10,6 +10,11 @@ services:
         tags:
             - { name: form.type }
 
+    raddit_app.event_listener.ajax_listener:
+        class: Raddit\AppBundle\EventListener\AjaxListener
+        tags:
+            - { name: kernel.event_subscriber }
+
     raddit_app.event_listener.update_canonical_fields_listener:
         class: Raddit\AppBundle\EventListener\UpdateCanonicalFieldsListener
         tags:
