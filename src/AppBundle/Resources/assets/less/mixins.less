@@ -12,22 +12,13 @@
 }
 
 /*
- * Mixin for setting the font size that always resets the line height for the
- * element in question.
- */
-.font-size(@size) {
-  font-size: @size;
-  line-height: @page-line-height;
-}
-
-/*
  * Make certain things boring and grey.
  *
  * This should be applied to paragraphs or navs only, never entire containers.
  */
 .meta() {
   color: @meta-color;
-  .font-size(0.85em);
+  font-size: 0.85em;
   margin: 0.075rem;
 
   form {
