@@ -19,6 +19,9 @@ create_forum:
     create_new_forum: Create new forum
     nav_link: Create forum
 
+edit_user:
+    title: Editing user %username%
+
 forum:
     moderators: Moderators
     submit_url: Submit Link
@@ -35,11 +38,15 @@ login_form:
     username: Username
     password: Password
 
-registration_form:
+user_form:
     username: Username
     password: Password
+    repeat_password: Password (repeat)
+    new_password: New password
+    repeat_new_password: New password (repeat)
     email: Email
-    submit: Submit
+    register: Register
+    save: Save changes
 
 site_nav:
     log_in: Log in

@@ -1,0 +1,12 @@
+{% extends '@RadditApp/base.html.twig' %}
+
+{% form_theme form '@RadditApp/forms/standard-form-theme.html.twig' %}
+
+{% block title %}{{ 'edit_user.title'|trans({'%username%': user.username}) }}{% endblock %}
+
+{% block page_classes %}edit-user-page{% endblock %}
+
+{% block body %}
+  {{ form(form) }}
+{% endblock %}
+

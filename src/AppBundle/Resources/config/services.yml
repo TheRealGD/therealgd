@@ -4,8 +4,8 @@ parameters:
     raddit_app.site_name: Raddit
 
 services:
-    raddit_app.form.registration_type:
-        class: Raddit\AppBundle\Form\RegistrationType
+    raddit_app.form.user_type:
+        class: Raddit\AppBundle\Form\UserType
         arguments: ["@security.password_encoder"]
         tags:
             - { name: form.type }
@@ -22,6 +22,12 @@ services:
 
     raddit_app.security.voter.comment_voter:
         class: Raddit\AppBundle\Security\Voter\CommentVoter
+        arguments: ["@security.access.decision_manager"]
+        tags:
+            - { name: security.voter }
+
+    raddit_app.security.voter.user_voter:
+        class: Raddit\AppBundle\Security\Voter\UserVoter
         arguments: ["@security.access.decision_manager"]
         tags:
             - { name: security.voter }

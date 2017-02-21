@@ -55,7 +55,7 @@ class User implements UserInterface, CanonicalizableInterface {
     /**
      * // bcrypt cannot handle more than 72 bytes
      * @Assert\Length(min=8, max=72, charset="8bit")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(groups={"registration"})
      *
      * @var string
      */

@@ -8,15 +8,15 @@ use Raddit\AppBundle\Form\EventListener\PasswordEncodingSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-final class RegistrationType extends AbstractType {
+final class UserType extends AbstractType {
     /**
      * @var UserPasswordEncoderInterface
      */
@@ -33,13 +33,21 @@ final class RegistrationType extends AbstractType {
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
+        $editing = $builder->getData() && $builder->getData()->getId() !== null;
+
         $builder
             ->add('username', TextType::class)
-            ->add('password', PasswordType::class, [
+            ->add('password', RepeatedType::class, [
                 'property_path' => 'plainPassword',
+                'required' => !$editing,
+                'first_name' => $editing ? 'new_password' : 'password',
+                'second_name' => $editing ? 'repeat_new_password' : 'repeat_password',
+                'type' => PasswordType::class,
             ])
             ->add('email', EmailType::class)
-            ->add('submit', SubmitType::class);
+            ->add('submit', SubmitType::class, [
+                'label' => 'user_form.'.($editing ? 'save' : 'register'),
+            ]);
 
         $builder->addEventSubscriber(new PasswordEncodingSubscriber($this->encoder));
         $builder->addEventSubscriber(new CanonicalizationSubscriber());
@@ -51,7 +59,14 @@ final class RegistrationType extends AbstractType {
     public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults([
             'data_class' => User::class,
-            'label_format' => 'registration_form.%name%',
+            'label_format' => 'user_form.%name%',
+            'validation_groups' => function (FormInterface $form) {
+                if ($form->getData()->getId() !== null) {
+                    return ['Default', 'editing'];
+                }
+
+                return ['Default', 'registration'];
+            }
         ]);
     }
 }

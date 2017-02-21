@@ -5,7 +5,8 @@ namespace Raddit\AppBundle\Controller;
 use Raddit\AppBundle\Entity\Comment;
 use Raddit\AppBundle\Entity\Submission;
 use Raddit\AppBundle\Entity\User;
-use Raddit\AppBundle\Form\RegistrationType;
+use Raddit\AppBundle\Form\UserType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -51,7 +52,7 @@ final class UserController extends Controller {
         }
 
         $user = new User();
-        $form = $this->createForm(RegistrationType::class, $user);
+        $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -65,6 +66,40 @@ final class UserController extends Controller {
 
         return $this->render('@RadditApp/registration.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Security("is_granted('edit_user', subject)")
+     *
+     * @param User    $subject
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function editUserAction(User $subject, Request $request) {
+        $form = $this->createForm(UserType::class, $subject);
+        $form->handleRequest($request);
+
+        $em = $this->getDoctrine()->getManager();
+
+        try {
+            if ($form->isSubmitted() && $form->isValid()) {
+                $em->flush();
+
+                return $this->redirectToRoute('raddit_app_edit_user', [
+                    'username' => $subject->getUsername(),
+                ]);
+            }
+        } finally {
+            // Always reload the user object from the database. This avoids the
+            // user in TokenStorage staying altered in case the form fails.
+            $em->refresh($subject);
+        }
+
+        return $this->render('@RadditApp/edit-user.html.twig', [
+            'form' => $form->createView(),
+            'user' => $subject,
         ]);
     }
 }
