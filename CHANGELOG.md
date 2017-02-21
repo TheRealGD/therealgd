@@ -2,7 +2,15 @@
 
 ## v0.3.0 (2017-xx-xx)
 
-* Added a build system for frontend assets.
+* Much future-proofing and many improvements to frontend assets.
+    * webpack/gulp-based build system.
+    * JS is written in ES2015 and transpiled to ES5 on build.
+    * jQuery is used for DOM manipulation & traversal, and Ajax calls.
+    * Individual 'plugins' are now reusable and can be applied to e.g. new DOM
+      elements created after an Ajax request.
+    * Styles have been organised into modules.
+* Added the ability to edit user accounts.
+* Voting on posts via Ajax (non-JS fallback still available.)
 
 ## v0.2.0 (2017-01-06)
 
