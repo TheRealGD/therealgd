@@ -2,9 +2,8 @@
 
 const $ = require('jquery');
 
-import './relative-time';
+import relativeTime from './relative-time';
 import enableAjaxVoting from './vote';
 
-$(() => {
-    enableAjaxVoting();
-});
+$(relativeTime);
+$(enableAjaxVoting);

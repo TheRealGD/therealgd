@@ -1,12 +1,14 @@
 'use strict';
 
+import $ from 'jquery';
 import moment from 'moment';
 
-addEventListener('DOMContentLoaded', () => {
-    const timestamps = document.getElementsByClassName('relative-time');
+export default function (root) {
+    root = root || ':root';
 
-    for (let i = 0; i < timestamps.length; i++) {
-        const isoTime = timestamps[i].getAttribute('datetime');
-        timestamps[i].innerText = moment(isoTime).fromNow();
-    }
-});
+    $(root).find('.relative-time[datetime]').each(function () {
+        const isoTime = $(this).attr('datetime');
+
+        $(this).text(moment(isoTime).fromNow());
+    });
+};
