@@ -32,5 +32,8 @@ module.exports = {
                 return module.context && /node_modules/.test(module.context);
             }
         }),
-    ]
+    ],
+    resolve: {
+        mainFields: ['jsnext:main', 'main']
+    }
 };
