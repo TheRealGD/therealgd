@@ -11,11 +11,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass="Raddit\AppBundle\Repository\SubmissionRepository")
  * @ORM\Table(name="submissions")
- * @ORM\InheritanceType("SINGLE_TABLE")
- * @ORM\DiscriminatorColumn(name="submission_type", type="string")
- * @ORM\DiscriminatorMap({"url": "Url", "post": "Post"})
  */
-abstract class Submission implements VotableInterface {
+class Submission implements VotableInterface {
     use VotableTrait;
 
     /**
@@ -36,6 +33,34 @@ abstract class Submission implements VotableInterface {
      * @var string
      */
     private $title;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     *
+     * @Assert\Length(max=2000, charset="8bit")
+     * @Assert\Url(protocols={"http", "https"})
+     *
+     * @see https://stackoverflow.com/questions/417142/
+     *
+     * @var string
+     */
+    private $url;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     *
+     * @var string
+     */
+    private $body;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     *
+     * @Assert\Length(max=25000)
+     *
+     * @var string
+     */
+    private $rawBody;
 
     /**
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="submission", fetch="EXTRA_LAZY")
@@ -75,7 +100,7 @@ abstract class Submission implements VotableInterface {
     private $votes;
 
     /**
-     * Creates a new submission with an implicit upvote from the comment author.
+     * Creates a new submission with an implicit upvote from its creator.
      *
      * @param Forum $forum
      * @param User  $user
@@ -83,13 +108,7 @@ abstract class Submission implements VotableInterface {
      * @return static
      */
     public static function create(Forum $forum, User $user) {
-        if (static::class === self::class) {
-            throw new \BadMethodCallException(
-                'This method must be called on an implementing class'
-            );
-        }
-
-        $submission = new static();
+        $submission = new self();
         $submission->setForum($forum);
         $submission->setUser($user);
 
@@ -98,7 +117,6 @@ abstract class Submission implements VotableInterface {
         $vote->setSubmission($submission);
         $vote->setUpvote(true);
 
-        /** @noinspection PhpUndefinedMethodInspection */
         $submission->getVotes()->add($vote);
 
         return $submission;
@@ -136,6 +154,48 @@ abstract class Submission implements VotableInterface {
      */
     public function setTitle($title) {
         $this->title = $title;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrl() {
+        return $this->url;
+    }
+
+    /**
+     * @param string $url
+     */
+    public function setUrl($url) {
+        $this->url = $url;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBody() {
+        return $this->body;
+    }
+
+    /**
+     * @param string $body
+     */
+    public function setBody($body) {
+        $this->body = $body;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRawBody() {
+        return $this->rawBody;
+    }
+
+    /**
+     * @param string $rawBody
+     */
+    public function setRawBody($rawBody) {
+        $this->rawBody = $rawBody;
     }
 
     /**
@@ -237,11 +297,4 @@ abstract class Submission implements VotableInterface {
 
         return $vote;
     }
-
-    /**
-     * Must return 'url' or 'post'.
-     *
-     * @return string
-     */
-    abstract public function getSubmissionType();
 }

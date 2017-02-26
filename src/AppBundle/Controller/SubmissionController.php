@@ -5,6 +5,7 @@ namespace Raddit\AppBundle\Controller;
 use Raddit\AppBundle\Entity\Comment;
 use Raddit\AppBundle\Entity\Forum;
 use Raddit\AppBundle\Entity\Submission;
+use Raddit\AppBundle\Form\SubmissionType;
 use Raddit\AppBundle\Repository\SubmissionRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -108,17 +109,13 @@ final class SubmissionController extends Controller {
      *
      * @param Forum   $forum
      * @param Request $request
-     * @param string  $typeClass
-     * @param string  $entityClass
      *
      * @return Response
      */
-    public function submitAction(Forum $forum, Request $request, $typeClass, $entityClass) {
-        /** @var Submission $submission */
-        /** @noinspection PhpUndefinedMethodInspection */
-        $submission = $entityClass::create($forum, $this->getUser());
+    public function submitAction(Forum $forum, Request $request) {
+        $submission = Submission::create($forum, $this->getUser());
 
-        $form = $this->createForm($typeClass, $submission);
+        $form = $this->createForm(SubmissionType::class, $submission);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -136,7 +133,6 @@ final class SubmissionController extends Controller {
         return $this->render('@RadditApp/submit.html.twig', [
             'form' => $form->createView(),
             'forum' => $forum,
-            'submission_type' => $submission->getSubmissionType(),
         ]);
     }
 

@@ -11,6 +11,7 @@
     * Styles have been organised into modules.
 * Added the ability to edit user accounts.
 * Voting on posts via Ajax (non-JS fallback still available.)
+* Remove the distinction between 'Post submissions' and 'URL submissions'.
 
 ## v0.2.0 (2017-01-06)
 

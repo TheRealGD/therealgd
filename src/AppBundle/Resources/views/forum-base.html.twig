@@ -3,8 +3,7 @@
 {% spaceless %}
   {% block site_nav_right %}
     {% if is_granted('ROLE_USER') %}
-      <li><a href="{{ path('raddit_app_submit_url', {forum_name: forum.name}) }}">{{ 'forum.submit_url'|trans }}</a></li>
-      <li><a href="{{ path('raddit_app_submit_post', {forum_name: forum.name}) }}">{{ 'forum.submit_post'|trans }}</a></li>
+      <li><a href="{{ path('raddit_app_submit', {forum_name: forum.name}) }}">{{ 'forum.submit'|trans }}</a></li>
     {% endif %}
 
     {{- parent() -}}

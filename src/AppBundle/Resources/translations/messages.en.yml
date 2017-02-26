@@ -24,8 +24,7 @@ edit_user:
 
 forum:
     moderators: Moderators
-    submit_url: Submit Link
-    submit_post: Submit Post
+    submit: Submit
 
 forum_form:
     name: Name
