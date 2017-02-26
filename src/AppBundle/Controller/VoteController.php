@@ -2,7 +2,7 @@
 
 namespace Raddit\AppBundle\Controller;
 
-use Raddit\AppBundle\Entity\VotableInterface;
+use Raddit\AppBundle\Entity\Votable;
 use Raddit\AppBundle\Entity\Vote;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -33,7 +33,7 @@ final class VoteController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $entity = $em->find($entityClass, $id);
 
-        if (!$entity instanceof VotableInterface) {
+        if (!$entity instanceof Votable) {
             throw $this->createNotFoundException('Entity not found');
         }
 

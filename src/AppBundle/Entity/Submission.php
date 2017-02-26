@@ -12,9 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="Raddit\AppBundle\Repository\SubmissionRepository")
  * @ORM\Table(name="submissions")
  */
-class Submission implements VotableInterface {
-    use VotableTrait;
-
+class Submission extends Votable {
     /**
      * @ORM\Column(type="bigint")
      * @ORM\GeneratedValue(strategy="AUTO")

@@ -6,7 +6,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Selectable;
 
-trait VotableTrait {
+abstract class Votable {
     /**
      * @return Vote[]|Collection|Selectable
      */
@@ -16,6 +16,11 @@ trait VotableTrait {
      * @param Vote[]|Collection $votes
      */
     abstract public function setVotes($votes);
+
+    /**
+     * @return Vote
+     */
+    abstract public function createVote();
 
     /**
      * @return int
@@ -57,12 +62,12 @@ trait VotableTrait {
     }
 
     /**
-     * @param VotableInterface $a
-     * @param VotableInterface $b
+     * @param Votable $a
+     * @param Votable $b
      *
      * @return int
      */
-    public function descendingNetScoreCmp(VotableInterface $a, VotableInterface $b) {
+    public final static function descendingNetScoreCmp(self $a, self $b) {
         $as = $a->getNetScore();
         $bs = $b->getNetScore();
 

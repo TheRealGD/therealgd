@@ -11,9 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity()
  * @ORM\Table(name="comments")
  */
-class Comment implements BodyInterface, VotableInterface {
-    use VotableTrait;
-
+class Comment extends Votable implements BodyInterface {
     /**
      * @ORM\Column(type="bigint")
      * @ORM\GeneratedValue(strategy="AUTO")
