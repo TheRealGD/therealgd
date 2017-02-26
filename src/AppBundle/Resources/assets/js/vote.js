@@ -1,6 +1,7 @@
 'use strict';
 
-const $ = require('jquery');
+import $ from 'jquery';
+import translator from 'bazinga-translator';
 
 /**
  * Get the current vote selection (-1: downvoted, 0: not voted on, 1: upvoted).
@@ -53,15 +54,24 @@ function getNewScore($form, isUp, score) {
     return score + weight;
 }
 
+function getUpButtonTitle(choice) {
+    return translator.trans('votes.' + (choice === 1 ? 'retract_upvote' : 'upvote'));
+}
+
+function getDownButtonTitle(choice) {
+    return translator.trans('votes.' + (choice === -1 ? 'retract_downvote' : 'downvote'));
+}
+
 /**
  * @param {jQuery} $form
  * @param {boolean} isUp
  */
 function vote($form, isUp) {
     const url = $form.attr('action');
+    const choice = getNewChoice($form, isUp);
 
     const data = {
-        choice: getNewChoice($form, isUp),
+        choice: choice,
         token: $form.find('input[name=token]').val()
     };
 
@@ -73,6 +83,10 @@ function vote($form, isUp) {
             .removeClass(isUp ? 'vote-user-downvoted' : 'vote-user-upvoted')
             .data('score', newScore)
             .find('.vote-score').text(newScore);
+
+        // update title attributes
+        $form.find('.vote-up').attr('title', getUpButtonTitle(choice));
+        $form.find('.vote-down').attr('title', getDownButtonTitle(choice))
     }).fail((xhr, textStatus, err) => {
         console && console.log('Failed to vote', textStatus, err);
     });

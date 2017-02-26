@@ -18,6 +18,10 @@ module.exports = {
                 test: /\.js$/,
                 exclude: /node_modules/,
                 loader: 'babel-loader'
+            },
+            {
+                test: require.resolve('bazinga-translator'),
+                loader: 'expose-loader?Translator'
             }
         ]
     },

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ app.request.locale|split('_')[0] }}">
   <head>
     <meta charset="UTF-8" />
     <title>{% block title %}{{ raddit_app_site_name() }}{% endblock %}</title>
@@ -43,6 +43,7 @@
     {% block javascripts %}
       <script src="{{ asset('js/vendor.min.js') }}"></script>
       <script src="{{ asset('js/main.min.js') }}"></script>
+      <script src="{{ path('bazinga_jstranslation_js') }}"></script>
     {% endblock %}
   </body>
 </html>
