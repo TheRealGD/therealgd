@@ -15,11 +15,6 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
-    raddit_app.event_listener.update_canonical_fields_listener:
-        class: Raddit\AppBundle\EventListener\UpdateCanonicalFieldsListener
-        tags:
-            - { name: doctrine.event_subscriber }
-
     raddit_app.security.voter.comment_voter:
         class: Raddit\AppBundle\Security\Voter\CommentVoter
         arguments: ["@security.access.decision_manager"]

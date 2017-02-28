@@ -5,7 +5,6 @@ namespace Raddit\AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Raddit\AppBundle\Utils\CanonicalizableInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -17,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @UniqueEntity("canonicalName", errorPath="name")
  */
-class Forum implements CanonicalizableInterface {
+class Forum {
     /**
      * @ORM\Column(type="bigint")
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -118,6 +117,7 @@ class Forum implements CanonicalizableInterface {
      */
     public function setName($name) {
         $this->name = $name;
+        $this->canonicalName = mb_strtolower($name, 'UTF-8');
     }
 
     /**
@@ -125,13 +125,6 @@ class Forum implements CanonicalizableInterface {
      */
     public function getCanonicalName() {
         return $this->canonicalName;
-    }
-
-    /**
-     * @param string $canonicalName
-     */
-    public function setCanonicalName($canonicalName) {
-        $this->canonicalName = $canonicalName;
     }
 
     /**
@@ -202,14 +195,5 @@ class Forum implements CanonicalizableInterface {
      */
     public function setCreated($created) {
         $this->created = $created;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getCanonicalizableFields() {
-        return [
-            'name' => 'canonicalName',
-        ];
     }
 }

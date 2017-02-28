@@ -3,7 +3,6 @@
 namespace Raddit\AppBundle\Form;
 
 use Raddit\AppBundle\Entity\Forum;
-use Raddit\AppBundle\Form\EventListener\CanonicalizationSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -21,8 +20,6 @@ final class ForumType extends AbstractType {
             ->add('title', TextType::class)
             ->add('description', TextareaType::class)
             ->add('submit', SubmitType::class);
-
-        $builder->addEventSubscriber(new CanonicalizationSubscriber());
     }
 
     /**

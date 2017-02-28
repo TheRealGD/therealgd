@@ -6,7 +6,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
-use Raddit\AppBundle\Utils\CanonicalizableInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -17,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @UniqueEntity("canonicalUsername", errorPath="username")
  */
-class User implements UserInterface, CanonicalizableInterface {
+class User implements UserInterface {
     /**
      * @ORM\Column(type="bigint")
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -123,6 +122,7 @@ class User implements UserInterface, CanonicalizableInterface {
      */
     public function setUsername($username) {
         $this->username = $username;
+        $this->canonicalUsername = mb_strtolower($username, 'UTF-8');
     }
 
     /**
@@ -130,13 +130,6 @@ class User implements UserInterface, CanonicalizableInterface {
      */
     public function getCanonicalUsername() {
         return $this->canonicalUsername;
-    }
-
-    /**
-     * @param string $canonicalUsername
-     */
-    public function setCanonicalUsername($canonicalUsername) {
-        $this->canonicalUsername = $canonicalUsername;
     }
 
     /**
@@ -179,6 +172,7 @@ class User implements UserInterface, CanonicalizableInterface {
      */
     public function setEmail($email) {
         $this->email = $email;
+        $this->canonicalEmail = mb_strtolower($email, 'UTF-8');
     }
 
     /**
@@ -186,13 +180,6 @@ class User implements UserInterface, CanonicalizableInterface {
      */
     public function getCanonicalEmail() {
         return $this->canonicalEmail;
-    }
-
-    /**
-     * @param string $canonicalEmail
-     */
-    public function setCanonicalEmail($canonicalEmail) {
-        $this->canonicalEmail = $canonicalEmail;
     }
 
     /**
@@ -245,16 +232,6 @@ class User implements UserInterface, CanonicalizableInterface {
      */
     public function eraseCredentials() {
         $this->plainPassword = null;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getCanonicalizableFields() {
-        return [
-            'username' => 'canonicalUsername',
-            'email' => 'canonicalEmail',
-        ];
     }
 
     /**
