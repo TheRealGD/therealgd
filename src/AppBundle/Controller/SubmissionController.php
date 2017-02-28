@@ -56,6 +56,7 @@ final class SubmissionController extends Controller {
             ->findSortedQb($sortBy)
             ->andWhere('s.forum = :forum')
             ->setParameter('forum', $forum)
+            ->setMaxResults(20)
             ->getQuery()
             ->execute();
 
