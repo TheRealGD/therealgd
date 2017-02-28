@@ -38,10 +38,11 @@ Clone the repository somewhere and navigate there with the command line.
 2. Run `bin/symfony_requirements` to check that your environment meets the
    requirements needed to run the software. Fix any errors that arise.
 3. Run `bin/console doctrine:migrations:migrate` to load the database schema.
-4. Run `bin/console doctrine:fixtures:load` to load example data to play around
-   with.
+4. Run `bin/console raddit:add-user <username> <email address>` to create a user
+   account.
 5. Run `bin/console server:run` to start the application.
-6. Navigate to <http://localhost:8000/>. Log in with `emma`/`goodshit`.
+6. Navigate to <http://localhost:8000/>. Log in with the credentials you chose
+   in step 4.
 
 ## Contributions
 
