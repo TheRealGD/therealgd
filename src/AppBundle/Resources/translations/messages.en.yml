@@ -56,7 +56,8 @@ submission_form:
     title: Title
     url: URL
     body: Body
-    submit: Submit
+    create: Create submission
+    edit: Edit submission
 
 submissions:
     comments: '{0} No comments|{1} %count% comment|[1,Inf[ %count% comments'

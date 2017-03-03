@@ -16,6 +16,9 @@ final class SubmissionType extends AbstractType {
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
+        $editing = $builder->getData() instanceof Submission &&
+            $builder->getData()->getId() !== null;
+
         $builder
             ->add('title', TextareaType::class)
             ->add('url', UrlType::class, ['required' => false])
@@ -23,7 +26,9 @@ final class SubmissionType extends AbstractType {
                 'property_path' => 'rawBody',
                 'required' => false,
             ])
-            ->add('submit', SubmitType::class);
+            ->add('submit', SubmitType::class, [
+                'label' => 'submission_form.'.($editing ? 'edit' : 'create'),
+            ]);
 
         $builder->addEventSubscriber(new MarkdownSubscriber());
     }
