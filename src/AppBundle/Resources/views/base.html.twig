@@ -35,6 +35,16 @@
       </nav>
     {% endspaceless %}
 
+    <div class="site-alerts">
+      {%- if app.request.hasPreviousSession -%}
+        {%- for type, notices in app.session.flashBag.all -%}
+          {%- for notice in notices -%}
+            <p class="alert alert-{{ type }}" role="alert">{{ notice|trans }}</p>
+          {%- endfor -%}
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+
     <div class="content-wrapper">
       <aside class="sidebar">{% block sidebar %}{% endblock %}</aside>
       <section class="body">{% block body %}{% endblock %}</section>
