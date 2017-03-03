@@ -19,13 +19,16 @@
   color: @submission-link-color-visited;
 }
 
-.submission-info,
-.submission-nav ul {
-  .meta();
+.submission-info {
+  .meta;
 }
 
 .submission-nav {
-  .horizontal-menu();
+  .meta-nav;
+
+  .submission-body-hidden & > ul {
+    margin-top: 0;
+  }
 }
 
 .submission-sort {

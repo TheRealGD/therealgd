@@ -19,13 +19,17 @@ final class MarkdownSubscriber implements EventSubscriberInterface {
 
         $entity = $event->getForm()->getData();
 
-        if (!$entity instanceof BodyInterface || strlen($entity->getBody()) > 0) {
+        if (!$entity instanceof BodyInterface) {
             return;
         }
 
-        $html = MarkdownConverter::convert($entity->getRawBody());
+        if (strlen(trim($entity->getRawBody())) > 0) {
+            $html = MarkdownConverter::convert($entity->getRawBody());
 
-        $entity->setBody($html);
+            $entity->setBody($html);
+        } else {
+            $entity->setBody(null);
+        }
     }
 
     /**

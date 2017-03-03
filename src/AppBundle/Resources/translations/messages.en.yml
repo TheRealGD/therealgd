@@ -61,6 +61,7 @@ submission_form:
 
 submissions:
     comments: '{0} No comments|{1} %count% comment|[1,Inf[ %count% comments'
+    edit: Edit
     info_with_forum_name: Submitted by %submitter% %timestamp% in %forum%
     info_without_forum_name: Submitted by %submitter% %timestamp%
     info_at_timestamp: at %timestamp%

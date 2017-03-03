@@ -138,6 +138,35 @@ final class SubmissionController extends Controller {
     }
 
     /**
+     * @Security("is_granted('edit', submission)")
+     *
+     * @param Forum      $forum
+     * @param Submission $submission
+     * @param Request    $request
+     *
+     * @return Response
+     */
+    public function editSubmissionAction(Forum $forum, Submission $submission, Request $request) {
+        $form = $this->createForm(SubmissionType::class, $submission);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('raddit_app_comments', [
+                'forum_name' => $forum->getName(),
+                'submission_id' => $submission->getId(),
+            ]);
+        }
+
+        return $this->render('@RadditApp/submit.html.twig', [
+            'form' => $form->createView(),
+            'forum' => $forum,
+            'submission' => $submission,
+        ]);
+    }
+
+    /**
      * @param Request $request
      *
      * @return mixed|string

@@ -43,7 +43,7 @@
 
 {%- block submission -%}
   {%- from '@RadditApp/macros/votes.html.twig' import vote -%}
-  <article class="submission {{ submission.url ? 'submission-has-url' }} {{ submission.body is not null ? 'submission-has-body' }}">
+  <article class="submission {{ submission.url ? 'submission-has-url' }} {{ submission.body is not null ? 'submission-has-body' }} {{ not options.show_body ? 'submission-body-hidden' }}">
     <div class="submission-row">
       <div class="submission-vote">
         {{- vote(submission, path('raddit_app_submission_vote', {id: submission.id})) -}}
@@ -91,6 +91,13 @@
                   {{- 'submissions.comments'|transchoice(submission.comments|length) -}}
                 </a>
               </li>
+              {%- if is_granted('edit', submission) -%}
+                <li>
+                  <a href="{{ path('raddit_app_edit_submission', {forum_name: submission.forum.name, submission_id: submission.id}) }}">
+                    {{- 'submissions.edit'|trans -}}
+                  </a>
+                </li>
+              {%- endif -%}
             </ul>
           </nav>
         {%- endspaceless -%}

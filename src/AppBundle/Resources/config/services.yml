@@ -21,6 +21,12 @@ services:
         tags:
             - { name: security.voter }
 
+    raddit_app.security.voter.submission_voter:
+        class: Raddit\AppBundle\Security\Voter\SubmissionVoter
+        arguments: ["@security.access.decision_manager"]
+        tags:
+            - { name: security.voter }
+
     raddit_app.security.voter.user_voter:
         class: Raddit\AppBundle\Security\Voter\UserVoter
         arguments: ["@security.access.decision_manager"]
