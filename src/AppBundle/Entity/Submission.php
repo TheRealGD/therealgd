@@ -61,7 +61,8 @@ class Submission extends Votable implements BodyInterface {
     private $rawBody;
 
     /**
-     * @ORM\OneToMany(targetEntity="Comment", mappedBy="submission", fetch="EXTRA_LAZY")
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="submission",
+     *     fetch="EXTRA_LAZY", cascade={"remove"})
      *
      * @var Comment[]|Collection
      */
@@ -91,7 +92,8 @@ class Submission extends Votable implements BodyInterface {
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="SubmissionVote", mappedBy="submission", fetch="EAGER", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="SubmissionVote", mappedBy="submission",
+     *     fetch="EAGER", cascade={"persist", "remove"})
      *
      * @var SubmissionVote[]|Collection
      */

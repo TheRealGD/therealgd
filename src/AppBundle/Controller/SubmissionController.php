@@ -151,7 +151,18 @@ final class SubmissionController extends Controller {
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $em = $this->getDoctrine()->getManager();
+
+            if ($form->get('delete')->isClicked()) {
+                $em->remove($submission);
+                $em->flush();
+
+                return $this->redirectToRoute('raddit_app_forum', [
+                    'forum_name' => $forum->getName(),
+                ]);
+            }
+
+            $em->flush();
 
             return $this->redirectToRoute('raddit_app_comments', [
                 'forum_name' => $forum->getName(),

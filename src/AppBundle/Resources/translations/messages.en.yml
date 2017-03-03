@@ -58,6 +58,8 @@ submission_form:
     body: Body
     create: Create submission
     edit: Edit submission
+    delete: Delete submission
+    confirm_delete: Are you sure you want to delete this submission?
 
 submissions:
     comments: '{0} No comments|{1} %count% comment|[1,Inf[ %count% comments'

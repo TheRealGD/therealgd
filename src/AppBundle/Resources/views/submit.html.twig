@@ -11,5 +11,21 @@
     {{ form_row(form.url) }}
 
     {{ form_row(form.body, {attr: {rows: 16}}) }}
+
+    {{ form_row(form.submit) }}
+
+    {% if form.delete is defined %}
+      {{ form_row(form.delete, {attr: {class: 'delete-submission'}}) }}
+    {% endif %}
   {{ form_end(form) }}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+
+  <script>
+    $('.delete-submission').click(function () {
+        return confirm('{{ 'submission_form.confirm_delete'|trans|e('js') }}');
+    });
+  </script>
 {% endblock %}

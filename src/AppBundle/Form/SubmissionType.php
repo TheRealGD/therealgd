@@ -30,6 +30,10 @@ final class SubmissionType extends AbstractType {
                 'label' => 'submission_form.'.($editing ? 'edit' : 'create'),
             ]);
 
+        if ($editing) {
+            $builder->add('delete', SubmitType::class);
+        }
+
         $builder->addEventSubscriber(new MarkdownSubscriber());
     }
 
