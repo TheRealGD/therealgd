@@ -4,6 +4,12 @@ parameters:
     raddit_app.site_name: Raddit
 
 services:
+    raddit_app.form.forum_type:
+        class: Raddit\AppBundle\Form\ForumType
+        arguments: ["@security.authorization_checker"]
+        tags:
+            - { name: form.type }
+
     raddit_app.form.user_type:
         class: Raddit\AppBundle\Form\UserType
         arguments: ["@security.password_encoder"]

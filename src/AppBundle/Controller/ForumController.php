@@ -64,7 +64,18 @@ final class ForumController extends Controller {
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $em = $this->getDoctrine()->getManager();
+
+            if ($form->has('delete') && $form->get('delete')->isClicked()) {
+                $em->remove($forum);
+                $em->flush();
+
+                $this->addFlash('success', 'edit_forum.delete_notice');
+
+                return $this->redirectToRoute('raddit_app_front');
+            }
+
+            $em->flush();
 
             $this->addFlash('success', 'edit_forum.edit_notice');
 

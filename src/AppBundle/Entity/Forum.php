@@ -65,14 +65,14 @@ class Forum {
     private $description;
 
     /**
-     * @ORM\OneToMany(targetEntity="Moderator", mappedBy="forum", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Moderator", mappedBy="forum", cascade={"persist", "remove"})
      *
      * @var Moderator[]|Collection
      */
     private $moderators;
 
     /**
-     * @ORM\OneToMany(targetEntity="Submission", mappedBy="forum")
+     * @ORM\OneToMany(targetEntity="Submission", mappedBy="forum", cascade={"remove"})
      *
      * @var Submission[]|Collection
      */

@@ -6,5 +6,27 @@
 {% block title %}{{ 'edit_forum.title'|trans({'%forum%': forum.name}) }}{% endblock %}
 
 {% block body %}
-  {{ form(form) }}
+  {{ form_start(form) }}
+    {{ form_row(form.name) }}
+
+    {{ form_row(form.title) }}
+
+    {{ form_row(form.description) }}
+
+    {{ form_row(form.submit) }}
+
+    {% if form.delete is defined %}
+      {{ form_row(form.delete, {attr: {class: 'delete-forum'}}) }}
+    {% endif %}
+  {{ form_end(form) }}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+
+  <script>
+    $('.delete-forum').click(function () {
+      return confirm(Translator.trans('forum_form.confirm_delete'));
+    });
+  </script>
 {% endblock %}

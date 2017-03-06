@@ -9,8 +9,18 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 final class ForumType extends AbstractType {
+    /**
+     * @var AuthorizationCheckerInterface
+     */
+    private $authorizationChecker;
+
+    public function __construct(AuthorizationCheckerInterface $authorizationChecker) {
+        $this->authorizationChecker = $authorizationChecker;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -24,6 +34,10 @@ final class ForumType extends AbstractType {
             ->add('submit', SubmitType::class, [
                 'label' => $editing ? 'forum_form.save' : 'forum_form.create',
             ]);
+
+        if ($editing && $this->authorizationChecker->isGranted('delete', $builder->getData())) {
+            $builder->add('delete', SubmitType::class);
+        }
     }
 
     /**
