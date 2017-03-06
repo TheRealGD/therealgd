@@ -25,7 +25,7 @@
 
   <script>
     $('.delete-submission').click(function () {
-        return confirm('{{ 'submission_form.confirm_delete'|trans|e('js') }}');
+        return confirm(Translator.trans('submission_form.confirm_delete'));
     });
   </script>
 {% endblock %}
