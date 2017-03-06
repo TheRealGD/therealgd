@@ -9,8 +9,14 @@
     * Individual 'plugins' are now reusable and can be applied to e.g. new DOM
       elements created after an Ajax request.
     * Styles have been organised into modules.
-* Added the ability to edit and remove submissions.
-* Added the ability to edit user accounts.
+* Added the ability to edit:
+    * Forums
+    * Submissions
+    * User accounts
+* Added the ability to remove:
+    * Forums
+    * Submissions
+* Show notices when certain actions are performed.
 * Added the ability to create user accounts via the command line.
 * Voting on posts via Ajax (non-JS fallback still available.)
 * Remove the distinction between 'Post submissions' and 'URL submissions'.
