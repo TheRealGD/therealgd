@@ -1,0 +1,10 @@
+{% extends '@RadditApp/forum-base.html.twig' %}
+{% form_theme form '@RadditApp/forms/standard-form-theme.html.twig' %}
+
+{% block page_classes %}edit-forum-page{% endblock %}
+
+{% block title %}{{ 'edit_forum.title'|trans({'%forum%': forum.name}) }}{% endblock %}
+
+{% block body %}
+  {{ form(form) }}
+{% endblock %}

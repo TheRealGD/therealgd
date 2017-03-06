@@ -19,6 +19,10 @@ create_forum:
     create_new_forum: Create new forum
     nav_link: Create forum
 
+edit_forum:
+    edit_notice: The changes have been saved.
+    title: Editing %forum%
+
 edit_user:
     title: Editing user %username%
 
@@ -30,7 +34,8 @@ forum_form:
     name: Name
     title: Title
     description: Description
-    submit: Submit
+    create: Create forum
+    save: Save changes
 
 login_form:
     log_in: Log in

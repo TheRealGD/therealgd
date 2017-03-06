@@ -51,32 +51,25 @@ class ApplicationAvailabilityTest extends WebTestCase {
     /**
      * Public URLs that should exist when fixtures are loaded into a fresh
      * database.
-     *
-     * @return array[]
      */
     public function publicUrlProvider() {
-        return [
-            ['/'],
-            ['/f/liberalwithdulledge/'],
-            ['/f/liberalwithdulledge/1/'],
-            ['/f/liberalwithdulledge/2/'],
-            ['/f/liberalwithdulledge/1/comment/1/'],
-            ['/f/liberalwithdulledge/1/comment/2/'],
-            ['/login'],
-            ['/registration'],
-            ['/user/emma']
-        ];
+        yield ['/'];
+        yield ['/f/liberalwithdulledge/'];
+        yield ['/f/liberalwithdulledge/1/'];
+        yield ['/f/liberalwithdulledge/2/'];
+        yield ['/f/liberalwithdulledge/1/comment/1/'];
+        yield ['/f/liberalwithdulledge/1/comment/2/'];
+        yield ['/login'];
+        yield ['/registration'];
+        yield ['/user/emma'];
     }
 
     /**
      * URLs that need authentication to access.
-     *
-     * @return array[]
      */
     public function authUrlProvider() {
-        return [
-            ['/create_forum'],
-            ['/f/liberalwithdulledge/submit'],
-        ];
+        yield ['create_forum'];
+        yield ['/f/liberalwithdulledge/edit'];
+        yield ['/f/liberalwithdulledge/submit'];
     }
 }

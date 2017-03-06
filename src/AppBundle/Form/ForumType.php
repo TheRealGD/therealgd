@@ -15,11 +15,15 @@ final class ForumType extends AbstractType {
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
+        $editing = $builder->getData() && $builder->getData()->getId() !== null;
+
         $builder
             ->add('name', TextType::class)
             ->add('title', TextType::class)
             ->add('description', TextareaType::class)
-            ->add('submit', SubmitType::class);
+            ->add('submit', SubmitType::class, [
+                'label' => $editing ? 'forum_form.save' : 'forum_form.create',
+            ]);
     }
 
     /**
