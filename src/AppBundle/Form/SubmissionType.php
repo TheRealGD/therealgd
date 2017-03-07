@@ -16,8 +16,7 @@ final class SubmissionType extends AbstractType {
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
-        $editing = $builder->getData() instanceof Submission &&
-            $builder->getData()->getId() !== null;
+        $editing = $builder->getData() && $builder->getData()->getId() !== null;
 
         $builder
             ->add('title', TextareaType::class)
@@ -25,6 +24,7 @@ final class SubmissionType extends AbstractType {
             ->add('body', TextareaType::class, [
                 'property_path' => 'rawBody',
                 'required' => false,
+                'trim' => false,
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'submission_form.'.($editing ? 'edit' : 'create'),

@@ -18,6 +18,7 @@ final class CommentType extends AbstractType {
         $builder
             ->add('comment', TextareaType::class, [
                 'property_path' => 'rawBody',
+                'trim' => false,
             ])
             ->add('submit', SubmitType::class);
 
