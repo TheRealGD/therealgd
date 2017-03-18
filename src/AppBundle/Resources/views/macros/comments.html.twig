@@ -79,6 +79,7 @@
   {{- block('comment_nav_permalink') -}}
   {{- block('comment_nav_parent') -}}
   {{- block('comment_nav_delete') -}}
+  {{- block('comment_nav_edit') }}
 {%- endblock -%}
 
 {%- block comment_nav_permalink -%}
@@ -139,5 +140,19 @@
         <button type="submit">{{ delete_thread_label|trans }}</button>
       </form>
     </li>
+  {%- endspaceless -%}
+{%- endblock -%}
+
+{%- block comment_nav_edit -%}
+  {%- spaceless -%}
+    {%- if is_granted('edit', comment) -%}
+      <li class="comment-nav-edit">
+        <a href="{{ path('raddit_app_edit_comment', {
+          forum_name: comment.submission.forum.name,
+          submission_id: comment.submission.id,
+          comment_id: comment.id,
+        }) }}">Edit</a>
+      </li>
+    {%- endif -%}
   {%- endspaceless -%}
 {%- endblock -%}

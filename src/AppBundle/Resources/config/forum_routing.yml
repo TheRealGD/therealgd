@@ -32,6 +32,11 @@ raddit_app_comment_post:
     path: /{forum_name}/{submission_id}/comment_post/{comment_id}
     methods: [POST]
 
+raddit_app_edit_comment:
+    defaults: { _controller: RadditAppBundle:Comment:editComment }
+    path: /{forum_name}/{submission_id}/edit_comment/{comment_id}
+    methods: [GET, POST]
+
 raddit_app_submit:
     defaults:
         _controller: RadditAppBundle:Submission:submit

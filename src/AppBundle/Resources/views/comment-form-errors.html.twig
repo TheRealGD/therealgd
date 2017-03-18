@@ -2,11 +2,21 @@
 
 {% from '@RadditApp/macros/comments.html.twig' import comment %}
 
+{% block title %}
+  {% if editing %}
+    {{ 'comment_form.edit_title'|trans }}
+  {% else %}
+    {{ 'comment_form.create_title'|trans }}
+  {% endif %}
+{% endblock %}
+
 {% block page_classes %}
   comment-form-error-page
 {% endblock %}
 
 {% block body %}
+  <h1>{{ block('title') }}</h1>
+
   {% if comment %}
     {{ comment(comment, false) }}
   {% endif %}

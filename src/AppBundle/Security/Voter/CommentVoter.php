@@ -13,8 +13,9 @@ final class CommentVoter extends Voter {
      * - delete - Allowed to delete a thread *or* to soft-delete a comment.
      * - delete_thread - Ability to delete a comment with its replies.
      * - softdelete - Ability to soft delete a comment.
+     * - edit - Ability to edit a comment.
      */
-    const ATTRIBUTES = ['delete', 'delete_thread', 'softdelete'];
+    const ATTRIBUTES = ['delete', 'delete_thread', 'softdelete', 'edit'];
 
     /**
      * @var AccessDecisionManagerInterface
@@ -64,6 +65,8 @@ final class CommentVoter extends Voter {
             return $this->canDeleteThread($subject, $token);
         case 'softdelete':
             return $this->canSoftDelete($subject, $token);
+        case 'edit':
+            return $this->canEdit($subject, $token);
         default:
             throw new \InvalidArgumentException('Unknown attribute '.$attribute);
         }
@@ -107,6 +110,24 @@ final class CommentVoter extends Voter {
         $forum = $comment->getSubmission()->getForum();
 
         // moderators can soft-delete
+        return $token->getUser()->isModeratorOfForum($forum);
+    }
+
+    /**
+     * @param Comment        $comment
+     * @param TokenInterface $token
+     *
+     * @return bool
+     */
+    private function canEdit(Comment $comment, TokenInterface $token) {
+        // users can edit their own comments
+        if ($token->getUser() === $comment->getUser()) {
+            return true;
+        }
+
+        $forum = $comment->getSubmission()->getForum();
+
+        // moderators can edit
         return $token->getUser()->isModeratorOfForum($forum);
     }
 }

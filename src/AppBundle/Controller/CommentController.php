@@ -83,6 +83,42 @@ final class CommentController extends Controller {
         }
 
         return $this->render('@RadditApp/comment-form-errors.html.twig', [
+            'editing' => false,
+            'form' => $form->createView(),
+            'forum' => $forum,
+            'submission' => $submission,
+            'comment' => $comment,
+        ]);
+    }
+
+    /**
+     * Edits a comment.
+     *
+     * @Security("is_granted('edit', comment)")
+     *
+     * @param Forum      $forum
+     * @param Submission $submission
+     * @param Comment    $comment
+     * @param Request    $request
+     *
+     * @return Response
+     */
+    public function editCommentAction(Forum $forum, Submission $submission, Comment $comment, Request $request) {
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('raddit_app_comment', [
+                'forum_name' => $forum->getName(),
+                'submission_id' => $submission->getId(),
+                'comment_id' => $comment->getId(),
+            ]);
+        }
+
+        return $this->render('@RadditApp/comment-form-errors.html.twig', [
+            'editing' => true,
             'form' => $form->createView(),
             'forum' => $forum,
             'submission' => $submission,
