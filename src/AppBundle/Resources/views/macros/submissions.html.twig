@@ -50,28 +50,30 @@
       </div>
 
       <div class="submission-inner">
-        {% spaceless %}
-          <h1 class="submission-title">
-            <a href="{{ block('submission_url') }}" class="submission-link">
-              {{- submission.title -}}
-            </a>
-          </h1>
-        {% endspaceless %}
+        <header class="submission-header">
+          {% spaceless %}
+            <h1 class="submission-title">
+              <a href="{{ block('submission_url') }}" class="submission-link">
+                {{- submission.title -}}
+              </a>
+            </h1>
+          {% endspaceless %}
 
-        <p class="submission-info">
-          {%- if options.show_forum_name -%}
-            {{ 'submissions.info_with_forum_name'|trans({
-              '%submitter%': block('submission_info_submitter'),
-              '%timestamp%': block('submission_info_timestamp'),
-              '%forum%': block('submission_info_forum_name'),
-            })|raw }}
-          {%- else -%}
-            {{ 'submissions.info_without_forum_name'|trans({
-              '%submitter%': block('submission_info_submitter'),
-              '%timestamp%': block('submission_info_timestamp'),
-            })|raw }}
-          {%- endif -%}
-        </p>
+          <p class="submission-info">
+            {%- if options.show_forum_name -%}
+              {{ 'submissions.info_with_forum_name'|trans({
+                '%submitter%': block('submission_info_submitter'),
+                '%timestamp%': block('submission_info_timestamp'),
+                '%forum%': block('submission_info_forum_name'),
+              })|raw }}
+            {%- else -%}
+              {{ 'submissions.info_without_forum_name'|trans({
+                '%submitter%': block('submission_info_submitter'),
+                '%timestamp%': block('submission_info_timestamp'),
+              })|raw }}
+            {%- endif -%}
+          </p>
+        </header>
 
         {%- if options.show_body -%}
           {% if submission.url %}

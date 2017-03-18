@@ -3,14 +3,18 @@
 // todo - smaller headings
 .sidebar {
   background: @sidebar-background-color;
-  box-sizing: border-box;
-  padding: 1em;
+  padding: 0 1rem;
+  margin-bottom: 1rem;
 
   @media screen and (min-width: 768px) {
-    margin-left: 1em;
+    margin-left: 1rem;
     float: right;
     min-width: 25%;
     max-width: 400px;
+  }
+
+  & > section {
+    padding-top: 1rem;
   }
 
   & > section:not(:last-child) {

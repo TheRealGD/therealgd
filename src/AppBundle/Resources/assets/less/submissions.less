@@ -2,7 +2,11 @@
 @import (reference) 'settings';
 
 .submission {
-  padding: 1em 0;
+  margin-bottom: 1rem;
+}
+
+.submission-header > * {
+  margin-bottom: 0;
 }
 
 .submission-row {
@@ -10,7 +14,7 @@
 }
 
 .submission-title {
-  font-size: 1.33em;
+  font-size: 1.33rem;
   font-weight: normal;
   margin: 0;
 }
@@ -25,10 +29,10 @@
 
 .submission-nav {
   .meta-nav;
+}
 
-  .submission-body-hidden & > ul {
-    margin-top: 0;
-  }
+.submission-body {
+  padding-top: 1rem;
 }
 
 .submission-sort {
@@ -36,7 +40,6 @@
 
   ul {
     display: table;
-    margin: 0.25em 0;
   }
 
   li {
@@ -47,7 +50,7 @@
     background: @submission-sort-link-background-color;
     color: @submission-sort-link-color;
     display: block;
-    padding: 0.5em 1em;
+    padding: 0.5rem 1rem;
   }
 
   .active {

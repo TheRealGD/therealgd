@@ -2,26 +2,22 @@
 // Standard, vertical, non-weird forms
 //
 
-/*
- * 1. Keep label from being larger than its inner text.
- */
 .form {
-  margin-top: 1em;
-  max-width: 40em;
+  max-width: 40rem;
 
   .row {
-    margin: 0 0 1em;
+    margin-bottom: 1rem;
   }
 
   label {
-    display: table; /* 1 */
+    // Keep label from being larger than its inner text
+    display: table;
   }
 
   button,
   input,
   select,
   textarea {
-    box-sizing: border-box;
     display: block;
   }
 

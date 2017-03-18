@@ -3,10 +3,15 @@
 
 html {
   background: @page-background-color;
+  box-sizing: border-box;
   color: @page-color;
   font-family: @page-font-family;
   font-size: @page-font-size;
   line-height: @page-line-height;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
 }
 
 a {
@@ -18,3 +23,10 @@ a:hover {
   text-decoration: underline;
 }
 
+// Avoid having to deal with margin collapsing. This approach requires
+// containers to have a top padding of 1rem for typographic elements to look
+// good.
+h1, h2, h3, h4, h5, h6, p, dl, ol, ul, blockquote {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}

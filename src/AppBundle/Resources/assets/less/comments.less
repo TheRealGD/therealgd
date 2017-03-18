@@ -2,8 +2,7 @@
 @import (reference) 'settings';
 
 .comment {
-  box-sizing: border-box;
-  margin: 1em 0;
+  padding-top: 1rem;
 
   &:target > .comment-row {
     background: @comment-highlight-background;
@@ -15,16 +14,12 @@
   .vote-flex;
 }
 
-.comment-info {
-  margin-top: 0;
-}
-
 /*
  * 1. Indent nested comments.
  */
 .comment-replies {
   .comment {
-    margin-left: 1em; /* 1 */
+    margin-left: 1rem; /* 1 */
   }
 }
 
