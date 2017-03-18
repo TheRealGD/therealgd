@@ -6,7 +6,7 @@ comments:
     edit: Edit
     permalink: Permalink
     parent: Parent
-    info: '%user% wrote %timestamp%:'
+    info: '%user% wrote %timestamp%'
     info_at_timestamp: at %timestamp%
     not_logged_in: You must %login_link% or %register_link% to comment.
     not_logged_in_login_link_label: log in
