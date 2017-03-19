@@ -7,6 +7,7 @@ use Raddit\AppBundle\Entity\User;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
@@ -42,6 +43,7 @@ class AddUserCommand extends Command implements ContainerAwareInterface {
             ->setDescription('Add a user account')
             ->addArgument('username', InputArgument::REQUIRED, 'The username for the new account')
             ->addArgument('email', InputArgument::REQUIRED, 'The email address for the account')
+            ->addOption('admin', 'a', InputOption::VALUE_NONE, 'Sets this user to be an admin')
         ;
     }
 
@@ -63,6 +65,7 @@ class AddUserCommand extends Command implements ContainerAwareInterface {
         $user->setUsername($input->getArgument('username'));
         $user->setPassword($this->encoder->encodePassword($user, $password));
         $user->setEmail($input->getArgument('email'));
+        $user->setAdmin($input->getOption('admin'));
 
         $errors = $this->validator->validate($user);
 

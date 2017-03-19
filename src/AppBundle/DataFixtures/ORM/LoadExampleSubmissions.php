@@ -16,20 +16,21 @@ class LoadExampleSubmissions implements FixtureInterface, OrderedFixtureInterfac
      */
     public function load(ObjectManager $manager) {
         $forum = $manager->getRepository(Forum::class)->findOneBy(['name' => 'liberalwithdulledge']);
-        $user = $manager->getRepository(User::class)->findOneByUsername('emma');
+        $emma = $manager->getRepository(User::class)->findOneByUsername('emma');
+        $zach = $manager->getRepository(User::class)->findOneByUsername('zach');
 
-        $url = Submission::create($forum, $user);
+        $url = Submission::create($forum, $zach);
         $url->setTitle('This is a submitted URL');
         $url->setUrl('http://www.example.com');
         $manager->persist($url);
 
-        $post = Submission::create($forum, $user);
+        $post = Submission::create($forum, $emma);
         $post->setTitle('This is a test submission');
         $post->setRawBody('Hi');
         $post->setBody(MarkdownConverter::convert($post->getRawBody()));
         $manager->persist($post);
 
-        $combo = Submission::create($forum, $user);
+        $combo = Submission::create($forum, $emma);
         $combo->setTitle('This is a submission with both a URL and a body');
         $combo->setUrl('http://www.example.org/some_thing_here');
         $combo->setRawBody('The quick brown fox jumped over the lazy dog.');

@@ -16,12 +16,18 @@ class LoadExampleUsers implements FixtureInterface, OrderedFixtureInterface, Con
      * {@inheritdoc}
      */
     public function load(ObjectManager $manager) {
-        $user = new User();
+        $user1 = new User();
+        $user1->setUsername('emma');
+        $user1->setPassword($this->container->get('security.password_encoder')->encodePassword($user1, 'goodshit'));
+        $user1->setEmail('emma@example.com');
+        $user1->setAdmin(true);
+        $manager->persist($user1);
 
-        $user->setUsername('emma');
-        $user->setPassword($this->container->get('security.password_encoder')->encodePassword($user, 'goodshit'));
-        $user->setEmail('emma@example.com');
-        $manager->persist($user);
+        $user2 = new User();
+        $user2->setUsername('zach');
+        $user2->setPassword($this->container->get('security.password_encoder')->encodePassword($user2, 'example2'));
+        $user2->setEmail('zach@example.com');
+        $manager->persist($user2);
 
         $manager->flush();
     }

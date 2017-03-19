@@ -85,6 +85,13 @@ class User implements UserInterface {
     private $created;
 
     /**
+     * @ORM\Column(type="boolean", options={"default": false})
+     *
+     * @var bool
+     */
+    private $admin = false;
+
+    /**
      * @ORM\OneToMany(targetEntity="Moderator", mappedBy="user")
      *
      * @var Moderator[]|Collection
@@ -197,6 +204,20 @@ class User implements UserInterface {
     }
 
     /**
+     * @return bool
+     */
+    public function isAdmin() {
+        return $this->admin;
+    }
+
+    /**
+     * @param bool $admin
+     */
+    public function setAdmin($admin) {
+        $this->admin = $admin;
+    }
+
+    /**
      * @return Collection|Moderator[]
      */
     public function getModeratorTokens() {
@@ -214,8 +235,13 @@ class User implements UserInterface {
      * {@inheritdoc}
      */
     public function getRoles() {
-        // TODO
-        return ['ROLE_USER'];
+        $roles = ['ROLE_USER'];
+
+        if ($this->admin) {
+            $roles[] = 'ROLE_ADMIN';
+        }
+
+        return $roles;
     }
 
     /**
