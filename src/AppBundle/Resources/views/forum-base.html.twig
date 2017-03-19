@@ -18,6 +18,15 @@
       {% endif %}
     </section>
 
+    {% if is_granted('edit', forum) %}
+      <section class="forum-manage">
+        <h1>{{ 'forum.manage'|trans }}</h1>
+        <ul>
+          <li><a href="{{ path('raddit_app_edit_forum', {forum_name: forum.name}) }}">{{ 'forum.edit'|trans }}</a></li>
+        </ul>
+      </section>
+    {% endif %}
+
     {% if forum.moderators|length > 0 %}
       <section class="forum-moderators">
         <h1>{{ 'forum.moderators'|trans }}</h1>

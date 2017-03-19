@@ -33,6 +33,8 @@ edit_user:
 forum:
     moderators: Moderators
     submit: Submit
+    manage: Manage
+    edit: Edit forum
 
 forum_form:
     name: Name
