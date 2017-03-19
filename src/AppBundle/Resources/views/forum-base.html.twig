@@ -14,7 +14,7 @@
       <h1 class="forum-title"><a href="{{ path('raddit_app_forum', {forum_name: forum.name}) }}">{{ forum.title }}</a></h1>
 
       {% if forum.description %}
-        <p class="forum-description">{{ forum.description }}</p>
+        <p class="forum-description">{{ forum.description|markdown|raw }}</p>
       {% endif %}
     </section>
 

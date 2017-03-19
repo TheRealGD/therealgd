@@ -1,6 +1,7 @@
 <?php
 
 namespace Raddit\AppBundle\Twig;
+use Raddit\AppBundle\Utils\MarkdownConverter;
 
 /**
  * Twig extension which makes certain parameters available as template
@@ -18,6 +19,12 @@ final class AppExtension extends \Twig_Extension {
     public function getFunctions() {
         return [
             new \Twig_SimpleFunction('raddit_app_site_name', [$this, 'getSiteName']),
+        ];
+    }
+
+    public function getFilters() {
+        return [
+            new \Twig_SimpleFilter('markdown', MarkdownConverter::class.'::convert')
         ];
     }
 

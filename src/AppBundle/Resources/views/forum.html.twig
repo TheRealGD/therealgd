@@ -8,7 +8,7 @@
   <link rel="canonical" href="{{ url('raddit_app_forum', {forum_name: forum.name}) }}">
 
   {% if forum.description %}
-    <meta name="description" content="{{ forum.description }}">
+    <meta name="description" content="{{ forum.description|markdown|striptags }}">
   {% endif %}
 {% endblock %}
 
