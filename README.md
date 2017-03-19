@@ -8,7 +8,7 @@ coincidental.
 
 ## Requirements
 
-* PHP >= 5.6 with the PDO_PGSQL extension
+* PHP >= 7.0 with the PDO_PGSQL extension
 * PostgreSQL >= 9.2
 * [Composer](https://getcomposer.org/)
 * [Node.js](https://nodejs.org/en/), optionally with [Yarn](https://yarnpkg.com)

@@ -17,7 +17,7 @@
         }
     },
     "require": {
-        "php": "^5.6|^7.0",
+        "php": "^7.0",
         "ext-pdo_pgsql": "*",
         "symfony/symfony": "3.2.*",
         "doctrine/orm": "^2.5",
@@ -66,6 +66,11 @@
         },
         "branch-alias": {
             "dev-master": "0.3-dev"
+        }
+    },
+    "config": {
+        "platform": {
+            "php": "7.0"
         }
     }
 }

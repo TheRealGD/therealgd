@@ -2,6 +2,7 @@
 
 ## v0.3.0 (2017-xx-xx)
 
+* Bumped the minimum PHP version to 7.0 as 5.6 is no longer supported.
 * Much future-proofing and many improvements to frontend assets.
     * webpack/gulp-based build system.
     * JS is written in ES2015 and transpiled to ES5 on build.
@@ -10,12 +11,15 @@
       elements created after an Ajax request.
     * Styles have been organised into modules.
 * Added the ability to edit:
+    * Comments
     * Forums
     * Submissions
     * User accounts
 * Added the ability to remove:
     * Forums
     * Submissions
+* Users can now be administrators.
+    * Added an `--admin` option to the `raddit:add-user` command.
 * Show notices when certain actions are performed.
 * Added the ability to create user accounts via the command line.
 * Voting on posts via Ajax (non-JS fallback still available.)
