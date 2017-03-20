@@ -24,7 +24,8 @@ class Comment extends Votable implements BodyInterface {
     /**
      * @ORM\Column(type="text")
      *
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="The comment must not be empty.")
+     * @Assert\Regex("/[[:graph:]]/u", message="The comment must not be empty.")
      * @Assert\Length(max=10000)
      *
      * @var string
