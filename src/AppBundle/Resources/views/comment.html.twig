@@ -1,12 +1,27 @@
 {% extends '@RadditApp/submission-base.html.twig' %}
 
 {% from '@RadditApp/macros/comments.html.twig' import comment, comment_form %}
+{% from '@RadditApp/macros/submissions.html.twig' import submission %}
 
 {% block page_classes %}
   single-comment-page
 {% endblock %}
 
 {% block body %}
+  {{ submission(submission) }}
+
+  <nav class="comment-thread-nav">
+    <h1>{{ 'comments.viewing_thread'|trans }}</h1>
+
+    <ul>
+      <li>
+        <a href="{{ path('raddit_app_comments', {forum_name: forum.name, submission_id: submission.id, }) }}">
+          {{- 'comments.thread_return'|trans -}}
+        </a>
+      </li>
+    </ul>
+  </nav>
+
   {{ comment(comment) }}
 
   {{ comment_form(submission, comment) }}

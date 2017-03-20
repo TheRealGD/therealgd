@@ -11,6 +11,8 @@ comments:
     not_logged_in: You must %login_link% or %register_link% to comment.
     not_logged_in_login_link_label: log in
     not_logged_in_register_link_label: register
+    viewing_thread: Viewing a single comment thread
+    thread_return: View all comments
 
 comment_form:
     comment: Comment
