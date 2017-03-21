@@ -1,9 +1,24 @@
+@import (reference) 'settings';
+
+
 //
 // Standard, vertical, non-weird forms
 //
 
 .form {
   max-width: 40rem;
+
+  .form-errors {
+    margin: 0;
+    padding: 0;
+
+    li {
+      color: @form-error-color;
+      font-weight: bold;
+      list-style-position: inside;
+      margin: 0;
+    }
+  }
 
   .row {
     margin-bottom: 1rem;
