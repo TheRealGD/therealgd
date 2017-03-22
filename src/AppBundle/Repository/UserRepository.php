@@ -3,7 +3,6 @@
 namespace Raddit\AppBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Raddit\AppBundle\Entity\Submission;
 use Raddit\AppBundle\Entity\User;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 

@@ -9,7 +9,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * aka Subraddit
+ * aka Subraddit.
  *
  * @ORM\Entity()
  * @ORM\Table(name="forums")

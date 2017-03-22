@@ -52,7 +52,8 @@ class User implements UserInterface {
     private $password;
 
     /**
-     * // bcrypt cannot handle more than 72 bytes
+     * Note: bcrypt cannot handle more than 72 bytes.
+     *
      * @Assert\Length(min=8, max=72, charset="8bit")
      * @Assert\NotBlank(groups={"registration"})
      *

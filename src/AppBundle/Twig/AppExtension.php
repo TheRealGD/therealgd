@@ -1,6 +1,7 @@
 <?php
 
 namespace Raddit\AppBundle\Twig;
+
 use Raddit\AppBundle\Utils\MarkdownConverter;
 
 /**
@@ -24,7 +25,7 @@ final class AppExtension extends \Twig_Extension {
 
     public function getFilters() {
         return [
-            new \Twig_SimpleFilter('markdown', MarkdownConverter::class.'::convert')
+            new \Twig_SimpleFilter('markdown', MarkdownConverter::class.'::convert'),
         ];
     }
 

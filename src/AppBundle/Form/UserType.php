@@ -64,7 +64,7 @@ final class UserType extends AbstractType {
                 }
 
                 return ['Default', 'registration'];
-            }
+            },
         ]);
     }
 }

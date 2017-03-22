@@ -8,6 +8,7 @@ use Doctrine\ORM\QueryBuilder;
 
 class SubmissionRepository extends EntityRepository {
     const SORT_TYPES = ['hot', 'new', 'top', 'controversial'];
+
     /**
      * @param string $sortType
      *

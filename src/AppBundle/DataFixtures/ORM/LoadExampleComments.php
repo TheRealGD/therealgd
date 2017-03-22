@@ -7,7 +7,6 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Raddit\AppBundle\Entity\Comment;
 use Raddit\AppBundle\Entity\Submission;
-use Raddit\AppBundle\Entity\Url;
 use Raddit\AppBundle\Entity\User;
 use Raddit\AppBundle\Utils\MarkdownConverter;
 
