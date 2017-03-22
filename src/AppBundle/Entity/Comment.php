@@ -129,13 +129,6 @@ class Comment extends Votable implements BodyInterface {
     }
 
     /**
-     * @param int $id
-     */
-    public function setId($id) {
-        $this->id = $id;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function getRawBody() {
@@ -237,24 +230,10 @@ class Comment extends Votable implements BodyInterface {
     }
 
     /**
-     * @param Comment[]|Collection $children
-     */
-    public function setChildren($children) {
-        $this->children = $children;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function getVotes() {
         return $this->votes;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setVotes($votes) {
-        $this->votes = $votes;
     }
 
     /**

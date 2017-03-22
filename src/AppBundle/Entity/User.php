@@ -111,13 +111,6 @@ class User implements UserInterface {
     }
 
     /**
-     * @param int $id
-     */
-    public function setId($id) {
-        $this->id = $id;
-    }
-
-    /**
      * @return string
      */
     public function getUsername() {
@@ -222,13 +215,6 @@ class User implements UserInterface {
      */
     public function getModeratorTokens() {
         return $this->moderatorTokens;
-    }
-
-    /**
-     * @param Collection|Moderator[] $moderatorTokens
-     */
-    public function setModeratorTokens($moderatorTokens) {
-        $this->moderatorTokens = $moderatorTokens;
     }
 
     /**

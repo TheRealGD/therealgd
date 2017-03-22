@@ -99,13 +99,6 @@ class Forum {
     }
 
     /**
-     * @param int $id
-     */
-    public function setId($id) {
-        $this->id = $id;
-    }
-
-    /**
      * @return string
      */
     public function getName() {
@@ -163,10 +156,25 @@ class Forum {
     }
 
     /**
-     * @param Collection|Moderator[] $moderators
+     * @param Moderator|Moderator[]|\Traversable $moderator
      */
-    public function setModerators($moderators) {
-        $this->moderators = $moderators;
+    public function addModerator($moderator) {
+        $moderators = is_iterable($moderator) ? $moderator : [$moderator];
+
+        foreach ($moderators as $item) {
+            $this->moderators->add($item);
+        }
+    }
+
+    /**
+     * @param Moderator|Moderator[]|\Traversable $moderator
+     */
+    public function removeModerator($moderator) {
+        $moderators = is_iterable($moderator) ? $moderator : [$moderator];
+
+        foreach ($moderators as $item) {
+            $this->moderators->removeElement($item);
+        }
     }
 
     /**
@@ -174,13 +182,6 @@ class Forum {
      */
     public function getSubmissions() {
         return $this->submissions;
-    }
-
-    /**
-     * @param Collection|Submission[] $submissions
-     */
-    public function setSubmissions($submissions) {
-        $this->submissions = $submissions;
     }
 
     /**

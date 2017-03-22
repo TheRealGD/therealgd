@@ -31,8 +31,7 @@ final class ForumController extends Controller {
             $moderator = new Moderator();
             $moderator->setUser($this->getUser());
             $moderator->setForum($forum);
-
-            $forum->setModerators([$moderator]);
+            $forum->addModerator($moderator);
 
             $em = $this->getDoctrine()->getManager();
 

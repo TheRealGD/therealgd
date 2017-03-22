@@ -42,13 +42,6 @@ class Moderator {
     }
 
     /**
-     * @param int $id
-     */
-    public function setId($id) {
-        $this->id = $id;
-    }
-
-    /**
      * @return Forum
      */
     public function getForum() {

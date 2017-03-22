@@ -13,11 +13,6 @@ abstract class Votable {
     abstract public function getVotes();
 
     /**
-     * @param Vote[]|Collection $votes
-     */
-    abstract public function setVotes($votes);
-
-    /**
      * @return Vote
      */
     abstract public function createVote();

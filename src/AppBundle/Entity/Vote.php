@@ -55,13 +55,6 @@ abstract class Vote {
     }
 
     /**
-     * @param int $id
-     */
-    public function setId($id) {
-        $this->id = $id;
-    }
-
-    /**
      * @return bool
      */
     public function isUpvote() {

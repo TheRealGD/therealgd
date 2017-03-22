@@ -136,13 +136,6 @@ class Submission extends Votable implements BodyInterface {
     }
 
     /**
-     * @param int $id
-     */
-    public function setId($id) {
-        $this->id = $id;
-    }
-
-    /**
      * @return string
      */
     public function getTitle() {
@@ -203,13 +196,6 @@ class Submission extends Votable implements BodyInterface {
      */
     public function getComments() {
         return $this->comments;
-    }
-
-    /**
-     * @param Collection|Comment[] $comments
-     */
-    public function setComments($comments) {
-        $this->comments = $comments;
     }
 
     /**
@@ -279,13 +265,6 @@ class Submission extends Votable implements BodyInterface {
      */
     public function getVotes() {
         return $this->votes;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setVotes($votes) {
-        $this->votes = $votes;
     }
 
     /**

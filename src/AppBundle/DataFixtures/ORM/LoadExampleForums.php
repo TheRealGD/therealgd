@@ -23,7 +23,7 @@ class LoadExampleForums implements FixtureInterface, OrderedFixtureInterface {
         $moderator = new Moderator();
         $moderator->setUser($user);
         $moderator->setForum($forum);
-        $forum->setModerators(new ArrayCollection([$moderator]));
+        $forum->addModerator($moderator);
 
         $manager->persist($forum);
         $manager->flush();
