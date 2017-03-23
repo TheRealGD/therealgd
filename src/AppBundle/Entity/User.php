@@ -173,10 +173,15 @@ class User implements UserInterface {
      */
     public function setEmail($email) {
         $this->email = $email;
-        $this->canonicalEmail = mb_strtolower($email, 'UTF-8');
+        $this->canonicalEmail = self::canonicalizeEmail($email);
     }
 
     /**
+     * Retrieve the canonical email address.
+     *
+     * Sending email to the canonicalised address is evil. Use this for lookup,
+     * but *always* send to the regular, non-canon address.
+     *
      * @return string
      */
     public function getCanonicalEmail() {
@@ -259,5 +264,36 @@ class User implements UserInterface {
         $criteria->where(Criteria::expr()->eq('forum', $forum));
 
         return count($this->moderatorTokens->matching($criteria)) > 0;
+    }
+
+    /**
+     * @param string $email
+     *
+     * @return string
+     *
+     * @throws \InvalidArgumentException if `$email` is not a valid address
+     */
+    public static function canonicalizeEmail(string $email): string {
+        if (substr_count($email, '@') !== 1) {
+            throw new \InvalidArgumentException('Invalid email address');
+        }
+
+        list($username, $domain) = explode('@', $email, 2);
+
+        switch (strtolower($domain)) {
+        case 'gmail.com':
+        case 'googlemail.com':
+            $username = strtolower($username);
+            $username = str_replace('.', '', $username);
+            $username = preg_replace('/\+.*/', '', $username);
+            $domain = 'gmail.com';
+            break;
+        // TODO - other common email providers
+        default:
+            // TODO - do unicode domains need to be handled too?
+            $domain = strtolower($domain);
+        }
+
+        return sprintf('%s@%s', $username, $domain);
     }
 }

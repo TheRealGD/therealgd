@@ -62,6 +62,7 @@ class ApplicationAvailabilityTest extends WebTestCase {
         yield ['/login'];
         yield ['/registration'];
         yield ['/user/emma'];
+        yield ['/reset_password'];
     }
 
     /**

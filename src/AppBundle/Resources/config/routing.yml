@@ -57,6 +57,16 @@ raddit_app_softdelete_comment:
     path: /sdc/{id}
     methods: [POST]
 
+raddit_app_request_password_reset:
+    defaults: { _controller: RadditAppBundle:ResetPassword:requestReset }
+    path: /reset_password
+    methods: [GET, POST]
+
+raddit_app_password_reset:
+    defaults: { _controller: RadditAppBundle:ResetPassword:reset }
+    path: /reset_password/{id}/{expires}/{checksum}
+    methods: [GET, POST]
+
 raddit_app_login_check:
     path: /login_check
     methods: [POST]

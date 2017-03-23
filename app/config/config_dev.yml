@@ -30,5 +30,6 @@ monolog:
         #    type:   chromephp
         #    level:  info
 
-#swiftmailer:
-#    delivery_address: me@example.com
+swiftmailer:
+    # you should use the profiler to view sent emails in dev
+    disable_delivery: true
