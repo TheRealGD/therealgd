@@ -18,10 +18,63 @@
     float: right;
   }
 
-  a {
+  & > ul > li > a {
     font-size: larger;
     color: @nav-link-color;
     display: block;
     padding: 1rem;
+  }
+}
+
+.dropdown-container {
+  position: relative;
+
+  // toggle dropdown by hovering when JS isn't available
+  &:not(.js) {
+    .dropdown-toggle:hover + .dropdown-menu,
+    .dropdown-menu:hover {
+      display: block;
+    }
+  }
+}
+
+// add a caret to dropdown toggle
+.dropdown-toggle::after {
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #fff;
+  content: '';
+  display: inline-block;
+  margin-left: 5px;
+  vertical-align: middle;
+}
+
+.dropdown-menu {
+  background: @dropdown-menu-background-color;
+  border: solid 1px @dropdown-menu-border-color;
+  border-top: none;
+  box-shadow: 0 0 1px @dropdown-menu-border-color;
+  display: none;
+  margin-top: -1px;
+  min-width: 12rem;
+  padding: 0;
+  position: absolute;
+  right: 0;
+
+  & > li {
+    display: block;
+    padding: 0;
+    white-space: pre;
+  }
+
+  & > li > a {
+    display: block;
+    padding: 0.5rem 1rem;
+
+    &:hover {
+      background: @page-link-color;
+      color: @page-background-color;
+      text-decoration: none;
+    }
   }
 }

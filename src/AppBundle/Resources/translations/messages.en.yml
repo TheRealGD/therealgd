@@ -86,7 +86,9 @@ reset_password:
 site_nav:
     log_in: Log in
     log_out: Log out
+    profile: Profile
     register: Register
+    my_account: My account
 
 submission_form:
     title: Title
