@@ -1,15 +1,16 @@
 # Change Log
 
-## v0.3.0 (2017-xx-xx)
+## v0.3.0 (2017-03-26)
 
 * Bumped the minimum PHP version to 7.0 as 5.6 is no longer supported.
 * Much future-proofing and many improvements to frontend assets.
     * webpack/gulp-based build system.
     * JS is written in ES2015 and transpiled to ES5 on build.
     * jQuery is used for DOM manipulation & traversal, and Ajax calls.
-    * Individual 'plugins' are now reusable and can be applied to e.g. new DOM
-      elements created after an Ajax request.
-    * Styles have been organised into modules.
+    * Individual JS 'plugins' are now reusable and can be applied to e.g. new
+      DOM elements created after an Ajax request.
+    * CSS rules have been grouped into files.
+    * Many style improvements have been made.
 * Added the ability to edit:
     * Comments
     * Forums
@@ -18,12 +19,14 @@
 * Added the ability to remove:
     * Forums
     * Submissions
+* Added a dropdown menu for user actions.
+* Added the ability to create user accounts via the command line.
+* Remove the distinction between 'Post submissions' and 'URL submissions'.
+* Show notices when certain actions are performed.
 * Users can now be administrators.
     * Added an `--admin` option to the `raddit:add-user` command.
-* Show notices when certain actions are performed.
-* Added the ability to create user accounts via the command line.
+* Users can now reset their passwords via email.
 * Voting on posts via Ajax (non-JS fallback still available.)
-* Remove the distinction between 'Post submissions' and 'URL submissions'.
 
 ## v0.2.0 (2017-01-06)
 
