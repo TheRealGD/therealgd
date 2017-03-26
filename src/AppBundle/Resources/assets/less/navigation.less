@@ -19,7 +19,8 @@
   }
 
   & > ul > li > a {
-    font-size: larger;
+    .fix-line-height(@nav-font-size);
+    font-size: @nav-font-size;
     color: @nav-link-color;
     display: block;
     padding: 1rem;
