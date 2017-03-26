@@ -18,6 +18,13 @@
     float: right;
   }
 
+  & > ul > li {
+    &.dropdown-container.expanded,
+    &.active {
+      background-color: @nav-active-background-color;
+    }
+  }
+
   & > ul > li > a {
     .fix-line-height(@nav-font-size);
     font-size: @nav-font-size;
