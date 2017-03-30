@@ -55,7 +55,7 @@
 .dropdown-toggle::after {
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
-  border-top: 5px solid #fff;
+  border-top: 5px solid;
   content: '';
   display: inline-block;
   margin-left: 5px;
@@ -72,7 +72,13 @@
   min-width: 12rem;
   padding: 0;
   position: absolute;
-  right: 0;
+  left: 0;
+  right: auto;
+
+  .right-nav & {
+    left: auto;
+    right: 0;
+  }
 
   & > li {
     display: block;

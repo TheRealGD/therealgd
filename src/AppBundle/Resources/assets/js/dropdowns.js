@@ -10,13 +10,14 @@ import $ from 'jquery';
 function initRoot(root) {
     root = root || ':root';
 
-    const container = $(root).find('.dropdown-container');
-
-    $(container)
+    $(root)
+        .find('.dropdown-container')
         .addClass('js')
         .find('.dropdown-toggle')
         .click(function (event) {
             event.stopPropagation();
+
+            const container = $(this).parent('.dropdown-container');
 
             // close all other dropdowns
             $('.dropdown-container.expanded')
@@ -26,8 +27,9 @@ function initRoot(root) {
                 .attr('aria-expanded', false);
 
             // toggle the current dropdown
-            $(container).toggleClass('expanded');
-            $(this).attr('aria-expanded', $(container).hasClass('expanded'));
+            $(this)
+                .attr('aria-expanded', $(container).hasClass('expanded'))
+                .parent('.dropdown-container').toggleClass('expanded');
 
             return false;
         });
