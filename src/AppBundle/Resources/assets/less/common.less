@@ -2,6 +2,12 @@
 
 .content-wrapper {
   .clear-fix();
+
+  @media screen and (max-width: 767px) {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
   margin: 0 1rem;
 
   & > .body > * {
