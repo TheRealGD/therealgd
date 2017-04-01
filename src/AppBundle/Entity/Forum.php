@@ -31,7 +31,7 @@ class Forum {
      *
      * @Assert\NotBlank()
      * @Assert\Length(min=3, max=25)
-     * @Assert\Regex("/^\w+$/")
+     * @Assert\Regex("/^\w+$/", message="The name must contain only contain letters, numbers, and underscores.")
      *
      * @var string
      */
