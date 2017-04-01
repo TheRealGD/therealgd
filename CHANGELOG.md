@@ -1,5 +1,9 @@
 # Change Log
 
+## v0.4.0 (2017-xx-xx)
+
+N/A
+
 ## v0.3.0 (2017-03-26)
 
 * Bumped the minimum PHP version to 7.0 as 5.6 is no longer supported.
