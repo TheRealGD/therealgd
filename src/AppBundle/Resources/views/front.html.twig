@@ -5,13 +5,6 @@
   front-page
 {% endblock %}
 
-{%- block site_nav_right -%}
-  {%- if is_granted('ROLE_USER') -%}
-    <li><a href="{{ path('raddit_app_create_forum') }}">{{ 'create_forum.nav_link'|trans }}</a></li>
-  {%- endif -%}
-  {{- parent() -}}
-{%- endblock -%}
-
 {% block body %}
   {{ submission_sort(sort_by) }}
 

@@ -2,8 +2,10 @@
 
 namespace Raddit\AppBundle\Form;
 
+use Raddit\AppBundle\Entity\Forum;
 use Raddit\AppBundle\Entity\Submission;
 use Raddit\AppBundle\Form\EventListener\MarkdownSubscriber;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -25,10 +27,19 @@ final class SubmissionType extends AbstractType {
                 'property_path' => 'rawBody',
                 'required' => false,
                 'trim' => false,
-            ])
-            ->add('submit', SubmitType::class, [
-                'label' => 'submission_form.'.($editing ? 'edit' : 'create'),
             ]);
+
+        if (!$editing) {
+            $builder->add('forum', EntityType::class, [
+                'class' => Forum::class,
+                'choice_label' => 'name',
+                'required' => false, // enable a blank choice
+            ]);
+        }
+
+        $builder->add('submit', SubmitType::class, [
+            'label' => 'submission_form.'.($editing ? 'edit' : 'create'),
+        ]);
 
         if ($editing) {
             $builder->add('delete', SubmitType::class);

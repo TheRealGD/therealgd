@@ -2,7 +2,7 @@
 
 ## v0.4.0 (2017-xx-xx)
 
-N/A
+* Submit button everywhere
 
 ## v0.3.0 (2017-03-26)
 

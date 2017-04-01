@@ -34,7 +34,6 @@ edit_user:
 
 forum:
     moderators: Moderators
-    submit: Submit
     manage: Manage
     edit: Edit forum
 
@@ -84,6 +83,7 @@ reset_password:
     update_notice: Your password has been updated.
 
 site_nav:
+    submit: Submit
     log_in: Log in
     log_out: Log out
     profile: Profile
@@ -94,6 +94,7 @@ submission_form:
     title: Title
     url: URL
     body: Body
+    forum: Forum
     create: Create submission
     edit: Edit submission
     delete: Delete submission

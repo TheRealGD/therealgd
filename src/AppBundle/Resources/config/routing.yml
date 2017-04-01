@@ -33,6 +33,11 @@ raddit_app_create_forum:
     path: /create_forum
     methods: [GET, POST]
 
+raddit_app_submit:
+    defaults: { _controller: RadditAppBundle:Submission:submit, forum_name: null }
+    path: /submit/{forum_name}
+    methods: [GET, POST]
+
 raddit_app_comment_vote:
     defaults:
         _controller: RadditAppBundle:Vote:vote

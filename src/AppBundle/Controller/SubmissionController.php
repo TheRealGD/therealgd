@@ -113,7 +113,7 @@ final class SubmissionController extends Controller {
      *
      * @return Response
      */
-    public function submitAction(Forum $forum, Request $request) {
+    public function submitAction(Request $request, Forum $forum = null) {
         $submission = Submission::create($forum, $this->getUser());
 
         $form = $this->createForm(SubmissionType::class, $submission);
@@ -126,7 +126,7 @@ final class SubmissionController extends Controller {
             $em->flush();
 
             return $this->redirectToRoute('raddit_app_comments', [
-                'forum_name' => $forum->getName(),
+                'forum_name' => $submission->getForum()->getName(),
                 'submission_id' => $submission->getId(),
             ]);
         }

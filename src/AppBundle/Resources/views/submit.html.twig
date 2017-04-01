@@ -1,5 +1,4 @@
-{% extends '@RadditApp/forum-base.html.twig' %}
-
+{% extends forum is defined and forum ? '@RadditApp/forum-base.html.twig' : '@RadditApp/base.html.twig' %}
 {% form_theme form '@RadditApp/forms/standard-form-theme.html.twig' %}
 
 {% block page_classes %}submit-page{% endblock %}
@@ -11,6 +10,10 @@
     {{ form_row(form.url) }}
 
     {{ form_row(form.body, {attr: {rows: 16}}) }}
+
+    {% if form.forum is defined %}
+      {{ form_row(form.forum) }}
+    {% endif %}
 
     {{ form_row(form.submit) }}
 

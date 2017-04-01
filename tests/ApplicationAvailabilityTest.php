@@ -71,6 +71,7 @@ class ApplicationAvailabilityTest extends WebTestCase {
     public function authUrlProvider() {
         yield ['create_forum'];
         yield ['/f/liberalwithdulledge/edit'];
-        yield ['/f/liberalwithdulledge/submit'];
+        yield ['/submit'];
+        yield ['/submit/liberalwithdulledge'];
     }
 }

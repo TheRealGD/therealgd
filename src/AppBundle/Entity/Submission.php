@@ -79,6 +79,8 @@ class Submission extends Votable implements BodyInterface {
      * @ORM\JoinColumn(nullable=false)
      * @ORM\ManyToOne(targetEntity="Forum", inversedBy="submissions")
      *
+     * @Assert\NotBlank()
+     *
      * @var Forum
      */
     private $forum;
@@ -107,9 +109,13 @@ class Submission extends Votable implements BodyInterface {
      *
      * @return static
      */
-    public static function create(Forum $forum, User $user) {
+    public static function create(Forum $forum = null, User $user) {
         $submission = new self();
-        $submission->setForum($forum);
+
+        if ($forum) {
+            $submission->setForum($forum);
+        }
+
         $submission->setUser($user);
 
         $vote = new SubmissionVote();
