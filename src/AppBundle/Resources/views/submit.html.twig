@@ -5,11 +5,11 @@
 
 {% block body %}
   {{ form_start(form) }}
-    {{ form_row(form.title, {attr: {rows: 4}}) }}
+    {{ form_row(form.title, {attr: {rows: 3}}) }}
 
     {{ form_row(form.url) }}
 
-    {{ form_row(form.body, {attr: {rows: 16}}) }}
+    {{ form_row(form.body, {attr: {rows: 10}}) }}
 
     {% if form.forum is defined %}
       {{ form_row(form.forum) }}
