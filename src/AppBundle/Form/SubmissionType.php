@@ -2,6 +2,7 @@
 
 namespace Raddit\AppBundle\Form;
 
+use Doctrine\ORM\EntityRepository;
 use Raddit\AppBundle\Entity\Forum;
 use Raddit\AppBundle\Entity\Submission;
 use Raddit\AppBundle\Form\EventListener\MarkdownSubscriber;
@@ -33,6 +34,10 @@ final class SubmissionType extends AbstractType {
             $builder->add('forum', EntityType::class, [
                 'class' => Forum::class,
                 'choice_label' => 'name',
+                'query_builder' => function (EntityRepository $repository) {
+                    return $repository->createQueryBuilder('f')
+                        ->orderBy('f.name', 'ASC');
+                },
                 'required' => false, // enable a blank choice
             ]);
         }
