@@ -63,17 +63,6 @@ abstract class Votable {
      * @return int
      */
     final public static function descendingNetScoreCmp(self $a, self $b) {
-        $as = $a->getNetScore();
-        $bs = $b->getNetScore();
-
-        if ($bs > $as) {
-            return 1;
-        }
-
-        if ($as > $bs) {
-            return -1;
-        }
-
-        return 0;
+        return $b->getNetScore() <=> $a->getNetScore();
     }
 }
