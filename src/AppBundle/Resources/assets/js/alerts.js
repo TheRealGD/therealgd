@@ -1,9 +1,7 @@
 'use strict';
 
-import $ from 'jquery';
-
-function initAlerts(root) {
-    $(root || ':root').find('.site-alerts .alert')
+function initAlerts($) {
+    $('.site-alerts .alert')
         .css('cursor', 'pointer')
         .click(function () {
             $(this).fadeOut(400, () => {

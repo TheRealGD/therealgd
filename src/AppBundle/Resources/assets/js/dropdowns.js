@@ -4,14 +4,9 @@ import $ from 'jquery';
 
 /**
  * Make all dropdown menus interactive.
- *
- * @param {string} root
  */
-function initRoot(root) {
-    root = root || ':root';
-
-    $(root)
-        .find('.dropdown-container')
+function initRoot($) {
+    $('.dropdown-container')
         .addClass('js')
         .find('.dropdown-toggle')
         .click(function (event) {
