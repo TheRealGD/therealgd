@@ -2,7 +2,10 @@
 
 ## v0.4.0 (2017-xx-xx)
 
-* Submit button everywhere
+* Added links for submit/create forum everywhere.
+* The submission form now lets you choose the forum you want to post in. 
+  Accessing the form through a forum makes that forum selected by default.
+* Replaced the popular submission ranking algorithm with one that makes sense.
 
 ## v0.3.0 (2017-03-26)
 
