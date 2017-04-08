@@ -22,18 +22,21 @@ final class SubmissionController extends Controller {
     /**
      * View submissions on the front page.
      *
-     * @param Request $request
+     * @param string $sortBy
      *
      * @return Response
      */
-    public function frontPageAction(Request $request) {
-        $sortBy = $this->getSortBy($request);
+    public function frontPageAction(string $sortBy) {
+        $repository = $this->getDoctrine()->getRepository(Submission::class);
 
-        $submissions = $this->getDoctrine()->getRepository(Submission::class)
-            ->findSortedQb($sortBy)
-            ->setMaxResults(20)
-            ->getQuery()
-            ->execute();
+        if ($sortBy === 'hot') {
+            $submissions = $repository->findHotSubmissions();
+        } else {
+            $submissions = $repository->findSortedQb($sortBy)
+                ->setMaxResults(SubmissionRepository::MAX_PER_PAGE)
+                ->getQuery()
+                ->execute();
+        }
 
         return $this->render('@RadditApp/front.html.twig', [
             'sort_by' => $sortBy,
@@ -44,21 +47,24 @@ final class SubmissionController extends Controller {
     /**
      * Show the front page of a given forum.
      *
-     * @param Forum   $forum
-     * @param Request $request
+     * @param Forum  $forum
+     * @param string $sortBy
      *
      * @return Response
      */
-    public function forumAction(Forum $forum, Request $request) {
-        $sortBy = $this->getSortBy($request);
+    public function forumAction(Forum $forum, string $sortBy) {
+        $repository = $this->getDoctrine()->getRepository(Submission::class);
 
-        $submissions = $this->getDoctrine()->getRepository(Submission::class)
-            ->findSortedQb($sortBy)
-            ->andWhere('s.forum = :forum')
-            ->setParameter('forum', $forum)
-            ->setMaxResults(20)
-            ->getQuery()
-            ->execute();
+        if ($sortBy === 'hot') {
+            $submissions = $repository->findHotSubmissions($forum);
+        } else {
+            $submissions = $repository->findSortedQb($sortBy)
+                ->andWhere('s.forum = :forum')
+                ->setParameter('forum', $forum)
+                ->setMaxResults(SubmissionRepository::MAX_PER_PAGE)
+                ->getQuery()
+                ->execute();
+        }
 
         return $this->render('@RadditApp/forum.html.twig', [
             'forum' => $forum,
@@ -179,20 +185,5 @@ final class SubmissionController extends Controller {
             'forum' => $forum,
             'submission' => $submission,
         ]);
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return mixed|string
-     */
-    private function getSortBy(Request $request) {
-        $sortBy = $request->query->get('sort');
-
-        if (!in_array($sortBy, SubmissionRepository::SORT_TYPES)) {
-            return 'hot';
-        }
-
-        return $sortBy;
     }
 }

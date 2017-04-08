@@ -9,9 +9,10 @@
 #
 
 raddit_app_forum:
-    defaults: { _controller: RadditAppBundle:Submission:forum }
-    path: /{forum_name}/
+    defaults: { _controller: RadditAppBundle:Submission:forum, sortBy: hot }
+    path: /{forum_name}/{sortBy}
     methods: [GET]
+    requirements: { sortBy: hot|new|top|controversial }
 
 raddit_app_comments:
     defaults: { _controller: RadditAppBundle:Submission:commentPage }

@@ -11,9 +11,12 @@
   {%- spaceless -%}
   <nav class="submission-sort">
     <ul>
-      {%- for type in constant('Raddit\\AppBundle\\Repository\\SubmissionRepository::SORT_TYPES') -%}
+      {%- for type in ['hot', 'new', 'top', 'controversial'] -%}
         <li>
-          <a href="?sort={{ type }}" class="{% if type == current %}active{% endif %}">
+          <a href="{{ path(
+              app.request.attributes.get('_route'),
+              app.request.attributes.get('_route_params')|default([])|merge({sortBy: type}))
+          }}" class="{{ type == current ? 'active' }}">
             {{- ('submissions.sort_by_'~type)|trans -}}
           </a>
         </li>
