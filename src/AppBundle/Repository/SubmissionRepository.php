@@ -47,8 +47,8 @@ class SubmissionRepository extends EntityRepository {
      *
      * @return Submission[]
      */
-    public function findHotSubmissions(Forum $forum = null, $page = 1, $max = self::MAX_PER_PAGE) {
-        if ($page < 0) {
+    public function findHotSubmissions(Forum $forum = null, int $page = 1, int $max = self::MAX_PER_PAGE) {
+        if ($page < 1) {
             throw new \InvalidArgumentException('page starts from 1');
         }
 
