@@ -4,6 +4,7 @@ namespace Raddit\AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Selectable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -85,10 +86,18 @@ class Forum {
      */
     private $created;
 
+    /**
+     * @ORM\OneToMany(targetEntity="ForumSubscription", mappedBy="forum")
+     *
+     * @var ForumSubscription[]|Collection|Selectable
+     */
+    private $subscriptions;
+
     public function __construct() {
         $this->created = new \DateTime('@'.time());
         $this->moderators = new ArrayCollection();
         $this->submissions = new ArrayCollection();
+        $this->subscriptions = new ArrayCollection();
     }
 
     /**
@@ -196,5 +205,12 @@ class Forum {
      */
     public function setCreated($created) {
         $this->created = $created;
+    }
+
+    /**
+     * @return ForumSubscription[]|Collection|Selectable
+     */
+    public function getSubscriptions() {
+        return $this->subscriptions;
     }
 }

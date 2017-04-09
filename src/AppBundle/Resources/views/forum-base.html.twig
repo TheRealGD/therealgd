@@ -5,8 +5,25 @@
     <section class="forum-meta">
       <h1 class="forum-title"><a href="{{ path('raddit_app_forum', {forum_name: forum.name}) }}">{{ forum.title }}</a></h1>
 
+      {% if is_granted('ROLE_USER') %}
+        {% set subscribed = app.user.subscriptionByForum(forum) is not null %}
+        <form action="{{ path(subscribed ? 'raddit_app_unsubscribe' : 'raddit_app_subscribe', {id: forum.id}) }}" method="POST">
+          <input type="hidden" name="token" value="{{ csrf_token('subscribe') }}">
+
+          <p>
+            <button class="forum-subscribe-button">
+              {{- (subscribed ? 'forum.unsubscribe' : 'forum.subscribe')|trans -}}
+            </button>
+
+            <span class="forum-subscriber-count">
+              {{ 'forum.subscriber_count'|transchoice(forum.subscriptions|length) }}
+            </span>
+          </p>
+        </form>
+      {% endif %}
+
       {% if forum.description %}
-        <p class="forum-description">{{ forum.description|markdown|raw }}</p>
+        <div class="forum-description">{{ forum.description|markdown|raw }}</div>
       {% endif %}
     </section>
 

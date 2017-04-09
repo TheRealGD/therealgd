@@ -36,6 +36,9 @@ forum:
     moderators: Moderators
     manage: Manage
     edit: Edit forum
+    subscribe: Subscribe
+    unsubscribe: Unsubscribe
+    subscriber_count: '{0} No subscribers|{1} %count% subscriber|[1,Inf[ %count% subscribers'
 
 forum_form:
     name: Name

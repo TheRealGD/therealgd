@@ -5,6 +5,7 @@ namespace Raddit\AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Selectable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -99,9 +100,17 @@ class User implements UserInterface {
      */
     private $moderatorTokens;
 
+    /**
+     * @ORM\OneToMany(targetEntity="ForumSubscription", mappedBy="user", cascade={"persist", "remove"})
+     *
+     * @var ForumSubscription[]|Collection|Selectable
+     */
+    private $subscriptions;
+
     public function __construct() {
         $this->created = new \DateTime('@'.time());
         $this->moderatorTokens = new ArrayCollection();
+        $this->subscriptions = new ArrayCollection();
     }
 
     /**
@@ -264,6 +273,38 @@ class User implements UserInterface {
         $criteria->where(Criteria::expr()->eq('forum', $forum));
 
         return count($this->moderatorTokens->matching($criteria)) > 0;
+    }
+
+    /**
+     * @return ForumSubscription[]|Collection|Selectable
+     */
+    public function getSubscriptions() {
+        return $this->subscriptions;
+    }
+
+    /**
+     * @param Forum $forum
+     */
+    public function addForumSubscription(Forum $forum) {
+        $subscription = new ForumSubscription();
+        $subscription->setForum($forum);
+        $subscription->setUser($this);
+
+        $this->subscriptions->add($subscription);
+    }
+
+    /**
+     * @param Forum $forum
+     *
+     * @return ForumSubscription|null
+     */
+    public function getSubscriptionByForum(Forum $forum) {
+        $criteria = Criteria::create();
+        $criteria->where(Criteria::expr()->eq('forum', $forum));
+
+        $subscriptions = $this->getSubscriptions()->matching($criteria);
+
+        return $subscriptions[0] ?? null;
     }
 
     /**

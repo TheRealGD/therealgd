@@ -63,6 +63,16 @@ raddit_app_softdelete_comment:
     path: /sdc/{id}
     methods: [POST]
 
+raddit_app_subscribe:
+    defaults: { _controller: RadditAppBundle:Forum:subscribe, action: subscribe }
+    path: /sub/{id}
+    methods: [POST]
+
+raddit_app_unsubscribe:
+    defaults: { _controller: RadditAppBundle:Forum:subscribe, action: unsubscribe }
+    path: /unsub/{id}
+    methods: [POST]
+
 raddit_app_request_password_reset:
     defaults: { _controller: RadditAppBundle:ResetPassword:requestReset }
     path: /reset_password

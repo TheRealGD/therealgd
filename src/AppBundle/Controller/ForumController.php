@@ -4,6 +4,7 @@ namespace Raddit\AppBundle\Controller;
 
 use Raddit\AppBundle\Entity\Forum;
 use Raddit\AppBundle\Entity\Moderator;
+use Raddit\AppBundle\Entity\User;
 use Raddit\AppBundle\Form\ForumType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -85,5 +86,53 @@ final class ForumController extends Controller {
             'form' => $form->createView(),
             'forum' => $forum,
         ]);
+    }
+
+    /**
+     * @Security("is_granted('ROLE_USER')")
+     *
+     * @param Request $request
+     * @param Forum   $forum   one of 'subscribe' or 'unsubscribe'
+     * @param string  $action
+     *
+     * @return Response
+     */
+    public function subscribeAction(Request $request, Forum $forum, string $action) {
+        if (!$this->isCsrfTokenValid('subscribe', $request->request->get('token'))) {
+            throw $this->createAccessDeniedException();
+        }
+
+        /** @var User $user */
+        $user = $this->getUser();
+        $em = $this->getDoctrine()->getManager();
+
+        switch ($action) {
+        case 'subscribe':
+            if (!$user->getSubscriptionByForum($forum)) {
+                $user->addForumSubscription($forum);
+            }
+
+            break;
+        case 'unsubscribe':
+            $subscription = $user->getSubscriptionByForum($forum);
+
+            if ($subscription) {
+                $em->remove($subscription);
+            }
+
+            break;
+        default:
+            throw new \InvalidArgumentException('$action must be subscribe or unsubscribe');
+        }
+
+        $em->flush();
+
+        $referrer = $request->headers->get('Referrer');
+
+        if ($referrer) {
+            return $this->redirectToRoute($referrer);
+        }
+
+        return $this->redirectToRoute('raddit_app_forum', ['forum_name' => $forum->getName()]);
     }
 }
