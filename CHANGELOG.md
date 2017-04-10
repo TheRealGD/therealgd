@@ -1,5 +1,11 @@
 # Change Log
 
+## v0.3.1 (2017-04-11)
+
+* Fixed recursion bug in JS which would make the browser consume 100% CPU.
+* Fixed nasty bug where submitting the user form without a password would erase
+  the existing password.
+
 ## v0.3.0 (2017-03-26)
 
 * Bumped the minimum PHP version to 7.0 as 5.6 is no longer supported.
