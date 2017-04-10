@@ -29,8 +29,10 @@ final class PasswordEncodingSubscriber implements EventSubscriberInterface {
         /** @var User $user */
         $user = $event->getForm()->getData();
 
-        $encoded = $this->encoder->encodePassword($user, $user->getPlainPassword());
-        $user->setPassword($encoded);
+        if ($user->getPlainPassword() !== null) {
+            $encoded = $this->encoder->encodePassword($user, $user->getPlainPassword());
+            $user->setPassword($encoded);
+        }
     }
 
     /**
