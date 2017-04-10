@@ -127,7 +127,7 @@ final class ForumController extends Controller {
 
         $em->flush();
 
-        $referrer = $request->headers->get('Referrer');
+        $referrer = $request->headers->get('Referer');
 
         if ($referrer) {
             return $this->redirectToRoute($referrer);
