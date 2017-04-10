@@ -130,7 +130,7 @@ final class ForumController extends Controller {
         $referrer = $request->headers->get('Referer');
 
         if ($referrer) {
-            return $this->redirectToRoute($referrer);
+            return $this->redirect($referrer);
         }
 
         return $this->redirectToRoute('raddit_app_forum', ['forum_name' => $forum->getName()]);
