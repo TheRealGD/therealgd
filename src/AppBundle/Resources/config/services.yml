@@ -1,53 +1,59 @@
 # Learn more about services, parameters and containers at
 # http://symfony.com/doc/current/service_container.html
 parameters:
-    raddit_app.site_name: Raddit
 
+# Symfony 3.3 naming convention
+# http://symfony.com/blog/new-in-symfony-3-3-optional-class-for-named-services
 services:
-    raddit_app.form.forum_type:
+    Raddit\AppBundle\Form\ForumType:
         class: Raddit\AppBundle\Form\ForumType
         arguments: ["@security.authorization_checker"]
         tags:
             - { name: form.type }
 
-    raddit_app.form.user_type:
+    Raddit\AppBundle\Form\UserType:
         class: Raddit\AppBundle\Form\UserType
         arguments: ["@security.password_encoder"]
         tags:
             - { name: form.type }
 
-    raddit_app.event_listener.ajax_listener:
+    Raddit\AppBundle\EventListener\AjaxListener:
         class: Raddit\AppBundle\EventListener\AjaxListener
         tags:
             - { name: kernel.event_subscriber }
 
-    raddit_app.security.voter.comment_voter:
+    Raddit\AppBundle\Security\Voter\CommentVoter:
         class: Raddit\AppBundle\Security\Voter\CommentVoter
         arguments: ["@security.access.decision_manager"]
         tags:
             - { name: security.voter }
+        public: false
 
-    raddit_app.security.voter.forum_voter:
+    Raddit\AppBundle\Security\Voter\ForumVoter:
         class: Raddit\AppBundle\Security\Voter\ForumVoter
         arguments: ["@security.access.decision_manager"]
         tags:
             - { name: security.voter }
+        public: false
 
-    raddit_app.security.voter.submission_voter:
+    Raddit\AppBundle\Security\Voter\SubmissionVoter:
         class: Raddit\AppBundle\Security\Voter\SubmissionVoter
         arguments: ["@security.access.decision_manager"]
         tags:
             - { name: security.voter }
+        public: false
 
-    raddit_app.security.voter.user_voter:
+    Raddit\AppBundle\Security\Voter\UserVoter:
         class: Raddit\AppBundle\Security\Voter\UserVoter
         arguments: ["@security.access.decision_manager"]
         tags:
             - { name: security.voter }
+        public: false
 
-    raddit_app.twig.app_extension:
+    Raddit\AppBundle\Twig\AppExtension:
         class: Raddit\AppBundle\Twig\AppExtension
         calls:
-            - [setSiteName, ["%raddit_app.site_name%"]]
+            - [setSiteName, ["%site_name%"]]
         tags:
             - { name: twig.extension }
+        public: false

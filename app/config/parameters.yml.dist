@@ -13,6 +13,8 @@ parameters:
     mailer_user:       ~
     mailer_password:   ~
 
+    site_name:         Raddit
+
     # The email address automated messages will be sent from
     no_reply_address:   no-reply@example.com
 
