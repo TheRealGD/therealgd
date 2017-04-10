@@ -4,7 +4,6 @@ namespace Raddit\AppBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
-use Raddit\AppBundle\Entity\Forum;
 use Raddit\AppBundle\Entity\Submission;
 
 class SubmissionRepository extends EntityRepository {
@@ -41,41 +40,35 @@ class SubmissionRepository extends EntityRepository {
      * for a maximum duration of `MAX_VISIBILITY`, depending on the multiplier
      * and score, while unpopular posts will give way to newer posts.
      *
-     * @param Forum|null $forum
-     * @param int        $page
-     * @param int        $max
+     * By passing a callable to this method, the query can be modified as
+     * needed through the `\Doctrine\DBAL\Query\QueryBuilder` object passed to
+     * the callback.
+     *
+     * @param callable|null $callback
      *
      * @return Submission[]
      */
-    public function findHotSubmissions(Forum $forum = null, int $page = 1, int $max = self::MAX_PER_PAGE) {
-        if ($page < 1) {
-            throw new \InvalidArgumentException('page starts from 1');
-        }
-
+    public function findHotSubmissions(callable $callback = null) {
         $rsm = $this->createResultSetMappingBuilder('s');
+        $em = $this->getEntityManager();
 
-        $sql =
-            "SELECT $rsm FROM submissions s ".
-                'LEFT JOIN submission_votes uv ON (uv.submission_id = s.id AND uv.upvote) '.
-                'LEFT JOIN submission_votes dv ON (dv.submission_id = s.id AND NOT dv.upvote) '.
-                ($forum ? 'WHERE s.forum_id = :forum ' : '').
-                'GROUP BY s.id '.
-                'ORDER BY EXTRACT(EPOCH FROM s.timestamp) + '.
-                        'GREATEST(LEAST(:mul * (COUNT(uv) - COUNT(dv)), :mv), 0) DESC, '.
-                    's.id DESC '.
-                'LIMIT :limit OFFSET :offset';
+        $qb = $em->getConnection()->createQueryBuilder()
+            ->select($rsm->generateSelectClause())
+            ->from('submissions', 's')
+            ->leftJoin('s', 'submission_votes', 'uv', 's.id = uv.submission_id AND uv.upvote')
+            ->leftJoin('s', 'submission_votes', 'dv', 's.id = dv.submission_id AND NOT dv.upvote')
+            ->groupBy('s.id')
+            ->orderBy('EXTRACT(EPOCH FROM s.timestamp) + GREATEST(LEAST(:mul * (COUNT(uv) - COUNT(dv)), :mv), 0)', 'DESC')
+            ->addOrderBy('s.id', 'DESC')
+            ->setParameter(':mul', self::MULTIPLIER)
+            ->setParameter(':mv', self::MAX_VISIBILITY)
+            ->setMaxResults(self::MAX_PER_PAGE);
 
-        $query = $this->getEntityManager()->createNativeQuery($sql, $rsm);
-        $query->setParameter(':mv', self::MAX_VISIBILITY);
-        $query->setParameter(':mul', self::MULTIPLIER);
-        $query->setParameter(':limit', $max);
-        $query->setParameter(':offset', ($page - 1) * $max);
-
-        if ($forum) {
-            $query->setParameter(':forum', $forum->getId());
+        if ($callback) {
+            $callback($qb);
         }
 
-        return $query->execute();
+        return $em->createNativeQuery($qb->getSQL(), $rsm)->execute($qb->getParameters());
     }
 
     /**

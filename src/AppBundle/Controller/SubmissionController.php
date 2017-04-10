@@ -2,6 +2,7 @@
 
 namespace Raddit\AppBundle\Controller;
 
+use Doctrine\DBAL\Query\QueryBuilder;
 use Raddit\AppBundle\Entity\Comment;
 use Raddit\AppBundle\Entity\Forum;
 use Raddit\AppBundle\Entity\Submission;
@@ -56,7 +57,12 @@ final class SubmissionController extends Controller {
         $repository = $this->getDoctrine()->getRepository(Submission::class);
 
         if ($sortBy === 'hot') {
-            $submissions = $repository->findHotSubmissions($forum);
+            $submissions = $repository->findHotSubmissions(
+                function (QueryBuilder $qb) use ($forum) {
+                    $qb->andWhere('s.forum_id = :forum');
+                    $qb->setParameter(':forum', $forum->getId());
+                }
+            );
         } else {
             $submissions = $repository->findSortedQb($sortBy)
                 ->andWhere('s.forum = :forum')
