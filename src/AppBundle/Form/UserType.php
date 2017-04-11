@@ -5,6 +5,7 @@ namespace Raddit\AppBundle\Form;
 use Raddit\AppBundle\Entity\User;
 use Raddit\AppBundle\Form\EventListener\PasswordEncodingSubscriber;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -12,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Intl\Intl;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -33,6 +35,7 @@ final class UserType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $editing = $builder->getData() && $builder->getData()->getId() !== null;
+        $localeBundle = Intl::getLocaleBundle();
 
         $builder
             ->add('username', TextType::class)
@@ -44,6 +47,14 @@ final class UserType extends AbstractType {
                 'type' => PasswordType::class,
             ])
             ->add('email', EmailType::class)
+            ->add('locale', ChoiceType::class, [
+                // TODO
+                'choices' => [
+                    $localeBundle->getLocaleName('en') => 'en',
+                    $localeBundle->getLocaleName('no') => 'no',
+                ],
+                'required' => false,
+            ])
             ->add('submit', SubmitType::class, [
                 'label' => 'user_form.'.($editing ? 'save' : 'register'),
             ]);

@@ -107,6 +107,13 @@ class User implements UserInterface {
      */
     private $subscriptions;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     *
+     * @var string
+     */
+    private $locale;
+
     public function __construct() {
         $this->created = new \DateTime('@'.time());
         $this->moderatorTokens = new ArrayCollection();
@@ -305,6 +312,20 @@ class User implements UserInterface {
         $subscriptions = $this->getSubscriptions()->matching($criteria);
 
         return $subscriptions[0] ?? null;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getLocale() {
+        return $this->locale;
+    }
+
+    /**
+     * @param string|null $locale
+     */
+    public function setLocale($locale) {
+        $this->locale = $locale;
     }
 
     /**

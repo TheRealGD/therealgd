@@ -136,5 +136,6 @@ user_form:
     new_password: New password
     repeat_new_password: New password (repeat)
     email: Email
+    locale: Language
     register: Register
     save: Save changes

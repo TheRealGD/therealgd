@@ -1,0 +1,141 @@
+comments:
+    author_deleted: '[slettet]'
+    comments: Kommentarer
+    delete: Slett
+    delete_thread: Slett med svar
+    edit: Rediger
+    permalink: Permalenke
+    parent: Forelder
+    info: '%user% skrev %timestamp%'
+    info_at_timestamp: '%timestamp%'
+    not_logged_in: Du må %login_link% eller %register_link% for å kommentere.
+    not_logged_in_login_link_label: logge inn
+    not_logged_in_register_link_label: registrere deg
+    viewing_thread: Viser en enkelt kommentartråd
+    thread_return: Vis alle kommentarer
+
+comment_form:
+    comment: Kommentar
+    submit: Send
+    edit_title: Redigerer en kommentar
+    create_title: Poster en kommentar
+
+create_forum:
+    create_new_forum: Opprett nytt forum
+    nav_link: Opprett forum
+
+edit_forum:
+    edit_notice: Endringene har blitt lagret.
+    delete_notice: Forumet og all dets innhold har blitt slettet.
+    title: Redigerer %forum%
+
+edit_user:
+    title: Redigerer brukerkontoen %username%
+
+forum:
+    moderators: Moderatorer
+    manage: Administrasjon
+    edit: Rediger forum
+    subscribe: Abonnere
+    unsubscribe: Avabonnere
+    subscriber_count: '{0} Ingen abonnenter|{1} %count% abonnent|[1,Inf[ %count% abonnenter'
+
+forum_form:
+    name: Navn
+    title: Tittel
+    description: Beskrivelse
+    create: Opprett forum
+    save: Lagre endringer
+    delete: Slett forum
+    confirm_delete: Er du sikker på at du vil slette dette forumet og all dets innhold?
+
+login_form:
+    log_in: Logg inn
+    username: Brukernavn
+    password: Passord
+    reset_password: Glemt passord?
+
+request_password_reset:
+    title: Be om nullstilling av passord
+    multiple_accounts_notice: >
+        Hvis du har flere kontoer registrert på én epost-adresse, vil du motta
+        én epost pr. konto.
+    no_confirmation_notice: >
+        Adressen du oppga er sikkert ugyldig hvis du aldri mottar en epost. Av
+        personvernsgrunner vil vi aldri bekrefte hvorvidt en brukerkonto med den
+        oppgitte epost-adressen faktisk eksisterer eller ei.
+
+request_password_reset_form:
+    email: Epost-adresse
+    submit: Send
+
+reset_password:
+    email_subject: '%site_name% - Nullstill passord for %username%'
+
+    # this should be kept at 76 columns --------------------------------------------
+    email_body: |
+        Noen ba om å nullstille passordet for %site_name%-kontoen din. For å
+        nullstille passordet ditt, klikk på lenken nedenfor:
+
+        %reset_link%
+
+        Du kan trygt ignorere denne meldingen om du ikke ba om å nullstille
+        passordet ditt. Lenken vil utløpe om 24 timer.
+
+    email_notice: En epost har blitt sendt til adressen du oppga.
+    update_notice: Passordet ditt ble oppdatert.
+
+site_nav:
+    submit: Nytt innlegg
+    log_in: Logg inn
+    log_out: Logg ut
+    profile: Profil
+    register: Registrér
+    my_account: Min brukerkonto
+
+submission_form:
+    title: Tittel
+    url: Lenke
+    body: Tekst
+    forum: Forum
+    create: Send innlegg
+    edit: Rediger innlegg
+    delete: Slett innlegg
+    confirm_delete: Er du sikker på at du vil slette dette innlegget?
+
+submissions:
+    comments: '{0} Ingen kommentarer|{1} %count% kommentar|[1,Inf[ %count% kommentarer'
+    delete_notice: Innlegget ble slettet.
+    edit: Rediger
+    edit_notice: Innlegget ble endret.
+    info_with_forum_name: Sendt inn av %submitter% %timestamp% til %forum%
+    info_without_forum_name: Sendt inn av %submitter% %timestamp%
+    info_at_timestamp: '%timestamp%'
+    sort_by_hot: Populært
+    sort_by_new: Nytt
+    sort_by_top: Topp
+    sort_by_controversial: Kontroversielt
+    total_votes: '{1} %count% stemme|[0,Inf[ %count% stemmer'
+    vote_stats: (+%up%, −%down%)
+
+votes:
+    upvote: Stem opp
+    downvote: Stem ned
+    retract_upvote: Fjern oppstemning
+    retract_downvote: Fjern nedstemning
+
+user:
+    submissions: Innlegg
+    comments: Kommentarer
+    moderates: '%username% er en moderator i:'
+
+user_form:
+    username: Brukernavn
+    password: Passord
+    repeat_password: Passord (gjenta)
+    new_password: Nytt passord
+    repeat_new_password: Nytt passord (gjenta)
+    email: Epost
+    locale: Språk
+    register: Registrer
+    save: Lagre endringer
