@@ -50,9 +50,10 @@ final class UserType extends AbstractType {
             ->add('locale', ChoiceType::class, [
                 // TODO
                 'choices' => [
-                    $localeBundle->getLocaleName('en') => 'en',
-                    $localeBundle->getLocaleName('no') => 'no',
+                    $localeBundle->getLocaleName('en', 'en') => 'en',
+                    $localeBundle->getLocaleName('no', 'nb_NO') => 'no',
                 ],
+                'choice_translation_domain' => false,
                 'required' => false,
             ])
             ->add('submit', SubmitType::class, [
