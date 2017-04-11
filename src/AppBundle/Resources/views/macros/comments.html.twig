@@ -70,8 +70,8 @@
 {%- endblock -%}
 
 {%- block comment_info_timestamp -%}
-  <time datetime="{{ comment.timestamp|date('c') }}" title="{{ comment.timestamp|date }}" class="comment-timestamp relative-time">
-    {{- 'comments.info_at_timestamp'|trans({'%timestamp%': comment.timestamp|date}) -}}
+  <time datetime="{{ comment.timestamp|date('c') }}" title="{{ comment.timestamp|localizeddate('long', 'short') }}" class="comment-timestamp relative-time">
+    {{- 'comments.info_at_timestamp'|trans({'%timestamp%': comment.timestamp|localizeddate('long', 'short')}) -}}
   </time>
 {%- endblock -%}
 

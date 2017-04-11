@@ -66,3 +66,9 @@ services:
         tags:
             - { name: twig.extension }
         public: false
+
+    Twig_Extensions_Extension_Intl:
+        class: Twig_Extensions_Extension_Intl
+        tags:
+            - { name: twig.extension }
+        public: false

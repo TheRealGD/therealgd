@@ -34,7 +34,7 @@
 
 {%- block submission_info_timestamp -%}
   <time datetime="{{ submission.timestamp|date('c') }}" title="{{ submission.timestamp|date }}" class="submission-timestamp relative-time">
-    {{- 'submissions.info_at_timestamp'|trans({'%timestamp%': submission.timestamp|date}) -}}
+    {{- 'submissions.info_at_timestamp'|trans({'%timestamp%': submission.timestamp|localizeddate('long', 'short')}) -}}
   </time>
 {%- endblock -%}
 
