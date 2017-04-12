@@ -3,6 +3,10 @@
 ## v0.4.0 (2017-xx-xx)
 
 * Added links for submit/create forum everywhere.
+* Added Norwegian translation.
+* Added the ability for logged in users to select their preferred locale.
+* Added the ability to subscribe to forums. The front page will only show
+  submissions from subscribed forums when logged in.
 * The submission form now lets you choose the forum you want to post in. 
   Accessing the form through a forum makes that forum selected by default.
 * Replaced the popular submission ranking algorithm with one that makes sense.
