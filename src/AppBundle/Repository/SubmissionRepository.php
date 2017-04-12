@@ -2,9 +2,11 @@
 
 namespace Raddit\AppBundle\Repository;
 
+use Doctrine\DBAL\Query\QueryBuilder as SQLQueryBuilder;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\QueryBuilder as DQLQueryBuilder;
 use Raddit\AppBundle\Entity\Submission;
+use Raddit\AppBundle\Entity\User;
 
 class SubmissionRepository extends EntityRepository {
     const MAX_PER_PAGE = 20;
@@ -74,7 +76,7 @@ class SubmissionRepository extends EntityRepository {
     /**
      * @param string $sortType one of 'new', 'top' or 'controversial'
      *
-     * @return QueryBuilder
+     * @return DQLQueryBuilder
      */
     public function findSortedQb($sortType) {
         $qb = $this->createQueryBuilder('s');
@@ -97,16 +99,31 @@ class SubmissionRepository extends EntityRepository {
     }
 
     /**
-     * @param QueryBuilder $qb
+     * @param SQLQueryBuilder $qb
+     * @param User            $user
      */
-    private function sortByNewest(QueryBuilder $qb) {
+    public function joinSubscribedForums(SQLQueryBuilder $qb, User $user) {
+        $qb->join(
+            's',
+            '(SELECT forum_id AS id FROM forum_subscriptions WHERE user_id = :user_id)',
+            'fs',
+            's.forum_id = fs.id'
+        );
+
+        $qb->setParameter(':user_id', $user->getId());
+    }
+
+    /**
+     * @param DQLQueryBuilder $qb
+     */
+    private function sortByNewest(DQLQueryBuilder $qb) {
         $qb->addOrderBy('s.id', 'DESC');
     }
 
     /**
-     * @param QueryBuilder $qb
+     * @param DQLQueryBuilder $qb
      */
-    private function sortByTop(QueryBuilder $qb) {
+    private function sortByTop(DQLQueryBuilder $qb) {
         $qb->addSelect('COUNT(uv) - COUNT(dv) AS HIDDEN net_score')
             ->leftJoin('s.votes', 'uv', 'WITH', 'uv.upvote = true')
             ->leftJoin('s.votes', 'dv', 'WITH', 'dv.upvote = false')
@@ -115,9 +132,9 @@ class SubmissionRepository extends EntityRepository {
     }
 
     /**
-     * @param QueryBuilder $qb
+     * @param DQLQueryBuilder $qb
      */
-    private function sortByControversial(QueryBuilder $qb) {
+    private function sortByControversial(DQLQueryBuilder $qb) {
         $qb->addSelect('COUNT(uv)/NULLIF(COUNT(dv), 0) AS HIDDEN controversy')
             ->leftJoin('s.votes', 'uv', 'WITH', 'uv.upvote = true')
             ->leftJoin('s.votes', 'dv', 'WITH', 'dv.upvote = false')

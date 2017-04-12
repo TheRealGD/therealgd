@@ -6,6 +6,7 @@ use Doctrine\DBAL\Query\QueryBuilder;
 use Raddit\AppBundle\Entity\Comment;
 use Raddit\AppBundle\Entity\Forum;
 use Raddit\AppBundle\Entity\Submission;
+use Raddit\AppBundle\Entity\User;
 use Raddit\AppBundle\Form\SubmissionType;
 use Raddit\AppBundle\Repository\SubmissionRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -31,8 +32,15 @@ final class SubmissionController extends Controller {
         $repository = $this->getDoctrine()->getRepository(Submission::class);
 
         if ($sortBy === 'hot') {
-            $submissions = $repository->findHotSubmissions();
+            $submissions = $repository->findHotSubmissions(function ($qb) use ($repository) {
+                $user = $this->getUser();
+
+                if ($user instanceof User) {
+                    $repository->joinSubscribedForums($qb, $user);
+                }
+            });
         } else {
+            // TODO - restrict to subscribed forums when logged in
             $submissions = $repository->findSortedQb($sortBy)
                 ->setMaxResults(SubmissionRepository::MAX_PER_PAGE)
                 ->getQuery()
