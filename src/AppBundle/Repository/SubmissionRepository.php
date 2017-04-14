@@ -29,6 +29,42 @@ class SubmissionRepository extends EntityRepository {
     const MULTIPLIER = 1800;
 
     /**
+     * @param string $sortBy
+     *
+     * @return Submission[]
+     */
+    public function findFrontPageSubmissions(string $sortBy) {
+        if ($sortBy === 'hot') {
+            return $this->findHotSubmissions();
+        }
+
+        return $this->findSortedQb($sortBy)
+            ->setMaxResults(self::MAX_PER_PAGE)
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
+     * @param string $sortBy
+     * @param User   $user
+     *
+     * @return Submission[]
+     */
+    public function findLoggedInFrontPageSubmissions(string $sortBy, User $user) {
+        if ($sortBy === 'hot') {
+            return $this->findHotSubmissions(function ($qb) use ($user) {
+                $this->joinSubscribedForums($qb, $user);
+            });
+        }
+
+        // TODO - restrict to subscribed forums
+        return $this->findSortedQb($sortBy)
+            ->setMaxResults(self::MAX_PER_PAGE)
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
      * Finds popular ('hot') submissions.
      *
      * The popularity of a submission is calculated using roughly the following

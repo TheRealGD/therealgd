@@ -1,6 +1,7 @@
 <?php
 
 namespace Raddit\AppBundle\EventListener;
+
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Raddit\AppBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
