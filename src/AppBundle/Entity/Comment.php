@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity()
  * @ORM\Table(name="comments")
  */
-class Comment extends Votable implements BodyInterface {
+class Comment extends Votable {
     /**
      * @ORM\Column(type="bigint")
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -27,13 +27,6 @@ class Comment extends Votable implements BodyInterface {
      * @Assert\NotBlank(message="The comment must not be empty.")
      * @Assert\Regex("/[[:graph:]]/u", message="The comment must not be empty.")
      * @Assert\Length(max=10000)
-     *
-     * @var string
-     */
-    private $rawBody;
-
-    /**
-     * @ORM\Column(type="text")
      *
      * @var string
      */
@@ -129,28 +122,14 @@ class Comment extends Votable implements BodyInterface {
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function getRawBody() {
-        return $this->rawBody;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setRawBody($rawBody) {
-        $this->rawBody = $rawBody;
-    }
-
-    /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getBody() {
         return $this->body;
     }
 
     /**
-     * {@inheritdoc}
+     * @param string $body
      */
     public function setBody($body) {
         $this->body = $body;
@@ -266,6 +245,5 @@ class Comment extends Votable implements BodyInterface {
     public function softDelete() {
         $this->softDeleted = true;
         $this->body = '';
-        $this->rawBody = '';
     }
 }

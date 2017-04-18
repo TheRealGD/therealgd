@@ -13,7 +13,7 @@ use League\CommonMark\CommonMarkConverter;
  * which, in addition to making input safe, gives us desired functionality like
  * autolinking and adding `target=_blank` to links.
  */
-final class MarkdownConverter {
+class MarkdownConverter {
     /**
      * @var CommonMarkConverter
      */
@@ -25,13 +25,11 @@ final class MarkdownConverter {
     private $purifier;
 
     /**
-     * Convert markdown input to safe HTML.
+     * Creates an instance with the default configuration.
      *
-     * @param string $markdown
-     *
-     * @return string
+     * @return self
      */
-    public static function convert($markdown) {
+    public static function createInstance() {
         $commonMark = new CommonMarkConverter([
             'html_input' => 'escape',
         ]);
@@ -49,9 +47,7 @@ final class MarkdownConverter {
             'URI.DisableExternalResources' => true,
         ]));
 
-        $converter = new self($commonMark, $purifier);
-
-        return $converter->convertToHtml($markdown);
+        return new self($commonMark, $purifier);
     }
 
     /**

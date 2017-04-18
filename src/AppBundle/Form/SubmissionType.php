@@ -5,7 +5,6 @@ namespace Raddit\AppBundle\Form;
 use Doctrine\ORM\EntityRepository;
 use Raddit\AppBundle\Entity\Forum;
 use Raddit\AppBundle\Entity\Submission;
-use Raddit\AppBundle\Form\EventListener\MarkdownSubscriber;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -25,7 +24,6 @@ final class SubmissionType extends AbstractType {
             ->add('title', TextareaType::class)
             ->add('url', UrlType::class, ['required' => false])
             ->add('body', TextareaType::class, [
-                'property_path' => 'rawBody',
                 'required' => false,
                 'trim' => false,
             ]);
@@ -49,8 +47,6 @@ final class SubmissionType extends AbstractType {
         if ($editing) {
             $builder->add('delete', SubmitType::class);
         }
-
-        $builder->addEventSubscriber(new MarkdownSubscriber());
     }
 
     /**

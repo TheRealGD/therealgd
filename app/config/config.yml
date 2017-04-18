@@ -33,6 +33,7 @@ framework:
     assets: ~
     php_errors:
         log: true
+    cache:           { app: cache.system }
 
 
 # Twig Configuration

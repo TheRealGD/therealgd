@@ -84,7 +84,7 @@
           {% endif %}
 
           {% if submission.body is not null %}
-            <div class="submission-body">{{ submission.body|raw }}</div>
+            <div class="submission-body">{{ submission.body|cached_markdown|raw }}</div>
           {% endif %}
         {%- endif -%}
 

@@ -8,7 +8,6 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Raddit\AppBundle\Entity\Comment;
 use Raddit\AppBundle\Entity\Submission;
 use Raddit\AppBundle\Entity\User;
-use Raddit\AppBundle\Utils\MarkdownConverter;
 
 class LoadExampleComments implements FixtureInterface, OrderedFixtureInterface {
     /**
@@ -19,13 +18,11 @@ class LoadExampleComments implements FixtureInterface, OrderedFixtureInterface {
         $user = $manager->getRepository(User::class)->findOneByUsername('emma');
 
         $comment = Comment::create($submission, $user);
-        $comment->setRawBody('I think that is an okay idea :)');
-        $comment->setBody(MarkdownConverter::convert($comment->getRawBody()));
+        $comment->setBody('I think that is an okay idea :)');
         $manager->persist($comment);
 
         $reply = Comment::create($submission, $user, $comment);
-        $reply->setRawBody("This is a test.\n\nTesting.\n\n*This is a test.*");
-        $reply->setBody(MarkdownConverter::convert($reply->getRawBody()));
+        $reply->setBody("This is a test.\n\nTesting.\n\n*This is a test.*");
         $manager->persist($reply);
 
         $manager->flush();

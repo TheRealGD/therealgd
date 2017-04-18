@@ -114,7 +114,7 @@ class SubmissionRepository extends EntityRepository {
      * @param User            $user
      */
     public function joinSubscribedForums(DQLQueryBuilder $qb, User $user) {
-        /** @noinspection SqlDialectInspection */
+        /* @noinspection SqlDialectInspection */
         $qb->andWhere('s.forum IN ('.
             'SELECT IDENTITY(fs.forum) FROM '.ForumSubscription::class.' fs WHERE fs.user = :user'.
         ')');

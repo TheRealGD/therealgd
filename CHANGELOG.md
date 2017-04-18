@@ -7,9 +7,14 @@
 * Added the ability for logged in users to select their preferred locale.
 * Added the ability to subscribe to forums. The front page will only show
   submissions from subscribed forums when logged in.
-* The submission form now lets you choose the forum you want to post in. 
+* The submission form now lets you choose the forum you want to post in.
   Accessing the form through a forum makes that forum selected by default.
 * Replaced the popular submission ranking algorithm with one that makes sense.
+* Markdown is now converted to HTML on demand and cached for 24 hours, rather
+  than loading pre-converted Markdown from the database. This change was
+  primarily motivated by the desire to allow site administrators a quick way to
+  deal with any XSS issues that may crop up in the conversion libraries, and
+  which warrant a complete reconversion process of all Markdown content.
 
 ## v0.3.1 (2017-04-11)
 

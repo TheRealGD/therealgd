@@ -23,7 +23,7 @@
       {% endif %}
 
       {% if forum.description %}
-        <div class="forum-description">{{ forum.description|markdown|raw }}</div>
+        <div class="forum-description">{{ forum.description|cached_markdown|raw }}</div>
       {% endif %}
     </section>
 

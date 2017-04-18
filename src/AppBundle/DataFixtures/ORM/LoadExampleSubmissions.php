@@ -8,7 +8,6 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Raddit\AppBundle\Entity\Forum;
 use Raddit\AppBundle\Entity\Submission;
 use Raddit\AppBundle\Entity\User;
-use Raddit\AppBundle\Utils\MarkdownConverter;
 
 class LoadExampleSubmissions implements FixtureInterface, OrderedFixtureInterface {
     /**
@@ -26,15 +25,13 @@ class LoadExampleSubmissions implements FixtureInterface, OrderedFixtureInterfac
 
         $post = Submission::create($forum, $emma);
         $post->setTitle('This is a test submission');
-        $post->setRawBody('Hi');
-        $post->setBody(MarkdownConverter::convert($post->getRawBody()));
+        $post->setBody('Hi');
         $manager->persist($post);
 
         $combo = Submission::create($forum, $emma);
         $combo->setTitle('This is a submission with both a URL and a body');
         $combo->setUrl('http://www.example.org/some_thing_here');
-        $combo->setRawBody('The quick brown fox jumped over the lazy dog.');
-        $combo->setBody(MarkdownConverter::convert($combo->getRawBody()));
+        $combo->setBody('The quick brown fox jumped over the lazy dog.');
         $manager->persist($combo);
 
         $manager->flush();

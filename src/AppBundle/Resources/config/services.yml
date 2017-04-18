@@ -1,6 +1,7 @@
 # Learn more about services, parameters and containers at
 # http://symfony.com/doc/current/service_container.html
 parameters:
+    markdown_cache_time: 86400
 
 # Symfony 3.3 naming convention
 # http://symfony.com/blog/new-in-symfony-3-3-optional-class-for-named-services
@@ -61,11 +62,28 @@ services:
 
     Raddit\AppBundle\Twig\AppExtension:
         class: Raddit\AppBundle\Twig\AppExtension
+        arguments:
+            - '@Raddit\AppBundle\Utils\MarkdownConverter'
+            - '@Raddit\AppBundle\Utils\CachedMarkdownConverter'
         calls:
             - [setSiteName, ["%site_name%"]]
         tags:
             - { name: twig.extension }
         public: false
+
+    Raddit\AppBundle\Utils\MarkdownConverter:
+        class: Raddit\AppBundle\Utils\MarkdownConverter
+        factory: [Raddit\AppBundle\Utils\MarkdownConverter, createInstance]
+        public: false
+        lazy: true
+
+    Raddit\AppBundle\Utils\CachedMarkdownConverter:
+        class: Raddit\AppBundle\Utils\CachedMarkdownConverter
+        calls:
+            - [setExpiresAfter, ["%markdown_cache_time%"]]
+        arguments: ['@cache.app', '@Raddit\AppBundle\Utils\MarkdownConverter']
+        public: false
+        lazy: true
 
     Twig_Extensions_Extension_Intl:
         class: Twig_Extensions_Extension_Intl

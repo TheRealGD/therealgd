@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="Raddit\AppBundle\Repository\SubmissionRepository")
  * @ORM\Table(name="submissions")
  */
-class Submission extends Votable implements BodyInterface {
+class Submission extends Votable {
     /**
      * @ORM\Column(type="bigint")
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -47,18 +47,11 @@ class Submission extends Votable implements BodyInterface {
     /**
      * @ORM\Column(type="text", nullable=true)
      *
-     * @var string
-     */
-    private $body;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     *
      * @Assert\Length(max=25000)
      *
      * @var string
      */
-    private $rawBody;
+    private $body;
 
     /**
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="submission",
@@ -181,20 +174,6 @@ class Submission extends Votable implements BodyInterface {
      */
     public function setBody($body) {
         $this->body = $body;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRawBody() {
-        return $this->rawBody;
-    }
-
-    /**
-     * @param string $rawBody
-     */
-    public function setRawBody($rawBody) {
-        $this->rawBody = $rawBody;
     }
 
     /**

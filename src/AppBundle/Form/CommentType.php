@@ -3,7 +3,6 @@
 namespace Raddit\AppBundle\Form;
 
 use Raddit\AppBundle\Entity\Comment;
-use Raddit\AppBundle\Form\EventListener\MarkdownSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -17,12 +16,10 @@ final class CommentType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
             ->add('comment', TextareaType::class, [
-                'property_path' => 'rawBody',
+                'property_path' => 'body',
                 'trim' => false,
             ])
             ->add('submit', SubmitType::class);
-
-        $builder->addEventSubscriber(new MarkdownSubscriber());
     }
 
     /**

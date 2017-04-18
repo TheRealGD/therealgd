@@ -2,6 +2,7 @@
 
 namespace Raddit\AppBundle\Twig;
 
+use Raddit\AppBundle\Utils\CachedMarkdownConverter;
 use Raddit\AppBundle\Utils\MarkdownConverter;
 
 /**
@@ -15,6 +16,28 @@ final class AppExtension extends \Twig_Extension {
     private $siteName;
 
     /**
+     * @var MarkdownConverter
+     */
+    private $markdownConverter;
+
+    /**
+     * @var CachedMarkdownConverter
+     */
+    private $cachedMarkdownConverter;
+
+    /**
+     * @param MarkdownConverter       $markdownConverter
+     * @param CachedMarkdownConverter $cachedMarkdownConverter
+     */
+    public function __construct(
+        MarkdownConverter $markdownConverter,
+        CachedMarkdownConverter $cachedMarkdownConverter
+    ) {
+        $this->markdownConverter = $markdownConverter;
+        $this->cachedMarkdownConverter = $cachedMarkdownConverter;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getFunctions() {
@@ -25,7 +48,8 @@ final class AppExtension extends \Twig_Extension {
 
     public function getFilters() {
         return [
-            new \Twig_SimpleFilter('markdown', MarkdownConverter::class.'::convert'),
+            new \Twig_SimpleFilter('markdown', [$this->markdownConverter, 'convertToHtml']),
+            new \Twig_SimpleFilter('cached_markdown', [$this->cachedMarkdownConverter, 'convertToHtml']),
         ];
     }
 
