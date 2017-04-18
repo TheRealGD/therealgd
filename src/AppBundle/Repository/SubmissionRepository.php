@@ -5,6 +5,7 @@ namespace Raddit\AppBundle\Repository;
 use Doctrine\DBAL\Query\QueryBuilder as SQLQueryBuilder;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder as DQLQueryBuilder;
+use Raddit\AppBundle\Entity\ForumSubscription;
 use Raddit\AppBundle\Entity\Submission;
 use Raddit\AppBundle\Entity\User;
 
@@ -53,15 +54,14 @@ class SubmissionRepository extends EntityRepository {
     public function findLoggedInFrontPageSubmissions(string $sortBy, User $user) {
         if ($sortBy === 'hot') {
             return $this->findHotSubmissions(function ($qb) use ($user) {
-                $this->joinSubscribedForums($qb, $user);
+                $this->nativeJoinSubscribedForums($qb, $user);
             });
         }
 
-        // TODO - restrict to subscribed forums
-        return $this->findSortedQb($sortBy)
-            ->setMaxResults(self::MAX_PER_PAGE)
-            ->getQuery()
-            ->execute();
+        $qb = $this->findSortedQb($sortBy)->setMaxResults(self::MAX_PER_PAGE);
+        $this->joinSubscribedForums($qb, $user);
+
+        return $qb->getQuery()->execute();
     }
 
     /**
@@ -110,6 +110,34 @@ class SubmissionRepository extends EntityRepository {
     }
 
     /**
+     * @param DQLQueryBuilder $qb
+     * @param User            $user
+     */
+    public function joinSubscribedForums(DQLQueryBuilder $qb, User $user) {
+        /** @noinspection SqlDialectInspection */
+        $qb->andWhere('s.forum IN ('.
+            'SELECT IDENTITY(fs.forum) FROM '.ForumSubscription::class.' fs WHERE fs.user = :user'.
+        ')');
+
+        $qb->setParameter('user', $user);
+    }
+
+    /**
+     * @param SQLQueryBuilder $qb
+     * @param User            $user
+     */
+    public function nativeJoinSubscribedForums(SQLQueryBuilder $qb, User $user) {
+        $qb->join(
+            's',
+            '(SELECT forum_id AS id FROM forum_subscriptions WHERE user_id = :user_id)',
+            'fs',
+            's.forum_id = fs.id'
+        );
+
+        $qb->setParameter(':user_id', $user->getId());
+    }
+
+    /**
      * @param string $sortType one of 'new', 'top' or 'controversial'
      *
      * @return DQLQueryBuilder
@@ -132,21 +160,6 @@ class SubmissionRepository extends EntityRepository {
         }
 
         return $qb;
-    }
-
-    /**
-     * @param SQLQueryBuilder $qb
-     * @param User            $user
-     */
-    public function joinSubscribedForums(SQLQueryBuilder $qb, User $user) {
-        $qb->join(
-            's',
-            '(SELECT forum_id AS id FROM forum_subscriptions WHERE user_id = :user_id)',
-            'fs',
-            's.forum_id = fs.id'
-        );
-
-        $qb->setParameter(':user_id', $user->getId());
     }
 
     /**
