@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * aka Subraddit.
  *
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Raddit\AppBundle\Repository\ForumRepository")
  * @ORM\Table(name="forums")
  *
  * @UniqueEntity("canonicalName", errorPath="name")

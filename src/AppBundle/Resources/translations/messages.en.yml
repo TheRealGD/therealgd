@@ -49,6 +49,10 @@ forum_form:
     delete: Delete forum
     confirm_delete: Are you sure you want to delete this forum and all its submissions and comments?
 
+front:
+    subscribed_forums: Subscribed forums
+    no_subscriptions: You are not subscribed to any forum.
+
 login_form:
     log_in: Log in
     username: Username

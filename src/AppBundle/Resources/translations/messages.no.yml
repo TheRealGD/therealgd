@@ -49,6 +49,10 @@ forum_form:
     delete: Slett forum
     confirm_delete: Er du sikker på at du vil slette dette forumet og all dets innhold?
 
+front:
+    subscribed_forums: Dine abonnementer
+    no_subscriptions: Du har ikke abonnert på noen fora.
+
 login_form:
     log_in: Logg inn
     username: Brukernavn

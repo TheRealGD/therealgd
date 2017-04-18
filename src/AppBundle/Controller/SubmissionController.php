@@ -32,13 +32,17 @@ final class SubmissionController extends Controller {
 
         if ($this->isGranted('ROLE_USER')) {
             $user = $this->getUser();
+
             $submissions = $repository->findLoggedInFrontPageSubmissions($sortBy, $user);
+            $subscribedForums = $this->getDoctrine()->getRepository(Forum::class)
+                ->findSubscribedForumNames($user);
         } else {
             $submissions = $repository->findFrontPageSubmissions($sortBy);
         }
 
         return $this->render('@RadditApp/front.html.twig', [
             'sort_by' => $sortBy,
+            'subscribed_forums' => $subscribedForums ?? null,
             'submissions' => $submissions,
         ]);
     }
