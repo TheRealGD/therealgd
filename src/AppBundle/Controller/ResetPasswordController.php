@@ -92,10 +92,10 @@ final class ResetPasswordController extends Controller {
 
         /** @var \Swift_Mime_Message $message */
         $message = \Swift_Message::newInstance()
-            ->setFrom([$this->getParameter('no_reply_address') => $this->getParameter('raddit_app.site_name')])
+            ->setFrom([$this->getParameter('no_reply_address') => $this->getParameter('site_name')])
             ->setTo([$user->getEmail() => $user->getUsername()])
             ->setSubject($translator->trans('reset_password.email_subject', [
-                '%site_name%' => $this->getParameter('raddit_app.site_name'),
+                '%site_name%' => $this->getParameter('site_name'),
                 '%username%' => $user->getUsername(),
             ]))
             ->setBody($translator->trans('reset_password.email_body', [
@@ -104,7 +104,7 @@ final class ResetPasswordController extends Controller {
                     'id' => $user->getId(),
                     'checksum' => $this->createChecksum($user, $expires),
                 ], UrlGeneratorInterface::ABSOLUTE_URL),
-                '%site_name%' => $this->getParameter('raddit_app.site_name'),
+                '%site_name%' => $this->getParameter('site_name'),
             ]));
 
         $message->getHeaders()->addTextHeader(
