@@ -12,6 +12,12 @@ services:
         tags:
             - { name: form.type }
 
+    Raddit\AppBundle\Form\UserSettingsType:
+        class: Raddit\AppBundle\Form\UserSettingsType
+        autowire: true
+        tags:
+            - { name: form.type }
+
     Raddit\AppBundle\Form\UserType:
         class: Raddit\AppBundle\Form\UserType
         arguments: ["@security.password_encoder"]

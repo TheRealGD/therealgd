@@ -88,6 +88,7 @@ reset_password:
 
     email_notice: En epost har blitt sendt til adressen du oppga.
     update_notice: Passordet ditt ble oppdatert.
+    title: Nullstille passord
 
 site_nav:
     submit: Nytt innlegg

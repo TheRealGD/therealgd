@@ -5,6 +5,7 @@ namespace Raddit\AppBundle\Controller;
 use Raddit\AppBundle\Entity\Comment;
 use Raddit\AppBundle\Entity\Submission;
 use Raddit\AppBundle\Entity\User;
+use Raddit\AppBundle\Form\UserSettingsType;
 use Raddit\AppBundle\Form\UserType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -78,7 +79,7 @@ final class UserController extends Controller {
      * @return Response
      */
     public function editUserAction(User $subject, Request $request) {
-        $form = $this->createForm(UserType::class, $subject);
+        $form = $this->createForm(UserSettingsType::class, $subject);
         $form->handleRequest($request);
 
         $em = $this->getDoctrine()->getManager();

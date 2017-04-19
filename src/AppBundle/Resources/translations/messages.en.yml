@@ -88,6 +88,7 @@ reset_password:
 
     email_notice: A reset email has been to the address you specified.
     update_notice: Your password has been updated.
+    title: Resetting password
 
 site_nav:
     submit: Submit
