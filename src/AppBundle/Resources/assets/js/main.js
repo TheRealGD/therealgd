@@ -1,7 +1,9 @@
 'use strict';
 
-const $ = require('jquery');
+//noinspection JSUnresolvedVariable
+__webpack_public_path__ = window.__webpack_public_path__;
 
+import $ from 'jquery';
 import relativeTime from './relative-time';
 import enableAjaxVoting from './vote';
 import { init as initAlerts } from './alerts';

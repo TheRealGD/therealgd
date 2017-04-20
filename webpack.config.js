@@ -13,11 +13,17 @@ module.exports = {
         filename: '[name].min.js'
     },
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                loader: 'babel-loader'
+                use: [{
+                    loader: 'babel-loader',
+                    options: {
+                        presets: [['es2015', {modules: false}]],
+                        plugins: ['syntax-dynamic-import']
+                    }
+                }]
             },
             {
                 test: require.resolve('bazinga-translator'),
@@ -39,7 +45,7 @@ module.exports = {
             minChunks: function (module) {
                 return module.context && /node_modules/.test(module.context);
             }
-        }),
+        })
     ],
     resolve: {
         mainFields: ['jsnext:main', 'main']

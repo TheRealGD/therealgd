@@ -16,7 +16,7 @@ class UserSettingsType extends UserType {
             // TODO
             'choices' => [
                 $localeBundle->getLocaleName('en', 'en') => 'en',
-                $localeBundle->getLocaleName('no', 'nb_NO') => 'no',
+                $localeBundle->getLocaleName('nb', 'nb') => 'nb',
             ],
             'choice_translation_domain' => false,
             'required' => false,
