@@ -16,6 +16,7 @@ class AppKernel extends Kernel {
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new Bazinga\Bundle\JsTranslationBundle\BazingaJsTranslationBundle(),
+            new Liip\ImagineBundle\LiipImagineBundle(),
             new Raddit\AppBundle\RadditAppBundle(),
         ];
 

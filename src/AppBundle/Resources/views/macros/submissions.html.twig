@@ -53,6 +53,12 @@
         {{- vote(submission, path('raddit_app_submission_vote', {id: submission.id})) -}}
       </div>
 
+      <a href="{{ block('submission_url') }}" class="submission-image">
+        {% if submission.image %}
+          <img src="{{ 'submission_images/%s'|format(submission.image)|imagine_filter('submission_thumbnail') }}" class="submission-thumbnail" alt="">
+        {% endif %}
+      </a>
+
       <div class="submission-inner">
         <header class="submission-header">
           {% spaceless %}

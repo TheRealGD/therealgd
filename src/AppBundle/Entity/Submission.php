@@ -95,6 +95,13 @@ class Submission extends Votable {
     private $votes;
 
     /**
+     * @ORM\Column(type="text", nullable=true)
+     *
+     * @var string
+     */
+    private $image;
+
+    /**
      * Creates a new submission with an implicit upvote from its creator.
      *
      * @param Forum $forum
@@ -260,5 +267,19 @@ class Submission extends Votable {
         $vote->setSubmission($this);
 
         return $vote;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getImage() {
+        return $this->image;
+    }
+
+    /**
+     * @param string|null $image
+     */
+    public function setImage($image) {
+        $this->image = $image;
     }
 }

@@ -38,6 +38,15 @@ services:
             - { name: doctrine.event_listener, event: postPersist }
             - { name: doctrine.event_listener, event: postUpdate }
 
+    Raddit\AppBundle\EventListener\SubmissionImageListener:
+        class: Raddit\AppBundle\EventListener\SubmissionImageListener
+        calls:
+            - [setLogger, ["@logger"]]
+        arguments: ["@doctrine.orm.entity_manager", "@request_stack", "@validator"]
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
+            - { name: kernel.event_listener, event: kernel.terminate }
+
     Raddit\AppBundle\Security\Voter\CommentVoter:
         class: Raddit\AppBundle\Security\Voter\CommentVoter
         arguments: ["@security.access.decision_manager"]

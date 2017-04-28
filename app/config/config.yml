@@ -75,3 +75,12 @@ doctrine_migrations:
     dir_name: "%kernel.root_dir%/../src/AppBundle/DoctrineMigrations"
     namespace: Raddit\AppBundle\DoctrineMigrations
     name: Raddit migrations
+
+liip_imagine:
+    filter_sets:
+        submission_thumbnail:
+            filters:
+                thumbnail:
+                    size: [200, 200]
+                    mode: outbound
+            quality: 70
