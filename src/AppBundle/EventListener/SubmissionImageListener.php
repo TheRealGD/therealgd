@@ -133,60 +133,72 @@ final class SubmissionImageListener implements LoggerAwareInterface {
     private function getFilename(string $imageUrl) {
         error_clear_last();
 
-        $tempFile = @tempnam(sys_get_temp_dir(), 'raddit');
-        $fh = @fopen($tempFile, 'w');
+        try {
+            $tempFile = @tempnam(sys_get_temp_dir(), 'raddit');
+            $fh = @fopen($tempFile, 'w');
 
-        if (!$fh) {
-            $this->logger->warning('Could not open file handle', ['error' => error_get_last()]);
-            @unlink($tempFile);
+            if (!$fh) {
+                $this->logger->warning('Could not open file for writing', [
+                    'error' => error_get_last(),
+                ]);
 
-            return null;
-        }
-
-        $ch = curl_init($imageUrl);
-        curl_setopt($ch, CURLOPT_FILE, $fh);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($ch, CURLOPT_MAXREDIRS, 5);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-
-        $success = curl_exec($ch) && curl_getinfo($ch, CURLINFO_RESPONSE_CODE) == 200;
-
-        if (!$success) {
-            $this->logger->info('Bad HTTP response', ['curl' => curl_getinfo($ch)]);
-            @unlink($tempFile);
-
-            return null;
-        }
-
-        $imageConstraint = new Image();
-        $imageConstraint->detectCorrupted = true;
-
-        $violations = $this->validator->validate($tempFile, $imageConstraint);
-
-        if (count($violations) > 0) {
-            /** @var ConstraintViolationInterface $violation */
-            foreach ($violations as $violation) {
-                $this->logger->info($violation->getMessageTemplate(), $violation->getParameters());
+                return null;
             }
 
+            $ch = curl_init($imageUrl);
+            curl_setopt($ch, CURLOPT_FILE, $fh);
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+            curl_setopt($ch, CURLOPT_MAXREDIRS, 5);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+
+            $success = curl_exec($ch) && curl_getinfo($ch, CURLINFO_RESPONSE_CODE) == 200;
+
+            if (!$success) {
+                $this->logger->info('Bad HTTP response', [
+                    'curl' => curl_getinfo($ch),
+                ]);
+
+                return null;
+            }
+
+            $imageConstraint = new Image();
+            $imageConstraint->detectCorrupted = true;
+
+            $violations = $this->validator->validate($tempFile, $imageConstraint);
+
+            if (count($violations) > 0) {
+                /** @var ConstraintViolationInterface $violation */
+                foreach ($violations as $violation) {
+                    $message = $violation->getMessageTemplate();
+                    $params = $violation->getParameters();
+
+                    $this->logger->info($message, $params);
+                }
+
+                return null;
+            }
+
+            $mimeType = MimeTypeGuesser::getInstance()->guess($tempFile);
+            $ext = ExtensionGuesser::getInstance()->guess($mimeType);
+
+            $filename = hash_file('sha256', $tempFile).'.'.$ext;
+
+            if (!@rename($tempFile, $this->imageDirectory.'/'.$filename)) {
+                $this->logger->warning('Could not rename file', [
+                    'error' => error_get_last(),
+                ]);
+
+                return null;
+            }
+
+            return $filename;
+        } finally {
+            if (isset($ch)) {
+                @curl_close($ch);
+            }
+
+            @fclose($fh);
             @unlink($tempFile);
-
-            return null;
         }
-
-        $mimeType = MimeTypeGuesser::getInstance()->guess($tempFile);
-        $ext = ExtensionGuesser::getInstance()->guess($mimeType);
-
-        $filename = hash_file('sha256', $tempFile).'.'.$ext;
-
-        if (!@rename($tempFile, $this->imageDirectory.'/'.$filename)) {
-            $this->logger->warning('Could not rename file', ['error' => error_get_last()]);
-
-            @unlink($tempFile);
-
-            return null;
-        }
-
-        return $filename;
     }
 }
