@@ -2,6 +2,7 @@
 
 ## v0.4.0 (2017-xx-xx)
 
+* Added submission thumbnails.
 * Added links for submit/create forum everywhere.
 * Added Norwegian translation.
 * Added the ability for logged in users to select their preferred locale.
