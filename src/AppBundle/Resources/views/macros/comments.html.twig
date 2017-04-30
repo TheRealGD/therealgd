@@ -28,7 +28,7 @@
   <article class="comment comment-{{ level|default(0) ? 'level-'~level : 'top-level' }} {{ comment.softDeleted ? 'comment-soft-deleted' }}" id="comment_{{ comment.id }}">
     <div class="comment-row">
       <div class="comment-vote">
-        {{ vote(comment, path('raddit_app_comment_vote', {id: comment.id})) }}
+        {{ vote(comment, 'raddit_app_comment_vote') }}
       </div>
 
       <div class="comment-inner">

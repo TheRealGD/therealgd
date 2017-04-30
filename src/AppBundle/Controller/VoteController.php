@@ -11,15 +11,18 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class VoteController extends Controller {
     /**
+     * Vote on a votable entity.
+     *
      * @Security("is_granted('ROLE_USER')")
      *
+     * @param Request $request
      * @param string  $entityClass
      * @param int     $id
-     * @param Request $request
+     * @param string  $_format     'html' or 'json'
      *
      * @return Response
      */
-    public function voteAction($entityClass, $id, Request $request) {
+    public function voteAction(Request $request, $entityClass, $id, $_format) {
         if (!$this->isCsrfTokenValid('vote', $request->request->get('token'))) {
             throw $this->createAccessDeniedException('Bad CSRF token');
         }
@@ -62,8 +65,8 @@ final class VoteController extends Controller {
 
         $em->flush();
 
-        if ($request->isXmlHttpRequest()) {
-            return $this->json([]);
+        if ($_format === 'json') {
+            return $this->json(['message' => 'successful vote']);
         }
 
         if (!$request->headers->has('Referer')) {

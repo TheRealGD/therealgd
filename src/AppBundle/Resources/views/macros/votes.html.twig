@@ -1,11 +1,15 @@
-{%- macro vote(entity, vote_path) -%}
+{%- macro vote(entity, route) -%}
   {{- block('vote') -}}
 {%- endmacro -%}
 
 {%- block vote -%}
   {%- set user_vote = is_granted('ROLE_USER') ? entity.userVote(app.user) : null -%}
   {%- spaceless -%}
-    <form action="{{ vote_path }}" method="post" class="vote {{ block('vote_class') }}" data-score="{{ entity.netScore }}">
+    <form action="{{ path(route, {id: entity.id}) }}"
+          method="post"
+          class="vote {{ block('vote_class') }}"
+          data-ajax-action="{{ path(route, {id: entity.id, _format: 'json'}) }}"
+          data-score="{{ entity.netScore }}">
       <input type="hidden" name="token" value="{{ csrf_token('vote') }}">
 
       <button type="submit" name="choice" value="{{ block('vote_choice_up') }}"

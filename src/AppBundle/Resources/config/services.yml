@@ -26,6 +26,7 @@ services:
 
     Raddit\AppBundle\EventListener\AjaxListener:
         class: Raddit\AppBundle\EventListener\AjaxListener
+        autowire: true
         tags:
             - { name: kernel.event_subscriber }
 

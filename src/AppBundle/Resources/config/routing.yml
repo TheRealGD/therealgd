@@ -42,16 +42,20 @@ raddit_app_submit:
 raddit_app_comment_vote:
     defaults:
         _controller: RadditAppBundle:Vote:vote
+        _format: html
         entityClass: Raddit\AppBundle\Entity\Comment
-    path: /cv/{id}
+    path: /cv/{id}.{_format}
     methods: [POST]
+    requirements: { _format: html|json }
 
 raddit_app_submission_vote:
     defaults:
         _controller: RadditAppBundle:Vote:vote
+        _format: html
         entityClass: Raddit\AppBundle\Entity\Submission
-    path: /sv/{id}
+    path: /sv/{id}.{_format}
     methods: [POST]
+    requirements: { _format: html|json }
 
 raddit_app_delete_comment:
     defaults: { _controller: RadditAppBundle:Comment:deleteComment }

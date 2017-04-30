@@ -69,7 +69,7 @@ function getDownButtonTitle(choice) {
  * @param {boolean} isUp
  */
 function vote($form, isUp) {
-    const url = $form.attr('action');
+    const url = $form.data('ajax-action');
     const choice = getNewChoice($form, isUp);
 
     const data = {
