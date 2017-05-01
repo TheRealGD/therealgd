@@ -44,7 +44,7 @@ final class ForumController extends Controller {
             ]);
         }
 
-        return $this->render('@RadditApp/create-forum.html.twig', [
+        return $this->render('@RadditApp/create_forum.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -82,7 +82,7 @@ final class ForumController extends Controller {
             return $this->redirect($request->getUri());
         }
 
-        return $this->render('@RadditApp/edit-forum.html.twig', [
+        return $this->render('@RadditApp/edit_forum.html.twig', [
             'form' => $form->createView(),
             'forum' => $forum,
         ]);

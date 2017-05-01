@@ -98,7 +98,7 @@ final class UserController extends Controller {
             $em->refresh($subject);
         }
 
-        return $this->render('@RadditApp/edit-user.html.twig', [
+        return $this->render('@RadditApp/edit_user.html.twig', [
             'form' => $form->createView(),
             'user' => $subject,
         ]);
@@ -128,7 +128,7 @@ final class UserController extends Controller {
             $this->getDoctrine()->getManager()->refresh($subject);
         }
 
-        return $this->render('@RadditApp/user-settings.html.twig', [
+        return $this->render('@RadditApp/user_settings.html.twig', [
             'form' => $form->createView(),
             'user' => $subject,
         ]);

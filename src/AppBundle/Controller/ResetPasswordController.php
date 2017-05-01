@@ -38,7 +38,7 @@ final class ResetPasswordController extends Controller {
             return $this->redirectToRoute('raddit_app_front');
         }
 
-        return $this->render('@RadditApp/request-password-reset.html.twig', [
+        return $this->render('@RadditApp/request_password_reset.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -77,7 +77,7 @@ final class ResetPasswordController extends Controller {
             $this->getDoctrine()->getManager()->refresh($user);
         }
 
-        return $this->render('@RadditApp/reset-password.html.twig', [
+        return $this->render('@RadditApp/reset_password.html.twig', [
             'form' => $form->createView(),
         ]);
     }

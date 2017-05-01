@@ -1,4 +1,4 @@
-{% extends '@RadditApp/submission-base.html.twig' %}
+{% extends '@RadditApp/submission_base.html.twig' %}
 
 {% from '@RadditApp/macros/comments.html.twig' import comment %}
 
@@ -21,6 +21,6 @@
     {{ comment(comment, false) }}
   {% endif %}
 
-  {% include '@RadditApp/forms/comment-form.html.twig' with { form: form } only %}
+  {% include '@RadditApp/forms/comment_form.html.twig' with { form: form } only %}
 {% endblock %}
 

@@ -41,7 +41,7 @@ final class CommentController extends Controller {
             'action' => $this->generateUrl('raddit_app_comment_post', $routeParams),
         ]);
 
-        return $this->render('@RadditApp/fragments/comment-form.html.twig', [
+        return $this->render('@RadditApp/fragments/comment_form.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -82,7 +82,7 @@ final class CommentController extends Controller {
             ]);
         }
 
-        return $this->render('@RadditApp/comment-form-errors.html.twig', [
+        return $this->render('@RadditApp/comment_form_errors.html.twig', [
             'editing' => false,
             'form' => $form->createView(),
             'forum' => $forum,
@@ -117,7 +117,7 @@ final class CommentController extends Controller {
             ]);
         }
 
-        return $this->render('@RadditApp/comment-form-errors.html.twig', [
+        return $this->render('@RadditApp/comment_form_errors.html.twig', [
             'editing' => true,
             'form' => $form->createView(),
             'forum' => $forum,
