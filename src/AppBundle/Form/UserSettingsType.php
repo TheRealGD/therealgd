@@ -2,24 +2,49 @@
 
 namespace Raddit\AppBundle\Form;
 
+use Raddit\AppBundle\Entity\User;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Intl\Intl;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class UserSettingsType extends UserType {
+final class UserSettingsType extends AbstractType {
+    const LOCALES = ['en', 'nb'];
+
+    /**
+     * {@inheritdoc}
+     */
     public function buildForm(FormBuilderInterface $builder, array $options) {
-        parent::buildForm($builder, $options);
+        $builder
+            ->add('locale', ChoiceType::class, [
+                'choices' => $this->getLocaleChoices(),
+                'choice_translation_domain' => false,
+                'required' => false,
+            ])
+            ->add('save', SubmitType::class)
+        ;
+    }
 
-        $localeBundle = Intl::getLocaleBundle();
-
-        $builder->add('locale', ChoiceType::class, [
-            // TODO
-            'choices' => [
-                $localeBundle->getLocaleName('en', 'en') => 'en',
-                $localeBundle->getLocaleName('nb', 'nb') => 'nb',
-            ],
-            'choice_translation_domain' => false,
-            'required' => false,
+    /**
+     * {@inheritdoc}
+     */
+    public function configureOptions(OptionsResolver $resolver) {
+        $resolver->setDefaults([
+            'data_class' => User::class,
+            'label_format' => 'user_settings_form.%name%',
         ]);
+    }
+
+    private function getLocaleChoices(): array {
+        $localeBundle = Intl::getLocaleBundle();
+        $choices = [];
+
+        foreach (self::LOCALES as $locale) {
+            $choices[$localeBundle->getLocaleName($locale, $locale)] = $locale;
+        }
+
+        return $choices;
     }
 }

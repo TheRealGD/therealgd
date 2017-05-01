@@ -79,7 +79,7 @@ final class UserController extends Controller {
      * @return Response
      */
     public function editUserAction(User $subject, Request $request) {
-        $form = $this->createForm(UserSettingsType::class, $subject);
+        $form = $this->createForm(UserType::class, $subject);
         $form->handleRequest($request);
 
         $em = $this->getDoctrine()->getManager();
@@ -99,6 +99,36 @@ final class UserController extends Controller {
         }
 
         return $this->render('@RadditApp/edit-user.html.twig', [
+            'form' => $form->createView(),
+            'user' => $subject,
+        ]);
+    }
+
+    /**
+     * @Security("is_granted('edit_user', subject)")
+     *
+     * @param User    $subject
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function userSettingsAction(User $subject, Request $request) {
+        $form = $this->createForm(UserSettingsType::class, $subject);
+        $form->handleRequest($request);
+
+        try {
+            if ($form->isSubmitted() && $form->isValid()) {
+                $this->getDoctrine()->getManager()->flush();
+
+                $this->addFlash('success', 'user_settings.update_notice');
+
+                return $this->redirect($request->getUri());
+            }
+        } finally {
+            $this->getDoctrine()->getManager()->refresh($subject);
+        }
+
+        return $this->render('@RadditApp/user-settings.html.twig', [
             'form' => $form->createView(),
             'user' => $subject,
         ]);

@@ -34,6 +34,7 @@
               <ul class="dropdown-menu">
                 <li><a href="{{ path('raddit_app_user', {username: app.user.username}) }}">{{ 'site_nav.profile'|trans }}</a></li>
                 <li><a href="{{ path('raddit_app_edit_user', {username: app.user.username}) }}">{{ 'site_nav.my_account'|trans }}</a></li>
+                <li><a href="{{ path('raddit_app_user_settings', {username: app.user.username}) }}">{{ 'site_nav.user_settings'|trans }}</a></li>
                 <li><a href="{{ logout_path() }}">{{ 'site_nav.log_out'|trans }}</a></li>
               </ul>
             </li>

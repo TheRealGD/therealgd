@@ -97,6 +97,7 @@ site_nav:
     profile: Profil
     register: Registrér
     my_account: Min brukerkonto
+    user_settings: Brukerinnstillinger
 
 submission_form:
     title: Tittel
@@ -141,6 +142,13 @@ user_form:
     new_password: Nytt passord
     repeat_new_password: Nytt passord (gjenta)
     email: Epost
-    locale: Språk
     register: Registrer
+    save: Lagre endringer
+
+user_settings:
+    title: Redigerer innstillinger for %username%
+    update_notice: Innstillingene har blitt oppdatert.
+
+user_settings_form:
+    locale: Språk
     save: Lagre endringer

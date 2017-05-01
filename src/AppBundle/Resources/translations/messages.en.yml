@@ -97,6 +97,7 @@ site_nav:
     profile: Profile
     register: Register
     my_account: My account
+    user_settings: User settings
 
 submission_form:
     title: Title
@@ -141,6 +142,13 @@ user_form:
     new_password: New password
     repeat_new_password: New password (repeat)
     email: Email
-    locale: Language
     register: Register
+    save: Save changes
+
+user_settings:
+    title: Editing user settings for %username%
+    update_notice: User settings have been updated.
+
+user_settings_form:
+    locale: Language
     save: Save changes

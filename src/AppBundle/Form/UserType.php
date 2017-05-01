@@ -11,13 +11,11 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class UserType extends AbstractType {
+final class UserType extends AbstractType {
     /**
      * @var UserPasswordEncoderInterface
      */
@@ -45,14 +43,10 @@ class UserType extends AbstractType {
                 'second_name' => $editing ? 'repeat_new_password' : 'repeat_password',
                 'type' => PasswordType::class,
             ])
-            ->add('email', EmailType::class);
-
-        // make the submit button always appear at the bottom
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($editing) {
-            $event->getForm()->add('submit', SubmitType::class, [
+            ->add('email', EmailType::class)
+            ->add('submit', SubmitType::class, [
                 'label' => 'user_form.'.($editing ? 'save' : 'register'),
             ]);
-        }, 20);
 
         $builder->addEventSubscriber(new PasswordEncodingSubscriber($this->encoder));
     }

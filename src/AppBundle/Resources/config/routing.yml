@@ -19,6 +19,11 @@ raddit_app_edit_user:
     path: /edit_user/{username}
     methods: [GET, POST]
 
+raddit_app_user_settings:
+    defaults: { _controller: RadditAppBundle:User:userSettings }
+    path: /user_settings/{username}
+    methods: [GET, POST]
+
 raddit_app_registration:
     defaults: { _controller: RadditAppBundle:User:registration }
     path: /registration
