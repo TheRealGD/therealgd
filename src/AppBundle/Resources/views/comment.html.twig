@@ -8,6 +8,8 @@
 {% endblock %}
 
 {% block body %}
+  {{ parent() }}
+
   {{ submission(submission) }}
 
   <nav class="comment-thread-nav">

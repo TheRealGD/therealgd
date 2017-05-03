@@ -8,6 +8,8 @@
 {% endblock %}
 
 {% block body %}
+  {{ parent() }}
+
   {{ submission(submission, {show_body: true}) }}
 
   <h2>{{ 'comments.comments'|trans }}</h2>

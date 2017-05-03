@@ -13,6 +13,7 @@ comments:
     not_logged_in_register_link_label: registrere deg
     viewing_thread: Viser en enkelt kommentartråd
     thread_return: Vis alle kommentarer
+    return_to_forum: ← Gå tilbake til %forum%
 
 comment_form:
     comment: Kommentar
