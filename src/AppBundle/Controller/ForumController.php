@@ -135,4 +135,16 @@ final class ForumController extends Controller {
 
         return $this->redirectToRoute('raddit_app_forum', ['forum_name' => $forum->getName()]);
     }
+
+    /**
+     * @return Response
+     */
+    public function listAction() {
+        $forums = $this->getDoctrine()->getRepository(Forum::class)
+            ->findBy([], ['name' => 'ASC']);
+
+        return $this->render('@RadditApp/forum_list.html.twig', [
+            'forums' => $forums,
+        ]);
+    }
 }

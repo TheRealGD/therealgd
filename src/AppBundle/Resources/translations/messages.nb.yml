@@ -49,6 +49,12 @@ forum_form:
     delete: Slett forum
     confirm_delete: Er du sikker på at du vil slette dette forumet og all dets innhold?
 
+forum_list:
+    name: Navn
+    title: Tittel
+    subscribers: Abonnenter
+    page_title: Liste over fora
+
 front:
     subscribed_forums: Dine abonnementer
     no_subscriptions: Du har ikke abonnert på noen fora.
@@ -98,6 +104,7 @@ site_nav:
     register: Registrér
     my_account: Min brukerkonto
     user_settings: Brukerinnstillinger
+    forum_list: Forumliste
 
 submission_form:
     title: Tittel

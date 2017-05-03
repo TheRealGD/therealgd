@@ -1,0 +1,48 @@
+{% extends '@RadditApp/base.html.twig' %}
+
+{% block page_classes %}
+  forum-list-page
+{% endblock %}
+
+{% block title %}
+  {{- 'forum_list.page_title'|trans -}}
+{% endblock %}
+
+{% block body %}
+  <h1>{{ 'forum_list.page_title'|trans }}</h1>
+
+  <table class="table forum-list">
+    <thead>
+      <tr>
+        <th>{{ 'forum_list.name'|trans }}</th>
+        <th>{{ 'forum_list.title'|trans }}</th>
+        <th>{{ 'forum_list.subscribers'|trans }}</th>
+        {% if is_granted('ROLE_USER') %}
+          <th></th>
+        {% endif %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for forum in forums %}
+        {% set has_description = forum.description is not empty %}
+        <tr>
+          <td><a href="{{ path('raddit_app_forum', {forum_name: forum.name}) }}"><strong>{{ forum.name }}</strong></a></td>
+          <td>{{ forum.title }}</td>
+          <td>{{ forum.subscriptions|length }}</td>
+          {% if is_granted('ROLE_USER') %}
+            {% set subscribed = app.user.subscriptionByForum(forum) is not null %}
+            <td>
+              <form action="{{ path(subscribed ? 'raddit_app_unsubscribe' : 'raddit_app_subscribe', {id: forum.id}) }}" method="POST">
+                <input type="hidden" name="token" value="{{ csrf_token('subscribe') }}">
+
+                <button class="forum-list-subscribe-button">
+                  {{- (subscribed ? 'forum.unsubscribe' : 'forum.subscribe')|trans -}}
+                </button>
+              </form>
+            </td>
+          {% endif %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

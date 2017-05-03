@@ -1,0 +1,28 @@
+@import (reference) 'settings';
+
+.table {
+  border-collapse: collapse;
+  width: 100%;
+
+  thead {
+    border-bottom: solid 2px @table-header-separator-color;
+  }
+
+  th {
+    text-align: left;
+  }
+
+  th, td {
+    padding: 0.25rem;
+
+    @media screen and (min-width: 768px) {
+      padding: 0.5rem;
+    }
+  }
+
+  tbody > tr:nth-child(even) {
+    th, td {
+      background-color: @table-alternate-row-background-color;
+    }
+  }
+}

@@ -19,6 +19,7 @@
         <ul>
           {% block site_nav_left %}
             <li><a href="{{ path('raddit_app_front') }}">{{ raddit_app_site_name() }}</a></li>
+            <li><a href="{{ path('raddit_app_forum_list') }}">{{ 'site_nav.forum_list'|trans }}</a></li>
           {% endblock %}
         </ul>
 
