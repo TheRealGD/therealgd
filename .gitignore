@@ -24,4 +24,5 @@ tags
 /web/css/
 /web/js/
 /web/media/
-/web/submission_images/
+/web/submission_images/*
+!/web/submission_images/.gitkeep
