@@ -11,14 +11,14 @@ final class ForumRepository extends EntityRepository {
     /**
      * @param User $user
      *
-     * @return \string[]
+     * @return string[]
      */
     public function findSubscribedForumNames(User $user) {
         /** @noinspection SqlDialectInspection */
         $dql =
             'SELECT f.name FROM '.Forum::class.' f WHERE f IN ('.
                 'SELECT IDENTITY(fs.forum) FROM '.ForumSubscription::class.' fs WHERE fs.user = ?1'.
-            ') ORDER BY f.name ASC';
+            ') ORDER BY f.canonicalName ASC';
 
         $names = $this->getEntityManager()->createQuery($dql)
             ->setParameter(1, $user)
