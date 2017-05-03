@@ -97,6 +97,9 @@ reset_password:
     update_notice: Your password has been updated.
     title: Resetting password
 
+site_footer:
+    version: Running %app% %version% (%branch%). Made with ☭.
+
 site_nav:
     submit: Submit
     log_in: Log in

@@ -7,6 +7,7 @@ html {
   color: @page-color;
   font-family: @page-font-family;
   font-size: @page-font-size;
+  height: 100%;
   line-height: @page-line-height;
 }
 
@@ -15,6 +16,9 @@ html {
 }
 
 body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
   margin: 0;
 }
 

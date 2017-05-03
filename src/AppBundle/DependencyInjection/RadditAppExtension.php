@@ -2,6 +2,7 @@
 
 namespace Raddit\AppBundle\DependencyInjection;
 
+use Raddit\AppBundle\DependencyInjection\Compiler\VersionPass;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
@@ -18,5 +19,7 @@ class RadditAppExtension extends Extension {
         );
 
         $loader->load('services.yml');
+
+        $container->addCompilerPass(new VersionPass());
     }
 }

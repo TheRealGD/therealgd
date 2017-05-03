@@ -26,6 +26,16 @@ final class AppExtension extends \Twig_Extension {
     private $cachedMarkdownConverter;
 
     /**
+     * @var string|null
+     */
+    private $branch;
+
+    /**
+     * @var string|null
+     */
+    private $version;
+
+    /**
      * @param MarkdownConverter       $markdownConverter
      * @param CachedMarkdownConverter $cachedMarkdownConverter
      */
@@ -43,6 +53,8 @@ final class AppExtension extends \Twig_Extension {
     public function getFunctions() {
         return [
             new \Twig_SimpleFunction('raddit_app_site_name', [$this, 'getSiteName']),
+            new \Twig_SimpleFunction('raddit_app_branch', [$this, 'getBranch']),
+            new \Twig_SimpleFunction('raddit_app_version', [$this, 'getVersion']),
         ];
     }
 
@@ -65,5 +77,33 @@ final class AppExtension extends \Twig_Extension {
      */
     public function setSiteName($siteName) {
         $this->siteName = $siteName;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getBranch() {
+        return $this->branch;
+    }
+
+    /**
+     * @param string|null $branch
+     */
+    public function setBranch($branch) {
+        $this->branch = $branch;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getVersion() {
+        return $this->version;
+    }
+
+    /**
+     * @param string|null $version
+     */
+    public function setVersion($version) {
+        $this->version = $version;
     }
 }

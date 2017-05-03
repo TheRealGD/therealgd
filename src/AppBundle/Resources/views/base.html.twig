@@ -5,6 +5,7 @@
     <title>{% block title %}{{ raddit_app_site_name() }}{% endblock %}</title>
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="raddit {{ raddit_app_version() }}">
 
     {% block stylesheets %}
       <link rel="stylesheet" href="{{ asset('css/main.min.css') }}">
@@ -58,6 +59,16 @@
       <aside class="sidebar">{% block sidebar %}{% endblock %}</aside>
       <section class="body">{% block body %}{% endblock %}</section>
     </div>
+
+    <footer class="site-footer">
+      <p class="site-footer-version">
+        {{ 'site_footer.version'|trans({
+          '%branch%': raddit_app_branch(),
+          '%version%': raddit_app_version(),
+          '%app%': '<a href="https://gitlab.com/edgyemma/raddit-app">raddit</a>',
+        })|raw }}
+      </p>
+    </footer>
 
     {% block javascripts %}
       <script>window.__webpack_public_path__ = "{{ app.request.baseUrl|e('js') }}/js/";</script>

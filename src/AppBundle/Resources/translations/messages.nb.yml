@@ -97,6 +97,9 @@ reset_password:
     update_notice: Passordet ditt ble oppdatert.
     title: Nullstille passord
 
+site_footer:
+    version: Kjører %app% %version% (%branch%). Laget med ☭.
+
 site_nav:
     submit: Nytt innlegg
     log_in: Logg inn
