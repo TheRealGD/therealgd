@@ -141,7 +141,7 @@ final class ForumController extends Controller {
      */
     public function listAction() {
         $forums = $this->getDoctrine()->getRepository(Forum::class)
-            ->findBy([], ['name' => 'ASC']);
+            ->findBy([], ['canonicalName' => 'ASC']);
 
         return $this->render('@RadditApp/forum_list.html.twig', [
             'forums' => $forums,
