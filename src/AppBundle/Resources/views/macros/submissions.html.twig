@@ -61,13 +61,19 @@
 
       <div class="submission-inner">
         <header class="submission-header">
-          {% spaceless %}
-            <h1 class="submission-title">
-              <a href="{{ block('submission_url') }}" class="submission-link">
-                {{- submission.title -}}
-              </a>
-            </h1>
-          {% endspaceless %}
+          <h1 class="submission-title">
+            <a href="{{ block('submission_url') }}" class="submission-link">
+              {{- submission.title -}}
+            </a>
+
+            {% if submission.url is not empty and '://' in submission.url %}
+              <small class="submission-host">
+                {%- with {host: submission.url|split('://')[1]|split('/')[0]} -%}
+                  {{- host[0:4] == 'www.' ? host[4:] : host -}}
+                {%- endwith -%}
+              </small>
+            {% endif %}
+          </h1>
 
           <p class="submission-info">
             {%- if options.show_forum_name -%}
