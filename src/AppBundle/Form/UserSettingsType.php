@@ -21,7 +21,6 @@ final class UserSettingsType extends AbstractType {
             ->add('locale', ChoiceType::class, [
                 'choices' => $this->getLocaleChoices(),
                 'choice_translation_domain' => false,
-                'required' => false,
             ])
             ->add('save', SubmitType::class)
         ;

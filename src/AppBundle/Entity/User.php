@@ -108,11 +108,11 @@ class User implements UserInterface {
     private $subscriptions;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="text")
      *
      * @var string
      */
-    private $locale;
+    private $locale = 'en';
 
     public function __construct() {
         $this->created = new \DateTime('@'.time());
