@@ -2,12 +2,17 @@
 
 ## v0.4.0 (2017-xx-xx)
 
-* Added submission thumbnails.
-* Added links for submit/create forum everywhere.
+* Added a forum directory.
+* Added separate page for user settings.
+* Added thumbnails for link submissions.
+* Added 'Submit' links everywhere.
 * Added Norwegian translation.
 * Added the ability for logged in users to select their preferred locale.
 * Added the ability to subscribe to forums. The front page will only show
   submissions from subscribed forums when logged in.
+* Added a footer which displays the software name and version.
+* Display host part of URL next to link submission titles.
+* Load comment forms in-line via Ajax.
 * The submission form now lets you choose the forum you want to post in.
   Accessing the form through a forum makes that forum selected by default.
 * Replaced the popular submission ranking algorithm with one that makes sense.
@@ -16,6 +21,7 @@
   primarily motivated by the desire to allow site administrators a quick way to
   deal with any XSS issues that may crop up in the conversion libraries, and
   which warrant a complete reconversion process of all Markdown content.
+* Miscellaneous UI & backend fixes.
 
 ## v0.3.1 (2017-04-11)
 
