@@ -6,6 +6,8 @@ comments:
     edit: Rediger
     permalink: Permalenke
     parent: Forelder
+    reply: Svar
+    form_load_error: En nettverksfeil oppstod. Vennligst prøv på nytt.
     info: '%user% skrev %timestamp%'
     info_at_timestamp: '%timestamp%'
     not_logged_in: Du må %login_link% eller %register_link% for å kommentere.

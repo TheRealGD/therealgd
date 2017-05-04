@@ -11,9 +11,11 @@ import {
     initWindow as dropdownInitWindow,
     initRoot as dropdownInitRoot
 } from './dropdowns';
+import initCommenting from './commenting';
 
 $(relativeTime);
 $(enableAjaxVoting);
 $(initAlerts);
 $(dropdownInitRoot);
 $(dropdownInitWindow);
+$(initCommenting);

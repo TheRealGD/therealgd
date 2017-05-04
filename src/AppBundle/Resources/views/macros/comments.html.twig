@@ -1,4 +1,4 @@
-{% macro comment(comment, recurse) %}
+{% macro comment(comment, recurse, show_form) %}
   {{- block('comment') -}}
 {% endmacro %}
 
@@ -44,6 +44,11 @@
         <nav class="comment-nav">
           <ul>{{ block('comment_nav') }}</ul>
         </nav>
+
+        {% if show_form ?? false and is_granted('ROLE_USER') %}
+          {% from _self import comment_form %}
+          {{ comment_form(comment.submission, comment) }}
+        {% endif %}
       </div>
     </div>
 
@@ -77,10 +82,23 @@
 {%- endblock -%}
 
 {%- block comment_nav -%}
+  {{- block('comment_nav_reply') -}}
   {{- block('comment_nav_permalink') -}}
   {{- block('comment_nav_parent') -}}
   {{- block('comment_nav_delete') -}}
   {{- block('comment_nav_edit') }}
+{%- endblock -%}
+
+{%- block comment_nav_reply -%}
+  <li class="comment-nav-reply" style="display: none">
+    <a href="#" data-form-url="{{ path('raddit_app_comment_form', {
+      forumName: comment.submission.forum.name,
+      submissionId: comment.submission.id,
+      commentId: comment.id
+    }) }}">
+      {{- 'comments.reply'|trans -}}
+    </a>
+  </li>
 {%- endblock -%}
 
 {%- block comment_nav_permalink -%}

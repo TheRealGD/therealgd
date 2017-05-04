@@ -49,6 +49,12 @@ raddit_app_submit:
     path: /submit/{forum_name}
     methods: [GET, POST]
 
+raddit_app_comment_form:
+    defaults: { _controller: RadditAppBundle:Comment:commentForm, comment_id: null }
+    methods: [GET]
+    path: /comment_form/{forumName}/{submissionId}/{commentId}
+    requirements: { submissionId: \d+, commentId: \d+ }
+
 raddit_app_comment_vote:
     defaults:
         _controller: RadditAppBundle:Vote:vote

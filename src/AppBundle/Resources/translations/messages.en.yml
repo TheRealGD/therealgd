@@ -6,6 +6,8 @@ comments:
     edit: Edit
     permalink: Permalink
     parent: Parent
+    reply: Reply
+    form_load_error: Error loading form. Please try again.
     info: '%user% wrote %timestamp%'
     info_at_timestamp: at %timestamp%
     not_logged_in: You must %login_link% or %register_link% to comment.
