@@ -23,7 +23,6 @@ comment_form:
 
 create_forum:
     create_new_forum: Create new forum
-    nav_link: Create forum
 
 edit_forum:
     edit_notice: The changes have been saved.
@@ -55,6 +54,7 @@ forum_list:
     title: Title
     subscribers: Subscribers
     page_title: List of forums
+    create_forum: Create forum
 
 front:
     subscribed_forums: Subscribed forums

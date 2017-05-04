@@ -23,7 +23,6 @@ comment_form:
 
 create_forum:
     create_new_forum: Opprett nytt forum
-    nav_link: Opprett forum
 
 edit_forum:
     edit_notice: Endringene har blitt lagret.
@@ -55,6 +54,7 @@ forum_list:
     title: Tittel
     subscribers: Abonnenter
     page_title: Liste over fora
+    create_forum: Opprett forum
 
 front:
     subscribed_forums: Dine abonnementer

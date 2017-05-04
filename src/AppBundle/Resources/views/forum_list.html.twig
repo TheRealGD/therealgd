@@ -45,4 +45,10 @@
       {% endfor %}
     </tbody>
   </table>
+
+  <nav class="forum-list-bottom-nav">
+    <ul>
+      <li><a href="{{ path('raddit_app_create_forum') }}">{{ 'forum_list.create_forum'|trans }}</a></li>
+    </ul>
+  </nav>
 {% endblock %}

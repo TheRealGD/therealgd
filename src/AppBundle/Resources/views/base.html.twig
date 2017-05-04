@@ -29,7 +29,6 @@
             <li><a href="{{ path('raddit_app_login') }}">{{ 'site_nav.log_in'|trans }}</a></li>
             <li><a href="{{ path('raddit_app_registration') }}">{{ 'site_nav.register'|trans }}</a></li>
           {% else %}
-            <li><a href="{{ path('raddit_app_create_forum') }}">{{ 'create_forum.nav_link'|trans }}</a></li>
             <li><a href="{{ path('raddit_app_submit', {forum_name: forum is defined and forum ? forum.name : null}) }}">{{ 'site_nav.submit'|trans }}</a></li>
             <li class="dropdown-container">
               <a href="#" class="dropdown-toggle"><strong>{{ app.user.username }}</strong></a>
