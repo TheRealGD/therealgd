@@ -13,7 +13,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  * aka Subraddit.
  *
  * @ORM\Entity(repositoryClass="Raddit\AppBundle\Repository\ForumRepository")
- * @ORM\Table(name="forums")
+ * @ORM\Table(name="forums", indexes={
+ *     @ORM\Index(name="forum_featured_idx", columns={"featured"})
+ * })
  *
  * @UniqueEntity("canonicalName", errorPath="name")
  */
@@ -92,6 +94,13 @@ class Forum {
      * @var ForumSubscription[]|Collection|Selectable
      */
     private $subscriptions;
+
+    /**
+     * @ORM\Column(type="boolean", options={"default": false})
+     *
+     * @var bool
+     */
+    private $featured = false;
 
     public function __construct() {
         $this->created = new \DateTime('@'.time());
@@ -212,5 +221,19 @@ class Forum {
      */
     public function getSubscriptions() {
         return $this->subscriptions;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFeatured(): bool {
+        return $this->featured;
+    }
+
+    /**
+     * @param bool $featured
+     */
+    public function setFeatured(bool $featured) {
+        $this->featured = $featured;
     }
 }

@@ -26,4 +26,20 @@ final class ForumRepository extends EntityRepository {
 
         return array_column($names, 'name');
     }
+
+    /**
+     * Get the names of the featured forums.
+     *
+     * @return string[]
+     */
+    public function findFeaturedForumNames() {
+        $names = $this->createQueryBuilder('f')
+            ->select('f.name')
+            ->where('f.featured = TRUE')
+            ->orderBy('f.canonicalName', 'ASC')
+            ->getQuery()
+            ->execute();
+
+        return array_column($names, 'name');
+    }
 }

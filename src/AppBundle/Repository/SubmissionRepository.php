@@ -5,6 +5,7 @@ namespace Raddit\AppBundle\Repository;
 use Doctrine\DBAL\Query\QueryBuilder as SQLQueryBuilder;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder as DQLQueryBuilder;
+use Raddit\AppBundle\Entity\Forum;
 use Raddit\AppBundle\Entity\ForumSubscription;
 use Raddit\AppBundle\Entity\Submission;
 use Raddit\AppBundle\Entity\User;
@@ -36,10 +37,13 @@ class SubmissionRepository extends EntityRepository {
      */
     public function findFrontPageSubmissions(string $sortBy) {
         if ($sortBy === 'hot') {
-            return $this->findHotSubmissions();
+            return $this->findHotSubmissions(function (SQLQueryBuilder $qb) {
+                $qb->andWhere('s.forum_id IN (SELECT id FROM forums WHERE featured)');
+            });
         }
 
         return $this->findSortedQb($sortBy)
+            ->andWhere('s.forum IN (SELECT f FROM '.Forum::class.' f WHERE f.featured = TRUE)')
             ->setMaxResults(self::MAX_PER_PAGE)
             ->getQuery()
             ->execute();

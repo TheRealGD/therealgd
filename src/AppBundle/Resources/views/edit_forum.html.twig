@@ -13,6 +13,10 @@
 
     {{ form_row(form.description) }}
 
+    {% if form.featured is defined %}
+      {{ form_row(form.featured) }}
+    {% endif %}
+
     {{ form_row(form.submit) }}
 
     {% if form.delete is defined %}

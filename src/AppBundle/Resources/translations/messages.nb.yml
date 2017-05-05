@@ -50,6 +50,7 @@ forum_form:
     save: Lagre endringer
     delete: Slett forum
     confirm_delete: Er du sikker på at du vil slette dette forumet og all dets innhold?
+    featured: Vis på forside
 
 forum_list:
     name: Navn
@@ -61,6 +62,8 @@ forum_list:
 front:
     subscribed_forums: Dine abonnementer
     no_subscriptions: Du har ikke abonnert på noen fora.
+    featured_forums: Utvalgte fora
+    no_forums: Det er ingen fora å vise
 
 login_form:
     log_in: Logg inn

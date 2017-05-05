@@ -14,21 +14,23 @@
 {% endblock %}
 
 {%- block sidebar -%}
-  {%- if is_granted('ROLE_USER') -%}
-    <section>
+  <section>
+    {% if is_granted('ROLE_USER') %}
       <h1>{{ 'front.subscribed_forums'|trans }}</h1>
+    {% else %}
+      <h1>{{ 'front.featured_forums'|trans }}</h1>
+    {% endif %}
 
-      {% if subscribed_forums|length > 0 %}
-        <ul>
-          {% for name in subscribed_forums %}
-            <li><a href="{{ path('raddit_app_forum', {forum_name: name}) }}">{{ name }}</a></li>
-          {% endfor %}
-        </ul>
-      {% else %}
-        <p>{{ 'front.no_subscriptions'|trans }}</p>
-      {% endif %}
-    </section>
-
-    {{ parent() }}
-  {%- endif -%}
+    {% if forums|length > 0 %}
+      <ul>
+        {% for name in forums %}
+          <li><a href="{{ path('raddit_app_forum', {forum_name: name}) }}">{{ name }}</a></li>
+        {% endfor %}
+      </ul>
+    {% elseif is_granted('ROLE_USER') %}
+      <p>{{ 'front.no_subscriptions'|trans }}</p>
+    {% else %}
+      <p>{{ 'front.no_forums'|trans }}</p>
+    {% endif %}
+  </section>
 {%- endblock -%}

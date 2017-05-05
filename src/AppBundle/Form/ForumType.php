@@ -4,6 +4,7 @@ namespace Raddit\AppBundle\Form;
 
 use Raddit\AppBundle\Entity\Forum;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -30,10 +31,17 @@ final class ForumType extends AbstractType {
         $builder
             ->add('name', TextType::class)
             ->add('title', TextType::class)
-            ->add('description', TextareaType::class)
-            ->add('submit', SubmitType::class, [
-                'label' => $editing ? 'forum_form.save' : 'forum_form.create',
+            ->add('description', TextareaType::class);
+
+        if ($this->authorizationChecker->isGranted('ROLE_ADMIN')) {
+            $builder->add('featured', CheckboxType::class, [
+                'required' => false,
             ]);
+        }
+
+        $builder->add('submit', SubmitType::class, [
+            'label' => $editing ? 'forum_form.save' : 'forum_form.create',
+        ]);
 
         if ($editing && $this->authorizationChecker->isGranted('delete', $builder->getData())) {
             $builder->add('delete', SubmitType::class);
