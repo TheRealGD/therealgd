@@ -81,7 +81,9 @@ final class BanController extends Controller {
             $banIds = [$banIds];
         }
 
-        $banIds = array_filter($banIds, function ($a) { return is_numeric($a); });
+        $banIds = array_filter($banIds, function ($a) {
+            return is_numeric($a);
+        });
 
         $em = $this->getDoctrine()->getManager();
         $banRepository = $this->getDoctrine()->getRepository(Ban::class);
