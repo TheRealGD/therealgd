@@ -1,0 +1,17 @@
+{% extends '@RadditApp/base.html.twig' %}
+{% form_theme form '@RadditApp/forms/standard_form_theme.html.twig' %}
+
+{% block page_classes %}
+  add-ban-page
+{% endblock %}
+
+{% block title %}
+  {{ 'ban_add.title'|trans }}
+{% endblock %}
+
+{% block body %}
+  <h1>{{ block('title') }}</h1>
+
+  {{ form(form) }}
+{% endblock %}
+

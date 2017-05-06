@@ -103,6 +103,21 @@ raddit_app_password_reset:
     path: /reset_password/{id}/{expires}/{checksum}
     methods: [GET, POST]
 
+raddit_app_bans:
+    defaults: { _controller: RadditAppBundle:Ban:list }
+    path: /bans
+    methods: [GET]
+
+raddit_app_add_ban:
+    defaults: { _controller: RadditAppBundle:Ban:add }
+    path: /add_ban
+    methods: [GET, POST]
+
+raddit_app_remove_bans:
+    defaults: { _controller: RadditAppBundle:Ban:remove }
+    path: /remove_bans
+    methods: [POST]
+
 raddit_app_login_check:
     path: /login_check
     methods: [POST]

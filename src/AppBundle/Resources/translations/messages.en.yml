@@ -1,3 +1,26 @@
+ban_add:
+    title: Ban an IP address
+    banned_notice: The IP address has been banned.
+
+ban_form:
+    ip: IP address
+    reason: Reason for banning
+    expiryDate: Expires at (YYYY-MM-DD hh:mm)
+    ban: Ban
+    user: User associated with IP
+
+ban_list:
+    title: Bans
+    ip: IP address
+    timestamp: Time
+    banned_by: Banned by
+    reason: Reason
+    user: User
+    user_none: none
+    expires: Expires
+    expires_never: never
+    remove: Remove bans
+
 banned:
     title: Banned
     message: You are banned!

@@ -1,3 +1,26 @@
+ban_add:
+    title: Utesteng en IP-adresse
+    banned_notice: IP-adressen ble utestengt.
+
+ban_form:
+    ip: IP-adresse
+    reason: Årsak for utestengelse
+    expiry_date: Varer til (ÅÅÅÅ-MM-DD tt:mm)
+    ban: Utesteng
+    user: Bruker assosiert med IP
+
+ban_list:
+    title: Utestengelser
+    ip: IP-adresse
+    timestamp: Tid
+    banned_by: Utestengt av
+    reason: Årsak
+    user: Bruker
+    user_none: ingen
+    expires: Løper ut
+    expires_never: aldri
+    remove: Fjern utestengelser
+
 banned:
     title: Utestengt
     message: Du har blitt utestengt!

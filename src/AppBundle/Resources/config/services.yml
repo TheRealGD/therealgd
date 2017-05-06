@@ -6,6 +6,12 @@ parameters:
 # Symfony 3.3 naming convention
 # http://symfony.com/blog/new-in-symfony-3-3-optional-class-for-named-services
 services:
+    Raddit\AppBundle\Form\BanType:
+        class: Raddit\AppBundle\Form\BanType
+        arguments: ['@Raddit\AppBundle\Repository\UserRepository']
+        tags:
+            - { name: form.type }
+
     Raddit\AppBundle\Form\ForumType:
         class: Raddit\AppBundle\Form\ForumType
         arguments: ["@security.authorization_checker"]
@@ -64,6 +70,12 @@ services:
         class: Raddit\AppBundle\Repository\BanRepository
         factory: ["@doctrine.orm.entity_manager", "getRepository"]
         arguments: [Raddit\AppBundle\Entity\Ban]
+        public: false
+
+    Raddit\AppBundle\Repository\UserRepository:
+        class: Raddit\AppBundle\Repository\UserRepository
+        factory: ["@doctrine.orm.entity_manager", "getRepository"]
+        arguments: [Raddit\AppBundle\Entity\User]
         public: false
 
     Raddit\AppBundle\Security\Voter\CommentVoter:
