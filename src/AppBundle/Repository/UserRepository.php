@@ -15,7 +15,12 @@ class UserRepository extends EntityRepository implements UserLoaderInterface {
      * {@inheritdoc}
      */
     public function loadUserByUsername($username) {
-        return $this->findOneByUsername($username);
+        return $this->createQueryBuilder('u')
+            ->where('u.username = ?1 OR u.canonicalUsername = ?2')
+            ->setParameter(1, $username)
+            ->setParameter(2, User::canonicalizeUsername($username))
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
     /**

@@ -139,7 +139,7 @@ class User implements UserInterface {
      */
     public function setUsername($username) {
         $this->username = $username;
-        $this->canonicalUsername = mb_strtolower($username, 'UTF-8');
+        $this->canonicalUsername = self::canonicalizeUsername($username);
     }
 
     /**
@@ -326,6 +326,17 @@ class User implements UserInterface {
      */
     public function setLocale($locale) {
         $this->locale = $locale;
+    }
+
+    /**
+     * Returns the canonical form of the username.
+     *
+     * @param string $username
+     *
+     * @return string
+     */
+    public static function canonicalizeUsername(string $username): string {
+        return mb_strtolower($username, 'UTF-8');
     }
 
     /**
