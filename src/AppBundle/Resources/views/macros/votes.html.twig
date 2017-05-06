@@ -10,7 +10,11 @@
           class="vote {{ block('vote_class') }}"
           data-ajax-action="{{ path(route, {id: entity.id, _format: 'json'}) }}"
           data-score="{{ entity.netScore }}">
-      <input type="hidden" name="token" value="{{ csrf_token('vote') }}">
+
+      {# csrf_token starts a session #}
+      {% if is_granted('ROLE_USER') %}
+        <input type="hidden" name="token" value="{{ csrf_token('vote') }}">
+      {% endif %}
 
       <button type="submit" name="choice" value="{{ block('vote_choice_up') }}"
               class="vote-button vote-up" title="{{ block('vote_up_label') }}">
