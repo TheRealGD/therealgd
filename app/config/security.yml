@@ -28,3 +28,7 @@ security:
                 csrf_parameter: token
                 csrf_token_generator: security.csrf.token_manager
                 path: raddit_app_log_out
+
+            remember_me:
+                secret: "%secret"
+                always_remember_me: true
