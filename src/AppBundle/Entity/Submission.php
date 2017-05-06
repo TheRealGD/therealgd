@@ -102,6 +102,13 @@ class Submission extends Votable {
     private $image;
 
     /**
+     * @ORM\Column(type="inet")
+     *
+     * @var string|null
+     */
+    private $ip;
+
+    /**
      * Creates a new submission with an implicit upvote from its creator.
      *
      * @param Forum $forum
@@ -281,5 +288,19 @@ class Submission extends Votable {
      */
     public function setImage($image) {
         $this->image = $image;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getIp() {
+        return $this->ip;
+    }
+
+    /**
+     * @param string|null $ip
+     */
+    public function setIp($ip) {
+        $this->ip = $ip;
     }
 }

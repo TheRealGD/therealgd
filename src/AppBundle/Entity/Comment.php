@@ -84,6 +84,13 @@ class Comment extends Votable {
     private $softDeleted = false;
 
     /**
+     * @ORM\Column(type="inet")
+     *
+     * @var string|null
+     */
+    private $ip;
+
+    /**
      * Creates a new comment with an implicit upvote from the comment author.
      *
      * @param Submission   $submission
@@ -245,5 +252,19 @@ class Comment extends Votable {
     public function softDelete() {
         $this->softDeleted = true;
         $this->body = '';
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getIp() {
+        return $this->ip;
+    }
+
+    /**
+     * @param string|null $ip
+     */
+    public function setIp($ip) {
+        $this->ip = $ip;
     }
 }

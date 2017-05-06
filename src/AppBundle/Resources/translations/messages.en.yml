@@ -1,3 +1,7 @@
+banned:
+    title: Banned
+    message: You are banned!
+
 comments:
     author_deleted: '[deleted]'
     comments: Comments

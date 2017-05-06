@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "a918daeca0b0c1aab37458ace03cb0c8",
+    "content-hash": "af5fc6ad2ea2c4d10aeec12bc4e44711",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -1702,6 +1702,51 @@
                 "service proxies"
             ],
             "time": "2016-11-04T15:53:15+00:00"
+        },
+        {
+            "name": "opensoft/doctrine-postgres-types",
+            "version": "1.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/opensoft/doctrine-postgres-types.git",
+                "reference": "7e69bdfeb2ae61c2f1e90872370cdf0135fb3006"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/opensoft/doctrine-postgres-types/zipball/7e69bdfeb2ae61c2f1e90872370cdf0135fb3006",
+                "reference": "7e69bdfeb2ae61c2f1e90872370cdf0135fb3006",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/dbal": "2.*",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.*|5.*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Doctrine\\DBAL\\PostgresTypes\\": "src/Doctrine/DBAL/PostgresTypes"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Richard Fullmer",
+                    "email": "richard.fullmer@opensoftdev.com"
+                }
+            ],
+            "description": "Provide some common postgres types for doctrine",
+            "time": "2016-08-31T16:56:34+00:00"
         },
         {
             "name": "paragonie/random_compat",

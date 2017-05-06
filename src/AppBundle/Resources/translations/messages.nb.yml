@@ -1,3 +1,7 @@
+banned:
+    title: Utestengt
+    message: Du har blitt utestengt!
+
 comments:
     author_deleted: '[slettet]'
     comments: Kommentarer

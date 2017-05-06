@@ -41,6 +41,13 @@ abstract class Vote {
      */
     private $user;
 
+    /**
+     * @ORM\Column(type="inet")
+     *
+     * @var string|null
+     */
+    private $ip;
+
     public function __construct() {
         $this->timestamp = new \DateTime('@'.time());
     }
@@ -92,5 +99,19 @@ abstract class Vote {
      */
     public function setUser($user) {
         $this->user = $user;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getIp() {
+        return $this->ip;
+    }
+
+    /**
+     * @param string|null $ip
+     */
+    public function setIp($ip) {
+        $this->ip = $ip;
     }
 }

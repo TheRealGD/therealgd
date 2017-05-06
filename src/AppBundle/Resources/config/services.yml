@@ -30,6 +30,18 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
+    Raddit\AppBundle\EventListener\AttachIpToEntityListener:
+        class: Raddit\AppBundle\EventListener\AttachIpToEntityListener
+        arguments: ["@request_stack"]
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+
+    Raddit\AppBundle\EventListener\BanListener:
+        class: Raddit\AppBundle\EventListener\BanListener
+        arguments: ['@Raddit\AppBundle\Repository\BanRepository']
+        tags:
+            - { name: kernel.event_subscriber }
+
     Raddit\AppBundle\EventListener\LocaleListener:
         class: Raddit\AppBundle\EventListener\LocaleListener
         autowire: true
@@ -47,6 +59,12 @@ services:
         tags:
             - { name: doctrine.event_listener, event: postPersist }
             - { name: kernel.event_listener, event: kernel.terminate }
+
+    Raddit\AppBundle\Repository\BanRepository:
+        class: Raddit\AppBundle\Repository\BanRepository
+        factory: ["@doctrine.orm.entity_manager", "getRepository"]
+        arguments: [Raddit\AppBundle\Entity\Ban]
+        public: false
 
     Raddit\AppBundle\Security\Voter\CommentVoter:
         class: Raddit\AppBundle\Security\Voter\CommentVoter
