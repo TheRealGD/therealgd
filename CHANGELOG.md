@@ -10,8 +10,11 @@
 * Added the ability for logged in users to select their preferred locale.
 * Added the ability to subscribe to forums. The front page will only show
   submissions from subscribed forums when logged in.
+* Added the ability to ban users.
+* Added the ability to select which forums are displayed to logged out users.
 * Added a footer which displays the software name and version.
 * Display host part of URL next to link submission titles.
+* Keep track of IP addresses when submitting/commenting/voting.
 * Load comment forms in-line via Ajax.
 * The submission form now lets you choose the forum you want to post in.
   Accessing the form through a forum makes that forum selected by default.
