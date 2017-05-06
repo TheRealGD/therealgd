@@ -16,12 +16,12 @@ final class BanRepository extends EntityRepository {
             throw new \InvalidArgumentException('Invalid IP address');
         }
 
-        $result = $this->createQueryBuilder('b')
-            ->select('COUNT(b)')
-            ->getQuery()
-            ->getSingleScalarResult();
+        $sql = "SELECT COUNT(b) FROM bans b WHERE ip >>= :ip";
 
-        return $result > 0;
+        $sth = $this->getEntityManager()->getConnection()->prepare($sql);
+        $sth->execute([$ip]);
+
+        return $sth->fetchColumn() > 0;
     }
 
     /**
