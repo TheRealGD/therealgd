@@ -63,9 +63,8 @@ class User implements UserInterface {
     private $plainPassword;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      *
-     * @Assert\NotBlank()
      * @Assert\Email()
      *
      * @var string
@@ -73,7 +72,7 @@ class User implements UserInterface {
     private $email;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      *
      * @var string
      */
@@ -189,7 +188,7 @@ class User implements UserInterface {
      */
     public function setEmail($email) {
         $this->email = $email;
-        $this->canonicalEmail = self::canonicalizeEmail($email);
+        $this->canonicalEmail = $email ? self::canonicalizeEmail($email) : null;
     }
 
     /**

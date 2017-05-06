@@ -43,7 +43,9 @@ final class UserType extends AbstractType {
                 'second_name' => $editing ? 'repeat_new_password' : 'repeat_password',
                 'type' => PasswordType::class,
             ])
-            ->add('email', EmailType::class)
+            ->add('email', EmailType::class, [
+                'required' => false,
+            ])
             ->add('submit', SubmitType::class, [
                 'label' => 'user_form.'.($editing ? 'save' : 'register'),
             ]);
