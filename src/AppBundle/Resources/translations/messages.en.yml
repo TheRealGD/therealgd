@@ -5,7 +5,7 @@ ban_add:
 ban_form:
     ip: IP address
     reason: Reason for banning
-    expiryDate: Expires at (YYYY-MM-DD hh:mm)
+    expiry_date: Expires at (YYYY-MM-DD hh:mm)
     ban: Ban
     user: User associated with IP
 
