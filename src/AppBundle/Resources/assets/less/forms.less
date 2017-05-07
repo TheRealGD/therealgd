@@ -1,5 +1,5 @@
+@import (reference) 'mixins';
 @import (reference) 'settings';
-
 
 //
 // Standard, vertical, non-weird forms
@@ -13,24 +13,33 @@
     display: inline-block;
   }
 
+  .text-inputs({
+    background-color: @form-text-input-background-color;
+    border: solid 1px @form-text-input-border-color;
+    border-radius: 2px;
+    line-height: 1.35;
+    color: @form-text-input-color;
+    padding: 0.5rem;
+
+    &:focus {
+      border: solid 1px @form-text-input-focus-border-color;
+      outline: none;
+    }
+
+    &[disabled] {
+      background-color: @form-text-input-disabled-background-color;
+      color: @form-text-input-disabled-color;
+    }
+  });
+
   .row {
     max-width: 40rem;
     margin-bottom: 1rem;
 
-    input:not([type]),
-    input[type="text"],
-    input[type="password"],
-    input[type="email"],
-    input[type="tel"],
-    input[type="number"],
-    input[type="search"],
-    input[type="datetime"],
-    input[type="datetime-local"],
-    input[type="url"],
-    textarea {
+    .text-inputs({
       // Make text type inputs fill the entire row
       width: 100%;
-    }
+    });
   }
 
   label {

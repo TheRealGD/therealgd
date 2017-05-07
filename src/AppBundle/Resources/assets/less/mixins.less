@@ -98,3 +98,21 @@
     flex: 1 1 auto;
   }
 }
+
+.text-inputs(@rules) {
+  input:not([type]),
+  input[type="text"],
+  input[type="password"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="number"],
+  input[type="search"],
+  input[type="datetime"],
+  input[type="datetime-local"],
+  input[type="date"],
+  input[type="time"],
+  input[type="url"],
+  textarea {
+    @rules();
+  }
+}
