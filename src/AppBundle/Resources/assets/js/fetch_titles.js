@@ -14,7 +14,9 @@ export default function ($) {
                 dataType: 'json',
                 data: { url: url }
             }).done(data => {
-                $('.receive-title').val(data.title);
+                if ($receiver.val().trim() === '') {
+                    $('.receive-title').val(data.title);
+                }
             }).fail(err => {
                 console && console.log(err);
             });
