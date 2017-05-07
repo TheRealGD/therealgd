@@ -6,29 +6,6 @@
 //
 
 .form {
-  max-width: 40rem;
-
-  .form-errors {
-    margin: 0;
-    padding: 0;
-
-    li {
-      color: @form-error-color;
-      font-weight: bold;
-      list-style-position: inside;
-      margin: 0;
-    }
-  }
-
-  .row {
-    margin-bottom: 1rem;
-  }
-
-  label {
-    // Keep label from being larger than its inner text
-    display: table;
-  }
-
   button,
   input,
   select,
@@ -36,18 +13,40 @@
     display: inline-block;
   }
 
-  // TODO - this list is incomplete
-  input:not([type]),
-  input[type="text"],
-  input[type="password"],
-  input[type="email"],
-  input[type="tel"],
-  input[type="number"],
-  input[type="search"],
-  input[type="datetime"],
-  input[type="datetime-local"],
-  input[type="url"],
-  textarea {
-    width: 100%;
+  .row {
+    max-width: 40rem;
+    margin-bottom: 1rem;
+
+    input:not([type]),
+    input[type="text"],
+    input[type="password"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="number"],
+    input[type="search"],
+    input[type="datetime"],
+    input[type="datetime-local"],
+    input[type="url"],
+    textarea {
+      // Make text type inputs fill the entire row
+      width: 100%;
+    }
+  }
+
+  label {
+    display: inline-block;
+    margin-right: 1ex;
+  }
+}
+
+.form-errors {
+  margin: 0;
+  padding: 0;
+
+  li {
+    color: @form-error-color;
+    font-weight: bold;
+    list-style-position: inside;
+    margin: 0;
   }
 }
