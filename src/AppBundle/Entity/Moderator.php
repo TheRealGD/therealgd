@@ -35,6 +35,17 @@ class Moderator {
     private $user;
 
     /**
+     * @ORM\Column(type="datetimetz")
+     *
+     * @var \DateTime
+     */
+    private $timestamp;
+
+    public function __construct() {
+        $this->timestamp = new \DateTime();
+    }
+
+    /**
      * @return int
      */
     public function getId() {
@@ -67,5 +78,19 @@ class Moderator {
      */
     public function setUser($user) {
         $this->user = $user;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getTimestamp(): \DateTime {
+        return $this->timestamp;
+    }
+
+    /**
+     * @param \DateTime $timestamp
+     */
+    public function setTimestamp(\DateTime $timestamp) {
+        $this->timestamp = $timestamp;
     }
 }
