@@ -12,9 +12,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * @ParamConverter("forum", options={"mapping": {"forum_name": "name"}})
- */
 final class ForumController extends Controller {
     /**
      * Create a new forum.
@@ -54,6 +51,8 @@ final class ForumController extends Controller {
 
     /**
      * @Security("is_granted('edit', forum)")
+     *
+     * @ParamConverter("forum", options={"mapping": {"forum_name": "name"}})
      *
      * @param Request $request
      * @param Forum   $forum
@@ -151,6 +150,8 @@ final class ForumController extends Controller {
 
     /**
      * Show a list of forum moderators.
+     *
+     * @ParamConverter("forum", options={"mapping": {"forum_name": "name"}})
      *
      * @param Forum $forum
      *
