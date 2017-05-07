@@ -5,9 +5,9 @@
 
 {% block body %}
   {{ form_start(form) }}
-    {{ form_row(form.title, {attr: {rows: 3}}) }}
+    {{ form_row(form.url, {attr: {class: 'fetch-title'}}) }}
 
-    {{ form_row(form.url) }}
+    {{ form_row(form.title, {attr: {rows: 3, class: 'receive-title'}}) }}
 
     {{ form_row(form.body, {attr: {rows: 10}}) }}
 

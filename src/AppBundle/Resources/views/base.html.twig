@@ -71,6 +71,8 @@
 
     {% block javascripts %}
       <script>window.__webpack_public_path__ = "{{ app.request.baseUrl|e('js') }}/js/";</script>
+      <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+      <script src="{{ path('fos_js_routing_js', {callback: 'fos.Router.setData'}) }}"></script>
       <script src="{{ asset('js/vendor.min.js') }}"></script>
       <script src="{{ asset('js/main.min.js') }}"></script>
       <script src="{{ path('bazinga_jstranslation_js') }}"></script>

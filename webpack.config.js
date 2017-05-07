@@ -12,6 +12,9 @@ module.exports = {
         path: __dirname + '/web/js',
         filename: '[name].min.js'
     },
+    externals: {
+        "fosjsrouting": "Routing"
+    },
     module: {
         rules: [
             {

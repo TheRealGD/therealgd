@@ -12,6 +12,7 @@ import {
     initRoot as dropdownInitRoot
 } from './dropdowns';
 import initCommenting from './commenting';
+import fetchTitles from './fetch_titles';
 
 $(relativeTime);
 $(enableAjaxVoting);
@@ -19,3 +20,4 @@ $(initAlerts);
 $(dropdownInitRoot);
 $(dropdownInitWindow);
 $(initCommenting);
+$(fetchTitles);

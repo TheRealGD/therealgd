@@ -3,6 +3,8 @@
 namespace Raddit\AppBundle\Controller;
 
 use Doctrine\DBAL\Query\QueryBuilder;
+use Embed\Embed;
+use Embed\Exceptions\InvalidUrlException;
 use Raddit\AppBundle\Entity\Comment;
 use Raddit\AppBundle\Entity\Forum;
 use Raddit\AppBundle\Entity\Submission;
@@ -194,5 +196,34 @@ final class SubmissionController extends Controller {
             'forum' => $forum,
             'submission' => $submission,
         ]);
+    }
+
+    /**
+     * JSON action for retrieving link titles.
+     *
+     * - 200 - Found a title
+     * - 400 - Bad URL
+     * - 404 - No title found
+     *
+     * @Security("is_granted('ROLE_USER')")
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function fetchTitleAction(Request $request) {
+        $url = $request->request->get('url');
+
+        try {
+            $title = (Embed::create($url))->getTitle();
+
+            if (!strlen($title)) {
+                return $this->json([], 404);
+            }
+
+            return $this->json(['title' => $title]);
+        } catch (InvalidUrlException $e) {
+            return $this->json(['error' => $e->getMessage()], 400);
+        }
     }
 }
