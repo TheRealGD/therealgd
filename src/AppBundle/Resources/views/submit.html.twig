@@ -15,11 +15,13 @@
       {{ form_row(form.forum) }}
     {% endif %}
 
-    {{ form_row(form.submit) }}
+    <div class="row">
+      {{ form_widget(form.submit) }}
 
-    {% if form.delete is defined %}
-      {{ form_row(form.delete, {attr: {class: 'delete-submission'}}) }}
-    {% endif %}
+      {% if form.delete is defined %}
+        {{ form_widget(form.delete, {attr: {class: 'delete-submission'}}) }}
+      {% endif %}
+    </div>
   {{ form_end(form) }}
 {% endblock %}
 
