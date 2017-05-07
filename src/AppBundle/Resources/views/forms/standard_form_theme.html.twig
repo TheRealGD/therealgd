@@ -28,3 +28,8 @@
     {{- form_widget(form) -}}
   </div>
 {%- endblock -%}
+
+{%- block button_widget -%}
+  {%- set attr = attr|merge({'class': (attr.class is defined and attr.class|length > 0) ? attr.class~' button' : 'button'}) -%}
+  {{- parent() -}}
+{%- endblock -%}
