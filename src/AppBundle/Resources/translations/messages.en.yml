@@ -86,6 +86,11 @@ forum_list:
     page_title: List of forums
     create_forum: Create forum
 
+forum_moderators:
+    title: Moderators for /%forum_name%
+    username: Username
+    since: Since
+
 front:
     subscribed_forums: Subscribed forums
     no_subscriptions: You are not subscribed to any forum.

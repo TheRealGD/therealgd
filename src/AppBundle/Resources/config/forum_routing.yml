@@ -47,3 +47,8 @@ raddit_app_edit_forum:
     defaults: { _controller: RadditAppBundle:Forum:editForum }
     path: /{forum_name}/edit
     methods: [GET, POST]
+
+raddit_app_forum_moderators:
+    defaults: { _controller: RadditAppBundle:Forum:moderators }
+    path: /{forum_name}/moderators
+    methods: [GET]

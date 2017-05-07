@@ -86,6 +86,11 @@ forum_list:
     page_title: Liste over fora
     create_forum: Opprett forum
 
+forum_moderators:
+    title: Moderatorer for /%forum_name%
+    username: Brukernavn
+    since: Siden
+
 front:
     subscribed_forums: Dine abonnementer
     no_subscriptions: Du har ikke abonnert på noen fora.

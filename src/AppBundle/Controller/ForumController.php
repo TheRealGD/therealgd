@@ -12,6 +12,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @ParamConverter("forum", options={"mapping": {"forum_name": "name"}})
+ */
 final class ForumController extends Controller {
     /**
      * Create a new forum.
@@ -50,8 +53,6 @@ final class ForumController extends Controller {
     }
 
     /**
-     * @ParamConverter("forum", options={"mapping": {"forum_name": "name"}})
-     *
      * @Security("is_granted('edit', forum)")
      *
      * @param Request $request
@@ -145,6 +146,23 @@ final class ForumController extends Controller {
 
         return $this->render('@RadditApp/forum_list.html.twig', [
             'forums' => $forums,
+        ]);
+    }
+
+    /**
+     * Show a list of forum moderators.
+     *
+     * @param Forum $forum
+     *
+     * @return Response
+     */
+    public function moderatorsAction(Forum $forum) {
+        $moderators = $this->getDoctrine()->getRepository(Moderator::class)
+            ->findBy(['forum' => $forum], ['id' => 'ASC']);
+
+        return $this->render('@RadditApp/forum_moderators.html.twig', [
+            'forum' => $forum,
+            'moderators' => $moderators,
         ]);
     }
 }
