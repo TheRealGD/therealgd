@@ -1,18 +1,17 @@
 @import (reference) 'mixins';
 
 .content-wrapper {
-  .clear-fix();
+  display: flex;
 
   @media screen and (max-width: 767px) {
-    display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
+  }
+
+  & > .body {
+    flex: 1 0 auto;
   }
 
   margin: 0 1rem;
-
-  & > .body > * {
-    overflow: auto;
-  }
 }
 
 .site-alerts {

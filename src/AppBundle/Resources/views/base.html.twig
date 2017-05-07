@@ -54,10 +54,10 @@
       {%- endif -%}
     </div>
 
-    <div class="content-wrapper">
+    <main class="content-wrapper">
+      <div class="body">{% block body %}{% endblock %}</div>
       <aside class="sidebar">{% block sidebar %}{% endblock %}</aside>
-      <section class="body">{% block body %}{% endblock %}</section>
-    </div>
+    </main>
 
     <footer class="site-footer">
       <p class="site-footer-version">
