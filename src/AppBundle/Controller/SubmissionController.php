@@ -24,20 +24,21 @@ final class SubmissionController extends Controller {
      * View submissions on the front page.
      *
      * @param string $sortBy
+     * @param int    $page
      *
      * @return Response
      */
-    public function frontPageAction(string $sortBy) {
+    public function frontPageAction(string $sortBy, int $page) {
         $forumRepository = $this->getDoctrine()->getRepository(Forum::class);
         $submissionRepository = $this->getDoctrine()->getRepository(Submission::class);
 
         if ($this->isGranted('ROLE_USER')) {
             $user = $this->getUser();
 
-            $submissions = $submissionRepository->findLoggedInFrontPageSubmissions($sortBy, $user);
+            $submissions = $submissionRepository->findLoggedInFrontPageSubmissions($sortBy, $user, $page);
             $forums = $forumRepository->findSubscribedForumNames($user);
         } else {
-            $submissions = $submissionRepository->findFrontPageSubmissions($sortBy);
+            $submissions = $submissionRepository->findFrontPageSubmissions($sortBy, $page);
             $forums = $forumRepository->findFeaturedForumNames();
         }
 
@@ -56,9 +57,9 @@ final class SubmissionController extends Controller {
      *
      * @return Response
      */
-    public function forumAction(Forum $forum, string $sortBy) {
+    public function forumAction(Forum $forum, string $sortBy, int $page) {
         $submissions = $this->getDoctrine()->getRepository(Submission::class)
-            ->findForumSubmissions($forum, $sortBy);
+            ->findForumSubmissions($forum, $sortBy, $page);
 
         return $this->render('@RadditApp/forum.html.twig', [
             'forum' => $forum,

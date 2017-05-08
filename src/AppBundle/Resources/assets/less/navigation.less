@@ -1,3 +1,4 @@
+@import (reference) 'buttons';
 @import (reference) 'mixins';
 @import (reference) 'settings';
 
@@ -100,4 +101,13 @@
 
 .horizontal-nav {
   .horizontal-menu();
+}
+
+.pagination {
+  .horizontal-menu();
+
+  a {
+    .button();
+    font-size: 1rem;
+  }
 }

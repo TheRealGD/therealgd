@@ -54,6 +54,14 @@ class ApplicationAvailabilityTest extends WebTestCase {
      */
     public function publicUrlProvider() {
         yield ['/'];
+        yield ['/hot'];
+        yield ['/new'];
+        yield ['/top'];
+        yield ['/controversial'];
+        yield ['/hot/1'];
+        yield ['/new/1'];
+        yield ['/top/1'];
+        yield ['/controversial/1'];
         yield ['/f/liberalwithdulledge/1/'];
         yield ['/f/liberalwithdulledge/2/'];
         yield ['/f/liberalwithdulledge/1/comment/1/'];

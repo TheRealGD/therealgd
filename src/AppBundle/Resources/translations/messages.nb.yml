@@ -106,6 +106,10 @@ login_form:
 markdown_type:
     help: Hjelp med formatering
 
+pagination:
+    next: Neste
+    previous: Forrige
+
 request_password_reset:
     title: Be om nullstilling av passord
     multiple_accounts_notice: >

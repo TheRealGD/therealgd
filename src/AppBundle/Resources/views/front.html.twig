@@ -11,6 +11,8 @@
   {% for submission in submissions %}
     {{ submission(submission) }}
   {% endfor %}
+
+  {% include '@RadditApp/includes/pagination.html.twig' with {pager: submissions} %}
 {% endblock %}
 
 {%- block sidebar -%}

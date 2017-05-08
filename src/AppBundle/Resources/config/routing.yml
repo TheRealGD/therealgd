@@ -4,10 +4,10 @@
 #
 
 raddit_app_front:
-    defaults: { _controller: RadditAppBundle:Submission:frontPage, sortBy: hot }
-    path: /{sortBy}
+    defaults: { _controller: RadditAppBundle:Submission:frontPage, sortBy: hot, page: 1 }
+    path: /{sortBy}/{page}
     methods: [GET]
-    requirements: { sortBy: hot|new|top|controversial }
+    requirements: { sortBy: hot|new|top|controversial, page: \d+ }
 
 raddit_app_user:
     defaults: { _controller: RadditAppBundle:User:userPage }

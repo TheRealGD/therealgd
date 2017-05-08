@@ -22,4 +22,6 @@
   {% for submission in submissions %}
     {{ submission(submission, {show_forum_name: false}) }}
   {% endfor %}
+
+  {% include '@RadditApp/includes/pagination.html.twig' with {pager: submissions} %}
 {% endblock %}

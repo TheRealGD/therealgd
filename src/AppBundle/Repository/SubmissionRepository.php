@@ -4,6 +4,8 @@ namespace Raddit\AppBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\Pagerfanta;
 use Raddit\AppBundle\Entity\Forum;
 use Raddit\AppBundle\Entity\ForumSubscription;
 use Raddit\AppBundle\Entity\Submission;
@@ -32,37 +34,48 @@ class SubmissionRepository extends EntityRepository {
 
     /**
      * @param string $sortBy
+     * @param int    $page
      *
-     * @return Submission[]
+     * @return Pagerfanta|Submission[]
      */
-    public function findFrontPageSubmissions(string $sortBy) {
-        return $this->findSortedQb($sortBy)
+    public function findFrontPageSubmissions(string $sortBy, $page = 1) {
+        $qb = $this->findSortedQb($sortBy)
             ->andWhere('s.forum IN (SELECT f FROM '.Forum::class.' f WHERE f.featured = TRUE)')
-            ->setMaxResults(self::MAX_PER_PAGE)
-            ->getQuery()
-            ->execute();
+            ->setMaxResults(self::MAX_PER_PAGE);
+
+        $pager = new Pagerfanta(new DoctrineORMAdapter($qb));
+        $pager->setMaxPerPage(self::MAX_PER_PAGE);
+        $pager->setCurrentPage($page);
+
+        return $pager;
     }
 
     /**
      * @param string $sortBy
      * @param User   $user
+     * @param int    $page
      *
-     * @return Submission[]
+     * @return Pagerfanta|Submission[]
      */
-    public function findLoggedInFrontPageSubmissions(string $sortBy, User $user) {
+    public function findLoggedInFrontPageSubmissions(string $sortBy, User $user, int $page = 1) {
         $qb = $this->findSortedQb($sortBy)->setMaxResults(self::MAX_PER_PAGE);
         $this->joinSubscribedForums($qb, $user);
 
-        return $qb->getQuery()->execute();
+        $pager = new Pagerfanta(new DoctrineORMAdapter($qb));
+        $pager->setMaxPerPage(self::MAX_PER_PAGE);
+        $pager->setCurrentPage($page);
+
+        return $pager;
     }
 
     /**
      * @param Forum  $forum
      * @param string $sortBy
+     * @param int    $page
      *
-     * @return Submission[]
+     * @return Pagerfanta|Submission[]
      */
-    public function findForumSubmissions(Forum $forum, string $sortBy) {
+    public function findForumSubmissions(Forum $forum, string $sortBy, int $page = 1) {
         $qb = $this->findSortedQb($sortBy)
             ->andWhere('s.forum = :forum')
             ->setParameter('forum', $forum)
@@ -70,7 +83,11 @@ class SubmissionRepository extends EntityRepository {
 
         PrependOrderBy::prepend($qb, 's.sticky', 'DESC');
 
-        return $qb->getQuery()->execute();
+        $pager = new Pagerfanta(new DoctrineORMAdapter($qb));
+        $pager->setMaxPerPage(self::MAX_PER_PAGE);
+        $pager->setCurrentPage($page);
+
+        return $pager;
     }
 
     /**
