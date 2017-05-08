@@ -7,9 +7,7 @@ use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
 use Raddit\AppBundle\Entity\Forum;
-use Raddit\AppBundle\Entity\ForumSubscription;
 use Raddit\AppBundle\Entity\Submission;
-use Raddit\AppBundle\Entity\User;
 use Raddit\AppBundle\Utils\PrependOrderBy;
 
 class SubmissionRepository extends EntityRepository {
@@ -33,33 +31,16 @@ class SubmissionRepository extends EntityRepository {
     const MULTIPLIER = 1800;
 
     /**
-     * @param string $sortBy
-     * @param int    $page
+     * @param string[] $forumNames
+     * @param string   $sortBy
+     * @param int      $page
      *
      * @return Pagerfanta|Submission[]
      */
-    public function findFrontPageSubmissions(string $sortBy, $page = 1) {
+    public function findFrontPageSubmissions(array $forumNames, string $sortBy, int $page = 1) {
         $qb = $this->findSortedQb($sortBy)
-            ->andWhere('s.forum IN (SELECT f FROM '.Forum::class.' f WHERE f.featured = TRUE)')
-            ->setMaxResults(self::MAX_PER_PAGE);
-
-        $pager = new Pagerfanta(new DoctrineORMAdapter($qb));
-        $pager->setMaxPerPage(self::MAX_PER_PAGE);
-        $pager->setCurrentPage($page);
-
-        return $pager;
-    }
-
-    /**
-     * @param string $sortBy
-     * @param User   $user
-     * @param int    $page
-     *
-     * @return Pagerfanta|Submission[]
-     */
-    public function findLoggedInFrontPageSubmissions(string $sortBy, User $user, int $page = 1) {
-        $qb = $this->findSortedQb($sortBy)->setMaxResults(self::MAX_PER_PAGE);
-        $this->joinSubscribedForums($qb, $user);
+            ->join('s.forum', 'f', 'WITH', 'f.name IN (:forums)')
+            ->setParameter(':forums', $forumNames);
 
         $pager = new Pagerfanta(new DoctrineORMAdapter($qb));
         $pager->setMaxPerPage(self::MAX_PER_PAGE);
@@ -88,19 +69,6 @@ class SubmissionRepository extends EntityRepository {
         $pager->setCurrentPage($page);
 
         return $pager;
-    }
-
-    /**
-     * @param QueryBuilder $qb
-     * @param User         $user
-     */
-    public function joinSubscribedForums(QueryBuilder $qb, User $user) {
-        /* @noinspection SqlDialectInspection */
-        $qb->andWhere('s.forum IN ('.
-            'SELECT IDENTITY(fs.forum) FROM '.ForumSubscription::class.' fs WHERE fs.user = :user'.
-        ')');
-
-        $qb->setParameter('user', $user);
     }
 
     public function recalculateRank(Submission $submission, int $scoreDelta) {

@@ -93,9 +93,9 @@ forum_moderators:
 
 front:
     subscribed_forums: Dine abonnementer
-    no_subscriptions: Du har ikke abonnert på noen fora.
+    no_subscriptions: Du har ikke abonnert på noen fora. Viser utvalgte fora istedenfor.
     featured_forums: Utvalgte fora
-    no_forums: Det er ingen fora å vise
+    no_forums: Det er ingen utvalgte fora å vise frem
 
 login_form:
     log_in: Logg inn

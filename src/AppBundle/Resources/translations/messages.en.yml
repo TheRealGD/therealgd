@@ -93,9 +93,9 @@ forum_moderators:
 
 front:
     subscribed_forums: Subscribed forums
-    no_subscriptions: You are not subscribed to any forum.
+    no_subscriptions: You are not subscribed to any forum. Showing featured forums instead.
     featured_forums: Featured forums
-    no_forums: There are no featured forums to display
+    no_forums: There are no featured forums to display.
 
 login_form:
     log_in: Log in
