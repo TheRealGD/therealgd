@@ -2,29 +2,34 @@
 
 ## v0.4.0 (2017-xx-xx)
 
-* Added a forum directory.
-* Added separate page for user settings.
-* Added thumbnails for link submissions.
-* Added 'Submit' links everywhere.
+* Added ability for users to select their preferred locale.
+* Added featured forums for logged-out users and users without subscriptions.
+* Added footer which displays the software name and version.
+* Added forum directory.
+* Added forum subscriptions.
+* Added IP bans.
+* Added link to Markdown help.
+* Added moderator list page.
 * Added Norwegian translation.
-* Added the ability for logged in users to select their preferred locale.
-* Added the ability to subscribe to forums. The front page will only show
-  submissions from subscribed forums when logged in.
-* Added the ability to ban users.
-* Added the ability to select which forums are displayed to logged out users.
-* Added a footer which displays the software name and version.
+* Added pagination for front page and forum indexes.
+* Added separate page for user settings.
+* Added sticky posts for forums.
+* Added 'Submit' links everywhere. Clicking them within a forum makes that forum
+  selected in the submission form.
+* Added thumbnails for link submissions.
 * Display host part of URL next to link submission titles.
+* Fetch title of URL in submission form via Ajax.
 * Keep track of IP addresses when submitting/commenting/voting.
+* Keep track of time a moderator was given their privileges.
+* Keep users logged in past session expiration.
 * Load comment forms in-line via Ajax.
-* The submission form now lets you choose the forum you want to post in.
-  Accessing the form through a forum makes that forum selected by default.
-* Replaced the popular submission ranking algorithm with one that makes sense.
-* Markdown is now converted to HTML on demand and cached for 24 hours, rather
-  than loading pre-converted Markdown from the database. This change was
-  primarily motivated by the desire to allow site administrators a quick way to
-  deal with any XSS issues that may crop up in the conversion libraries, and
-  which warrant a complete reconversion process of all Markdown content.
 * Miscellaneous UI & backend fixes.
+* Parsed Markdown is no longer stored in the database. Instead, it is parsed on
+  demand and cached for 24 hours.
+* Refactor submissions table to store the ranking.
+* Remove required email address when registering.
+* Replaced the popular submission ranking algorithm with one that makes sense.
+* Revamped form styling.
 
 ## v0.3.1 (2017-04-11)
 
