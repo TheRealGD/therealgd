@@ -5,6 +5,11 @@
   front-page
 {% endblock %}
 
+{% block head %}
+  <link rel="canonical" href="{{ url('raddit_app_front') }}">
+  {% include '@RadditApp/includes/meta_pagination.html.twig' with {pager: submissions} %}
+{% endblock %}
+
 {% block body %}
   {{ submission_sort(sort_by) }}
 

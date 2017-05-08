@@ -1,0 +1,9 @@
+{% with {attr: app.request.attributes} %}
+  {% if pager.hasPreviousPage %}
+    <link rel="prev" href="{{ path(attr.get('_route'), attr.get('_route_params')|default({})|merge({page: pager.previousPage})) }}">
+  {% endif %}
+
+  {% if pager.hasNextPage %}
+    <link rel="next" href="{{ path(attr.get('_route'), attr.get('_route_params')|default({})|merge({page: pager.nextPage})) }}">
+  {% endif %}
+{% endwith %}

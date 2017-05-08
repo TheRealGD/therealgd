@@ -6,6 +6,7 @@
 
 {% block head %}
   <link rel="canonical" href="{{ url('raddit_app_forum', {forum_name: forum.name}) }}">
+  {% include '@RadditApp/includes/meta_pagination.html.twig' with {pager: submissions} %}
 
   {% if forum.description %}
     <meta name="description" content="{{ forum.description|markdown|striptags }}">
