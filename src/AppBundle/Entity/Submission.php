@@ -109,6 +109,13 @@ class Submission extends Votable {
     private $ip;
 
     /**
+     * @ORM\Column(type="boolean")
+     *
+     * @var bool
+     */
+    private $sticky = false;
+
+    /**
      * Creates a new submission with an implicit upvote from its creator.
      *
      * @param Forum $forum
@@ -302,5 +309,19 @@ class Submission extends Votable {
      */
     public function setIp($ip) {
         $this->ip = $ip;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getSticky() {
+        return $this->sticky;
+    }
+
+    /**
+     * @param bool $sticky
+     */
+    public function setSticky($sticky) {
+        $this->sticky = $sticky;
     }
 }

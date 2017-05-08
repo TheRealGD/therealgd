@@ -7,18 +7,32 @@ use Raddit\AppBundle\Entity\Forum;
 use Raddit\AppBundle\Entity\Submission;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 final class SubmissionType extends AbstractType {
+    /**
+     * @var AuthorizationCheckerInterface
+     */
+    private $authorizationChecker;
+
+    public function __construct(AuthorizationCheckerInterface $authorizationChecker) {
+        $this->authorizationChecker = $authorizationChecker;
+    }
+
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
-        $editing = $builder->getData() && $builder->getData()->getId() !== null;
+        /** @var Submission $submission */
+        $submission = $builder->getData();
+
+        $editing = $submission && $submission->getId() !== null;
 
         $builder
             ->add('title', TextareaType::class)
@@ -38,6 +52,12 @@ final class SubmissionType extends AbstractType {
                 },
                 'required' => false, // enable a blank choice
             ]);
+        }
+
+        $forum = $submission ? $submission->getForum() : null;
+
+        if ($forum && $this->authorizationChecker->isGranted('sticky', $submission)) {
+            $builder->add('sticky', CheckboxType::class, ['required' => false]);
         }
 
         $builder->add('submit', SubmitType::class, [

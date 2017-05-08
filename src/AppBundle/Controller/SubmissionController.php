@@ -10,6 +10,7 @@ use Raddit\AppBundle\Entity\Forum;
 use Raddit\AppBundle\Entity\Submission;
 use Raddit\AppBundle\Form\SubmissionType;
 use Raddit\AppBundle\Repository\SubmissionRepository;
+use Raddit\AppBundle\Utils\PrependOrderBy;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -64,17 +65,20 @@ final class SubmissionController extends Controller {
         if ($sortBy === 'hot') {
             $submissions = $repository->findHotSubmissions(
                 function (QueryBuilder $qb) use ($forum) {
+                    PrependOrderBy::prepend($qb, 's.sticky', 'DESC');
                     $qb->andWhere('s.forum_id = :forum');
                     $qb->setParameter(':forum', $forum->getId());
                 }
             );
         } else {
-            $submissions = $repository->findSortedQb($sortBy)
+            $qb = $repository->findSortedQb($sortBy)
                 ->andWhere('s.forum = :forum')
                 ->setParameter('forum', $forum)
-                ->setMaxResults(SubmissionRepository::MAX_PER_PAGE)
-                ->getQuery()
-                ->execute();
+                ->setMaxResults(SubmissionRepository::MAX_PER_PAGE);
+
+            PrependOrderBy::prepend($qb, 's.sticky', 'DESC');
+
+            $submissions = $qb->getQuery()->execute();
         }
 
         return $this->render('@RadditApp/forum.html.twig', [

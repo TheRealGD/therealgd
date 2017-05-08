@@ -152,6 +152,7 @@ submission_form:
     url: Lenke
     body: Tekst
     forum: Forum
+    sticky: Klistre øverst
     create: Send innlegg
     edit: Rediger innlegg
     delete: Slett innlegg

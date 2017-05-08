@@ -15,6 +15,10 @@
       {{ form_row(form.forum) }}
     {% endif %}
 
+    {% if form.sticky is defined %}
+      {{ form_row(form.sticky) }}
+    {% endif %}
+
     <div class="row">
       {{ form_widget(form.submit) }}
 

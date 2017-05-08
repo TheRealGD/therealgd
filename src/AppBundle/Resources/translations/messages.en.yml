@@ -152,6 +152,7 @@ submission_form:
     url: URL
     body: Body
     forum: Forum
+    sticky: Sticky
     create: Create submission
     edit: Edit submission
     delete: Delete submission

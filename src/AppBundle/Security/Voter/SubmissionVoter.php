@@ -8,7 +8,7 @@ use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 final class SubmissionVoter extends Voter {
-    const ATTRIBUTES = ['edit'];
+    const ATTRIBUTES = ['edit', 'sticky'];
 
     /**
      * @var AccessDecisionManagerInterface
@@ -33,6 +33,8 @@ final class SubmissionVoter extends Voter {
         switch ($attribute) {
         case 'edit':
             return $this->canEdit($subject, $token);
+        case 'sticky':
+            return $this->canSticky($subject, $token);
         default:
             throw new \RuntimeException('Invalid attribute');
         }
@@ -50,5 +52,19 @@ final class SubmissionVoter extends Voter {
         }
 
         return $submission->getUser() === $token->getUser();
+    }
+
+    /**
+     * @param Submission     $submission
+     * @param TokenInterface $token
+     *
+     * @return bool
+     */
+    private function canSticky(Submission $submission, TokenInterface $token) {
+        if ($this->decisionManager->decide($token, ['ROLE_ADMIN'])) {
+            return true;
+        }
+
+        return $token->getUser()->isModeratorOfForum($submission->getForum());
     }
 }
