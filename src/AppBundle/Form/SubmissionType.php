@@ -5,6 +5,7 @@ namespace Raddit\AppBundle\Form;
 use Doctrine\ORM\EntityRepository;
 use Raddit\AppBundle\Entity\Forum;
 use Raddit\AppBundle\Entity\Submission;
+use Raddit\AppBundle\Form\Type\MarkdownType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -37,9 +38,8 @@ final class SubmissionType extends AbstractType {
         $builder
             ->add('title', TextareaType::class)
             ->add('url', UrlType::class, ['required' => false])
-            ->add('body', TextareaType::class, [
+            ->add('body', MarkdownType::class, [
                 'required' => false,
-                'trim' => false,
             ]);
 
         if (!$editing) {

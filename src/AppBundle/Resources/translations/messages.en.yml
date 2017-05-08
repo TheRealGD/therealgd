@@ -103,6 +103,9 @@ login_form:
     password: Password
     reset_password: Reset password?
 
+markdown_type:
+    help: Syntax reference
+
 request_password_reset:
     title: Request password reset link
     multiple_accounts_notice: >

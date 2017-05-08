@@ -103,6 +103,9 @@ login_form:
     password: Passord
     reset_password: Glemt passord?
 
+markdown_type:
+    help: Hjelp med formatering
+
 request_password_reset:
     title: Be om nullstilling av passord
     multiple_accounts_notice: >
