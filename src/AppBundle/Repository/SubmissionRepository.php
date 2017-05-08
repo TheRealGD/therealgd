@@ -2,9 +2,8 @@
 
 namespace Raddit\AppBundle\Repository;
 
-use Doctrine\DBAL\Query\QueryBuilder as SQLQueryBuilder;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\QueryBuilder as DQLQueryBuilder;
+use Doctrine\ORM\QueryBuilder;
 use Raddit\AppBundle\Entity\Forum;
 use Raddit\AppBundle\Entity\ForumSubscription;
 use Raddit\AppBundle\Entity\Submission;
@@ -37,12 +36,6 @@ class SubmissionRepository extends EntityRepository {
      * @return Submission[]
      */
     public function findFrontPageSubmissions(string $sortBy) {
-        if ($sortBy === 'hot') {
-            return $this->findHotSubmissions(function (SQLQueryBuilder $qb) {
-                $qb->andWhere('s.forum_id IN (SELECT id FROM forums WHERE featured)');
-            });
-        }
-
         return $this->findSortedQb($sortBy)
             ->andWhere('s.forum IN (SELECT f FROM '.Forum::class.' f WHERE f.featured = TRUE)')
             ->setMaxResults(self::MAX_PER_PAGE)
@@ -57,12 +50,6 @@ class SubmissionRepository extends EntityRepository {
      * @return Submission[]
      */
     public function findLoggedInFrontPageSubmissions(string $sortBy, User $user) {
-        if ($sortBy === 'hot') {
-            return $this->findHotSubmissions(function ($qb) use ($user) {
-                $this->nativeJoinSubscribedForums($qb, $user);
-            });
-        }
-
         $qb = $this->findSortedQb($sortBy)->setMaxResults(self::MAX_PER_PAGE);
         $this->joinSubscribedForums($qb, $user);
 
@@ -76,16 +63,6 @@ class SubmissionRepository extends EntityRepository {
      * @return Submission[]
      */
     public function findForumSubmissions(Forum $forum, string $sortBy) {
-        if ($sortBy === 'hot') {
-            return $this->findHotSubmissions(
-                function (SQLQueryBuilder $qb) use ($forum) {
-                    PrependOrderBy::prepend($qb, 's.sticky', 'DESC');
-                    $qb->andWhere('s.forum_id = :forum');
-                    $qb->setParameter(':forum', $forum->getId());
-                }
-            );
-        }
-
         $qb = $this->findSortedQb($sortBy)
             ->andWhere('s.forum = :forum')
             ->setParameter('forum', $forum)
@@ -97,55 +74,10 @@ class SubmissionRepository extends EntityRepository {
     }
 
     /**
-     * Finds popular ('hot') submissions.
-     *
-     * The popularity of a submission is calculated using roughly the following
-     * formulas:
-     *
-     *     net_score = upvotes - downvotes
-     *     advantage = max(min(multiplier * net_score, MAX_VISIBILITY), 0)
-     *     popularity = unix_time + advantage
-     *
-     * This ensures that posts with high net scores can rank over newer posts
-     * for a maximum duration of `MAX_VISIBILITY`, depending on the multiplier
-     * and score, while unpopular posts will give way to newer posts.
-     *
-     * By passing a callable to this method, the query can be modified as
-     * needed through the `\Doctrine\DBAL\Query\QueryBuilder` object passed to
-     * the callback.
-     *
-     * @param callable|null $callback
-     *
-     * @return Submission[]
+     * @param QueryBuilder $qb
+     * @param User         $user
      */
-    public function findHotSubmissions(callable $callback = null) {
-        $rsm = $this->createResultSetMappingBuilder('s');
-        $em = $this->getEntityManager();
-
-        $qb = $em->getConnection()->createQueryBuilder()
-            ->select($rsm->generateSelectClause())
-            ->from('submissions', 's')
-            ->leftJoin('s', 'submission_votes', 'uv', 's.id = uv.submission_id AND uv.upvote')
-            ->leftJoin('s', 'submission_votes', 'dv', 's.id = dv.submission_id AND NOT dv.upvote')
-            ->groupBy('s.id')
-            ->orderBy('EXTRACT(EPOCH FROM s.timestamp) + GREATEST(LEAST(:mul * (COUNT(uv) - COUNT(dv)), :mv), 0)', 'DESC')
-            ->addOrderBy('s.id', 'DESC')
-            ->setParameter(':mul', self::MULTIPLIER)
-            ->setParameter(':mv', self::MAX_VISIBILITY)
-            ->setMaxResults(self::MAX_PER_PAGE);
-
-        if ($callback) {
-            $callback($qb);
-        }
-
-        return $em->createNativeQuery($qb->getSQL(), $rsm)->execute($qb->getParameters());
-    }
-
-    /**
-     * @param DQLQueryBuilder $qb
-     * @param User            $user
-     */
-    public function joinSubscribedForums(DQLQueryBuilder $qb, User $user) {
+    public function joinSubscribedForums(QueryBuilder $qb, User $user) {
         /* @noinspection SqlDialectInspection */
         $qb->andWhere('s.forum IN ('.
             'SELECT IDENTITY(fs.forum) FROM '.ForumSubscription::class.' fs WHERE fs.user = :user'.
@@ -154,30 +86,42 @@ class SubmissionRepository extends EntityRepository {
         $qb->setParameter('user', $user);
     }
 
-    /**
-     * @param SQLQueryBuilder $qb
-     * @param User            $user
-     */
-    public function nativeJoinSubscribedForums(SQLQueryBuilder $qb, User $user) {
-        $qb->join(
-            's',
-            '(SELECT forum_id AS id FROM forum_subscriptions WHERE user_id = :user_id)',
-            'fs',
-            's.forum_id = fs.id'
-        );
+    public function recalculateRank(Submission $submission, int $scoreDelta) {
+        if ($submission->getId() !== null) {
+            $sql =
+                'SELECT COUNT(uv) - COUNT(dv) '.
+                'FROM submissions s '.
+                'LEFT JOIN submission_votes uv ON (s.id = uv.submission_id AND uv.upvote) '.
+                'LEFT JOIN submission_votes dv ON (s.id = dv.submission_id AND NOT dv.upvote) '.
+                'WHERE s.id = ? '.
+                'GROUP BY s.id';
 
-        $qb->setParameter(':user_id', $user->getId());
+            $conn = $this->getEntityManager()->getConnection();
+
+            $netScore = $conn->fetchColumn($sql, [$submission->getId()]);
+            $netScore += $scoreDelta;
+        } else {
+            // this score is always correct when the submission is non-persisted
+            $netScore = $submission->getNetScore();
+        }
+
+        $unixTime = $submission->getTimestamp()->getTimestamp();
+        $advantage = max(min(self::MULTIPLIER * $netScore, self::MAX_VISIBILITY), 0);
+        $submission->setRanking($unixTime + $advantage);
     }
 
     /**
-     * @param string $sortType one of 'new', 'top' or 'controversial'
+     * @param string $sortType one of 'hot', 'new', 'top' or 'controversial'
      *
-     * @return DQLQueryBuilder
+     * @return QueryBuilder
      */
     public function findSortedQb($sortType) {
         $qb = $this->createQueryBuilder('s');
 
         switch ($sortType) {
+        case 'hot':
+            $this->sortByHot($qb);
+            break;
         case 'new':
             $this->sortByNewest($qb);
             break;
@@ -195,16 +139,24 @@ class SubmissionRepository extends EntityRepository {
     }
 
     /**
-     * @param DQLQueryBuilder $qb
+     * @param QueryBuilder $qb
      */
-    private function sortByNewest(DQLQueryBuilder $qb) {
+    private function sortByHot(QueryBuilder $qb) {
+        $qb->addOrderBy('s.ranking', 'DESC');
         $qb->addOrderBy('s.id', 'DESC');
     }
 
     /**
-     * @param DQLQueryBuilder $qb
+     * @param QueryBuilder $qb
      */
-    private function sortByTop(DQLQueryBuilder $qb) {
+    private function sortByNewest(QueryBuilder $qb) {
+        $qb->addOrderBy('s.id', 'DESC');
+    }
+
+    /**
+     * @param QueryBuilder $qb
+     */
+    private function sortByTop(QueryBuilder $qb) {
         $qb->addSelect('COUNT(uv) - COUNT(dv) AS HIDDEN net_score')
             ->leftJoin('s.votes', 'uv', 'WITH', 'uv.upvote = true')
             ->leftJoin('s.votes', 'dv', 'WITH', 'dv.upvote = false')
@@ -213,9 +165,9 @@ class SubmissionRepository extends EntityRepository {
     }
 
     /**
-     * @param DQLQueryBuilder $qb
+     * @param QueryBuilder $qb
      */
-    private function sortByControversial(DQLQueryBuilder $qb) {
+    private function sortByControversial(QueryBuilder $qb) {
         $qb->addSelect('COUNT(uv)/NULLIF(COUNT(dv), 0) AS HIDDEN controversy')
             ->leftJoin('s.votes', 'uv', 'WITH', 'uv.upvote = true')
             ->leftJoin('s.votes', 'dv', 'WITH', 'dv.upvote = false')

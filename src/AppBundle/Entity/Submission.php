@@ -116,6 +116,13 @@ class Submission extends Votable {
     private $sticky = false;
 
     /**
+     * @ORM\Column(type="bigint")
+     *
+     * @var int
+     */
+    private $ranking;
+
+    /**
      * Creates a new submission with an implicit upvote from its creator.
      *
      * @param Forum $forum
@@ -146,6 +153,7 @@ class Submission extends Votable {
         $this->comments = new ArrayCollection();
         $this->timestamp = new \DateTime('@'.time());
         $this->votes = new ArrayCollection();
+        $this->ranking = $this->timestamp->getTimestamp();
     }
 
     /**
@@ -323,5 +331,19 @@ class Submission extends Votable {
      */
     public function setSticky($sticky) {
         $this->sticky = $sticky;
+    }
+
+    /**
+     * @return int
+     */
+    public function getRanking(): int {
+        return $this->ranking;
+    }
+
+    /**
+     * @param int $ranking
+     */
+    public function setRanking(int $ranking) {
+        $this->ranking = $ranking;
     }
 }

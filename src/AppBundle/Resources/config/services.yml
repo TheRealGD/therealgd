@@ -72,6 +72,11 @@ services:
             - { name: doctrine.event_listener, event: postPersist }
             - { name: kernel.event_listener, event: kernel.terminate }
 
+    Raddit\AppBundle\EventListener\SubmissionRankListener:
+        class: Raddit\AppBundle\EventListener\SubmissionRankListener
+        tags:
+            - { name: doctrine.event_subscriber }
+
     Raddit\AppBundle\Repository\BanRepository:
         class: Raddit\AppBundle\Repository\BanRepository
         factory: ["@doctrine.orm.entity_manager", "getRepository"]
