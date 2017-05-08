@@ -2,15 +2,12 @@
 
 namespace Raddit\AppBundle\Controller;
 
-use Doctrine\DBAL\Query\QueryBuilder;
 use Embed\Embed;
 use Embed\Exceptions\InvalidUrlException;
 use Raddit\AppBundle\Entity\Comment;
 use Raddit\AppBundle\Entity\Forum;
 use Raddit\AppBundle\Entity\Submission;
 use Raddit\AppBundle\Form\SubmissionType;
-use Raddit\AppBundle\Repository\SubmissionRepository;
-use Raddit\AppBundle\Utils\PrependOrderBy;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -60,26 +57,8 @@ final class SubmissionController extends Controller {
      * @return Response
      */
     public function forumAction(Forum $forum, string $sortBy) {
-        $repository = $this->getDoctrine()->getRepository(Submission::class);
-
-        if ($sortBy === 'hot') {
-            $submissions = $repository->findHotSubmissions(
-                function (QueryBuilder $qb) use ($forum) {
-                    PrependOrderBy::prepend($qb, 's.sticky', 'DESC');
-                    $qb->andWhere('s.forum_id = :forum');
-                    $qb->setParameter(':forum', $forum->getId());
-                }
-            );
-        } else {
-            $qb = $repository->findSortedQb($sortBy)
-                ->andWhere('s.forum = :forum')
-                ->setParameter('forum', $forum)
-                ->setMaxResults(SubmissionRepository::MAX_PER_PAGE);
-
-            PrependOrderBy::prepend($qb, 's.sticky', 'DESC');
-
-            $submissions = $qb->getQuery()->execute();
-        }
+        $submissions = $this->getDoctrine()->getRepository(Submission::class)
+            ->findForumSubmissions($forum, $sortBy);
 
         return $this->render('@RadditApp/forum.html.twig', [
             'forum' => $forum,

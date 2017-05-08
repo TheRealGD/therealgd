@@ -9,6 +9,7 @@ use Raddit\AppBundle\Entity\Forum;
 use Raddit\AppBundle\Entity\ForumSubscription;
 use Raddit\AppBundle\Entity\Submission;
 use Raddit\AppBundle\Entity\User;
+use Raddit\AppBundle\Utils\PrependOrderBy;
 
 class SubmissionRepository extends EntityRepository {
     const MAX_PER_PAGE = 20;
@@ -64,6 +65,33 @@ class SubmissionRepository extends EntityRepository {
 
         $qb = $this->findSortedQb($sortBy)->setMaxResults(self::MAX_PER_PAGE);
         $this->joinSubscribedForums($qb, $user);
+
+        return $qb->getQuery()->execute();
+    }
+
+    /**
+     * @param Forum  $forum
+     * @param string $sortBy
+     *
+     * @return Submission[]
+     */
+    public function findForumSubmissions(Forum $forum, string $sortBy) {
+        if ($sortBy === 'hot') {
+            return $this->findHotSubmissions(
+                function (SQLQueryBuilder $qb) use ($forum) {
+                    PrependOrderBy::prepend($qb, 's.sticky', 'DESC');
+                    $qb->andWhere('s.forum_id = :forum');
+                    $qb->setParameter(':forum', $forum->getId());
+                }
+            );
+        }
+
+        $qb = $this->findSortedQb($sortBy)
+            ->andWhere('s.forum = :forum')
+            ->setParameter('forum', $forum)
+            ->setMaxResults(self::MAX_PER_PAGE);
+
+        PrependOrderBy::prepend($qb, 's.sticky', 'DESC');
 
         return $qb->getQuery()->execute();
     }
