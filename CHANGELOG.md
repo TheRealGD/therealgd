@@ -1,6 +1,6 @@
 # Change Log
 
-## v0.4.0 (2017-xx-xx)
+## v0.4.0 (2017-05-09)
 
 * Added ability for users to select their preferred locale.
 * Added featured forums for logged-out users and users without subscriptions.
