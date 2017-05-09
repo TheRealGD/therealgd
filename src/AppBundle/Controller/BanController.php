@@ -3,6 +3,7 @@
 namespace Raddit\AppBundle\Controller;
 
 use Raddit\AppBundle\Entity\Ban;
+use Raddit\AppBundle\Entity\User;
 use Raddit\AppBundle\Form\BanType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -44,6 +45,15 @@ final class BanController extends Controller {
     public function addAction(Request $request) {
         $ban = new Ban();
 
+        $ban->setIp($request->query->filter('ip', null, FILTER_VALIDATE_IP));
+
+        // TODO: use a DTO instead
+        if ($request->query->has('user_id')) {
+            $id = $request->query->getInt('user_id');
+            $user = $this->getDoctrine()->getManager()->find(User::class, $id);
+            $ban->setUser($user);
+        }
+
         $form = $this->createForm(BanType::class, $ban);
         $form->handleRequest($request);
 
@@ -60,6 +70,25 @@ final class BanController extends Controller {
 
         return $this->render('@RadditApp/ban_add.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * Redirect to the ban form.
+     *
+     * @Security("is_granted('ROLE_ADMIN')")
+     *
+     * @param string $entityClass
+     * @param string $id
+     *
+     * @return Response
+     */
+    public function redirectAction($entityClass, $id) {
+        $entity = $this->getDoctrine()->getManager()->find($entityClass, $id);
+
+        return $this->redirectToRoute('raddit_app_add_ban', [
+            'ip' => $entity->getIp(),
+            'user_id' => $entity->getUser()->getId(),
         ]);
     }
 

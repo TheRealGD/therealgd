@@ -116,6 +116,11 @@
                   </a>
                 </li>
               {%- endif -%}
+              {%- if is_granted('ROLE_ADMIN') -%}
+                <li>
+                  <a href="{{ path('raddit_app_ban_ip_by_submission', {id: submission.id}) }}">{{ 'submissions.ip_ban'|trans }}</a>
+                </li>
+              {%- endif -%}
             </ul>
           </nav>
         {%- endspaceless -%}

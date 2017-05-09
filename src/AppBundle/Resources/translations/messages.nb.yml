@@ -43,6 +43,7 @@ comments:
     viewing_thread: Viser en enkelt kommentartråd
     thread_return: Vis alle kommentarer
     return_to_forum: ← Gå tilbake til %forum%
+    admin_ban: Utesteng IP
 
 comment_form:
     comment: Kommentar
@@ -179,6 +180,7 @@ submissions:
     sort_by_controversial: Kontroversielt
     total_votes: '{1} %count% stemme|[0,Inf[ %count% stemmer'
     vote_stats: (+%up%, −%down%)
+    ip_ban: Utesteng IP
 
 votes:
     upvote: Stem opp

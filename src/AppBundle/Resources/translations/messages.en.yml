@@ -34,6 +34,7 @@ comments:
     permalink: Permalink
     parent: Parent
     reply: Reply
+    admin_ban: IP ban
     form_load_error: Error loading form. Please try again.
     info: '%user% wrote %timestamp%'
     info_at_timestamp: at %timestamp%
@@ -179,6 +180,7 @@ submissions:
     sort_by_controversial: Controversial
     total_votes: '{1} %count% vote|[0,Inf[ %count% votes'
     vote_stats: (+%up%, −%down%)
+    ip_ban: IP ban
 
 votes:
     upvote: Upvote

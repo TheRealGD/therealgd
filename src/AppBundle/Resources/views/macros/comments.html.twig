@@ -87,6 +87,7 @@
   {{- block('comment_nav_parent') -}}
   {{- block('comment_nav_delete') -}}
   {{- block('comment_nav_edit') }}
+  {{- block('comment_nav_ip_ban') -}}
 {%- endblock -%}
 
 {%- block comment_nav_reply -%}
@@ -174,4 +175,16 @@
       </li>
     {%- endif -%}
   {%- endspaceless -%}
+{%- endblock -%}
+
+{%- block comment_nav_ip_ban -%}
+  {%- if is_granted('ROLE_ADMIN') %}
+    {%- spaceless -%}
+      <li class="comment-nav-edit">
+        <a href="{{ path('raddit_app_ban_ip_by_comment', {id: comment.id}) }}">
+          {{- 'comments.admin_ban'|trans -}}
+        </a>
+      </li>
+    {%- endspaceless -%}
+  {%- endif -%}
 {%- endblock -%}
