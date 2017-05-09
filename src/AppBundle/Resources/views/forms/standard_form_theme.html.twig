@@ -35,9 +35,10 @@
 {%- endblock -%}
 
 {%- block markdown_row -%}
-  {{- form_label(form) -}}
-  {{- form_errors(form) -}}
+  {%- set attr = attr|merge({'class': (attr.class is defined and attr.class|length > 0) ? attr.class~' markdown-input' : 'markdown-input'}) -%}
   <div class="row markdown-row">
+    {{- form_label(form) -}}
+    {{- form_errors(form) -}}
     {{- block('textarea_widget') -}}
     <p class="markdown-help">
       {#- TODO: don't link to an external site -#}
@@ -45,5 +46,6 @@
         {{- 'markdown_type.help'|trans -}}
       </a>
     </p>
+    <div class="markdown-preview-container"></div>
   </div>
 {%- endblock -%}

@@ -13,6 +13,7 @@ import {
 } from './dropdowns';
 import initCommenting from './commenting';
 import fetchTitles from './fetch_titles';
+import markdownPreview from './markdown';
 
 $(relativeTime);
 $(enableAjaxVoting);
@@ -21,3 +22,4 @@ $(dropdownInitRoot);
 $(dropdownInitWindow);
 $(initCommenting);
 $(fetchTitles);
+$(markdownPreview);
