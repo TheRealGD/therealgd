@@ -185,16 +185,16 @@ class Comment extends Votable {
     }
 
     /**
-     * @return Comment
+     * @return Comment|null
      */
     public function getParent() {
         return $this->parent;
     }
 
     /**
-     * @param Comment $parent
+     * @param Comment|null $parent
      */
-    public function setParent(Comment $parent) {
+    public function setParent($parent) {
         $this->parent = $parent;
     }
 

@@ -30,6 +30,7 @@
 * Remove required email address when registering.
 * Replaced the popular submission ranking algorithm with one that makes sense.
 * Revamped form styling.
+* Rewrote fixtures.
 
 ## v0.3.1 (2017-04-11)
 
