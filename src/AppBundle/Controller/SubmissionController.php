@@ -8,10 +8,12 @@ use Raddit\AppBundle\Entity\Comment;
 use Raddit\AppBundle\Entity\Forum;
 use Raddit\AppBundle\Entity\Submission;
 use Raddit\AppBundle\Form\SubmissionType;
+use Raddit\AppBundle\Utils\MarkdownConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -212,5 +214,17 @@ final class SubmissionController extends Controller {
         } catch (InvalidUrlException $e) {
             return $this->json(['error' => $e->getMessage()], 400);
         }
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function markdownPreviewAction(Request $request) {
+        $converter = MarkdownConverter::createInstance();
+        $markdown = $request->request->get('markdown', '');
+
+        return new Response($converter->convertToHtml($markdown));
     }
 }

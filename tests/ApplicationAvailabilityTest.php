@@ -62,10 +62,17 @@ class ApplicationAvailabilityTest extends WebTestCase {
         yield ['/new/1'];
         yield ['/top/1'];
         yield ['/controversial/1'];
-        yield ['/f/liberalwithdulledge/1/'];
-        yield ['/f/liberalwithdulledge/2/'];
-        yield ['/f/liberalwithdulledge/1/comment/1/'];
-        yield ['/f/liberalwithdulledge/1/comment/2/'];
+        yield ['/f/news/hot'];
+        yield ['/f/news/new'];
+        yield ['/f/news/top'];
+        yield ['/f/news/controversial'];
+        yield ['/f/news/hot/1'];
+        yield ['/f/news/new/1'];
+        yield ['/f/news/top/1'];
+        yield ['/f/news/controversial/1'];
+        yield ['/f/news/1/'];
+        yield ['/f/cats/2/'];
+        yield ['/f/news/1/comment/1/'];
         yield ['/login'];
         yield ['/registration'];
         yield ['/user/emma'];
@@ -76,9 +83,9 @@ class ApplicationAvailabilityTest extends WebTestCase {
      * URLs that need authentication to access.
      */
     public function authUrlProvider() {
-        yield ['create_forum'];
-        yield ['/f/liberalwithdulledge/edit'];
+        yield ['/create_forum'];
+        yield ['/f/news/edit'];
         yield ['/submit'];
-        yield ['/submit/liberalwithdulledge'];
+        yield ['/submit/news'];
     }
 }
