@@ -1,5 +1,6 @@
 'use strict';
 
+const fontello = require('gulp-fontello');
 const gulp = require('gulp');
 const less = require('gulp-less');
 const LessNpmImport = require('less-plugin-npm-import');
@@ -8,7 +9,7 @@ const uglifycss = require('gulp-uglifycss');
 const gutil = require('gulp-util');
 const webpack = require('webpack');
 
-gulp.task('default', ['css', 'js']);
+gulp.task('default', ['css', 'fonts', 'js']);
 
 gulp.task('css', () => {
     return gulp.src('./src/AppBundle/Resources/assets/less/main.less')
@@ -18,6 +19,12 @@ gulp.task('css', () => {
         .pipe(uglifycss())
         .pipe(rename('main.min.css'))
         .pipe(gulp.dest('./web/css/'));
+});
+
+gulp.task('fonts', () => {
+    return gulp.src('./fontello.json')
+        .pipe(fontello())
+        .pipe(gulp.dest('./web/fonts'));
 });
 
 const webpackCache = {};

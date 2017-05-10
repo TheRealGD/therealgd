@@ -22,6 +22,7 @@ tags
 /vendor/
 /web/bundles/
 /web/css/
+/web/fonts/
 /web/js/
 /web/media/
 /web/submission_images/*

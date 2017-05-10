@@ -1,0 +1,23 @@
+{
+
+    "name": "raddit",
+    "css_prefix_text": "icon-",
+    "css_use_suffix": false,
+    "hinting": true,
+    "units_per_em": 1000,
+    "ascent": 850,
+    "glyphs": [
+        {
+            "uid": "a79ef2d6f102af86440aa80238d5f4b0",
+            "css": "down",
+            "code": 59392,
+            "src": "elusive"
+        },
+        {
+            "uid": "cbb11c546600a92fde108476faf5d337",
+            "css": "up",
+            "code": 59393,
+            "src": "elusive"
+        }
+    ]
+}
