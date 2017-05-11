@@ -1,31 +1,25 @@
-{% extends '@RadditApp/forum_base.html.twig' %}
-
+{% extends '@RadditApp/base.html.twig' %}
 {% from '@RadditApp/macros/submissions.html.twig' import submission, submission_sort %}
 
-{% block title %}{{ forum.title }}{% endblock %}
-
-{% block head %}
-  <link rel="canonical" href="{{ url('raddit_app_forum', {forum_name: forum.name}) }}">
-  {% include '@RadditApp/includes/meta_pagination.html.twig' with {pager: submissions} %}
-
-  {% if forum.description %}
-    <meta name="description" content="{{ forum.description|markdown|striptags }}">
-  {% endif %}
+{% block page_classes %}
+  all-page
 {% endblock %}
 
-{% block page_classes %}forum-front{% endblock %}
+{% block head %}
+  <link rel="canonical" href="{{ url('raddit_app_all') }}">
+  {% include '@RadditApp/includes/meta_pagination.html.twig' with {pager: submissions} %}
+{% endblock %}
 
 {% block body %}
-  <h1>/{{ forum.name }}</h1>
-
   <nav class="submission-sort">
     <ul>
       {{- submission_sort(sort_by) -}}
+      <li><a href="{{ path('raddit_app_front', app.request.attributes.get('_route_params')) }}">{{ 'front.front'|trans }}</a></li>
     </ul>
   </nav>
 
   {% for submission in submissions %}
-    {{ submission(submission, {show_forum_name: false}) }}
+    {{ submission(submission) }}
   {% endfor %}
 
   {% include '@RadditApp/includes/pagination.html.twig' with {pager: submissions} %}

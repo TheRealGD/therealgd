@@ -97,6 +97,8 @@ front:
     no_subscriptions: You are not subscribed to any forum. Showing featured forums instead.
     featured_forums: Featured forums
     no_forums: There are no featured forums to display.
+    front: Front
+    all: All
 
 login_form:
     log_in: Log in

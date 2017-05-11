@@ -9,20 +9,16 @@
 
 {%- macro submission_sort(current) -%}
   {%- spaceless -%}
-  <nav class="submission-sort">
-    <ul>
-      {%- for type in ['hot', 'new', 'top', 'controversial'] -%}
-        <li>
-          <a href="{{ path(
-              app.request.attributes.get('_route'),
-              app.request.attributes.get('_route_params')|default([])|merge({sortBy: type}))
-          }}" class="{{ type == current ? 'active' }}">
-            {{- ('submissions.sort_by_'~type)|trans -}}
-          </a>
-        </li>
-      {%- endfor -%}
-    </ul>
-  </nav>
+    {%- for type in ['hot', 'new', 'top', 'controversial'] -%}
+      <li>
+        <a href="{{ path(
+          app.request.attributes.get('_route'),
+          app.request.attributes.get('_route_params')|default([])|merge({sortBy: type}))
+        }}" class="{{ type == current ? 'active' }}">
+          {{- ('submissions.sort_by_'~type)|trans -}}
+        </a>
+      </li>
+    {%- endfor -%}
   {%- endspaceless -%}
 {%- endmacro -%}
 

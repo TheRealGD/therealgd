@@ -97,6 +97,8 @@ front:
     no_subscriptions: Du har ikke abonnert på noen fora. Viser utvalgte fora istedenfor.
     featured_forums: Utvalgte fora
     no_forums: Det er ingen utvalgte fora å vise frem
+    front: Forside
+    all: Alle
 
 login_form:
     log_in: Logg inn

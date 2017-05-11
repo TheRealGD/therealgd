@@ -42,11 +42,7 @@ class SubmissionRepository extends EntityRepository {
             ->join('s.forum', 'f', 'WITH', 'f.name IN (:forums)')
             ->setParameter(':forums', $forumNames);
 
-        $pager = new Pagerfanta(new DoctrineORMAdapter($qb));
-        $pager->setMaxPerPage(self::MAX_PER_PAGE);
-        $pager->setCurrentPage($page);
-
-        return $pager;
+        return $this->paginate($qb, $page);
     }
 
     /**
@@ -59,16 +55,21 @@ class SubmissionRepository extends EntityRepository {
     public function findForumSubmissions(Forum $forum, string $sortBy, int $page = 1) {
         $qb = $this->findSortedQb($sortBy)
             ->andWhere('s.forum = :forum')
-            ->setParameter('forum', $forum)
-            ->setMaxResults(self::MAX_PER_PAGE);
+            ->setParameter('forum', $forum);
 
         PrependOrderBy::prepend($qb, 's.sticky', 'DESC');
 
-        $pager = new Pagerfanta(new DoctrineORMAdapter($qb));
-        $pager->setMaxPerPage(self::MAX_PER_PAGE);
-        $pager->setCurrentPage($page);
+        return $this->paginate($qb, $page);
+    }
 
-        return $pager;
+    /**
+     * @param string $sortBy
+     * @param int    $page
+     *
+     * @return Pagerfanta|Submission[]
+     */
+    public function findAllSubmissions(string $sortBy, int $page = 1) {
+        return $this->paginate($this->findSortedQb($sortBy), $page);
     }
 
     public function recalculateRank(Submission $submission, int $scoreDelta) {
@@ -158,5 +159,19 @@ class SubmissionRepository extends EntityRepository {
             ->leftJoin('s.votes', 'dv', 'WITH', 'dv.upvote = false')
             ->addGroupBy('s')
             ->addOrderBy('controversy', 'ASC');
+    }
+
+    /**
+     * @param QueryBuilder|\Doctrine\ORM\Query $query
+     * @param int                              $page
+     *
+     * @return Pagerfanta
+     */
+    private function paginate($query, int $page) {
+        $pager = new Pagerfanta(new DoctrineORMAdapter($query));
+        $pager->setMaxPerPage(self::MAX_PER_PAGE);
+        $pager->setCurrentPage($page);
+
+        return $pager;
     }
 }

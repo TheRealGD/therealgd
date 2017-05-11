@@ -54,6 +54,22 @@ final class SubmissionController extends Controller {
     }
 
     /**
+     * @param string $sortBy
+     * @param int    $page
+     *
+     * @return Response
+     */
+    public function allAction(string $sortBy, int $page) {
+        $submissions = $this->getDoctrine()->getRepository(Submission::class)
+            ->findAllSubmissions($sortBy, $page);
+
+        return $this->render('@RadditApp/all.html.twig', [
+            'submissions' => $submissions,
+            'sort_by' => $sortBy,
+        ]);
+    }
+
+    /**
      * Show the front page of a given forum.
      *
      * @param Forum  $forum

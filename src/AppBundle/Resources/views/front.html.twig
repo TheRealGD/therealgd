@@ -11,7 +11,12 @@
 {% endblock %}
 
 {% block body %}
-  {{ submission_sort(sort_by) }}
+  <nav class="submission-sort">
+    <ul>
+      {{- submission_sort(sort_by) -}}
+      <li><a href="{{ path('raddit_app_all', app.request.attributes.get('_route_params')) }}">{{ 'front.all'|trans }}</a></li>
+    </ul>
+  </nav>
 
   {% for submission in submissions %}
     {{ submission(submission) }}
