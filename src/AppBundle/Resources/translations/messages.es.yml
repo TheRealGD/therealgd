@@ -1,0 +1,211 @@
+ban_add:
+    title: Banea un direccion IP
+    banned_notice: La direccion IP ha sido baneada
+
+ban_form:
+    ip: Direccion IP
+    reason: Razon del baneo
+    expiry_date: Expira el (YYYY-MM-DD hh:mm)
+    ban: Banear
+    user: Usuario asociado con el IP
+
+ban_list:
+    title: Baneos
+    ip: Direccion IP
+    timestamp: Hora
+    banned_by: Baneado por
+    reason: Razon
+    user: Usuario
+    user_none: none
+    expires: Expira
+    expires_never: nunca
+    remove: Remover baneos
+
+banned:
+    title: Baneado
+    message: Has sido baneado!
+
+comments:
+    author_deleted: '[deleted]'
+    comments: Comentarios
+    delete: Borrar
+    delete_thread: Borrar con respuestas
+    edit: Editar
+    permalink: Permalink
+    parent: Parent
+    reply: Responder
+    admin_ban: Banear IP
+    form_load_error: Error cargando forma. Por favor intente de nuevo.
+    info: '%user% escribio %timestamp%'
+    info_at_timestamp: el %timestamp%
+    not_logged_in: Debes %login_link% o %register_link% para comentar.
+    not_logged_in_login_link_label: ingresar
+    not_logged_in_register_link_label: registrar
+    viewing_thread: Viendo comentario unico
+    thread_return: Ver todos los comentarios
+    return_to_forum: ← Regresar a %forum%
+
+comment_form:
+    comment: Comentar
+    submit: Presentar
+    edit_title: Editando comentario
+    create_title: Creando un comentario
+
+create_forum:
+    create_new_forum: Crea un nuevo foro
+
+edit_forum:
+    edit_notice: Los cambios han sido guardados
+    delete_notice: El foro y todos sus contenidos han sido borrados
+    title: Editando %forum%
+
+edit_user:
+    title: Editando usuario %username%
+
+forum:
+    moderators: Moderadores
+    manage: Administrar
+    edit: Editar foro
+    subscribe: Subscribir
+    unsubscribe: Desubscribir
+    subscriber_count: '{0} No subscriptores|{1} %count% subscriptor|[1,Inf[ %count% subscriptores'
+
+forum_form:
+    name: Nombre
+    title: Titulo
+    description: Descripcion
+    create: Crear foro
+    save: Guardar cambios
+    delete: Borrar foro
+    confirm_delete: Estas segur@ que desea borrar este foro y todo su contenido y comentarios?
+    featured: Mostrar en la pagina principal
+
+forum_list:
+    name: Nombre
+    title: Titulo
+    subscribers: Subscriptores
+    page_title: Lista de foros
+    create_forum: Crear foro
+
+forum_moderators:
+    title: Moderadores de /%forum_name%
+    username: Usuario
+    since: desde
+
+front:
+    subscribed_forums: Subscripto en
+    no_subscriptions: No estas subscripto en ningun foro. Estas viendo los foros principales.
+    featured_forums: Foros principales
+    no_forums: No hay foros principales para mostrar.
+    front: Principal
+    all: Todos
+
+login_form:
+    log_in: Ingresar
+    username: Usuario
+    password: Contraseña
+    reset_password: Resetear Contraseña?
+
+markdown_type:
+    help: Referencia de sintaxis
+
+pagination:
+    next: Siguiente
+    previous: Anterior
+
+request_password_reset:
+    title: Solicitar link para reseteo de contraseña
+    multiple_accounts_notice: >
+        Si usted posee varios usuarios bajo la misma direccion de email, usted recibira un link por cada usuario.
+    no_confirmation_notice: >
+        Si nunca recibio un email, la direccion que especifico es probablemente incorrecta. Por razones de privacidad, nosotros no confirmaremos si un usuario con ese email existe.
+
+request_password_reset_form:
+    email: Direccion de email
+    submit: Enviar
+
+reset_password:
+    email_subject: '%site_name% - Reset password for user %username%'
+
+    # this should be kept at 76 columns --------------------------------------------
+    email_body: |
+        Alguien solicito un cambio de contraseña para su cuenta de %site_name%. Para
+        resetear su contraseña, haga click en este link:
+
+        %reset_link%
+
+        Si usted no solicito un cambio de contraseña, por favor ignore este mensaje.
+        El link expirará después de 24 horas.
+
+    email_notice: Un email ha sido enviado al email especificado.
+    update_notice: Su contraseña ha sido cambiada.
+    title: Reseteando contraseña
+
+site_footer:
+    version: Usando %app% %version% (%branch%). Hecho con ☭.
+
+site_nav:
+    submit: Presentar
+    log_in: Ingresar
+    log_out: Salir
+    profile: Perfil
+    register: Registrar
+    my_account: Mi cuenta
+    user_settings: Opciones de usuario
+    forum_list: Foros
+
+submission_form:
+    title: Titulo
+    url: URL
+    body: Contenido
+    forum: Foro
+    sticky: Sticky
+    create: Crear contenido
+    edit: Editar contenido
+    delete: Borrar contenido
+    confirm_delete: Está seguro que desea borrar este contenido?
+
+submissions:
+    comments: '{0} Sin comentarios|{1} %count% comentario|[1,Inf[ %count% comentarios'
+    delete_notice: El contenido ha sido borrado.
+    edit: Editar
+    edit_notice: El contenido ha sido editado.
+    info_with_forum_name: Presentado por %submitter% %timestamp% en %forum%
+    info_without_forum_name: Presentado por %submitter% %timestamp%
+    info_at_timestamp: el %timestamp%
+    sort_by_hot: Activo
+    sort_by_new: Nuevo
+    sort_by_top: Popular
+    sort_by_controversial: Controversial
+    total_votes: '{1} %count% voto|[0,Inf[ %count% votos'
+    vote_stats: (+%up%, −%down%)
+    ip_ban: Banear IP
+
+votes:
+    upvote: Votar
+    downvote: Desvotar
+    retract_upvote: Remover voto
+    retract_downvote: Remover desvoto
+
+user:
+    submissions: Presentaciones
+    comments: Comentarios
+    moderates: '%username% es un moderador en:'
+
+user_form:
+    username: Usuario
+    password: Contraseña
+    repeat_password: Repetir contraseña
+    new_password: Nueva contraseña
+    repeat_new_password: Repetir nueva contraseña
+    email: Email
+    register: Registrar
+    save: Guardar cambios
+
+user_settings:
+    title: Editandos las opciones del usuario %username%
+    update_notice: Las opciones has sido actualizadas.
+
+user_settings_form:
+    locale: Lenguaje
+    save: Guardar cambios

@@ -11,7 +11,7 @@ use Symfony\Component\Intl\Intl;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class UserSettingsType extends AbstractType {
-    const LOCALES = ['en', 'nb'];
+    const LOCALES = ['en', 'es', 'nb'];
 
     /**
      * {@inheritdoc}
