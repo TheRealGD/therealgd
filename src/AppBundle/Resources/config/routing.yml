@@ -99,6 +99,12 @@ raddit_app_fetch_title:
     methods: [POST]
     options: { expose: true }
 
+raddit_app_markdown_preview:
+    defaults: { _controller: RadditAppBundle:Submission:markdownPreview }
+    path: /md.json
+    methods: [POST]
+    options: { expose: true }
+
 raddit_app_request_password_reset:
     defaults: { _controller: RadditAppBundle:ResetPassword:requestReset }
     path: /reset_password
