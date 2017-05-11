@@ -3,6 +3,7 @@
 namespace Raddit\AppBundle\Security\Voter;
 
 use Raddit\AppBundle\Entity\Submission;
+use Raddit\AppBundle\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
@@ -30,6 +31,10 @@ final class SubmissionVoter extends Voter {
      * {@inheritdoc}
      */
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token) {
+        if (!$token->getUser() instanceof User) {
+            return false;
+        }
+
         switch ($attribute) {
         case 'edit':
             return $this->canEdit($subject, $token);
@@ -51,7 +56,11 @@ final class SubmissionVoter extends Voter {
             return true;
         }
 
-        return $submission->getUser() === $token->getUser();
+        if ($submission->getUser() === $token->getUser()) {
+            return true;
+        }
+
+        return $token->getUser()->isModeratorOfForum($submission->getForum());
     }
 
     /**
