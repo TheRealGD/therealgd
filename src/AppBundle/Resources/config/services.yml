@@ -18,6 +18,12 @@ services:
         tags:
             - { name: form.type }
 
+    Raddit\AppBundle\Form\ModeratorType:
+        class: Raddit\AppBundle\Form\ModeratorType
+        arguments: ['@Raddit\AppBundle\Repository\UserRepository']
+        tags:
+            - { name: form.type }
+
     Raddit\AppBundle\Form\SubmissionType:
         class: Raddit\AppBundle\Form\SubmissionType
         arguments: ["@security.authorization_checker"]

@@ -3,10 +3,14 @@
 namespace Raddit\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="moderators")
+ *
+ * @UniqueEntity(fields={"forum", "user"}, errorPath="user")
  */
 class Moderator {
     /**
@@ -29,6 +33,8 @@ class Moderator {
     /**
      * @ORM\JoinColumn(nullable=false)
      * @ORM\ManyToOne(targetEntity="User", inversedBy="moderatorTokens")
+     *
+     * @Assert\NotNull(message="No such user.")
      *
      * @var User
      */

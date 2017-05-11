@@ -52,3 +52,8 @@ raddit_app_forum_moderators:
     defaults: { _controller: RadditAppBundle:Forum:moderators }
     path: /{forum_name}/moderators
     methods: [GET]
+
+raddit_app_add_moderator:
+    defaults: { _controller: RadditAppBundle:Forum:addModerator }
+    path: /{forum_name}/add_moderator
+    methods: [GET, POST]

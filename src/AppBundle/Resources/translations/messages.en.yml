@@ -1,3 +1,7 @@
+add_moderator:
+    title: Add moderator to %forum%
+    notice: The user has been promoted to moderator.
+
 ban_add:
     title: Ban an IP address
     banned_notice: The IP address has been banned.
@@ -69,6 +73,7 @@ forum:
     subscribe: Subscribe
     unsubscribe: Unsubscribe
     subscriber_count: '{0} No subscribers|{1} %count% subscriber|[1,Inf[ %count% subscribers'
+    add_moderator: Add moderator
 
 forum_form:
     name: Name
@@ -108,6 +113,10 @@ login_form:
 
 markdown_type:
     help: Syntax reference
+
+moderator_form:
+    user: Username
+    submit: Add as moderator
 
 pagination:
     next: Next

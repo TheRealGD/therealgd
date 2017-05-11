@@ -6,6 +6,7 @@ use Raddit\AppBundle\Entity\Forum;
 use Raddit\AppBundle\Entity\Moderator;
 use Raddit\AppBundle\Entity\User;
 use Raddit\AppBundle\Form\ForumType;
+use Raddit\AppBundle\Form\ModeratorType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -164,6 +165,41 @@ final class ForumController extends Controller {
         return $this->render('@RadditApp/forum_moderators.html.twig', [
             'forum' => $forum,
             'moderators' => $moderators,
+        ]);
+    }
+
+    /**
+     * @ParamConverter("forum", options={"mapping": {"forum_name": "name"}})
+     * @Security("is_granted('ROLE_ADMIN')")
+     *
+     * @param Forum   $forum
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function addModeratorAction(Forum $forum, Request $request) {
+        $moderator = new Moderator();
+        $moderator->setForum($forum);
+
+        $form = $this->createForm(ModeratorType::class, $moderator);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            $em->persist($moderator);
+            $em->flush();
+
+            $this->addFlash('success', 'add_moderator.notice');
+
+            return $this->redirectToRoute('raddit_app_forum_moderators', [
+                'forum_name' => $forum->getName(),
+            ]);
+        }
+
+        return $this->render('@RadditApp/add_moderator.html.twig', [
+            'form' => $form->createView(),
+            'forum' => $forum,
         ]);
     }
 }
