@@ -1,5 +1,9 @@
 # Change Log
 
+## v0.5.0 (2017-XX-XX)
+
+Work in progress.
+
 ## v0.4.0 (2017-05-09)
 
 * Added ability for users to select their preferred locale.
