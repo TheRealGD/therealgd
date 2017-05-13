@@ -105,6 +105,11 @@ front:
     front: Forside
     all: Alle
 
+inbox:
+    title: Innboks
+    clear_inbox: Tøm innboks
+    clear_notice: Innboksen ble tømt.
+
 login_form:
     log_in: Logg inn
     username: Brukernavn
@@ -165,6 +170,7 @@ site_nav:
     my_account: Min brukerkonto
     user_settings: Brukerinnstillinger
     forum_list: Forumliste
+    inbox: Innboks (%count%)
 
 submission_form:
     title: Tittel
@@ -221,3 +227,5 @@ user_settings:
 user_settings_form:
     locale: Språk
     save: Lagre endringer
+inbox:
+  title: 'messages'

@@ -113,10 +113,18 @@ class User implements UserInterface {
      */
     private $locale = 'en';
 
+    /**
+     * @ORM\OneToMany(targetEntity="Notification", mappedBy="user", fetch="EXTRA_LAZY")
+     *
+     * @var Notification[]|Collection|Selectable
+     */
+    private $notifications;
+
     public function __construct() {
         $this->created = new \DateTime('@'.time());
         $this->moderatorTokens = new ArrayCollection();
         $this->subscriptions = new ArrayCollection();
+        $this->notifications = new ArrayCollection();
     }
 
     /**
@@ -325,6 +333,13 @@ class User implements UserInterface {
      */
     public function setLocale($locale) {
         $this->locale = $locale;
+    }
+
+    /**
+     * @return Collection|Selectable|Notification[]
+     */
+    public function getNotifications() {
+        return $this->notifications;
     }
 
     /**

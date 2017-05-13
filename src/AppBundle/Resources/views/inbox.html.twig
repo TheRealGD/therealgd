@@ -1,0 +1,36 @@
+{% extends '@RadditApp/base.html.twig' %}
+
+{% block head %}
+  {% include '@RadditApp/includes/meta_pagination.html.twig' with {pager: notifications} %}
+{% endblock %}
+
+{% block page_classes %}
+  inbox-page
+{% endblock %}
+
+{% block title %}
+  {{ 'inbox.title'|trans }}
+{% endblock %}
+
+{% block body %}
+  <h1>{{ 'inbox.title'|trans }}</h1>
+
+  <form action="{{ path('raddit_app_clear_inbox') }}" method="POST" class="form">
+    <input type="hidden" name="token" value="{{ csrf_token('clear_inbox') }}">
+    <div class="row">
+      <button type="submit" class="button">{{ 'inbox.clear_inbox'|trans }}</button>
+    </div>
+  </form>
+
+  {% for notification in notifications %}
+    {{ block('notification_'~notification.type) }}
+  {% endfor %}
+
+  {% include '@RadditApp/includes/pagination.html.twig' with {pager: notifications} %}
+{% endblock %}
+
+{% block notification_comment %}
+  {% from '@RadditApp/macros/comments.html.twig' import comment %}
+
+  {{ comment(notification.comment, false) }}
+{% endblock %}

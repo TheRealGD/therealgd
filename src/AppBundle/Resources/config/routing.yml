@@ -121,6 +121,18 @@ raddit_app_password_reset:
     path: /reset_password/{id}/{expires}/{checksum}
     methods: [GET, POST]
 
+raddit_app_inbox:
+    defaults: { _controller: RadditAppBundle:User:inbox, page: 1 }
+    path: /inbox/{page}
+    methods: [GET]
+    requirements: { page: \d+ }
+
+raddit_app_clear_inbox:
+    defaults: { _controller: RadditAppBundle:User:clearInbox, _format: html }
+    path: /clear_inbox.{_format}
+    methods: [POST]
+    requirements: { _format: html|json }
+
 raddit_app_bans:
     defaults: { _controller: RadditAppBundle:Ban:list }
     path: /bans

@@ -1,8 +1,8 @@
 # Change Log
 
-## v0.5.0 (2017-XX-XX)
+## v0.5.0 (2017-xx-xx)
 
-Work in progress.
+* Notify user when their submission or comment is replied to.
 
 ## v0.4.0 (2017-05-09)
 

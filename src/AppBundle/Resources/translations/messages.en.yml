@@ -105,6 +105,11 @@ front:
     front: Front
     all: All
 
+inbox:
+    title: Inbox
+    clear_inbox: Clear inbox
+    clear_notice: The inbox was cleared.
+
 login_form:
     log_in: Log in
     username: Username
@@ -165,6 +170,7 @@ site_nav:
     my_account: My account
     user_settings: User settings
     forum_list: Forums
+    inbox: Inbox (%count%)
 
 submission_form:
     title: Title

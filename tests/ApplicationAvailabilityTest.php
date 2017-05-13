@@ -93,6 +93,7 @@ class ApplicationAvailabilityTest extends WebTestCase {
     public function authUrlProvider() {
         yield ['/create_forum'];
         yield ['/f/news/edit'];
+        yield ['/inbox'];
         yield ['/submit'];
         yield ['/submit/news'];
     }

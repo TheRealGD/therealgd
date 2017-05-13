@@ -4,6 +4,7 @@ namespace Raddit\AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Selectable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -91,6 +92,13 @@ class Comment extends Votable {
     private $ip;
 
     /**
+     * @ORM\OneToMany(targetEntity="CommentNotification", mappedBy="comment", cascade={"persist", "remove"})
+     *
+     * @var CommentNotification[]|Collection|Selectable
+     */
+    private $notifications;
+
+    /**
      * Creates a new comment with an implicit upvote from the comment author.
      *
      * @param Submission   $submission
@@ -119,6 +127,7 @@ class Comment extends Votable {
         $this->timestamp = new \DateTime('@'.time());
         $this->children = new ArrayCollection();
         $this->votes = new ArrayCollection();
+        $this->notifications = new ArrayCollection();
     }
 
     /**
@@ -266,5 +275,12 @@ class Comment extends Votable {
      */
     public function setIp($ip) {
         $this->ip = $ip;
+    }
+
+    /**
+     * @return Collection|Selectable|CommentNotification[]
+     */
+    public function getNotifications() {
+        return $this->notifications;
     }
 }

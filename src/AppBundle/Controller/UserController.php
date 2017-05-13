@@ -3,6 +3,7 @@
 namespace Raddit\AppBundle\Controller;
 
 use Raddit\AppBundle\Entity\Comment;
+use Raddit\AppBundle\Entity\Notification;
 use Raddit\AppBundle\Entity\Submission;
 use Raddit\AppBundle\Entity\User;
 use Raddit\AppBundle\Form\UserSettingsType;
@@ -11,6 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 final class UserController extends Controller {
     /**
@@ -132,5 +134,46 @@ final class UserController extends Controller {
             'form' => $form->createView(),
             'user' => $subject,
         ]);
+    }
+
+    /**
+     * @Security("is_granted('ROLE_USER')")
+     *
+     * @param int $page
+     *
+     * @return Response
+     */
+    public function inboxAction(int $page) {
+        $notifications = $this->getDoctrine()->getRepository(Notification::class)
+            ->findNotificationsInInbox($this->getUser(), $page);
+
+        return $this->render('@RadditApp/inbox.html.twig', [
+            'notifications' => $notifications,
+        ]);
+    }
+
+    /**
+     * @Security("is_granted('ROLE_USER')")
+     *
+     * @param Request $request
+     * @param string  $_format
+     *
+     * @return Response
+     */
+    public function clearInboxAction(Request $request, string $_format) {
+        if (!$this->isCsrfTokenValid('clear_inbox', $request->request->get('token'))) {
+            throw new AccessDeniedHttpException();
+        }
+
+        $this->getDoctrine()->getRepository(Notification::class)->clearInbox($this->getUser());
+        $this->getDoctrine()->getManager()->flush();
+
+        if ($_format === 'json') {
+            return $this->json(['message' => 'The inbox was successfully cleared.']);
+        }
+
+        $this->addFlash('notice', 'inbox.clear_notice');
+
+        return $this->redirectToRoute('raddit_app_inbox');
     }
 }

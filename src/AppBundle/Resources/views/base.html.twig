@@ -30,6 +30,11 @@
             <li><a href="{{ path('raddit_app_login') }}">{{ 'site_nav.log_in'|trans }}</a></li>
             <li><a href="{{ path('raddit_app_registration') }}">{{ 'site_nav.register'|trans }}</a></li>
           {% else %}
+            {% with {notification_count: app.user.notifications|length} %}
+              {% if notification_count > 0 %}
+                <li><a href="{{ path('raddit_app_inbox') }}">{{ 'site_nav.inbox'|trans({'%count%': '<strong>%d</strong>'|format(notification_count)})|raw }}</sup></a></li>
+              {% endif %}
+            {% endwith %}
             <li><a href="{{ path('raddit_app_submit', {forum_name: forum is defined and forum ? forum.name : null}) }}">{{ 'site_nav.submit'|trans }}</a></li>
             <li class="dropdown-container">
               <a href="#" class="dropdown-toggle"><strong>{{ app.user.username }}</strong></a>

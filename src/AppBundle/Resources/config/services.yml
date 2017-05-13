@@ -60,6 +60,11 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
+    Raddit\AppBundle\EventListener\CommentNotificationListener:
+        class: Raddit\AppBundle\EventListener\CommentNotificationListener
+        tags:
+            - { name: doctrine.event_subscriber }
+
     Raddit\AppBundle\EventListener\LocaleListener:
         class: Raddit\AppBundle\EventListener\LocaleListener
         autowire: true
