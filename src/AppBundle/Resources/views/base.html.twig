@@ -32,7 +32,7 @@
           {% else %}
             {% with {notification_count: app.user.notifications|length} %}
               {% if notification_count > 0 %}
-                <li><a href="{{ path('raddit_app_inbox') }}">{{ 'site_nav.inbox'|trans({'%count%': '<strong>%d</strong>'|format(notification_count)})|raw }}</sup></a></li>
+                <li><a href="{{ path('raddit_app_inbox') }}">{{ 'site_nav.inbox'|trans({'%count%': '<strong>%d</strong>'|format(notification_count)})|raw }}</a></li>
               {% endif %}
             {% endwith %}
             <li><a href="{{ path('raddit_app_submit', {forum_name: forum is defined and forum ? forum.name : null}) }}">{{ 'site_nav.submit'|trans }}</a></li>
