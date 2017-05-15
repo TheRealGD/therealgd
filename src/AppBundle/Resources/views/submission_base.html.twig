@@ -1,5 +1,9 @@
 {% extends '@RadditApp/forum_base.html.twig' %}
 
+{% block title %}
+  {{ submission.title }}
+{% endblock %}
+
 {% block sidebar %}
   <section class="sidebar-submission-meta">
     <p class="sidebar-submission-meta-score">
