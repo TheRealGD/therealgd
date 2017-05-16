@@ -22,8 +22,12 @@ class CommentNotificationListener implements EventSubscriber {
         }
 
         $parent = $comment->getParent();
+        $user = $comment->getUser();
 
-        if ($parent && $comment->getUser() === $parent->getUser()) {
+        if (
+            $parent && $user === $parent->getUser() ||
+            !$parent && $user === $comment->getSubmission()->getUser()
+        ) {
             // don't send notifications to one self
             return;
         }
