@@ -7,11 +7,10 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Intl\Intl;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class UserSettingsType extends AbstractType {
-    const LOCALES = ['en', 'eo', 'es', 'nb'];
+    private $localeChoices = [];
 
     /**
      * {@inheritdoc}
@@ -22,8 +21,7 @@ final class UserSettingsType extends AbstractType {
                 'choices' => $this->getLocaleChoices(),
                 'choice_translation_domain' => false,
             ])
-            ->add('save', SubmitType::class)
-        ;
+            ->add('save', SubmitType::class);
     }
 
     /**
@@ -36,14 +34,11 @@ final class UserSettingsType extends AbstractType {
         ]);
     }
 
-    private function getLocaleChoices(): array {
-        $localeBundle = Intl::getLocaleBundle();
-        $choices = [];
+    public function getLocaleChoices(): array {
+        return $this->localeChoices;
+    }
 
-        foreach (self::LOCALES as $locale) {
-            $choices[$localeBundle->getLocaleName($locale, $locale)] = $locale;
-        }
-
-        return $choices;
+    public function setLocaleChoices(array $localeChoices) {
+        $this->localeChoices = $localeChoices;
     }
 }
