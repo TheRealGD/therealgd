@@ -47,10 +47,15 @@
 }
 
 .submission-sort {
-  .horizontal-menu();
+  display: flex;
 
   ul {
     display: table;
+    padding: 0;
+  }
+
+  ul + ul {
+    margin-left: 1rem;
   }
 
   li {
@@ -64,7 +69,7 @@
     padding: 0.5rem 1rem;
   }
 
-  .active {
+  .active a {
     background-color: @submission-sort-active-link-background-color;
     color: @submission-sort-active-link-color;
   }

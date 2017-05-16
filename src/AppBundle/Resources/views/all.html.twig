@@ -1,5 +1,6 @@
 {% extends '@RadditApp/base.html.twig' %}
 {% from '@RadditApp/macros/submissions.html.twig' import submission, submission_sort %}
+{% from '@RadditApp/front.html.twig' import submission_filter %}
 
 {% block page_classes %}
   all-page
@@ -12,10 +13,8 @@
 
 {% block body %}
   <nav class="submission-sort">
-    <ul>
-      {{- submission_sort(sort_by) -}}
-      <li><a href="{{ path('raddit_app_front', app.request.attributes.get('_route_params')) }}">{{ 'front.front'|trans }}</a></li>
-    </ul>
+    <ul>{{ submission_sort(sort_by) }}</ul>
+    <ul>{{ submission_filter(sort_by) }}</ul>
   </nav>
 
   {% for submission in submissions %}

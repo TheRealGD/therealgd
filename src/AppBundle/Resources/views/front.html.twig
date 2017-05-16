@@ -1,5 +1,6 @@
 {% extends '@RadditApp/base.html.twig' %}
 {% from '@RadditApp/macros/submissions.html.twig' import submission, submission_sort %}
+{% from _self import submission_filter %}
 
 {% block page_classes %}
   front-page
@@ -12,10 +13,8 @@
 
 {% block body %}
   <nav class="submission-sort">
-    <ul>
-      {{- submission_sort(sort_by) -}}
-      <li><a href="{{ path('raddit_app_all', app.request.attributes.get('_route_params')) }}">{{ 'front.all'|trans }}</a></li>
-    </ul>
+    <ul>{{ submission_sort(sort_by) }}</ul>
+    <ul>{{ submission_filter(sort_by) }}</ul>
   </nav>
 
   {% for submission in submissions %}
@@ -47,3 +46,11 @@
     {% endif %}
   </section>
 {%- endblock -%}
+
+{#- shared with all.html.twig -#}
+{%- macro submission_filter() -%}
+  {%- with {attr: app.request.attributes} -%}
+    <li{% if attr.get('_route') == 'raddit_app_front' %} class="active"{% endif %}><a href="{{ path('raddit_app_front', attr.get('_route_params')) }}">{{ 'front.front'|trans }}</a></li>
+    <li{% if attr.get('_route') == 'raddit_app_all' %} class="active"{% endif %}><a href="{{ path('raddit_app_all', attr.get('_route_params')) }}">{{ 'front.all'|trans }}</a></li>
+  {%- endwith -%}
+{%- endmacro -%}

@@ -10,11 +10,8 @@
 {%- macro submission_sort(current) -%}
   {%- spaceless -%}
     {%- for type in ['hot', 'new', 'top', 'controversial'] -%}
-      <li>
-        <a href="{{ path(
-          app.request.attributes.get('_route'),
-          app.request.attributes.get('_route_params')|default([])|merge({sortBy: type}))
-        }}" class="{{ type == current ? 'active' }}">
+      <li class="{{ type == current ? 'active' }}">
+        <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|default([])|merge({sortBy: type})) }}">
           {{- ('submissions.sort_by_'~type)|trans -}}
         </a>
       </li>
