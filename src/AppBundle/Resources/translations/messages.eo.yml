@@ -97,6 +97,12 @@ front:
     no_subscriptions: Vi ne havas neniun albonajn forumojn. Anstataŭe montras priatentitajn forumojn.
     featured_forums: Priatentitaj Forumoj
     no_forums: Estas neniuj priatentitaj forumoj por montri.
+    all: Ĉiuj
+
+inbox:
+    title: Enirkesto
+    clear_inbox: Vakigi enirkeston
+    clear_notice: La enirkeston vakigis.
 
 login_form:
     log_in: Ensaluti
