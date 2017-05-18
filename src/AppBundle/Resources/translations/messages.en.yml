@@ -226,4 +226,5 @@ user_settings:
 
 user_settings_form:
     locale: Language
+    night_mode: Night mode
     save: Save changes

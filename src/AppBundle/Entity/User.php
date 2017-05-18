@@ -120,6 +120,13 @@ class User implements UserInterface {
      */
     private $notifications;
 
+    /**
+     * @ORM\Column(type="boolean")
+     *
+     * @var bool
+     */
+    private $nightMode = false;
+
     public function __construct() {
         $this->created = new \DateTime('@'.time());
         $this->moderatorTokens = new ArrayCollection();
@@ -340,6 +347,20 @@ class User implements UserInterface {
      */
     public function getNotifications() {
         return $this->notifications;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isNightMode(): bool {
+        return $this->nightMode;
+    }
+
+    /**
+     * @param bool $nightMode
+     */
+    public function setNightMode(bool $nightMode) {
+        $this->nightMode = $nightMode;
     }
 
     /**

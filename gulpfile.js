@@ -12,12 +12,12 @@ const webpack = require('webpack');
 gulp.task('default', ['css', 'fonts', 'js']);
 
 gulp.task('css', () => {
-    return gulp.src('./src/AppBundle/Resources/assets/less/main.less')
+    return gulp.src('./src/AppBundle/Resources/assets/less/main*.less')
         .pipe(less({
             plugins: [new LessNpmImport({prefix: '~'})]
         }))
         .pipe(uglifycss())
-        .pipe(rename('main.min.css'))
+        .pipe(rename({suffix: '.min'}))
         .pipe(gulp.dest('./web/css/'));
 });
 

@@ -8,7 +8,12 @@
     <meta name="generator" content="raddit {{ raddit_app_version() }}">
 
     {% block stylesheets %}
-      <link rel="stylesheet" href="{{ asset('css/main.min.css') }}">
+      {% if not app.user or not app.user.nightMode %}
+        <link rel="stylesheet" href="{{ asset('css/main.min.css') }}">
+      {% else %}
+        <link rel="stylesheet" href="{{ asset('css/main-night.min.css') }}">
+      {% endif %}
+
       <link rel="stylesheet" href="{{ asset('fonts/css/raddit.css') }}">
     {% endblock %}
 
