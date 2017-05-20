@@ -2,6 +2,9 @@
 
 ## v0.5.0 (2017-xx-xx)
 
+* Added a command that prunes IP addresses on many entities, optionally after
+  they reach a provided age.
+* Added 'night mode', a dark stylesheet that's supposedly easier on the eyes.
 * Notify user when their submission or comment is replied to.
 
 ## v0.4.0 (2017-05-09)
