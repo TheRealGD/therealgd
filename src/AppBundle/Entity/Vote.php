@@ -42,7 +42,7 @@ abstract class Vote {
     private $user;
 
     /**
-     * @ORM\Column(type="inet")
+     * @ORM\Column(type="inet", nullable=true)
      *
      * @var string|null
      */

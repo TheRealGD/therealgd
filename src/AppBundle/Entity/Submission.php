@@ -102,7 +102,7 @@ class Submission extends Votable {
     private $image;
 
     /**
-     * @ORM\Column(type="inet")
+     * @ORM\Column(type="inet", nullable=true)
      *
      * @var string|null
      */

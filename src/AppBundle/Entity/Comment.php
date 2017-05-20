@@ -85,7 +85,7 @@ class Comment extends Votable {
     private $softDeleted = false;
 
     /**
-     * @ORM\Column(type="inet")
+     * @ORM\Column(type="inet", nullable=true)
      *
      * @var string|null
      */
