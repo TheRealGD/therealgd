@@ -31,7 +31,7 @@ comments:
     delete: Forigi
     delete_thread: Forigi kun respondoj
     edit: Redakti
-    permalink: Permalink
+    permalink: Konstanta ligilo
     parent: Gepatro
     reply: Respondi
     admin_ban: IP forbaro
@@ -52,7 +52,7 @@ comment_form:
     create_title: Skribas komenton
 
 create_forum:
-    create_new_forum: Kreas nova forumo
+    create_new_forum: Kreas novan forumon
 
 edit_forum:
     edit_notice: La redaktojn savis.
@@ -97,6 +97,7 @@ front:
     no_subscriptions: Vi ne havas neniun albonajn forumojn. Anstataŭe montras priatentitajn forumojn.
     featured_forums: Priatentitaj Forumoj
     no_forums: Estas neniuj priatentitaj forumoj por montri.
+    front: Fronta
     all: Ĉiuj
 
 inbox:
@@ -213,4 +214,5 @@ user_settings:
 
 user_settings_form:
     locale: Lingvo
+    night_mode: Nokta reĝimo
     save: Konservi modifiĝojn
