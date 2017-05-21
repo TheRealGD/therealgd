@@ -3,71 +3,33 @@
 parameters:
     markdown_cache_time: 86400
 
-# Symfony 3.3 naming convention
-# http://symfony.com/blog/new-in-symfony-3-3-optional-class-for-named-services
 services:
-    Raddit\AppBundle\Form\BanType:
-        class: Raddit\AppBundle\Form\BanType
-        arguments: ['@Raddit\AppBundle\Repository\UserRepository']
-        tags:
-            - { name: form.type }
-
-    Raddit\AppBundle\Form\ForumType:
-        class: Raddit\AppBundle\Form\ForumType
-        arguments: ["@security.authorization_checker"]
-        tags:
-            - { name: form.type }
-
-    Raddit\AppBundle\Form\ModeratorType:
-        class: Raddit\AppBundle\Form\ModeratorType
-        arguments: ['@Raddit\AppBundle\Repository\UserRepository']
-        tags:
-            - { name: form.type }
-
-    Raddit\AppBundle\Form\SubmissionType:
-        class: Raddit\AppBundle\Form\SubmissionType
-        arguments: ["@security.authorization_checker"]
-        tags:
-            - { name: form.type }
-
-    Raddit\AppBundle\Form\UserSettingsType:
-        class: Raddit\AppBundle\Form\UserSettingsType
+    _defaults:
+        autoconfigure: true
         autowire: true
-        tags:
-            - { name: form.type }
+        public: false
 
-    Raddit\AppBundle\Form\UserType:
-        class: Raddit\AppBundle\Form\UserType
-        arguments: ["@security.password_encoder"]
-        tags:
-            - { name: form.type }
+    # makes classes in src/AppBundle available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    Raddit\AppBundle\:
+        resource: '../../*'
+        # you can exclude directories or files
+        # but if a service is unused, it's removed anyway
+        exclude: '../../{Entity,Repository}'
 
-    Raddit\AppBundle\EventListener\AjaxListener:
-        class: Raddit\AppBundle\EventListener\AjaxListener
-        arguments: ["@serializer"]
-        tags:
-            - { name: kernel.event_subscriber }
+    # controllers are imported separately to make sure they're public
+    # and have a tag that allows actions to type-hint services
+    Raddit\AppBundle\Controller\:
+        resource: '../../Controller'
+        public: true
+        tags: ['controller.service_arguments']
 
     Raddit\AppBundle\EventListener\AttachIpToEntityListener:
-        class: Raddit\AppBundle\EventListener\AttachIpToEntityListener
         arguments: ["@request_stack"]
         tags:
             - { name: doctrine.event_listener, event: prePersist }
 
-    Raddit\AppBundle\EventListener\BanListener:
-        class: Raddit\AppBundle\EventListener\BanListener
-        arguments: ['@Raddit\AppBundle\Repository\BanRepository']
-        tags:
-            - { name: kernel.event_subscriber }
-
-    Raddit\AppBundle\EventListener\CommentNotificationListener:
-        class: Raddit\AppBundle\EventListener\CommentNotificationListener
-        tags:
-            - { name: doctrine.event_subscriber }
-
     Raddit\AppBundle\EventListener\LocaleListener:
-        class: Raddit\AppBundle\EventListener\LocaleListener
-        autowire: true
         tags:
             - { name: kernel.event_listener, event: kernel.request, priority: 15 }
             - { name: kernel.event_listener, event: security.interactive_login, method: onInteractiveLogin }
@@ -75,7 +37,6 @@ services:
             - { name: doctrine.event_listener, event: postUpdate }
 
     Raddit\AppBundle\EventListener\SubmissionImageListener:
-        class: Raddit\AppBundle\EventListener\SubmissionImageListener
         calls:
             - [setLogger, ["@logger"]]
         arguments: ["@doctrine.orm.entity_manager", "@request_stack", "@validator"]
@@ -84,77 +45,34 @@ services:
             - { name: kernel.event_listener, event: kernel.terminate }
 
     Raddit\AppBundle\EventListener\SubmissionRankListener:
-        class: Raddit\AppBundle\EventListener\SubmissionRankListener
         tags:
             - { name: doctrine.event_subscriber }
 
     Raddit\AppBundle\Repository\BanRepository:
-        class: Raddit\AppBundle\Repository\BanRepository
         factory: ["@doctrine.orm.entity_manager", "getRepository"]
         arguments: [Raddit\AppBundle\Entity\Ban]
-        public: false
 
     Raddit\AppBundle\Repository\UserRepository:
-        class: Raddit\AppBundle\Repository\UserRepository
         factory: ["@doctrine.orm.entity_manager", "getRepository"]
         arguments: [Raddit\AppBundle\Entity\User]
-        public: false
-
-    Raddit\AppBundle\Security\Voter\CommentVoter:
-        class: Raddit\AppBundle\Security\Voter\CommentVoter
-        arguments: ["@security.access.decision_manager"]
-        tags:
-            - { name: security.voter }
-        public: false
-
-    Raddit\AppBundle\Security\Voter\ForumVoter:
-        class: Raddit\AppBundle\Security\Voter\ForumVoter
-        arguments: ["@security.access.decision_manager"]
-        tags:
-            - { name: security.voter }
-        public: false
-
-    Raddit\AppBundle\Security\Voter\SubmissionVoter:
-        class: Raddit\AppBundle\Security\Voter\SubmissionVoter
-        arguments: ["@security.access.decision_manager"]
-        tags:
-            - { name: security.voter }
-        public: false
-
-    Raddit\AppBundle\Security\Voter\UserVoter:
-        class: Raddit\AppBundle\Security\Voter\UserVoter
-        arguments: ["@security.access.decision_manager"]
-        tags:
-            - { name: security.voter }
-        public: false
 
     Raddit\AppBundle\Twig\AppExtension:
-        class: Raddit\AppBundle\Twig\AppExtension
-        arguments:
-            - '@Raddit\AppBundle\Utils\MarkdownConverter'
-            - '@Raddit\AppBundle\Utils\CachedMarkdownConverter'
         calls:
             - [setSiteName, ["%site_name%"]]
-        tags:
-            - { name: twig.extension }
-        public: false
 
     Raddit\AppBundle\Utils\MarkdownConverter:
-        class: Raddit\AppBundle\Utils\MarkdownConverter
         factory: [Raddit\AppBundle\Utils\MarkdownConverter, createInstance]
-        public: false
         lazy: true
 
     Raddit\AppBundle\Utils\CachedMarkdownConverter:
-        class: Raddit\AppBundle\Utils\CachedMarkdownConverter
         calls:
             - [setExpiresAfter, ["%markdown_cache_time%"]]
-        arguments: ['@cache.app', '@Raddit\AppBundle\Utils\MarkdownConverter']
-        public: false
         lazy: true
 
-    Twig_Extensions_Extension_Intl:
+
+    ## Misc
+
+    Doctrine\DBAL\Connection: "@doctrine.dbal.default_connection"
+
+    twig.extension.intl:
         class: Twig_Extensions_Extension_Intl
-        tags:
-            - { name: twig.extension }
-        public: false
