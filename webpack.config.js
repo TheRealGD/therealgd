@@ -1,7 +1,8 @@
 'use strict';
 
 const webpack = require('webpack');
-const path = require('path');
+const ManifestPlugin = require('webpack-manifest-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
     devtool: '#source-map',
@@ -10,7 +11,7 @@ module.exports = {
     },
     output: {
         path: __dirname + '/web/js',
-        filename: '[name].min.js'
+        filename: '[name].[chunkhash:8].min.js'
     },
     externals: {
         "fosjsrouting": "Routing"
@@ -48,6 +49,14 @@ module.exports = {
             minChunks: function (module) {
                 return module.context && /node_modules/.test(module.context);
             }
+        }),
+        new ManifestPlugin({
+            // path relative to symfony's web root
+            basePath: 'js/'
+        }),
+        new CleanWebpackPlugin(['web/js'], {
+            root: __dirname,
+            exclude: ['manifest.json']
         })
     ],
     resolve: {

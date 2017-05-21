@@ -5,6 +5,7 @@
         "babel-loader": "^6.2.10",
         "babel-plugin-syntax-dynamic-import": "^6.18.0",
         "babel-preset-es2015": "^6.22.0",
+        "clean-webpack-plugin": "^0.1.16",
         "expose-loader": "^0.7.3",
         "gulp": "^3.9.1",
         "gulp-fontello": "^0.4.6",
@@ -13,7 +14,8 @@
         "gulp-uglifycss": "^1.0.6",
         "gulp-util": "^3.0.8",
         "less-plugin-npm-import": "^2.1.0",
-        "webpack": "^2.4.1"
+        "webpack": "^2.4.1",
+        "webpack-manifest-plugin": "^1.1.0"
     },
     "dependencies": {
         "bazinga-translator": "^2.6.4",
