@@ -7,6 +7,20 @@
 * Added 'night mode', a dark stylesheet that's supposedly easier on the eyes.
 * Notify user when their submission or comment is replied to.
 
+## v0.4.1 (2017-05-23)
+
+* Added Esperanto and Spanish translations.
+* Added Markdown preview.
+* Added page for adding moderators.
+* Added page for viewing submissions across all forums.
+* Collapse navbar margins on small screen sizes.
+* Fixed bug preventing deletion of forums.
+* Fixed bug preventing moderators from editing submissions.
+* Fixed nasty bug resulting in invalid entities being persisted to the database.
+* Use the correct page title on submission pages.
+* Use a web font for voting arrows since Unicode arrows are inconsistent across
+  platforms.
+
 ## v0.4.0 (2017-05-09)
 
 * Added ability for users to select their preferred locale.
