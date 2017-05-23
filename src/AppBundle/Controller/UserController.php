@@ -2,6 +2,7 @@
 
 namespace Raddit\AppBundle\Controller;
 
+use Doctrine\Common\Persistence\ObjectManager;
 use Raddit\AppBundle\Entity\Comment;
 use Raddit\AppBundle\Entity\Notification;
 use Raddit\AppBundle\Entity\Submission;
@@ -155,18 +156,22 @@ final class UserController extends Controller {
     /**
      * @Security("is_granted('ROLE_USER')")
      *
-     * @param Request $request
-     * @param string  $_format
+     * @param Request       $request
+     * @param ObjectManager $em
+     * @param string        $_format
      *
      * @return Response
      */
-    public function clearInboxAction(Request $request, string $_format) {
+    public function clearInboxAction(Request $request, ObjectManager $em, string $_format) {
         if (!$this->isCsrfTokenValid('clear_inbox', $request->request->get('token'))) {
             throw new AccessDeniedHttpException();
         }
 
-        $this->getDoctrine()->getRepository(Notification::class)->clearInbox($this->getUser());
-        $this->getDoctrine()->getManager()->flush();
+        $user = $this->getUser();
+        $max = $request->query->getInt('max', null);
+
+        $em->getRepository(Notification::class)->clearInbox($user, $max);
+        $em->flush();
 
         if ($_format === 'json') {
             return $this->json(['message' => 'The inbox was successfully cleared.']);

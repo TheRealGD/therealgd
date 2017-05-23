@@ -109,6 +109,7 @@ inbox:
     title: Innboks
     clear_inbox: Tøm innboks
     clear_notice: Innboksen ble tømt.
+    empty: Innboksen er tom.
 
 login_form:
     log_in: Logg inn

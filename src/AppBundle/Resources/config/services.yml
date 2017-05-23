@@ -48,10 +48,6 @@ services:
             - { name: doctrine.event_listener, event: postPersist }
             - { name: kernel.event_listener, event: kernel.terminate }
 
-    Raddit\AppBundle\EventListener\SubmissionRankListener:
-        tags:
-            - { name: doctrine.event_subscriber }
-
     Raddit\AppBundle\Repository\BanRepository:
         factory: ["@doctrine.orm.entity_manager", "getRepository"]
         arguments: [Raddit\AppBundle\Entity\Ban]
@@ -77,6 +73,10 @@ services:
     ## Misc
 
     Doctrine\DBAL\Connection: "@doctrine.dbal.default_connection"
+
+    Doctrine\Common\Persistence\ObjectManager: "@doctrine.orm.entity_manager"
+    Doctrine\ORM\EntityManager: "@doctrine.orm.entity_manager"
+    Doctrine\ORM\EntityManagerInterface: "@doctrine.orm.entity_manager"
 
     Symfony\Component\Serializer\Serializer: "@serializer"
 

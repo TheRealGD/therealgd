@@ -109,6 +109,7 @@ inbox:
     title: Inbox
     clear_inbox: Clear inbox
     clear_notice: The inbox was cleared.
+    empty: The inbox is empty.
 
 login_form:
     log_in: Log in
