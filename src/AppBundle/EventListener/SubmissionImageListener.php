@@ -90,6 +90,10 @@ final class SubmissionImageListener implements LoggerAwareInterface {
 
         $queue = $event->getRequest()->attributes->get(self::QUEUE_KEY, []);
 
+        if (!$queue) {
+            return;
+        }
+
         /** @var Submission $submission */
         foreach ($queue as $submission) {
             try {
