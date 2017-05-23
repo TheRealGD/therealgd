@@ -47,9 +47,10 @@
         "willdurand/js-translation-bundle": "^2.6"
     },
     "require-dev": {
+        "dama/doctrine-test-bundle": "^1.0",
+        "friendsofphp/php-cs-fixer": "2.2.x-dev",
         "sensio/generator-bundle": "^3.0",
-        "symfony/phpunit-bridge": "^3.0",
-        "friendsofphp/php-cs-fixer": "2.2.x-dev"
+        "symfony/phpunit-bridge": "^3.0"
     },
     "scripts": {
         "symfony-scripts": [
