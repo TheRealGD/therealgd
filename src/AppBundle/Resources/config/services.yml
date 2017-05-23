@@ -74,5 +74,7 @@ services:
 
     Doctrine\DBAL\Connection: "@doctrine.dbal.default_connection"
 
+    Symfony\Component\Serializer\Serializer: "@serializer"
+
     twig.extension.intl:
         class: Twig_Extensions_Extension_Intl

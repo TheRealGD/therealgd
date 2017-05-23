@@ -8,7 +8,7 @@ use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
-use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Serializer\Serializer;
 
 /**
  * Suppresses redirection when a controller throws a 403 exception during an XHR
@@ -27,11 +27,11 @@ use Symfony\Component\Serializer\SerializerInterface;
  */
 final class AjaxListener implements EventSubscriberInterface {
     /**
-     * @var SerializerInterface
+     * @var Serializer
      */
     private $serializer;
 
-    public function __construct(SerializerInterface $serializer) {
+    public function __construct(Serializer $serializer) {
         $this->serializer = $serializer;
     }
 
