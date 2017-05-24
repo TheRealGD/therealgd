@@ -25,32 +25,6 @@ class MarkdownConverter {
     private $purifier;
 
     /**
-     * Creates an instance with the default configuration.
-     *
-     * @return self
-     */
-    public static function createInstance() {
-        $commonMark = new CommonMarkConverter([
-            'html_input' => 'escape',
-        ]);
-
-        $purifier = new \HTMLPurifier(\HTMLPurifier_Config::create([
-            // Convert non-link URLs to links.
-            'AutoFormat.Linkify' => true,
-            // Disable cache
-            'Cache.DefinitionImpl' => null,
-            // Add rel="nofollow" to outgoing links.
-            'HTML.Nofollow' => true,
-            // Add target="_blank" to outgoing links.
-            'HTML.TargetBlank' => true,
-            // Disable embedding of external resources like images.
-            'URI.DisableExternalResources' => true,
-        ]));
-
-        return new self($commonMark, $purifier);
-    }
-
-    /**
      * @param CommonMarkConverter $converter
      * @param \HTMLPurifier       $purifier
      */

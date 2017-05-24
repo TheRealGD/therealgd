@@ -232,12 +232,12 @@ final class SubmissionController extends Controller {
     }
 
     /**
-     * @param Request $request
+     * @param Request           $request
+     * @param MarkdownConverter $converter
      *
      * @return Response
      */
-    public function markdownPreviewAction(Request $request) {
-        $converter = MarkdownConverter::createInstance();
+    public function markdownPreviewAction(Request $request, MarkdownConverter $converter) {
         $markdown = $request->request->get('markdown', '');
 
         return new Response($converter->convertToHtml($markdown));

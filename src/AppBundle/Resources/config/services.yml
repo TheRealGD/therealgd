@@ -3,6 +3,16 @@
 parameters:
     markdown_cache_time: 86400
 
+    commonmark_config:
+        html_input: escape
+
+    html_purifier_config:
+        AutoFormat.Linkify:           true   # Convert non-link URLs to links.
+        Cache.DefinitionImpl:         null   # Disable cache
+        HTML.Nofollow:                true   # Add rel="nofollow" to outgoing links.
+        HTML.TargetBlank:             true   # Add target="_blank" to outgoing links.
+        URI.DisableExternalResources: true   # Disable embedding of external resources like images.
+
 services:
     _defaults:
         autoconfigure: true
@@ -60,10 +70,6 @@ services:
         calls:
             - [setSiteName, ["%site_name%"]]
 
-    Raddit\AppBundle\Utils\MarkdownConverter:
-        factory: [Raddit\AppBundle\Utils\MarkdownConverter, createInstance]
-        lazy: true
-
     Raddit\AppBundle\Utils\CachedMarkdownConverter:
         calls:
             - [setExpiresAfter, ["%markdown_cache_time%"]]
@@ -77,6 +83,28 @@ services:
     Doctrine\Common\Persistence\ObjectManager: "@doctrine.orm.entity_manager"
     Doctrine\ORM\EntityManager: "@doctrine.orm.entity_manager"
     Doctrine\ORM\EntityManagerInterface: "@doctrine.orm.entity_manager"
+
+    HTMLPurifier:
+        class: HTMLPurifier
+        arguments: ['@HTMLPurifier_Config']
+        lazy: true
+
+    HTMLPurifier_Config:
+        class: HTMLPurifier_Config
+        factory: [HTMLPurifier_Config, create]
+        arguments:
+            - "%html_purifier_config%"
+        lazy: true
+
+    League\CommonMark\CommonMarkConverter:
+        arguments: ["%commonmark_config%", '@League\CommonMark\Environment']
+        lazy: true
+
+    League\CommonMark\Environment:
+        factory: [League\CommonMark\Environment, createCommonMarkEnvironment]
+        calls:
+            - [addInlineParser, ['@Raddit\AppBundle\CommonMark\Inline\Parser\ForumLinkParser']]
+        lazy: true
 
     Symfony\Component\Serializer\Serializer: "@serializer"
 
