@@ -61,7 +61,7 @@ create_forum:
 edit_forum:
     edit_notice: De veranderingen zijn opgeslagen.
     delete_notice: Het forum en al zijn inhoud zijn verwijderd.
-    title: %forum% aan het bewerken
+    title: '%forum% aan het bewerken'
 
 edit_user:
     title: Gebruiker %username% aan het bewerken
