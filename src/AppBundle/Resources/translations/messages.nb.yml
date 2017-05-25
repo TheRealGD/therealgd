@@ -210,6 +210,9 @@ user:
     submissions: Innlegg
     comments: Kommentarer
     moderates: '%username% er en moderator i:'
+    username_rules: Tillatte tegn er A-Z, a-z, 0-9 og understrek.
+    password_rules: Minst 8 tegn; opptil 72 på grunn av begrensninger med bcrypt-algoritmen.
+    email_optional: Å oppgi en epost-adresse er valgfritt. Den vil kun bli brukt til nullstilling av passord.
 
 user_form:
     username: Brukernavn

@@ -210,6 +210,9 @@ user:
     submissions: Submissions
     comments: Comments
     moderates: '%username% is a moderator on:'
+    username_rules: Allowed characters are A-Z, a-z, 0-9 and underscore.
+    password_rules: Minimum of 8 characters; maximum of 72 due to limitations of the bcrypt algorithm.
+    email_optional: Providing an email address is optional. It will only be used for resetting your password.
 
 user_form:
     username: Username

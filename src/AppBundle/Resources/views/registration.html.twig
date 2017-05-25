@@ -5,8 +5,5 @@
 {% block page_classes %}registration-page{% endblock %}
 
 {% block body %}
-  {{ form_start(form) }}
-  {{ form_end(form) }}
+  {% include '@RadditApp/forms/user_form.html.twig' %}
 {% endblock %}
-
-

@@ -1,0 +1,35 @@
+{{ form_start(form) }}
+  <div class="row">
+    {{ form_errors(form.username) }}
+    {{ form_label(form.username) }}
+    {{ form_widget(form.username) }}
+
+    <div class="help">
+      <p>{{ 'user.username_rules'|trans }}</p>
+    </div>
+  </div>
+
+  <div class="row">
+    {{ form_errors(form.password.first) }}
+    {{ form_label(form.password.first) }}
+    {{ form_widget(form.password.first) }}
+
+    <div class="help">
+      <p>{{ 'user.password_rules'|trans }}</p>
+    </div>
+  </div>
+
+  {{ form_row(form.password.second) }}
+
+  <div class="row">
+    {{ form_errors(form.email) }}
+    {{ form_label(form.email) }}
+    {{ form_widget(form.email) }}
+
+    <div class="help">
+      <p>{{ 'user.email_optional'|trans }}</p>
+    </div>
+  </div>
+
+  {{ form_row(form.submit) }}
+{{ form_end(form) }}

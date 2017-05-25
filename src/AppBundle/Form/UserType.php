@@ -39,8 +39,8 @@ final class UserType extends AbstractType {
             ->add('password', RepeatedType::class, [
                 'property_path' => 'plainPassword',
                 'required' => !$editing,
-                'first_name' => $editing ? 'new_password' : 'password',
-                'second_name' => $editing ? 'repeat_new_password' : 'repeat_password',
+                'first_options' => ['label' => $editing ? 'user_form.new_password' : 'user_form.password'],
+                'second_options' => ['label' => $editing ? 'user_form.repeat_new_password' : 'user_form.repeat_password'],
                 'type' => PasswordType::class,
             ])
             ->add('email', EmailType::class, [

@@ -9,6 +9,6 @@
 {% block body %}
   <h1>{{ block('title') }}</h1>
 
-  {{ form(form) }}
+  {% include '@RadditApp/forms/user_form.html.twig' %}
 {% endblock %}
 
