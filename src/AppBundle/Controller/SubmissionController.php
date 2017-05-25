@@ -68,27 +68,21 @@ final class SubmissionController extends Controller {
     /**
      * Show the front page of a given forum.
      *
-     * @param string  $forum
+     * @param string $forum_name
      * @param string $sortBy
      * @param int    $page
      *
      * @return Response
      */
-    public function forumAction(string $forum, string $sortBy, int $page) {
-        $forumRep = $htis->getDoctrine()->getRepository(Forum::class);
-        $forums = $forumRep->createQueryBuilder('f')
-        ->where('LOWER(f.name) = ?1')
-        ->setParameter(1, strtolower($forum))
-        ->getQuery()
-        ->getResult();
-        
-        if (!isset($forums[0])) {
-            $this->addFlash('notice', 'forum_list.forum_not_found');
-            return $this->redirectToRoute('raddit_app_forum_list');
+    public function forumAction(string $forum_name, string $sortBy, int $page) {
+        // TODO: use a ParamConverter
+        $forum = $this->getDoctrine()->getRepository(Forum::class)
+            ->findOneByCanonicalName(mb_strtolower($forum_name, 'UTF-8'));
+
+        if (!isset($forum)) {
+            throw $this->createNotFoundException();
         }
-        
-        $forum = $forums[0];
-        
+
         $submissions = $this->getDoctrine()->getRepository(Submission::class)
             ->findForumSubmissions($forum, $sortBy, $page);
 
