@@ -13,7 +13,7 @@ class UserControllerTest extends WebTestCase {
         $crawler = $client->request('GET', '/f/cats/3/');
 
         $form = $crawler->selectButton('comment[submit]')->form([
-            'comment[comment]' => 'You will be notified about this comment.'
+            'comment[comment]' => 'You will be notified about this comment.',
         ]);
 
         $client->submit($form);
@@ -32,7 +32,7 @@ class UserControllerTest extends WebTestCase {
         $crawler = $client->request('GET', '/f/cats/3/comment/3/');
 
         $form = $crawler->selectButton('comment[submit]')->form([
-            'comment[comment]' => 'You will be notified about this comment.'
+            'comment[comment]' => 'You will be notified about this comment.',
         ]);
 
         $client->submit($form);

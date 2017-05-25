@@ -48,6 +48,7 @@ class ForumLinkParser extends AbstractInlineParser {
 
         if ($name === null) {
             $cursor->restoreState($previousState);
+
             return false;
         }
 
