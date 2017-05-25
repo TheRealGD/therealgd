@@ -212,6 +212,9 @@ user:
     submissions: Inzendingen
     comments: Reacties
     moderates: '%username% is moderator voor:'
+    username_rules: Toegestane tekens zijn A t/m Z, a t/m z, 0 t/m 9 en een liggend streepje (_).
+    password_rules: Je wachtwoord moet minimaal 8 tekens lang zijn; maximaal 72. (de reden hiervoor komt door het een beperking in het BCrypt-algoritme).
+    email_optional: Het is niet verplicht om een e-mailadres op te geven. Deze zal slechts worden gebruikt wanneer je een nieuw wachtwoord aanvraagt.
 
 user_form:
     username: Gebruikersnaam
