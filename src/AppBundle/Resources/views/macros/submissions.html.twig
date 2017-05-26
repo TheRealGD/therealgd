@@ -11,7 +11,7 @@
   {%- spaceless -%}
     {%- for type in ['hot', 'new', 'top', 'controversial'] -%}
       <li class="{{ type == current ? 'active' }}">
-        <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|default([])|merge({sortBy: type})) }}">
+        <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|default([])|merge({page: 1, sortBy: type})) }}">
           {{- ('submissions.sort_by_'~type)|trans -}}
         </a>
       </li>
