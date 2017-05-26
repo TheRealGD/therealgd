@@ -3,11 +3,33 @@
 namespace Raddit\AppBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\Pagerfanta;
 use Raddit\AppBundle\Entity\Forum;
 use Raddit\AppBundle\Entity\ForumSubscription;
 use Raddit\AppBundle\Entity\User;
 
 final class ForumRepository extends EntityRepository {
+    /**
+     * @param int $page
+     *
+     * @return Forum[]|Pagerfanta
+     */
+    public function findForumsByPage(int $page) {
+        $qb = $this->createQueryBuilder('f')
+            ->addSelect('COUNT(s) AS HIDDEN submission_count')
+            ->leftJoin('f.submissions', 's')
+            ->orderBy('submission_count', 'DESC')
+            ->addOrderBy('f.canonicalName', 'ASC')
+            ->groupBy('f.id');
+
+        $pager = new Pagerfanta(new DoctrineORMAdapter($qb));
+        $pager->setMaxPerPage(25);
+        $pager->setCurrentPage($page);
+
+        return $pager;
+    }
+
     /**
      * @param User $user
      *

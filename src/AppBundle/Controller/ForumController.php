@@ -7,6 +7,7 @@ use Raddit\AppBundle\Entity\Moderator;
 use Raddit\AppBundle\Entity\User;
 use Raddit\AppBundle\Form\ForumType;
 use Raddit\AppBundle\Form\ModeratorType;
+use Raddit\AppBundle\Repository\ForumRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -138,14 +139,14 @@ final class ForumController extends Controller {
     }
 
     /**
+     * @param ForumRepository $repository
+     * @param int             $page
+     *
      * @return Response
      */
-    public function listAction() {
-        $forums = $this->getDoctrine()->getRepository(Forum::class)
-            ->findBy([], ['canonicalName' => 'ASC']);
-
+    public function listAction(ForumRepository $repository, int $page = 1) {
         return $this->render('@RadditApp/forum_list.html.twig', [
-            'forums' => $forums,
+            'forums' => $repository->findForumsByPage($page),
         ]);
     }
 

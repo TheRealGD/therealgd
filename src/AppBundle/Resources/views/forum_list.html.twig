@@ -8,8 +8,18 @@
   {{- 'forum_list.page_title'|trans -}}
 {% endblock %}
 
+{% block head %}
+  {% include '@RadditApp/includes/meta_pagination.html.twig' with {pager: forums} %}
+{% endblock %}
+
 {% block body %}
   <h1>{{ 'forum_list.page_title'|trans }}</h1>
+
+  <nav class="horizontal-nav forum-list-bottom-nav">
+    <ul>
+      <li><a href="{{ path('raddit_app_create_forum') }}" class="button">{{ 'forum_list.create_forum'|trans }}</a></li>
+    </ul>
+  </nav>
 
   <table class="table forum-list">
     <thead>
@@ -17,6 +27,7 @@
         <th>{{ 'forum_list.name'|trans }}</th>
         <th>{{ 'forum_list.title'|trans }}</th>
         <th>{{ 'forum_list.subscribers'|trans }}</th>
+        <th>{{ 'forum_list.submission_count'|trans }}</th>
         {% if is_granted('ROLE_USER') %}
           <th></th>
         {% endif %}
@@ -29,6 +40,7 @@
           <td><a href="{{ path('raddit_app_forum', {forum_name: forum.name}) }}"><strong>{{ forum.name }}</strong></a></td>
           <td>{{ forum.title }}</td>
           <td>{{ forum.subscriptions|length }}</td>
+          <td>{{ forum.submissions|length }}</td>
           {% if is_granted('ROLE_USER') %}
             {% set subscribed = app.user.subscriptionByForum(forum) is not null %}
             <td>
@@ -46,9 +58,5 @@
     </tbody>
   </table>
 
-  <nav class="horizontal-nav forum-list-bottom-nav">
-    <ul>
-      <li><a href="{{ path('raddit_app_create_forum') }}" class="button">{{ 'forum_list.create_forum'|trans }}</a></li>
-    </ul>
-  </nav>
+  {% include '@RadditApp/includes/pagination.html.twig' with {pager: forums} %}
 {% endblock %}

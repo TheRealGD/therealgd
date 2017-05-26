@@ -75,7 +75,7 @@ class Forum {
     private $moderators;
 
     /**
-     * @ORM\OneToMany(targetEntity="Submission", mappedBy="forum", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="Submission", mappedBy="forum", cascade={"remove"}, fetch="EXTRA_LAZY")
      *
      * @var Submission[]|Collection
      */

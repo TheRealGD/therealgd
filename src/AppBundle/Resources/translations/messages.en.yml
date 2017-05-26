@@ -91,6 +91,7 @@ forum_list:
     subscribers: Subscribers
     page_title: List of forums
     create_forum: Create forum
+    submission_count: Submissions
 
 forum_moderators:
     title: Moderators for /%forum_name%

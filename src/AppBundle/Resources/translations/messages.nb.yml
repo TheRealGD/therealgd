@@ -91,6 +91,7 @@ forum_list:
     subscribers: Abonnenter
     page_title: Liste over fora
     create_forum: Opprett forum
+    submission_count: Innlegg
 
 forum_moderators:
     title: Moderatorer for /%forum_name%
