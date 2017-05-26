@@ -56,7 +56,7 @@
 
 {%- macro submission_filter() -%}
   {%- with {attr: app.request.attributes} -%}
-    <li{% if attr.get('_route') == 'raddit_app_front' %} class="active"{% endif %}><a href="{{ path('raddit_app_front', attr.get('_route_params')) }}">{{ 'front.front'|trans }}</a></li>
-    <li{% if attr.get('_route') == 'raddit_app_all' %} class="active"{% endif %}><a href="{{ path('raddit_app_all', attr.get('_route_params')) }}">{{ 'front.all'|trans }}</a></li>
+    <li{% if attr.get('_route') == 'raddit_app_front' %} class="active"{% endif %}><a href="{{ path('raddit_app_front', attr.get('_route_params')|merge({page: 1})) }}">{{ 'front.front'|trans }}</a></li>
+    <li{% if attr.get('_route') == 'raddit_app_all' %} class="active"{% endif %}><a href="{{ path('raddit_app_all', attr.get('_route_params')|merge({page: 1})) }}">{{ 'front.all'|trans }}</a></li>
   {%- endwith -%}
 {%- endmacro -%}
