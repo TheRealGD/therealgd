@@ -16,22 +16,26 @@ final class ForumRepository extends EntityRepository {
      * @return Forum[]|Pagerfanta
      */
     public function findForumsByPage(int $page, string $sortBy) {
-        if (!preg_match('/^by_(name|title|submissions|subscribers)$/', $sortBy)) {
+        if (!preg_match('/^(?:by_)?(name|title|submissions|subscribers)$/', $sortBy, $matches)) {
             throw new \InvalidArgumentException('invalid sort type');
         }
 
         $qb = $this->createQueryBuilder('f');
 
-        if ($sortBy === 'subscribers') {
+        switch ($matches[1]) {
+        case 'subscribers':
             $qb->addSelect('COUNT(s) AS HIDDEN subscribers')
                 ->leftJoin('f.subscriptions', 's')
                 ->orderBy('subscribers', 'DESC');
-        } elseif ($sortBy === 'submissions') {
+            break;
+        case 'submissions':
             $qb->addSelect('COUNT(s) AS HIDDEN submissions')
                 ->leftJoin('f.submissions', 's')
                 ->orderBy('submissions', 'DESC');
-        } elseif ($sortBy === 'title') {
+            break;
+        case 'title':
             $qb->orderBy('LOWER(f.title)', 'ASC');
+            break;
         }
 
         $qb->addOrderBy('f.canonicalName', 'ASC')->groupBy('f.id');
