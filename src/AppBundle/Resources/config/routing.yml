@@ -46,10 +46,10 @@ raddit_app_create_forum:
     methods: [GET, POST]
 
 raddit_app_forum_list:
-    defaults: { _controller: RadditAppBundle:Forum:list, page: 1 }
-    path: /forums/{page}
+    defaults: { _controller: RadditAppBundle:Forum:list, page: 1, sortBy: by_submissions }
+    path: /forums/{sortBy}/{page}
     methods: [GET]
-    requirements: { forums: \d+ }
+    requirements: { forums: \d+, sortBy: by_name|by_title|by_subscribers|by_submissions }
 
 raddit_app_submit:
     defaults: { _controller: RadditAppBundle:Submission:submit, forum_name: null }

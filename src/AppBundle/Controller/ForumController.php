@@ -144,12 +144,14 @@ final class ForumController extends Controller {
     /**
      * @param ForumRepository $repository
      * @param int             $page
+     * @param string          $sortBy
      *
      * @return Response
      */
-    public function listAction(ForumRepository $repository, int $page = 1) {
+    public function listAction(ForumRepository $repository, int $page = 1, string $sortBy) {
         return $this->render('@RadditApp/forum_list.html.twig', [
-            'forums' => $repository->findForumsByPage($page),
+            'forums' => $repository->findForumsByPage($page, $sortBy),
+            'sortBy' => $sortBy,
         ]);
     }
 

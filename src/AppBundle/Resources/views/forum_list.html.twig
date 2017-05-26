@@ -9,8 +9,11 @@
 {% endblock %}
 
 {% block head %}
+  <link rel="canonical" href="{{ url('raddit_app_forum_list') }}">
   {% include '@RadditApp/includes/meta_pagination.html.twig' with {pager: forums} %}
 {% endblock %}
+
+{% from _self import table_head as th %}
 
 {% block body %}
   <h1>{{ 'forum_list.page_title'|trans }}</h1>
@@ -21,13 +24,13 @@
     </ul>
   </nav>
 
-  <table class="table forum-list">
+  <table class="table table-fixed-columns forum-list">
     <thead>
       <tr>
-        <th>{{ 'forum_list.name'|trans }}</th>
-        <th>{{ 'forum_list.title'|trans }}</th>
-        <th>{{ 'forum_list.subscribers'|trans }}</th>
-        <th>{{ 'forum_list.submission_count'|trans }}</th>
+        <th>{{ th('forum_list.name'|trans, 'by_name', sortBy) }}</th>
+        <th>{{ th('forum_list.title'|trans, 'by_title', sortBy) }}</th>
+        <th>{{ th('forum_list.subscribers'|trans, 'by_subscribers', sortBy) }}</th>
+        <th>{{ th('forum_list.submission_count'|trans, 'by_submissions', sortBy) }}</th>
         {% if is_granted('ROLE_USER') %}
           <th></th>
         {% endif %}
@@ -60,3 +63,13 @@
 
   {% include '@RadditApp/includes/pagination.html.twig' with {pager: forums} %}
 {% endblock %}
+
+{% macro table_head(label, newSortBy, currentSortBy) %}
+  {%- if newSortBy == currentSortBy -%}
+    {{ label }} &#x25BC;
+  {% else %}
+    <a href="{{ path('raddit_app_forum_list', app.request.attributes.get('_route_params')|merge({sortBy: newSortBy})) }}">
+      {{- label -}}
+    </a>
+  {%- endif -%}
+{% endmacro %}

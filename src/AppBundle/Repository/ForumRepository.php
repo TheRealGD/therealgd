@@ -15,13 +15,26 @@ final class ForumRepository extends EntityRepository {
      *
      * @return Forum[]|Pagerfanta
      */
-    public function findForumsByPage(int $page) {
-        $qb = $this->createQueryBuilder('f')
-            ->addSelect('COUNT(s) AS HIDDEN submission_count')
-            ->leftJoin('f.submissions', 's')
-            ->orderBy('submission_count', 'DESC')
-            ->addOrderBy('f.canonicalName', 'ASC')
-            ->groupBy('f.id');
+    public function findForumsByPage(int $page, string $sortBy) {
+        if (!preg_match('/^by_(name|title|submissions|subscribers)$/', $sortBy)) {
+            throw new \InvalidArgumentException('invalid sort type');
+        }
+
+        $qb = $this->createQueryBuilder('f');
+
+        if ($sortBy === 'subscribers') {
+            $qb->addSelect('COUNT(s) AS HIDDEN subscribers')
+                ->leftJoin('f.subscriptions', 's')
+                ->orderBy('subscribers', 'DESC');
+        } elseif ($sortBy === 'submissions') {
+            $qb->addSelect('COUNT(s) AS HIDDEN submissions')
+                ->leftJoin('f.submissions', 's')
+                ->orderBy('submissions', 'DESC');
+        } elseif ($sortBy === 'title') {
+            $qb->orderBy('LOWER(f.title)', 'ASC');
+        }
+
+        $qb->addOrderBy('f.canonicalName', 'ASC')->groupBy('f.id');
 
         $pager = new Pagerfanta(new DoctrineORMAdapter($qb));
         $pager->setMaxPerPage(25);
