@@ -8,6 +8,13 @@
 
 {% block head %}
   <link rel="canonical" href="{{ url('raddit_app_front') }}">
+
+  <meta property="og:title" content="{{ raddit_app_site_name() }}">
+  <meta property="og:site_name" content="{{ raddit_app_site_name() }}">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ url('raddit_app_front') }}">
+  <meta property="og:image" content="{{ absolute_url(asset('apple-touch-icon.png')) }}">
+
   {% include '@RadditApp/includes/meta_pagination.html.twig' with {pager: submissions} %}
 {% endblock %}
 
@@ -47,7 +54,6 @@
   </section>
 {%- endblock -%}
 
-{#- shared with all.html.twig -#}
 {%- macro submission_filter() -%}
   {%- with {attr: app.request.attributes} -%}
     <li{% if attr.get('_route') == 'raddit_app_front' %} class="active"{% endif %}><a href="{{ path('raddit_app_front', attr.get('_route_params')) }}">{{ 'front.front'|trans }}</a></li>
