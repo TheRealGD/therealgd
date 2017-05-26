@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="raddit {{ raddit_app_version() }}">
 
-    <link rel="apple-touch-icon-precomposed" name="{{ asset('apple-touch-icon-precomposed.png') }}">
+    <link rel="apple-touch-icon-precomposed" href="{{ asset('apple-touch-icon-precomposed.png') }}">
 
     {% block stylesheets %}
       {% if not app.user or not app.user.nightMode %}
