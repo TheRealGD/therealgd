@@ -53,8 +53,11 @@ final class ForumController extends Controller {
 
     /**
      * @Security("is_granted('edit', forum)")
-     *
-     * @ParamConverter("forum", options={"mapping": {"forum_name": "name"}})
+     * @ParamConverter("forum", options={
+     *     "mapping": {"forum_name": "name"},
+     *     "map_method_signature": true,
+     *     "repository_method": "findOneByCaseInsensitiveName"
+     * })
      *
      * @param Request $request
      * @param Forum   $forum
@@ -153,7 +156,11 @@ final class ForumController extends Controller {
     /**
      * Show a list of forum moderators.
      *
-     * @ParamConverter("forum", options={"mapping": {"forum_name": "name"}})
+     * @ParamConverter("forum", options={
+     *     "mapping": {"forum_name": "name"},
+     *     "map_method_signature": true,
+     *     "repository_method": "findOneByCaseInsensitiveName"
+     * })
      *
      * @param Forum $forum
      *
@@ -170,7 +177,11 @@ final class ForumController extends Controller {
     }
 
     /**
-     * @ParamConverter("forum", options={"mapping": {"forum_name": "name"}})
+     * @ParamConverter("forum", options={
+     *     "mapping": {"forum_name": "name"},
+     *     "map_method_signature": true,
+     *     "repository_method": "findOneByCaseInsensitiveName"
+     * })
      * @Security("is_granted('ROLE_ADMIN')")
      *
      * @param Forum   $forum

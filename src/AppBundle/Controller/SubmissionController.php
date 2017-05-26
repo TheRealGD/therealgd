@@ -13,7 +13,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @ParamConverter("forum", options={"mapping": {"forum_name": "name"}})
+ * @ParamConverter("forum", options={
+ *     "mapping": {"forum_name": "name"},
+ *     "map_method_signature": true,
+ *     "repository_method": "findOneByCaseInsensitiveName"
+ * })
  * @ParamConverter("submission", options={"mapping": {"forum": "forum", "submission_id": "id"}})
  * @ParamConverter("comment", options={"mapping": {"submission": "submission", "comment_id": "id"}})
  */
@@ -68,21 +72,13 @@ final class SubmissionController extends Controller {
     /**
      * Show the front page of a given forum.
      *
-     * @param string $forum_name
+     * @param Forum  $forum
      * @param string $sortBy
      * @param int    $page
      *
      * @return Response
      */
-    public function forumAction(string $forum_name, string $sortBy, int $page) {
-        // TODO: use a ParamConverter
-        $forum = $this->getDoctrine()->getRepository(Forum::class)
-            ->findOneByCanonicalName(mb_strtolower($forum_name, 'UTF-8'));
-
-        if (!isset($forum)) {
-            throw $this->createNotFoundException();
-        }
-
+    public function forumAction(Forum $forum, string $sortBy, int $page) {
         $submissions = $this->getDoctrine()->getRepository(Submission::class)
             ->findForumSubmissions($forum, $sortBy, $page);
 

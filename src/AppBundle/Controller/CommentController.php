@@ -13,7 +13,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @ParamConverter("forum", options={"mapping": {"forum_name": "name"}})
+ * @ParamConverter("forum", options={
+ *     "mapping": {"forum_name": "name"},
+ *     "map_method_signature": true,
+ *     "repository_method": "findOneByCaseInsensitiveName"
+ * })
  * @ParamConverter("submission", options={"mapping": {"forum": "forum", "submission_id": "id"}})
  * @ParamConverter("comment", options={"mapping": {"submission": "submission", "comment_id": "id"}})
  */

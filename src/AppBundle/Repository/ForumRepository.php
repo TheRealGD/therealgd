@@ -64,4 +64,25 @@ final class ForumRepository extends EntityRepository {
 
         return array_column($names, 'name');
     }
+
+    /**
+     * @param string|null $name
+     *
+     * @return Forum|null
+     */
+    public function findOneByCaseInsensitiveName($name) {
+        if ($name === null) {
+            // for the benefit of param converters which for some reason insist
+            // on calling repository methods with null parameters.
+            return null;
+        }
+
+        return $this->createQueryBuilder('f')
+            ->where('f.name = ?1')
+            ->orWhere('f.canonicalName = ?2')
+            ->setParameter(1, $name)
+            ->setParameter(2, mb_strtolower($name, 'UTF-8'))
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }
