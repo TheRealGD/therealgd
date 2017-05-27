@@ -15,6 +15,12 @@ raddit_app_all:
     methods: [GET]
     requirements: { sortBy: hot|new|top|controversial, page: \d+ }
 
+raddit_app_featured:
+    defaults: { _controller: RadditAppBundle:Front:featured, sortBy: hot, page: 1}
+    path: /featured/{sortBy}/{page}
+    methods: [GET]
+    requirements: { sortBy: hot|new|top|controversial, page: \d+ }
+
 raddit_app_user:
     defaults: { _controller: RadditAppBundle:User:userPage }
     path: /user/{username}

@@ -60,4 +60,25 @@ final class FrontController extends Controller {
             'sort_by' => $sortBy,
         ]);
     }
+
+    /**
+     * Show featured forums.
+     *
+     * @param ObjectManager $om
+     * @param string        $sortBy
+     * @param int           $page
+     *
+     * @return Response
+     */
+    public function featuredAction(ObjectManager $om, string $sortBy, int $page) {
+        $forums = $om->getRepository(Forum::class)->findFeaturedForumNames();
+
+        $submissions = $om->getRepository(Submission::class)
+            ->findFrontPageSubmissions($forums, $sortBy, $page);
+
+        return $this->render('@RadditApp/featured.html.twig', [
+            'submissions' => $submissions,
+            'sort_by' => $sortBy,
+        ]);
+    }
 }

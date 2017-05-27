@@ -107,6 +107,7 @@ front:
     no_forums: Det er ingen utvalgte fora å vise frem
     front: Forside
     all: Alle
+    featured: Utvalgte
 
 inbox:
     title: Innboks

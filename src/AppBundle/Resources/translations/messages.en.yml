@@ -107,6 +107,7 @@ front:
     no_forums: There are no featured forums to display.
     front: Front
     all: All
+    featured: Featured
 
 inbox:
     title: Inbox
