@@ -8,6 +8,13 @@
 #     prefix: /your_prefix_here
 #
 
+raddit_app_forum_front:
+    defaults:
+        _controller: FrameworkBundle:Redirect:redirect
+        route: raddit_app_forum
+    path: /{forum_name}/
+    methods: [GET]
+
 raddit_app_forum:
     defaults: { _controller: RadditAppBundle:Forum:front, sortBy: hot, page: 1 }
     path: /{forum_name}/{sortBy}/{page}
