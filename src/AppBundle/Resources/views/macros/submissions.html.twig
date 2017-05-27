@@ -38,6 +38,13 @@
   </a>
 {%- endblock -%}
 
+{%- block submission_info_edited_at -%}
+  {%- set date = submission.editedAt|localizeddate('long', 'short') -%}
+  <time datetime="{{ submission.editedAt|date('c') }}" title="{{ date }}" class="relative-time-diff" data-compare-to="{{ submission.timestamp|date('c') }}">
+    {{- 'submissions.info_at_timestamp'|trans({'%timestamp%': date}) -}}
+  </time>
+{%- endblock -%}
+
 {%- block submission -%}
   {%- from '@RadditApp/macros/votes.html.twig' import vote -%}
   <article class="submission {{ submission.url ? 'submission-has-url' }} {{ submission.body is not null ? 'submission-has-body' }} {{ not options.show_body ? 'submission-body-hidden' }} {{ submission.sticky ? 'submission-sticky' }}">
@@ -81,6 +88,14 @@
                 '%timestamp%': block('submission_info_timestamp'),
               })|raw }}
             {%- endif -%}
+
+            {% if submission.editedAt %}
+              <span class="submission-info-edited-at {{ submission.moderated ? 'submission-info-moderated' }}">
+                {{ (submission.moderated ? 'submissions.moderator_info' : 'submissions.edit_info')|trans({
+                  '%edited_at%': block('submission_info_edited_at')
+                })|raw }}
+              </span>
+            {% endif %}
           </p>
         </header>
 

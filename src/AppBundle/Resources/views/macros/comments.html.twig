@@ -32,10 +32,20 @@
       </div>
 
       <div class="comment-inner">
-        <h1 class="comment-info">{{ 'comments.info'|trans({
+        <h1 class="comment-info">
+          {{ 'comments.info'|trans({
             '%user%': block('comment_info_user'),
             '%timestamp%': block('comment_info_timestamp'),
-          })|raw }}</h1>
+          })|raw }}
+
+          {% if comment.editedAt %}
+            <span class="comment-info-edited-at {{ comment.moderated ? 'comment-info-moderated' }}">
+              {{ (comment.moderated ? 'comments.moderator_info' : 'comments.edit_info')|trans({
+                '%edited_at%': block('comment_info_edited_at')
+              })|raw }}
+            </span>
+          {% endif %}
+        </h1>
 
         <div class="comment-body">
           {{ comment.body|cached_markdown|raw }}
@@ -77,6 +87,13 @@
 {%- block comment_info_timestamp -%}
   {%- set date = comment.timestamp|localizeddate('long', 'short') -%}
   <time datetime="{{ comment.timestamp|date('c') }}" title="{{ date }}" class="comment-timestamp relative-time">
+    {{- 'comments.info_at_timestamp'|trans({'%timestamp%': date}) -}}
+  </time>
+{%- endblock -%}
+
+{%- block comment_info_edited_at -%}
+  {%- set date = comment.editedAt|localizeddate('long', 'short') -%}
+  <time datetime="{{ comment.editedAt|date('c') }}" title="{{ date }}" class="relative-time-diff" data-compare-to="{{ comment.timestamp|date('c') }}">
     {{- 'comments.info_at_timestamp'|trans({'%timestamp%': date}) -}}
   </time>
 {%- endblock -%}

@@ -186,6 +186,9 @@ final class SubmissionController extends Controller {
                 ]);
             }
 
+            $submission->setEditedAt(new \DateTime('@'.time()));
+            $submission->setModerated($this->getUser() !== $submission->getUser());
+
             $this->addFlash('notice', 'submissions.edit_notice');
 
             $em->flush();

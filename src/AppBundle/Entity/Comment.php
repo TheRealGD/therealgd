@@ -99,6 +99,20 @@ class Comment extends Votable {
     private $notifications;
 
     /**
+     * @ORM\Column(type="datetimetz", nullable=true)
+     *
+     * @var \DateTime|null
+     */
+    private $editedAt;
+
+    /**
+     * @ORM\Column(type="boolean")
+     *
+     * @var bool
+     */
+    private $moderated = false;
+
+    /**
      * Creates a new comment with an implicit upvote from the comment author.
      *
      * @param Submission   $submission
@@ -282,5 +296,33 @@ class Comment extends Votable {
      */
     public function getNotifications() {
         return $this->notifications;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getEditedAt() {
+        return $this->editedAt;
+    }
+
+    /**
+     * @param \DateTime|null $editedAt
+     */
+    public function setEditedAt($editedAt) {
+        $this->editedAt = $editedAt;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isModerated(): bool {
+        return $this->moderated;
+    }
+
+    /**
+     * @param bool $moderated
+     */
+    public function setModerated(bool $moderated) {
+        $this->moderated = $moderated;
     }
 }

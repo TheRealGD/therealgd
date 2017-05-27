@@ -123,6 +123,20 @@ class Submission extends Votable {
     private $ranking;
 
     /**
+     * @ORM\Column(type="datetimetz", nullable=true)
+     *
+     * @var \DateTime|null
+     */
+    private $editedAt;
+
+    /**
+     * @ORM\Column(type="boolean")
+     *
+     * @var bool
+     */
+    private $moderated = false;
+
+    /**
      * Creates a new submission with an implicit upvote from its creator.
      *
      * @param Forum $forum
@@ -345,5 +359,33 @@ class Submission extends Votable {
      */
     public function setRanking(int $ranking) {
         $this->ranking = $ranking;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getEditedAt() {
+        return $this->editedAt;
+    }
+
+    /**
+     * @param \DateTime|null $editedAt
+     */
+    public function setEditedAt($editedAt) {
+        $this->editedAt = $editedAt;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isModerated(): bool {
+        return $this->moderated;
+    }
+
+    /**
+     * @param bool $moderated
+     */
+    public function setModerated(bool $moderated) {
+        $this->moderated = $moderated;
     }
 }

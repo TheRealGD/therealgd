@@ -48,6 +48,8 @@ comments:
     thread_return: Vis alle kommentarer
     return_to_forum: ← Gå tilbake til %forum%
     admin_ban: Utesteng IP
+    edit_info: (redigert %edited_at%)
+    moderator_info: (redigert av en moderator %edited_at%)
 
 comment_form:
     comment: Kommentar
@@ -200,6 +202,12 @@ submissions:
     total_votes: '{1} %count% stemme|[0,Inf[ %count% stemmer'
     vote_stats: (+%up%, −%down%)
     ip_ban: Utesteng IP
+    edit_info: (redigert %edited_at%)
+    moderator_info: (redigert av en moderator %edited_at%)
+
+time:
+    earlier_format: '%relative_time% tidligere'
+    later_format: '%relative_time% senere'
 
 votes:
     upvote: Stem opp

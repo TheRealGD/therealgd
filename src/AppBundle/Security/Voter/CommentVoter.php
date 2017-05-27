@@ -120,14 +120,17 @@ final class CommentVoter extends Voter {
      * @return bool
      */
     private function canEdit(Comment $comment, TokenInterface $token) {
-        // users can edit their own comments
-        if ($token->getUser() === $comment->getUser()) {
+        $forum = $comment->getSubmission()->getForum();
+
+        if ($token->getUser()->isModeratorOfForum($forum)) {
             return true;
         }
 
-        $forum = $comment->getSubmission()->getForum();
+        // users can edit their own comments
+        if ($token->getUser() === $comment->getUser()) {
+            return !$comment->isModerated();
+        }
 
-        // moderators can edit
-        return $token->getUser()->isModeratorOfForum($forum);
+        return false;
     }
 }

@@ -56,11 +56,16 @@ final class SubmissionVoter extends Voter {
             return true;
         }
 
-        if ($submission->getUser() === $token->getUser()) {
+        if ($token->getUser()->isModeratorOfForum($submission->getForum())) {
             return true;
         }
 
-        return $token->getUser()->isModeratorOfForum($submission->getForum());
+        if ($submission->getUser() === $token->getUser()) {
+            // users can only edit if their submissions weren't moderated
+            return !$submission->isModerated();
+        }
+
+        return false;
     }
 
     /**

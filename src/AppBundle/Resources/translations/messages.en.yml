@@ -48,6 +48,8 @@ comments:
     viewing_thread: Viewing a single comment thread
     thread_return: View all comments
     return_to_forum: ← Return to %forum%
+    edit_info: (edited %edited_at%)
+    moderator_info: (edited by a moderator %edited_at%)
 
 comment_form:
     comment: Comment
@@ -200,6 +202,12 @@ submissions:
     total_votes: '{1} %count% vote|[0,Inf[ %count% votes'
     vote_stats: (+%up%, −%down%)
     ip_ban: IP ban
+    edit_info: (edited %edited_at%)
+    moderator_info: (edited by a moderator %edited_at%)
+
+time:
+    earlier_format: '%relative_time% earlier'
+    later_format: '%relative_time% later'
 
 votes:
     upvote: Upvote
