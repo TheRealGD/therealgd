@@ -2,8 +2,10 @@
 
 namespace Raddit\AppBundle\Controller;
 
+use Doctrine\Common\Persistence\ObjectManager;
 use Raddit\AppBundle\Entity\Forum;
 use Raddit\AppBundle\Entity\Moderator;
+use Raddit\AppBundle\Entity\Submission;
 use Raddit\AppBundle\Entity\User;
 use Raddit\AppBundle\Form\ForumType;
 use Raddit\AppBundle\Form\ModeratorType;
@@ -15,6 +17,33 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 final class ForumController extends Controller {
+    /**
+     * Show the front page of a given forum.
+     *
+     * @ParamConverter("forum", options={
+     *     "mapping": {"forum_name": "name"},
+     *     "map_method_signature": true,
+     *     "repository_method": "findOneByCaseInsensitiveName"
+     * })
+     *
+     * @param ObjectManager $om
+     * @param Forum         $forum
+     * @param string        $sortBy
+     * @param int           $page
+     *
+     * @return Response
+     */
+    public function frontAction(ObjectManager $om, Forum $forum, string $sortBy, int $page) {
+        $submissions = $om->getRepository(Submission::class)
+            ->findForumSubmissions($forum, $sortBy, $page);
+
+        return $this->render('@RadditApp/forum.html.twig', [
+            'forum' => $forum,
+            'sort_by' => $sortBy,
+            'submissions' => $submissions,
+        ]);
+    }
+
     /**
      * Create a new forum.
      *

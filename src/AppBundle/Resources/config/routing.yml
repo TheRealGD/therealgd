@@ -4,13 +4,13 @@
 #
 
 raddit_app_front:
-    defaults: { _controller: RadditAppBundle:Submission:frontPage, sortBy: hot, page: 1 }
+    defaults: { _controller: RadditAppBundle:Front:front, sortBy: hot, page: 1 }
     path: /{sortBy}/{page}
     methods: [GET]
     requirements: { sortBy: hot|new|top|controversial, page: \d+ }
 
 raddit_app_all:
-    defaults: { _controller: RadditAppBundle:Submission:all, sortBy: hot, page: 1 }
+    defaults: { _controller: RadditAppBundle:Front:all, sortBy: hot, page: 1 }
     path: /all/{sortBy}/{page}
     methods: [GET]
     requirements: { sortBy: hot|new|top|controversial, page: \d+ }
