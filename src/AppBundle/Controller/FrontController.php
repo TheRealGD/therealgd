@@ -77,6 +77,7 @@ final class FrontController extends Controller {
             ->findFrontPageSubmissions($forums, $sortBy, $page);
 
         return $this->render('@RadditApp/featured.html.twig', [
+            'forums' => $forums,
             'submissions' => $submissions,
             'sort_by' => $sortBy,
         ]);

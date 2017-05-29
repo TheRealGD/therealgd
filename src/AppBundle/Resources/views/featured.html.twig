@@ -4,4 +4,18 @@
   featured-page
 {% endblock %}
 
-{% block sidebar %}{% endblock %}
+{% block sidebar %}
+  <section>
+    <h1>{{ 'front.featured_forums'|trans }}</h1>
+
+    {% if forums|length > 0 %}
+      <ul>
+        {% for name in forums %}
+          <li><a href="{{ path('raddit_app_forum', {forum_name: name}) }}">{{ name }}</a></li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>{{ 'front.no_forums'|trans }}</p>
+    {% endif %}
+  </section>
+{% endblock %}
