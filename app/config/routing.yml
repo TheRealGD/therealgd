@@ -3,7 +3,7 @@ raddit_app_routing:
 
 raddit_app_forum_routing:
     resource: "@RadditAppBundle/Resources/config/forum_routing.yml"
-    prefix: /f
+    prefix: /f/{forum_name}/
 
 _bazinga_jstranslation:
     resource: "@BazingaJsTranslationBundle/Resources/config/routing/routing.yml"

@@ -1,66 +1,61 @@
 #
-# This file describes forum routes, i.e. routes that have an /f/ prefix. You can
-# change this prefix by importing these routes with a prefix of your choice in
-# your AppBundle's routing.yml:
-#
-# raddit_app_forum_routing:
-#     resource: "@RadditAppBundle/Resources/config/forum_routing.yml"
-#     prefix: /your_prefix_here
+# This file describes forum routes, i.e. routes that have an /f/{forum_name}/
+# prefix.
 #
 
 raddit_app_forum_front:
     defaults:
         _controller: FrameworkBundle:Redirect:redirect
         route: raddit_app_forum
-    path: /{forum_name}/
+    path: /
     methods: [GET]
 
 raddit_app_forum:
     defaults: { _controller: RadditAppBundle:Forum:front, sortBy: hot, page: 1 }
-    path: /{forum_name}/{sortBy}/{page}
+    path: /{sortBy}/{page}
     methods: [GET]
     requirements: { sortBy: hot|new|top|controversial, page: \d+ }
 
 raddit_app_comments:
     defaults: { _controller: RadditAppBundle:Submission:commentPage }
-    path: /{forum_name}/{submission_id}/
+    path: /{submission_id}/
     methods: [GET]
     requirements:
         submission_id: \d+
 
 raddit_app_comment:
     defaults: { _controller: RadditAppBundle:Submission:commentPermalink }
-    path: /{forum_name}/{submission_id}/comment/{comment_id}/
+    path: /{submission_id}/comment/{comment_id}/
     methods: [GET]
 
 raddit_app_comment_post:
     defaults:
         _controller: RadditAppBundle:Comment:comment
         comment_id: ~
-    path: /{forum_name}/{submission_id}/comment_post/{comment_id}
+    path: /{submission_id}/comment_post/{comment_id}
     methods: [POST]
 
 raddit_app_edit_comment:
     defaults: { _controller: RadditAppBundle:Comment:editComment }
-    path: /{forum_name}/{submission_id}/edit_comment/{comment_id}
+    path: /{submission_id}/edit_comment/{comment_id}
     methods: [GET, POST]
 
 raddit_app_edit_submission:
     defaults: { _controller: RadditAppBundle:Submission:editSubmission }
-    path: /{forum_name}/{submission_id}/edit
+    path: /{submission_id}/edit
     methods: [GET, POST]
 
 raddit_app_edit_forum:
     defaults: { _controller: RadditAppBundle:Forum:editForum }
-    path: /{forum_name}/edit
+    path: /edit
     methods: [GET, POST]
 
 raddit_app_forum_moderators:
     defaults: { _controller: RadditAppBundle:Forum:moderators }
-    path: /{forum_name}/moderators
+    path: /moderators
     methods: [GET]
 
 raddit_app_add_moderator:
     defaults: { _controller: RadditAppBundle:Forum:addModerator }
-    path: /{forum_name}/add_moderator
+    path: /add_moderator
     methods: [GET, POST]
