@@ -30,7 +30,7 @@ banned:
     message: Du wurdest gesperrt!
 
 comments:
-    author_deleted: '[deleted]'
+    author_deleted: '[gelöscht]'
     comments: Kommentare
     delete: Löschen
     delete_thread: Löschen mit Antworten
