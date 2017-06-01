@@ -31,5 +31,9 @@
     </div>
   </div>
 
+  {% if form.verification is defined %}
+    {{ form_row(form.verification) }}
+  {% endif %}
+
   {{ form_row(form.submit) }}
 {{ form_end(form) }}

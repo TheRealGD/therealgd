@@ -232,6 +232,7 @@ user_form:
     repeat_new_password: New password (repeat)
     email: Email
     register: Register
+    verification: Verification
     save: Save changes
 
 user_settings:

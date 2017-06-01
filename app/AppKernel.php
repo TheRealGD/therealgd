@@ -19,6 +19,7 @@ class AppKernel extends Kernel {
             new Liip\ImagineBundle\LiipImagineBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
+            new Gregwar\CaptchaBundle\GregwarCaptchaBundle(),
             new Raddit\AppBundle\RadditAppBundle(),
         ];
 

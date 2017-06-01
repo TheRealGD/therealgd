@@ -232,6 +232,7 @@ user_form:
     repeat_new_password: Nytt passord (gjenta)
     email: Epost
     register: Registrer
+    verification: Verifikasjon
     save: Lagre endringer
 
 user_settings:

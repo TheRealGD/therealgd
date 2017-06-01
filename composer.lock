@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "20801501bc554857181e24b028daedb0",
+    "content-hash": "3c2f14e6e8e2c94c7235b55f2de5fc5c",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -1296,6 +1296,108 @@
                 "routing"
             ],
             "time": "2015-10-28T15:08:39+00:00"
+        },
+        {
+            "name": "gregwar/captcha",
+            "version": "v1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Gregwar/Captcha.git",
+                "reference": "2f704c8bc3f1bb5f58994af2729e77ac4e3172e6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Gregwar/Captcha/zipball/2f704c8bc3f1bb5f58994af2729e77ac4e3172e6",
+                "reference": "2f704c8bc3f1bb5f58994af2729e77ac4e3172e6",
+                "shasum": ""
+            },
+            "require": {
+                "ext-gd": "*",
+                "php": ">=5.3.0"
+            },
+            "type": "captcha",
+            "autoload": {
+                "psr-4": {
+                    "Gregwar\\Captcha\\": "/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Grégoire Passault",
+                    "email": "g.passault@gmail.com",
+                    "homepage": "http://www.gregwar.com/"
+                },
+                {
+                    "name": "Jeremy Livingston",
+                    "email": "jeremy.j.livingston@gmail.com"
+                }
+            ],
+            "description": "Captcha generator",
+            "homepage": "https://github.com/Gregwar/Captcha",
+            "keywords": [
+                "bot",
+                "captcha",
+                "spam"
+            ],
+            "time": "2017-04-19T08:10:55+00:00"
+        },
+        {
+            "name": "gregwar/captcha-bundle",
+            "version": "v2.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Gregwar/CaptchaBundle.git",
+                "reference": "f6c45045f020e2be45b325bced6c36ce51d8075f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Gregwar/CaptchaBundle/zipball/f6c45045f020e2be45b325bced6c36ce51d8075f",
+                "reference": "f6c45045f020e2be45b325bced6c36ce51d8075f",
+                "shasum": ""
+            },
+            "require": {
+                "gregwar/captcha": "~1.1",
+                "php": ">=5.3.9",
+                "symfony/form": "~2.1|~3.0",
+                "symfony/framework-bundle": "~2.1|~3.0"
+            },
+            "type": "captcha-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Gregwar\\CaptchaBundle\\": "/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Grégoire Passault",
+                    "email": "g.passault@gmail.com",
+                    "homepage": "http://www.gregwar.com/"
+                },
+                {
+                    "name": "Jeremy Livingston",
+                    "email": "jeremy.j.livingston@gmail.com"
+                }
+            ],
+            "description": "Captcha bundle",
+            "homepage": "https://github.com/Gregwar/CaptchaBundle",
+            "keywords": [
+                "Symfony2",
+                "bot",
+                "captcha",
+                "code",
+                "security",
+                "spam",
+                "visual"
+            ],
+            "time": "2016-09-21T08:36:55+00:00"
         },
         {
             "name": "imagine/imagine",

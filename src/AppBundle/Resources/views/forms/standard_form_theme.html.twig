@@ -49,3 +49,24 @@
     <div class="markdown-preview-container"></div>
   </div>
 {%- endblock -%}
+
+{%- block captcha_widget -%}
+  {%- spaceless -%}
+    <div>
+      {%- if not reload -%}
+        <img src="{{ captcha_code }}" alt="" title="captcha" width="{{ captcha_width }}" height="{{ captcha_height }}">
+      {%- else -%}
+        <a class="captcha_reload" href="javascript:reload_{{ image_id }}();">
+          <img src="{{ captcha_code }}" alt="" id="{{ image_id }}" title="{{ 'Renew'|trans({}, 'gregwar_captcha') }}" width="{{ captcha_width }}" height="{{ captcha_height }}">
+        </a>
+        <script type="text/javascript">
+          function reload_{{ image_id }}() {
+            var img = document.getElementById('{{ image_id }}');
+            img.src = '{{ captcha_code }}?n=' + (new Date()).getTime();
+          }
+        </script>
+      {%- endif -%}
+    </div>
+    {{- form_widget(form) -}}
+  {%- endspaceless -%}
+{%- endblock -%}

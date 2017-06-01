@@ -2,6 +2,7 @@
 
 namespace Raddit\AppBundle\Form;
 
+use Gregwar\CaptchaBundle\Type\CaptchaType;
 use Raddit\AppBundle\Entity\User;
 use Raddit\AppBundle\Form\EventListener\PasswordEncodingSubscriber;
 use Symfony\Component\Form\AbstractType;
@@ -45,10 +46,18 @@ final class UserType extends AbstractType {
             ])
             ->add('email', EmailType::class, [
                 'required' => false,
-            ])
-            ->add('submit', SubmitType::class, [
-                'label' => 'user_form.'.($editing ? 'save' : 'register'),
             ]);
+
+        if (!$editing) {
+            $builder->add('verification', CaptchaType::class, [
+                'as_url' => true,
+                'reload' => true,
+            ]);
+        }
+
+        $builder->add('submit', SubmitType::class, [
+            'label' => 'user_form.'.($editing ? 'save' : 'register'),
+        ]);
 
         $builder->addEventSubscriber(new PasswordEncodingSubscriber($this->encoder));
     }
