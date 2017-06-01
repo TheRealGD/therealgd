@@ -195,6 +195,8 @@ final class SubmissionImageListener implements LoggerAwareInterface {
                 return null;
             }
 
+            @chmod($this->imageDirectory.'/'.$filename, 0666 & ~umask());
+
             return $filename;
         } finally {
             if (isset($ch)) {
