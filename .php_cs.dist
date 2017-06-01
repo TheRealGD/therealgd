@@ -1,0 +1,17 @@
+<?php
+
+return PhpCsFixer\Config::create()
+    ->setRules([
+        '@Symfony' => true,
+        'array_syntax' => ['syntax' => 'short'],
+        'braces' => ['position_after_functions_and_oop_constructs' => 'same'],
+
+    ])
+    ->setCacheFile(__DIR__.'/var/php_cs.cache')
+    ->setFinder(
+        PhpCsFixer\Finder::create()
+            ->in(__DIR__.'/app')
+            ->in(__DIR__.'/src')
+            ->in(__DIR__.'/tests')
+            ->exclude('Resources')
+    );

@@ -2,7 +2,6 @@
 *.phar
 *.iml
 .DS_Store
-.php_cs.dist
 tags
 /app/config/parameters.yml
 /build/
