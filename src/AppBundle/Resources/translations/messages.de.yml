@@ -63,7 +63,7 @@ create_forum:
 edit_forum:
     edit_notice: Die Änderungen wurden gespeichert.
     delete_notice: Das Forum und alle Inhalte wurden gelöscht.
-    title: %forum% bearbeiten
+    title: '%forum% bearbeiten'
 
 edit_user:
     title: Benutzer %username% bearbeiten
@@ -148,17 +148,17 @@ request_password_reset_form:
     submit: Einreichen
 
 reset_password:
-    email_subject: '%site_name% - Passwort für Benutzer %username%' zurücksetzen
+    email_subject: '%site_name% - Passwort für Benutzer %username% zurücksetzen'
 
     # this should be kept at 76 columns --------------------------------------------
     email_body: |
-        Wir haben die Anfrage erhalten, das Passwort für deinen %site_name% 
-        Account zurückzusetzen. Um dein Passwort zurückzusetzen, klicke 
+        Wir haben die Anfrage erhalten, das Passwort für deinen %site_name%
+        Account zurückzusetzen. Um dein Passwort zurückzusetzen, klicke
         auf den untenstehenden Link.
 
         %reset_link%
 
-        Wenn die Anfrage nicht von dir stammt, kannst du diese Nachricht 
+        Wenn die Anfrage nicht von dir stammt, kannst du diese Nachricht
         ignorieren. Der Link läuft nach 24 Stunden aus.
 
     email_notice: Eine Anfrage zum Zurücksetzen des Passworts wurde an die angegebene Email Adresse gesendet
