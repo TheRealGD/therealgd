@@ -159,7 +159,7 @@ reset_password:
         If you did not request a password reset, you can safely ignore this message.
         The link will expire after 24 hours.
 
-    email_notice: A reset email has been to the address you specified.
+    email_notice: A reset email has been sent to the address you specified.
     update_notice: Your password has been updated.
     title: Resetting password
 
