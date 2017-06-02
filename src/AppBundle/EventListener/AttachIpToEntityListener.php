@@ -4,6 +4,7 @@ namespace Raddit\AppBundle\EventListener;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Raddit\AppBundle\Entity\Comment;
+use Raddit\AppBundle\Entity\Message;
 use Raddit\AppBundle\Entity\Submission;
 use Raddit\AppBundle\Entity\Vote;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -33,7 +34,8 @@ final class AttachIpToEntityListener {
         if ((
             $entity instanceof Vote ||
             $entity instanceof Submission ||
-            $entity instanceof Comment
+            $entity instanceof Comment ||
+            $entity instanceof Message
         ) && $entity->getIp() === null) {
             $ip = $this->requestStack->getCurrentRequest()->getClientIp();
 

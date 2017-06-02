@@ -124,6 +124,10 @@ login_form:
 markdown_type:
     help: Syntax reference
 
+message_reply_form:
+    message: Message
+    reply: Reply
+
 moderator_form:
     user: Username
     submit: Add as moderator

@@ -1,0 +1,15 @@
+@import (reference) 'mixins';
+@import (reference) 'settings';
+
+.message-thread-inner,
+.message-reply {
+  border: solid 1px @message-border-color;
+  margin-bottom: 1rem;
+  padding: 1rem 1rem 0;
+}
+
+.message-head {
+  .meta();
+  font-weight: normal;
+}
+
