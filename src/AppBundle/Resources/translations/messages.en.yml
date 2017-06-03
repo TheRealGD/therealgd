@@ -117,6 +117,7 @@ inbox:
     clear_inbox: Clear inbox
     clear_notice: The inbox was cleared.
     empty: The inbox is empty.
+    message_reply_head: 'Re: %title%'
 
 login_form:
     log_in: Log in

@@ -29,7 +29,7 @@ class MessageThread extends Message {
     private $replies;
 
     /**
-     * @ORM\OneToMany(targetEntity="MessageThreadNotification", mappedBy="thread")
+     * @ORM\OneToMany(targetEntity="MessageThreadNotification", mappedBy="thread", cascade={"persist", "remove"})
      *
      * @var Notification[]|Collection|Selectable
      */
@@ -45,6 +45,7 @@ class MessageThread extends Message {
     public function __construct() {
         parent::__construct();
 
+        $this->notifications = new ArrayCollection();
         $this->replies = new ArrayCollection();
     }
 

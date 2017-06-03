@@ -117,6 +117,7 @@ inbox:
     clear_inbox: Tøm innboks
     clear_notice: Innboksen ble tømt.
     empty: Innboksen er tom.
+    message_reply_head: 'Sv: %title%'
 
 login_form:
     log_in: Logg inn

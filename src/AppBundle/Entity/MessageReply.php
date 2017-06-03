@@ -21,7 +21,7 @@ class MessageReply extends Message {
     private $thread;
 
     /**
-     * @ORM\OneToMany(targetEntity="MessageReplyNotification", mappedBy="reply")
+     * @ORM\OneToMany(targetEntity="MessageReplyNotification", mappedBy="reply", cascade={"persist", "remove"})
      *
      * @var Notification[]|Collection|Selectable
      */
