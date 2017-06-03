@@ -48,7 +48,7 @@ raddit_app_edit_comment:
 
 raddit_app_edit_submission:
     defaults: { _controller: RadditAppBundle:Submission:editSubmission }
-    path: /{submission_id}/edit
+    path: /edit_submission/{submission_id}
     methods: [GET, POST]
 
 raddit_app_edit_forum:
