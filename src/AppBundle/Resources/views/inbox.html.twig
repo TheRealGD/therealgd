@@ -38,3 +38,27 @@
 
   {{ comment(notification.comment, false) }}
 {% endblock %}
+
+{% block notification_message_thread %}
+  {% from '@RadditApp/macros/messages.html.twig' import message_thread %}
+
+  <h1 class="notification-head">
+    <a href="{{ path('raddit_app_message', {id: notification.thread.id}) }}">
+      {{- notification.thread.title -}}
+    </a>
+  </h1>
+
+  {{ message_thread(notification.thread, {recursive: false}) }}
+{% endblock %}
+
+{% block notification_message_reply %}
+  {% from '@RadditApp/macros/messages.html.twig' import message_reply %}
+
+  <h1 class="notification-head">
+    <a href="{{ path('raddit_app_message', {id: notification.reply.thread.id}) }}#mr{{ notification.reply.id }}">
+      {{ 'inbox.message_reply_head'|trans({'%title%': notification.reply.thread.title}) -}}
+    </a>
+  </h1>
+
+  {{ message_reply(notification.reply) }}
+{% endblock %}

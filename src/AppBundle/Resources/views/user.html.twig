@@ -2,6 +2,7 @@
 
 {% from '@RadditApp/macros/submissions.html.twig' import submission %}
 {% from '@RadditApp/macros/comments.html.twig' import comment %}
+{% from _self import timestamp %}
 
 {% block title %}{{ user.username }}{% endblock %}
 
@@ -39,3 +40,31 @@
     </div>
   {% endif %}
 {% endblock %}
+
+{% block sidebar %}
+  <section>
+    <h1>{{ user.username }}</h1>
+
+    <p>{{ 'user.registered'|trans({
+      '%timestamp%': timestamp(user.created)
+    })|raw }}</p>
+  </section>
+
+  {%- if is_granted('ROLE_USER') -%}
+    <section>
+      <h1>{{ 'user.toolbox'|trans }}</h1>
+      <nav>
+        <ul>
+          <li><a href="{{ path('raddit_app_compose_message', {username: user.username}) }}">{{ 'user.message'|trans }}</a></li>
+        </ul>
+      </nav>
+    </section>
+  {%- endif -%}
+{% endblock %}
+
+{%- macro timestamp(timestamp) -%}
+  {%- set date = timestamp|localizeddate('long', 'short') -%}
+  <time datetime="{{ timestamp|date('c') }}" class="relative-time" title="{{ date }}">
+    {{- 'time.on_timestamp'|trans({'%timestamp%': date}) -}}
+  </time>
+{%- endmacro -%}

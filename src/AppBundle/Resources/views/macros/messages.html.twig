@@ -1,0 +1,48 @@
+{% macro message_thread(message, options) %}
+  {% set recursive = options.recursive ?? true %}
+  {{ block('message_thread') }}
+{% endmacro %}
+
+{% macro message_reply(message) %}
+  {{ block('message_reply') }}
+{% endmacro %}
+
+{% block message_thread %}
+  <article class="message-thread" id="mt{{ message.id }}">
+    <div class="message-thread-inner">
+      {{ block('message_head') }}
+      {{ block('message_body') }}
+    </div>
+
+    {% if recursive %}
+      {% for message in message.replies %}
+        {{ block('message_reply') }}
+      {% endfor %}
+    {% endif %}
+  </article>
+{% endblock %}
+
+{% block message_reply %}
+  <article class="message-reply" id="mr{{ message.id }}">
+    {{ block('message_head') }}
+    {{ block('message_body') }}
+  </article>
+{% endblock %}
+
+{% block message_head %}
+  <h1 class="message-head">
+    <a href="{{ path('raddit_app_user', {username: message.sender.username}) }}" class="message-sender {{ message.sender == app.user ? 'message-self' }}">
+      {{- message.sender.username -}}
+    </a>
+
+    {% with {date: message.timestamp|localizeddate()} %}
+      <time datetime="{{ message.timestamp|date('c') }}" title="{{ date }}" class="relative-time">
+        {{- date -}}
+      </time>
+    {% endwith %}
+  </h1>
+{% endblock %}
+
+{% block message_body %}
+  <div class="message-body">{{ message.body|cached_markdown|raw }}</div>
+{% endblock %}

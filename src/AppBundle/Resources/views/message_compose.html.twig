@@ -1,0 +1,23 @@
+{% extends '@RadditApp/base.html.twig' %}
+{% form_theme form '@RadditApp/forms/standard_form_theme.html.twig' %}
+
+{% block page_classes %}
+  compose-message-page
+{% endblock %}
+
+{% block title %}
+  {{ 'compose_message.title'|trans({'%username%': receiver.username}) }}
+{% endblock %}
+
+{% block body %}
+  <h1>{{ 'compose_message.title'|trans({'%username%': '<a href="%s">%s</a>'|format(
+      path('raddit_app_user', {username: receiver.username})|escape,
+      receiver.username|escape
+    )})|raw }}</h1>
+
+  {{ form_start(form) }}
+    {{ form_row(form.title, {attr: {rows: 3}}) }}
+
+    {{ form_row(form.body, {attr: {rows: 8}}) }}
+  {{ form_end(form) }}
+{% endblock %}
