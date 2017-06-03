@@ -89,7 +89,7 @@ class Forum {
     private $created;
 
     /**
-     * @ORM\OneToMany(targetEntity="ForumSubscription", mappedBy="forum", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="ForumSubscription", mappedBy="forum", cascade={"persist", "remove"})
      *
      * @var ForumSubscription[]|Collection|Selectable
      */

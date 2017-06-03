@@ -4,6 +4,7 @@ namespace Raddit\AppBundle\Controller;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Raddit\AppBundle\Entity\Forum;
+use Raddit\AppBundle\Entity\ForumSubscription;
 use Raddit\AppBundle\Entity\Moderator;
 use Raddit\AppBundle\Entity\Submission;
 use Raddit\AppBundle\Entity\User;
@@ -64,6 +65,11 @@ final class ForumController extends Controller {
             $moderator->setUser($this->getUser());
             $moderator->setForum($forum);
             $forum->addModerator($moderator);
+
+            $subscription = new ForumSubscription();
+            $subscription->setForum($forum);
+            $subscription->setUser($this->getUser());
+            $forum->getSubscriptions()->add($subscription);
 
             $em = $this->getDoctrine()->getManager();
 
