@@ -2,10 +2,28 @@
 
 ## v0.5.0 (2017-xx-xx)
 
+* Added CAPTCHA to registration form.
 * Added a command that prunes IP addresses on many entities, optionally after
   they reach a provided age.
+* Added Dutch and German translations.
+* Added explanation of the various user form fields.
 * Added 'night mode', a dark stylesheet that's supposedly easier on the eyes.
+* Added Open Graph support 
+* Added private messaging.
+* Added sorting options for forum list.
+* Added URL slugs for submissions.
+* Allow trailing slash for some routes.
+* Automatically subscribe to forums when you create them.
+* Fixed 'clear inbox' button potentially removing unseen entries.
+* Fixed `/f/{forum_name}` being case-sensitive.
+* Fixed mistake in English language pack.
+* Fixed wrong permissions being set on submission images.
+* Go back to page 1 when switching between front page listings.
 * Notify user when their submission or comment is replied to.
+* Replaced the stock favicons.
+* Upgraded to Symfony 3.3.
+* Use APCu caching for Doctrine queries & metadata in production.
+* Various consistency fixes.
 
 ## v0.4.1 (2017-05-23)
 
