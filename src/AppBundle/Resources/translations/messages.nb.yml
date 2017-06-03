@@ -57,6 +57,9 @@ comment_form:
     edit_title: Redigerer en kommentar
     create_title: Poster en kommentar
 
+compose_message:
+    title: Komponerer en melding til %username%
+
 create_forum:
     create_new_forum: Opprett nytt forum
 
@@ -123,6 +126,12 @@ login_form:
 
 markdown_type:
     help: Hjelp med formatering
+
+message_form:
+    title: Tittel
+    message: Melding
+    send: Send
+    reply: Svar
 
 moderator_form:
     user: Brukernavn
@@ -207,6 +216,7 @@ submissions:
     moderator_info: (redigert av en moderator %edited_at%)
 
 time:
+    on_timestamp: '%timestamp%'
     earlier_format: '%relative_time% tidligere'
     later_format: '%relative_time% senere'
 
@@ -223,6 +233,9 @@ user:
     username_rules: Tillatte tegn er A-Z, a-z, 0-9 og understrek.
     password_rules: Minst 8 tegn; opptil 72 på grunn av begrensninger med bcrypt-algoritmen.
     email_optional: Å oppgi en epost-adresse er valgfritt. Den vil kun bli brukt til nullstilling av passord.
+    message: Send melding
+    toolbox: Verktøy
+    registered: Registrert %timestamp%
 
 user_form:
     username: Brukernavn

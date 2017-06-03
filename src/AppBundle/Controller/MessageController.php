@@ -4,13 +4,50 @@ namespace Raddit\AppBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Raddit\AppBundle\Entity\MessageThread;
+use Raddit\AppBundle\Entity\User;
 use Raddit\AppBundle\Form\MessageReplyType;
+use Raddit\AppBundle\Form\MessageThreadType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 final class MessageController extends Controller {
+    /**
+     * Start a new message thread.
+     *
+     * @Security("is_granted('ROLE_USER')")
+     *
+     * @param Request       $request
+     * @param EntityManager $em
+     * @param User          $receiver
+     *
+     * @return Response
+     */
+    public function composeAction(Request $request, EntityManager $em, User $receiver) {
+        $thread = new MessageThread();
+
+        $form = $this->createForm(MessageThreadType::class, $thread);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $thread->setSender($this->getUser());
+            $thread->setReceiver($receiver);
+
+            $em->persist($thread);
+            $em->flush();
+
+            return $this->redirectToRoute('raddit_app_message', [
+                'id' => $thread->getId(),
+            ]);
+        }
+
+        return $this->render('@RadditApp/message_compose.html.twig', [
+            'form' => $form->createView(),
+            'receiver' => $receiver,
+        ]);
+    }
+
     /**
      * View and reply to a message thread.
      *

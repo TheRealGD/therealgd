@@ -57,6 +57,9 @@ comment_form:
     edit_title: Editing comment
     create_title: Posting a comment
 
+compose_message:
+    title: Composing a message to %username%
+
 create_forum:
     create_new_forum: Create new forum
 
@@ -124,8 +127,10 @@ login_form:
 markdown_type:
     help: Syntax reference
 
-message_reply_form:
+message_form:
+    title: Title
     message: Message
+    send: Send
     reply: Reply
 
 moderator_form:
@@ -211,6 +216,7 @@ submissions:
     moderator_info: (edited by a moderator %edited_at%)
 
 time:
+    on_timestamp: on %timestamp%
     earlier_format: '%relative_time% earlier'
     later_format: '%relative_time% later'
 
@@ -227,6 +233,9 @@ user:
     username_rules: Allowed characters are A-Z, a-z, 0-9 and underscore.
     password_rules: Minimum of 8 characters; maximum of 72 due to limitations of the bcrypt algorithm.
     email_optional: Providing an email address is optional. It will only be used for resetting your password.
+    toolbox: Toolbox
+    message: Send message
+    registered: Registered %timestamp%
 
 user_form:
     username: Username
