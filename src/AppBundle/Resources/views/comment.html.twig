@@ -17,7 +17,7 @@
 
     <ul>
       <li>
-        <a href="{{ path('raddit_app_comments', {forum_name: forum.name, submission_id: submission.id, }) }}">
+        <a href="{{ path('raddit_app_comments', {forum_name: forum.name, submission_id: submission.id, slug: submission.title|slugify}) }}">
           {{- 'comments.thread_return'|trans -}}
         </a>
       </li>

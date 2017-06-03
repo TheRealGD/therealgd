@@ -16,9 +16,15 @@ raddit_app_forum:
     methods: [GET]
     requirements: { sortBy: hot|new|top|controversial, page: \d+ }
 
-raddit_app_comments:
-    defaults: { _controller: RadditAppBundle:Submission:commentPage }
+raddit_app_comments_redirect:
+    defaults: { _controller: FrameworkBundle:Redirect:redirect, route: raddit_app_comments }
     path: /{submission_id}/
+    methods: [GET]
+    requirements: { submission_id: \d+ }
+
+raddit_app_comments:
+    defaults: { _controller: RadditAppBundle:Submission:commentPage, slug: ~ }
+    path: /{submission_id}/{slug}
     methods: [GET]
     requirements:
         submission_id: \d+

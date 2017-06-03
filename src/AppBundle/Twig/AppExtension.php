@@ -4,6 +4,7 @@ namespace Raddit\AppBundle\Twig;
 
 use Raddit\AppBundle\Utils\CachedMarkdownConverter;
 use Raddit\AppBundle\Utils\MarkdownConverter;
+use Raddit\AppBundle\Utils\Slugger;
 
 /**
  * Twig extension which makes certain parameters available as template
@@ -62,6 +63,7 @@ final class AppExtension extends \Twig_Extension {
         return [
             new \Twig_SimpleFilter('markdown', [$this->markdownConverter, 'convertToHtml']),
             new \Twig_SimpleFilter('cached_markdown', [$this->cachedMarkdownConverter, 'convertToHtml']),
+            new \Twig_SimpleFilter('slugify', Slugger::class.'::slugify'),
         ];
     }
 

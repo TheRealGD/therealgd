@@ -6,6 +6,7 @@ use Raddit\AppBundle\Entity\Comment;
 use Raddit\AppBundle\Entity\Forum;
 use Raddit\AppBundle\Entity\Submission;
 use Raddit\AppBundle\Form\CommentType;
+use Raddit\AppBundle\Utils\Slugger;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -203,6 +204,7 @@ final class CommentController extends Controller {
         return $this->redirectToRoute('raddit_app_comments', [
             'forum_name' => $comment->getSubmission()->getForum()->getName(),
             'submission_id' => $comment->getSubmission()->getId(),
+            'slug' => Slugger::slugify($comment->getSubmission()->getTitle()),
         ]);
     }
 }

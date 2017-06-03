@@ -113,7 +113,7 @@
           <nav class="submission-nav">
             <ul>
               <li>
-                <a href="{{ path('raddit_app_comments', {forum_name: submission.forum.name, submission_id: submission.id}) }}">
+                <a href="{{ path('raddit_app_comments', {forum_name: submission.forum.name, submission_id: submission.id, slug: submission.title|slugify}) }}">
                   {{- 'submissions.comments'|transchoice(submission.comments|length) -}}
                 </a>
               </li>
@@ -141,7 +141,7 @@
   {%- if submission.url -%}
     {{- submission.url -}}
   {%- else -%}
-    {{- path('raddit_app_comments', {forum_name: submission.forum.name, submission_id: submission.id}) -}}
+    {{- path('raddit_app_comments', {forum_name: submission.forum.name, submission_id: submission.id, slug: submission.title|slugify}) -}}
   {%- endif -%}
 {%- endblock -%}
 

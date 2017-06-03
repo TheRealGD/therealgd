@@ -49,6 +49,20 @@ class ApplicationAvailabilityTest extends WebTestCase {
     }
 
     /**
+     * @dataProvider redirectUrlProvider
+     *
+     * @param string $expectedLocation
+     * @param string $url
+     */
+    public function testRedirectedUrlsGoToExpectedLocation($expectedLocation, $url) {
+        $client = $this->createClient();
+        $client->request('GET', $url);
+
+        $this->assertTrue($client->getResponse()->isRedirect());
+        $this->assertStringEndsWith($expectedLocation, $client->getResponse()->headers->get('Location'));
+    }
+
+    /**
      * Public URLs that should exist when fixtures are loaded into a fresh
      * database.
      */
@@ -86,7 +100,7 @@ class ApplicationAvailabilityTest extends WebTestCase {
         yield ['/f/news/new/1'];
         yield ['/f/news/top/1'];
         yield ['/f/news/controversial/1'];
-        yield ['/f/news/1/'];
+        yield ['/f/news/1'];
         yield ['/f/news/1/comment/1/'];
         yield ['/f/NeWs/hot'];
         yield ['/f/NeWs/new'];
@@ -96,10 +110,10 @@ class ApplicationAvailabilityTest extends WebTestCase {
         yield ['/f/NeWs/new/1'];
         yield ['/f/NeWs/top/1'];
         yield ['/f/NeWs/controversial/1'];
-        yield ['/f/NeWs/1/'];
+        yield ['/f/NeWs/1'];
         yield ['/f/NeWs/1/comment/1/'];
-        yield ['/f/cats/2/'];
-        yield ['/f/CATS/2/'];
+        yield ['/f/cats/2'];
+        yield ['/f/CATS/2'];
         yield ['/forums'];
         yield ['/forums/by_name'];
         yield ['/forums/by_title'];
@@ -113,6 +127,11 @@ class ApplicationAvailabilityTest extends WebTestCase {
         yield ['/registration'];
         yield ['/user/emma'];
         yield ['/reset_password'];
+    }
+
+    public function redirectUrlProvider() {
+        yield ['/f/cats/2', '/f/cats/2/'];
+        yield ['/f/cats', '/f/cats/'];
     }
 
     /**
