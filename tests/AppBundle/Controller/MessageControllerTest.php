@@ -47,6 +47,24 @@ class MessageControllerTest extends WebTestCase {
         $this->assertStringEndsWith('/login', $client->getResponse()->headers->get('Location'));
     }
 
+    public function testCanReply() {
+        $client = $this->createClient([], [
+            'PHP_AUTH_USER' => 'emma',
+            'PHP_AUTH_PW' => 'goodshit',
+        ]);
+        $client->followRedirects();
+
+        $crawler = $client->request('GET', '/message/1');
+
+        $form = $crawler->selectButton('message_reply[submit]')->form([
+            'message_reply[body]' => 'aaa',
+        ]);
+
+        $crawler = $client->submit($form);
+
+        $this->assertContains('aaa', $crawler->filter('.message-reply:last-child .message-body p')->text());
+    }
+
     public function authProvider() {
         yield ['emma', 'goodshit'];
         yield ['zach', 'example2'];
