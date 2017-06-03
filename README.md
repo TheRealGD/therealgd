@@ -9,7 +9,7 @@ coincidental.
 
 ## Requirements
 
-* PHP >= 7.0 with the PDO_PGSQL and curl extensions.
+* PHP >= 7.0 with the APCu, curl, and PDO_PGSQL extensions.
 * PostgreSQL >= 9.2
 * [Composer](https://getcomposer.org/)
 * [Node.js](https://nodejs.org/en/), optionally with [Yarn](https://yarnpkg.com)
