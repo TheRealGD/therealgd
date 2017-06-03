@@ -197,7 +197,7 @@ submissions:
     sort_by_new: Νέα
     sort_by_top: Κορυφαία
     sort_by_controversial: Αμφιλεγόμενα
-    total_votes: '{1} %count% ψήφος|[0,Inf[ %count% ψήφος'
+    total_votes: '{1} %count% βαθμος|[0,Inf[ %count% βαθμοί'
     vote_stats: (+%up%, −%down%)
     ip_ban: Απαγόρευση IP
     edit_info: (Επεξεργασία %edited_at%)
@@ -209,7 +209,7 @@ time:
 
 votes:
     upvote: Πανοψηφίσει
-    downvote: Καταψηφίσει
+    downvote: Κατοψηφίσει
     retract_upvote: Ανακαλέστε ψήφο
     retract_downvote: Ανακαλέστε καταψήφο
 
