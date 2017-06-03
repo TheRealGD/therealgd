@@ -46,5 +46,12 @@ class LoadExampleUsers extends AbstractFixture implements ContainerAwareInterfac
             'email' => 'zach@example.com',
             'admin' => false,
         ];
+
+        yield [
+            'username' => 'third',
+            'password' => 'example3',
+            'email' => 'third@example.net',
+            'admin' => false,
+        ];
     }
 }
