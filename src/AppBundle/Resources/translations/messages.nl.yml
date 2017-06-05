@@ -35,6 +35,8 @@ comments:
     delete: Verwijder
     delete_thread: Verwijder inclusief reacties
     edit: Bewerk
+    edit_info: (%edited_at% bewerkt)
+    moderator_info: (%edited_at% bewerkt door een moderator)
     permalink: Permanente link
     parent: Bovenliggende
     reply: Reactie
@@ -54,6 +56,9 @@ comment_form:
     submit: Verstuur
     edit_title: Reactie bewerken
     create_title: Reactie aan het plaatsen
+
+compose_message:
+    title: Nieuw bericht opstellen voor %username%
 
 create_forum:
     create_new_forum: Maak een nieuw forum aan
@@ -78,6 +83,8 @@ forum:
 forum_form:
     name: Naam
     title: Titel
+    category: Categorie
+    uncategorized_placeholder: (ongecategoriseerd)
     description: Omschrijving
     create: Maak forum aan
     save: Sla veranderingen op
@@ -91,6 +98,10 @@ forum_list:
     subscribers: Abbonees
     page_title: Forumlijst
     create_forum: Maak een forum aan
+    submission_count: Inzendingen
+    list_view: Lijstoverizcht
+    category_view: Categorieënoverizcht
+    uncategorized: Ongecategoriseerd
 
 forum_moderators:
     title: Moderators van /%forum_name%
@@ -104,12 +115,14 @@ front:
     no_forums: Er zijn geen fora om te laten zien.
     front: Voorpagina
     all: Alles
+    featured: Uitgelicht
 
 inbox:
     title: Inbox
     clear_inbox: Maak inbox leeg
     clear_notice: Je inbox is leeggemaakt.
     empty: Je hebt geen nieuwe berichten.
+    message_reply_thread: 'Antw.: %title'
 
 login_form:
     log_in: Log in
@@ -119,6 +132,12 @@ login_form:
 
 markdown_type:
     help: Syntaxhandleiding
+
+message_form:
+    title: Onderwerp
+    message: Bericht
+    send: Verzenden
+    reply: Antwoord
 
 moderator_form:
     user: Gebruikersnaam
@@ -190,6 +209,8 @@ submissions:
     comments: '{0} Geen reacties|{1} %count% reactie|[1,Inf[ %count% reacties'
     delete_notice: De inzending is verwijderd.
     edit: Bewerk
+    edit_info: (%edited_at% bewerkt)
+    moderator_info: (%edited_at% bewerkt door een moderator)
     edit_notice: De inzending is bewerkt.
     info_with_forum_name: Ingezonden door %submitter% %timestamp% in %forum%
     info_without_forum_name: Ingezonden door %submitter% %timestamp%
@@ -205,6 +226,7 @@ submissions:
 time:
     earlier_format: '%relative_time% eerder'
     later_format: '%relative_time% later'
+    on_timestamp: op %timestamp%
 
 votes:
     upvote: '+1'
@@ -219,6 +241,10 @@ user:
     username_rules: Toegestane tekens zijn A t/m Z, a t/m z, 0 t/m 9 en een liggend streepje (_).
     password_rules: Je wachtwoord moet minimaal 8 tekens lang zijn; maximaal 72. (de reden hiervoor komt door het een beperking in het BCrypt-algoritme).
     email_optional: Het is niet verplicht om een e-mailadres op te geven. Deze zal slechts worden gebruikt wanneer je een nieuw wachtwoord aanvraagt.
+    toolbox: Gereedschapskist
+    message: Stuur bericht
+    registered: Geregistreed %timestamp%
+    verification: Verificatie
 
 user_form:
     username: Gebruikersnaam
