@@ -198,11 +198,13 @@ final class ForumController extends Controller {
      * @return Response
      */
     public function listCategoriesAction(EntityManager $em) {
-        $forumCategories = $em->getRepository(ForumCategory::class)->findAll();
+        $forumCategories = $em->getRepository(ForumCategory::class)->findBy(
+            [], ['name' => 'ASC']
+        );
 
-        $uncategorizedForums = $em->getRepository(Forum::class)->findBy([
-            'category' => null,
-        ]);
+        $uncategorizedForums = $em->getRepository(Forum::class)->findBy(
+            ['category' => null], ['canonicalName' => 'ASC']
+        );
 
         return $this->render('@RadditApp/forums_by_category.html.twig', [
             'forum_categories' => $forumCategories,
