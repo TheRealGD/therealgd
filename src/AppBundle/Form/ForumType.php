@@ -2,6 +2,7 @@
 
 namespace Raddit\AppBundle\Form;
 
+use Doctrine\ORM\EntityRepository;
 use Raddit\AppBundle\Entity\Forum;
 use Raddit\AppBundle\Entity\ForumCategory;
 use Raddit\AppBundle\Form\Type\MarkdownType;
@@ -37,6 +38,10 @@ final class ForumType extends AbstractType {
             ->add('category', EntityType::class, [
                 'class' => ForumCategory::class,
                 'choice_label' => 'name',
+                'query_builder' => function (EntityRepository $repository) {
+                    return $repository->createQueryBuilder('fc')
+                        ->orderBy('fc.name', 'ASC');
+                },
                 'required' => false,
                 'placeholder' => 'forum_form.uncategorized_placeholder',
             ]);
