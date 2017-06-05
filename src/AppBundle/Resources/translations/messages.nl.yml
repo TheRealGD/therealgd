@@ -122,7 +122,7 @@ inbox:
     clear_inbox: Maak inbox leeg
     clear_notice: Je inbox is leeggemaakt.
     empty: Je hebt geen nieuwe berichten.
-    message_reply_thread: 'Antw.: %title'
+    message_reply_head: 'Antw.: %title'
 
 login_form:
     log_in: Log in
@@ -244,7 +244,6 @@ user:
     toolbox: Gereedschapskist
     message: Stuur bericht
     registered: Geregistreed %timestamp%
-    verification: Verificatie
 
 user_form:
     username: Gebruikersnaam
@@ -255,6 +254,7 @@ user_form:
     email: E-mailadres
     register: Registreer
     save: Sla veranderingen op
+    verification: Verificatie
 
 user_settings:
     title: Gebruikersinstellingen aanpassen voor %username%
