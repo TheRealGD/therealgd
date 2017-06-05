@@ -84,11 +84,13 @@ forum_form:
     name: Navn
     title: Tittel
     description: Beskrivelse
+    category: Kategori
     create: Opprett forum
     save: Lagre endringer
     delete: Slett forum
     confirm_delete: Er du sikker på at du vil slette dette forumet og all dets innhold?
     featured: Vis på forside
+    uncategorized_placeholder: (ukategorisert)
 
 forum_list:
     name: Navn
@@ -97,6 +99,9 @@ forum_list:
     page_title: Liste over fora
     create_forum: Opprett forum
     submission_count: Innlegg
+    list_view: Listevisning
+    category_view: Kategorivisning
+    uncategorized: Ukategorisert
 
 forum_moderators:
     title: Moderatorer for /%forum_name%

@@ -57,6 +57,11 @@ raddit_app_forum_list:
     methods: [GET]
     requirements: { forums: \d+, sortBy: by_name|by_title|by_subscribers|by_submissions }
 
+raddit_app_forums_by_category:
+    defaults: { _controller: RadditAppBundle:Forum:listCategories }
+    path: /forums/by_category
+    methods: [GET]
+
 raddit_app_submit:
     defaults: { _controller: RadditAppBundle:Submission:submit, forum_name: null }
     path: /submit/{forum_name}

@@ -3,7 +3,9 @@
 namespace Raddit\AppBundle\Controller;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManager;
 use Raddit\AppBundle\Entity\Forum;
+use Raddit\AppBundle\Entity\ForumCategory;
 use Raddit\AppBundle\Entity\ForumSubscription;
 use Raddit\AppBundle\Entity\Moderator;
 use Raddit\AppBundle\Entity\Submission;
@@ -187,6 +189,24 @@ final class ForumController extends Controller {
         return $this->render('@RadditApp/forum_list.html.twig', [
             'forums' => $repository->findForumsByPage($page, $sortBy),
             'sortBy' => $sortBy,
+        ]);
+    }
+
+    /**
+     * @param EntityManager $em
+     *
+     * @return Response
+     */
+    public function listCategoriesAction(EntityManager $em) {
+        $forumCategories = $em->getRepository(ForumCategory::class)->findAll();
+
+        $uncategorizedForums = $em->getRepository(Forum::class)->findBy([
+            'category' => null,
+        ]);
+
+        return $this->render('@RadditApp/forums_by_category.html.twig', [
+            'forum_categories' => $forumCategories,
+            'uncategorized_forums' => $uncategorizedForums,
         ]);
     }
 

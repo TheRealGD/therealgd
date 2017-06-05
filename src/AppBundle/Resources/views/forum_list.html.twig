@@ -1,4 +1,5 @@
 {% extends '@RadditApp/base.html.twig' %}
+{% from '@RadditApp/forums_by_category.html.twig' import forum_view_selector %}
 
 {% block page_classes %}
   forum-list-page
@@ -14,15 +15,10 @@
 {% endblock %}
 
 {% from _self import table_head as th %}
+{% from '@RadditApp/macros/forum_list_macros.html.twig' import forum_list_header %}
 
 {% block body %}
-  <h1>{{ 'forum_list.page_title'|trans }}</h1>
-
-  <nav class="horizontal-nav forum-list-bottom-nav">
-    <ul>
-      <li><a href="{{ path('raddit_app_create_forum') }}" class="button">{{ 'forum_list.create_forum'|trans }}</a></li>
-    </ul>
-  </nav>
+  {{ forum_list_header() }}
 
   <table class="table table-fixed-columns forum-list">
     <thead>

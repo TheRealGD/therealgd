@@ -1,0 +1,34 @@
+@import (reference) 'settings';
+
+.grouped-forum-listing {
+  .columns(@counter) when (@counter <= 5) {
+    @media screen and (min-width: (160px + 192px * @counter)) {
+      columns: @counter;
+      column-rule: solid 1px @grouped-forum-listing-border-color;
+    }
+
+    .columns(@counter + 1);
+  }
+
+  .columns(2);
+
+  padding: 0;
+
+  li {
+    list-style: none;
+    margin: 0;
+  }
+
+  ul {
+    padding: 0;
+    margin: 0 0 1rem;
+  }
+
+  .forum-group-heading {
+    font-size: 1.20rem;
+  }
+}
+
+.forum-list-view-selector {
+  .submission-sort; // todo
+}

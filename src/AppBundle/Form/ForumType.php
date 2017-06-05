@@ -3,7 +3,9 @@
 namespace Raddit\AppBundle\Form;
 
 use Raddit\AppBundle\Entity\Forum;
+use Raddit\AppBundle\Entity\ForumCategory;
 use Raddit\AppBundle\Form\Type\MarkdownType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -31,7 +33,13 @@ final class ForumType extends AbstractType {
         $builder
             ->add('name', TextType::class)
             ->add('title', TextType::class)
-            ->add('description', MarkdownType::class);
+            ->add('description', MarkdownType::class)
+            ->add('category', EntityType::class, [
+                'class' => ForumCategory::class,
+                'choice_label' => 'name',
+                'required' => false,
+                'placeholder' => 'forum_form.uncategorized_placeholder',
+            ]);
 
         if ($this->authorizationChecker->isGranted('ROLE_ADMIN')) {
             $builder->add('featured', CheckboxType::class, [

@@ -102,6 +102,13 @@ class Forum {
      */
     private $featured = false;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="ForumCategory", inversedBy="forums")
+     *
+     * @var ForumCategory|null
+     */
+    private $category;
+
     public function __construct() {
         $this->created = new \DateTime('@'.time());
         $this->moderators = new ArrayCollection();
@@ -235,5 +242,19 @@ class Forum {
      */
     public function setFeatured(bool $featured) {
         $this->featured = $featured;
+    }
+
+    /**
+     * @return null|ForumCategory
+     */
+    public function getCategory() {
+        return $this->category;
+    }
+
+    /**
+     * @param null|ForumCategory $category
+     */
+    public function setCategory($category) {
+        $this->category = $category;
     }
 }

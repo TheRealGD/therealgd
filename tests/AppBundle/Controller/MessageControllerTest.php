@@ -31,7 +31,7 @@ class MessageControllerTest extends WebTestCase {
     public function testCannotReadOthersMessages() {
         $client = $this->createClient([], [
             'PHP_AUTH_USER' => 'third',
-            'PHP_AUTH_PW' => 'example3'
+            'PHP_AUTH_PW' => 'example3',
         ]);
 
         $client->request('GET', '/message/1');
