@@ -1140,16 +1140,16 @@
         },
         {
             "name": "ezyang/htmlpurifier",
-            "version": "v4.9.2",
+            "version": "v4.9.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ezyang/htmlpurifier.git",
-                "reference": "6d50e5282afdfdfc3e0ff6d192aff56c5629b3d4"
+                "reference": "95e1bae3182efc0f3422896a3236e991049dac69"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ezyang/htmlpurifier/zipball/6d50e5282afdfdfc3e0ff6d192aff56c5629b3d4",
-                "reference": "6d50e5282afdfdfc3e0ff6d192aff56c5629b3d4",
+                "url": "https://api.github.com/repos/ezyang/htmlpurifier/zipball/95e1bae3182efc0f3422896a3236e991049dac69",
+                "reference": "95e1bae3182efc0f3422896a3236e991049dac69",
                 "shasum": ""
             },
             "require": {
@@ -1183,7 +1183,7 @@
             "keywords": [
                 "html"
             ],
-            "time": "2017-03-13T06:30:53+00:00"
+            "time": "2017-06-03T02:28:16+00:00"
         },
         {
             "name": "fig/link-util",
@@ -3000,16 +3000,16 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "v3.3.0",
+            "version": "v3.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "5a7e31c48e7cd4831efa409fffb661beb9995174"
+                "reference": "82bd7c039214b34bb5d12c04f996f05f6581c49f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/5a7e31c48e7cd4831efa409fffb661beb9995174",
-                "reference": "5a7e31c48e7cd4831efa409fffb661beb9995174",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/82bd7c039214b34bb5d12c04f996f05f6581c49f",
+                "reference": "82bd7c039214b34bb5d12c04f996f05f6581c49f",
                 "shasum": ""
             },
             "require": {
@@ -3026,7 +3026,7 @@
                 "symfony/polyfill-php56": "~1.0",
                 "symfony/polyfill-php70": "~1.0",
                 "symfony/polyfill-util": "~1.0",
-                "twig/twig": "~1.32|~2.2"
+                "twig/twig": "~1.34|~2.4"
             },
             "conflict": {
                 "phpdocumentor/reflection-docblock": "<3.0",
@@ -3149,7 +3149,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2017-05-29T21:02:32+00:00"
+            "time": "2017-06-06T04:00:14+00:00"
         },
         {
             "name": "twig/extensions",
@@ -3209,16 +3209,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v2.3.2",
+            "version": "v2.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "85e8372c451510165c04bf781295f9d922fa524b"
+                "reference": "eab7c3288ae6603d7d6f92b531626af2b162d1f2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/85e8372c451510165c04bf781295f9d922fa524b",
-                "reference": "85e8372c451510165c04bf781295f9d922fa524b",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/eab7c3288ae6603d7d6f92b531626af2b162d1f2",
+                "reference": "eab7c3288ae6603d7d6f92b531626af2b162d1f2",
                 "shasum": ""
             },
             "require": {
@@ -3233,12 +3233,15 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.3-dev"
+                    "dev-master": "2.4-dev"
                 }
             },
             "autoload": {
                 "psr-0": {
                     "Twig_": "lib/"
+                },
+                "psr-4": {
+                    "Twig\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -3268,7 +3271,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2017-04-21T00:13:02+00:00"
+            "time": "2017-06-07T18:47:58+00:00"
         },
         {
             "name": "white-october/pagerfanta-bundle",
@@ -4915,16 +4918,16 @@
         },
         {
             "name": "symfony/phpunit-bridge",
-            "version": "v3.3.0",
+            "version": "v3.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/phpunit-bridge.git",
-                "reference": "1a09124ea479cca85fc66a6f21e59aa952ebed1f"
+                "reference": "acae7416018ebe5a7a2d79b4221203b2b8aca5d3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/1a09124ea479cca85fc66a6f21e59aa952ebed1f",
-                "reference": "1a09124ea479cca85fc66a6f21e59aa952ebed1f",
+                "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/acae7416018ebe5a7a2d79b4221203b2b8aca5d3",
+                "reference": "acae7416018ebe5a7a2d79b4221203b2b8aca5d3",
                 "shasum": ""
             },
             "require": {
@@ -4973,7 +4976,7 @@
             ],
             "description": "Symfony PHPUnit Bridge",
             "homepage": "https://symfony.com",
-            "time": "2017-05-28T11:10:04+00:00"
+            "time": "2017-06-01T14:45:22+00:00"
         },
         {
             "name": "symfony/polyfill-xml",
