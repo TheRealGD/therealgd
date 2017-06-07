@@ -7,7 +7,6 @@ use Raddit\AppBundle\Entity\MessageThread;
 use Raddit\AppBundle\Entity\User;
 use Raddit\AppBundle\Form\MessageReplyType;
 use Raddit\AppBundle\Form\MessageThreadType;
-use Raddit\AppBundle\Repository\MessageThreadRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,13 +16,14 @@ final class MessageController extends Controller {
     /**
      * @Security("is_granted('ROLE_USER')")
      *
-     * @param MessageThreadRepository $repository
-     * @param int                     $page
+     * @param EntityManager $em
+     * @param int           $page
      *
      * @return Response
      */
-    public function listAction(MessageThreadRepository $repository, int $page) {
-        $messages = $repository->findUserMessages($this->getUser(), $page);
+    public function listAction(EntityManager $em, int $page) {
+        $messages = $em->getRepository(MessageThread::class)
+            ->findUserMessages($this->getUser(), $page);
 
         return $this->render('@RadditApp/message_list.html.twig', [
             'messages' => $messages,
