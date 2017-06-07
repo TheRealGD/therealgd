@@ -3,12 +3,13 @@
 # prefix.
 #
 
-raddit_app_forum_front:
-    defaults:
-        _controller: FrameworkBundle:Redirect:redirect
-        route: raddit_app_forum
-    path: /
-    methods: [GET]
+# Disabled because Symfony broke BC and fucked up routing
+#raddit_app_forum_front:
+#    defaults:
+#        _controller: FrameworkBundle:Redirect:redirect
+#        route: raddit_app_forum
+#    path: /
+#    methods: [GET]
 
 raddit_app_forum:
     defaults: { _controller: RadditAppBundle:Forum:front, sortBy: hot, page: 1 }
@@ -16,11 +17,11 @@ raddit_app_forum:
     methods: [GET]
     requirements: { sortBy: hot|new|top|controversial, page: \d+ }
 
-raddit_app_comments_redirect:
-    defaults: { _controller: FrameworkBundle:Redirect:redirect, route: raddit_app_comments }
-    path: /{submission_id}/
-    methods: [GET]
-    requirements: { submission_id: \d+ }
+#raddit_app_comments_redirect:
+#    defaults: { _controller: FrameworkBundle:Redirect:redirect, route: raddit_app_comments }
+#    path: /{submission_id}/
+#    methods: [GET]
+#    requirements: { submission_id: \d+ }
 
 raddit_app_comments:
     defaults: { _controller: RadditAppBundle:Submission:commentPage, slug: ~ }
