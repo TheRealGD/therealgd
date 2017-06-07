@@ -18,3 +18,8 @@ _gregwar_captcha_routing:
 
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+
+_trailing_slash_redirect:
+    defaults: { _controller: RadditAppBundle:Redirecting:removeTrailingSlash }
+    path: /{url}
+    requirements: { url: '.*/$' }

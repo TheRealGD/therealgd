@@ -48,19 +48,19 @@ class ApplicationAvailabilityTest extends WebTestCase {
         $this->assertStringEndsWith('/login', $client->getResponse()->headers->get('Location'));
     }
 
-//    /**
-//     * @dataProvider redirectUrlProvider
-//     *
-//     * @param string $expectedLocation
-//     * @param string $url
-//     */
-//    public function testRedirectedUrlsGoToExpectedLocation($expectedLocation, $url) {
-//        $client = $this->createClient();
-//        $client->request('GET', $url);
-//
-//        $this->assertTrue($client->getResponse()->isRedirect());
-//        $this->assertStringEndsWith($expectedLocation, $client->getResponse()->headers->get('Location'));
-//    }
+    /**
+     * @dataProvider redirectUrlProvider
+     *
+     * @param string $expectedLocation
+     * @param string $url
+     */
+    public function testRedirectedUrlsGoToExpectedLocation($expectedLocation, $url) {
+        $client = $this->createClient();
+        $client->request('GET', $url);
+
+        $this->assertTrue($client->getResponse()->isRedirect());
+        $this->assertStringEndsWith($expectedLocation, $client->getResponse()->headers->get('Location'));
+    }
 
     /**
      * Public URLs that should exist when fixtures are loaded into a fresh
@@ -101,7 +101,7 @@ class ApplicationAvailabilityTest extends WebTestCase {
         yield ['/f/news/top/1'];
         yield ['/f/news/controversial/1'];
         yield ['/f/news/1'];
-        yield ['/f/news/1/comment/1/'];
+        yield ['/f/news/1/comment/1'];
         yield ['/f/NeWs/hot'];
         yield ['/f/NeWs/new'];
         yield ['/f/NeWs/top'];
@@ -111,7 +111,7 @@ class ApplicationAvailabilityTest extends WebTestCase {
         yield ['/f/NeWs/top/1'];
         yield ['/f/NeWs/controversial/1'];
         yield ['/f/NeWs/1'];
-        yield ['/f/NeWs/1/comment/1/'];
+        yield ['/f/NeWs/1/comment/1'];
         yield ['/f/cats/2'];
         yield ['/f/CATS/2'];
         yield ['/forums'];
@@ -129,11 +129,10 @@ class ApplicationAvailabilityTest extends WebTestCase {
         yield ['/reset_password'];
     }
 
-      // disabled because Symfony broke BC and fucked everything
-//    public function redirectUrlProvider() {
-//        yield ['/f/cats/2', '/f/cats/2/'];
-//        yield ['/f/cats', '/f/cats/'];
-//    }
+    public function redirectUrlProvider() {
+        yield ['/f/cats/2', '/f/cats/2/'];
+        yield ['/f/cats', '/f/cats/'];
+    }
 
     /**
      * URLs that need authentication to access.
