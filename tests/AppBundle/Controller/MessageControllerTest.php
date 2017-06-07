@@ -14,6 +14,43 @@ class MessageControllerTest extends WebTestCase {
      * @param string $username
      * @param string $password
      */
+    public function testCanViewMessageList($username, $password) {
+        $client = $this->createClient([], [
+            'PHP_AUTH_USER' => $username,
+            'PHP_AUTH_PW' => $password,
+        ]);
+
+        $crawler = $client->request('GET', '/messages');
+
+        $this->assertContains('Example message.', $crawler->filter('tbody tr td:nth-child(1)')->text());
+        $this->assertEquals('1', trim($crawler->filter('tbody tr td:nth-child(3)')->text()));
+    }
+
+    public function testMessageListIsEmptyForUserWithNoMessages() {
+        $client = $this->createClient([], [
+            'PHP_AUTH_USER' => 'third',
+            'PHP_AUTH_PW' => 'example3',
+        ]);
+
+        $crawler = $client->request('GET', '/messages');
+
+        $this->assertContains('There are no messages to display.', $crawler->filter('.content-wrapper p')->text());
+    }
+
+    public function testMustBeLoggedInToViewMessageList() {
+        $client = $this->createClient();
+        $client->request('GET', '/messages');
+
+        $this->assertTrue($client->getResponse()->isRedirect());
+        $this->assertStringEndsWith('/login', $client->getResponse()->headers->get('Location'));
+    }
+
+    /**
+     * @dataProvider authProvider
+     *
+     * @param string $username
+     * @param string $password
+     */
     public function testCanReadOwnMessages($username, $password) {
         $client = $this->createClient([], [
             'PHP_AUTH_USER' => $username,

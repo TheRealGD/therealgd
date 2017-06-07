@@ -139,6 +139,15 @@ message_form:
     send: Send
     reply: Svar
 
+message_list:
+    page_title: Meldinger
+    title: Tittel
+    replies: Svar
+    from: Fra
+    to: Til
+    sent: Sendt
+    no_messages: Det finnes ingen meldinger å vise.
+
 moderator_form:
     user: Brukernavn
     submit: Legg til som moderator
@@ -191,6 +200,7 @@ site_nav:
     user_settings: Brukerinnstillinger
     forum_list: Forumliste
     inbox: Innboks (%count%)
+    messages: Meldinger
 
 submission_form:
     title: Tittel

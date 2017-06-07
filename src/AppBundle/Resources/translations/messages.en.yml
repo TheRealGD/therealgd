@@ -139,6 +139,15 @@ message_form:
     send: Send
     reply: Reply
 
+message_list:
+    page_title: Messages
+    title: Title
+    replies: Replies
+    from: From
+    to: To
+    sent: Sent
+    no_messages: There are no messages to display.
+
 moderator_form:
     user: Username
     submit: Add as moderator
@@ -191,6 +200,7 @@ site_nav:
     user_settings: User settings
     forum_list: Forums
     inbox: Inbox (%count%)
+    messages: Messages
 
 submission_form:
     title: Title

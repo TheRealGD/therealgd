@@ -174,6 +174,11 @@ raddit_app_ban_ip_by_comment:
     path: /ban_by_comment/{id}
     methods: [GET]
 
+raddit_app_message_list:
+    defaults: { _controller: RadditAppBundle:Message:list, page: 1 }
+    path: /messages/{page}
+    methods: [GET]
+
 raddit_app_message:
     defaults: { _controller: RadditAppBundle:Message:message }
     path: /message/{id}

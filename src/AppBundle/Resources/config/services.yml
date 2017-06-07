@@ -66,6 +66,10 @@ services:
         factory: ["@doctrine.orm.entity_manager", "getRepository"]
         arguments: [Raddit\AppBundle\Entity\Forum]
 
+    Raddit\AppBundle\Repository\MessageThreadRepository:
+        factory: ["@doctrine.orm.entity_manager", "getRepository"]
+        arguments: [Raddit\AppBundle\Entity\MessageThread]
+
     Raddit\AppBundle\Repository\UserRepository:
         factory: ["@doctrine.orm.entity_manager", "getRepository"]
         arguments: [Raddit\AppBundle\Entity\User]
