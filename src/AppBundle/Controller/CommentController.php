@@ -113,9 +113,6 @@ final class CommentController extends Controller {
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $comment->setEditedAt(new \DateTime('@'.time()));
-            $comment->setModerated($this->getUser() !== $comment->getUser());
-
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('raddit_app_comment', [
