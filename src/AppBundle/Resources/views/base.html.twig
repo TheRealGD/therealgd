@@ -23,40 +23,7 @@
   </head>
 
   <body class="{{ block('page_classes')|replace({'\n': ''}) }} {{ app.user ? 'user-logged-in' : 'user-anonymous' }}">
-    {% spaceless %}
-      <nav class="site-nav">
-        <ul>
-          {% block site_nav_left %}
-            <li><a href="{{ path('raddit_app_front') }}">{{ raddit_app_site_name() }}</a></li>
-            <li><a href="{{ path('raddit_app_forum_list') }}">{{ 'site_nav.forum_list'|trans }}</a></li>
-          {% endblock %}
-        </ul>
-
-        <ul class="right-nav">
-          {% if not is_granted('ROLE_USER') %}
-            <li><a href="{{ path('raddit_app_login') }}">{{ 'site_nav.log_in'|trans }}</a></li>
-            <li><a href="{{ path('raddit_app_registration') }}">{{ 'site_nav.register'|trans }}</a></li>
-          {% else %}
-            {% with {notification_count: app.user.notifications|length} %}
-              {% if notification_count > 0 %}
-                <li class="has-notifications"><a href="{{ path('raddit_app_inbox') }}">{{ 'site_nav.inbox'|trans({'%count%': '<strong>%d</strong>'|format(notification_count)})|raw }}</a></li>
-              {% endif %}
-            {% endwith %}
-            <li><a href="{{ path('raddit_app_submit', {forum_name: forum is defined and forum ? forum.name : null}) }}">{{ 'site_nav.submit'|trans }}</a></li>
-            <li class="dropdown-container">
-              <a href="#" class="dropdown-toggle"><strong>{{ app.user.username }}</strong></a>
-              <ul class="dropdown-menu">
-                <li><a href="{{ path('raddit_app_user', {username: app.user.username}) }}"><span class="icon icon-user"></span> {{ 'site_nav.profile'|trans }}</a></li>
-                <li><a href="{{ path('raddit_app_message_list') }}"><span class="icon icon-mail"></span> {{ 'site_nav.messages'|trans }}</a></li>
-                <li><a href="{{ path('raddit_app_edit_user', {username: app.user.username}) }}"><span class="icon icon-lock"></span> {{ 'site_nav.my_account'|trans }}</a></li>
-                <li><a href="{{ path('raddit_app_user_settings', {username: app.user.username}) }}"><span class="icon icon-settings"></span> {{ 'site_nav.user_settings'|trans }}</a></li>
-                <li><a href="{{ logout_path() }}"><span class="icon icon-logout"></span> {{ 'site_nav.log_out'|trans }}</a></li>
-              </ul>
-            </li>
-          {% endif %}
-        </ul>
-      </nav>
-    {% endspaceless %}
+    {% include '@RadditApp/includes/site_nav.html.twig' with {} only %}
 
     <div class="site-alerts">
       {%- if app.request.hasPreviousSession -%}
