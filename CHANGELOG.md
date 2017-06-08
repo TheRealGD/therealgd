@@ -7,18 +7,23 @@
   they reach a provided age.
 * Added Dutch and German translations.
 * Added explanation of the various user form fields.
+* Added forum categories.
+* Added icons to the user menu.
 * Added 'night mode', a dark stylesheet that's supposedly easier on the eyes.
 * Added Open Graph support 
 * Added private messaging.
 * Added sorting options for forum list.
 * Added URL slugs for submissions.
-* Allow trailing slash for some routes.
+* Allow trailing slashes for all routes.
 * Automatically subscribe to forums when you create them.
 * Fixed 'clear inbox' button potentially removing unseen entries.
 * Fixed `/f/{forum_name}` being case-sensitive.
 * Fixed mistake in English language pack.
 * Fixed wrong permissions being set on submission images.
 * Go back to page 1 when switching between front page listings.
+* Keep track of when a submission or comment was edited.
+* Lock submissions/comments for furthering editing once they've been edited by a
+  moderator.
 * Notify user when their submission or comment is replied to.
 * Replaced the stock favicons.
 * Upgraded to Symfony 3.3.
