@@ -23,7 +23,7 @@
   </head>
 
   <body class="{{ block('page_classes')|replace({'\n': ''}) }} {{ app.user ? 'user-logged-in' : 'user-anonymous' }}">
-    {% include '@RadditApp/includes/site_nav.html.twig' with {} only %}
+    {% include '@RadditApp/includes/site_nav.html.twig' %}
 
     <div class="site-alerts">
       {%- if app.request.hasPreviousSession -%}
