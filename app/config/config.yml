@@ -40,6 +40,8 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    form_themes:
+        - "RadditAppBundle:forms:standard_form_theme.html.twig"
 
 # Doctrine Configuration
 doctrine:
