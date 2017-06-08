@@ -98,6 +98,10 @@
     display: block;
     padding: 0.5rem 1rem;
 
+    &:not(:hover) > .icon {
+      color: @page-color;
+    }
+
     &:hover {
       background: @page-link-color;
       color: @page-background-color;
