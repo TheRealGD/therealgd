@@ -31,5 +31,6 @@
 
     <listeners>
         <listener class="\DAMA\DoctrineTestBundle\PHPUnit\PHPUnitStaticDbConnectionListener" />
+        <listener class="\Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
     </listeners>
 </phpunit>
