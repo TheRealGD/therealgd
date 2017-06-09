@@ -56,6 +56,10 @@ comment_form:
     submit: Στειλε το
     edit_title: Διόρθωση σχολίου
     create_title: Γράφω σχόλιο
+    
+compose_message:
+    title: Γράφοντας μήνυμα στον/στη %username%
+
 
 create_forum:
     create_new_forum: Δημιουργία νέου φόρουμ
@@ -82,11 +86,13 @@ forum_form:
     name: Ονομα
     title: Τίτλος
     description: Περιγραφή
+    category: Κατηγορία
     create: Δημιουργία φόρουμ
     save: Αποθήκευσε αλλαγές
     delete: Διαγραφή φόρουμ
     confirm_delete: Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτό το φόρουμ και όλα τα άρθρα και τα σχόλιά του;
     featured: Εμφανίστε την στην πρώτη σελίδα
+    uncategorized_placeholder: (Δεν ταξινομούνται)
 
 forum_list:
     name: Ονομα
@@ -95,6 +101,9 @@ forum_list:
     page_title: Λίστα φόρουμ
     create_forum: Δημιουργία φόρουμ
     submission_count: Συνεισφορές
+    list_view: Προβολή λίστας
+    category_view: Προβολή κατηγορίας
+    uncategorized: Δεν ταξινομούνται
 
 forum_moderators:
     title: Συντονιστές για /%forum_name%
@@ -115,6 +124,7 @@ inbox:
     clear_inbox: Διαγράψτε το Inbox.
     clear_notice: Το inbox εκκαθαρίστηκε.
     empty: Το inbox είναι άδειο.
+    message_reply_head: 'Re: %τίτλος%'
 
 login_form:
     log_in: Σύνδεση
@@ -124,6 +134,21 @@ login_form:
 
 markdown_type:
     help: Βοήθεια μορφοποίησης
+    
+message_form:
+    title: Τίτλος
+    message: Μήνυμα
+    send: Στείλε
+    reply: Απάντησε
+    
+message_list:
+    page_title: Μηνύματα
+    title: Τίτλος
+    replies: Απαντήσεις
+    from: Από
+    to: Προς
+    sent: Στάλθηκε
+    no_messages: Δεν υπάρχουν μηνύματα.
 
 moderator_form:
     user: Ονομα
@@ -173,6 +198,7 @@ site_nav:
     user_settings: Προτιμήσεις χρήστη
     forum_list: Φόρουμ
     inbox: Inbox (%count%)
+    messages: Μηνύματα
 
 submission_form:
     title: Τίτλος
@@ -204,6 +230,7 @@ submissions:
     moderator_info: (Επεξεργασία από έναν συντονιστή %edited_at%)
 
 time:
+    on_timestamp: στις %timestamp%
     earlier_format: '%relative_time% νωρίτερα'
     later_format: '%relative_time% αργότερα'
 
@@ -220,6 +247,9 @@ user:
     username_rules: Επιτρέπονται χαρακτήρες  είναι A-Z, a-z, 0-9 και _.
     password_rules: Ελάχιστο 8 χαρακτήρες; Το πολύ 72 λόγω περιορισμών του αλγόριθμου bcrypt.
     email_optional: Η παροχή μιας διεύθυνσης email είναι προαιρετική. Θα χρησιμοποιηθεί μόνο για επαναφορά του κωδικού πρόσβασής σας.
+    toolbox: Εργαλειοθήκη
+    message: Στείλετε μήνυμα
+    registered: Εγγεγραμμένοι στις %timestamp%
 
 user_form:
     username: Ονομα
@@ -229,6 +259,7 @@ user_form:
     repeat_new_password: Νέος Κωδικός (επαναλαμβάνω)
     email: Email
     register: Εγγραφή
+    verification: Επαλήθευση
     save: Αποθηκεύστε τις αλλαγές
 
 user_settings:
