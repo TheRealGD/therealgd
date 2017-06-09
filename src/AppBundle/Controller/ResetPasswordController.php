@@ -90,8 +90,7 @@ final class ResetPasswordController extends Controller {
         $expires = (new \DateTime('@'.time()))->modify('+24 hours')->format('c');
         $translator = $this->get('translator');
 
-        /** @var \Swift_Mime_Message $message */
-        $message = \Swift_Message::newInstance()
+        $message = (new \Swift_Message())
             ->setFrom([$this->getParameter('no_reply_address') => $this->getParameter('site_name')])
             ->setTo([$user->getEmail() => $user->getUsername()])
             ->setSubject($translator->trans('reset_password.email_subject', [
