@@ -111,7 +111,7 @@ services:
     League\CommonMark\Environment:
         factory: [League\CommonMark\Environment, createCommonMarkEnvironment]
         calls:
-            - [addInlineParser, ['@Raddit\AppBundle\CommonMark\Inline\Parser\ForumLinkParser']]
+            - [addExtension, ['@Raddit\AppBundle\CommonMark\AppExtension']]
         lazy: true
 
     Symfony\Component\Serializer\Serializer: "@serializer"
