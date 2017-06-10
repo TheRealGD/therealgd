@@ -86,6 +86,13 @@ class User implements UserInterface {
     private $created;
 
     /**
+     * @ORM\Column(type="datetimetz", nullable=true)
+     *
+     * @var \DateTime|null
+     */
+    private $lastSeen;
+
+    /**
      * @ORM\Column(type="boolean", options={"default": false})
      *
      * @var bool
@@ -230,6 +237,20 @@ class User implements UserInterface {
      */
     public function setCreated($created) {
         $this->created = $created;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getLastSeen() {
+        return $this->lastSeen;
+    }
+
+    /**
+     * @param \DateTime|null $lastSeen
+     */
+    public function setLastSeen($lastSeen) {
+        $this->lastSeen = $lastSeen;
     }
 
     /**

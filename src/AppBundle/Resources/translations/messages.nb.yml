@@ -107,6 +107,7 @@ forum_moderators:
     title: Moderatorer for /%forum_name%
     username: Brukernavn
     since: Siden
+    last_seen: Sist sett
 
 front:
     subscribed_forums: Dine abonnementer

@@ -16,6 +16,7 @@
       <tr>
         <th>{{ 'forum_moderators.username'|trans }}</th>
         <th>{{ 'forum_moderators.since'|trans }}</th>
+        <th>{{ 'forum_moderators.last_seen'|trans }}</th>
       </tr>
     </thead>
     <tbody>
@@ -26,6 +27,13 @@
           <time datetime="{{ moderator.timestamp|date('c') }}" title="{{ moderator.timestamp|localizeddate('long', 'short') }}" class="relative-time">
             {{ moderator.timestamp|localizeddate('long', 'short') }}
           </time>
+        </td>
+        <td>
+          {% if moderator.user.lastSeen is not null %}
+          <time datetime="{{ moderator.user.lastSeen|date('c') }}" title="{{ moderator.user.lastSeen|localizeddate('long', 'short') }}" class="relative-time">
+            {{ moderator.user.lastSeen|localizeddate('long', 'short') }}
+          </time>
+          {% endif %}
         </td>
       </tr>
       {% endfor %}

@@ -107,6 +107,7 @@ forum_moderators:
     title: Moderators for /%forum_name%
     username: Username
     since: Since
+    last_seen: Last seen
 
 front:
     subscribed_forums: Subscribed forums
