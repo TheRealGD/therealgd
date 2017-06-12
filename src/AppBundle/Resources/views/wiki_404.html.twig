@@ -14,7 +14,11 @@
   <p>{{ 'wiki.not_found_message'|trans }}</p>
 
   {% if is_granted('ROLE_USER') %}
-    <p><a href="#" class="button">{{ 'wiki.create_this_page'|trans }}</a></p>
+    <p>
+      <a href="{{ path('raddit_app_wiki_create', {path: path}) }}" class="button">
+        {{- 'wiki.create_this_page'|trans -}}
+      </a>
+    </p>
   {% endif %}
 {% endblock %}
 

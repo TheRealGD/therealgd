@@ -13,11 +13,21 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 final class WikiController extends Controller {
-    public function wikiAction(WikiPage $page = null) {
-        if (!$page) {
-            $response = new Response('', 404);
+    /**
+     * Views a wiki page.
+     *
+     * @param string        $path
+     * @param EntityManager $em
+     *
+     * @return Response
+     */
+    public function wikiAction(string $path, EntityManager $em) {
+        $page = $em->getRepository(WikiPage::class)->findOneBy(['path' => $path]);
 
-            return $this->render('@RadditApp/wiki_404.html.twig', [], $response);
+        if (!$page) {
+            return $this->render('@RadditApp/wiki_404.html.twig', [
+                'path' => $path
+            ], new Response('', 404));
         }
 
         return $this->render('@RadditApp/wiki.html.twig', [
@@ -26,6 +36,52 @@ final class WikiController extends Controller {
     }
 
     /**
+     * Creates a wiki page.
+     *
+     * @Security("is_granted('ROLE_USER')")
+     *
+     * @param Request       $request
+     * @param string        $path
+     * @param EntityManager $em
+     *
+     * @return Response
+     *
+     * @todo handle conflicts
+     * @todo do something if the page already exists
+     */
+    public function createAction(Request $request, string $path, EntityManager $em) {
+        $model = new Wiki();
+
+        $form = $this->createForm(WikiType::class, $model);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $page = new WikiPage();
+            $page->setPath($path);
+
+            $revision = new WikiRevision();
+            $revision->setPage($page);
+            $revision->setUser($this->getUser());
+            $revision->setTitle($model->title);
+            $revision->setBody($model->body);
+
+            $page->setCurrentRevision($revision);
+
+            $em->persist($page);
+            $em->flush();
+
+            return $this->redirectToRoute('raddit_app_wiki', ['path' => $path]);
+        }
+
+        return $this->render('@RadditApp/wiki_create.html.twig', [
+            'form' => $form->createView(),
+            'path' => $path,
+        ]);
+    }
+
+    /**
+     * Edits a wiki page.
+     *
      * @Security("is_granted('ROLE_USER')")
      *
      * @param Request       $request
