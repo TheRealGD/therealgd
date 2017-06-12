@@ -274,3 +274,8 @@ user_settings_form:
     locale: Language
     night_mode: Night mode
     save: Save changes
+
+wiki:
+    not_found_title: Page not found
+    not_found_message: The requested page was not found.
+    create_this_page: Create this page
