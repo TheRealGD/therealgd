@@ -192,17 +192,22 @@ raddit_app_compose_message:
 raddit_app_wiki:
     defaults: { _controller: RadditAppBundle:Wiki:wiki, path: index }
     path: /wiki/{path}
-    requirements: { path: '[A-Za-z0-9-]+(/[A-Za-z0-9-]+)*' }
+    requirements: { path: "%wiki_page_regex%" }
 
 raddit_app_wiki_create:
     defaults: { _controller: RadditAppBundle:Wiki:create }
     path: /wiki/_create/{path}
-    requirements: { path: '[A-Za-z0-9-]+(/[A-Za-z0-9-]+)*' }
+    requirements: { path: "%wiki_page_regex%" }
 
 raddit_app_wiki_edit:
     defaults: { _controller: RadditAppBundle:Wiki:edit }
     path: /wiki/_edit/{path}
-    requirements: { path: '[A-Za-z0-9-]+(/[A-Za-z0-9-]+)*' }
+    requirements: { path: "%wiki_page_regex%" }
+
+raddit_app_wiki_history:
+    defaults: { _controller: RadditAppBundle:Wiki:history, page: 1 }
+    path: /wiki/_history/{path}/{page}
+    requirements: { path: "%wiki_page_regex%" }
 
 raddit_app_login_check:
     path: /login_check

@@ -6,6 +6,7 @@ imports:
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    wiki_page_regex: '[A-Za-z][A-Za-z0-9-]*(/[A-Za-z][A-Za-z0-9-]*)*'
     locale: en
 
 framework:

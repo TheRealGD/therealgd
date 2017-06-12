@@ -118,4 +118,21 @@ final class WikiController extends Controller {
             'page' => $page,
         ]);
     }
+
+    /**
+     * @param WikiPage      $wikiPage
+     * @param int           $page
+     * @param EntityManager $em
+     *
+     * @return Response
+     */
+    public function historyAction(WikiPage $wikiPage, int $page, EntityManager $em) {
+        $revisions = $em->getRepository(WikiRevision::class)
+            ->findRevisionsForPage($wikiPage, $page);
+
+        return $this->render('@RadditApp/wiki_history.html.twig', [
+            'page' => $wikiPage,
+            'revisions' => $revisions,
+        ]);
+    }
 }
