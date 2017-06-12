@@ -135,4 +135,18 @@ final class WikiController extends Controller {
             'revisions' => $revisions,
         ]);
     }
+
+    /**
+     * @param int           $page
+     * @param EntityManager $em
+     *
+     * @return Response
+     */
+    public function allAction(int $page, EntityManager $em) {
+        $pages = $em->getRepository(WikiPage::class)->findAllPages($page);
+
+        return $this->render('@RadditApp/wiki_all.html.twig', [
+            'pages' => $pages,
+        ]);
+    }
 }

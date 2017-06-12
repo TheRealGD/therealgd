@@ -287,6 +287,9 @@ wiki:
     user: User
     id_label: ID
     locked_notice: The page is locked. Only admins can edit it.
+    page_title: Page title
+    path: Path
+    all_pages: All pages
 
 wiki_form:
     title: Title
