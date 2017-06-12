@@ -22,13 +22,18 @@
   </article>
 {% endblock %}
 
-{# TODO: translate/make prettier #}
 {% block sidebar %}
   <section>
     <h1>{{ page.path }}</h1>
-    {% with {time: page.currentRevision.timestamp|localizeddate('long', 'short')} %}
-      <p>Last edited by {{ page.currentRevision.user.username }} <time datetime="{{ page.currentRevision.timestamp|date('c') }}" title="{{ time }}" class="relative-time">{{ time }}</time></p>
-    {% endwith %}
+      <p>
+        {{- 'wiki.last_edited'|trans({
+          '%username%': '<a href="%s">%s</a>'|format(
+            path('raddit_app_user', {username: page.currentRevision.user.username})|escape,
+            page.currentRevision.user.username|escape
+          ),
+          '%timestamp%': block('_last_edited_time'),
+        })|raw -}}
+      </p>
 
     {% if page.locked %}
       <p>{{ 'wiki.locked_notice'|trans }}</p>
@@ -36,17 +41,29 @@
   </section>
 
   <section>
-    <h1>Toolbox</h1>
-
-      <ul>
-        {% if is_granted('write', page) %}
-          <li><a href="{{ path('raddit_app_wiki_edit', {path: page.path}) }}">Edit page</a></li>
-        {% endif %}
-        <li><a href="{{ path('raddit_app_wiki_history', {path: page.path}) }}">Page history</a></li>
-      </ul>
+    <h1>{{ 'wiki.toolbox'|trans }}</h1>
 
     <ul>
-      <li><a href="{{ path('raddit_app_wiki_all') }}">All pages</a></li>
+      {% if is_granted('write', page) %}
+        <li><a href="{{ path('raddit_app_wiki_edit', {path: page.path}) }}">{{ 'wiki.edit_page'|trans }}</a></li>
+      {% endif %}
+      <li><a href="{{ path('raddit_app_wiki_history', {path: page.path}) }}">{{ 'wiki.page_history'|trans }}</a></li>
     </ul>
   </section>
+
+  <section>
+    <h1>{{ 'wiki.navigation'|trans }}</h1>
+
+    <ul>
+      <li><a href="{{ path('raddit_app_wiki_all') }}">{{ 'wiki.all_pages'|trans }}</a></li>
+    </ul>
+  </section>
+{% endblock %}
+
+{% block _last_edited_time %}
+  {% with {time: page.currentRevision.timestamp|localizeddate('long', 'short')} %}
+    <time datetime="{{ page.currentRevision.timestamp|date('c') }}" title="{{ time }}" class="relative-time">
+      {{ 'time.on_timestamp'|trans({'%timestamp%': time}) }}
+    </time>
+  {% endwith %}
 {% endblock %}

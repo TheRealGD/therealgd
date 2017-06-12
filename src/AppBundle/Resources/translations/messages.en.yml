@@ -290,6 +290,11 @@ wiki:
     page_title: Page title
     path: Path
     all_pages: All pages
+    page_history: Page history
+    edit_page: Edit page
+    toolbox: Toolbox
+    navigation: Navigation
+    last_edited: Last edited by %username% %timestamp%
 
 wiki_form:
     title: Title
