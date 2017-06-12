@@ -9,6 +9,24 @@ use Raddit\AppBundle\Entity\WikiPage;
 
 class WikiPageRepository extends EntityRepository {
     /**
+     * @param string|null $path
+     *
+     * @return WikiPage|null
+     */
+    public function findOneCaseInsensitively($path) {
+        if ($path === null) {
+            return null;
+        }
+
+        return $this->createQueryBuilder('wp')
+            ->where('wp.path = ?1 OR wp.canonicalPath = ?2')
+            ->setParameter(1, $path)
+            ->setParameter(2, WikiPage::canonicalizePath($path))
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    /**
      * @param int $page
      *
      * @return Pagerfanta|WikiPage

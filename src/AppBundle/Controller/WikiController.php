@@ -7,6 +7,7 @@ use Raddit\AppBundle\Entity\WikiPage;
 use Raddit\AppBundle\Entity\WikiRevision;
 use Raddit\AppBundle\Form\Model\Wiki;
 use Raddit\AppBundle\Form\WikiType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,7 +23,7 @@ final class WikiController extends Controller {
      * @return Response
      */
     public function wikiAction(string $path, EntityManager $em) {
-        $page = $em->getRepository(WikiPage::class)->findOneBy(['path' => $path]);
+        $page = $em->getRepository(WikiPage::class)->findOneCaseInsensitively($path);
 
         if (!$page) {
             return $this->render('@RadditApp/wiki_404.html.twig', [
@@ -82,6 +83,11 @@ final class WikiController extends Controller {
     /**
      * Edits a wiki page.
      *
+     * @ParamConverter("page", options={
+     *     "map_method_signature": true,
+     *     "repository_method": "findOneCaseInsensitively"
+     * })
+     *
      * @Security("is_granted('write', page)")
      *
      * @param Request       $request
@@ -120,6 +126,11 @@ final class WikiController extends Controller {
     }
 
     /**
+     * @ParamConverter("wikiPage", options={
+     *     "map_method_signature": true,
+     *     "repository_method": "findOneCaseInsensitively"
+     * })
+     *
      * @param WikiPage      $wikiPage
      * @param int           $page
      * @param EntityManager $em
