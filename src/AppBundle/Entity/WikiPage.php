@@ -28,6 +28,13 @@ class WikiPage {
     private $path;
 
     /**
+     * @ORM\Column(type="text", unique=true)
+     *
+     * @var string|null
+     */
+    private $canonicalPath;
+
+    /**
      * @ORM\ManyToOne(targetEntity="WikiRevision", cascade={"persist"})
      *
      * @var WikiRevision|null
@@ -47,6 +54,10 @@ class WikiPage {
      * @var bool
      */
     private $locked = false;
+
+    public static function canonicalizePath(string $path) {
+        return strtolower(str_replace('-', '_', $path));
+    }
 
     public function __construct() {
         $this->revisions = new ArrayCollection();
@@ -71,6 +82,14 @@ class WikiPage {
      */
     public function setPath($path) {
         $this->path = $path;
+        $this->canonicalPath = strlen($path) ? self::canonicalizePath($path) : null;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCanonicalPath() {
+        return $this->canonicalPath;
     }
 
     /**
