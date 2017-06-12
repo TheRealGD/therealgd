@@ -97,7 +97,6 @@ front:
     no_subscriptions: Vi ne havas neniun albonajn forumojn. Anstataŭe montras priatentitajn forumojn.
     featured_forums: Priatentitaj Forumoj
     no_forums: Estas neniuj priatentitaj forumoj por montri.
-    front: Fronta
     all: Ĉiuj
     featured: Priatentita
 
@@ -141,7 +140,7 @@ reset_password:
 
         %reset_link%
 
-        Se vi ne petis pasvortan reŝargon, vi povas sendanĝere malatenti ĉi-tion 
+        Se vi ne petis pasvortan reŝargon, vi povas sendanĝere malatenti ĉi-tion
         mesaĝon.
 
     email_notice: Reŝargan retpoŝton sendis al specifita adreso.

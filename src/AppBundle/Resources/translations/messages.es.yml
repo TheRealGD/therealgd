@@ -97,7 +97,6 @@ front:
     no_subscriptions: No estas subscripto en ningun foro. Estas viendo los foros principales.
     featured_forums: Foros principales
     no_forums: No hay foros principales para mostrar.
-    front: Principal
     all: Todos
 
 login_form:

@@ -56,7 +56,7 @@ comment_form:
     submit: Στειλε το
     edit_title: Διόρθωση σχολίου
     create_title: Γράφω σχόλιο
-    
+
 compose_message:
     title: Γράφοντας μήνυμα στον/στη %username%
 
@@ -115,7 +115,6 @@ front:
     no_subscriptions: Δεν είστε εγγεγραμμένοι σε κανένα φόρουμ. Εμφανίζονται τα προεπιλεγμένα φόρουμ.
     featured_forums: Προεπιλεγμένα φόρουμ
     no_forums: Δεν υπάρχουν προεπιλεγμένα φόρουμ για να δείτε.
-    front: Μπροστινή
     all: Ολα
     featured: Προεπιλεγμένα
 
@@ -134,13 +133,13 @@ login_form:
 
 markdown_type:
     help: Βοήθεια μορφοποίησης
-    
+
 message_form:
     title: Τίτλος
     message: Μήνυμα
     send: Στείλε
     reply: Απάντησε
-    
+
 message_list:
     page_title: Μηνύματα
     title: Τίτλος

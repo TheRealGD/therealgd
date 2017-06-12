@@ -71,6 +71,10 @@ final class FrontController extends Controller {
      * @return Response
      */
     public function featuredAction(ObjectManager $om, string $sortBy, int $page) {
+        if (!$this->isGranted('ROLE_USER')) {
+            return $this->redirectToRoute('raddit_app_front');
+        }
+
         $forums = $om->getRepository(Forum::class)->findFeaturedForumNames();
 
         $submissions = $om->getRepository(Submission::class)
