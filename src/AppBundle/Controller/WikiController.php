@@ -82,7 +82,7 @@ final class WikiController extends Controller {
     /**
      * Edits a wiki page.
      *
-     * @Security("is_granted('ROLE_USER')")
+     * @Security("is_granted('write', page)")
      *
      * @param Request       $request
      * @param WikiPage      $page

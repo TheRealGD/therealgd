@@ -286,6 +286,7 @@ wiki:
     revision_time: Revised
     user: User
     id_label: ID
+    locked_notice: The page is locked. Only admins can edit it.
 
 wiki_form:
     title: Title

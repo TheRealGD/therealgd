@@ -41,6 +41,13 @@ class WikiPage {
      */
     private $revisions;
 
+    /**
+     * @ORM\Column(type="boolean", options={"default": false})
+     *
+     * @var bool
+     */
+    private $locked = false;
+
     public function __construct() {
         $this->revisions = new ArrayCollection();
     }
@@ -85,5 +92,19 @@ class WikiPage {
      */
     public function getRevisions() {
         return $this->revisions;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isLocked(): bool {
+        return $this->locked;
+    }
+
+    /**
+     * @param bool $locked
+     */
+    public function setLocked(bool $locked) {
+        $this->locked = $locked;
     }
 }
