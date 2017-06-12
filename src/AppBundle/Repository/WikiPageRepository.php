@@ -19,7 +19,7 @@ class WikiPageRepository extends EntityRepository {
             ->orderBy('LOWER(wr.title)', 'ASC');
 
         $pager = new Pagerfanta(new DoctrineORMAdapter($qb));
-        $pager->setMaxPerPage(1);
+        $pager->setMaxPerPage(25);
         $pager->setCurrentPage($page);
 
         return $pager;
