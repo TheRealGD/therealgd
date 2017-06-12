@@ -28,14 +28,14 @@ class WikiPage {
     private $path;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WikiRevision")
+     * @ORM\ManyToOne(targetEntity="WikiRevision", cascade={"persist"})
      *
      * @var WikiRevision|null
      */
     private $currentRevision;
 
     /**
-     * @ORM\OneToMany(targetEntity="WikiRevision", mappedBy="page")
+     * @ORM\OneToMany(targetEntity="WikiRevision", mappedBy="page", cascade={"persist"})
      *
      * @var WikiRevision[]|Collection
      */

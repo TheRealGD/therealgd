@@ -35,10 +35,10 @@
     <h1>Toolbox</h1>
 
     {% if is_granted('ROLE_USER') %}
-    <ul>
-      <li><a href="#">Edit page</a></li>
-      <li><a href="#">Page history</a></li>
-    </ul>
+      <ul>
+        <li><a href="{{ path('raddit_app_wiki_edit', {path: page.path}) }}">Edit page</a></li>
+        <li><a href="#">Page history</a></li>
+      </ul>
     {% endif %}
 
     <ul>

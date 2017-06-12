@@ -279,3 +279,9 @@ wiki:
     not_found_title: Page not found
     not_found_message: The requested page was not found.
     create_this_page: Create this page
+    editing_title: Editing %path%
+
+wiki_form:
+    title: Title
+    body: Body
+    submit: Submit

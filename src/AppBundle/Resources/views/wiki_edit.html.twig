@@ -1,0 +1,22 @@
+{% extends '@RadditApp/wiki.html.twig' %}
+
+{% block page_classes %}
+  wiki-edit-page
+{% endblock %}
+
+{% block title %}
+  {{ 'wiki.editing_title'|trans({'%path%': page.path}) }}
+{% endblock %}
+
+{% block body %}
+  <h1>{{ 'wiki.editing_title'|trans({
+    '%path%': '<a href="%s">%s</a>'|format(path('raddit_app_wiki', {path: page.path})|escape, page.path|escape)
+  })|raw }}</h1>
+
+  {{ form_start(form) }}
+    {{ form_row(form.title) }}
+
+    {{ form_row(form.body, {attr: {rows: 16}}) }}
+  {{ form_end(form) }}
+{% endblock %}
+
