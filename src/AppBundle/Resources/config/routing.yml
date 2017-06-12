@@ -189,6 +189,11 @@ raddit_app_compose_message:
     path: /compose_message/{username}
     methods: [GET, POST]
 
+raddit_app_wiki:
+    defaults: { _controller: RadditAppBundle:Wiki:wiki, path: index }
+    path: /wiki/{path}
+    requirements: { path: '[A-Za-z0-9-]+(/[A-Za-z0-9-]+)*' }
+
 raddit_app_login_check:
     path: /login_check
     methods: [POST]

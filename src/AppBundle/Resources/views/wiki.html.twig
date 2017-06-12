@@ -1,0 +1,48 @@
+{% extends '@RadditApp/base.html.twig' %}
+
+{% block page_classes %}
+  wiki-page
+{% endblock %}
+
+{% block title %}
+  {{ page.currentRevision.title }}
+{% endblock %}
+
+{% block head %}
+  <link rel="canonical" href="{{ url('raddit_app_wiki', {path: page.path}) }}">
+{% endblock %}
+
+{% block body %}
+  <article class="wiki-page">
+    <h1 class="wiki-page-title">{{ block('title') }}</h1>
+
+    <div class="wiki-page-body">
+      {{ page.currentRevision.body|cached_markdown|raw }}
+    </div>
+  </article>
+{% endblock %}
+
+{# TODO: translate/make prettier #}
+{% block sidebar %}
+  <section>
+    <h1>{{ page.path }}</h1>
+    {% with {time: page.currentRevision.timestamp|localizeddate('long', 'short')} %}
+      <p>Last edited by {{ page.currentRevision.user.username }} <time datetime="{{ page.currentRevision.timestamp|date('c') }}" title="{{ time }}" class="relative-time">{{ time }}</time></p>
+    {% endwith %}
+  </section>
+
+  <section>
+    <h1>Toolbox</h1>
+
+    {% if is_granted('ROLE_USER') %}
+    <ul>
+      <li><a href="#">Edit page</a></li>
+      <li><a href="#">Page history</a></li>
+    </ul>
+    {% endif %}
+
+    <ul>
+      <li><a href="#">All pages</a></li>
+    </ul>
+  </section>
+{% endblock %}
