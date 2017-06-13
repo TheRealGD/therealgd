@@ -19,10 +19,14 @@ tags
 !var/sessions/.gitkeep
 !var/SymfonyRequirements.php
 /vendor/
+/web/build/
 /web/bundles/
-/web/css/
 /web/fonts/
-/web/js/
 /web/media/
 /web/submission_images/*
 !/web/submission_images/.gitkeep
+
+## legacy
+
+/web/css/
+/web/js/

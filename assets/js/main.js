@@ -1,7 +1,7 @@
 'use strict';
 
-//noinspection JSUnresolvedVariable
-__webpack_public_path__ = window.__webpack_public_path__;
+window.$ = window.jQuery = require('jquery');
+window.Translator = require('bazinga-translator');
 
 import $ from 'jquery';
 import relativeTime from './relative-time';

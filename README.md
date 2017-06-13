@@ -26,8 +26,8 @@ Clone the repository somewhere and navigate there with the command line.
 
 1.  Run `npm install` (`yarn install` is preferred if you have Yarn).
 
-2.  Run `npm run build`/`yarn run build`. The `css` and `js` directories in
-    `web` should now contain some files.
+2.  Run `npm run build-dev`/`yarn run build-dev`. The `build` and `fonts`
+    directories in `web` should now contain some files.
 
 ### Setting up the backend
 

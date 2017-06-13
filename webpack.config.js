@@ -1,65 +1,26 @@
 'use strict';
 
-const webpack = require('webpack');
-const ManifestPlugin = require('webpack-manifest-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const Encore = require('@symfony/webpack-encore');
+const merge = require('webpack-merge');
 
-module.exports = {
-    devtool: '#source-map',
-    entry: {
-        main: __dirname + '/src/AppBundle/Resources/assets/js/main.js'
-    },
-    output: {
-        path: __dirname + '/web/js',
-        filename: '[name].[chunkhash:8].min.js'
-    },
+Encore
+    .setOutputPath('web/build/')
+    .setPublicPath('/build')
+    .cleanupOutputBeforeBuild()
+    .enableLessLoader()
+    .enableSourceMaps(!Encore.isProduction())
+    .addStyleEntry('red', './assets/less/main.less')
+    .addStyleEntry('night', './assets/less/main-night.less')
+    .createSharedEntry('vendor', ['bazinga-translator', 'jquery', 'moment/src/moment', 'underscore'])
+    .addEntry('main', './assets/js/main.js')
+    .configureBabel(babelConfig => {
+        babelConfig.presets.push(['es2015', { modules: false }]);
+        babelConfig.plugins = ['syntax-dynamic-import'];
+    })
+    .enableVersioning();
+
+module.exports = merge(Encore.getWebpackConfig(), {
     externals: {
         "fosjsrouting": "Routing"
     },
-    module: {
-        rules: [
-            {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                use: [{
-                    loader: 'babel-loader',
-                    options: {
-                        presets: [['es2015', {modules: false}]],
-                        plugins: ['syntax-dynamic-import']
-                    }
-                }]
-            },
-            {
-                test: require.resolve('bazinga-translator'),
-                loader: 'expose-loader?Translator'
-            },
-            {
-                test: require.resolve('jquery'),
-                loader: 'expose-loader?$!expose-loader?jQuery'
-            }
-        ]
-    },
-    plugins: [
-        new webpack.optimize.UglifyJsPlugin({
-            compress: { warnings: false },
-            sourceMap: true
-        }),
-        new webpack.optimize.CommonsChunkPlugin({
-            name: 'vendor',
-            minChunks: function (module) {
-                return module.context && /node_modules/.test(module.context);
-            }
-        }),
-        new ManifestPlugin({
-            // path relative to symfony's web root
-            basePath: 'js/'
-        }),
-        new CleanWebpackPlugin(['web/js'], {
-            root: __dirname,
-            exclude: ['manifest.json']
-        })
-    ],
-    resolve: {
-        mainFields: ['jsnext:main', 'main']
-    }
-};
+});

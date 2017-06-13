@@ -10,7 +10,7 @@
 * Added forum categories.
 * Added icons to the user menu.
 * Added 'night mode', a dark stylesheet that's supposedly easier on the eyes.
-* Added Open Graph support 
+* Added Open Graph support
 * Added private messaging.
 * Added sorting options for forum list.
 * Added URL slugs for submissions.
@@ -25,6 +25,7 @@
 * Lock submissions/comments for furthering editing once they've been edited by a
   moderator.
 * Notify user when their submission or comment is replied to.
+* Refactored the entire frontend asset build system.
 * Replaced the stock favicons.
 * Upgraded to Symfony 3.3.
 * Use APCu caching for Doctrine queries & metadata in production.
