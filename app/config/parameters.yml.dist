@@ -15,8 +15,10 @@ parameters:
 
     site_name:         Raddit
 
+    cdn:               ~
+
     # The email address automated messages will be sent from
-    no_reply_address:   no-reply@example.com
+    no_reply_address:  no-reply@example.com
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
