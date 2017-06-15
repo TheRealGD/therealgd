@@ -109,6 +109,7 @@ forum_moderators:
     title: Συντονιστές για /%forum_name%
     username: Όνομα χρήστη
     since: από
+    last_seen: Τελευταία ενεργή
 
 front:
     subscribed_forums: Φόρουμ στα οποία είμαι συνδρομητής
@@ -117,6 +118,7 @@ front:
     no_forums: Δεν υπάρχουν προεπιλεγμένα φόρουμ για να δείτε.
     all: Ολα
     featured: Προεπιλεγμένα
+    subscribed: Συνδρομητής
 
 inbox:
     title: Inbox
@@ -198,6 +200,7 @@ site_nav:
     forum_list: Φόρουμ
     inbox: Inbox (%count%)
     messages: Μηνύματα
+    wiki: Wiki
 
 submission_form:
     title: Τίτλος
@@ -269,3 +272,29 @@ user_settings_form:
     locale: Γλώσσα
     night_mode: Νυχτερινή λειτουργία
     save: Αποθήκευσε τις αλλαγές
+
+wiki:
+    not_found_title: Η σελίδα δεν βρέθηκε
+    not_found_message: Η ζητούμενη σελίδα δεν βρέθηκε.
+    create_this_page: Δημιουργήστε αυτήν τη σελίδα
+    editing_title: Επεξεργασία "%path%"
+    create_title: Δημιουργία "%path%"
+    history_title: Εμφάνιση ιστορικού για "%path%"
+    id: "#%id%"
+    revision_time: Αναθεωρημένο
+    user: Χρήστης
+    id_label: Ταυτότητα
+    locked_notice: Η σελίδα είναι κλειδωμένη. Μόνο οι διαχειριστές μπορούν να την επεξεργαστούν.
+    page_title: Τίτλος σελίδας
+    path: Διαδρομή
+    all_pages: Ολες οι σελίδες
+    page_history: Ιστορικό σελίδας
+    edit_page: Επεξεργασία σελίδας
+    toolbox: Εργαλειοθήκη
+    navigation: Πλοήγηση
+    last_edited: Τελευταία επεξεργασία από %username% %timestamp%
+
+wiki_form:
+    title: Τίτλος
+    body: Σώμα
+    submit: Υποβάλλετε
