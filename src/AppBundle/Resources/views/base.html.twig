@@ -11,9 +11,9 @@
 
     {% block stylesheets %}
       {% if not app.user or not app.user.nightMode %}
-        <link rel="stylesheet" href="{{ asset('build/red.css') }}">
+        <link rel="stylesheet" href="{{ preload(asset('build/red.css')) }}">
       {% else %}
-        <link rel="stylesheet" href="{{ asset('build/night.css') }}">
+        <link rel="stylesheet" href="{{ preload(asset('build/night.css')) }}">
       {% endif %}
 
       <link rel="stylesheet" href="{{ asset('fonts/css/raddit.css') }}">
@@ -51,11 +51,11 @@
     </footer>
 
     {% block javascripts %}
-      <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+      <script src="{{ preload(asset('bundles/fosjsrouting/js/router.js')) }}"></script>
       <script src="{{ path('fos_js_routing_js', {callback: 'fos.Router.setData'}) }}"></script>
-      <script src="{{ asset('build/manifest.js') }}"></script>
-      <script src="{{ asset('build/vendor.js') }}"></script>
-      <script src="{{ asset('build/main.js') }}"></script>
+      <script src="{{ preload(asset('build/manifest.js')) }}"></script>
+      <script src="{{ preload(asset('build/vendor.js')) }}"></script>
+      <script src="{{ preload(asset('build/main.js')) }}"></script>
       <script src="{{ path('bazinga_jstranslation_js') }}"></script>
     {% endblock %}
   </body>
