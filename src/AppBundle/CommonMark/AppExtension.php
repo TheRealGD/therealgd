@@ -15,9 +15,22 @@ class AppExtension extends Extension {
         $this->urlGenerator = $urlGenerator;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getInlineParsers() {
         return [
             new Inline\Parser\ForumLinkParser($this->urlGenerator),
+            new Inline\Parser\StrikethroughParser(),
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getInlineRenderers() {
+        return [
+            Inline\Element\Strikethrough::class => new Inline\Renderer\StrikethroughRenderer(),
         ];
     }
 }
