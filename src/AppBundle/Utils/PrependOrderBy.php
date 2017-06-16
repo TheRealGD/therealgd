@@ -18,21 +18,15 @@ final class PrependOrderBy {
     public static function prepend($qb, string $clause, string $order = 'ASC') {
         if ($qb instanceof SQLQueryBuilder) {
             self::prependWithSqlBuilder($qb, $clause, $order);
-
-            return;
-        }
-
-        if ($qb instanceof DQLQueryBuilder) {
+        } elseif ($qb instanceof DQLQueryBuilder) {
             self::prependWithDqlBuilder($qb, $clause, $order);
-
-            return;
+        } else {
+            throw new \InvalidArgumentException(sprintf(
+                'Parameter 1 must be %s or %s',
+                DQLQueryBuilder::class,
+                SQLQueryBuilder::class
+            ));
         }
-
-        throw new \InvalidArgumentException(sprintf(
-            'Parameter 1 must be %s or %s',
-            DQLQueryBuilder::class,
-            SQLQueryBuilder::class
-        ));
     }
 
     private static function prependWithSqlBuilder(SQLQueryBuilder $qb, string $clause, string $order) {
