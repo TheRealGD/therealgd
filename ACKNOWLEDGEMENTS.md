@@ -17,4 +17,6 @@ contributions to the code base.
 
 * Greek translation contributed by ziq.
 
+* Portuguese (Brazilian) translation contributed by VitorVRS.
+
 * Spanish translation contributed by sancocho.

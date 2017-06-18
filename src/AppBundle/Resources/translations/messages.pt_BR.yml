@@ -1,0 +1,302 @@
+add_moderator:
+    title: Adicionar moderador à %forum%
+    notice: O usuário foi promovido à moderador.
+
+ban_add:
+    title: Banir um endereço de IP
+    banned_notice: O endereço de IP foi banido.
+
+ban_form:
+    ip: Endereço IP
+    reason: Motivo para banir
+    expiry_date: Expira em (YYYY-MM-DD hh:mm)
+    ban: Banir
+    user: Usuário associado ao IP
+
+ban_list:
+    title: Banimentos
+    ip: Endereços de IP
+    timestamp: Hora
+    banned_by: Banido por
+    reason: Motivo
+    user: Usuário
+    user_none: nenhum
+    expires: Expira
+    expires_never: nunca
+    remove: Remover banimento
+
+banned:
+    title: Banido
+    message: Você foi banido!
+
+comments:
+    author_deleted: '[removido]'
+    comments: Comentários
+    delete: Remover
+    delete_thread: Remover com respostas
+    edit: Alterar
+    permalink: Permalink
+    parent: Pai
+    reply: Responder
+    admin_ban: Banir IP
+    form_load_error: Erro ao carregar o formulário. Por favor tente novamente.
+    info: '%user% escreveu %timestamp%'
+    info_at_timestamp: em %timestamp%
+    not_logged_in: Você precisa %login_link% ou %register_link% para comentar.
+    not_logged_in_login_link_label: entrar
+    not_logged_in_register_link_label: registrar
+    viewing_thread: Vendo um tópico de comentário
+    thread_return: Ver todos os comentários
+    return_to_forum: ← Voltar para %forum%
+    edit_info: (alterado %edited_at%)
+    moderator_info: (alterado por um moderador %edited_at%)
+
+comment_form:
+    comment: Comentar
+    submit: Enviar
+    edit_title: Alterando comentário
+    create_title: Enviando comentário
+
+compose_message:
+    title: Escrevendo uma mensagem para %username%
+
+create_forum:
+    create_new_forum: Criar novo fórum
+
+edit_forum:
+    edit_notice: As alterações foram salvas.
+    delete_notice: O fórum e todo o seu conteúdo foi removido.
+    title: Alterando %forum%
+
+edit_user:
+    title: Alterando usuário %username%
+
+forum:
+    moderators: Moderadores
+    manage: Gerenciar
+    edit: Alterar fórum
+    subscribe: Inscrever
+    unsubscribe: Desinscrever
+    subscriber_count: '{0} Nenhum inscrito|{1} %count% inscrito|[1,Inf[ %count% inscritos'
+    add_moderator: Adicionar moderador
+
+forum_form:
+    name: Nome
+    title: Título
+    description: Descrição
+    category: Categoria
+    create: Criar fórum
+    save: Salvar alterações
+    delete: Apagar fórum
+    confirm_delete: Você tem certeza que quer apagar o fórum e todo os seus envios e comentários?
+    featured: Mostrar na página inicial
+    uncategorized_placeholder: (não categorizado)
+
+forum_list:
+    name: Nome
+    title: Título
+    subscribers: Inscritos
+    page_title: Lista de fóruns
+    create_forum: Criar fórum
+    submission_count: Envios
+    list_view: Visualização em lista
+    category_view: Visualização por Categoria
+    uncategorized: Não categorizado
+
+forum_moderators:
+    title: Moderadores para /%forum_name%
+    username: Nome de usuário
+    since: Desde
+    last_seen: Visto por último
+
+front:
+    subscribed_forums: Fóruns inscritos
+    no_subscriptions: Você não está inscrito em nenhum fórum. Mostrando apenas fóruns destacados.
+    featured_forums: Fóruns destacados
+    no_forums: Não há fóruns destacados para mostrar.
+    all: Tudo
+    featured: Destacados
+    subscribed: Inscritos
+
+inbox:
+    title: Caixa de Entrada
+    clear_inbox: Limpar caixa de entrada
+    clear_notice: A caixa de entrada foi esvaziada.
+    empty: A caixa de entrada está vazia.
+    message_reply_head: 'Re: %title%'
+
+login_form:
+    log_in: Entrar
+    username: Nome de usuário
+    password: Senha
+    reset_password: Redefinir senha?
+
+markdown_type:
+    help: Referência de sintaxe
+
+message_form:
+    title: Título
+    message: Mensagem
+    send: Enviar
+    reply: Responder
+
+message_list:
+    page_title: Mensagens
+    title: Título
+    replies: Respostas
+    from: De
+    to: Para
+    sent: Enviado
+    no_messages: Não há mensagens para mostrar.
+
+moderator_form:
+    user: Nome de usuário
+    submit: Adicionar como moderador
+
+pagination:
+    next: Próximo
+    previous: Anterior
+
+request_password_reset:
+    title: Solicitar link para redefinição de senha
+    multiple_accounts_notice: >
+        Se você possui várias contas cadastradas com um mesmo endereço de email, você irá
+        receber um email por conta.
+    no_confirmation_notice: >
+        Se você nunca receber o email, o endereço que você informou está, provavelmente, 
+        incorreto. Por motivos de privacidade nós não iremos confirmar se existe um usuário com
+        o endereço informado.
+
+request_password_reset_form:
+    email: Endereço de email
+    submit: Enviar
+
+reset_password:
+    email_subject: '%site_name% - Redefinir senha para o usuário %username%'
+
+    # this should be kept at 76 columns --------------------------------------------
+    email_body: |
+        Alguém solicitou a redefinição de senha para sua conta %site_name%.
+        Para redefinir sua senha, clique no link abaixo:
+
+        %reset_link%
+
+        Se você não solicitou a redefinição de senha, você pode ignorar esta mensagem.
+        O link irá expirar depois de 24 horas.
+
+    email_notice: Um email para redefinição foi enviado para o endereço informado.
+    update_notice: Sua senha foi atualizada.
+    title: Redefinindo senha
+
+site_footer:
+    version: Rodando %app% %version% (%branch%). Feito com ☭.
+
+site_nav:
+    submit: Enviar
+    log_in: Entrar
+    log_out: Sair
+    profile: Perfil
+    register: Registrar
+    my_account: Minha conta
+    user_settings: Preferências
+    forum_list: Fóruns
+    inbox: Caixa de Entrada (%count%)
+    messages: Mensagens
+    wiki: Wiki
+
+submission_form:
+    title: Título
+    url: URL
+    body: Corpo
+    forum: Fórum
+    sticky: Sticky
+    create: Criar submissão
+    edit: Alterar submissão
+    delete: Apagar submissão
+    confirm_delete: Você tem certeza que quer apagar esta submissão?
+
+submissions:
+    comments: '{0} Nenhum comentário|{1} %count% comentário|[1,Inf[ %count% comentários'
+    delete_notice: A submissão foi apagada.
+    edit: Alterar
+    edit_notice: A submissão foi alterada.
+    info_with_forum_name: Enviado por %submitter% %timestamp% em %forum%
+    info_without_forum_name: Enviado por %submitter% %timestamp%
+    info_at_timestamp: às %timestamp%
+    sort_by_hot: Hot
+    sort_by_new: Novos
+    sort_by_top: No topo
+    sort_by_controversial: Controversos
+    total_votes: '{1} %count% ponto|[0,Inf[ %count% pontos'
+    vote_stats: (+%up%, −%down%)
+    ip_ban: Banir IP
+    edit_info: (alterado %edited_at%)
+    moderator_info: (alterado por um moderador %edited_at%)
+
+time:
+    on_timestamp: em %timestamp%
+    earlier_format: '%relative_time% mais cedo'
+    later_format: '%relative_time% mais tarde'
+
+votes:
+    upvote: Voto positivo
+    downvote: Voto negativo
+    retract_upvote: Retirar voto positivo
+    retract_downvote: Retirar voto negativo
+
+user:
+    submissions: Envios
+    comments: Comentários
+    moderates: '%username% é moderador em:'
+    username_rules: Caracteres permitidos são A-Z, a-z, 0-9 e sublinhado.
+    password_rules: Mínimo de 8 caracteres; máximo de 72 devido à limitações do algoritmo bcrypt.
+    email_optional: Informar um email é opcional. Somente será usado para redefinir sua senha.
+    toolbox: Caixa de ferramentas
+    message: Enviar mensagem
+    registered: Registrado %timestamp%
+
+user_form:
+    username: Nome de usuário
+    password: Senha
+    repeat_password: Senha (repetir)
+    new_password: Nova senha
+    repeat_new_password: Nova senha (repetir)
+    email: Email
+    register: Registrar
+    verification: Verificação
+    save: Salvar alterações
+
+user_settings:
+    title: Alterando preferências do usuário %username%
+    update_notice: Preferências foram atualizadas.
+
+user_settings_form:
+    locale: Idioma
+    night_mode: Modo noturno
+    save: Salvar alterações
+
+wiki:
+    not_found_title: Página não encontrada
+    not_found_message: A página solicitada não foi encontrada.
+    create_this_page: Criar esta página
+    editing_title: Alterar "%path%"
+    create_title: Criando "%path%"
+    history_title: Mostrando histórico para "%path%"
+    id: "#%id%"
+    revision_time: Revisado
+    user: Usuário
+    id_label: ID
+    locked_notice: A página foi bloqueada. Somente administradores podem alterá-la.
+    page_title: Título da página
+    path: Caminho
+    all_pages: Todas páginas
+    page_history: Histórico da página
+    edit_page: Alterar página
+    toolbox: Caixa de ferramentas
+    navigation: Navegação
+    last_edited: Alterado por último por %username% %timestamp%
+
+wiki_form:
+    title: Título
+    body: Corpo
+    submit: Enviar
