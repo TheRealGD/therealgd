@@ -76,7 +76,7 @@ services:
 
     Raddit\AppBundle\Twig\AppExtension:
         calls:
-            - [setSiteName, ["%site_name%"]]
+            - [setSiteName, ["%env(SITE_NAME)%"]]
 
     Raddit\AppBundle\Utils\CachedMarkdownConverter:
         calls:

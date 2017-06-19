@@ -1,7 +1,7 @@
 <?php
 
 /** @var \Symfony\Component\DependencyInjection\ContainerBuilder $container */
-$cdn = $container->getParameter('cdn');
+$cdn = $container->getParameter('env(CDN)');
 $cdn = rtrim($cdn, '/');
 
 if (strpos($cdn, '//') !== false) {

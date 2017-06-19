@@ -13,7 +13,7 @@ parameters:
 framework:
     #esi:             ~
     translator:      { fallbacks: ["%locale%"] }
-    secret:          "%secret%"
+    secret:          "%env(SECRET)%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
         strict_requirements: ~
@@ -49,18 +49,12 @@ twig:
 doctrine:
     dbal:
         driver:   pdo_pgsql
-        host:     "%database_host%"
-        port:     "%database_port%"
-        dbname:   "%database_name%"
-        user:     "%database_user%"
-        password: "%database_password%"
+        host:     "%env(DATABASE_HOST)%"
+        port:     "%env(DATABASE_PORT)%"
+        dbname:   "%env(DATABASE_NAME)%"
+        user:     "%env(DATABASE_USER)%"
+        password: "%env(DATABASE_PASSWORD)%"
         charset:  UTF8
-        # if using pdo_sqlite as your database driver:
-        #   1. add the path in parameters.yml
-        #     e.g. database_path: "%kernel.root_dir%/data/data.db3"
-        #   2. Uncomment database_path in parameters.yml.dist
-        #   3. Uncomment next line:
-        #     path:     "%database_path%"
         types:
             inet: Doctrine\DBAL\PostgresTypes\InetType
         mapping_types:
@@ -73,10 +67,10 @@ doctrine:
 
 # Swiftmailer Configuration
 swiftmailer:
-    transport: "%mailer_transport%"
-    host:      "%mailer_host%"
-    username:  "%mailer_user%"
-    password:  "%mailer_password%"
+    transport: "%env(MAILER_TRANSPORT)%"
+    host:      "%env(MAILER_HOST)%"
+    username:  "%env(MAILER_USER)%"
+    password:  "%env(MAILER_PASSWORD)%"
     spool:     { type: memory }
 
 doctrine_migrations:

@@ -17,7 +17,7 @@ final class ResetPasswordController extends Controller {
      * @return Response
      */
     public function requestResetAction(Request $request) {
-        if (!$this->getParameter('no_reply_address')) {
+        if (!$this->getParameter('env(NO_REPLY_ADDRESS)')) {
             throw $this->createNotFoundException();
         }
 
@@ -90,11 +90,14 @@ final class ResetPasswordController extends Controller {
         $expires = (new \DateTime('@'.time()))->modify('+24 hours')->format('c');
         $translator = $this->get('translator');
 
+        $siteName = $this->getParameter('env(SITE_NAME)');
+        $noReplyAddress = $this->getParameter('env(NO_REPLY_ADDRESS)');
+
         $message = (new \Swift_Message())
-            ->setFrom([$this->getParameter('no_reply_address') => $this->getParameter('site_name')])
+            ->setFrom([$noReplyAddress => $siteName])
             ->setTo([$user->getEmail() => $user->getUsername()])
             ->setSubject($translator->trans('reset_password.email_subject', [
-                '%site_name%' => $this->getParameter('site_name'),
+                '%site_name%' => $siteName,
                 '%username%' => $user->getUsername(),
             ]))
             ->setBody($translator->trans('reset_password.email_body', [
@@ -103,7 +106,7 @@ final class ResetPasswordController extends Controller {
                     'id' => $user->getId(),
                     'checksum' => $this->createChecksum($user, $expires),
                 ], UrlGeneratorInterface::ABSOLUTE_URL),
-                '%site_name%' => $this->getParameter('site_name'),
+                '%site_name%' => $siteName,
             ]));
 
         $message->getHeaders()->addTextHeader(
@@ -127,6 +130,6 @@ final class ResetPasswordController extends Controller {
             $expires
         );
 
-        return hash_hmac('sha256', $message, $this->getParameter('secret'));
+        return hash_hmac('sha256', $message, $this->getParameter('env(SECRET)'));
     }
 }

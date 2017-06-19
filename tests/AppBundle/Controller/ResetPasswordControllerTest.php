@@ -31,7 +31,7 @@ class ResetPasswordControllerTest extends WebTestCase {
         $message = $collector->getMessages()[0];
 
         $this->assertEquals(
-            sprintf('%s - Reset password for user emma', $client->getContainer()->getParameter('site_name')),
+            sprintf('%s - Reset password for user emma', $client->getContainer()->getParameter('env(SITE_NAME)')),
             $message->getSubject()
         );
 
@@ -43,7 +43,7 @@ class ResetPasswordControllerTest extends WebTestCase {
             'expires' => $expires,
             'checksum' => hash_hmac(
                 'sha256', $user->getId().'~'.$user->getPassword().'~'.$expires,
-                $client->getContainer()->getParameter('secret')
+                $client->getContainer()->getParameter('env(SECRET)')
             ),
         ], UrlGeneratorInterface::ABSOLUTE_URL);
 
