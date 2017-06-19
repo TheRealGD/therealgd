@@ -5,15 +5,18 @@
 * Added CAPTCHA to registration form.
 * Added a command that prunes IP addresses on many entities, optionally after
   they reach a provided age.
-* Added Dutch and German translations.
+* Added Dutch, German, Greek and Portuguese (Brazilian) translations.
 * Added explanation of the various user form fields.
 * Added forum categories.
 * Added icons to the user menu.
 * Added 'night mode', a dark stylesheet that's supposedly easier on the eyes.
 * Added Open Graph support
+* Added the option to serve assets over a CDN.
 * Added private messaging.
 * Added sorting options for forum list.
+* Added strikethrough support via `~~` syntax.
 * Added URL slugs for submissions.
+* Added wiki.
 * Allow trailing slashes for all routes.
 * Automatically subscribe to forums when you create them.
 * Fixed 'clear inbox' button potentially removing unseen entries.
@@ -22,12 +25,13 @@
 * Fixed wrong permissions being set on submission images.
 * Go back to page 1 when switching between front page listings.
 * Keep track of when a submission or comment was edited.
+* Keep track of when a user last logged in.
 * Lock submissions/comments for furthering editing once they've been edited by a
   moderator.
 * Notify user when their submission or comment is replied to.
 * Refactored the entire frontend asset build system.
 * Replaced the stock favicons.
-* Upgraded to Symfony 3.3.
+* Upgraded to Symfony 3.3, Swiftmailer 6.
 * Use APCu caching for Doctrine queries & metadata in production.
 * Various consistency fixes.
 
