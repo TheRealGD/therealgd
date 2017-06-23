@@ -20,6 +20,7 @@ class AppKernel extends Kernel {
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
             new Gregwar\CaptchaBundle\GregwarCaptchaBundle(),
+            new Scheb\TwoFactorBundle\SchebTwoFactorBundle(),
             new Raddit\AppBundle\RadditAppBundle(),
         ];
 

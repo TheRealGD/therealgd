@@ -238,6 +238,9 @@ time:
     earlier_format: '%relative_time% earlier'
     later_format: '%relative_time% later'
 
+two_factor:
+    explanation: To complete the login, you must enter the verification code sent by email to %email%.
+
 votes:
     upvote: Upvote
     downvote: Downvote
@@ -250,7 +253,9 @@ user:
     moderates: '%username% is a moderator on:'
     username_rules: Allowed characters are A-Z, a-z, 0-9 and underscore.
     password_rules: Minimum of 8 characters; maximum of 72 due to limitations of the bcrypt algorithm.
-    email_optional: Providing an email address is optional. It will only be used for resetting your password.
+    email_optional: Providing an email address is optional. We will only use it for resetting passwords and sending two-factor authentication codes.
+    two_factor_explanation: Require that an authentication code be entered when you log in. This code will be sent to you by email.
+    two_factor_warning: Make sure you have a valid email address before enabling this option!
     toolbox: Toolbox
     message: Send message
     registered: Registered %timestamp%
@@ -264,6 +269,7 @@ user_form:
     email: Email
     register: Register
     verification: Verification
+    two_factor_enabled: Enable two-factor authentication
     save: Save changes
 
 user_settings:

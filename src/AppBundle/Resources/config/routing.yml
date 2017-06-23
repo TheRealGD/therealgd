@@ -224,3 +224,7 @@ raddit_app_login_check:
 
 raddit_app_log_out:
     path: /log_out
+
+raddit_app_2fa_post:
+    path: /
+    methods: [POST]

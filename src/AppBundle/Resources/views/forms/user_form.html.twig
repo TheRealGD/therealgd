@@ -35,5 +35,20 @@
     {{ form_row(form.verification) }}
   {% endif %}
 
+  {% if form.twoFactorEnabled is defined %}
+    <div class="row">
+      {{ form_errors(form.twoFactorEnabled) }}
+      {{ form_label(form.twoFactorEnabled) }}
+      {{ form_widget(form.twoFactorEnabled) }}
+
+      <div class="help">
+        <p>
+          {{ 'user.two_factor_explanation'|trans }}<br>
+          <strong>{{ 'user.two_factor_warning'|trans }}</strong>
+        </p>
+      </div>
+    </div>
+  {% endif %}
+
   {{ form_row(form.submit) }}
 {{ form_end(form) }}

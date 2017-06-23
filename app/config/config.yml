@@ -86,3 +86,16 @@ liip_imagine:
                     size: [200, 200]
                     mode: outbound
             quality: 70
+
+scheb_two_factor:
+    email:
+        # todo - disable when env(NO_REPLY_ADDRESS) is null
+        enabled: true
+        sender_email: "%env(NO_REPLY_ADDRESS)%"
+        sender_name: "%env(SITE_NAME)%"
+        template: RadditAppBundle::security_2fa_form.html.twig
+        digits: 8
+    exclude_pattern: ^/((build|bundles|fonts|media|submission_images)/|(favicon\.ico|apple-touch-icon-precomposed\.png)$)
+    security_tokens:
+        - Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken
+        - Symfony\Component\Security\Core\Authentication\Token\RememberMeToken

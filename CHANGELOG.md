@@ -15,6 +15,7 @@
 * Added private messaging.
 * Added sorting options for forum list.
 * Added strikethrough support via `~~` syntax.
+* Added two-factor authentication.
 * Added URL slugs for submissions.
 * Added wiki.
 * Allow trailing slashes for all routes.

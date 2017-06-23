@@ -1,4 +1,7 @@
 security:
+    access_decision_manager:
+        strategy: unanimous
+
     encoders:
         Raddit\AppBundle\Entity\User:
             algorithm: bcrypt
