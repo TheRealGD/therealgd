@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 final class UserType extends AbstractType {
@@ -24,10 +25,20 @@ final class UserType extends AbstractType {
     private $encoder;
 
     /**
-     * @param UserPasswordEncoderInterface $encoder
+     * @var AuthorizationCheckerInterface
      */
-    public function __construct(UserPasswordEncoderInterface $encoder) {
+    private $authorizationChecker;
+
+    /**
+     * @param UserPasswordEncoderInterface  $encoder
+     * @param AuthorizationCheckerInterface $authorizationChecker
+     */
+    public function __construct(
+        UserPasswordEncoderInterface $encoder,
+        AuthorizationCheckerInterface $authorizationChecker
+    ) {
         $this->encoder = $encoder;
+        $this->authorizationChecker = $authorizationChecker;
     }
 
     /**
@@ -55,10 +66,13 @@ final class UserType extends AbstractType {
                 'reload' => true,
             ]);
         } else {
-            $builder->add('twoFactorEnabled', CheckboxType::class, [
-                'label' => 'user_form.two_factor_enabled',
-                'required' => false,
-            ]);
+            // TODO - fix problems with 2FA and allow everyone to use it
+            if ($this->authorizationChecker->isGranted('ROLE_ADMIN')) {
+                $builder->add('twoFactorEnabled', CheckboxType::class, [
+                    'label' => 'user_form.two_factor_enabled',
+                    'required' => false,
+                ]);
+            }
         }
 
         $builder->add('submit', SubmitType::class, [
