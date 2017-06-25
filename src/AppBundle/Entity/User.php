@@ -116,6 +116,7 @@ class User implements UserInterface, TwoFactorInterface {
 
     /**
      * @ORM\OneToMany(targetEntity="Submission", mappedBy="user")
+     * @ORM\OrderBy({"id": "DESC"})
      *
      * @var Submission[]|Collection|Selectable
      */
@@ -123,6 +124,7 @@ class User implements UserInterface, TwoFactorInterface {
 
     /**
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="user")
+     * @ORM\OrderBy({"id": "DESC"})
      *
      * @var Comment[]|Collection|Selectable
      */
