@@ -3,12 +3,11 @@
 namespace Raddit\AppBundle\Controller;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use Raddit\AppBundle\Entity\Comment;
 use Raddit\AppBundle\Entity\Notification;
-use Raddit\AppBundle\Entity\Submission;
 use Raddit\AppBundle\Entity\User;
 use Raddit\AppBundle\Form\UserSettingsType;
 use Raddit\AppBundle\Form\UserType;
+use Raddit\AppBundle\Repository\UserRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,28 +16,16 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 final class UserController extends Controller {
     /**
-     * @param User $user
+     * @param User           $user
+     * @param UserRepository $repository
      *
      * @return Response
      */
-    public function userPageAction(User $user) {
-        $em = $this->getDoctrine()->getManager();
-
-        $submissions = $em->getRepository(Submission::class)->findBy(
-            ['user' => $user],
-            ['id' => 'DESC'],
-            25
-        );
-
-        $comments = $em->getRepository(Comment::class)->findBy(
-            ['user' => $user],
-            ['id' => 'DESC'],
-            25
-        );
+    public function userPageAction(User $user, UserRepository $repository) {
+        $contributions = $repository->findLatestContributions($user);
 
         return $this->render('@RadditApp/user.html.twig', [
-            'submissions' => $submissions,
-            'comments' => $comments,
+            'contributions' => $contributions,
             'user' => $user,
         ]);
     }

@@ -11,34 +11,15 @@
 {% endblock %}
 
 {% block body %}
-  <div class="container user-submissions">
-    <h2>{{ 'user.submissions'|trans }}</h2>
-    {% for submission in submissions %}
-      {{ submission(submission) }}
-    {% endfor %}
-  </div>
+  <h1>{{ user.username }}</h1>
 
-  <div class="container user-comments">
-    <h2>{{ 'user.comments'|trans }}</h2>
-    {% for comment in comments %}
-      {{ comment(comment, false) }}
-    {% endfor %}
-  </div>
-
-  {% if user.moderatorTokens|length %}
-    <div class="container">
-      <h2>{{ 'user.moderates'|trans({'%username%': user.username}) }}</h2>
-      <ul>
-        {% for token in user.moderatorTokens %}
-          <li>
-            <a href="{{ path('raddit_app_forum', {forum_name: token.forum.name}) }}">
-              {{- token.forum.name -}}
-            </a>
-          </li>
-        {% endfor %}
-      </ul>
-    </div>
-  {% endif %}
+  {% for contribution in contributions %}
+    {% if contribution.type == 'submission' %}
+      {{ submission(contribution.submission) }}
+    {% elseif contribution.type == 'comment' %}
+      {{ comment(contribution.comment, false) }}
+    {% endif %}
+  {% endfor %}
 {% endblock %}
 
 {% block sidebar %}
@@ -60,6 +41,17 @@
       </nav>
     </section>
   {%- endif -%}
+
+  {% if user.moderatorTokens|length > 0 %}
+    <section>
+      <h1>{{ 'user.moderates'|trans({'%username%': user.username}) }}</h1>
+      <ul>
+        {% for token in user.moderatorTokens %}
+          <li><a href="{{ path('raddit_app_forum', {forum_name: token.forum.name}) }}">{{ token.forum.name }}</a></li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
 {% endblock %}
 
 {%- macro timestamp(timestamp) -%}

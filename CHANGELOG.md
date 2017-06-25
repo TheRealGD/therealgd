@@ -20,6 +20,7 @@
 * Added wiki.
 * Allow trailing slashes for all routes.
 * Automatically subscribe to forums when you create them.
+* Bumped the minimum PostgreSQL version to 9.3.
 * Fixed 'clear inbox' button potentially removing unseen entries.
 * Fixed `/f/{forum_name}` being case-sensitive.
 * Fixed mistake in English language pack.
