@@ -24,23 +24,25 @@
 
 {% block sidebar %}
   <section>
-    <h1>{{ user.username }}</h1>
+    <h1><a href="{{ path('raddit_app_user', {username: user.username}) }}">{{ user.username }}</a></h1>
 
     <p>{{ 'user.registered'|trans({
       '%timestamp%': timestamp(user.created)
     })|raw }}</p>
   </section>
 
-  {%- if is_granted('ROLE_USER') -%}
-    <section>
-      <h1>{{ 'user.toolbox'|trans }}</h1>
-      <nav>
-        <ul>
+  <section>
+    <h1>{{ 'user.toolbox'|trans }}</h1>
+    <nav>
+      <ul>
+        {% if is_granted('ROLE_USER') %}
           <li><a href="{{ path('raddit_app_compose_message', {username: user.username}) }}">{{ 'user.message'|trans }}</a></li>
-        </ul>
-      </nav>
-    </section>
-  {%- endif -%}
+        {% endif %}
+        <li><a href="{{ path('raddit_app_user_submissions', {username: user.username}) }}">{{ 'user.submissions'|trans }}</a></li>
+        <li><a href="{{ path('raddit_app_user_comments', {username: user.username}) }}">{{ 'user.comments'|trans }}</a></li>
+      </ul>
+    </nav>
+  </section>
 
   {% if user.moderatorTokens|length > 0 %}
     <section>

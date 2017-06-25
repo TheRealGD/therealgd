@@ -26,6 +26,18 @@ raddit_app_user:
     path: /user/{username}
     methods: [GET]
 
+raddit_app_user_submissions:
+    defaults: { _controller: RadditAppBundle:User:submissions, page: 1 }
+    path: /user/{username}/submissions/{page}
+    methods: [GET]
+    requirements: { page: \d+ }
+
+raddit_app_user_comments:
+    defaults: { _controller: RadditAppBundle:User:comments, page: 1 }
+    path: /user/{username}/comments/{page}
+    methods: [GET]
+    requirements: { page: \d+ }
+
 raddit_app_edit_user:
     defaults: { _controller: RadditAppBundle:User:editUser }
     path: /edit_user/{username}

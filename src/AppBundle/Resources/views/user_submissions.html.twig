@@ -1,0 +1,26 @@
+{% extends '@RadditApp/user.html.twig' %}
+{% from '@RadditApp/macros/submissions.html.twig' import submission %}
+
+{% block head %}
+  <link rel="canonical" href="{{ url('raddit_app_user_submissions', {username: user.username}) }}">
+  {{ include('@RadditApp/includes/meta_pagination.html.twig', {pager: submissions}) }}
+{% endblock %}
+
+{% block page_classes %}
+  user-submissions-page
+{% endblock %}
+
+{% block title %}
+  {{ 'user.submissions'|trans }}
+{% endblock %}
+
+{% block body %}
+  <h1>{{ block('title') }}</h1>
+
+  {% for submission in submissions %}
+    {{ submission(submission) }}
+  {% endfor %}
+
+  {{ include('@RadditApp/includes/pagination.html.twig', {pager: submissions}) }}
+{% endblock %}
+

@@ -42,7 +42,7 @@ class Comment extends Votable {
 
     /**
      * @ORM\JoinColumn(nullable=false)
-     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="comments")
      *
      * @var User
      */

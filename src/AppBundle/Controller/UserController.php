@@ -3,6 +3,8 @@
 namespace Raddit\AppBundle\Controller;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use Pagerfanta\Adapter\DoctrineCollectionAdapter;
+use Pagerfanta\Pagerfanta;
 use Raddit\AppBundle\Entity\Notification;
 use Raddit\AppBundle\Entity\User;
 use Raddit\AppBundle\Form\UserSettingsType;
@@ -16,6 +18,8 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 final class UserController extends Controller {
     /**
+     * Show the user's profile page.
+     *
      * @param User           $user
      * @param UserRepository $repository
      *
@@ -26,6 +30,40 @@ final class UserController extends Controller {
 
         return $this->render('@RadditApp/user.html.twig', [
             'contributions' => $contributions,
+            'user' => $user,
+        ]);
+    }
+
+    /**
+     * @param User $user
+     * @param int  $page
+     *
+     * @return Response
+     */
+    public function submissionsAction(User $user, int $page) {
+        $submissions = new Pagerfanta(new DoctrineCollectionAdapter($user->getSubmissions()));
+        $submissions->setMaxPerPage(25);
+        $submissions->setCurrentPage($page);
+
+        return $this->render('@RadditApp/user_submissions.html.twig', [
+            'submissions' => $submissions,
+            'user' => $user,
+        ]);
+    }
+
+    /**
+     * @param User $user
+     * @param int  $page
+     *
+     * @return Response
+     */
+    public function commentsAction(User $user, int $page) {
+        $comments = new Pagerfanta(new DoctrineCollectionAdapter($user->getComments()));
+        $comments->setMaxPerPage(25);
+        $comments->setCurrentPage($page);
+
+        return $this->render('@RadditApp/user_comments.html.twig', [
+            'comments' => $comments,
             'user' => $user,
         ]);
     }

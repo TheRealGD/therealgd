@@ -115,6 +115,20 @@ class User implements UserInterface, TwoFactorInterface {
     private $subscriptions;
 
     /**
+     * @ORM\OneToMany(targetEntity="Submission", mappedBy="user")
+     *
+     * @var Submission[]|Collection|Selectable
+     */
+    private $submissions;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="user")
+     *
+     * @var Comment[]|Collection|Selectable
+     */
+    private $comments;
+
+    /**
      * @ORM\Column(type="text")
      *
      * @var string
@@ -158,6 +172,8 @@ class User implements UserInterface, TwoFactorInterface {
         $this->moderatorTokens = new ArrayCollection();
         $this->subscriptions = new ArrayCollection();
         $this->notifications = new ArrayCollection();
+        $this->submissions = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     /**
@@ -366,6 +382,20 @@ class User implements UserInterface, TwoFactorInterface {
         $subscriptions = $this->getSubscriptions()->matching($criteria);
 
         return $subscriptions[0] ?? null;
+    }
+
+    /**
+     * @return Collection|Selectable|Submission[]
+     */
+    public function getSubmissions() {
+        return $this->submissions;
+    }
+
+    /**
+     * @return Collection|Selectable|Comment[]
+     */
+    public function getComments() {
+        return $this->comments;
     }
 
     /**
