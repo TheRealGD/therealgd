@@ -25,12 +25,24 @@ function makeTimesRelative($) {
 }
 
 function loadLocaleAndMakeTimesRelative($, locale) {
+    locale = locale.toLowerCase().replace('_', '-');
+
     import(`moment/src/locale/${locale}.js`).then(() => {
         moment.locale(locale);
 
         makeTimesRelative($);
     }).catch(error => {
-        console && console.log('relative-time.js - ' + error);
+        if (locale.indexOf('-') !== -1) {
+            const newLocale = locale.replace(/-.*/, '');
+
+            if (console) {
+                console.log(`Couldn't load ${locale}; trying ${newLocale}`);
+            }
+
+            loadLocaleAndMakeTimesRelative($, newLocale);
+        } else if (console) {
+            console.log(error.toString());
+        }
     });
 }
 
