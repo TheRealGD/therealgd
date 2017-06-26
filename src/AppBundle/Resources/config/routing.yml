@@ -26,6 +26,11 @@ raddit_app_user:
     path: /user/{username}
     methods: [GET]
 
+raddit_app_user_shortcut:
+    defaults: { _controller: FrameworkBundle:Redirect:redirect, route: raddit_app_user }
+    path: /u/{username}
+    methods: [GET]
+
 raddit_app_user_submissions:
     defaults: { _controller: RadditAppBundle:User:submissions, page: 1 }
     path: /user/{username}/submissions/{page}
