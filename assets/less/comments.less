@@ -5,7 +5,6 @@
   border: solid 1px @comment-border-color;
   margin-bottom: 1rem;
   padding-top: 0.5rem;
-  padding-right: 0.5rem;
 
   &:target > .comment-row {
     background: @comment-highlight-background;
@@ -15,6 +14,10 @@
   .comment-replies & {
     // let inner replies have a smaller margin
     margin: 0 0.5rem 0.5rem;
+  }
+
+  .comment-body {
+    padding-right: 0.5rem;
   }
 }
 
