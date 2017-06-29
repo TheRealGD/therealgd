@@ -260,6 +260,14 @@ user:
     message: Send message
     registered: Registered %timestamp%
 
+user_flag:
+    post_as_label: Post as
+    none_label: (none)
+    admin: admin
+    admin_label: Admin
+    moderator: moderator
+    moderator_label: Moderator
+
 user_form:
     username: Username
     password: Password

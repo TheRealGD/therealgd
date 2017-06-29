@@ -254,6 +254,14 @@ user:
     toolbox: Verktøy
     registered: Registrert %timestamp%
 
+user_flag:
+    post_as_label: Post som
+    none_label: (ingen)
+    admin: admin
+    admin_label: Administrator
+    moderator: moderator
+    moderator_label: Moderator
+
 user_form:
     username: Brukernavn
     password: Passord

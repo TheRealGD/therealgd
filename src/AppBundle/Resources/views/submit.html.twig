@@ -14,6 +14,10 @@
       {{ form_row(form.forum) }}
     {% endif %}
 
+    {% if form.userFlag is defined %}
+      {{ form_row(form.userFlag) }}
+    {% endif %}
+
     {% if form.sticky is defined %}
       {{ form_row(form.sticky) }}
     {% endif %}

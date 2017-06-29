@@ -113,6 +113,13 @@ class Comment extends Votable {
     private $moderated = false;
 
     /**
+     * @ORM\Column(type="smallint", options={"default": 0})
+     *
+     * @var int
+     */
+    private $userFlag = 0;
+
+    /**
      * Creates a new comment with an implicit upvote from the comment author.
      *
      * @param Submission   $submission
@@ -324,5 +331,23 @@ class Comment extends Votable {
      */
     public function setModerated(bool $moderated) {
         $this->moderated = $moderated;
+    }
+
+    /**
+     * @return int
+     */
+    public function getUserFlag(): int {
+        return $this->userFlag;
+    }
+
+    /**
+     * @param int $userFlag
+     */
+    public function setUserFlag(int $userFlag) {
+        if (!in_array($userFlag, UserFlags::FLAGS, true)) {
+            throw new \InvalidArgumentException('Bad flag');
+        }
+
+        $this->userFlag = $userFlag;
     }
 }

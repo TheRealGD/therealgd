@@ -20,9 +20,11 @@
 {%- endmacro -%}
 
 {%- block submission_info_submitter -%}
-  <a href="{{ path('raddit_app_user', {username: submission.user.username}) }}" class="submission-submitter">
-    {{- submission.user.username -}}
-  </a>
+  {%- from '@RadditApp/macros/user_macros.html.twig' import user_link -%}
+  {{ user_link(submission.user, {
+    class: 'submission-submitter',
+    flag: submission.userFlag,
+  }) }}
 {%- endblock -%}
 
 {%- block submission_info_timestamp -%}

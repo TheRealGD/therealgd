@@ -14,16 +14,28 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 final class SubmissionType extends AbstractType {
+    use UserFlagTrait;
+
     /**
      * @var AuthorizationCheckerInterface
      */
     private $authorizationChecker;
 
-    public function __construct(AuthorizationCheckerInterface $authorizationChecker) {
+    /**
+     * @var TokenStorageInterface
+     */
+    private $tokenStorage;
+
+    public function __construct(
+        AuthorizationCheckerInterface $authorizationChecker,
+        TokenStorageInterface $tokenStorage
+    ) {
         $this->authorizationChecker = $authorizationChecker;
+        $this->tokenStorage = $tokenStorage;
     }
 
     /**
@@ -41,6 +53,8 @@ final class SubmissionType extends AbstractType {
             ->add('body', MarkdownType::class, [
                 'required' => false,
             ]);
+
+        $this->addUserFlagOption($builder, $options);
 
         if (!$editing) {
             $builder->add('forum', EntityType::class, [
@@ -75,7 +89,10 @@ final class SubmissionType extends AbstractType {
     public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults([
             'data_class' => Submission::class,
+            'forum' => null,
             'label_format' => 'submission_form.%name%',
         ]);
+
+        $resolver->setAllowedTypes('forum', [Forum::class, 'null']);
     }
 }

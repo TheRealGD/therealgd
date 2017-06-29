@@ -44,6 +44,9 @@ final class CommentController extends Controller {
 
         $form = $this->createForm(CommentType::class, null, [
             'action' => $this->generateUrl('raddit_app_comment_post', $routeParams),
+            'forum' => $this->getDoctrine()->getRepository(Forum::class)->findOneBy([
+                'canonicalName' => mb_strtolower($forumName, 'UTF-8'),
+            ]),
         ]);
 
         return $this->render('@RadditApp/fragments/comment_form.html.twig', [

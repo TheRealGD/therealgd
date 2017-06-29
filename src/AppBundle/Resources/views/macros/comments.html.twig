@@ -75,10 +75,14 @@
 {%- endblock -%}
 
 {%- block comment_info_user -%}
+  {%- from '@RadditApp/macros/user_macros.html.twig' import user_link -%}
+
   {%- if not comment.softDeleted -%}
-    <a href="{{ path('raddit_app_user', {username: comment.user.username}) }}" class="comment-user">
-      {{- comment.user.username -}}
-    </a>
+    {{- user_link(comment.user, {
+      class: 'comment-user',
+      flag: comment.userFlag,
+      submitter: comment.user is same as(comment.submission.user),
+    }) -}}
   {%- else -%}
     {{- 'comments.author_deleted'|trans -}}
   {%- endif -%}
