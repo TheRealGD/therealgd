@@ -60,6 +60,7 @@ comment_form:
 compose_message:
     title: Kirjoitetaan viestiä käyttäjälle %username%
 
+
 create_forum:
     create_new_forum: Aloita uusi foorumi
 
@@ -79,6 +80,7 @@ forum:
     unsubscribe: Poista tilaus
     subscriber_count: '{0} Ei tilaajia|{1} %count% tilaaja|[1,Inf[ %count% tilaajaa'
     add_moderator: Lisää moderaattori
+
 
 forum_form:
     name: Nimi
@@ -167,6 +169,7 @@ request_password_reset:
 request_password_reset_form:
     email: Sähköpostiosoite
     submit: Lähetä
+
 reset_password:
     email_subject: '%site_name% - Nollaa käyttäjän %username% salasana'
 
