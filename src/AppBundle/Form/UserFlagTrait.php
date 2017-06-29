@@ -38,7 +38,7 @@ trait UserFlagTrait {
         }
     }
 
-    private function isModerator($comment, array $options): bool {
+    private function isModerator($entity, array $options): bool {
         /** @noinspection PhpUndefinedMethodInspection */
         $user = $this->tokenStorage->getToken()->getUser();
 
@@ -49,11 +49,13 @@ trait UserFlagTrait {
         if ($options['forum']) {
             $forum = $options['forum'];
         } elseif (
-            $comment instanceof Comment &&
-            $comment->getSubmission() instanceof Submission &&
-            $comment->getSubmission()->getForum() instanceof Forum
+            $entity instanceof Comment &&
+            $entity->getSubmission() instanceof Submission &&
+            $entity->getSubmission()->getForum()
         ) {
-            $forum = $comment->getSubmission()->getForum();
+            $forum = $entity->getSubmission()->getForum();
+        } elseif ($entity instanceof Submission && $entity->getForum()) {
+            $forum = $entity->getForum();
         } else {
             return false;
         }
