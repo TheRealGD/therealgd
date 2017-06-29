@@ -208,7 +208,7 @@ submission_form:
     url: URL
     body: Sisältö
     forum: Foorumi
-    sticky: Sticky
+    sticky: Kiinnitä
     create: Lisää
     edit: Muokkaa lisäystä
     delete: Poista lisäys
