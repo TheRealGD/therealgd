@@ -29,14 +29,14 @@ abstract class AbstractLocalLinkParser extends AbstractInlineParser {
     /**
      * {@inheritdoc}
      */
-    public final function getCharacters() {
+    final public function getCharacters() {
         return ['/', $this->getPrefix()];
     }
 
     /**
      * {@inheritdoc}
      */
-    public final function parse(InlineParserContext $inlineContext) {
+    final public function parse(InlineParserContext $inlineContext) {
         $cursor = $inlineContext->getCursor();
 
         $previousChar = $cursor->peek(-1);

@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Seized from <https://symfony.com/doc/current/routing/redirect_trailing_slash.html>
+ * Seized from <https://symfony.com/doc/current/routing/redirect_trailing_slash.html>.
  */
 class RedirectingController {
     public function removeTrailingSlashAction(Request $request) {

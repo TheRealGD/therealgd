@@ -27,7 +27,7 @@ final class WikiController extends Controller {
 
         if (!$page) {
             return $this->render('@RadditApp/wiki_404.html.twig', [
-                'path' => $path
+                'path' => $path,
             ], new Response('', 404));
         }
 

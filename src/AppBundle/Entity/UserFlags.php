@@ -10,7 +10,7 @@ final class UserFlags {
     const FLAGS = [
         self::FLAG_NONE,
         self::FLAG_MODERATOR,
-        self::FLAG_ADMIN
+        self::FLAG_ADMIN,
     ];
 
     const FLAG_NONE = 0;

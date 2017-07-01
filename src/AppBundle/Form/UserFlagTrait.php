@@ -27,7 +27,7 @@ trait UserFlagTrait {
                 $choices['admin'] = UserFlags::FLAG_ADMIN;
             }
 
-            /** @noinspection PhpUnusedParameterInspection */
+            /* @noinspection PhpUnusedParameterInspection */
             $builder->add('userFlag', ChoiceType::class, [
                 'choices' => $choices,
                 'choice_label' => function ($key, $name) {

@@ -13,5 +13,5 @@ if (strpos($cdn, '//') !== false) {
 $container->loadFromExtension('framework', [
     'assets' => [
         $key => $cdn,
-    ]
+    ],
 ]);
