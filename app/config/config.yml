@@ -49,11 +49,7 @@ twig:
 doctrine:
     dbal:
         driver:   pdo_pgsql
-        host:     "%env(DATABASE_HOST)%"
-        port:     "%env(DATABASE_PORT)%"
-        dbname:   "%env(DATABASE_NAME)%"
-        user:     "%env(DATABASE_USER)%"
-        password: "%env(DATABASE_PASSWORD)%"
+        url:      "%env(DATABASE_URL)%"
         charset:  UTF8
         types:
             inet: Doctrine\DBAL\PostgresTypes\InetType
