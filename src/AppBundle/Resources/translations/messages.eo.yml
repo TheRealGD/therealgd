@@ -1,3 +1,7 @@
+add_moderator:
+    title: Aldoni kontrolanton al %forum%
+    notice: La uzanto levigis al kontrolanto
+
 ban_add:
     title: Forbari IP adreson
     banned_notice: La IP adreso estas forbara.
@@ -44,12 +48,17 @@ comments:
     viewing_thread: Vidi unu komentan fadenon
     thread_return: Vidi ĉiujn komentojn
     return_to_forum: ← Reveni al %forum%
+    edit_info: (redaktis %edited_at%)
+    moderator_info: (kontrolanto redaktis %edited_at%)
 
 comment_form:
     comment: Komento
-    submit: Sendi
+    submit: Afiŝis
     edit_title: Redaktas komenton
     create_title: Skribas komenton
+
+compose_message:
+    title: Kreas mesaĝon por %username%
 
 create_forum:
     create_new_forum: Kreas novan forumon
@@ -68,17 +77,20 @@ forum:
     edit: Redakti fourmon
     subscribe: Aboni
     unsubscribe: Malaboni
-    subscriber_count: '{0} Neniam abonantoj|{1} %count% abonanto|[1,Inf[ %count% abonantoj'
+    subscriber_count: '{0} Sen abonantoj|{1} %count% abonanto|[1,Inf[ %count% abonantoj'
+    add_moderator: Aldoni kontrolanto
 
 forum_form:
     name: Nomo
     title: Titolo
     description: Priskribo
+    category: Kategorio
     create: Krei forumon
-    save: Konservi modifiĝojn
+    save: Konservi ŝanĝojn
     delete: Savi forumon
     confirm_delete: Ĉu vi certe volas savi ĉi-tion forumon kaj ĉiujn komentojn kaj ĉiujn sendadojn?
     featured: Malfonen porti
+    uncategorized_placeholder: (senkategorio)
 
 forum_list:
     name: Nomo
@@ -86,11 +98,16 @@ forum_list:
     subscribers: Abonantoj
     page_title: Listo de forumoj
     create_forum: Krei forumon
+    submission_count: Afiŝonombro
+    list_view: Lista vido
+    category_view: Kategoria vido
+    uncategorized: Senkategoria vido
 
 forum_moderators:
     title: Kontrolantoj de /%forum_name%
     username: Uzantonomo
     since: Ekde
+    last_seen: Laste vidis
 
 front:
     subscribed_forums: Abonaj forumoj
@@ -98,12 +115,15 @@ front:
     featured_forums: Priatentitaj Forumoj
     no_forums: Estas neniuj priatentitaj forumoj por montri.
     all: Ĉiuj
-    featured: Priatentita
+    featured: Priatentitaj
+    subscribed: Abonaj
 
 inbox:
     title: Enirkesto
     clear_inbox: Vakigi enirkeston
     clear_notice: La enirkeston vakigis.
+    empty: La enirkesto estas vakiga
+    message_reply_head: 'Re: %title%'
 
 login_form:
     log_in: Ensaluti
@@ -112,7 +132,26 @@ login_form:
     reset_password: Reŝargi pasvorton?
 
 markdown_type:
-    help: Sintakso referenco
+    help: Sintaksa referenco
+
+message_form:
+    title: Titolo
+    message: Mesaĝo
+    send: Sendi
+    reply: Respondi
+
+message_list:
+    page_title: Mesaĝoj
+    title: Titolo
+    replies: Respondoj
+    from: de
+    to: al
+    sent: Sendis
+    no_messages: Sen mesaĝoj montri.
+
+moderator_form:
+    user: Uzantonomo
+    submit: Aldoni tiel kontrolanto
 
 pagination:
     next: Sekva
@@ -144,21 +183,24 @@ reset_password:
         mesaĝon.
 
     email_notice: Reŝargan retpoŝton sendis al specifita adreso.
-    update_notice: Via pasvorton ĝisdatigis.
+    update_notice: Via pasvorto ĝisdatigis.
     title: Reŝargi pasvorton
 
 site_footer:
-    version: Uzas %app% %version% (%branch%). Faris kun ☭.
+    version: Uzanta %app% %version% (%branch%). Farita kun ☭.
 
 site_nav:
-    submit: Sendi
+    submit: Afiŝi
     log_in: Ensaluti
     log_out: Elsaluti
     profile: Profilo
     register: Registri
     my_account: Mia konto
-    user_settings: Uzanto agordoj
+    user_settings: Uzanto-agordoj
     forum_list: Forumoj
+    inbox: Enirkesto (%count%)
+    messages: Mesaĝoj
+    wiki: Vikio
 
 submission_form:
     title: Titolo
@@ -172,12 +214,12 @@ submission_form:
     confirm_delete: Ĉu vi certe volas savi ĉi-tion submission?
 
 submissions:
-    comments: '{0} Neniam komentoj|{1} %count% komento|[1,Inf[ %count% komentoj'
+    comments: '{0} Sen komentoj|{1} %count% komento|[1,Inf[ %count% komentoj'
     delete_notice: La sendadon savis.
     edit: Redakti
     edit_notice: La sendadon redaktis.
-    info_with_forum_name: Sendis de %submitter% %timestamp% en %forum%
-    info_without_forum_name: Sendis de %submitter% %timestamp%
+    info_with_forum_name: Afiŝis de %submitter% %timestamp% en %forum%
+    info_without_forum_name: Afiŝis de %submitter% %timestamp%
     info_at_timestamp: je %timestamp%
     sort_by_hot: Varma
     sort_by_new: Nova
@@ -186,17 +228,43 @@ submissions:
     total_votes: '{1} %count% voĉdono|[0,Inf[ %count% voĉdonoj'
     vote_stats: (+%up%, −%down%)
     ip_ban: IP forbaro
+    edit_info: (redaktis %edited_at%)
+    moderator_info: (kontrolanto redaktis %edit_at%)
+
+time:
+    on_timestamp: je %timestamp%
+    earlier_format: '%relative_time% frue'
+    later_format: '%relative_time% poste'
+
+two_factor:
+    explantation: Por fini la ensaluto, vi devas tajpi la identokontrolo retpoŝtis al %email%.
 
 votes:
-    upovote: Porvoĉdoni
+    upvote: Porvoĉdoni
     downvote: Kontraŭvoĉdoni
     retract_upvote: Retract porvoĉdono
     retract_downvote: Retract kontraŭvoĉdono
 
 user:
-    submissions: Sendadoj
+    submissions: Afiŝoj
     comments: Komentoj
     moderates: '%username% estas kontrolanto por:'
+    username_rules: Permesita karakteroj estas A ĝis Z, a ĝis z, 0 ĝis 9, kaj substrekas.
+    password_rules: Minimuma de 8 karakteroj; maksimuma de 72 ĉar limigoj de la «bcrypt» algoritmo.
+    email_optional: Provizi retpoŝton nedevigas. Ni nur uzos ĝin por reagordi pasvortojn kaj retpoŝti du-faktorajn identokontrolojn.
+    two_factor_explanation: Postuli ke oni devos tajpi identokontrolojn, kiam ensalutos. La kodo retpoŝtos al vi.
+    two_factor_warning: Certigu ke vi havas prava retpoŝtadreso frue ŝaltas ĉi-tiun agordon!
+    toolbox: Ilaro
+    message: Sendi mesaĝon
+    registered: Registris %timestamp%
+
+user_flag:
+    post_as_label: Afiŝi tiel
+    none_label: (sen)
+    admin: administranto
+    admin_label: Administranto
+    moderator: kontrolanto
+    moderator_label: Kontrolanto
 
 user_form:
     username: Uzantonomo
@@ -206,13 +274,41 @@ user_form:
     repeat_new_password: Nova pasvorto (ripetu)
     email: Retpoŝto
     register: Registri
+    verification: Certigo
+    two_factor_enabled: Ŝalti du-faktoran identokontrolon
     save: Konservi modifiĝojn
 
 user_settings:
-    title: Rekontas uzanton agordojn por %username%
-    update_notice: Uzanto agordojn ĝisdatigis.
+    title: Redaktante uzanton-agordojn por %username%
+    update_notice: Uzanto-agordoj ĝisdatigis.
 
 user_settings_form:
     locale: Lingvo
     night_mode: Nokta reĝimo
     save: Konservi modifiĝojn
+
+wiki:
+    not_found_title: Ne trovis paĝon.
+    not_found_message: La petitis paĝon ne trovitis.
+    create_this_page: Krei ĉi-tiun paĝon
+    editing_title: Redaktas "%path%"
+    create_title: Kreas "%path%"
+    history_title: Montras historion de "%path%"
+    id: "#%id%"
+    revision_time: Redaktis
+    user: Uzanto
+    id_label: ID
+    locked_notice: La paĝon ŝlositis. Nur administrantoj povas redakti ĝin.
+    page_title: Paĝa Titolo
+    path: Dosierindiko
+    all_pages: Ĉiuj paĝoj
+    page_history: Paĝa historio
+    edit_page: Redakti paĝon
+    toolbox: Ilaro
+    navigation: Navigado
+    last_edited: Laste redaktis de %username% %timestamp%
+
+wiki_form:
+    title: Titolo
+    body: Korpo
+    submit: Afiŝi
