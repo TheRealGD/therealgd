@@ -1,33 +1,66 @@
 {% spaceless %}
-  <nav class="site-nav">
-    <ul>
-      <li><a href="{{ path('raddit_app_front') }}">{{ raddit_app_site_name() }}</a></li>
-      <li><a href="{{ path('raddit_app_forum_list') }}">{{ 'site_nav.forum_list'|trans }}</a></li>
-      <li><a href="{{ path('raddit_app_wiki') }}">{{ 'site_nav.wiki'|trans }}</a></li>
-    </ul>
+  {%- set notification_count = is_granted('ROLE_USER') ? app.user.notifications|length : 0 -%}
 
-    <ul class="right-nav">
-      {% if not is_granted('ROLE_USER') %}
-        <li><a href="{{ path('raddit_app_login') }}">{{ 'site_nav.log_in'|trans }}</a></li>
-        <li><a href="{{ path('raddit_app_registration') }}">{{ 'site_nav.register'|trans }}</a></li>
-      {% else %}
-        {% with {notification_count: app.user.notifications|length} %}
-        {% if notification_count > 0 %}
-          <li class="has-notifications"><a href="{{ path('raddit_app_inbox') }}">{{ 'site_nav.inbox'|trans({'%count%': '<strong>%d</strong>'|format(notification_count)})|raw }}</a></li>
-        {% endif %}
-        {% endwith %}
-        <li><a href="{{ path('raddit_app_submit', {forum_name: forum is defined and forum ? forum.name : null}) }}">{{ 'site_nav.submit'|trans }}</a></li>
-        <li class="dropdown-container">
-          <a href="#" class="dropdown-toggle"><strong>{{ app.user.username }}</strong></a>
-          <ul class="dropdown-menu">
-            <li><a href="{{ path('raddit_app_user', {username: app.user.username}) }}"><span class="icon icon-user"></span> {{ 'site_nav.profile'|trans }}</a></li>
-            <li><a href="{{ path('raddit_app_message_list') }}"><span class="icon icon-mail"></span> {{ 'site_nav.messages'|trans }}</a></li>
-            <li><a href="{{ path('raddit_app_edit_user', {username: app.user.username}) }}"><span class="icon icon-lock"></span> {{ 'site_nav.my_account'|trans }}</a></li>
-            <li><a href="{{ path('raddit_app_user_settings', {username: app.user.username}) }}"><span class="icon icon-settings"></span> {{ 'site_nav.user_settings'|trans }}</a></li>
-            <li><a href="{{ logout_path() }}"><span class="icon icon-logout"></span> {{ 'site_nav.log_out'|trans }}</a></li>
-          </ul>
+  <nav class="site-nav">
+    <div class="site-nav__header">
+      <a href="{{ path('raddit_app_front') }}" class="site-nav__logo">{{ raddit_app_site_name() }}</a>
+      {# todo: accessibility #}
+      <a href="#" class="site-nav__mobile-toggle {{ notification_count > 0 ? 'site-nav__mobile-toggle--has-notifications' }}" onclick="$(this).parents('.site-nav').find('.site-nav__inner').toggleClass('site-nav__inner--mobile-visible'); return false"><span class="icon icon-menu"></span></a>
+    </div>
+
+    <div class="site-nav__inner">
+      {# left portion of site nav #}
+      <ul class="site-nav__menu">
+        <li class="site-nav__item">
+          <a href="{{ path('raddit_app_forum_list') }}" class="site-nav__link">{{ 'site_nav.forum_list'|trans }}</a>
         </li>
-      {% endif %}
-    </ul>
+
+        <li class="site-nav__item">
+          <a href="{{ path('raddit_app_wiki') }}" class="site-nav__link">{{ 'site_nav.wiki'|trans }}</a>
+        </li>
+      </ul>
+
+      {# right portion of site nav #}
+      <ul class="site-nav__menu right-nav">
+        {% if not is_granted('ROLE_USER') %}
+          <li class="site-nav__item">
+            <a href="{{ path('raddit_app_login') }}" class="site-nav__link">{{ 'site_nav.log_in'|trans }}</a>
+          </li>
+
+          <li class="site-nav__item">
+            <a href="{{ path('raddit_app_registration') }}" class="site-nav__link">{{ 'site_nav.register'|trans }}</a>
+          </li>
+        {% else %}
+          {# notifications #}
+          {% if notification_count > 0 %}
+            <li class="site-nav__item site-nav__item--has-notifications">
+              <a href="{{ path('raddit_app_inbox') }}" class="site-nav__link">
+                {{- 'site_nav.inbox'|trans({'%count%': '<strong>%d</strong>'|format(notification_count)})|raw -}}
+              </a>
+            </li>
+          {% endif %}
+
+          {# submit button #}
+          <li class="site-nav__item">
+            <a href="{{ path('raddit_app_submit', {forum_name: forum is defined and forum ? forum.name : null}) }}" class="site-nav__link">
+              {{- 'site_nav.submit'|trans -}}
+            </a>
+          </li>
+
+          {# user menu #}
+          <li class="site-nav__item dropdown-container">
+            <a href="#" class="site-nav__link dropdown-toggle"><strong>{{ app.user.username }}</strong></a>
+            <ul class="dropdown-menu">
+              <li><a href="{{ path('raddit_app_user', {username: app.user.username}) }}"><span class="icon icon-user"></span> {{ 'site_nav.profile'|trans }}</a></li>
+              <li><a href="{{ path('raddit_app_message_list') }}"><span class="icon icon-mail"></span> {{ 'site_nav.messages'|trans }}</a></li>
+              <li><a href="{{ path('raddit_app_edit_user', {username: app.user.username}) }}"><span class="icon icon-lock"></span> {{ 'site_nav.my_account'|trans }}</a></li>
+              <li><a href="{{ path('raddit_app_user_settings', {username: app.user.username}) }}"><span class="icon icon-settings"></span> {{ 'site_nav.user_settings'|trans }}</a></li>
+              <li><a href="{{ logout_path() }}"><span class="icon icon-logout"></span> {{ 'site_nav.log_out'|trans }}</a></li>
+            </ul>
+          </li>
+
+        {% endif %}
+      </ul>
+    </div>
   </nav>
 {% endspaceless %}
