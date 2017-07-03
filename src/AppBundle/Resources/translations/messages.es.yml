@@ -1,3 +1,7 @@
+add_moderator:
+    title: Agrega un moderador a %forum%
+    notice: El usuario ha sido promovido a moderador.
+
 ban_add:
     title: Banea un direccion IP
     banned_notice: La direccion IP ha sido baneada
@@ -18,7 +22,7 @@ ban_list:
     user: Usuario
     user_none: none
     expires: Expira
-    expires_never: nunca
+    expires_never: Nunca
     remove: Remover baneos
 
 banned:
@@ -26,7 +30,7 @@ banned:
     message: Has sido baneado!
 
 comments:
-    author_deleted: '[deleted]'
+    author_deleted: '[Eliminado]'
     comments: Comentarios
     delete: Borrar
     delete_thread: Borrar con respuestas
@@ -44,12 +48,17 @@ comments:
     viewing_thread: Viendo comentario unico
     thread_return: Ver todos los comentarios
     return_to_forum: ← Regresar a %forum%
+    edit_info: (Editado %edited_at%)
+    moderator_info: (editado por un moderador %edited_at%)
 
 comment_form:
     comment: Comentar
     submit: Presentar
     edit_title: Editando comentario
     create_title: Creando un comentario
+
+compose_message:
+    title: Escribe un mensaje para %username%
 
 create_forum:
     create_new_forum: Crea un nuevo foro
@@ -69,16 +78,19 @@ forum:
     subscribe: Subscribir
     unsubscribe: Desubscribir
     subscriber_count: '{0} No subscriptores|{1} %count% subscriptor|[1,Inf[ %count% subscriptores'
+    add_moderator: Agregar moderador
 
 forum_form:
     name: Nombre
     title: Titulo
     description: Descripcion
+    category: Categoría
     create: Crear foro
     save: Guardar cambios
     delete: Borrar foro
     confirm_delete: Estas segur@ que desea borrar este foro y todo su contenido y comentarios?
     featured: Mostrar en la pagina principal
+    uncategorized_placeholder: (Sin categorizar)
 
 forum_list:
     name: Nombre
@@ -86,11 +98,16 @@ forum_list:
     subscribers: Subscriptores
     page_title: Lista de foros
     create_forum: Crear foro
+    list_view: Ver por lista
+    category_view: Ver por categoría
+    uncategorized: Sin categorizar
+
 
 forum_moderators:
     title: Moderadores de /%forum_name%
     username: Usuario
     since: desde
+    last_seen: Visto en
 
 front:
     subscribed_forums: Subscripto en
@@ -98,6 +115,15 @@ front:
     featured_forums: Foros principales
     no_forums: No hay foros principales para mostrar.
     all: Todos
+    featured: Principales
+    subscribed: Subscritos
+
+inbox:
+    title: Bandeja de entrada
+    clear_inbox: Limpiar bandeja
+    clear_notice: La bandeja de entrada ha sido limpiada
+    empty: Su bandeja de entrada esta vacía
+    message_reply_head: 'Re: %title%'
 
 login_form:
     log_in: Ingresar
@@ -107,6 +133,25 @@ login_form:
 
 markdown_type:
     help: Referencia de sintaxis
+    
+message_form:
+    title: Titulo
+    message: Mensaje
+    send: Enviar
+    reply: Responder
+    
+message_list:
+    page_title: Mensajes
+    title: Titulos
+    replies: Respuestas
+    from: De
+    to: A
+    sent: Enviado
+    no_messages: No hay mensajes para mostrar
+
+moderator_form:
+    user: Usuario
+    submit: Agregar como moderador
 
 pagination:
     next: Siguiente
@@ -152,6 +197,9 @@ site_nav:
     my_account: Mi cuenta
     user_settings: Opciones de usuario
     forum_list: Foros
+    inbox: Bandeja de Entrada (%count%)
+    messages: Mensajes
+    wiki: Wiki
 
 submission_form:
     title: Titulo
@@ -159,7 +207,7 @@ submission_form:
     body: Contenido
     forum: Foro
     sticky: Sticky
-    create: Crear contenido
+    create: Publicar contenido
     edit: Editar contenido
     delete: Borrar contenido
     confirm_delete: Está seguro que desea borrar este contenido?
@@ -178,7 +226,17 @@ submissions:
     sort_by_controversial: Controversial
     total_votes: '{1} %count% voto|[0,Inf[ %count% votos'
     vote_stats: (+%up%, −%down%)
-    ip_ban: Banear IP
+    ip_ban: Banear por IP
+    edit_info: (Editado %edited_at%)
+    moderator_info: (editado por un moderador %edited_at%)
+
+time:
+    on_timestamp: en %timestamp%
+    earlier_format: '%relative_time% earlier'
+    later_format: '%relative_time% later'
+    
+two_factor:
+    explanation: Para completar el logueo debe introducir el código de verficación enviado al correo %email%.
 
 votes:
     upvote: Votar
@@ -190,6 +248,22 @@ user:
     submissions: Presentaciones
     comments: Comentarios
     moderates: '%username% es un moderador en:'
+    username_rules: Los caracteres permitidos son A-Z, a-z, 0-9 y raya baja.
+    password_rules: Mínimo de 8 caracteres; máximo de 72 debido a limitaciones en el algoritmo bcrypt.
+    email_optional: Proveer una dirección de email es opcional. Solo la utilizaremos para reiniciar contraseñas y enviar códigos de autenticación para el logueo de dos pasos.
+    two_factor_explanation: Demanda que un código de autenticación sea entrado cuando te logueas. Este código se te será enviado a tu email.
+    two_factor_warning: Asegúrate que tienes una dirección de email válida antes de habilitar esta opción!
+    toolbox: Herramientas
+    message: Enviar mensaje
+    registered: Registrado el %timestamp%
+    
+user_flag:
+    post_as_label: Publicar como
+    none_label: (none)
+    admin: admin
+    admin_label: Admin
+    moderator: moderador
+    moderator_label: Moderador
 
 user_form:
     username: Usuario
@@ -199,6 +273,8 @@ user_form:
     repeat_new_password: Repetir nueva contraseña
     email: Email
     register: Registrar
+    verification: Verification
+    two_factor_enabled: Hablitar autenticatión de dos pasos
     save: Guardar cambios
 
 user_settings:
@@ -207,4 +283,31 @@ user_settings:
 
 user_settings_form:
     locale: Lenguaje
+    night_mode: Modo nocturno
     save: Guardar cambios
+    
+    wiki:
+    not_found_title: Página no encontrada
+    not_found_message: La página solicitada no ha sido encontrada.
+    create_this_page: Crea esta página
+    editing_title: Editando "%path%"
+    create_title: Creando "%path%"
+    history_title: Mostrando historial de "%path%"
+    id: "#%id%"
+    revision_time: Revisado
+    user: Usuario
+    id_label: ID
+    locked_notice: Esta página está bloqueada, solo puede ser editada por los administradores.
+    page_title: Título
+    path: Dirección
+    all_pages: Todas las páginas
+    page_history: Historial de la página
+    edit_page: Editar página
+    toolbox: Herramientas
+    navigation: Navigación
+    last_edited: Última edición por %username% %timestamp%
+
+wiki_form:
+    title: Título
+    body: Contenido
+    submit: Publicar
