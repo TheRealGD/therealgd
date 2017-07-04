@@ -13,6 +13,8 @@ contributions to the code base.
 
 * Esperanto translation by Jade.
 
+* Finnish translation by average scott.
+
 * German translation by evilsjw.
 
 * Greek translation contributed by ziq.
