@@ -219,8 +219,8 @@ submissions:
     delete_notice: Lisäys poistettu.
     edit: Muokkaa
     edit_notice: Lisäystä muokattu.
-    info_with_forum_name: %submitter% lisäsi %timestamp% foorumilla %forum%
-    info_without_forum_name: %submitter% lisäsi %timestamp%
+    info_with_forum_name: "%submitter% lisäsi %timestamp% foorumilla %forum%"
+    info_without_forum_name: "%submitter% lisäsi %timestamp%"
     info_at_timestamp: lisätty %timestamp%
     sort_by_hot: Kuumat
     sort_by_new: Uudet
