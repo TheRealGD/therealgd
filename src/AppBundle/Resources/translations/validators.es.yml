@@ -1,4 +1,4 @@
 'The comment must not be empty.': 'El comentario no debe estar vacio.'
 'The name must contain only contain letters, numbers, and underscores.': 'El nombre solo puede contener letras, numeros y guion bajo.'
 'Two-factor cannot be enabled without providing an email address.': 'Autenticaciòn de dos pasos no puese ser habilitada sin una direcciòn de email vàlida.'
-'No such user.':'El usuario no existe.'
+'No such user.': 'El usuario no existe.'
