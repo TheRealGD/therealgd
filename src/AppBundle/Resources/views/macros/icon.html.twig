@@ -1,0 +1,5 @@
+{%- macro icon(name) -%}
+  <span class="icon">
+    {{- source('@RadditApp/icons/%s.svg'|format(name)) -}}
+  </span>
+{%- endmacro -%}

@@ -22,7 +22,6 @@ tags
 /vendor/
 /web/build/
 /web/bundles/
-/web/fonts/
 /web/media/
 /web/submission_images/*
 !/web/submission_images/.gitkeep
@@ -31,3 +30,4 @@ tags
 
 /web/css/
 /web/js/
+/web/fonts/

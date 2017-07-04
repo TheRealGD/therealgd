@@ -4,6 +4,7 @@
         "@symfony/webpack-encore": "^0.7.2",
         "babel-plugin-syntax-dynamic-import": "^6.18.0",
         "babel-preset-es2015": "^6.24.1",
+        "font-blast": "^0.6.1",
         "fontello-cli": "^0.4.0",
         "less": "^2.7.2",
         "less-loader": "^4.0.4",
@@ -18,11 +19,8 @@
         "underscore": "^1.8.3"
     },
     "scripts": {
-        "assets-dev": "node_modules/.bin/encore dev",
-        "assets-prod": "node_modules/.bin/encore production",
-        "build-dev": "npm run assets-dev && npm run install-fonts",
-        "build-prod": "npm run assets-prod && npm run install-fonts",
-        "install-fonts": "node_modules/.bin/fontello-cli install --config ./fontello.json --css ./web/fonts/css --font ./web/fonts/font",
+        "build-dev": "npm run assets-dev",
+        "build-prod": "npm run assets-prod",
         "watch": "node_modules/.bin/encore dev --watch"
     }
 }

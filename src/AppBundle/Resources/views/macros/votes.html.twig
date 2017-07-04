@@ -3,6 +3,8 @@
 {%- endmacro -%}
 
 {%- block vote -%}
+  {%- from '@RadditApp/macros/icon.html.twig' import icon -%}
+
   {%- set user_vote = is_granted('ROLE_USER') ? entity.userVote(app.user) : null -%}
   {%- spaceless -%}
     <form action="{{ path(route, {id: entity.id}) }}"
@@ -18,14 +20,14 @@
 
       <button type="submit" name="choice" value="{{ block('vote_choice_up') }}"
               class="vote-button vote-up" title="{{ block('vote_up_label') }}">
-        <span class="inner" aria-hidden="true"><span class="icon icon-up"></span></span>
+        <span class="inner" aria-hidden="true">{{ icon('up') }}</span>
       </button>
 
       <span class="vote-score">{{ entity.netScore }}</span>
 
       <button type="submit" name="choice" value="{{ block('vote_choice_down') }}"
               class="vote-button vote-down" title="{{ block('vote_down_label') }}">
-        <span class="inner" aria-hidden="true"><span class="icon icon-down"></span></span>
+        <span class="inner" aria-hidden="true">{{ icon('down') }}</span>
       </button>
     </form>
   {%- endspaceless -%}

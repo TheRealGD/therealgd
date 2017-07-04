@@ -1,3 +1,4 @@
+{% from '@RadditApp/macros/icon.html.twig' import icon %}
 {% spaceless %}
   {%- set notification_count = is_granted('ROLE_USER') ? app.user.notifications|length : 0 -%}
 
@@ -5,7 +6,7 @@
     <div class="site-nav__header">
       <a href="{{ path('raddit_app_front') }}" class="site-nav__logo">{{ raddit_app_site_name() }}</a>
       {# todo: accessibility #}
-      <a href="#" class="site-nav__mobile-toggle {{ notification_count > 0 ? 'site-nav__mobile-toggle--has-notifications' }}" onclick="$(this).parents('.site-nav').find('.site-nav__inner').toggleClass('site-nav__inner--mobile-visible'); return false"><span class="icon icon-menu"></span></a>
+      <a href="#" class="site-nav__mobile-toggle {{ notification_count > 0 ? 'site-nav__mobile-toggle--has-notifications' }}" onclick="$(this).parents('.site-nav').find('.site-nav__inner').toggleClass('site-nav__inner--mobile-visible'); return false">{{ icon('menu') }}</a>
     </div>
 
     <div class="site-nav__inner">
@@ -51,11 +52,11 @@
           <li class="site-nav__item dropdown-container">
             <a href="#" class="site-nav__link dropdown-toggle"><strong>{{ app.user.username }}</strong></a>
             <ul class="dropdown-menu">
-              <li><a href="{{ path('raddit_app_user', {username: app.user.username}) }}"><span class="icon icon-user"></span> {{ 'site_nav.profile'|trans }}</a></li>
-              <li><a href="{{ path('raddit_app_message_list') }}"><span class="icon icon-mail"></span> {{ 'site_nav.messages'|trans }}</a></li>
-              <li><a href="{{ path('raddit_app_edit_user', {username: app.user.username}) }}"><span class="icon icon-lock"></span> {{ 'site_nav.my_account'|trans }}</a></li>
-              <li><a href="{{ path('raddit_app_user_settings', {username: app.user.username}) }}"><span class="icon icon-settings"></span> {{ 'site_nav.user_settings'|trans }}</a></li>
-              <li><a href="{{ logout_path() }}"><span class="icon icon-logout"></span> {{ 'site_nav.log_out'|trans }}</a></li>
+              <li><a href="{{ path('raddit_app_user', {username: app.user.username}) }}">{{ icon('user') }} {{ 'site_nav.profile'|trans }}</a></li>
+              <li><a href="{{ path('raddit_app_message_list') }}">{{ icon('mail') }} {{ 'site_nav.messages'|trans }}</a></li>
+              <li><a href="{{ path('raddit_app_edit_user', {username: app.user.username}) }}">{{ icon('lock') }} {{ 'site_nav.my_account'|trans }}</a></li>
+              <li><a href="{{ path('raddit_app_user_settings', {username: app.user.username}) }}">{{ icon('settings') }} {{ 'site_nav.user_settings'|trans }}</a></li>
+              <li><a href="{{ logout_path() }}">{{ icon('logout') }} {{ 'site_nav.log_out'|trans }}</a></li>
             </ul>
           </li>
 
