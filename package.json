@@ -19,8 +19,8 @@
         "underscore": "^1.8.3"
     },
     "scripts": {
-        "build-dev": "npm run assets-dev",
-        "build-prod": "npm run assets-prod",
+        "build-dev": "node_modules/.bin/encore dev",
+        "build-prod": "node_modules/.bin/encore production",
         "watch": "node_modules/.bin/encore dev --watch"
     }
 }
