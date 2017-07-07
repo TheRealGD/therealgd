@@ -12,9 +12,9 @@ coincidental.
 * PHP >= 7.0 with the APCu, curl, and PDO_PGSQL extensions.
 * PostgreSQL >= 9.3
 * [Composer](https://getcomposer.org/)
-* [Node.js](https://nodejs.org/en/), optionally with [Yarn](https://yarnpkg.com)
+* [Node.js](https://nodejs.org/en/) (>= 8.x preferred)
 
-My dev environment runs PHP 7.1 and PostgreSQL 9.4 under macOS Sierra. If any
+My dev environment runs PHP 7.1 and PostgreSQL 9.5 under macOS Sierra. If any
 compatibility issues with other software versions or operating systems should
 arise, a bug report would be most appreciated.
 
@@ -24,10 +24,10 @@ Clone the repository somewhere and navigate there with the command line.
 
 ### Building frontend assets
 
-1.  Run `npm install` (`yarn install` is preferred if you have Yarn).
+1. Run `npm install`.
 
-2.  Run `npm run build-dev`/`yarn run build-dev`. The `build` and `fonts`
-    directories in `web` should now contain some files.
+2. Run `npm run build-dev`. The `web/build/` directory should now contain some
+   files.
 
 ### Setting up the backend
 
