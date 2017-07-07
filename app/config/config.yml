@@ -36,6 +36,7 @@ framework:
     php_errors:
         log: true
     cache:           { app: cache.system }
+    web_link:        { enabled: true }
 
 
 # Twig Configuration
