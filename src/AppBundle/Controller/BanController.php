@@ -2,9 +2,13 @@
 
 namespace Raddit\AppBundle\Controller;
 
+use Doctrine\Common\Collections\Criteria;
+use Pagerfanta\Adapter\DoctrineSelectableAdapter;
+use Pagerfanta\Pagerfanta;
 use Raddit\AppBundle\Entity\Ban;
 use Raddit\AppBundle\Entity\User;
 use Raddit\AppBundle\Form\BanType;
+use Raddit\AppBundle\Repository\BanRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,10 +27,17 @@ final class BanController extends Controller {
     /**
      * @Security("is_granted('ROLE_ADMIN')")
      *
+     * @param int           $page
+     * @param BanRepository $banRepository
+     *
      * @return Response
      */
-    public function listAction() {
-        $bans = $this->getDoctrine()->getRepository(Ban::class)->findAll();
+    public function listAction(int $page, BanRepository $banRepository) {
+        $criteria = Criteria::create()->orderBy(['id' => 'DESC']);
+
+        $bans = new Pagerfanta(new DoctrineSelectableAdapter($banRepository, $criteria));
+        $bans->setMaxPerPage(25);
+        $bans->setCurrentPage($page);
 
         return $this->render('@RadditApp/ban_list.html.twig', [
             'bans' => $bans,

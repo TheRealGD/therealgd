@@ -1,11 +1,10 @@
 {% extends '@RadditApp/base.html.twig' %}
 
-{% block title %}
-  {{ 'ban_list.title'|trans }}
-{% endblock %}
+{% block title 'ban_list.title'|trans %}
+{% block page_classes 'ban-list-page' %}
 
-{% block page_classes %}
-  ban-list-page
+{% block head %}
+  {{ include('@RadditApp/includes/meta_pagination.html.twig', {pager: bans}, with_context = false) }}
 {% endblock %}
 
 {% block body %}
@@ -59,4 +58,6 @@
 
     <p><button type="submit" class="button">{{ 'ban_list.remove'|trans }}</button></p>
   </form>
+
+  {{ include('@RadditApp/includes/pagination.html.twig', {pager: bans}, with_context = false) }}
 {% endblock %}

@@ -163,9 +163,10 @@ raddit_app_clear_inbox:
     requirements: { _format: html|json }
 
 raddit_app_bans:
-    defaults: { _controller: RadditAppBundle:Ban:list }
-    path: /bans
+    defaults: { _controller: RadditAppBundle:Ban:list, page: 1 }
+    path: /bans/{page}
     methods: [GET]
+    requirements: { page: \d+ }
 
 raddit_app_add_ban:
     defaults: { _controller: RadditAppBundle:Ban:add }
