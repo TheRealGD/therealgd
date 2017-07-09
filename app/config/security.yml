@@ -35,3 +35,5 @@ security:
             remember_me:
                 secret: "%secret"
                 always_remember_me: true
+
+            user_checker: Raddit\AppBundle\Security\UserChecker

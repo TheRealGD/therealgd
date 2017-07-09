@@ -3,8 +3,12 @@
 namespace Raddit\Tests\AppBundle\Entity;
 
 use PHPUnit\Framework\TestCase;
+use Raddit\AppBundle\Entity\Ban;
 use Raddit\AppBundle\Entity\User;
 
+/**
+ * @group time-sensitive
+ */
 class UserTest extends TestCase {
     /**
      * @dataProvider nonCanonicalUsernameProvider
@@ -24,6 +28,41 @@ class UserTest extends TestCase {
      */
     public function testCanCanonicalizeEmail($expected, $input) {
         $this->assertEquals($expected, User::canonicalizeEmail($input));
+    }
+
+    public function testNewUserIsNotBanned() {
+        $user = new User();
+
+        $this->assertFalse($user->isBanned());
+    }
+
+    public function testUserBanIsEffective() {
+        $user = new User();
+        $user->getBans()->add(new Ban());
+
+        $this->assertTrue($user->isBanned());
+    }
+
+    public function testExpiringUserBanIsEffective() {
+        $ban = new Ban();
+        $ban->setExpiryDate(new \DateTime('@'.time().' +1 hour'));
+
+        $user = new User();
+        $user->getBans()->add($ban);
+
+        $this->assertTrue($user->isBanned());
+    }
+
+    public function testExpiredUserBanIsIneffective() {
+        $ban = new Ban();
+        $ban->setExpiryDate(new \DateTime('@'.time().' +1 hour'));
+
+        $user = new User();
+        $user->getBans()->add($ban);
+
+        sleep(7200); // 2 hours
+
+        $this->assertFalse($user->isBanned());
     }
 
     /**

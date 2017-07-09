@@ -131,6 +131,13 @@ class User implements UserInterface, TwoFactorInterface {
     private $comments;
 
     /**
+     * @ORM\OneToMany(targetEntity="Ban", mappedBy="user")
+     *
+     * @var Ban[]|Collection|Selectable
+     */
+    private $bans;
+
+    /**
      * @ORM\Column(type="text")
      *
      * @var string
@@ -176,6 +183,7 @@ class User implements UserInterface, TwoFactorInterface {
         $this->notifications = new ArrayCollection();
         $this->submissions = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->bans = new ArrayCollection();
     }
 
     /**
@@ -398,6 +406,27 @@ class User implements UserInterface, TwoFactorInterface {
      */
     public function getComments() {
         return $this->comments;
+    }
+
+    /**
+     * @return Collection|Selectable|Ban[]
+     */
+    public function getBans() {
+        return $this->bans;
+    }
+
+    /**
+     * Checks if a user is banned.
+     *
+     * @return bool
+     */
+    public function isBanned(): bool {
+        $criteria = Criteria::create()
+            ->where(Criteria::expr()->eq('expiryDate', null))
+            ->orWhere(Criteria::expr()->gte('expiryDate', new \DateTime('@'.time())))
+            ->setMaxResults(1);
+
+        return count($this->bans->matching($criteria)) > 0;
     }
 
     /**

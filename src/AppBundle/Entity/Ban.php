@@ -33,7 +33,7 @@ class Ban {
     private $reason;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="bans")
      *
      * @var User
      */
