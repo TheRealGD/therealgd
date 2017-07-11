@@ -8,6 +8,8 @@ framework:
     profiler:
         enabled: true
         collect: false
+    assets:
+        json_manifest_path: ~
 
 web_profiler:
     toolbar: false
