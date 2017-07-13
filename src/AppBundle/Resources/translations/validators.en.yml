@@ -10,4 +10,5 @@
 'External resource is not allowed on line {{ line }}': 'External resource is not allowed on line {{ line }}'
 'expression() syntax is not allowed on line {{ line }}': 'expression() syntax is not allowed on line {{ line }}'
 'expression() syntax is not allowed in strings on line {{ line }}': 'expression() syntax is not allowed in strings on line {{ line }}'
+'Embedded data is not allowed on line {{ line }}': 'Embedded data is not allowed on line {{ line }}'
 'Recursion limit reached': 'Recursion limit reached'

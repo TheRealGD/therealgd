@@ -155,7 +155,7 @@ class CssValidator extends ConstraintValidator {
 
     private function validateCssValue($cssValue, int $recursionDepth) {
         if ($recursionDepth > 5) {
-            $this->context->buildViolation('Recursion limit reached');
+            $this->context->addViolation('Recursion limit reached');
         }
 
         if (is_object($cssValue)) {
@@ -197,6 +197,12 @@ class CssValidator extends ConstraintValidator {
 
         if (stripos($url, 'javascript:') === 0 || stripos($url, 'vbscript:') === 0) {
             $this->context->buildViolation('Script URL is not allowed on line {{ line }}')
+                ->setParameter('{{ line }}', $cssValue->getLineNo())
+                ->addViolation();
+        }
+
+        if (stripos($url, 'data:') === 0) {
+            $this->context->buildViolation('Embedded data is not allowed on line {{ line }}')
                 ->setParameter('{{ line }}', $cssValue->getLineNo())
                 ->addViolation();
         }
