@@ -107,7 +107,11 @@ class CssValidator extends ConstraintValidator {
             foreach ($document->getAllRuleSets() as $cssRuleSet) {
                 $this->validateRuleSet($cssRuleSet);
             }
-        } catch (SourceException | \ErrorException $e) {
+        } catch (SourceException $e) {
+            $this->context->buildViolation('Error from CSS parser: {{ error }}')
+                ->setParameter('{{ error }}', $e->getMessage())
+                ->addViolation();
+        } catch (\ErrorException $e) {
             $this->context->buildViolation('Error from CSS parser: {{ error }}')
                 ->setParameter('{{ error }}', $e->getMessage())
                 ->addViolation();
