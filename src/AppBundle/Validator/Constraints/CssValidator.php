@@ -29,6 +29,9 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
  * - `charset` @-rule with non UTF-8 setting: could possibly be used to evade
  *   the safeguards of this validator.
  *
+ * - `import` @-rule: can cause cross-origin requests and execute arbitrary
+ *    code through CSS.
+ *
  * - `-ms-filter` property: can cause cross-origin requests.
  *
  * - `-moz-binding` property: can execute arbitrary code in Firefox <= 3.0.
@@ -84,6 +87,7 @@ class CssValidator extends ConstraintValidator {
         $value = (string) $value;
 
         $this->assertDoesNotContainDxFilters($value);
+        $this->assertDoesNotContainImportRule($value);
 
         $parserSettings = Settings::create()
             // prevent calls to mb_* functions with bad, user-provided charsets
@@ -131,6 +135,20 @@ class CssValidator extends ConstraintValidator {
         if (preg_match('/\b[pP][rR][oO][gG][iI][dD]:/', $css, $matches, PREG_OFFSET_CAPTURE)) {
             $this->context->buildViolation('"progid:" syntax is not allowed on line {{ line }}')
                 ->setParameter('{{ line }}', substr_count($css, "\n", null, $matches[0][1]) + 1)
+                ->addViolation();
+        }
+    }
+
+    /**
+     * Special check for import at-rule, since the parser strangely enough won't
+     * handle this either.
+     *
+     * @param string $css
+     */
+    private function assertDoesNotContainImportRule(string $css) {
+        if (preg_match('/^(?:.*;)?\s*(\@[iI][mM][pP][oO][rR][tT])\b/', $css, $matches, PREG_OFFSET_CAPTURE)) {
+            $this->context->buildViolation('@import syntax is not allowed on line {{ line }}')
+                ->setParameter('{{ line }}', substr_count($css, "\n", null, $matches[1][1]) + 1)
                 ->addViolation();
         }
     }
