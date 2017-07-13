@@ -5,6 +5,7 @@ namespace Raddit\AppBundle\Form;
 use Doctrine\ORM\EntityRepository;
 use Raddit\AppBundle\Entity\Forum;
 use Raddit\AppBundle\Entity\ForumCategory;
+use Raddit\AppBundle\Entity\Stylesheet;
 use Raddit\AppBundle\Form\Type\MarkdownType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -44,7 +45,27 @@ final class ForumType extends AbstractType {
                 },
                 'required' => false,
                 'placeholder' => 'forum_form.uncategorized_placeholder',
-            ]);
+            ])
+            ->add('stylesheet', EntityType::class, [
+                'class' => Stylesheet::class,
+                'choice_label' => 'name',
+                'placeholder' => 'forum_form.no_style',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('s')->where('s.nightFriendly = FALSE');
+                },
+                'required' => false,
+            ])
+            ->add('nightStylesheet', EntityType::class, [
+                'class' => Stylesheet::class,
+                'choice_label' => 'name',
+                'label' => 'forum_form.night_stylesheet',
+                'placeholder' => 'forum_form.no_style',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('s')->where('s.nightFriendly = TRUE');
+                },
+                'required' => false,
+            ])
+        ;
 
         if ($this->authorizationChecker->isGranted('ROLE_ADMIN')) {
             $builder->add('featured', CheckboxType::class, [

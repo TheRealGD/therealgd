@@ -91,6 +91,9 @@ forum_form:
     confirm_delete: Are you sure you want to delete this forum and all its submissions and comments?
     featured: Show on front page
     uncategorized_placeholder: (uncategorized)
+    stylesheet: Stylesheet
+    night_stylesheet: Stylesheet (night mode)
+    no_style: (no style)
 
 forum_list:
     name: Name
@@ -204,6 +207,23 @@ site_nav:
     messages: Messages
     wiki: Wiki
 
+stylesheets:
+    name: Name
+    css: CSS
+    author: Author
+    edit: Edit
+    append_to_default_style: Append to default style
+    append_to_default_style_description: Leave this checked unless your CSS provides a complete stylesheet for the entire site.
+    night_friendly: Night friendly
+    create_stylesheet: Create stylesheet
+    edit_stylesheet: Edit stylesheet
+    new_stylesheet: New stylesheet
+    list_title: Custom stylesheets
+    created_notice: Your stylesheet has been created.
+    edited_notice: Your changes have been saved.
+    create_title: Creating a stylesheet
+    edit_title: Editing stylesheet %name%
+
 submission_form:
     title: Title
     url: URL
@@ -287,6 +307,7 @@ user_settings:
 user_settings_form:
     locale: Language
     night_mode: Night mode
+    show_custom_stylesheets: Show custom stylesheets
     save: Save changes
 
 wiki:

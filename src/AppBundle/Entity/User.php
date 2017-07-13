@@ -176,6 +176,13 @@ class User implements UserInterface, TwoFactorInterface {
      */
     private $emailAuthCode;
 
+    /**
+     * @ORM\Column(type="boolean", options={"default": true})
+     *
+     * @var bool
+     */
+    private $showCustomStylesheets = true;
+
     public function __construct() {
         $this->created = new \DateTime('@'.time());
         $this->moderatorTokens = new ArrayCollection();
@@ -497,6 +504,20 @@ class User implements UserInterface, TwoFactorInterface {
      */
     public function setEmailAuthCode($authCode) {
         $this->emailAuthCode = $authCode;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isShowCustomStylesheets(): bool {
+        return $this->showCustomStylesheets;
+    }
+
+    /**
+     * @param bool $showCustomStylesheets
+     */
+    public function setShowCustomStylesheets(bool $showCustomStylesheets) {
+        $this->showCustomStylesheets = $showCustomStylesheets;
     }
 
     /**

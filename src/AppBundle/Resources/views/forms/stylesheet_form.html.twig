@@ -1,0 +1,17 @@
+{{ form_start(form) }}
+  {{ form_row(form.name) }}
+
+  {{ form_row(form.css, { attr: { rows: 12 } }) }}
+
+  {{ form_row(form.nightFriendly) }}
+
+  <div class="row">
+    {{ form_errors(form.appendToDefaultStyle) }}
+    {{ form_label(form.appendToDefaultStyle) }}
+    {{ form_widget(form.appendToDefaultStyle) }}
+    <p class="help">{{ 'stylesheets.append_to_default_style_description'|trans }}</p>
+  </div>
+  {{ form_row(form.nightFriendly) }}
+
+  {{ form_row(form.submit) }}
+{{ form_end(form) }}

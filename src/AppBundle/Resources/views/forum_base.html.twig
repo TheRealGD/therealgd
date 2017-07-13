@@ -1,7 +1,25 @@
 {% extends '@RadditApp/base.html.twig' %}
 
-{% spaceless %}
-  {% block sidebar %}
+{% block stylesheets %}
+  {% if not no_custom_stylesheets ?? false %}
+    {% if not is_granted('ROLE_USER') or app.user.showCustomStylesheets %}
+      {% set stylesheet = is_granted('ROLE_USER') and app.user.nightMode ? forum.nightStylesheet : forum.stylesheet %}
+
+      {% if not stylesheet or stylesheet.appendToDefaultStyle %}
+        {{ parent() }}
+      {% endif %}
+
+      {% if stylesheet %}
+        <link rel="stylesheet" href="{{ path('raddit_app_raw_stylesheet', {id: stylesheet.id}) }}">
+      {% endif %}
+    {% endif %}
+  {% else %}
+    {{ parent() }}
+  {% endif %}
+{% endblock %}
+
+{% block sidebar %}
+  {%- spaceless -%}
     <section class="forum-meta">
       <h1 class="forum-title"><a href="{{ path('raddit_app_forum', {forum_name: forum.name}) }}">{{ forum.title }}</a></h1>
 
@@ -53,5 +71,5 @@
         </ul>
       </section>
     {% endif %}
-  {% endblock %}
-{% endspaceless %}
+  {%- endspaceless -%}
+{% endblock %}

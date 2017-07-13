@@ -128,6 +128,27 @@ raddit_app_unsubscribe:
     path: /unsub/{id}
     methods: [POST]
 
+raddit_app_stylesheets:
+    defaults: { _controller: RadditAppBundle:Stylesheet:list, page: 1 }
+    path: /stylesheets/{page}
+    methods: [GET]
+    requirements: { page: \d+ }
+
+raddit_app_create_stylesheet:
+    defaults: { _controller: RadditAppBundle:Stylesheet:create }
+    path: /create_stylesheet
+    methods: [GET, POST]
+
+raddit_app_edit_stylesheet:
+    defaults: { _controller: RadditAppBundle:Stylesheet:edit }
+    path: /edit_stylesheet/{id}
+    methods: [GET, POST]
+
+raddit_app_raw_stylesheet:
+    defaults: { _controller: RadditAppBundle:Stylesheet:raw, _format: css }
+    path: /user_style/{id}.css
+    methods: [GET]
+
 raddit_app_fetch_title:
     defaults: { _controller: RadditAppBundle:Ajax:fetchTitle, _format: json }
     path: /ft.json

@@ -1,8 +1,8 @@
 {% extends '@RadditApp/forum_base.html.twig' %}
 
 {% block page_classes %}edit-forum-page{% endblock %}
-
-{% block title %}{{ 'edit_forum.title'|trans({'%forum%': forum.name}) }}{% endblock %}
+{% block title 'edit_forum.title'|trans({'%forum%': forum.name}) %}
+{% set no_custom_stylesheets = true %}
 
 {% block body %}
   {{ form_start(form) }}
@@ -11,6 +11,17 @@
     {{ form_row(form.title) }}
 
     {{ form_row(form.description) }}
+
+    {{ form_row(form.category) }}
+
+    <div class="row">
+      {{- form_errors(form.stylesheet) -}}
+      {{- form_label(form.stylesheet) -}}
+      {{- form_widget(form.stylesheet) }}
+      <a href="{{ path('raddit_app_create_stylesheet') }}">{{ 'stylesheets.create_stylesheet'|trans }}</a>
+    </div>
+
+    {{ form_row(form.nightStylesheet) }}
 
     {% if form.featured is defined %}
       {{ form_row(form.featured) }}

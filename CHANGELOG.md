@@ -5,6 +5,7 @@
 * Added CAPTCHA to registration form.
 * Added a command that prunes IP addresses on many entities, optionally after
   they reach a provided age.
+* Added custom CSS.
 * Added Dutch, Finnish, German, Greek and Portuguese (Brazilian) translations.
 * Added explanation of the various user form fields.
 * Added forum categories.

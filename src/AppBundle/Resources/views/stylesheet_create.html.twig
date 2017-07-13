@@ -1,0 +1,11 @@
+{% extends '@RadditApp/base.html.twig' %}
+
+{% block title 'stylesheets.create_title'|trans %}
+{% block page_classes 'create-stylesheet-page' %}
+
+{% block body %}
+  <h1>{{ block('title') }}</h1>
+
+  {{ include('@RadditApp/forms/stylesheet_form.html.twig', {form: form}, with_context=false) }}
+{% endblock %}
+

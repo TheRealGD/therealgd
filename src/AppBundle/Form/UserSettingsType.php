@@ -25,6 +25,9 @@ final class UserSettingsType extends AbstractType {
             ->add('night_mode', CheckboxType::class, [
                 'required' => false,
             ])
+            ->add('show_custom_stylesheets', CheckboxType::class, [
+                'required' => false,
+            ])
             ->add('save', SubmitType::class);
     }
 

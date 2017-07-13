@@ -109,6 +109,20 @@ class Forum {
      */
     private $category;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Stylesheet")
+     *
+     * @var Stylesheet|null
+     */
+    private $stylesheet;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Stylesheet")
+     *
+     * @var Stylesheet|null
+     */
+    private $nightStylesheet;
+
     public function __construct() {
         $this->created = new \DateTime('@'.time());
         $this->moderators = new ArrayCollection();
@@ -256,5 +270,33 @@ class Forum {
      */
     public function setCategory($category) {
         $this->category = $category;
+    }
+
+    /**
+     * @return Stylesheet|null
+     */
+    public function getStylesheet() {
+        return $this->stylesheet;
+    }
+
+    /**
+     * @param Stylesheet|null $stylesheet
+     */
+    public function setStylesheet($stylesheet) {
+        $this->stylesheet = $stylesheet;
+    }
+
+    /**
+     * @return Stylesheet|null
+     */
+    public function getNightStylesheet() {
+        return $this->nightStylesheet;
+    }
+
+    /**
+     * @param Stylesheet|null $nightStylesheet
+     */
+    public function setNightStylesheet($nightStylesheet) {
+        $this->nightStylesheet = $nightStylesheet;
     }
 }
