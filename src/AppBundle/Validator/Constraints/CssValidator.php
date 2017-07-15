@@ -2,15 +2,17 @@
 
 namespace Raddit\AppBundle\Validator\Constraints;
 
-use Sabberworm\CSS\CSSList\CSSList;
+use Sabberworm\CSS\CSSList\CSSBlockList;
 use Sabberworm\CSS\Parser;
 use Sabberworm\CSS\Parsing\SourceException;
 use Sabberworm\CSS\Property\Charset;
+use Sabberworm\CSS\Property\Import;
 use Sabberworm\CSS\Rule\Rule;
 use Sabberworm\CSS\RuleSet\RuleSet;
 use Sabberworm\CSS\Settings;
 use Sabberworm\CSS\Value\CSSFunction;
 use Sabberworm\CSS\Value\CSSString;
+use Sabberworm\CSS\Value\RuleValueList;
 use Sabberworm\CSS\Value\URL;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -86,8 +88,7 @@ class CssValidator extends ConstraintValidator {
 
         $value = (string) $value;
 
-        $this->assertDoesNotContainDxFilters($value);
-        $this->assertDoesNotContainImportRule($value);
+        $this->assertDoesNotContainDxFilters($value, $constraint);
 
         $parserSettings = Settings::create()
             // prevent calls to mb_* functions with bad, user-provided charsets
@@ -108,16 +109,16 @@ class CssValidator extends ConstraintValidator {
         try {
             $document = $parser->parse();
 
-            foreach ($document->getAllRuleSets() as $cssRuleSet) {
-                $this->validateRuleSet($cssRuleSet);
-            }
+            $this->validateBlockList($document, $constraint);
         } catch (SourceException $e) {
-            $this->context->buildViolation('Error from CSS parser: {{ error }}')
+            $this->context->buildViolation($constraint->cssParseErrorMessage)
                 ->setParameter('{{ error }}', $e->getMessage())
+                ->setCode(Css::CSS_PARSE_ERROR)
                 ->addViolation();
         } catch (\ErrorException $e) {
-            $this->context->buildViolation('Error from CSS parser: {{ error }}')
+            $this->context->buildViolation($constraint->cssParseErrorMessage)
                 ->setParameter('{{ error }}', $e->getMessage())
+                ->setCode(Css::CSS_PARSE_ERROR)
                 ->addViolation();
         } finally {
             set_error_handler($oldErrorHandler);
@@ -130,123 +131,131 @@ class CssValidator extends ConstraintValidator {
      * phrase 'progid:' and add a violation if it exists.
      *
      * @param string $css
+     * @param Css    $constraint
      */
-    private function assertDoesNotContainDxFilters(string $css) {
-        if (preg_match('/\b[pP][rR][oO][gG][iI][dD]:/', $css, $matches, PREG_OFFSET_CAPTURE)) {
-            $this->context->buildViolation('"progid:" syntax is not allowed on line {{ line }}')
-                ->setParameter('{{ line }}', substr_count($css, "\n", null, $matches[0][1]) + 1)
+    private function assertDoesNotContainDxFilters(string $css, Css $constraint) {
+        preg_match_all('/\b[pP][rR][oO][gG][iI][dD]:/', $css, $matches, PREG_OFFSET_CAPTURE | PREG_SET_ORDER);
+
+        foreach ($matches as $match) {
+            $this->context->buildViolation($constraint->progidNotAllowedMessage)
+                ->setParameter('{{ line }}', substr_count($css, "\n", null, $match[0][1]) + 1)
+                ->setCode(Css::PROGID_NOT_ALLOWED)
                 ->addViolation();
         }
     }
 
     /**
-     * Special check for import at-rule, since the parser strangely enough won't
-     * handle this either.
-     *
-     * @param string $css
+     * @param CSSBlockList $cssValue
+     * @param Css          $constraint
      */
-    private function assertDoesNotContainImportRule(string $css) {
-        if (preg_match('/^(?:.*;)?\s*(\@[iI][mM][pP][oO][rR][tT])\b/', $css, $matches, PREG_OFFSET_CAPTURE)) {
-            $this->context->buildViolation('@import syntax is not allowed on line {{ line }}')
-                ->setParameter('{{ line }}', substr_count($css, "\n", null, $matches[1][1]) + 1)
+    private function validateBlockList(CSSBlockList $cssValue, Css $constraint) {
+        foreach ($cssValue->getContents() as $cssElement) {
+            if ($cssElement instanceof Charset) {
+                $this->validateCharset($cssElement, $constraint);
+            } elseif ($cssElement instanceof Import) {
+                $this->validateImport($cssElement, $constraint);
+            } elseif ($cssElement instanceof RuleSet) {
+                $this->validateRuleSet($cssElement, $constraint);
+            } elseif ($cssElement instanceof CSSBlockList) {
+                $this->validateBlockList($cssElement, $constraint);
+            }
+        }
+    }
+
+    private function validateCharset(Charset $cssValue, Css $constraint) {
+        /** @noinspection PhpUndefinedMethodInspection */
+        if (!preg_match('/^utf-?8$/i', $cssValue->getCharset()->getString())) {
+            $this->context->buildViolation($constraint->nonUtf8NotAllowedMessage)
+                ->setParameter('{{ line }}', $cssValue->getLineNo())
+                ->setCode(Css::NON_UTF8_NOT_ALLOWED)
                 ->addViolation();
         }
     }
 
-    private function validateRuleSet(RuleSet $cssRuleSet) {
+    private function validateCssValue($cssValue, Css $constraint) {
+        if (is_object($cssValue)) {
+            if ($cssValue instanceof CSSFunction) {
+                $this->validateFunction($cssValue, $constraint);
+            } elseif ($cssValue instanceof RuleValueList) {
+                foreach ($cssValue->getListComponents() as $component) {
+                    $this->validateCssValue($component, $constraint);
+                }
+            } elseif ($cssValue instanceof CSSString) {
+                $this->validateString($cssValue, $constraint);
+            } elseif ($cssValue instanceof URL) {
+                $this->validateUrl($cssValue, $constraint);
+            }
+        }
+    }
+
+    private function validateFunction(CSSFunction $cssValue, Css $constraint) {
+        /** @noinspection PhpParamsInspection */
+        $name = trim($cssValue->getName());
+
+        if (strtolower($name) === 'expression') {
+            $this->context->buildViolation($constraint->expressionSyntaxNotAllowedMessage)
+                ->setParameter('{{ line }}', $cssValue->getLineNo())
+                ->setCode(Css::EXPRESSION_SYNTAX_NOT_ALLOWED)
+                ->addViolation();
+        }
+    }
+
+    private function validateImport(Import $cssValue, Css $constraint) {
+        $this->context->buildViolation($constraint->importNotAllowedMessage)
+            ->setParameter('{{ line }}', $cssValue->getLineNo())
+            ->setCode(Css::IMPORT_NOT_ALLOWED)
+            ->addViolation();
+    }
+
+    private function validateRuleSet(RuleSet $cssRuleSet, Css $constraint) {
         /** @var Rule $cssRule */
         foreach ($cssRuleSet->getRules() as $cssRule) {
             $property = strtolower(trim($cssRule->getRule()));
 
             if (isset(self::UNSAFE_PROPERTIES[$property])) {
-                $this->context->buildViolation('Property "{{ property }}" is not allowed on line {{ line }}')
+                $this->context->buildViolation($constraint->propertyNotAllowedMessage)
                     ->setParameter('{{ property }}', $property)
                     ->setParameter('{{ line }}', $cssRule->getLineNo())
+                    ->setCode(Css::PROPERTY_NOT_ALLOWED)
                     ->addViolation();
             }
 
             $cssValue = $cssRule->getValue();
 
-            $this->validateCssValue($cssValue, 1);
+            $this->validateCssValue($cssValue, $constraint);
         }
     }
 
-    private function validateCssValue($cssValue, int $recursionDepth) {
-        if ($recursionDepth > 5) {
-            $this->context->addViolation('Recursion limit reached');
-        }
-
-        if (is_object($cssValue)) {
-            switch (get_class($cssValue)) {
-            case Charset::class:
-                $this->validateCharset($cssValue);
-                break;
-            case CSSFunction::class:
-                $this->validateFunction($cssValue);
-                break;
-            case CSSList::class:
-                // TODO: not sure if this works properly
-                /** @noinspection PhpUndefinedMethodInspection */
-                foreach ($cssValue->getContents() as $cssListValue) {
-                    $this->validateCssValue($cssListValue, $recursionDepth + 1);
-                }
-                break;
-            case CSSString::class:
-                $this->validateString($cssValue);
-                break;
-            case URL::class:
-                $this->validateUrl($cssValue);
-                break;
-            }
-        }
-    }
-
-    private function validateCharset(Charset $cssValue) {
-        /** @noinspection PhpUndefinedMethodInspection */
-        if (!preg_match('/^utf-?8$/i', $cssValue->getCharset()->getString())) {
-            $this->context->buildViolation('Non UTF-8 charset is not allowed on line {{ line }}')
+    private function validateString(CSSString $cssValue, Css $constraint) {
+        if (preg_match('/^\s*expression\s*\(.*\)/i', $cssValue->getString())) {
+            $this->context->buildViolation($constraint->expressionStringNotAllowedMessage)
                 ->setParameter('{{ line }}', $cssValue->getLineNo())
+                ->setCode(Css::EXPRESSION_STRING_NOT_ALLOWED)
                 ->addViolation();
         }
     }
 
-    private function validateUrl(URL $cssValue) {
+    private function validateUrl(URL $cssValue, Css $constraint) {
         $url = trim($cssValue->getURL()->getString());
 
         if (stripos($url, 'javascript:') === 0 || stripos($url, 'vbscript:') === 0) {
-            $this->context->buildViolation('Script URL is not allowed on line {{ line }}')
+            $this->context->buildViolation($constraint->scriptNotAllowedMessage)
                 ->setParameter('{{ line }}', $cssValue->getLineNo())
+                ->setCode(Css::SCRIPT_NOT_ALLOWED)
                 ->addViolation();
         }
 
         if (stripos($url, 'data:') === 0) {
-            $this->context->buildViolation('Embedded data is not allowed on line {{ line }}')
+            $this->context->buildViolation($constraint->dataNotAllowedMessage)
                 ->setParameter('{{ line }}', $cssValue->getLineNo())
+                ->setCode(Css::DATA_NOT_ALLOWED)
                 ->addViolation();
         }
 
         if (strpos($url, '://') !== false || strpos($url, '//') === 0) {
-            $this->context->buildViolation('External resource is not allowed on line {{ line }}')
+            $this->context->buildViolation($constraint->externalResourceNotAllowedMessage)
                 ->setParameter('{{ line }}', $cssValue->getLineNo())
-                ->addViolation();
-        }
-    }
-
-    private function validateFunction(CSSFunction $cssValue) {
-        /** @noinspection PhpParamsInspection */
-        $name = trim($cssValue->getName());
-
-        if (strtolower($name) === 'expression') {
-            $this->context->buildViolation('expression() syntax is not allowed on line {{ line }}')
-                ->setParameter('{{ line }}', $cssValue->getLineNo())
-                ->addViolation();
-        }
-    }
-
-    private function validateString(CSSString $cssValue) {
-        if (preg_match('/^\s*expression\s*\(.*\)/i', $cssValue->getString())) {
-            $this->context->buildViolation('expression() syntax is not allowed in strings on line {{ line }}')
-                ->setParameter('{{ line }}', $cssValue->getLineNo())
+                ->setCode(Css::EXTERNAL_RESOURCE_NOT_ALLOWED)
                 ->addViolation();
         }
     }
