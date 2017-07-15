@@ -1,10 +1,8 @@
 add_moderator:
     title: Add moderator to %forum%
-    notice: The user has been promoted to moderator.
 
 ban_add:
     title: Ban an IP address
-    banned_notice: The IP address has been banned.
 
 ban_form:
     ip: IP address
@@ -64,15 +62,25 @@ create_forum:
     create_new_forum: Create new forum
 
 edit_forum:
-    edit_notice: The changes have been saved.
-    delete_notice: The forum and all its contents have been deleted.
     title: Editing %forum%
 
 edit_user:
     title: Editing user %username%
 
 flash:
+    ban_added: The IP address has been banned.
+    forum_deleted: The forum and all its contents have been deleted.
+    forum_updated: The changes have been saved.
+    forum_moderator_added: The user has been promoted to moderator.
+    inbox_cleared: The inbox was cleared.
+    reset_password_email_sent: A reset email has been sent to the address you specified.
+    stylesheet_created: Your stylesheet has been created.
+    stylesheet_updated: The stylesheet has been updated.
+    submission_edited: The submission was edited.
+    submission_deleted: The submission was deleted.
     user_account_registered: Your account has been registered.
+    user_password_updated: Your password has been updated.
+    user_settings_updated: User settings have been updated.
 
 forum:
     moderators: Moderators
@@ -127,7 +135,6 @@ front:
 inbox:
     title: Inbox
     clear_inbox: Clear inbox
-    clear_notice: The inbox was cleared.
     empty: The inbox is empty.
     message_reply_head: 'Re: %title%'
 
@@ -190,8 +197,6 @@ reset_password:
         If you did not request a password reset, you can safely ignore this message.
         The link will expire after 24 hours.
 
-    email_notice: A reset email has been sent to the address you specified.
-    update_notice: Your password has been updated.
     title: Resetting password
 
 site_footer:
@@ -222,8 +227,6 @@ stylesheets:
     edit_stylesheet: Edit stylesheet
     new_stylesheet: New stylesheet
     list_title: Custom stylesheets
-    created_notice: Your stylesheet has been created.
-    edited_notice: Your changes have been saved.
     create_title: Creating a stylesheet
     edit_title: Editing stylesheet %name%
 
@@ -240,9 +243,7 @@ submission_form:
 
 submissions:
     comments: '{0} No comments|{1} %count% comment|[1,Inf[ %count% comments'
-    delete_notice: The submission was deleted.
     edit: Edit
-    edit_notice: The submission was edited.
     info_with_forum_name: Submitted by %submitter% %timestamp% in %forum%
     info_without_forum_name: Submitted by %submitter% %timestamp%
     info_at_timestamp: at %timestamp%
@@ -305,7 +306,6 @@ user_form:
 
 user_settings:
     title: Editing user settings for %username%
-    update_notice: User settings have been updated.
 
 user_settings_form:
     locale: Language

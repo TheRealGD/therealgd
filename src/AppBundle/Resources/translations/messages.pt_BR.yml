@@ -1,10 +1,8 @@
 add_moderator:
     title: Adicionar moderador à %forum%
-    notice: O usuário foi promovido à moderador.
 
 ban_add:
     title: Banir um endereço de IP
-    banned_notice: O endereço de IP foi banido.
 
 ban_form:
     ip: Endereço IP
@@ -64,12 +62,22 @@ create_forum:
     create_new_forum: Criar novo fórum
 
 edit_forum:
-    edit_notice: As alterações foram salvas.
-    delete_notice: O fórum e todo o seu conteúdo foi removido.
     title: Alterando %forum%
 
 edit_user:
     title: Alterando usuário %username%
+
+flash:
+    ban_added: O endereço de IP foi banido.
+    forum_deleted: O fórum e todo o seu conteúdo foi removido.
+    forum_updated: As alterações foram salvas.
+    forum_moderator_added: O usuário foi promovido à moderador.
+    inbox_cleared: A caixa de entrada foi esvaziada.
+    reset_password_email_sent: Um email para redefinição foi enviado para o endereço informado.
+    submission_deleted: A submissão foi apagada.
+    submission_edited: A submissão foi alterada.
+    user_password_updated: Sua senha foi atualizada.
+    user_settings_updated: Preferências foram atualizadas.
 
 forum:
     moderators: Moderadores
@@ -121,7 +129,6 @@ front:
 inbox:
     title: Caixa de Entrada
     clear_inbox: Limpar caixa de entrada
-    clear_notice: A caixa de entrada foi esvaziada.
     empty: A caixa de entrada está vazia.
     message_reply_head: 'Re: %title%'
 
@@ -163,7 +170,7 @@ request_password_reset:
         Se você possui várias contas cadastradas com um mesmo endereço de email, você irá
         receber um email por conta.
     no_confirmation_notice: >
-        Se você nunca receber o email, o endereço que você informou está, provavelmente, 
+        Se você nunca receber o email, o endereço que você informou está, provavelmente,
         incorreto. Por motivos de privacidade nós não iremos confirmar se existe um usuário com
         o endereço informado.
 
@@ -184,8 +191,6 @@ reset_password:
         Se você não solicitou a redefinição de senha, você pode ignorar esta mensagem.
         O link irá expirar depois de 24 horas.
 
-    email_notice: Um email para redefinição foi enviado para o endereço informado.
-    update_notice: Sua senha foi atualizada.
     title: Redefinindo senha
 
 site_footer:
@@ -217,9 +222,7 @@ submission_form:
 
 submissions:
     comments: '{0} Nenhum comentário|{1} %count% comentário|[1,Inf[ %count% comentários'
-    delete_notice: A submissão foi apagada.
     edit: Alterar
-    edit_notice: A submissão foi alterada.
     info_with_forum_name: Enviado por %submitter% %timestamp% em %forum%
     info_without_forum_name: Enviado por %submitter% %timestamp%
     info_at_timestamp: às %timestamp%
@@ -268,7 +271,6 @@ user_form:
 
 user_settings:
     title: Alterando preferências do usuário %username%
-    update_notice: Preferências foram atualizadas.
 
 user_settings_form:
     locale: Idioma

@@ -1,10 +1,8 @@
 add_moderator:
     title: Προσθέστε τον συντονιστή στο %forum%
-    notice: Ο χρήστης έχει γίνει συντονιστής.
 
 ban_add:
     title: Κάντε απαγόρευση μιας διεύθυνσης IP
-    banned_notice: Η διεύθυνση IP έχει απαγορευτεί.
 
 ban_form:
     ip: Διεύθυνση IP
@@ -65,12 +63,22 @@ create_forum:
     create_new_forum: Δημιουργία νέου φόρουμ
 
 edit_forum:
-    edit_notice: Οι αλλαγές έχουν αποθηκευτεί.
-    delete_notice: Το φόρουμ και όλο το περιεχόμενό του έχουν αφαιρεθεί.
     title: Επεξεργασία %forum%
 
 edit_user:
     title: Επεξεργασία χρήστη %username%
+
+flash:
+    ban_added: Η διεύθυνση IP έχει απαγορευτεί.
+    forum_deleted: Το φόρουμ και όλο το περιεχόμενό του έχουν αφαιρεθεί.
+    forum_updated: Οι αλλαγές έχουν αποθηκευτεί.
+    forum_moderator_added: Ο χρήστης έχει γίνει συντονιστής.
+    inbox_cleared: Το inbox εκκαθαρίστηκε.
+    reset_password_email_sent: Ένα μήνυμα επαναφοράς στάλθηκε στη διεύθυνση που καθορίσατε.
+    submission_deleted: Η υποβολή διαγράφηκε.
+    submission_edited: Έχετε κάνει τις αλλαγές
+    user_password_updated: Ο κωδικός πρόσβασής σας έχει ενημερωθεί.
+    user_settings_updated: Οι προτιμήσεις χρήστη έχουν αλλάξει.
 
 forum:
     moderators: Συντονιστές
@@ -123,7 +131,6 @@ front:
 inbox:
     title: Inbox
     clear_inbox: Διαγράψτε το Inbox.
-    clear_notice: Το inbox εκκαθαρίστηκε.
     empty: Το inbox είναι άδειο.
     message_reply_head: 'Re: %τίτλος%'
 
@@ -182,8 +189,6 @@ reset_password:
         Εάν δεν ζητήσατε επαναφορά κωδικού πρόσβασης, μπορείτε να αγνοήσετε αυτό το μήνυμα.
         Η σελίδα λήγει μετά από 24 ώρες.
 
-    email_notice: Ένα μήνυμα επαναφοράς στάλθηκε στη διεύθυνση που καθορίσατε.
-    update_notice: Ο κωδικός πρόσβασής σας έχει ενημερωθεί.
     title: Επαναφορά κωδικού πρόσβασης
 
 site_footer:
@@ -215,9 +220,7 @@ submission_form:
 
 submissions:
     comments: '{0} Μηδενικά σχόλια|{1} %count% σχόλιο|[1,Inf[ %count% σχόλια'
-    delete_notice: Η υποβολή διαγράφηκε.
     edit: Επεξεργασία
-    edit_notice: Έχετε κάνει τις αλλαγές
     info_with_forum_name: Στάλθηκε από %submitter% %timestamp% στην %forum%
     info_without_forum_name: Στάλθηκε από %submitter% %timestamp%
     info_at_timestamp: στην %timestamp%
@@ -266,7 +269,6 @@ user_form:
 
 user_settings:
     title: Αλλαγή προτιμήσεις χρήστη για %username%
-    update_notice: Οι προτιμήσεις χρήστη έχουν αλλάξει.
 
 user_settings_form:
     locale: Γλώσσα

@@ -33,7 +33,7 @@ final class ResetPasswordController extends Controller {
                 $this->sendPasswordResetEmail($user, $request);
             }
 
-            $this->addFlash('success', 'reset_password.email_notice');
+            $this->addFlash('success', 'flash.reset_password_email_sent');
 
             return $this->redirectToRoute('raddit_app_front');
         }
@@ -69,7 +69,7 @@ final class ResetPasswordController extends Controller {
 
             if ($form->isSubmitted() && $form->isValid()) {
                 $this->getDoctrine()->getManager()->flush();
-                $this->addFlash('success', 'reset_password.update_notice');
+                $this->addFlash('success', 'flash.user_password_updated');
 
                 return $this->redirectToRoute('raddit_app_front');
             }

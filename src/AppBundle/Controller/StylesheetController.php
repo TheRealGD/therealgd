@@ -53,7 +53,7 @@ class StylesheetController extends Controller {
             $em->persist($stylesheet);
             $em->flush();
 
-            $this->addFlash('success', 'stylesheets.created_notice');
+            $this->addFlash('success', 'flash.stylesheet_created');
 
             return $this->redirectToRoute('raddit_app_edit_stylesheet', [
                 'id' => $stylesheet->getId(),
@@ -83,7 +83,7 @@ class StylesheetController extends Controller {
 
             $em->flush();
 
-            $this->addFlash('success', 'stylesheets.edited_notice');
+            $this->addFlash('success', 'flash.stylesheet_updated');
 
             return $this->redirectToRoute('raddit_app_edit_stylesheet', [
                 'id' => $stylesheet->getId(),

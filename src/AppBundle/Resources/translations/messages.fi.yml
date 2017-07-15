@@ -1,10 +1,8 @@
 add_moderator:
     title: Lisää moderaattori foorumille %forum%
-    notice: Käyttäjä on ylennetty moderaattoriksi.
 
 ban_add:
     title: Bannaa IP-osoite
-    banned_notice: IP-osoite on bannattu.
 
 ban_form:
     ip: IP-osoite
@@ -65,12 +63,22 @@ create_forum:
     create_new_forum: Aloita uusi foorumi
 
 edit_forum:
-    edit_notice: Muutokset tallennettu.
-    delete_notice: Foorumi ja kaikki sen sisältö on poistettu.
     title: Muokataan foorumia %forum%
 
 edit_user:
     title: Muokataan käyttäjää %username%
+
+flash:
+    ban_added: IP-osoite on bannattu.
+    forum_deleted: Foorumi ja kaikki sen sisältö on poistettu.
+    forum_updated: Muutokset tallennettu.
+    forum_moderator_added: Käyttäjä on ylennetty moderaattoriksi.
+    inbox_cleared: Postilaatikko tyhjennetty.
+    reset_password_email_sent: Nollaussähköpostiviesti on lähetetty antamaasi osoitteeseen.
+    submission_deleted: Lisäys poistettu.
+    submission_edited: Lisäystä muokattu.
+    user_password_updated: Salasanasi on päivitetty.
+    user_settings_updated: Käyttäjän asetukset päivitetty.
 
 forum:
     moderators: Moderaattorit
@@ -123,7 +131,6 @@ front:
 inbox:
     title: Postilaatikko
     clear_inbox: Tyhjennä postilaatikko
-    clear_notice: Postilaatikko tyhjennetty.
     empty: Postilaatikko on tyhjä.
     message_reply_head: 'VS: %title%'
 
@@ -183,8 +190,6 @@ reset_password:
         Jos et pyytänyt salasanan nollausta, voit turvallisesti jättää viestin huomiotta.
         Linkkiä ei voi käyttää enää 24 tunnin kuluttua.
 
-    email_notice: Nollaussähköpostiviesti on lähetetty antamaasi osoitteeseen.
-    update_notice: Salasanasi on päivitetty.
     title: Nollataan salasanaa
 
 site_footer:
@@ -216,9 +221,7 @@ submission_form:
 
 submissions:
     comments: '{0} Ei kommentteja|{1} %count% kommentti|[1,Inf[ %count% kommenttia'
-    delete_notice: Lisäys poistettu.
     edit: Muokkaa
-    edit_notice: Lisäystä muokattu.
     info_with_forum_name: "%submitter% lisäsi %timestamp% foorumilla %forum%"
     info_without_forum_name: "%submitter% lisäsi %timestamp%"
     info_at_timestamp: lisätty %timestamp%
@@ -273,7 +276,6 @@ user_form:
 
 user_settings:
     title: Muokataan käyttäjän %username% asetuksia
-    update_notice: Käyttäjän asetukset päivitetty.
 
 user_settings_form:
     locale: Kieli

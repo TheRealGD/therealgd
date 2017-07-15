@@ -1,10 +1,8 @@
 add_moderator:
     title: Moderator zu %forum% hinzufügen
-    notice: Dieser Benutzer wurde zum Moderator ernannt.
 
 ban_add:
     title: Eine IP Adresse sperren
-    banned_notice: Die IP Adresse wurde gesperrt.
 
 ban_form:
     ip: IP Adresse
@@ -61,12 +59,22 @@ create_forum:
     create_new_forum: Neues Forum erstellen
 
 edit_forum:
-    edit_notice: Die Änderungen wurden gespeichert.
-    delete_notice: Das Forum und alle Inhalte wurden gelöscht.
     title: '%forum% bearbeiten'
 
 edit_user:
     title: Benutzer %username% bearbeiten
+
+flash:
+    ban_added: Die IP Adresse wurde gesperrt.
+    forum_deleted: Das Forum und alle Inhalte wurden gelöscht.
+    forum_updated: Die Änderungen wurden gespeichert.
+    forum_moderator_added: Dieser Benutzer wurde zum Moderator ernannt.
+    inbox_cleared: Der Posteingang wurde geleert.
+    reset_password_email_sent: Eine Anfrage zum Zurücksetzen des Passworts wurde an die angegebene Email Adresse gesendet
+    submission_deleted: Die Einreichung wurde gelöscht.
+    submission_edited: Die Einreichung wurde bearbeitet.
+    user_password_updated: Dein Passwort wurde aktualisiert.
+    user_settings_updated: Einstellungen wurden aktualisiert.
 
 forum:
     moderators: Moderatoren
@@ -111,7 +119,6 @@ front:
 inbox:
     title: Posteingang
     clear_inbox: Posteingang leeren
-    clear_notice: Der Posteingang wurde geleert.
     empty: Der Posteingang ist leer.
 
 login_form:
@@ -156,8 +163,6 @@ reset_password:
         Wenn die Anfrage nicht von dir stammt, kannst du diese Nachricht
         ignorieren. Der Link läuft nach 24 Stunden aus.
 
-    email_notice: Eine Anfrage zum Zurücksetzen des Passworts wurde an die angegebene Email Adresse gesendet
-    update_notice: Dein Passwort wurde aktualisiert.
     title: Passwort zurücksetzen
 
 site_footer:
@@ -187,9 +192,7 @@ submission_form:
 
 submissions:
     comments: '{0} Keine Kommentare|{1} %count% Kommentar|[1,Inf[ %count% Kommentare'
-    delete_notice: Die Einreichung wurde gelöscht.
     edit: Bearbeiten
-    edit_notice: Die Einreichung wurde bearbeitet.
     info_with_forum_name: Eingereicht von %submitter% %timestamp% in %forum%
     info_without_forum_name: Eingereicht von %submitter% %timestamp%
     info_at_timestamp: vor %timestamp%
@@ -233,7 +236,6 @@ user_form:
 
 user_settings:
     title: Einstellungen von %username% bearbeiten
-    update_notice: Einstellungen wurden aktualisiert.
 
 user_settings_form:
     locale: Sprache

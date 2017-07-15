@@ -1,10 +1,8 @@
 add_moderator:
     title: Agrega un moderador a %forum%
-    notice: El usuario ha sido promovido a moderador.
 
 ban_add:
     title: Banea un direccion IP
-    banned_notice: La direccion IP ha sido baneada
 
 ban_form:
     ip: Direccion IP
@@ -64,12 +62,22 @@ create_forum:
     create_new_forum: Crea un nuevo foro
 
 edit_forum:
-    edit_notice: Los cambios han sido guardados
-    delete_notice: El foro y todos sus contenidos han sido borrados
     title: Editando %forum%
 
 edit_user:
     title: Editando usuario %username%
+
+flash:
+    ban_added: La direccion IP ha sido baneada
+    forum_deleted: El foro y todos sus contenidos han sido borrados
+    forum_updated: Los cambios han sido guardados
+    forum_moderator_added: El usuario ha sido promovido a moderador.
+    inbox_cleared: La bandeja de entrada ha sido limpiada
+    reset_password_email_sent: Un email ha sido enviado al email especificado.
+    submission_deleted: El contenido ha sido borrado.
+    submission_edited: El contenido ha sido editado.
+    user_password_updated: Su contraseña ha sido cambiada.
+    user_settings_updated: Las opciones has sido actualizadas.
 
 forum:
     moderators: Moderadores
@@ -121,7 +129,6 @@ front:
 inbox:
     title: Bandeja de entrada
     clear_inbox: Limpiar bandeja
-    clear_notice: La bandeja de entrada ha sido limpiada
     empty: Su bandeja de entrada esta vacía
     message_reply_head: 'Re: %title%'
 
@@ -133,13 +140,13 @@ login_form:
 
 markdown_type:
     help: Referencia de sintaxis
-    
+
 message_form:
     title: Titulo
     message: Mensaje
     send: Enviar
     reply: Responder
-    
+
 message_list:
     page_title: Mensajes
     title: Titulos
@@ -181,8 +188,6 @@ reset_password:
         Si usted no solicito un cambio de contraseña, por favor ignore este mensaje.
         El link expirará después de 24 horas.
 
-    email_notice: Un email ha sido enviado al email especificado.
-    update_notice: Su contraseña ha sido cambiada.
     title: Reseteando contraseña
 
 site_footer:
@@ -214,9 +219,7 @@ submission_form:
 
 submissions:
     comments: '{0} Sin comentarios|{1} %count% comentario|[1,Inf[ %count% comentarios'
-    delete_notice: El contenido ha sido borrado.
     edit: Editar
-    edit_notice: El contenido ha sido editado.
     info_with_forum_name: Presentado por %submitter% %timestamp% en %forum%
     info_without_forum_name: Presentado por %submitter% %timestamp%
     info_at_timestamp: el %timestamp%
@@ -234,7 +237,7 @@ time:
     on_timestamp: en %timestamp%
     earlier_format: '%relative_time% earlier'
     later_format: '%relative_time% later'
-    
+
 two_factor:
     explanation: Para completar el logueo debe introducir el código de verficación enviado al correo %email%.
 
@@ -256,7 +259,7 @@ user:
     toolbox: Herramientas
     message: Enviar mensaje
     registered: Registrado el %timestamp%
-    
+
 user_flag:
     post_as_label: Publicar como
     none_label: (none)
@@ -279,13 +282,12 @@ user_form:
 
 user_settings:
     title: Editandos las opciones del usuario %username%
-    update_notice: Las opciones has sido actualizadas.
 
 user_settings_form:
     locale: Lenguaje
     night_mode: Modo nocturno
     save: Guardar cambios
-    
+
     wiki:
     not_found_title: Página no encontrada
     not_found_message: La página solicitada no ha sido encontrada.

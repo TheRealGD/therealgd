@@ -1,10 +1,8 @@
 add_moderator:
     title: Voeg een moderator toe aan %forum%
-    notice: De gebruiker is bevorderd tot moderator.
 
 ban_add:
     title: Verban een IP-adres
-    banned_notice: Het IP-adres is verbannen.
 
 ban_form:
     ip: IP-aders
@@ -64,12 +62,22 @@ create_forum:
     create_new_forum: Maak een nieuw forum aan
 
 edit_forum:
-    edit_notice: De veranderingen zijn opgeslagen.
-    delete_notice: Het forum en al zijn inhoud zijn verwijderd.
     title: '%forum% aan het bewerken'
 
 edit_user:
     title: Gebruiker %username% aan het bewerken
+
+flash:
+    ban_added: Het IP-adres is verbannen.
+    forum_deleted: Het forum en al zijn inhoud zijn verwijderd.
+    forum_updated: De veranderingen zijn opgeslagen.
+    forum_moderator_added: De gebruiker is bevorderd tot moderator.
+    inbox_cleared: Je inbox is leeggemaakt.
+    reset_password_email_sent: Een e-mail met een link is gestuurd naar het e-mailadres dat je hebt opgegeven.
+    submission_deleted: De inzending is verwijderd.
+    submission_edited: De inzending is bewerkt.
+    user_password_updated: Je wachtwoord is opnieuw ingesteld.
+    user_settings_updated: De gebruikersinstellingen zijn aangepast.
 
 forum:
     moderators: Moderators
@@ -119,7 +127,6 @@ front:
 inbox:
     title: Inbox
     clear_inbox: Maak inbox leeg
-    clear_notice: Je inbox is leeggemaakt.
     empty: Je hebt geen nieuwe berichten.
     message_reply_head: 'Antw.: %title'
 
@@ -173,10 +180,6 @@ reset_password:
         Mocht je geen link hebben aangevraagd, dan kunt u dit bericht gerust
         negeren. De link vervalt 24 uur nadat deze is aangevraagd.
 
-    email_notice: |
-        Een e-mail met een link is gestuurd naar het e-mailadres dat je
-        hebt opgegeven.
-    update_notice: Je wachtwoord is opnieuw ingesteld.
     title: Wachtwoord opnieuw instellen
 
 site_footer:
@@ -206,11 +209,9 @@ submission_form:
 
 submissions:
     comments: '{0} Geen reacties|{1} %count% reactie|[1,Inf[ %count% reacties'
-    delete_notice: De inzending is verwijderd.
     edit: Bewerk
     edit_info: (%edited_at% bewerkt)
     moderator_info: (%edited_at% bewerkt door een moderator)
-    edit_notice: De inzending is bewerkt.
     info_with_forum_name: Ingezonden door %submitter% %timestamp% in %forum%
     info_without_forum_name: Ingezonden door %submitter% %timestamp%
     info_at_timestamp: om %timestamp%
@@ -257,7 +258,6 @@ user_form:
 
 user_settings:
     title: Gebruikersinstellingen aanpassen voor %username%
-    update_notice: De gebruikersinstellingen zijn aangepast.
 
 user_settings_form:
     locale: Taal

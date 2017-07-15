@@ -112,14 +112,14 @@ final class ForumController extends Controller {
                 $em->remove($forum);
                 $em->flush();
 
-                $this->addFlash('success', 'edit_forum.delete_notice');
+                $this->addFlash('success', 'flash.forum_deleted');
 
                 return $this->redirectToRoute('raddit_app_front');
             }
 
             $em->flush();
 
-            $this->addFlash('success', 'edit_forum.edit_notice');
+            $this->addFlash('success', 'flash.forum_updated');
 
             return $this->redirect($request->getUri());
         }
@@ -261,7 +261,7 @@ final class ForumController extends Controller {
             $em->persist($moderator);
             $em->flush();
 
-            $this->addFlash('success', 'add_moderator.notice');
+            $this->addFlash('success', 'flash.forum_moderator_added');
 
             return $this->redirectToRoute('raddit_app_forum_moderators', [
                 'forum_name' => $forum->getName(),

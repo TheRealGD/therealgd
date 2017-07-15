@@ -1,10 +1,8 @@
 add_moderator:
     title: Aldoni kontrolanton al %forum%
-    notice: La uzanto levigis al kontrolanto
 
 ban_add:
     title: Forbari IP adreson
-    banned_notice: La IP adreso estas forbara.
 
 ban_form:
     ip: IP adreso
@@ -64,12 +62,22 @@ create_forum:
     create_new_forum: Kreas novan forumon
 
 edit_forum:
-    edit_notice: La redaktojn savis.
-    delete_notice: La forumojn kaj ĉiujn enhavojn savis.
     title: Redaktas %forum%
 
 edit_user:
     title: Redaktas uzanton %username%
+
+flash:
+    ban_added: La IP adreso estas forbara.
+    forum_deleted: La forumojn kaj ĉiujn enhavojn savis.
+    forum_updated: La redaktojn savis.
+    forum_moderator_added: La uzanto levigis al kontrolanto
+    inbox_cleared: La enirkeston vakigis.
+    reset_password_email_sent: Reŝargan retpoŝton sendis al specifita adreso.
+    submission_deleted: La sendadon savis.
+    submission_edited: La sendadon redaktis.
+    user_password_updated: Via pasvorto ĝisdatigis.
+    user_settings_updated: Uzanto-agordoj ĝisdatigis.
 
 forum:
     moderators: Kontrolantoj
@@ -121,7 +129,6 @@ front:
 inbox:
     title: Enirkesto
     clear_inbox: Vakigi enirkeston
-    clear_notice: La enirkeston vakigis.
     empty: La enirkesto estas vakiga
     message_reply_head: 'Re: %title%'
 
@@ -182,8 +189,6 @@ reset_password:
         Se vi ne petis pasvortan reŝargon, vi povas sendanĝere malatenti ĉi-tion
         mesaĝon.
 
-    email_notice: Reŝargan retpoŝton sendis al specifita adreso.
-    update_notice: Via pasvorto ĝisdatigis.
     title: Reŝargi pasvorton
 
 site_footer:
@@ -215,9 +220,7 @@ submission_form:
 
 submissions:
     comments: '{0} Sen komentoj|{1} %count% komento|[1,Inf[ %count% komentoj'
-    delete_notice: La sendadon savis.
     edit: Redakti
-    edit_notice: La sendadon redaktis.
     info_with_forum_name: Afiŝis de %submitter% %timestamp% en %forum%
     info_without_forum_name: Afiŝis de %submitter% %timestamp%
     info_at_timestamp: je %timestamp%
@@ -280,7 +283,6 @@ user_form:
 
 user_settings:
     title: Redaktante uzanton-agordojn por %username%
-    update_notice: Uzanto-agordoj ĝisdatigis.
 
 user_settings_form:
     locale: Lingvo

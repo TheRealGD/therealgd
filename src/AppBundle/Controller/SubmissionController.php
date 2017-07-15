@@ -114,14 +114,14 @@ final class SubmissionController extends Controller {
                 $em->remove($submission);
                 $em->flush();
 
-                $this->addFlash('notice', 'submissions.delete_notice');
+                $this->addFlash('notice', 'flash.submission_deleted');
 
                 return $this->redirectToRoute('raddit_app_forum', [
                     'forum_name' => $forum->getName(),
                 ]);
             }
 
-            $this->addFlash('notice', 'submissions.edit_notice');
+            $this->addFlash('notice', 'flash.submission_edited');
 
             $em->flush();
 

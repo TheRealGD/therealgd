@@ -1,10 +1,8 @@
 add_moderator:
     title: Legg til moderator for %forum%
-    notice: Brukeren har blitt lagt til som moderator.
 
 ban_add:
     title: Utesteng en IP-adresse
-    banned_notice: IP-adressen ble utestengt.
 
 ban_form:
     ip: IP-adresse
@@ -64,15 +62,25 @@ create_forum:
     create_new_forum: Opprett nytt forum
 
 edit_forum:
-    edit_notice: Endringene har blitt lagret.
-    delete_notice: Forumet og all dets innhold har blitt slettet.
     title: Redigerer %forum%
 
 edit_user:
     title: Redigerer brukerkontoen %username%
 
 flash:
+    ban_added: IP-adressen ble utestengt.
+    forum_deleted: Forumet og all dets innhold har blitt slettet.
+    forum_updated: Endringene har blitt lagret.
+    forum_moderator_added: Brukeren har blitt lagt til som moderator.
+    inbox_cleared: Innboksen ble tømt.
     user_account_registered: Din konto har blitt registrert.
+    reset_password_email_sent: En epost har blitt sendt til adressen du oppga.
+    stylesheet_created: Stilarket ditt har blitt opprettet.
+    stylesheet_updated: Stilarket ditt har blitt lagret.
+    submission_deleted: Innlegget ble slettet.
+    submission_edited: Innlegget ble endret.
+    user_password_updated: Passordet ditt ble oppdatert.
+    user_settings_updated: Innstillingene har blitt oppdatert.
 
 forum:
     moderators: Moderatorer
@@ -124,7 +132,6 @@ front:
 inbox:
     title: Innboks
     clear_inbox: Tøm innboks
-    clear_notice: Innboksen ble tømt.
     empty: Innboksen er tom.
     message_reply_head: 'Sv: %title%'
 
@@ -187,8 +194,6 @@ reset_password:
         Du kan trygt ignorere denne meldingen om du ikke ba om å nullstille
         passordet ditt. Lenken vil utløpe om 24 timer.
 
-    email_notice: En epost har blitt sendt til adressen du oppga.
-    update_notice: Passordet ditt ble oppdatert.
     title: Nullstille passord
 
 site_footer:
@@ -219,9 +224,7 @@ submission_form:
 
 submissions:
     comments: '{0} Ingen kommentarer|{1} %count% kommentar|[1,Inf[ %count% kommentarer'
-    delete_notice: Innlegget ble slettet.
     edit: Rediger
-    edit_notice: Innlegget ble endret.
     info_with_forum_name: Sendt inn av %submitter% %timestamp% til %forum%
     info_without_forum_name: Sendt inn av %submitter% %timestamp%
     info_at_timestamp: '%timestamp%'
@@ -278,7 +281,6 @@ user_form:
 
 user_settings:
     title: Redigerer innstillinger for %username%
-    update_notice: Innstillingene har blitt oppdatert.
 
 user_settings_form:
     locale: Språk

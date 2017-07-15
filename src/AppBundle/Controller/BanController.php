@@ -71,7 +71,7 @@ final class BanController extends Controller {
         if ($form->isSubmitted() && $form->isValid()) {
             $ban->setBannedBy($this->getUser());
 
-            $this->addFlash('success', 'ban_add.banned_notice');
+            $this->addFlash('success', 'flash.ban_added');
 
             $this->getDoctrine()->getManager()->persist($ban);
             $this->getDoctrine()->getManager()->flush();

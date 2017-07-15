@@ -171,7 +171,7 @@ final class UserController extends Controller {
             if ($form->isSubmitted() && $form->isValid()) {
                 $this->getDoctrine()->getManager()->flush();
 
-                $this->addFlash('success', 'user_settings.update_notice');
+                $this->addFlash('success', 'flash.user_settings_updated');
 
                 return $this->redirect($request->getUri());
             }
@@ -225,7 +225,7 @@ final class UserController extends Controller {
             return $this->json(['message' => 'The inbox was successfully cleared.']);
         }
 
-        $this->addFlash('notice', 'inbox.clear_notice');
+        $this->addFlash('notice', 'flash.inbox_cleared');
 
         return $this->redirectToRoute('raddit_app_inbox');
     }
