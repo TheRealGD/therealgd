@@ -71,6 +71,9 @@ edit_forum:
 edit_user:
     title: Redigerer brukerkontoen %username%
 
+flash:
+    user_account_registered: Din konto har blitt registrert.
+
 forum:
     moderators: Moderatorer
     manage: Administrasjon

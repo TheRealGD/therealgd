@@ -71,6 +71,9 @@ edit_forum:
 edit_user:
     title: Editing user %username%
 
+flash:
+    user_account_registered: Your account has been registered.
+
 forum:
     moderators: Moderators
     manage: Manage

@@ -90,6 +90,8 @@ final class UserController extends Controller {
             $em->persist($user);
             $em->flush();
 
+            $this->addFlash('success', 'flash.user_account_registered');
+
             return $this->redirectToRoute('raddit_app_login');
         }
 
