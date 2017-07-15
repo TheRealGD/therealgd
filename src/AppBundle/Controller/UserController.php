@@ -3,6 +3,7 @@
 namespace Raddit\AppBundle\Controller;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManager;
 use Pagerfanta\Adapter\DoctrineCollectionAdapter;
 use Pagerfanta\Pagerfanta;
 use Raddit\AppBundle\Entity\Notification;
@@ -12,9 +13,13 @@ use Raddit\AppBundle\Form\UserType;
 use Raddit\AppBundle\Repository\UserRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\SecurityBundle\Security\FirewallMap;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\Security\Core\Authentication\Token\RememberMeToken;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Http\RememberMe\RememberMeServicesInterface;
 
 final class UserController extends Controller {
     /**
@@ -71,11 +76,21 @@ final class UserController extends Controller {
     /**
      * User registration form.
      *
-     * @param Request $request
+     * @param Request                     $request
+     * @param EntityManager               $em
+     * @param FirewallMap                 $firewallMap
+     * @param TokenStorageInterface       $tokenStorage
+     * @param RememberMeServicesInterface $rememberMeServices
      *
      * @return Response
      */
-    public function registrationAction(Request $request) {
+    public function registrationAction(
+        Request $request,
+        EntityManager $em,
+        FirewallMap $firewallMap,
+        TokenStorageInterface $tokenStorage,
+        RememberMeServicesInterface $rememberMeServices
+    ) {
         if ($this->isGranted('ROLE_USER')) {
             return $this->redirectToRoute('raddit_app_front');
         }
@@ -85,14 +100,20 @@ final class UserController extends Controller {
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-
             $em->persist($user);
             $em->flush();
 
+            $response = $this->redirectToRoute('raddit_app_front');
+
+            // log in with the new user
+            $firewallName = $firewallMap->getFirewallConfig($request)->getName();
+            $token = new RememberMeToken($user, $firewallName, $this->getParameter('env(SECRET)'));
+            $tokenStorage->setToken($token);
+            $rememberMeServices->loginSuccess($request, $response, $token);
+
             $this->addFlash('success', 'flash.user_account_registered');
 
-            return $this->redirectToRoute('raddit_app_login');
+            return $response;
         }
 
         return $this->render('@RadditApp/registration.html.twig', [
