@@ -1,3 +1,6 @@
+# New keys should use the generic categories 'title', 'label', 'help', 'nav',
+# etc. Older keys are subject to renaming.
+
 add_moderator:
     title: Add moderator to %forum%
 
@@ -129,6 +132,9 @@ front:
     featured: Featured
     subscribed: Subscribed
 
+help:
+    delete_forum_warning: All content on this forum will be irreversibly deleted!
+
 inbox:
     title: Inbox
     clear_inbox: Clear inbox
@@ -136,6 +142,8 @@ inbox:
     message_reply_head: 'Re: %title%'
 
 label:
+    password: Password
+    confirm: Confirm
     theme: Theme
     night_theme: Theme (night mode)
     save_settings: Save settings
@@ -171,6 +179,7 @@ moderator_form:
 nav:
     appearance: Appearance
     create_theme: Create theme
+    delete_forum: Delete forum
     themes: Themes
 
 pagination:
@@ -273,6 +282,7 @@ time:
     later_format: '%relative_time% later'
 
 title:
+    delete_forum: Delete forum %forum%
     forum_appearance: Appearance for %forum%
 
 two_factor:

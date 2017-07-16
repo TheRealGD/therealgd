@@ -13,6 +13,7 @@ use Raddit\AppBundle\Entity\User;
 use Raddit\AppBundle\Form\ForumAppearanceType;
 use Raddit\AppBundle\Form\ForumType;
 use Raddit\AppBundle\Form\ModeratorType;
+use Raddit\AppBundle\Form\PasswordConfirmType;
 use Raddit\AppBundle\Repository\ForumRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -97,27 +98,17 @@ final class ForumController extends Controller {
      *     "repository_method": "findOneByCaseInsensitiveName"
      * })
      *
-     * @param Request $request
-     * @param Forum   $forum
+     * @param Request       $request
+     * @param Forum         $forum
+     * @param EntityManager $em
      *
      * @return Response
      */
-    public function editForumAction(Request $request, Forum $forum) {
+    public function editForumAction(Request $request, Forum $forum, EntityManager $em) {
         $form = $this->createForm(ForumType::class, $forum);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-
-            if ($form->has('delete') && $form->get('delete')->isClicked()) {
-                $em->remove($forum);
-                $em->flush();
-
-                $this->addFlash('success', 'flash.forum_deleted');
-
-                return $this->redirectToRoute('raddit_app_front');
-            }
-
             $em->flush();
 
             $this->addFlash('success', 'flash.forum_updated');
@@ -126,6 +117,40 @@ final class ForumController extends Controller {
         }
 
         return $this->render('@RadditApp/edit_forum.html.twig', [
+            'form' => $form->createView(),
+            'forum' => $forum,
+        ]);
+    }
+
+    /**
+     * @Security("is_granted('ROLE_ADMIN')")
+     *
+     * @ParamConverter("forum", options={
+     *     "mapping": {"forum_name": "name"},
+     *     "map_method_signature": true,
+     *     "repository_method": "findOneByCaseInsensitiveName"
+     * })
+     *
+     * @param Request       $request
+     * @param Forum         $forum
+     * @param EntityManager $em
+     *
+     * @return Response
+     */
+    public function deleteAction(Request $request, Forum $forum, EntityManager $em) {
+        $form = $this->createForm(PasswordConfirmType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->remove($forum);
+            $em->flush();
+
+            $this->addFlash('success', 'flash.forum_deleted');
+
+            return $this->redirectToRoute('raddit_app_front');
+        }
+
+        return $this->render('@RadditApp/forum_delete.html.twig', [
             'form' => $form->createView(),
             'forum' => $forum,
         ]);

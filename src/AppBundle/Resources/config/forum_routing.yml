@@ -43,6 +43,11 @@ raddit_app_edit_forum:
     path: /edit
     methods: [GET, POST]
 
+raddit_app_delete_forum:
+    defaults: { _controller: RadditAppBundle:Forum:delete }
+    path: /delete
+    methods: [GET, POST]
+
 raddit_app_forum_apperance:
     defaults: { _controller: RadditAppBundle:Forum:appearance }
     path: /appearance
