@@ -114,6 +114,10 @@ services:
             - [addExtension, ['@Raddit\AppBundle\CommonMark\AppExtension']]
         lazy: true
 
+    Symfony\Bundle\SecurityBundle\Security\FirewallMap: "@security.firewall.map"
+
+    Symfony\Component\Security\Http\RememberMe\RememberMeServicesInterface: "@security.authentication.rememberme.services.simplehash.main"
+
     Symfony\Component\Serializer\Serializer: "@serializer"
 
     twig.extension.intl:
