@@ -14,15 +14,6 @@
 
     {{ form_row(form.category) }}
 
-    <div class="row">
-      {{- form_errors(form.stylesheet) -}}
-      {{- form_label(form.stylesheet) -}}
-      {{- form_widget(form.stylesheet) }}
-      <a href="{{ path('raddit_app_create_stylesheet') }}">{{ 'stylesheets.create_stylesheet'|trans }}</a>
-    </div>
-
-    {{ form_row(form.nightStylesheet) }}
-
     {% if form.featured is defined %}
       {{ form_row(form.featured) }}
     {% endif %}

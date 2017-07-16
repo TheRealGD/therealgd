@@ -10,6 +10,7 @@ use Raddit\AppBundle\Entity\ForumSubscription;
 use Raddit\AppBundle\Entity\Moderator;
 use Raddit\AppBundle\Entity\Submission;
 use Raddit\AppBundle\Entity\User;
+use Raddit\AppBundle\Form\ForumAppearanceType;
 use Raddit\AppBundle\Form\ForumType;
 use Raddit\AppBundle\Form\ModeratorType;
 use Raddit\AppBundle\Repository\ForumRepository;
@@ -269,6 +270,41 @@ final class ForumController extends Controller {
         }
 
         return $this->render('@RadditApp/add_moderator.html.twig', [
+            'form' => $form->createView(),
+            'forum' => $forum,
+        ]);
+    }
+
+    /**
+     * Alter a forum's appearance.
+     *
+     * @Security("is_granted('edit', forum)")
+     *
+     * @ParamConverter("forum", options={
+     *     "mapping": {"forum_name": "name"},
+     *     "map_method_signature": true,
+     *     "repository_method": "findOneByCaseInsensitiveName"
+     * })
+     *
+     * @param Forum         $forum
+     * @param Request       $request
+     * @param EntityManager $em
+     *
+     * @return Response
+     */
+    public function appearanceAction(Forum $forum, Request $request, EntityManager $em) {
+        $form = $this->createForm(ForumAppearanceType::class, $forum);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->flush();
+
+            return $this->redirectToRoute('raddit_app_forum_apperance', [
+                'forum_name' => $forum->getName(),
+            ]);
+        }
+
+        return $this->render('@RadditApp/forum_appearance.html.twig', [
             'form' => $form->createView(),
             'forum' => $forum,
         ]);

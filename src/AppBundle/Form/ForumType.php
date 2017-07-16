@@ -46,25 +46,6 @@ final class ForumType extends AbstractType {
                 'required' => false,
                 'placeholder' => 'forum_form.uncategorized_placeholder',
             ])
-            ->add('stylesheet', EntityType::class, [
-                'class' => Stylesheet::class,
-                'choice_label' => 'name',
-                'placeholder' => 'forum_form.no_style',
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('s')->where('s.nightFriendly = FALSE');
-                },
-                'required' => false,
-            ])
-            ->add('nightStylesheet', EntityType::class, [
-                'class' => Stylesheet::class,
-                'choice_label' => 'name',
-                'label' => 'forum_form.night_stylesheet',
-                'placeholder' => 'forum_form.no_style',
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('s')->where('s.nightFriendly = TRUE');
-                },
-                'required' => false,
-            ])
         ;
 
         if ($this->authorizationChecker->isGranted('ROLE_ADMIN')) {

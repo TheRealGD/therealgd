@@ -43,6 +43,11 @@ raddit_app_edit_forum:
     path: /edit
     methods: [GET, POST]
 
+raddit_app_forum_apperance:
+    defaults: { _controller: RadditAppBundle:Forum:appearance }
+    path: /appearance
+    methods: [GET, POST]
+
 raddit_app_forum_moderators:
     defaults: { _controller: RadditAppBundle:Forum:moderators }
     path: /moderators
