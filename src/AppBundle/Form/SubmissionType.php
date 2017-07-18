@@ -3,6 +3,7 @@
 namespace Raddit\AppBundle\Form;
 
 use Doctrine\ORM\EntityRepository;
+use Eo\HoneypotBundle\Form\Type\HoneypotType;
 use Raddit\AppBundle\Entity\Forum;
 use Raddit\AppBundle\Entity\Submission;
 use Raddit\AppBundle\Form\Type\MarkdownType;
@@ -42,6 +43,10 @@ final class SubmissionType extends AbstractType {
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
+        if ($options['honeypot']) {
+            $builder->add('email', HoneypotType::class);
+        }
+
         /** @var Submission $submission */
         $submission = $builder->getData();
 
@@ -91,8 +96,10 @@ final class SubmissionType extends AbstractType {
             'data_class' => Submission::class,
             'forum' => null,
             'label_format' => 'submission_form.%name%',
+            'honeypot' => true,
         ]);
 
         $resolver->setAllowedTypes('forum', [Forum::class, 'null']);
+        $resolver->setAllowedTypes('honeypot', ['bool']);
     }
 }

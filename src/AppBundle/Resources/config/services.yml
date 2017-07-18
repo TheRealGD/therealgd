@@ -23,6 +23,10 @@ services:
         Doctrine\Common\EventSubscriber:
             tags: [doctrine.event_subscriber]
 
+        Psr\Log\LoggerAwareInterface:
+            calls:
+                - [setLogger, ["@logger"]]
+
     # makes classes in src/AppBundle available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     Raddit\AppBundle\:
@@ -51,8 +55,6 @@ services:
             - { name: doctrine.event_listener, event: postUpdate }
 
     Raddit\AppBundle\EventListener\SubmissionImageListener:
-        calls:
-            - [setLogger, ["@logger"]]
         arguments: ["@doctrine.orm.entity_manager", "@request_stack", "@validator"]
         tags:
             - { name: doctrine.event_listener, event: postPersist }

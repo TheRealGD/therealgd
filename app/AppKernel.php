@@ -21,6 +21,7 @@ class AppKernel extends Kernel {
             new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
             new Gregwar\CaptchaBundle\GregwarCaptchaBundle(),
             new Scheb\TwoFactorBundle\SchebTwoFactorBundle(),
+            new Eo\HoneypotBundle\EoHoneypotBundle(),
             new Raddit\AppBundle\RadditAppBundle(),
         ];
 

@@ -2,6 +2,7 @@
 
 namespace Raddit\AppBundle\Form;
 
+use Eo\HoneypotBundle\Form\Type\HoneypotType;
 use Gregwar\CaptchaBundle\Type\CaptchaType;
 use Raddit\AppBundle\Entity\User;
 use Raddit\AppBundle\Form\EventListener\PasswordEncodingSubscriber;
@@ -45,6 +46,10 @@ final class UserType extends AbstractType {
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
+        if ($options['honeypot']) {
+            $builder->add('phone', HoneypotType::class);
+        }
+
         $editing = $builder->getData() && $builder->getData()->getId() !== null;
 
         $builder
@@ -88,6 +93,7 @@ final class UserType extends AbstractType {
     public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'honeypot' => true,
             'label_format' => 'user_form.%name%',
             'validation_groups' => function (FormInterface $form) {
                 if ($form->getData()->getId() !== null) {
@@ -97,5 +103,7 @@ final class UserType extends AbstractType {
                 return ['Default', 'registration'];
             },
         ]);
+
+        $resolver->setAllowedTypes('honeypot', ['bool']);
     }
 }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "2ff0468dfdb9e91d6afbe8681955388d",
+    "content-hash": "4ecece9c68a91e9d937f5e946f892310",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -1194,6 +1194,55 @@
                 "twitter cards"
             ],
             "time": "2017-05-07T18:52:23+00:00"
+        },
+        {
+            "name": "eo/honeypot-bundle",
+            "version": "v1.1.0",
+            "target-dir": "Eo/HoneypotBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/eymengunay/EoHoneypotBundle.git",
+                "reference": "f3e99a7ea5fbedb4ab129974e3dba7bd3053948b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/eymengunay/EoHoneypotBundle/zipball/f3e99a7ea5fbedb4ab129974e3dba7bd3053948b",
+                "reference": "f3e99a7ea5fbedb4ab129974e3dba7bd3053948b",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/symfony": "~3.0"
+            },
+            "require-dev": {
+                "eo/symfony-test-edition": "~3.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Eo\\HoneypotBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Eymen Gunay",
+                    "email": "eymen@egunay.com"
+                }
+            ],
+            "description": "Honeypot trap for Symfony3 forms.",
+            "keywords": [
+                "Honeypot",
+                "spam"
+            ],
+            "time": "2016-04-26T15:32:52+00:00"
         },
         {
             "name": "ezyang/htmlpurifier",

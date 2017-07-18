@@ -96,3 +96,6 @@ scheb_two_factor:
     security_tokens:
         - Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken
         - Symfony\Component\Security\Core\Authentication\Token\RememberMeToken
+
+eo_honeypot:
+    redirect: { enabled: false }

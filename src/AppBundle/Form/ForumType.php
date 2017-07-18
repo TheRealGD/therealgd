@@ -3,6 +3,7 @@
 namespace Raddit\AppBundle\Form;
 
 use Doctrine\ORM\EntityRepository;
+use Eo\HoneypotBundle\Form\Type\HoneypotType;
 use Raddit\AppBundle\Entity\Forum;
 use Raddit\AppBundle\Entity\ForumCategory;
 use Raddit\AppBundle\Entity\Stylesheet;
@@ -30,6 +31,10 @@ final class ForumType extends AbstractType {
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
+        if ($options['honeypot']) {
+            $builder->add('email', HoneypotType::class);
+        }
+
         $editing = $builder->getData() && $builder->getData()->getId() !== null;
 
         $builder
@@ -70,6 +75,9 @@ final class ForumType extends AbstractType {
         $resolver->setDefaults([
             'data_class' => Forum::class,
             'label_format' => 'forum_form.%name%',
+            'honeypot' => true,
         ]);
+
+        $resolver->setAllowedTypes('honeypot', ['bool']);
     }
 }

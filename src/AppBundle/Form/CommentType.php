@@ -2,6 +2,7 @@
 
 namespace Raddit\AppBundle\Form;
 
+use Eo\HoneypotBundle\Form\Type\HoneypotType;
 use Raddit\AppBundle\Entity\Comment;
 use Raddit\AppBundle\Entity\Forum;
 use Raddit\AppBundle\Form\Type\MarkdownType;
@@ -37,6 +38,10 @@ final class CommentType extends AbstractType {
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
+        if ($options['honeypot']) {
+            $builder->add('email', HoneypotType::class);
+        }
+
         $builder->add('comment', MarkdownType::class, [
             'property_path' => 'body',
         ]);
@@ -53,9 +58,11 @@ final class CommentType extends AbstractType {
         $resolver->setDefaults([
             'data_class' => Comment::class,
             'forum' => null,
+            'honeypot' => true,
             'label_format' => 'comment_form.%name%',
         ]);
 
         $resolver->setAllowedTypes('forum', ['null', Forum::class]);
+        $resolver->setAllowedTypes('honeypot', ['bool']);
     }
 }
