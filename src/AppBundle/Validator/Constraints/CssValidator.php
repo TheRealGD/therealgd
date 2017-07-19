@@ -2,7 +2,7 @@
 
 namespace Raddit\AppBundle\Validator\Constraints;
 
-use Sabberworm\CSS\CSSList\CSSBlockList;
+use Sabberworm\CSS\CSSList\CSSList;
 use Sabberworm\CSS\Parser;
 use Sabberworm\CSS\Parsing\SourceException;
 use Sabberworm\CSS\Property\Charset;
@@ -109,7 +109,7 @@ class CssValidator extends ConstraintValidator {
         try {
             $document = $parser->parse();
 
-            $this->validateBlockList($document, $constraint);
+            $this->validateList($document, $constraint);
         } catch (SourceException $e) {
             $this->context->buildViolation($constraint->cssParseErrorMessage)
                 ->setParameter('{{ error }}', $e->getMessage())
@@ -145,10 +145,10 @@ class CssValidator extends ConstraintValidator {
     }
 
     /**
-     * @param CSSBlockList $cssValue
-     * @param Css          $constraint
+     * @param CSSList $cssValue
+     * @param Css     $constraint
      */
-    private function validateBlockList(CSSBlockList $cssValue, Css $constraint) {
+    private function validateList(CSSList $cssValue, Css $constraint) {
         foreach ($cssValue->getContents() as $cssElement) {
             if ($cssElement instanceof Charset) {
                 $this->validateCharset($cssElement, $constraint);
@@ -156,8 +156,8 @@ class CssValidator extends ConstraintValidator {
                 $this->validateImport($cssElement, $constraint);
             } elseif ($cssElement instanceof RuleSet) {
                 $this->validateRuleSet($cssElement, $constraint);
-            } elseif ($cssElement instanceof CSSBlockList) {
-                $this->validateBlockList($cssElement, $constraint);
+            } elseif ($cssElement instanceof CSSList) {
+                $this->validateList($cssElement, $constraint);
             }
         }
     }
