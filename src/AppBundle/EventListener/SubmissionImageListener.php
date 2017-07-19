@@ -6,6 +6,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Embed\Embed;
 use Embed\Exceptions\EmbedException;
+use League\Flysystem\FileExistsException;
+use League\Flysystem\FilesystemInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\NullLogger;
@@ -33,6 +35,11 @@ final class SubmissionImageListener implements LoggerAwareInterface {
     private $manager;
 
     /**
+     * @var FilesystemInterface
+     */
+    private $filesystem;
+
+    /**
      * @var RequestStack
      */
     private $requestStack;
@@ -42,21 +49,18 @@ final class SubmissionImageListener implements LoggerAwareInterface {
      */
     private $validator;
 
-    /**
-     * @var string
-     */
-    private $imageDirectory;
-
     public function __construct(
         EntityManagerInterface $manager,
+        FilesystemInterface $filesystem,
         RequestStack $requestStack,
         ValidatorInterface $validator
     ) {
         $this->manager = $manager;
+        $this->filesystem = $filesystem;
         $this->requestStack = $requestStack;
         $this->validator = $validator;
-        $this->logger = new NullLogger();
-        $this->imageDirectory = __DIR__.'/../../../web/submission_images';
+
+        $this->setLogger(new NullLogger());
     }
 
     /**
@@ -112,34 +116,19 @@ final class SubmissionImageListener implements LoggerAwareInterface {
     }
 
     /**
-     * @return string
-     */
-    public function getImageDirectory(): string {
-        return $this->imageDirectory;
-    }
-
-    /**
-     * @param string $imageDirectory
-     */
-    public function setImageDirectory(string $imageDirectory) {
-        $this->imageDirectory = rtrim($imageDirectory, '/');
-    }
-
-    /**
      * Download, store, and rename the image.
      *
      * @param string $imageUrl
      *
      * @return string|null the final file name, or null if the download failed
-     *
-     * @todo refactor this, perhaps use a library
      */
     private function getFilename(string $imageUrl) {
         error_clear_last();
 
         try {
+            // fixme: don't create temporary files
             $tempFile = @tempnam(sys_get_temp_dir(), 'raddit');
-            $fh = @fopen($tempFile, 'w');
+            $fh = @fopen($tempFile, 'wb+');
 
             if (!$fh) {
                 $this->logger->warning('Could not open file for writing', [
@@ -149,6 +138,7 @@ final class SubmissionImageListener implements LoggerAwareInterface {
                 return null;
             }
 
+            // todo: refactor to use guzzle or something
             $ch = curl_init($imageUrl);
             curl_setopt($ch, CURLOPT_FILE, $fh);
             curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
@@ -165,8 +155,7 @@ final class SubmissionImageListener implements LoggerAwareInterface {
                 return null;
             }
 
-            $imageConstraint = new Image();
-            $imageConstraint->detectCorrupted = true;
+            $imageConstraint = new Image(['detectCorrupted' => true]);
 
             $violations = $this->validator->validate($tempFile, $imageConstraint);
 
@@ -185,19 +174,15 @@ final class SubmissionImageListener implements LoggerAwareInterface {
             $mimeType = MimeTypeGuesser::getInstance()->guess($tempFile);
             $ext = ExtensionGuesser::getInstance()->guess($mimeType);
 
-            $filename = hash_file('sha256', $tempFile).'.'.$ext;
+            $filename = sprintf('%s.%s', hash_file('sha256', $tempFile), $ext);
 
-            if (!@rename($tempFile, $this->imageDirectory.'/'.$filename)) {
-                $this->logger->warning('Could not rename file', [
-                    'error' => error_get_last(),
-                ]);
-
-                return null;
+            try {
+                $success = $this->filesystem->writeStream($filename, $fh);
+            } catch (FileExistsException $e) {
+                $success = true;
             }
 
-            @chmod($this->imageDirectory.'/'.$filename, 0666 & ~umask());
-
-            return $filename;
+            return $success ? $filename : null;
         } finally {
             if (isset($ch)) {
                 @curl_close($ch);

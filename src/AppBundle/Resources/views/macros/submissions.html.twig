@@ -58,7 +58,7 @@
       {% if submission.image %}
         <div class="submission-image-container">
           <a href="{{ block('submission_url') }}" class="submission-image">
-            <img src="{{ 'submission_images/%s'|format(submission.image)|imagine_filter('submission_thumbnail') }}" class="submission-thumbnail" alt="">
+            <img src="{{ submission.image|imagine_filter('submission_thumbnail') }}" class="submission-thumbnail" alt="">
           </a>
         </div>
       {% endif %}

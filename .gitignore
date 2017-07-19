@@ -23,8 +23,7 @@ tags
 /web/build/
 /web/bundles/
 /web/media/
-/web/submission_images/*
-!/web/submission_images/.gitkeep
+/web/submission_images/
 
 ## legacy
 

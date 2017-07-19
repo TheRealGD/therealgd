@@ -22,6 +22,7 @@ class AppKernel extends Kernel {
             new Gregwar\CaptchaBundle\GregwarCaptchaBundle(),
             new Scheb\TwoFactorBundle\SchebTwoFactorBundle(),
             new Eo\HoneypotBundle\EoHoneypotBundle(),
+            new Oneup\FlysystemBundle\OneupFlysystemBundle(),
             new Raddit\AppBundle\RadditAppBundle(),
         ];
 

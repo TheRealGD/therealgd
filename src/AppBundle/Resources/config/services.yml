@@ -55,7 +55,8 @@ services:
             - { name: doctrine.event_listener, event: postUpdate }
 
     Raddit\AppBundle\EventListener\SubmissionImageListener:
-        arguments: ["@doctrine.orm.entity_manager", "@request_stack", "@validator"]
+        arguments:
+            $filesystem: "@oneup_flysystem.submission_images_filesystem"
         tags:
             - { name: doctrine.event_listener, event: postPersist }
             - { name: kernel.event_listener, event: kernel.terminate }
