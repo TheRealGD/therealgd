@@ -12,7 +12,7 @@
   <div class="row">
     {{ form_errors(form.password.first) }}
     {{ form_label(form.password.first) }}
-    {{ form_widget(form.password.first, {attr: {autocomplete: 'new-password'}}) }}
+    {{ form_widget(form.password.first) }}
 
     <div class="help">
       <p>{{ 'user.password_rules'|trans }}</p>

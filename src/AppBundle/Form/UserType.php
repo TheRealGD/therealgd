@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -85,6 +86,14 @@ final class UserType extends AbstractType {
         ]);
 
         $builder->addEventSubscriber(new PasswordEncodingSubscriber($this->encoder));
+    }
+
+    public function finishView(FormView $view, FormInterface $form, array $options) {
+        if ($form->getData() && $form->getData()->getId()) {
+            // don't autocomplete the password fields when editing the user
+            $view['password']['first']->vars['attr']['auto-complete'] = 'new-password';
+            $view['password']['second']->vars['attr']['auto-complete'] = 'new-password';
+        }
     }
 
     /**
