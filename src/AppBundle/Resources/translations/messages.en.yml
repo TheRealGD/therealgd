@@ -147,6 +147,7 @@ label:
     theme: Theme
     night_theme: Theme (night mode)
     save_settings: Save settings
+    source_code: Source code
 
 login_form:
     log_in: Log in
@@ -284,6 +285,7 @@ time:
 title:
     delete_forum: Delete forum %forum%
     forum_appearance: Appearance for %forum%
+    showing_revision: 'Showing revision #%revision% of page %path%'
 
 two_factor:
     explanation: To complete the login, you must enter the verification code sent by email to %email%.

@@ -148,6 +148,18 @@ final class WikiController extends Controller {
     }
 
     /**
+     * @param WikiRevision $revision
+     *
+     * @return Response
+     */
+    public function revisionAction(WikiRevision $revision) {
+        return $this->render('@RadditApp/wiki_revision.html.twig', [
+            'page' => $revision->getPage(),
+            'revision' => $revision,
+        ]);
+    }
+
+    /**
      * @param int           $page
      * @param EntityManager $em
      *

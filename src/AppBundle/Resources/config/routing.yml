@@ -257,6 +257,11 @@ raddit_app_wiki_all:
     path: /wiki/_all/{page}
     methods: [GET]
 
+raddit_app_wiki_revision:
+    defaults: { _controller: RadditAppBundle:Wiki:revision }
+    path: /wiki/_revision/{id}
+    methods: [GET]
+
 raddit_app_login_check:
     path: /login_check
     methods: [POST]

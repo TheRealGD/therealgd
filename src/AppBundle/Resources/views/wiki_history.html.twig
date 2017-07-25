@@ -24,7 +24,11 @@
     <tbody>
       {% for revision in revisions %}
         <tr>
-          <td>{{ 'wiki.id'|trans({'%id%': revision.id|localizednumber}) }}</td>
+          <td>
+            <a href="{{ path('raddit_app_wiki_revision', {id: revision.id}) }}">
+              {{- 'wiki.id'|trans({'%id%': revision.id|localizednumber}) -}}
+            </a>
+          </td>
           <td>
             {% with {date: revision.timestamp|localizeddate('long', 'short')} %}
               <time datetime="{{ revision.timestamp|date('c') }}" class="relative-time" title="{{ date }}">
