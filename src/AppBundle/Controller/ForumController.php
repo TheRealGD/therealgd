@@ -52,7 +52,7 @@ final class ForumController extends Controller {
     /**
      * Create a new forum.
      *
-     * @Security("is_granted('ROLE_USER')")
+     * @Security("is_granted('create_forum')")
      *
      * @param Request $request
      *

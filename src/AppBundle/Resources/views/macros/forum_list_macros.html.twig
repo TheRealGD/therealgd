@@ -1,5 +1,5 @@
 {% macro forum_list_header() %}
-  {%- spaceless -%}
+  {% spaceless %}
     <nav class="forum-list-view-selector">
       <ul>
         <li class="{{ app.request.attributes.get('_route') == 'raddit_app_forum_list' ? 'active' }}">
@@ -10,15 +10,17 @@
         </li>
       </ul>
     </nav>
-  {%- endspaceless -%}
+  {% endspaceless %}
 
   <h1>{{ 'forum_list.page_title'|trans }}</h1>
 
-  {%- spaceless -%}
-    <nav class="horizontal-nav forum-list-bottom-nav">
-      <ul>
-        <li><a href="{{ path('raddit_app_create_forum') }}" class="button">{{ 'forum_list.create_forum'|trans }}</a></li>
-      </ul>
-    </nav>
-  {%- endspaceless -%}
+  {% if is_granted('create_forum') %}
+    {% spaceless %}
+      <nav class="horizontal-nav forum-list-bottom-nav">
+        <ul>
+          <li><a href="{{ path('raddit_app_create_forum') }}" class="button">{{ 'forum_list.create_forum'|trans }}</a></li>
+        </ul>
+      </nav>
+    {% endspaceless %}
+  {% endif %}
 {% endmacro %}
