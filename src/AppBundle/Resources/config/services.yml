@@ -77,6 +77,10 @@ services:
         factory: ["@doctrine.orm.entity_manager", "getRepository"]
         arguments: [Raddit\AppBundle\Entity\User]
 
+    Raddit\AppBundle\Security\Voter\TokenVoter:
+        arguments:
+            $forumCreationInterval: "%user_forum_creation_interval%"
+
     Raddit\AppBundle\Twig\AppExtension:
         calls:
             - [setSiteName, ["%env(SITE_NAME)%"]]

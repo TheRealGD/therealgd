@@ -20,10 +20,20 @@ final class TokenVoter extends Voter {
     private $decisionManager;
 
     /**
-     * @param AccessDecisionManagerInterface $decisionManager
+     * @var string|null
      */
-    public function __construct(AccessDecisionManagerInterface $decisionManager) {
+    private $forumCreationInterval;
+
+    /**
+     * @param AccessDecisionManagerInterface $decisionManager
+     * @param string|null                    $forumCreationInterval
+     */
+    public function __construct(
+        AccessDecisionManagerInterface $decisionManager,
+        string $forumCreationInterval = null
+    ) {
         $this->decisionManager = $decisionManager;
+        $this->forumCreationInterval = $forumCreationInterval;
     }
 
     /**
@@ -55,7 +65,23 @@ final class TokenVoter extends Voter {
      * @return bool
      */
     private function canCreateForum(TokenInterface $token) {
-        // TODO: do something special here
+        if ($this->decisionManager->decide($token, ['ROLE_ADMIN'])) {
+            return true;
+        }
+
+        if ($this->forumCreationInterval) {
+            $now = new \DateTime('@'.time());
+            $maxDate = (clone $now)->modify($this->forumCreationInterval);
+            $maxDate = $now->sub($now->diff($maxDate, true));
+
+            /* @var User $user */
+            $user = $token->getUser();
+
+            if ($user->getCreated() > $maxDate) {
+                return false;
+            }
+        }
+
         return true;
     }
 }
