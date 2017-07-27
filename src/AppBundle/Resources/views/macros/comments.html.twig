@@ -1,4 +1,10 @@
-{% macro comment(comment, recurse, show_form) %}
+{#
+ # Options:
+ #
+ # - recurse (bool): true
+ # - show_form (bool): false
+ #}
+{% macro comment(comment, options) %}
   {{- block('comment') -}}
 {% endmacro %}
 
@@ -55,14 +61,14 @@
           <ul>{{ block('comment_nav') }}</ul>
         </nav>
 
-        {% if show_form ?? false and is_granted('ROLE_USER') %}
+        {% if options.show_form ?? false and is_granted('ROLE_USER') %}
           {% from _self import comment_form %}
           {{ comment_form(comment.submission, comment) }}
         {% endif %}
       </div>
     </div>
 
-    {% if recurse ?? true and comment.children|length > 0 %}
+    {% if options.recurse ?? true and comment.children|length > 0 %}
       <div class="comment-replies">
         {%- for reply in comment.children -%}
           {%- with { comment: reply, level: level|default(0) + 1} only -%}

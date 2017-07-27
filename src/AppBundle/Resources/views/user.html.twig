@@ -17,7 +17,7 @@
     {% if contribution.type == 'submission' %}
       {{ submission(contribution.submission) }}
     {% elseif contribution.type == 'comment' %}
-      {{ comment(contribution.comment, false) }}
+      {{ comment(contribution.comment, {recurse: false}) }}
     {% endif %}
   {% endfor %}
 {% endblock %}

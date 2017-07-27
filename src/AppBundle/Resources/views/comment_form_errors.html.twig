@@ -20,7 +20,7 @@
   <h1>{{ block('title') }}</h1>
 
   {% if comment %}
-    {{ comment(comment, false) }}
+    {{ comment(comment, {recurse: false}) }}
   {% endif %}
 
   {% include '@RadditApp/forms/comment_form.html.twig' with { form: form } only %}

@@ -18,7 +18,7 @@
   <h1>{{ block('title') }}</h1>
 
   {% for comment in comments %}
-    {{ comment(comment, false) }}
+    {{ comment(comment, {recurse: false}) }}
   {% endfor %}
 
   {{ include('@RadditApp/includes/pagination.html.twig', { pager: comments }) }}

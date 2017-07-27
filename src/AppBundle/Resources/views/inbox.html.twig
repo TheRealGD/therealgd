@@ -36,7 +36,7 @@
 {% block notification_comment %}
   {% from '@RadditApp/macros/comments.html.twig' import comment %}
 
-  {{ comment(notification.comment, false) }}
+  {{ comment(notification.comment, {recurse: false}) }}
 {% endblock %}
 
 {% block notification_message_thread %}
