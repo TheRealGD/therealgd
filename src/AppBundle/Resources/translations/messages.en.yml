@@ -182,8 +182,17 @@ nav:
     create_theme: Create theme
     delete_forum: Delete forum
     themes: Themes
-
-pagination:
+    submit: Submit
+    log_in: Log in
+    log_out: Log out
+    profile: Profile
+    register: Register
+    my_account: My account
+    user_settings: User settings
+    forums: Forums
+    inbox_count: Inbox (%count%)
+    messages: Messages
+    wiki: Wiki
     next: Next
     previous: Previous
 
@@ -221,19 +230,6 @@ reset_password:
 
 site_footer:
     version: Running %app% %version% (%branch%). Made with ☭.
-
-site_nav:
-    submit: Submit
-    log_in: Log in
-    log_out: Log out
-    profile: Profile
-    register: Register
-    my_account: My account
-    user_settings: User settings
-    forum_list: Forums
-    inbox: Inbox (%count%)
-    messages: Messages
-    wiki: Wiki
 
 stylesheets:
     name: Name

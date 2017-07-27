@@ -134,7 +134,16 @@ moderator_form:
     user: Benutzername
     submit: Als Moderator hinzufügen
 
-pagination:
+nav:
+    submit: Einreichen
+    log_in: Einloggen
+    log_out: Ausloggen
+    profile: Profile
+    register: Registrieren
+    my_account: Mein Account
+    user_settings: Einstellungen
+    forums: Foren
+    inbox_count: Posteingang (%count%)
     next: Nächste
     previous: Vorherige
 
@@ -167,17 +176,6 @@ reset_password:
 
 site_footer:
     version: Running %app% %version% (%branch%). Made with ☭.
-
-site_nav:
-    submit: Einreichen
-    log_in: Einloggen
-    log_out: Ausloggen
-    profile: Profile
-    register: Registrieren
-    my_account: Mein Account
-    user_settings: Einstellungen
-    forum_list: Foren
-    inbox: Posteingang (%count%)
 
 submission_form:
     title: Titel

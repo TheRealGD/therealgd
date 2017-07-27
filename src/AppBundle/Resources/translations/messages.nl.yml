@@ -149,7 +149,16 @@ moderator_form:
     user: Gebruikersnaam
     submit: Voeg als moderator toe
 
-pagination:
+nav:
+    submit: Bericht plaatsen
+    log_in: Log in
+    log_out: Log uit
+    profile: Profiel
+    register: Registeren
+    my_account: Mijn account
+    user_settings: Gebruikersinstellingen
+    forums: Fora
+    inbox_count: Inbox (%count%)
     next: Volgende
     previous: Vorige
 
@@ -184,17 +193,6 @@ reset_password:
 
 site_footer:
     version: Deze site draait op %app% %version% (%branch%). Gemaakt met ☭.
-
-site_nav:
-    submit: Bericht plaatsen
-    log_in: Log in
-    log_out: Log uit
-    profile: Profiel
-    register: Registeren
-    my_account: Mijn account
-    user_settings: Gebruikersinstellingen
-    forum_list: Fora
-    inbox: Inbox (%count%)
 
 submission_form:
     title: Titel

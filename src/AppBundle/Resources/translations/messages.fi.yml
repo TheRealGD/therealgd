@@ -162,7 +162,18 @@ moderator_form:
     user: Käyttäjänimi
     submit: Lisää moderaattori
 
-pagination:
+nav:
+    submit: Lisää
+    log_in: Kirjaudu
+    log_out: Kirjaudu ulos
+    profile: Profiili
+    register: Rekisteröidy
+    my_account: Tunnukseni
+    user_settings: Käyttäjäasetukset
+    forums: Foorumit
+    inbox_count: Postilaatikko (%count%)
+    messages: Viestit
+    wiki: Wiki
     next: Seuraava
     previous: Edellinen
 
@@ -194,19 +205,6 @@ reset_password:
 
 site_footer:
     version: Käytössä %app% %version% (%branch%). Tehty ☭lla.
-
-site_nav:
-    submit: Lisää
-    log_in: Kirjaudu
-    log_out: Kirjaudu ulos
-    profile: Profiili
-    register: Rekisteröidy
-    my_account: Tunnukseni
-    user_settings: Käyttäjäasetukset
-    forum_list: Foorumit
-    inbox: Postilaatikko (%count%)
-    messages: Viestit
-    wiki: Wiki
 
 submission_form:
     title: Otsikko

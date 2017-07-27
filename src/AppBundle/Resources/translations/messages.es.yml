@@ -160,7 +160,18 @@ moderator_form:
     user: Usuario
     submit: Agregar como moderador
 
-pagination:
+nav:
+    submit: Presentar
+    log_in: Ingresar
+    log_out: Salir
+    profile: Perfil
+    register: Registrar
+    my_account: Mi cuenta
+    user_settings: Opciones de usuario
+    forums: Foros
+    inbox_count: Bandeja de Entrada (%count%)
+    messages: Mensajes
+    wiki: Wiki
     next: Siguiente
     previous: Anterior
 
@@ -192,19 +203,6 @@ reset_password:
 
 site_footer:
     version: Usando %app% %version% (%branch%). Hecho con ☭.
-
-site_nav:
-    submit: Presentar
-    log_in: Ingresar
-    log_out: Salir
-    profile: Perfil
-    register: Registrar
-    my_account: Mi cuenta
-    user_settings: Opciones de usuario
-    forum_list: Foros
-    inbox: Bandeja de Entrada (%count%)
-    messages: Mensajes
-    wiki: Wiki
 
 submission_form:
     title: Titulo

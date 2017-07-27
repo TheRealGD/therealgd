@@ -160,7 +160,18 @@ moderator_form:
     user: Uzantonomo
     submit: Aldoni tiel kontrolanto
 
-pagination:
+nav:
+    submit: Afiŝi
+    log_in: Ensaluti
+    log_out: Elsaluti
+    profile: Profilo
+    register: Registri
+    my_account: Mia konto
+    user_settings: Uzanto-agordoj
+    forums: Forumoj
+    inbox_count: Enirkesto (%count%)
+    messages: Mesaĝoj
+    wiki: Vikio
     next: Sekva
     previous: Antaŭa
 
@@ -193,19 +204,6 @@ reset_password:
 
 site_footer:
     version: Uzanta %app% %version% (%branch%). Farita kun ☭.
-
-site_nav:
-    submit: Afiŝi
-    log_in: Ensaluti
-    log_out: Elsaluti
-    profile: Profilo
-    register: Registri
-    my_account: Mia konto
-    user_settings: Uzanto-agordoj
-    forum_list: Forumoj
-    inbox: Enirkesto (%count%)
-    messages: Mesaĝoj
-    wiki: Vikio
 
 submission_form:
     title: Titolo

@@ -4,14 +4,14 @@
       {% if pager.hasPreviousPage %}
         <li class="previous">
           <a href="{{ path(attr.get('_route'), attr.get('_route_params')|default({})|merge({page: pager.previousPage})) }}">
-            {{ 'pagination.previous'|trans }}
+            {{ 'nav.previous'|trans }}
           </a>
         </li>
       {% endif %}
       {% if pager.hasNextPage %}
         <li class="next">
           <a href="{{ path(attr.get('_route'), attr.get('_route_params')|default({})|merge({page: pager.nextPage})) }}">
-            {{ 'pagination.next'|trans }}
+            {{ 'nav.next'|trans }}
           </a>
         </li>
       {% endif %}

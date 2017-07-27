@@ -163,7 +163,17 @@ moderator_form:
     user: Brukernavn
     submit: Legg til som moderator
 
-pagination:
+nav:
+    submit: Nytt innlegg
+    log_in: Logg inn
+    log_out: Logg ut
+    profile: Profil
+    register: Registrér
+    my_account: Min brukerkonto
+    user_settings: Brukerinnstillinger
+    forums: Forumliste
+    inbox_count: Innboks (%count%)
+    messages: Meldinger
     next: Neste
     previous: Forrige
 
@@ -198,18 +208,6 @@ reset_password:
 
 site_footer:
     version: Kjører %app% %version% (%branch%). Laget med ☭.
-
-site_nav:
-    submit: Nytt innlegg
-    log_in: Logg inn
-    log_out: Logg ut
-    profile: Profil
-    register: Registrér
-    my_account: Min brukerkonto
-    user_settings: Brukerinnstillinger
-    forum_list: Forumliste
-    inbox: Innboks (%count%)
-    messages: Meldinger
 
 submission_form:
     title: Tittel

@@ -162,7 +162,18 @@ moderator_form:
     user: Ονομα
     submit: Υποβάλλε
 
-pagination:
+nav:
+    submit: Υποβάλλε
+    log_in: Σύνδεση
+    log_out: Αποσυνδέση
+    profile: Προφίλ
+    register: Εγγραφή
+    my_account: Ο λογαριασμός μου
+    user_settings: Προτιμήσεις χρήστη
+    forums: Φόρουμ
+    inbox_count: Inbox (%count%)
+    messages: Μηνύματα
+    wiki: Wiki
     next: Επόμενο
     previous: Προηγούμενο
 
@@ -193,19 +204,6 @@ reset_password:
 
 site_footer:
     version: Λειτουργώντας %app% %version% (%branch%). Φτιαγμένο με ☭.
-
-site_nav:
-    submit: Υποβάλλε
-    log_in: Σύνδεση
-    log_out: Αποσυνδέση
-    profile: Προφίλ
-    register: Εγγραφή
-    my_account: Ο λογαριασμός μου
-    user_settings: Προτιμήσεις χρήστη
-    forum_list: Φόρουμ
-    inbox: Inbox (%count%)
-    messages: Μηνύματα
-    wiki: Wiki
 
 submission_form:
     title: Τίτλος
