@@ -10,17 +10,17 @@
     max-width: 20rem;
   }
 
-  h1 {
-    font-size: 1.5rem;
-  }
-
-  & > section {
+  &__section {
     background: @sidebar-background-color;
     padding: 1rem 1rem 0;
     margin-bottom: 1rem;
   }
-}
 
-.sidebar:empty {
-  display: none;
+  &__title {
+    font-size: 1.5rem;
+  }
+
+  &:empty {
+    display: none;
+  }
 }

@@ -34,12 +34,12 @@
 {%- block sidebar -%}
   <section class="sidebar__section sidebar__section--front-forums">
     {% if has_subscriptions %}
-      <h1>{{ 'front.subscribed_forums'|trans }}</h1>
+      <h1 class="sidebar__title">{{ 'front.subscribed_forums'|trans }}</h1>
     {% elseif is_granted('ROLE_USER') %}
-      <h1>{{ 'front.featured_forums'|trans }}</h1>
+      <h1 class="sidebar__title">{{ 'front.featured_forums'|trans }}</h1>
       <p>{{ 'front.no_subscriptions'|trans }}</p>
     {% else %}
-      <h1>{{ 'front.featured_forums'|trans }}</h1>
+      <h1 class="sidebar__title">{{ 'front.featured_forums'|trans }}</h1>
     {% endif %}
 
     {% if forums|length > 0 %}

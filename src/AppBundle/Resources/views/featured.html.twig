@@ -6,7 +6,7 @@
 
 {% block sidebar %}
   <section class="sidebar__section sidebar__section--featured-forums">
-    <h1>{{ 'front.featured_forums'|trans }}</h1>
+    <h1 class="sidebar__title">{{ 'front.featured_forums'|trans }}</h1>
 
     {% if forums|length > 0 %}
       <ul>

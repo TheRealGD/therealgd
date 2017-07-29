@@ -24,7 +24,7 @@
 
 {% block sidebar %}
   <section class="sidebar__section sidebar__section--user-info">
-    <h1><a href="{{ path('raddit_app_user', {username: user.username}) }}">{{ user.username }}</a></h1>
+    <h1 class="sidebar__title"><a href="{{ path('raddit_app_user', {username: user.username}) }}">{{ user.username }}</a></h1>
 
     <p>{{ 'user.registered'|trans({
       '%timestamp%': timestamp(user.created)
@@ -32,7 +32,7 @@
   </section>
 
   <section class="sidebar__section sidebar__section--user-toolbox">
-    <h1>{{ 'user.toolbox'|trans }}</h1>
+    <h1 class="sidebar__title">{{ 'user.toolbox'|trans }}</h1>
     <nav>
       <ul>
         {% if is_granted('ROLE_USER') %}
@@ -46,7 +46,7 @@
 
   {% if user.moderatorTokens|length > 0 %}
     <section class="sidebar__section sidebar__section--user-moderator-info">
-      <h1>{{ 'user.moderates'|trans({'%username%': user.username}) }}</h1>
+      <h1 class="sidebar__title">{{ 'user.moderates'|trans({'%username%': user.username}) }}</h1>
       <ul>
         {% for token in user.moderatorTokens %}
           <li><a href="{{ path('raddit_app_forum', {forum_name: token.forum.name}) }}">{{ token.forum.name }}</a></li>

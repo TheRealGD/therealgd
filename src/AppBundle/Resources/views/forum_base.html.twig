@@ -21,7 +21,7 @@
 {% block sidebar %}
   {%- spaceless -%}
     <section class="sidebar__section sidebar__section--forum-meta forum-meta">
-      <h1 class="forum-title"><a href="{{ path('raddit_app_forum', {forum_name: forum.name}) }}">{{ forum.title }}</a></h1>
+      <h1 class="sidebar__title forum-title"><a href="{{ path('raddit_app_forum', {forum_name: forum.name}) }}">{{ forum.title }}</a></h1>
 
       {% if is_granted('ROLE_USER') %}
         {% set subscribed = app.user.subscriptionByForum(forum) is not null %}
@@ -47,7 +47,7 @@
 
     {% if is_granted('edit', forum) %}
       <section class="sidebar__section sidebar__section--forum-manage forum-manage">
-        <h1>{{ 'forum.manage'|trans }}</h1>
+        <h1 class="sidebar__title">{{ 'forum.manage'|trans }}</h1>
         <ul>
           <li><a href="{{ path('raddit_app_edit_forum', {forum_name: forum.name}) }}">{{ 'forum.edit'|trans }}</a></li>
           <li><a href="{{ path('raddit_app_forum_apperance', {forum_name: forum.name}) }}">{{ 'nav.appearance'|trans }}</a></li>
@@ -61,7 +61,7 @@
 
     {% if forum.moderators|length > 0 %}
       <section class="sidebar__section sidebar__section--forum-moderators forum-moderators">
-        <h1><a href="{{ path('raddit_app_forum_moderators', {forum_name: forum.name}) }}">{{ 'forum.moderators'|trans }}</a></h1>
+        <h1 class="sidebar__title"><a href="{{ path('raddit_app_forum_moderators', {forum_name: forum.name}) }}">{{ 'forum.moderators'|trans }}</a></h1>
         <ul>
           {% for moderator in forum.moderators %}
             <li>
