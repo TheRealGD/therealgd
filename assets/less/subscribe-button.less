@@ -1,0 +1,55 @@
+@import (reference) 'mixins';
+@import (reference) 'settings';
+
+.subscribe-button {
+  .unbuttonize;
+
+  cursor: pointer;
+  display: inline-block;
+
+  &__inner {
+    display: flex;
+  }
+
+  &__label,
+  &__subscriber-count {
+    background-color: @button-background-color;
+    color: @button-text-color;
+    padding: 0.5rem 1rem;
+  }
+
+  &__label {
+    border-radius: 4px 0 0 4px;
+  }
+
+  &__subscriber-count {
+    border-radius: 0 4px 4px 0;
+    margin-left: 1px;
+  }
+
+  &:active {
+    .subscribe-button__label {
+      color: @button-active-text-color;
+    }
+  }
+
+  &:hover {
+    .subscribe-button__label {
+      background-color: @button-hover-background-color;
+    }
+  }
+
+  /**
+   * Make widget suitable when space is tight, e.g. in table cells.
+   */
+  &--inline {
+    vertical-align: top;
+    display: inline;
+
+    // todo: find out if it's better to let elements have their own modifiers
+    .subscribe-button__label,
+    .subscribe-button__subscriber-count {
+      padding: 0.25rem 0.5rem;
+    }
+  }
+}

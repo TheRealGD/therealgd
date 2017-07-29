@@ -1,0 +1,15 @@
+{% macro subscribe_button(forum, subscribed, inline) %}
+  {% set subscriber_count = forum.subscriptions|length %}
+  {% from '@RadditApp/macros/icon.html.twig' import icon %}
+  <button class="subscribe-button subscribe-button--{{ subscribed ? 'unsubscribe' : 'subscribe' }} {{ inline ? 'subscribe-button--inline' }}">
+    <span class="subscribe-button__inner">
+      <span class="subscribe-button__label">
+        {{- (subscribed ? 'forum.unsubscribe' : 'forum.subscribe')|trans -}}
+      </span>
+
+      <span class="subscribe-button__subscriber-count" aria-label="{{ 'forum.subscriber_count'|transchoice(subscriber_count) }}">
+        {{- subscriber_count|localizednumber -}}
+      </span>
+    </span>
+  </button>
+{% endmacro %}

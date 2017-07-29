@@ -25,11 +25,8 @@
       <tr>
         <th>{{ th('forum_list.name'|trans, 'by_name', sortBy) }}</th>
         <th>{{ th('forum_list.title'|trans, 'by_title', sortBy) }}</th>
-        <th>{{ th('forum_list.subscribers'|trans, 'by_subscribers', sortBy) }}</th>
         <th>{{ th('forum_list.submission_count'|trans, 'by_submissions', sortBy) }}</th>
-        {% if is_granted('ROLE_USER') %}
-          <th></th>
-        {% endif %}
+        <th>{{ th('forum_list.subscribers'|trans, 'by_subscribers', sortBy) }}</th>
       </tr>
     </thead>
     <tbody>
@@ -38,19 +35,18 @@
         <tr>
           <td><a href="{{ path('raddit_app_forum', {forum_name: forum.name}) }}"><strong>{{ forum.name }}</strong></a></td>
           <td>{{ forum.title }}</td>
-          <td>{{ forum.subscriptions|length }}</td>
-          <td>{{ forum.submissions|length }}</td>
+          <td>{{ forum.submissions|length|localizednumber }}</td>
           {% if is_granted('ROLE_USER') %}
+            {% from '@RadditApp/macros/forum_macros.html.twig' import subscribe_button %}
             {% set subscribed = app.user.subscriptionByForum(forum) is not null %}
             <td>
               <form action="{{ path(subscribed ? 'raddit_app_unsubscribe' : 'raddit_app_subscribe', {id: forum.id}) }}" method="POST">
                 <input type="hidden" name="token" value="{{ csrf_token('subscribe') }}">
-
-                <button class="forum-list-subscribe-button">
-                  {{- (subscribed ? 'forum.unsubscribe' : 'forum.subscribe')|trans -}}
-                </button>
+                {{ subscribe_button(forum, subscribed, true) }}
               </form>
             </td>
+          {% else %}
+            <td>{{ forum.subscriptions|length|localizednumber }}</td>
           {% endif %}
         </tr>
       {% endfor %}

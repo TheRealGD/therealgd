@@ -17,12 +17,12 @@ class ForumControllerTest extends WebTestCase {
 
         $crawler = $client->request('GET', '/f/news');
 
-        $form = $crawler->selectButton('Subscribe')->form();
+        $form = $crawler->filter('.subscribe-button--subscribe')->form();
         $crawler = $client->submit($form);
 
         $this->assertContains(
             'Unsubscribe',
-            $crawler->filter('.forum-subscribe-button')->text()
+            $crawler->filter('.subscribe-button--unsubscribe')->text()
         );
     }
 
@@ -35,9 +35,9 @@ class ForumControllerTest extends WebTestCase {
 
         $crawler = $client->request('GET', '/forums');
 
-        $form = $crawler->selectButton('Subscribe')->form();
+        $form = $crawler->filter('.subscribe-button--subscribe')->form();
         $crawler = $client->submit($form);
 
-        $this->assertCount(1, $crawler->selectButton('Unsubscribe'));
+        $this->assertCount(1, $crawler->filter('.subscribe-button--unsubscribe'));
     }
 }
