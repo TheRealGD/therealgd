@@ -32,7 +32,7 @@
 {% endblock %}
 
 {%- block sidebar -%}
-  <section>
+  <section class="sidebar__section sidebar__section--front-forums">
     {% if has_subscriptions %}
       <h1>{{ 'front.subscribed_forums'|trans }}</h1>
     {% elseif is_granted('ROLE_USER') %}

@@ -23,7 +23,7 @@
 {% endblock %}
 
 {% block sidebar %}
-  <section>
+  <section class="sidebar__section sidebar__section--user-info">
     <h1><a href="{{ path('raddit_app_user', {username: user.username}) }}">{{ user.username }}</a></h1>
 
     <p>{{ 'user.registered'|trans({
@@ -31,7 +31,7 @@
     })|raw }}</p>
   </section>
 
-  <section>
+  <section class="sidebar__section sidebar__section--user-toolbox">
     <h1>{{ 'user.toolbox'|trans }}</h1>
     <nav>
       <ul>
@@ -45,7 +45,7 @@
   </section>
 
   {% if user.moderatorTokens|length > 0 %}
-    <section>
+    <section class="sidebar__section sidebar__section--user-moderator-info">
       <h1>{{ 'user.moderates'|trans({'%username%': user.username}) }}</h1>
       <ul>
         {% for token in user.moderatorTokens %}

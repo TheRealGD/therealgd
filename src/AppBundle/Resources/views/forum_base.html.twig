@@ -20,7 +20,7 @@
 
 {% block sidebar %}
   {%- spaceless -%}
-    <section class="forum-meta">
+    <section class="sidebar__section sidebar__section--forum-meta forum-meta">
       <h1 class="forum-title"><a href="{{ path('raddit_app_forum', {forum_name: forum.name}) }}">{{ forum.title }}</a></h1>
 
       {% if is_granted('ROLE_USER') %}
@@ -46,7 +46,7 @@
     </section>
 
     {% if is_granted('edit', forum) %}
-      <section class="forum-manage">
+      <section class="sidebar__section sidebar__section--forum-manage forum-manage">
         <h1>{{ 'forum.manage'|trans }}</h1>
         <ul>
           <li><a href="{{ path('raddit_app_edit_forum', {forum_name: forum.name}) }}">{{ 'forum.edit'|trans }}</a></li>
@@ -60,7 +60,7 @@
     {% endif %}
 
     {% if forum.moderators|length > 0 %}
-      <section class="forum-moderators">
+      <section class="sidebar__section sidebar__section--forum-moderators forum-moderators">
         <h1><a href="{{ path('raddit_app_forum_moderators', {forum_name: forum.name}) }}">{{ 'forum.moderators'|trans }}</a></h1>
         <ul>
           {% for moderator in forum.moderators %}

@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block sidebar %}
-  <section class="sidebar-submission-meta">
+  <section class="sidebar__section sidebar__section--submission-meta sidebar-submission-meta">
     <p class="sidebar-submission-meta-score">
       <strong class="vote-total">{{- 'submissions.total_votes'|transchoice(submission.votes|length) -}}</strong>
       <span class="vote-stats">{{ 'submissions.vote_stats'|trans({

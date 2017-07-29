@@ -23,8 +23,8 @@
 {% endblock %}
 
 {% block sidebar %}
-  <section>
-    <h1>{{ page.path }}</h1>
+  <section class="sidebar__section sidebar__section--wiki-info">
+    <h1 class="sidebar__title">{{ page.path }}</h1>
       <p>
         {{- 'wiki.last_edited'|trans({
           '%username%': '<a href="%s">%s</a>'|format(
@@ -40,8 +40,8 @@
     {% endif %}
   </section>
 
-  <section>
-    <h1>{{ 'wiki.toolbox'|trans }}</h1>
+  <section class="sidebar__section sidebar__section--wiki-toolbox">
+    <h1 class="sidebar__title">{{ 'wiki.toolbox'|trans }}</h1>
 
     <ul>
       {% if is_granted('write', page) %}
@@ -51,7 +51,7 @@
     </ul>
   </section>
 
-  <section>
+  <section class="sidebar__section sidebar__section--wiki-navigation">
     <h1>{{ 'wiki.navigation'|trans }}</h1>
 
     <ul>
