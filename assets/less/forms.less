@@ -32,7 +32,19 @@
     }
   });
 
-  .row {
+  &__errors {
+    margin: 0;
+    padding: 0;
+  }
+
+  &__error {
+    color: @form-error-color;
+    font-weight: bold;
+    list-style-position: inside;
+    margin: 0;
+  }
+
+  &__row {
     max-width: 40rem;
     margin-bottom: 1rem;
 
@@ -40,46 +52,25 @@
       // Make text type inputs fill the entire row
       width: 100%;
     });
+
+    &--markdown {
+      margin-bottom: 0;
+    }
   }
 
-  .help {
+  &__help {
     color: @form-help-text-color;
     font-size: 0.80rem;
   }
 
-  label {
+  &__label {
     display: inline-block;
     margin-right: 1ex;
   }
 
-  .markdown-row {
+  &__markdown-help {
+    font-size: smaller;
+    text-align: right;
     margin-bottom: 0;
-
-    .markdown-help {
-      font-size: smaller;
-      text-align: right;
-      margin-bottom: 0;
-    }
-
-    .markdown-preview {
-      background: @markdown-preview-background-color;
-      border-radius: 4px;
-      display: flex;
-      flex-direction: column;
-      margin: 1rem 0;
-      padding: 1rem 1rem 0;
-    }
-  }
-}
-
-.form-errors {
-  margin: 0;
-  padding: 0;
-
-  li {
-    color: @form-error-color;
-    font-weight: bold;
-    list-style-position: inside;
-    margin: 0;
   }
 }

@@ -5,24 +5,26 @@
 {% endblock %}
 
 {% block body %}
-  <form action="{{ path('raddit_app_login_check') }}" method="POST" class="form login-form">
+  <form action="{{ path('raddit_app_login_check') }}" method="POST" class="form form--login">
     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
     {% if error %}
-      <p class="error">{{ error.messageKey|trans(error.messageData, 'security') }}</p>
+      <ul class="form__errors">
+        <li class="form__error">{{ error.messageKey|trans(error.messageData, 'security') }}</li>
+      </ul>
     {% endif %}
 
-    <div class="row">
-      <label for="login-username">{{ 'login_form.username'|trans }}</label>
+    <div class="form__row">
+      <label class="form__label" for="login-username">{{ 'login_form.username'|trans }}</label>
       <input type="text" name="_username" autocomplete="off" id="login-username">
     </div>
 
-    <div class="row">
-      <label for="login-password">{{ 'login_form.password'|trans }}</label>
+    <div class="form__row">
+      <label class="form__label" for="login-password">{{ 'login_form.password'|trans }}</label>
       <input type="password" name="_password" autocomplete="off" id="login-password">
     </div>
 
-    <div class="row">
+    <div class="form__row">
       <button type="submit" class="button">{{ 'login_form.log_in'|trans }}</button>
     </div>
 

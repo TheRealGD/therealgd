@@ -5,12 +5,15 @@
 
   {{ form_row(form.nightFriendly) }}
 
-  <div class="row">
+  <div class="form__row">
     {{ form_errors(form.appendToDefaultStyle) }}
     {{ form_label(form.appendToDefaultStyle) }}
     {{ form_widget(form.appendToDefaultStyle) }}
-    <p class="help">{{ 'stylesheets.append_to_default_style_description'|trans }}</p>
+    <div class="form__help">
+      <p>{{ 'stylesheets.append_to_default_style_description'|trans }}</p>
+    </div>
   </div>
+
   {{ form_row(form.nightFriendly) }}
 
   {{ form_row(form.submit) }}

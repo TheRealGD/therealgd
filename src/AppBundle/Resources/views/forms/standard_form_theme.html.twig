@@ -7,16 +7,16 @@
 
 {%- block form_errors -%}
   {%- if errors|length > 0 -%}
-    <ul class="form-errors">
+    <ul class="form__errors">
       {%- for error in errors -%}
-        <li>{{ error.message }}</li>
+        <li class="form__error">{{ error.message }}</li>
       {%- endfor -%}
     </ul>
   {%- endif -%}
 {%- endblock -%}
 
 {%- block form_row -%}
-  <div class="row">
+  <div class="form__row">
     {{- form_label(form) -}}
     {{- form_errors(form) -}}
     {{- form_widget(form) -}}
@@ -24,29 +24,37 @@
 {%- endblock -%}
 
 {%- block button_row -%}
-  <div class="row">
+  <div class="form__row">
     {{- form_widget(form) -}}
   </div>
 {%- endblock -%}
 
 {%- block button_widget -%}
-  {%- set attr = attr|merge({'class': (attr.class is defined and attr.class|length > 0) ? attr.class~' button' : 'button'}) -%}
+  {%- set attr = attr|merge({'class': (attr.class ?? '')~' button'|trim}) -%}
+  {{- parent() -}}
+{%- endblock -%}
+
+{%- block form_label -%}
+  {%- set label_attr = label_attr|merge({class: (label_attr.class ?? '')~' form__label'|trim}) -%}
+  {%- if required -%}
+    {%- set label_attr = label_attr|merge({class: label_attr.class~' form__label--required'}) -%}
+  {%- endif -%}
   {{- parent() -}}
 {%- endblock -%}
 
 {%- block markdown_row -%}
-  {%- set attr = attr|merge({'class': (attr.class is defined and attr.class|length > 0) ? attr.class~' markdown-input' : 'markdown-input'}) -%}
-  <div class="row markdown-row">
+  {%- set attr = attr|merge({'class': (attr.class ?? '')~' markdown-input__input'|trim}) -%}
+  <div class="form__row form__row--markdown markdown-input">
     {{- form_label(form) -}}
     {{- form_errors(form) -}}
     {{- block('textarea_widget') -}}
-    <p class="markdown-help">
+    <p class="form__markdown-help">
       {#- TODO: don't link to an external site -#}
       <a href="http://commonmark.org/help/" target="_blank">
         {{- 'markdown_type.help'|trans -}}
       </a>
     </p>
-    <div class="markdown-preview-container"></div>
+    <div class="markdown-input__preview-container"></div>
   </div>
 {%- endblock -%}
 

@@ -18,7 +18,7 @@
   {% if notifications|length > 0 %}
     <form action="{{ path('raddit_app_clear_inbox', { max: notifications|first.id }) }}" method="POST" class="form">
       <input type="hidden" name="token" value="{{ csrf_token('clear_inbox') }}">
-      <div class="row">
+      <div class="form__row">
         <button type="submit" class="button">{{ 'inbox.clear_inbox'|trans }}</button>
       </div>
     </form>

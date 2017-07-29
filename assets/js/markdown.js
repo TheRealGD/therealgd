@@ -12,16 +12,16 @@ function createPreview() {
         data: { markdown: $(this).val() }
     }).done(content => {
         const html = content.length > 0
-            ? `<div class="markdown-preview">${content}</div>`
+            ? `<div class="markdown-input__preview">${content}</div>`
             : '';
 
         $(this)
-            .closest('.markdown-row')
-            .find('.markdown-preview-container')
+            .closest('.markdown-input')
+            .find('.markdown-input__preview-container')
             .html(html);
     });
 }
 
 export default function ($) {
-    $('.markdown-input').on('input', debounce(createPreview, 600));
+    $('.markdown-input__input').on('input', debounce(createPreview, 600));
 };
