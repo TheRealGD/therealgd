@@ -53,17 +53,24 @@ Clone the repository somewhere and navigate there with the command line.
 
 ## Reporting issues
 
-Visit [/f/meta](https://raddit.me/f/meta) to report issues. Alternatively, email
-emma1312@protonmail.ch to disclose or discuss something in private with the
-creator of the software.
+* Bugs should be reported on the [issue tracker][issues].
+* Feature requests should be discussed on [/f/meta][meta].
+
+You can email emma1312@protonmail.ch to disclose or discuss something in private
+with the creator of the software.
 
 ## Contributions
 
-Before contributing new features, please open an issue so we can discuss the
-direction in which to take the project and avoid hurt feelings. Bug fixes are
-always welcome, however.
+You are always welcome to submit pull requests for things like bug fixes,
+documentation, and new translations. Pull requests for new/altered functionality
+are likely to be rejected, as this must be discussed with the community
+beforehand.
 
 ## License
 
 The software is released under the zlib license. See the `LICENSE` file for
 details.
+
+
+[issues]: https://gitlab.com/edgyemma/raddit-app/issues
+[meta]: https://raddit.me/f/meta
