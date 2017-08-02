@@ -14,8 +14,8 @@
   <meta property="og:url" content="{{ url('raddit_app_forum', {forum_name: forum.name}) }}">
   <meta property="og:image" content="{{ absolute_url(asset('apple-touch-icon-precomposed.png')) }}">
 
-  {% if forum.description %}
-    <meta name="description" content="{{ forum.description|markdown|striptags }}">
+  {% if forum.description is not empty %}
+    <meta name="description" content="{{ forum.description }}">
   {% endif %}
 {% endblock %}
 

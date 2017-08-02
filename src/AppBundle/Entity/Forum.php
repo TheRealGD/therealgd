@@ -60,12 +60,22 @@ class Forum {
     /**
      * @ORM\Column(type="text", nullable=true)
      *
-     * @Assert\Length(max=1500)
+     * @Assert\Length(max=300)
      * @Assert\NotBlank()
      *
      * @var string|null
      */
     private $description;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     *
+     * @Assert\Length(max=1500)
+     * @Assert\NotBlank()
+     *
+     * @var string|null
+     */
+    private $sidebar;
 
     /**
      * @ORM\OneToMany(targetEntity="Moderator", mappedBy="forum", cascade={"persist", "remove"})
@@ -174,17 +184,31 @@ class Forum {
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getDescription() {
         return $this->description;
     }
 
     /**
-     * @param string $description
+     * @param string|null $description
      */
     public function setDescription($description) {
         $this->description = $description;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSidebar() {
+        return $this->sidebar;
+    }
+
+    /**
+     * @param string|null $sidebar
+     */
+    public function setSidebar($sidebar) {
+        $this->sidebar = $sidebar;
     }
 
     /**

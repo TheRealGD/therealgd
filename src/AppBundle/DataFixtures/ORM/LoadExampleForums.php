@@ -19,7 +19,7 @@ class LoadExampleForums extends AbstractFixture implements DependentFixtureInter
 
             $forum->setName($data['name']);
             $forum->setTitle($data['title']);
-            $forum->setDescription($data['description']);
+            $forum->setSidebar($data['sidebar']);
             $forum->setCreated($data['created']);
             $forum->setFeatured($data['featured']);
 
@@ -47,7 +47,7 @@ class LoadExampleForums extends AbstractFixture implements DependentFixtureInter
         yield [
             'name' => 'cats',
             'title' => 'Cat Memes',
-            'description' => 'le memes',
+            'sidebar' => 'le memes',
             'moderators' => [
                 ['username' => 'emma', 'added' => new \DateTime('2017-04-20 19:17')],
                 ['username' => 'zach', 'added' => new \DateTime('2017-05-05 05:05')],
@@ -59,7 +59,7 @@ class LoadExampleForums extends AbstractFixture implements DependentFixtureInter
         yield [
             'name' => 'news',
             'title' => 'News',
-            'description' => "Discussion of current events\n\n### Rules\n\n* rulez go here",
+            'sidebar' => "Discussion of current events\n\n### Rules\n\n* rulez go here",
             'moderators' => [
                 ['username' => 'zach', 'added' => new \DateTime('2017-01-02 00:01')],
             ],

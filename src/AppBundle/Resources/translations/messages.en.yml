@@ -134,6 +134,7 @@ front:
 
 help:
     delete_forum_warning: All content on this forum will be irreversibly deleted!
+    forum_description: A short description of the forum. Search engines will present this description in their results.
 
 inbox:
     title: Inbox
@@ -148,6 +149,7 @@ label:
     night_theme: Theme (night mode)
     save_settings: Save settings
     source_code: Source code
+    sidebar: Sidebar
 
 login_form:
     log_in: Log in
@@ -282,6 +284,7 @@ title:
     delete_forum: Delete forum %forum%
     forum_appearance: Appearance for %forum%
     showing_revision: 'Showing revision #%revision% of page %path%'
+    editing_forum: Editing forum %forum%
 
 two_factor:
     explanation: To complete the login, you must enter the verification code sent by email to %email%.

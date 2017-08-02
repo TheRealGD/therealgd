@@ -31,7 +31,6 @@
     </thead>
     <tbody>
       {% for forum in forums %}
-        {% set has_description = forum.description is not empty %}
         <tr>
           <td><a href="{{ path('raddit_app_forum', {forum_name: forum.name}) }}"><strong>{{ forum.name }}</strong></a></td>
           <td>{{ forum.title }}</td>

@@ -1,31 +1,17 @@
 {% extends '@RadditApp/forum_base.html.twig' %}
 
 {% block page_classes %}edit-forum-page{% endblock %}
-{% block title 'edit_forum.title'|trans({'%forum%': forum.name}) %}
+{% block title 'edit_forum.title'|trans({'%forum%': '/f/'~forum.name}) %}
 {% set no_custom_stylesheets = true %}
 
 {% block body %}
-  {{ form_start(form) }}
-    {{ form_row(form.name) }}
+  <h1>
+    {{ 'title.editing_forum'|trans({
+      '%forum%': '<a href="%s">/f/%s</a>'|format(path('raddit_app_forum', {forum_name: forum.name})|e, forum.name|e)
+    })|raw }}
+  </h1>
 
-    {{ form_row(form.title) }}
-
-    {{ form_row(form.description) }}
-
-    {{ form_row(form.category) }}
-
-    {% if form.featured is defined %}
-      {{ form_row(form.featured) }}
-    {% endif %}
-
-    <div class="form__row">
-      {{ form_widget(form.submit) }}
-
-      {% if form.delete is defined %}
-        {{ form_widget(form.delete, {attr: {class: 'delete-forum'}}) }}
-      {% endif %}
-    </div>
-  {{ form_end(form) }}
+  {{ include('@RadditApp/forms/forum_form.html.twig', {form: form}, with_context=false) }}
 {% endblock %}
 
 {% block javascripts %}

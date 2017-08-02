@@ -5,6 +5,7 @@
 {% block title %}{{ 'create_forum.create_new_forum'|trans }}{% endblock %}
 
 {% block body %}
-  {{ form_start(form) }}
-  {{ form_end(form) }}
+  <h1>{{ block('title') }}</h1>
+
+  {{ include('@RadditApp/forms/forum_form.html.twig', {form: form}, with_context=false) }}
 {% endblock %}

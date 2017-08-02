@@ -34,8 +34,8 @@
         </form>
       {% endif %}
 
-      {% if forum.description %}
-        <div class="forum-description">{{ forum.description|cached_markdown|raw }}</div>
+      {% if forum.sidebar is not empty %}
+        <div class="forum-sidebar-content">{{ forum.sidebar|cached_markdown|raw }}</div>
       {% endif %}
     </section>
 
