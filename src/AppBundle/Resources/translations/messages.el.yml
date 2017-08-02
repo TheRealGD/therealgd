@@ -75,8 +75,11 @@ flash:
     forum_moderator_added: Ο χρήστης έχει γίνει συντονιστής.
     inbox_cleared: Το inbox εκκαθαρίστηκε.
     reset_password_email_sent: Ένα μήνυμα επαναφοράς στάλθηκε στη διεύθυνση που καθορίσατε.
-    submission_deleted: Η υποβολή διαγράφηκε.
+    stylesheet_created: Το φύλλο στυλ σας έχει δημιουργηθεί.
+    stylesheet_updated: Το φύλλο στυλ σας έχει ενημερωθεί.
     submission_edited: Έχετε κάνει τις αλλαγές
+    submission_deleted: Η υποβολή διαγράφηκε.
+    user_account_registered: Ο λογαριασμός σας έχει εγγραφεί.
     user_password_updated: Ο κωδικός πρόσβασής σας έχει ενημερωθεί.
     user_settings_updated: Οι προτιμήσεις χρήστη έχουν αλλάξει.
 
@@ -128,11 +131,22 @@ front:
     featured: Προεπιλεγμένα
     subscribed: Συνδρομητής
 
+help:
+    delete_forum_warning: Όλο το περιεχόμενο σε αυτό το φόρουμ θα διαγραφεί για πάντα!
+
 inbox:
     title: Inbox
     clear_inbox: Διαγράψτε το Inbox.
     empty: Το inbox είναι άδειο.
     message_reply_head: 'Re: %τίτλος%'
+
+label:
+    password: Κωδικός πρόσβασης
+    confirm: Επιβεβαιώνω
+    theme: Στυλ
+    night_theme: Στυλ νύχτας
+    save_settings: Αποθήκευση ρυθμίσεων
+    source_code: Κωδικός προγραμματισμού
 
 login_form:
     log_in: Σύνδεση
@@ -163,6 +177,10 @@ moderator_form:
     submit: Υποβάλλε
 
 nav:
+    appearance: Εμφάνιση
+    create_theme: Δημιουργία στυλ
+    delete_forum: Διαγραφή φόρουμ
+    themes: Στυλ
     submit: Υποβάλλε
     log_in: Σύνδεση
     log_out: Αποσυνδέση
@@ -176,6 +194,9 @@ nav:
     wiki: Wiki
     next: Επόμενο
     previous: Προηγούμενο
+    
+placeholder:
+    default: (Προκαθορισμένο)
 
 request_password_reset:
     title: Ζητήστε να επαναφέρουμε τον κωδικό σας
@@ -204,6 +225,21 @@ reset_password:
 
 site_footer:
     version: Λειτουργώντας %app% %version% (%branch%). Φτιαγμένο με ☭.
+    
+stylesheets:
+    name: Ονομα
+    css: CSS
+    author: Συντάχθηκε από
+    edit: Επεξεργασία
+    append_to_default_style: Προσάρτηση στο προεπιλεγμένο στυλ
+    append_to_default_style_description: Αφήστε αυτό το στοιχείο εκτός εάν το CSS σας παρέχει ένα πλήρες φύλλο στυλ για ολόκληρη την ιστοσελίδα.
+    night_friendly: Φιλικό στη νυχτερινή λειτουργία
+    create_stylesheet: Δημιουργία φύλλου στυλ
+    edit_stylesheet: Επεξεργασία φύλλου στυλ
+    new_stylesheet: Νέο φύλλο στυλ
+    list_title: Προσαρμοσμένα φύλλα στυλ
+    create_title: Δημιουργία φύλλου στυλ
+    edit_title: Επεξεργασία φύλλου στυλ %name%
 
 submission_form:
     title: Τίτλος
@@ -237,6 +273,14 @@ time:
     earlier_format: '%relative_time% νωρίτερα'
     later_format: '%relative_time% αργότερα'
 
+title:
+    delete_forum: Διαγραφή φόρουμ %forum%
+    forum_appearance: Εμφάνιση για %forum%
+    showing_revision: 'Εμφάνιση αλλαγής #%revision% της σελίδας %path%'
+
+two_factor:
+    explanation: Για να συνδεθείτε, πρέπει να εισαγάγετε τον κωδικό πρόσβασης που αποστέλλεται μέσω email στη διεύθυνση %email%.
+
 votes:
     upvote: Πανοψηφίσει
     downvote: Κατοψηφίσει
@@ -250,9 +294,19 @@ user:
     username_rules: Επιτρέπονται χαρακτήρες  είναι A-Z, a-z, 0-9 και _.
     password_rules: Ελάχιστο 8 χαρακτήρες; Το πολύ 72 λόγω περιορισμών του αλγόριθμου bcrypt.
     email_optional: Η παροχή μιας διεύθυνσης email είναι προαιρετική. Θα χρησιμοποιηθεί μόνο για επαναφορά του κωδικού πρόσβασής σας.
+    two_factor_explanation: Απαιτείται να εισαχθεί ένας κωδικός πρόσβασης μιας χρήσης κατά τη σύνδεση. Αυτός ο κωδικός θα σας αποσταλεί μέσω ηλεκτρονικού ταχυδρομείου.
+    two_factor_warning: Βεβαιωθείτε ότι έχετε μια έγκυρη διεύθυνση email προτού ενεργοποιήσετε αυτήν την επιλογή!
     toolbox: Εργαλειοθήκη
     message: Στείλετε μήνυμα
     registered: Εγγεγραμμένοι στις %timestamp%
+
+user_flag:
+    post_as_label: Γράψτε ως
+    none_label: (κανένα)
+    admin: διαχειριστής
+    admin_label: Διαχειριστής
+    moderator: συντονιστής
+    moderator_label: Συντονιστής
 
 user_form:
     username: Ονομα
@@ -263,6 +317,7 @@ user_form:
     email: Email
     register: Εγγραφή
     verification: Επαλήθευση
+    two_factor_enabled: Ενεργοποιήστε τον κωδικό πρόσβασης δύο παραγόντων
     save: Αποθηκεύστε τις αλλαγές
 
 user_settings:
@@ -271,6 +326,7 @@ user_settings:
 user_settings_form:
     locale: Γλώσσα
     night_mode: Νυχτερινή λειτουργία
+    show_custom_stylesheets: Εμφάνιση προσαρτημένων φύλλων στυλ
     save: Αποθήκευσε τις αλλαγές
 
 wiki:
