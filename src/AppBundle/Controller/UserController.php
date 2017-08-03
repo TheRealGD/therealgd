@@ -229,4 +229,27 @@ final class UserController extends Controller {
 
         return $this->redirectToRoute('raddit_app_inbox');
     }
+
+    /**
+     * @param Request       $request
+     * @param User          $user
+     * @param EntityManager $em
+     * @param bool          $trusted
+     *
+     * @return Response
+     */
+    public function markAsTrustedAction(Request $request, User $user, EntityManager $em, bool $trusted) {
+        if (!$this->isCsrfTokenValid('mark_trusted', $request->request->get('token'))) {
+            throw new AccessDeniedHttpException();
+        }
+
+        $user->setTrusted($trusted);
+        $em->flush();
+
+        $this->addFlash('success', $trusted ? 'flash.user_marked_trusted' : 'flash.user_marked_untrusted');
+
+        return $this->redirectToRoute('raddit_app_user', [
+            'username' => $user->getUsername(),
+        ]);
+    }
 }

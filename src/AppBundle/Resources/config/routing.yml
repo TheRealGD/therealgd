@@ -58,6 +58,12 @@ raddit_app_registration:
     path: /registration
     methods: [GET, POST]
 
+raddit_app_mark_user_trusted:
+    defaults: { _controller: RadditAppBundle:User:markAsTrusted }
+    path: /mark_as_trusted/{id}/{trusted}
+    methods: [POST]
+    requirements: { trusted: '[01]' }
+
 raddit_app_login:
     defaults: { _controller: RadditAppBundle:Security:login }
     path: /login

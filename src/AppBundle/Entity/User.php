@@ -183,6 +183,13 @@ class User implements UserInterface, TwoFactorInterface {
      */
     private $showCustomStylesheets = true;
 
+    /**
+     * @ORM\Column(type="boolean", options={"default": false})
+     *
+     * @var bool
+     */
+    private $trusted = false;
+
     public function __construct() {
         $this->created = new \DateTime('@'.time());
         $this->moderatorTokens = new ArrayCollection();
@@ -334,6 +341,10 @@ class User implements UserInterface, TwoFactorInterface {
 
         if ($this->admin) {
             $roles[] = 'ROLE_ADMIN';
+        }
+
+        if ($this->trusted) {
+            $roles[] = 'ROLE_TRUSTED_USER';
         }
 
         return $roles;
@@ -518,6 +529,20 @@ class User implements UserInterface, TwoFactorInterface {
      */
     public function setShowCustomStylesheets(bool $showCustomStylesheets) {
         $this->showCustomStylesheets = $showCustomStylesheets;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isTrusted(): bool {
+        return $this->trusted;
+    }
+
+    /**
+     * @param bool $trusted
+     */
+    public function setTrusted(bool $trusted) {
+        $this->trusted = $trusted;
     }
 
     /**

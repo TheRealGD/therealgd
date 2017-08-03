@@ -37,3 +37,7 @@ security:
                 always_remember_me: true
 
             user_checker: Raddit\AppBundle\Security\UserChecker
+
+    role_hierarchy:
+        ROLE_ADMIN:        [ROLE_TRUSTED_USER, ROLE_USER]
+        ROLE_TRUSTED_USER: [ROLE_USER]

@@ -66,6 +66,9 @@ documentation, and new translations. Pull requests for new/altered functionality
 are likely to be rejected, as this must be discussed with the community
 beforehand.
 
+If you'd like to support me with money, you can send Bitcoins to
+`1AXAH2ZaHfVsq2xnbXRN9497FpUAri8x72`.
+
 ## License
 
 The software is released under the zlib license. See the `LICENSE` file for

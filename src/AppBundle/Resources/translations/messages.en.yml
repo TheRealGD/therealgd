@@ -1,6 +1,10 @@
 # New keys should use the generic categories 'title', 'label', 'help', 'nav',
 # etc. Older keys are subject to renaming.
 
+action:
+    mark_as_trusted: Mark user as trusted
+    mark_as_untrusted: Mark user as untrusted
+
 add_moderator:
     title: Add moderator to %forum%
 
@@ -84,6 +88,8 @@ flash:
     user_account_registered: Your account has been registered.
     user_password_updated: Your password has been updated.
     user_settings_updated: User settings have been updated.
+    user_marked_trusted: The user was marked as trusted.
+    user_marked_untrusted: The user was marked as untrusted.
 
 forum:
     moderators: Moderators
@@ -131,6 +137,9 @@ front:
     all: All
     featured: Featured
     subscribed: Subscribed
+
+heading:
+    user_roles: User roles
 
 help:
     delete_forum_warning: All content on this forum will be irreversibly deleted!
