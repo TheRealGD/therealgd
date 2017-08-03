@@ -12,3 +12,4 @@
 'expression() syntax is not allowed in strings on line {{ line }}': 'expression() syntax is not allowed in strings on line {{ line }}'
 'Embedded data is not allowed on line {{ line }}': 'Embedded data is not allowed on line {{ line }}'
 '@import syntax is not allowed on line {{ line }}': '@import syntax is not allowed on line {{ line }}'
+'You cannot post more. Wait a while before trying again.': 'You cannot post more. Wait a while before trying again.'

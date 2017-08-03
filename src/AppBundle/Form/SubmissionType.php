@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -97,6 +98,26 @@ final class SubmissionType extends AbstractType {
             'forum' => null,
             'label_format' => 'submission_form.%name%',
             'honeypot' => true,
+            'validation_groups' => function (FormInterface $form) {
+                $groups = ['Default'];
+                $trusted = $this->authorizationChecker->isGranted('ROLE_TRUSTED_USER');
+
+                if ($form->getData() && $form->getData()->getId()) {
+                    $groups[] = 'edit';
+
+                    if (!$trusted) {
+                        $groups[] = 'untrusted_user_edit';
+                    }
+                } else {
+                    $groups[] = 'create';
+
+                    if (!$trusted) {
+                        $groups[] = 'untrusted_user_create';
+                    }
+                }
+
+                return $groups;
+            },
         ]);
 
         $resolver->setAllowedTypes('forum', [Forum::class, 'null']);
