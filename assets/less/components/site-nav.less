@@ -1,0 +1,118 @@
+@import (reference) '../settings';
+
+@media screen and (min-width: @desktop-min-width) {
+  .site-nav {
+    background-color: @nav-background-color;
+    display: flex;
+    margin-bottom: 1rem;
+    padding: 0 1rem;
+
+    &__mobile-toggle {
+      display: none;
+    }
+
+    &__logo,
+    &__link {
+      color: @nav-link-color;
+      display: block;
+      font-size: @nav-font-size;
+      padding: 1rem;
+    }
+
+    &__logo {
+      font-weight: bold;
+    }
+
+    &__inner {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    &__menu {
+      display: flex;
+      padding: 0;
+      margin: 0;
+    }
+
+    &__item {
+      display: block;
+
+      &--has-notifications {
+        background: @nav-notifications-background-color;
+      }
+
+      // todo: BEM
+      &.dropdown-container {
+        &.expanded,
+        &:not(.js):hover {
+          background: @nav-active-background-color;
+        }
+      }
+    }
+  }
+}
+
+// mobile
+
+@media screen and (max-width: (@desktop-min-width - 1px)) {
+  .site-nav {
+    background-color: @nav-background-color;
+    margin-bottom: 1rem;
+
+    &__logo {
+      font-weight: bold;
+    }
+
+    &__logo,
+    &__mobile-toggle,
+    &__link {
+      color: @nav-link-color;
+      font-size: @nav-font-size;
+      padding: 1rem;
+    }
+
+    &__mobile-toggle {
+      &--has-notifications {
+        background: @nav-notifications-background-color;
+      }
+    }
+
+    &__header {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    &__menu {
+      margin: 0;
+      padding: 0;
+    }
+
+    &__item {
+      &--has-notifications {
+        background: @nav-notifications-background-color;
+      }
+
+      &.dropdown-container {
+        &.expanded,
+        &:not(.js):hover {
+          background: @nav-active-background-color;
+        }
+      }
+    }
+
+    &__link {
+      display: block;
+    }
+
+    &__inner {
+      background-color: @nav-inner-background-color;
+      display: none;
+
+      &--mobile-visible {
+        display: block;
+      }
+    }
+  }
+}
+
