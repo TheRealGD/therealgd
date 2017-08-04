@@ -1,27 +1,39 @@
 # Change Log
 
-## v0.5.0 (2017-xx-xx)
+## v0.5.0 (2017-08-04)
 
+* Added `autocomplete="new-password"` to password fields when editing user
+  accounts.
 * Added CAPTCHA to registration form.
 * Added a command that prunes IP addresses on many entities, optionally after
   they reach a provided age.
+* Added (buggy) two-factor authentication for admins only.
+* Added combined view of comments ands
 * Added custom CSS.
 * Added Dutch, Finnish, German, Greek and Portuguese (Brazilian) translations.
 * Added explanation of the various user form fields.
+* Added Flysystem for submission thumbnails as part of push for multi-server
+  support.
 * Added forum categories.
+* Added honeypot fields to fool spam bots.
 * Added icons to the user menu.
 * Added 'night mode', a dark stylesheet that's supposedly easier on the eyes.
+* Added mod/admin flags.
 * Added Open Graph support
 * Added the option to serve assets over a CDN.
 * Added private messaging.
 * Added sorting options for forum list.
 * Added strikethrough support via `~~` syntax.
-* Added two-factor authentication.
+* Added 'trusted' users.
 * Added URL slugs for submissions.
 * Added wiki.
 * Allow trailing slashes for all routes.
 * Automatically subscribe to forums when you create them.
+* Began using BEM naming conventions for page elements.
+* Began refactoring translation key names.
 * Bumped the minimum PostgreSQL version to 9.3.
+* Check for user bans on login.
+* Don't allow new users to create forums.
 * Fixed 'clear inbox' button potentially removing unseen entries.
 * Fixed `/f/{forum_name}` being case-sensitive.
 * Fixed mistake in English language pack.
@@ -29,14 +41,25 @@
 * Go back to page 1 when switching between front page listings.
 * Keep track of when a submission or comment was edited.
 * Keep track of when a user last logged in.
+* Linkify `/f/<forum>` and `/u/<username>` in Markdown.
 * Lock submissions/comments for furthering editing once they've been edited by a
   moderator.
+* Login automatically upon registration.
 * Notify user when their submission or comment is replied to.
+* Preload some assets with HTTP/2 Server Push. 
+* Rate limit submissions for untrusted users.
 * Refactored the entire frontend asset build system.
+* Removed .htaccess files as PHP-FPM is the preferred way to run the software.
+* Renamed the 'description' field when creating/editing forums to 'sidebar' and
+  added an actual description field.
 * Replaced the stock favicons.
+* Rotate log files in production.
 * Upgraded to Symfony 3.3, Swiftmailer 6.
 * Use APCu caching for Doctrine queries & metadata in production.
-* Various consistency fixes.
+* Use environment variables for parameters.
+* Use SVG icons instead of an icon fonts.
+* Various fixes for bugs and consistency.
+* Various UI improvements.
 
 ## v0.4.1 (2017-05-23)
 
