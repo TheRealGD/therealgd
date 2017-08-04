@@ -88,7 +88,7 @@ final class SubmissionController extends Controller {
             ]);
         }
 
-        return $this->render('@RadditApp/submit.html.twig', [
+        return $this->render('@RadditApp/submission_create.html.twig', [
             'form' => $form->createView(),
             'forum' => $forum,
         ]);
@@ -132,7 +132,7 @@ final class SubmissionController extends Controller {
             ]);
         }
 
-        return $this->render('@RadditApp/submit.html.twig', [
+        return $this->render('@RadditApp/submission_edit.html.twig', [
             'form' => $form->createView(),
             'forum' => $forum,
             'submission' => $submission,

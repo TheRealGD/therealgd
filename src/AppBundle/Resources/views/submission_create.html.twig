@@ -1,0 +1,10 @@
+{% extends forum is defined and forum ? '@RadditApp/forum_base.html.twig' : '@RadditApp/base.html.twig' %}
+
+{% block page_classes 'create-submission-page' %}
+{% block title 'title.create_submission'|trans %}
+
+{% block body %}
+  <h1>{{ block('title') }}</h1>
+
+  {{ include('@RadditApp/forms/submission_form.html.twig', {form: form}, with_context=false) }}
+{% endblock %}

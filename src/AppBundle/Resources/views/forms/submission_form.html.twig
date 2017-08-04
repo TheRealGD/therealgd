@@ -1,0 +1,29 @@
+{{ form_start(form) }}
+  {{ form_errors(form) }}
+
+  {{ form_row(form.url, {attr: {class: 'fetch-title'}}) }}
+
+  {{ form_row(form.title, {attr: {rows: 3, class: 'receive-title'}}) }}
+
+  {{ form_row(form.body, {attr: {rows: 10}}) }}
+
+  {% if form.forum is defined %}
+    {{ form_row(form.forum) }}
+  {% endif %}
+
+  {% if form.userFlag is defined %}
+    {{ form_row(form.userFlag) }}
+  {% endif %}
+
+  {% if form.sticky is defined %}
+    {{ form_row(form.sticky) }}
+  {% endif %}
+
+  <div class="form__row">
+    {{ form_widget(form.submit) }}
+
+    {% if form.delete is defined %}
+      {{ form_widget(form.delete, {attr: {class: 'delete-submission-button'}}) }}
+    {% endif %}
+  </div>
+{{ form_end(form) }}

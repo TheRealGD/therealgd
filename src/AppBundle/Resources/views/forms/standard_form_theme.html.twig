@@ -30,12 +30,12 @@
 {%- endblock -%}
 
 {%- block button_widget -%}
-  {%- set attr = attr|merge({'class': (attr.class ?? '')~' button'|trim}) -%}
+  {%- set attr = attr|merge({'class': (attr.class ?? '')~' button'}) -%}
   {{- parent() -}}
 {%- endblock -%}
 
 {%- block form_label -%}
-  {%- set label_attr = label_attr|merge({class: (label_attr.class ?? '')~' form__label'|trim}) -%}
+  {%- set label_attr = label_attr|merge({class: (label_attr.class ?? '')~' form__label'}) -%}
   {%- if required -%}
     {%- set label_attr = label_attr|merge({class: label_attr.class~' form__label--required'}) -%}
   {%- endif -%}
@@ -43,7 +43,7 @@
 {%- endblock -%}
 
 {%- block markdown_row -%}
-  {%- set attr = attr|merge({'class': (attr.class ?? '')~' markdown-input__input'|trim}) -%}
+  {%- set attr = attr|merge({'class': (attr.class ?? '')~' markdown-input__input'}) -%}
   <div class="form__row form__row--markdown markdown-input">
     {{- form_label(form) -}}
     {{- form_errors(form) -}}

@@ -294,6 +294,8 @@ title:
     forum_appearance: Appearance for %forum%
     showing_revision: 'Showing revision #%revision% of page %path%'
     editing_forum: Editing forum %forum%
+    create_submission: Create submission
+    editing_submission: Editing submission %title%
 
 two_factor:
     explanation: To complete the login, you must enter the verification code sent by email to %email%.
