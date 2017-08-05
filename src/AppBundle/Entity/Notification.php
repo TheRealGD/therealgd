@@ -43,13 +43,6 @@ abstract class Notification {
     }
 
     /**
-     * @param int|null $id
-     */
-    public function setId($id) {
-        $this->id = $id;
-    }
-
-    /**
      * @return User|null
      */
     public function getUser() {
