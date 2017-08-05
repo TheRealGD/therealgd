@@ -8,7 +8,7 @@
   {{ form_row(form.body, {attr: {rows: 10}}) }}
 
   {% if form.forum is defined %}
-    {{ form_row(form.forum) }}
+    {{ form_row(form.forum, {attr: {class: 'select2'}}) }}
   {% endif %}
 
   {% if form.userFlag is defined %}

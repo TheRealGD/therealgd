@@ -12,10 +12,12 @@
         "webpack-merge": "^4.1.0"
     },
     "dependencies": {
+        "babel-polyfill": "^6.23.0",
         "bazinga-translator": "^2.6.5",
         "jquery": "^3.2.1",
         "moment": "^2.18.1",
         "normalize.css": "^6.0.0",
+        "select2": "^4.0.3",
         "underscore": "^1.8.3"
     },
     "scripts": {

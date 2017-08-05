@@ -11,7 +11,13 @@ Encore
     .enableSourceMaps(!Encore.isProduction())
     .addStyleEntry('red', './assets/less/main.less')
     .addStyleEntry('night', './assets/less/main-night.less')
-    .createSharedEntry('vendor', ['bazinga-translator', 'jquery', 'moment/src/moment', 'underscore'])
+    .createSharedEntry('vendor', [
+        'babel-polyfill',
+        'bazinga-translator',
+        'jquery',
+        'moment/src/moment',
+        'underscore',
+    ])
     .addEntry('main', './assets/js/main.js')
     .configureBabel(babelConfig => {
         babelConfig.presets.push(['es2015', { modules: false }]);

@@ -209,6 +209,7 @@ nav:
 
 placeholder:
     default: (default)
+    choose_one: Choose one…
 
 request_password_reset:
     title: Request password reset link

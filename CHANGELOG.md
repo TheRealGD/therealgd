@@ -1,5 +1,9 @@
 # Change Log
 
+## v0.6.0 (2017-xx-xx)
+
+* Use the select2 library for the forum selection box on the submit page.
+
 ## v0.5.0 (2017-08-04)
 
 * Added `autocomplete="new-password"` to password fields when editing user

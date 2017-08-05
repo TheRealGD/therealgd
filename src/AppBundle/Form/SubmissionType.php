@@ -70,6 +70,7 @@ final class SubmissionType extends AbstractType {
                     return $repository->createQueryBuilder('f')
                         ->orderBy('f.name', 'ASC');
                 },
+                'placeholder' => 'placeholder.choose_one',
                 'required' => false, // enable a blank choice
             ]);
         }

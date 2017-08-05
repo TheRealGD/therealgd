@@ -1,2 +1,9 @@
 @import 'main';
 @import 'settings-night';
+
+.select2-container {
+  // Fix for select2 being bad on dark pages.
+  // It doesn't matter that the select box is bright, since regular select boxes
+  // wouldn't have their colours overridden anyway.
+  color: #000;
+}
