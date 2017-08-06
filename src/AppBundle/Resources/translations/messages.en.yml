@@ -197,7 +197,7 @@ nav:
     log_in: Log in
     log_out: Log out
     profile: Profile
-    register: Register
+    register: Sign up
     my_account: My account
     user_settings: User settings
     forums: Forums
@@ -297,6 +297,8 @@ title:
     editing_forum: Editing forum %forum%
     create_submission: Create submission
     editing_submission: Editing submission %title%
+    log_in: Log in
+    sign_up: Sign up
 
 two_factor:
     explanation: To complete the login, you must enter the verification code sent by email to %email%.
