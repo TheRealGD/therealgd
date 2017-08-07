@@ -1,31 +1,6 @@
 @import (reference) 'settings';
 
 /*
- * http://cssmojo.com/the-very-latest-clearfix-reloaded/
- */
-.clear-fix() {
-  &::after {
-    clear: both;
-    content: '';
-    display: table;
-  }
-}
-
-/*
- * Fixes bold text consuming more vertical space than regular text at certain
- * font sizes. This affects the vertical size of the container depending on
- * whether there is bold text present or not. I believe this only happens when
- * the line-height ends up being a non-integer amount of pixels, and only with
- * certain fonts (e.g. Helvetica Neue is affected, but standard Helvetica is
- * not.)
- *
- * The font size must be in (r)em units, and the line-height must be unit-less.
- */
-.fix-line-height(@font-size, @line-height: @page-line-height) {
-  line-height: ceil(unit(@font-size) * @page-font-size * @line-height);
-}
-
-/*
  * Make certain things boring and grey.
  *
  * This should be applied to paragraphs or navs only, never entire containers.
