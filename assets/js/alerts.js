@@ -1,7 +1,7 @@
 'use strict';
 
 function initAlerts($) {
-    $('.site-alerts .alert')
+    $('.alert--dismissable')
         .css('cursor', 'pointer')
         .click(function () {
             $(this).fadeOut(400, () => {

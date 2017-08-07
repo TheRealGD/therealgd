@@ -43,7 +43,7 @@ comments:
     not_logged_in: Sinun täytyy %login_link% tai %register_link% kommentoidaksesi.
     not_logged_in_login_link_label: kirjautua
     not_logged_in_register_link_label: rekisteröityä
-    viewing_thread: Tarkastellaan yhden kommentin lankaa
+    viewing_thread: Tarkastellaan yhden kommentin lankaa.
     thread_return: Näytä kaikki kommentit
     return_to_forum: ← Palaa foorumille %forum%
     edit_info: (muokattu %edited_at%)

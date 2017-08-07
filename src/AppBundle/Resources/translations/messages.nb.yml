@@ -42,7 +42,7 @@ comments:
     not_logged_in: Du må %login_link% eller %register_link% for å kommentere.
     not_logged_in_login_link_label: logge inn
     not_logged_in_register_link_label: registrere deg
-    viewing_thread: Viser en enkelt kommentartråd
+    viewing_thread: Viser en enkelt kommentartråd.
     thread_return: Vis alle kommentarer
     return_to_forum: ← Gå tilbake til %forum%
     admin_ban: Utesteng IP

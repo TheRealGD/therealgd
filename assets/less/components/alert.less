@@ -1,0 +1,26 @@
+@import (reference) '../settings';
+
+.alert {
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  padding: 1rem 1rem 0;
+
+  &--animate {
+    animation: alert-fadein 1s;
+  }
+
+  &--notice {
+    background: @alert-notice-color;
+  }
+
+  &--success {
+    background: @alert-success-color;
+  }
+}
+
+@keyframes alert-fadein {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

@@ -12,17 +12,14 @@
 
   {{ submission(submission) }}
 
-  <nav class="comment-thread-nav">
-    <h1>{{ 'comments.viewing_thread'|trans }}</h1>
-
-    <ul>
-      <li>
-        <a href="{{ path('raddit_app_comments', {forum_name: forum.name, submission_id: submission.id, slug: submission.title|slugify}) }}">
-          {{- 'comments.thread_return'|trans -}}
-        </a>
-      </li>
-    </ul>
-  </nav>
+  <div class="alert alert--notice alert--no-animation" role="alert">
+    <p>
+      {{ 'comments.viewing_thread'|trans }}
+      <a href="{{ path('raddit_app_comments', {forum_name: forum.name, submission_id: submission.id, slug: submission.title|slugify}) }}">
+        {{- 'comments.thread_return'|trans -}}
+      </a>
+    </p>
+  </div>
 
   {{ comment(comment, {show_form: true}) }}
 {% endblock %}

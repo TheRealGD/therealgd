@@ -43,7 +43,7 @@ comments:
     not_logged_in: Πρεπει να κάνεις %login_link% ή %register_link% για να κάνεις σχόλιο.
     not_logged_in_login_link_label: Σύνδεσε
     not_logged_in_register_link_label: Εγγραφή
-    viewing_thread: Βλέπετε ένα νήμα σχολίων
+    viewing_thread: Βλέπετε ένα νήμα σχολίων.
     thread_return: Δείτε όλα τα σχόλια
     return_to_forum: ← Επιστρέψετε στην %forum%
     edit_info: (Επεξεργασία %edited_at%)
@@ -194,7 +194,7 @@ nav:
     wiki: Wiki
     next: Επόμενο
     previous: Προηγούμενο
-    
+
 placeholder:
     default: (Προκαθορισμένο)
 
@@ -225,7 +225,7 @@ reset_password:
 
 site_footer:
     version: Λειτουργώντας %app% %version% (%branch%). Φτιαγμένο με ☭.
-    
+
 stylesheets:
     name: Ονομα
     css: CSS

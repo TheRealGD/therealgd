@@ -43,7 +43,7 @@ comments:
     not_logged_in: Du musst %login_link% oder %register_link% um Kommentare zu schreiben.
     not_logged_in_login_link_label: Einloggen
     not_logged_in_register_link_label: Registrieren
-    viewing_thread: Viewing a single comment thread
+    viewing_thread: Viewing a single comment thread.
     thread_return: Alle Kommentare anzeigen
     return_to_forum: ← Zurück zu %forum%
     edit_info: (bearbeitet vor %edited_at%)

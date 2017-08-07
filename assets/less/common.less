@@ -19,30 +19,11 @@
 }
 
 .site-alerts {
-  margin: 0 1rem 1rem;
+  margin: 0 1rem;
 
   &:empty {
     display: none;
   }
-
-  .alert {
-    animation: fadein 1s;
-    border-radius: 0.5rem;
-    padding: 1rem;
-  }
-
-  .alert-notice {
-    background: @alert-notice-color;
-  }
-
-  .alert-success {
-    background: @alert-success-color;
-  }
-}
-
-@keyframes fadein {
-  from { opacity: 0; }
-  to { opacity: 1; }
 }
 
 .site-footer {

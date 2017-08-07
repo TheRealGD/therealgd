@@ -45,7 +45,7 @@ comments:
     not_logged_in: Je moet je %login_link% of %register_link% om te kunnen reageren.
     not_logged_in_login_link_label: inloggen
     not_logged_in_register_link_label: registeren
-    viewing_thread: Draad van een enkele reactie aan het bekijken
+    viewing_thread: Draad van een enkele reactie aan het bekijken.
     thread_return: Bekijk alle reacties
     return_to_forum: ← Keer terug naar %forum%
 

@@ -43,7 +43,7 @@ comments:
     not_logged_in: Vi devas %login_link% aŭ %register_link% por komenti.
     not_logged_in_login_link_label: ensaluti
     not_logged_in_register_link_label: registri
-    viewing_thread: Vidi unu komentan fadenon
+    viewing_thread: Vidi unu komentan fadenon.
     thread_return: Vidi ĉiujn komentojn
     return_to_forum: ← Reveni al %forum%
     edit_info: (redaktis %edited_at%)

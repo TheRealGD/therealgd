@@ -24,19 +24,19 @@
     {% include '@RadditApp/includes/site_nav.html.twig' %}
 
     <div class="site-alerts">
-      {%- if app.request.hasPreviousSession -%}
-        {%- for type, notices in app.session.flashBag.all -%}
-          {%- for notice in notices -%}
-            <p class="alert alert-{{ type }}" role="alert">{{ notice|trans }}</p>
-          {%- endfor -%}
+      {%- for type, notices in app.flashes -%}
+        {%- for notice in notices -%}
+          <div class="alert alert--{{ type }} alert--animate alert--dismissable" role="alert">
+            <p>{{ notice|trans }}</p>
+          </div>
         {%- endfor -%}
-      {%- endif -%}
+      {%- endfor -%}
     </div>
 
-    <main class="content-wrapper">
-      <div class="body">{% block body %}{% endblock %}</div>
+    <div class="content-wrapper">
+      <main class="body">{% block body %}{% endblock %}</main>
       <aside class="sidebar">{% block sidebar %}{% endblock %}</aside>
-    </main>
+    </div>
 
     <footer class="site-footer">
       <p class="site-footer-version">

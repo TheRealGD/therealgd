@@ -16,7 +16,8 @@
       commentId: comment.id|default(null)
     })) }}
   {% else %}
-    <p class="must-log-in">{{ 'comments.not_logged_in'|trans({
+    <div class="alert alert--notice">
+      <p>{{ 'comments.not_logged_in'|trans({
         '%login_link%': '<a href="%s">%s</a>'|format(
           path('raddit_app_login'),
           'comments.not_logged_in_login_link_label'|trans
@@ -26,6 +27,7 @@
           'comments.not_logged_in_register_link_label'|trans
         ),
       })|raw }}</p>
+    </div>
   {% endif %}
 {% endmacro %}
 
