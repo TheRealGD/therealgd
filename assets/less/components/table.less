@@ -1,0 +1,45 @@
+@import (reference) '../settings';
+
+// No real need to use BEM for the table structure since HTML places strict
+// restrictions on how tables are structured. Just make sure nested tables don't
+// inherit any of these styles.
+.table {
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+  width: 100%;
+
+  &--fixed-columns {
+    table-layout: fixed;
+  }
+
+  & > thead {
+    border-bottom: solid 2px @table-header-separator-color;
+  }
+
+  & > thead,
+  & > tbody,
+  & > tfoot,
+  & {
+    & > tr {
+      & > th {
+        text-align: left;
+      }
+
+      & > th,
+      & > td {
+        padding: 0.25rem;
+
+        @media screen and (min-width: @desktop-min-width) {
+          padding: 0.5rem;
+        }
+      }
+    }
+  }
+
+  & > tbody > tr:nth-child(even) {
+    & > th,
+    & > td {
+      background-color: @table-alternate-row-background-color;
+    }
+  }
+}
