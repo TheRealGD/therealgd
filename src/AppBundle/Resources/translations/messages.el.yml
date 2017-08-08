@@ -1,3 +1,9 @@
+action:
+    upvote: Πανοψηφίσει
+    downvote: Κατοψηφίσει
+    retract_upvote: Ανακαλέστε ψήφο
+    retract_downvote: Ανακαλέστε καταψήφο
+
 add_moderator:
     title: Προσθέστε τον συντονιστή στο %forum%
 
@@ -280,12 +286,6 @@ title:
 
 two_factor:
     explanation: Για να συνδεθείτε, πρέπει να εισαγάγετε τον κωδικό πρόσβασης που αποστέλλεται μέσω email στη διεύθυνση %email%.
-
-votes:
-    upvote: Πανοψηφίσει
-    downvote: Κατοψηφίσει
-    retract_upvote: Ανακαλέστε ψήφο
-    retract_downvote: Ανακαλέστε καταψήφο
 
 user:
     submissions: Υποβολές

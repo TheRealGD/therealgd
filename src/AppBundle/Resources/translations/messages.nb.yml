@@ -1,3 +1,9 @@
+action:
+    upvote: Stem opp
+    downvote: Stem ned
+    retract_upvote: Fjern oppstemning
+    retract_downvote: Fjern nedstemning
+
 add_moderator:
     title: Legg til moderator for %forum%
 
@@ -240,12 +246,6 @@ time:
     on_timestamp: '%timestamp%'
     earlier_format: '%relative_time% tidligere'
     later_format: '%relative_time% senere'
-
-votes:
-    upvote: Stem opp
-    downvote: Stem ned
-    retract_upvote: Fjern oppstemning
-    retract_downvote: Fjern nedstemning
 
 user:
     submissions: Innlegg

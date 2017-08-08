@@ -1,3 +1,9 @@
+action:
+    upvote: '+1'
+    downvote: '-1'
+    retract_upvote: '+1 verwijderen'
+    retract_downvote: '-1 verwijderen'
+
 add_moderator:
     title: Voeg een moderator toe aan %forum%
 
@@ -225,12 +231,6 @@ time:
     earlier_format: '%relative_time% eerder'
     later_format: '%relative_time% later'
     on_timestamp: op %timestamp%
-
-votes:
-    upvote: '+1'
-    downvote: '-1'
-    retract_upvote: '+1 verwijderen'
-    retract_downvote: '-1 verwijderen'
 
 user:
     submissions: Inzendingen

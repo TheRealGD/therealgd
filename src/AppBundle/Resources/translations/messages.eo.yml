@@ -1,3 +1,9 @@
+action:
+    upvote: Porvoĉdoni
+    downvote: Kontraŭvoĉdoni
+    retract_upvote: Retract porvoĉdono
+    retract_downvote: Retract kontraŭvoĉdono
+
 add_moderator:
     title: Aldoni kontrolanton al %forum%
 
@@ -239,12 +245,6 @@ time:
 
 two_factor:
     explantation: Por fini la ensaluto, vi devas tajpi la identokontrolo retpoŝtis al %email%.
-
-votes:
-    upvote: Porvoĉdoni
-    downvote: Kontraŭvoĉdoni
-    retract_upvote: Retract porvoĉdono
-    retract_downvote: Retract kontraŭvoĉdono
 
 user:
     submissions: Afiŝoj

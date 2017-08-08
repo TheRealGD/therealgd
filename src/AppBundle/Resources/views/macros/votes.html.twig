@@ -52,9 +52,9 @@
 {%- endblock -%}
 
 {%- block vote_up_label -%}
-  {{- (user_vote and user_vote.upvote ? 'votes.retract_upvote' : 'votes.upvote')|trans -}}
+  {{- (user_vote and user_vote.upvote ? 'action.retract_upvote' : 'action.upvote')|trans -}}
 {%- endblock -%}
 
 {%- block vote_down_label -%}
-  {{- (user_vote and not user_vote.upvote ? 'votes.retract_downvote' : 'votes.downvote')|trans -}}
+  {{- (user_vote and not user_vote.upvote ? 'action.retract_downvote' : 'action.downvote')|trans -}}
 {%- endblock -%}

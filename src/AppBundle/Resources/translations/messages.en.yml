@@ -4,6 +4,10 @@
 action:
     mark_as_trusted: Mark user as trusted
     mark_as_untrusted: Mark user as untrusted
+    upvote: Upvote
+    downvote: Downvote
+    retract_upvote: Retract upvote
+    retract_downvote: Retract downvote
 
 add_moderator:
     title: Add moderator to %forum%
@@ -304,12 +308,6 @@ title:
 
 two_factor:
     explanation: To complete the login, you must enter the verification code sent by email to %email%.
-
-votes:
-    upvote: Upvote
-    downvote: Downvote
-    retract_upvote: Retract upvote
-    retract_downvote: Retract downvote
 
 user:
     submissions: Submissions

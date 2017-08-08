@@ -1,3 +1,9 @@
+action:
+    upvote: Upvote
+    downvote: Downvote
+    retract_upvote: Upvote rückgängig machen
+    retract_downvote: Downvote rückgängig machen
+
 add_moderator:
     title: Moderator zu %forum% hinzufügen
 
@@ -207,12 +213,6 @@ submissions:
 time:
     earlier_format: 'vor %relative_time%'
     later_format: '%relative_time% später'
-
-votes:
-    upvote: Upvote
-    downvote: Downvote
-    retract_upvote: Upvote rückgängig machen
-    retract_downvote: Downvote rückgängig machen
 
 user:
     submissions: Einreichungen

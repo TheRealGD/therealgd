@@ -1,3 +1,9 @@
+action:
+    upvote: Voto positivo
+    downvote: Voto negativo
+    retract_upvote: Retirar voto positivo
+    retract_downvote: Retirar voto negativo
+
 add_moderator:
     title: Adicionar moderador à %forum%
 
@@ -238,12 +244,6 @@ time:
     on_timestamp: em %timestamp%
     earlier_format: '%relative_time% mais cedo'
     later_format: '%relative_time% mais tarde'
-
-votes:
-    upvote: Voto positivo
-    downvote: Voto negativo
-    retract_upvote: Retirar voto positivo
-    retract_downvote: Retirar voto negativo
 
 user:
     submissions: Envios

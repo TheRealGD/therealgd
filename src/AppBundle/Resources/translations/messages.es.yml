@@ -1,3 +1,9 @@
+action:
+    upvote: Votar
+    downvote: Desvotar
+    retract_upvote: Remover voto
+    retract_downvote: Remover desvoto
+
 add_moderator:
     title: Agrega un moderador a %forum%
 
@@ -238,12 +244,6 @@ time:
 
 two_factor:
     explanation: Para completar el logueo debe introducir el código de verficación enviado al correo %email%.
-
-votes:
-    upvote: Votar
-    downvote: Desvotar
-    retract_upvote: Remover voto
-    retract_downvote: Remover desvoto
 
 user:
     submissions: Presentaciones

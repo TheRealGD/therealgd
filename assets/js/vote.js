@@ -56,12 +56,12 @@ function getNewScore($form, isUp, score) {
 
 function getUpButtonTitle(choice) {
     //noinspection JSUnresolvedFunction
-    return translator.trans('votes.' + (choice === 1 ? 'retract_upvote' : 'upvote'));
+    return translator.trans('action.' + (choice === 1 ? 'retract_upvote' : 'upvote'));
 }
 
 function getDownButtonTitle(choice) {
     //noinspection JSUnresolvedFunction
-    return translator.trans('votes.' + (choice === -1 ? 'retract_downvote' : 'downvote'));
+    return translator.trans('action.' + (choice === -1 ? 'retract_downvote' : 'downvote'));
 }
 
 /**
