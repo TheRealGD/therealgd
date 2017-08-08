@@ -50,6 +50,7 @@ class ForumAppearanceType extends AbstractType {
     public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults([
             'data_class' => Forum::class,
+            'validation_groups' => ['appearance'],
         ]);
     }
 }
