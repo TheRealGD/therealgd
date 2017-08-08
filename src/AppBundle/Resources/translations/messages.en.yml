@@ -140,6 +140,7 @@ front:
 
 heading:
     user_roles: User roles
+    forums_you_moderate: Forums you moderate
 
 help:
     delete_forum_warning: All content on this forum will be irreversibly deleted!
@@ -206,6 +207,7 @@ nav:
     wiki: Wiki
     next: Next
     previous: Previous
+    moderated: Moderated
 
 placeholder:
     default: (default)

@@ -7,6 +7,7 @@ use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
 use Raddit\AppBundle\Entity\Forum;
 use Raddit\AppBundle\Entity\ForumSubscription;
+use Raddit\AppBundle\Entity\Moderator;
 use Raddit\AppBundle\Entity\User;
 
 final class ForumRepository extends EntityRepository {
@@ -78,6 +79,23 @@ final class ForumRepository extends EntityRepository {
             ->orderBy('f.canonicalName', 'ASC')
             ->getQuery()
             ->execute();
+
+        return array_column($names, 'name');
+    }
+
+    /**
+     * @param User $user
+     *
+     * @return string[]
+     */
+    public function findModeratedForumNames(User $user) {
+        $dql = 'SELECT f.name FROM '.Forum::class.' f WHERE f IN ('.
+            'SELECT IDENTITY(m.forum) FROM '.Moderator::class.' m WHERE m.user = ?1'.
+        ') ORDER BY f.canonicalName ASC';
+
+        $names = $this->getEntityManager()->createQuery($dql)
+            ->setParameter(1, $user)
+            ->getResult();
 
         return array_column($names, 'name');
     }

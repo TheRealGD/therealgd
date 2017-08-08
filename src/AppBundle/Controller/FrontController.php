@@ -2,9 +2,11 @@
 
 namespace Raddit\AppBundle\Controller;
 
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManager;
 use Raddit\AppBundle\Entity\Forum;
 use Raddit\AppBundle\Entity\Submission;
+use Raddit\AppBundle\Entity\User;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -15,15 +17,15 @@ final class FrontController extends Controller {
     /**
      * View submissions on the front page.
      *
-     * @param ObjectManager $om
+     * @param EntityManager $em
      * @param string        $sortBy
      * @param int           $page
      *
      * @return Response
      */
-    public function frontAction(ObjectManager $om, string $sortBy, int $page) {
-        $forumRepo = $om->getRepository(Forum::class);
-        $submissionRepo = $om->getRepository(Submission::class);
+    public function frontAction(EntityManager $em, string $sortBy, int $page) {
+        $forumRepo = $em->getRepository(Forum::class);
+        $submissionRepo = $em->getRepository(Submission::class);
 
         if ($this->isGranted('ROLE_USER')) {
             $forums = $forumRepo->findSubscribedForumNames($this->getUser());
@@ -45,14 +47,14 @@ final class FrontController extends Controller {
     }
 
     /**
-     * @param ObjectManager $om
+     * @param EntityManager $em
      * @param string        $sortBy
      * @param int           $page
      *
      * @return Response
      */
-    public function allAction(ObjectManager $om, string $sortBy, int $page) {
-        $submissions = $om->getRepository(Submission::class)
+    public function allAction(EntityManager $em, string $sortBy, int $page) {
+        $submissions = $em->getRepository(Submission::class)
             ->findAllSubmissions($sortBy, $page);
 
         return $this->render('@RadditApp/all.html.twig', [
@@ -64,26 +66,53 @@ final class FrontController extends Controller {
     /**
      * Show featured forums.
      *
-     * @param ObjectManager $om
+     * @param EntityManager $em
      * @param string        $sortBy
      * @param int           $page
      *
      * @return Response
      */
-    public function featuredAction(ObjectManager $om, string $sortBy, int $page) {
+    public function featuredAction(EntityManager $em, string $sortBy, int $page) {
         if (!$this->isGranted('ROLE_USER')) {
             return $this->redirectToRoute('raddit_app_front');
         }
 
-        $forums = $om->getRepository(Forum::class)->findFeaturedForumNames();
+        $forums = $em->getRepository(Forum::class)->findFeaturedForumNames();
 
-        $submissions = $om->getRepository(Submission::class)
+        $submissions = $em->getRepository(Submission::class)
             ->findFrontPageSubmissions($forums, $sortBy, $page);
 
         return $this->render('@RadditApp/featured.html.twig', [
             'forums' => $forums,
             'submissions' => $submissions,
             'sort_by' => $sortBy,
+        ]);
+    }
+
+    /**
+     * Show from forums the user moderates.
+     *
+     * @Security("is_granted('ROLE_USER')")
+     *
+     * @param EntityManager $em
+     * @param string        $sortBy
+     * @param int           $page
+     *
+     * @return Response
+     */
+    public function moderatedAction(EntityManager $em, string $sortBy, int $page) {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $forums = $em->getRepository(Forum::class)->findModeratedForumNames($user);
+
+        $submissions = $em->getRepository(Submission::class)
+            ->findFrontPageSubmissions($forums, $sortBy, $page);
+
+        return $this->render('@RadditApp/moderated.html.twig', [
+            'forums' => $forums,
+            'sort_by' => $sortBy,
+            'submissions' => $submissions,
         ]);
     }
 }
