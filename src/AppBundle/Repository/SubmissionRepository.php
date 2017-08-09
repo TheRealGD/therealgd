@@ -14,23 +14,6 @@ class SubmissionRepository extends EntityRepository {
     const MAX_PER_PAGE = 20;
 
     /**
-     * The time in seconds during which an older post can have a higher rank
-     * than a newer one.
-     *
-     * @var int
-     */
-    const MAX_VISIBILITY = 28800;
-
-    /**
-     * Amount to multiply the net score with.
-     *
-     * @todo This should be calculated based on recent site activity.
-     *
-     * @var int
-     */
-    const MULTIPLIER = 1800;
-
-    /**
      * @param string[] $forumNames
      * @param string   $sortBy
      * @param int      $page
@@ -70,30 +53,6 @@ class SubmissionRepository extends EntityRepository {
      */
     public function findAllSubmissions(string $sortBy, int $page = 1) {
         return $this->paginate($this->findSortedQb($sortBy), $page);
-    }
-
-    public function recalculateRank(Submission $submission, int $scoreDelta) {
-        if ($submission->getId() !== null) {
-            $sql =
-                'SELECT COUNT(uv) - COUNT(dv) '.
-                'FROM submissions s '.
-                'LEFT JOIN submission_votes uv ON (s.id = uv.submission_id AND uv.upvote) '.
-                'LEFT JOIN submission_votes dv ON (s.id = dv.submission_id AND NOT dv.upvote) '.
-                'WHERE s.id = ? '.
-                'GROUP BY s.id';
-
-            $conn = $this->getEntityManager()->getConnection();
-
-            $netScore = $conn->fetchColumn($sql, [$submission->getId()]);
-            $netScore += $scoreDelta;
-        } else {
-            // this score is always correct when the submission is non-persisted
-            $netScore = $submission->getNetScore();
-        }
-
-        $unixTime = $submission->getTimestamp()->getTimestamp();
-        $advantage = max(min(self::MULTIPLIER * $netScore, self::MAX_VISIBILITY), 0);
-        $submission->setRanking($unixTime + $advantage);
     }
 
     /**

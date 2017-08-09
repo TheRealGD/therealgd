@@ -5,7 +5,7 @@
 {%- block vote -%}
   {%- from '@RadditApp/macros/icon.html.twig' import icon -%}
 
-  {%- set user_vote = is_granted('ROLE_USER') ? entity.userVote(app.user) : null -%}
+  {%- set user_choice = is_granted('ROLE_USER') ? entity.userChoice(app.user) : null -%}
   {%- spaceless -%}
     <form action="{{ path(route, {id: entity.id}) }}"
           method="post"
@@ -34,27 +34,37 @@
 {%- endblock -%}
 
 {%- block vote_class -%}
-  {%- if not user_vote -%}
-    {#- nothing -#}
-  {%- elseif user_vote.upvote -%}
+  {%- if user_choice == constant('Raddit\\AppBundle\\Entity\\Votable::USER_UPVOTED') -%}
     vote-user-upvoted
-  {%- else -%}
+  {%- elseif user_choice == constant('Raddit\\AppBundle\\Entity\\Votable::USER_DOWNVOTED') -%}
     vote-user-downvoted
   {%- endif -%}
 {%- endblock -%}
 
 {%- block vote_choice_up -%}
-  {{- user_vote and user_vote.upvote ? 0 : 1 -}}
+  {{- user_choice == constant('Raddit\\AppBundle\\Entity\\Votable::USER_UPVOTED')
+    ? constant('Raddit\\AppBundle\\Entity\\Votable::VOTE_RETRACT')
+    : constant('Raddit\\AppBundle\\Entity\\Votable::VOTE_UP')
+  -}}
 {%- endblock -%}
 
 {%- block vote_choice_down -%}
-  {{- user_vote and not user_vote.upvote ? 0 : -1 -}}
+  {{- user_choice == constant('Raddit\\AppBundle\\Entity\\Votable::USER_DOWNVOTED')
+    ? constant('Raddit\\AppBundle\\Entity\\Votable::VOTE_RETRACT')
+    : constant('Raddit\\AppBundle\\Entity\\Votable::VOTE_DOWN')
+  -}}
 {%- endblock -%}
 
 {%- block vote_up_label -%}
-  {{- (user_vote and user_vote.upvote ? 'action.retract_upvote' : 'action.upvote')|trans -}}
+  {{- (user_choice == constant('Raddit\\AppBundle\\Entity\\Votable::USER_UPVOTED')
+    ? 'action.retract_upvote'
+    : 'action.upvote'
+  )|trans -}}
 {%- endblock -%}
 
 {%- block vote_down_label -%}
-  {{- (user_vote and not user_vote.upvote ? 'action.retract_downvote' : 'action.downvote')|trans -}}
+  {{- (user_choice == constant('Raddit\\AppBundle\\Entity\\Votable::USER_DOWNVOTED')
+    ? 'action.retract_downvote'
+    : 'action.downvote'
+  )|trans -}}
 {%- endblock -%}

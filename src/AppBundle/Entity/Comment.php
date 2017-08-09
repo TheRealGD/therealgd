@@ -71,7 +71,8 @@ class Comment extends Votable {
     private $children;
 
     /**
-     * @ORM\OneToMany(targetEntity="CommentVote", mappedBy="comment", fetch="EAGER", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="CommentVote", mappedBy="comment",
+     *      fetch="EAGER", cascade={"persist", "remove"}, orphanRemoval=true)
      *
      * @var CommentVote[]|Collection
      */
@@ -133,13 +134,7 @@ class Comment extends Votable {
         $comment->user = $user;
         $comment->submission = $submission;
         $comment->parent = $parent;
-
-        $vote = new CommentVote();
-        $vote->setUser($user);
-        $vote->setComment($comment);
-        $vote->setUpvote(true);
-
-        $comment->votes->add($vote);
+        $comment->vote($user, null, self::VOTE_UP);
 
         return $comment;
     }
@@ -253,13 +248,14 @@ class Comment extends Votable {
     }
 
     /**
-     * {@inheritdoc}
+     * @param User        $user
+     * @param string|null $ip
+     * @param int         $choice
+     *
+     * @return Vote
      */
-    public function createVote() {
-        $vote = new CommentVote();
-        $vote->setComment($this);
-
-        return $vote;
+    protected function createVote(User $user, $ip, int $choice): Vote {
+        return new CommentVote($user, $ip, $choice, $this);
     }
 
     /**

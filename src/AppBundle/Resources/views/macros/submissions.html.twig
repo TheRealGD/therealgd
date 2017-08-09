@@ -100,6 +100,10 @@
                 })|raw }}
               </span>
             {% endif %}
+
+            {% if app.environment == 'dev' and app.request.query.has('showrank') %}
+              {{ submission.ranking - submission.timestamp.timestamp  }}
+            {% endif %}
           </p>
         </header>
 

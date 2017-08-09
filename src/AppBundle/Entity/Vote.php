@@ -15,7 +15,7 @@ abstract class Vote {
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Id()
      *
-     * @var int
+     * @var int|null
      */
     private $id;
 
@@ -48,43 +48,50 @@ abstract class Vote {
      */
     private $ip;
 
-    public function __construct() {
+    /**
+     * @param User        $user
+     * @param string|null $ip
+     * @param bool|int    $choice
+     */
+    public function __construct(User $user, $ip, $choice) {
         $this->timestamp = new \DateTime('@'.time());
+        $this->user = $user;
+        $this->setIp($ip);
+        $this->setChoice($choice);
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getId() {
         return $this->id;
     }
 
-    /**
-     * @return bool
-     */
-    public function isUpvote() {
-        return $this->upvote;
+    public function getChoice(): int {
+        return $this->upvote ? Votable::USER_UPVOTED : Votable::USER_DOWNVOTED;
     }
 
     /**
-     * @param bool $upvote
+     * @param int|bool $choice true/Votable::VOTE_UP = upvote,
+     *                         false/Votable::VOTE_DOWN = downvote
      */
-    public function setUpvote($upvote) {
-        $this->upvote = $upvote;
+    public function setChoice($choice) {
+        if (is_bool($choice)) {
+            $this->upvote = $choice;
+        } elseif ($choice === Votable::VOTE_UP || $choice === Votable::VOTE_DOWN) {
+            $this->upvote = $choice === Votable::VOTE_UP;
+        } elseif ($choice === Votable::VOTE_RETRACT) {
+            throw new \InvalidArgumentException('A vote entity cannot have a "retracted" status');
+        } else {
+            throw new \InvalidArgumentException('Unknown choice');
+        }
     }
 
     /**
      * @return \DateTime
      */
-    public function getTimestamp() {
+    public function getTimestamp(): \DateTime {
         return $this->timestamp;
-    }
-
-    /**
-     * @param \DateTime $timestamp
-     */
-    public function setTimestamp($timestamp) {
-        $this->timestamp = $timestamp;
     }
 
     /**
@@ -92,13 +99,6 @@ abstract class Vote {
      */
     public function getUser() {
         return $this->user;
-    }
-
-    /**
-     * @param User $user
-     */
-    public function setUser($user) {
-        $this->user = $user;
     }
 
     /**
@@ -112,6 +112,21 @@ abstract class Vote {
      * @param string|null $ip
      */
     public function setIp($ip) {
+        if ($ip !== null && !filter_var($ip, FILTER_VALIDATE_IP)) {
+            throw new \InvalidArgumentException("Bad IP address");
+        }
+
         $this->ip = $ip;
+    }
+
+    /**
+     * Legacy getter needed for `Selectable` compatibility.
+     *
+     * @return bool
+     *
+     * @internal
+     */
+    public function getUpvote(): bool {
+        return $this->upvote;
     }
 }

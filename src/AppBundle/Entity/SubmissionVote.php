@@ -23,16 +23,18 @@ class SubmissionVote extends Vote {
     private $submission;
 
     /**
+     * {@inheritdoc}
+     */
+    public function __construct(User $user, $ip, $choice, Submission $submission) {
+        parent::__construct($user, $ip, $choice);
+
+        $this->submission = $submission;
+    }
+
+    /**
      * @return Submission
      */
     public function getSubmission() {
         return $this->submission;
-    }
-
-    /**
-     * @param Submission $submission
-     */
-    public function setSubmission($submission) {
-        $this->submission = $submission;
     }
 }

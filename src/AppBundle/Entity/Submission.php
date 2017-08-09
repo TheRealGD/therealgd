@@ -17,6 +17,23 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Submission extends Votable {
     /**
+     * Amount to multiply the net score with.
+     *
+     * @todo This should be calculated based on recent site activity.
+     *
+     * @var int
+     */
+    const MULTIPLIER = 1800;
+
+    /**
+     * The time in seconds during which an older post can have a higher rank
+     * than a newer one.
+     *
+     * @var int
+     */
+    const MAX_VISIBILITY = 28800;
+
+    /**
      * @ORM\Column(type="bigint")
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Id()
@@ -91,7 +108,7 @@ class Submission extends Votable {
 
     /**
      * @ORM\OneToMany(targetEntity="SubmissionVote", mappedBy="submission",
-     *     fetch="EAGER", cascade={"persist", "remove"})
+     *     fetch="EAGER", cascade={"persist", "remove"}, orphanRemoval=true)
      *
      * @var SubmissionVote[]|Collection
      */
@@ -162,13 +179,7 @@ class Submission extends Votable {
         }
 
         $submission->setUser($user);
-
-        $vote = new SubmissionVote();
-        $vote->setUser($user);
-        $vote->setSubmission($submission);
-        $vote->setUpvote(true);
-
-        $submission->getVotes()->add($vote);
+        $submission->vote($user, null, self::VOTE_UP);
 
         return $submission;
     }
@@ -308,11 +319,17 @@ class Submission extends Votable {
     /**
      * {@inheritdoc}
      */
-    public function createVote() {
-        $vote = new SubmissionVote();
-        $vote->setSubmission($this);
+    protected function createVote(User $user, $ip, int $choice): Vote {
+        return new SubmissionVote($user, $ip, $choice, $this);
+    }
 
-        return $vote;
+    /**
+     * {@inheritdoc}
+     */
+    public function vote(User $user, $ip, int $choice) {
+        parent::vote($user, $ip, $choice);
+
+        $this->updateRanking();
     }
 
     /**
@@ -364,11 +381,11 @@ class Submission extends Votable {
         return $this->ranking;
     }
 
-    /**
-     * @param int $ranking
-     */
-    public function setRanking(int $ranking) {
-        $this->ranking = $ranking;
+    public function updateRanking() {
+        $unixTime = $this->getTimestamp()->getTimestamp();
+        $advantage = max(min(self::MULTIPLIER * $this->getNetScore(), self::MAX_VISIBILITY), 0);
+
+        $this->ranking = $unixTime + $advantage;
     }
 
     /**
