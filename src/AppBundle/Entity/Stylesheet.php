@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * A custom stylesheet. Can be applied to forums, user pages, etc.
  *
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Raddit\AppBundle\Repository\StylesheetRepository")
  * @ORM\Table(name="stylesheets", uniqueConstraints={
  *     @ORM\UniqueConstraint(name="stylesheets_user_name_idx", columns={"user_id", "name"})
  * })

@@ -2,10 +2,12 @@
 
 namespace Raddit\AppBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use Raddit\AppBundle\Entity\Comment;
 use Raddit\AppBundle\Entity\Forum;
 use Raddit\AppBundle\Entity\Submission;
 use Raddit\AppBundle\Form\CommentType;
+use Raddit\AppBundle\Repository\ForumRepository;
 use Raddit\AppBundle\Utils\Slugger;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -26,13 +28,19 @@ final class CommentController extends Controller {
     /**
      * Render the comment form only (no layout).
      *
-     * @param string   $forumName
-     * @param int      $submissionId
-     * @param int|null $commentId
+     * @param ForumRepository $forumRepository
+     * @param string          $forumName
+     * @param int             $submissionId
+     * @param int|null        $commentId
      *
      * @return Response
      */
-    public function commentFormAction($forumName, $submissionId, $commentId = null) {
+    public function commentFormAction(
+        ForumRepository $forumRepository,
+        $forumName,
+        $submissionId,
+        $commentId = null
+    ) {
         $routeParams = [
             'forum_name' => $forumName,
             'submission_id' => $submissionId,
@@ -44,7 +52,7 @@ final class CommentController extends Controller {
 
         $form = $this->createForm(CommentType::class, null, [
             'action' => $this->generateUrl('raddit_app_comment_post', $routeParams),
-            'forum' => $this->getDoctrine()->getRepository(Forum::class)->findOneBy([
+            'forum' => $forumRepository->findOneBy([
                 'canonicalName' => mb_strtolower($forumName, 'UTF-8'),
             ]),
         ]);
@@ -59,14 +67,16 @@ final class CommentController extends Controller {
      *
      * @Security("is_granted('ROLE_USER')")
      *
-     * @param Forum        $forum
-     * @param Submission   $submission
-     * @param Request      $request
-     * @param Comment|null $comment
+     * @param EntityManager $em
+     * @param Forum         $forum
+     * @param Submission    $submission
+     * @param Request       $request
+     * @param Comment|null  $comment
      *
      * @return Response
      */
     public function commentAction(
+        EntityManager $em,
         Forum $forum,
         Submission $submission,
         Request $request,
@@ -78,8 +88,6 @@ final class CommentController extends Controller {
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-
             $em->persist($reply);
             $em->flush();
 
@@ -104,19 +112,26 @@ final class CommentController extends Controller {
      *
      * @Security("is_granted('edit', comment)")
      *
-     * @param Forum      $forum
-     * @param Submission $submission
-     * @param Comment    $comment
-     * @param Request    $request
+     * @param EntityManager $em
+     * @param Forum         $forum
+     * @param Submission    $submission
+     * @param Comment       $comment
+     * @param Request       $request
      *
      * @return Response
      */
-    public function editCommentAction(Forum $forum, Submission $submission, Comment $comment, Request $request) {
+    public function editCommentAction(
+        EntityManager $em,
+        Forum $forum,
+        Submission $submission,
+        Comment $comment,
+        Request $request
+    ) {
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $em->flush();
 
             return $this->redirectToRoute('raddit_app_comment', [
                 'forum_name' => $forum->getName(),
@@ -140,17 +155,16 @@ final class CommentController extends Controller {
      * @ParamConverter("comment", options={"mapping": {"id": "id"}})
      * @Security("is_granted('delete', comment)")
      *
-     * @param Comment $comment
-     * @param Request $request
+     * @param EntityManager $em
+     * @param Comment       $comment
+     * @param Request       $request
      *
      * @return Response
      */
-    public function deleteCommentAction(Comment $comment, Request $request) {
+    public function deleteCommentAction(EntityManager $em, Comment $comment, Request $request) {
         if (!$this->isCsrfTokenValid('delete_comment', $request->request->get('token'))) {
             throw $this->createAccessDeniedException('Bad CSRF token');
         }
-
-        $em = $this->getDoctrine()->getManager();
 
         if ($this->isGranted('delete_thread', $comment)) {
             $em->refresh($comment);
@@ -172,19 +186,19 @@ final class CommentController extends Controller {
      * @ParamConverter("comment", options={"mapping": {"id": "id"}})
      * @Security("is_granted('softdelete', comment)")
      *
-     * @param Comment $comment
-     * @param Request $request
+     * @param EntityManager $em
+     * @param Comment       $comment
+     * @param Request       $request
      *
      * @return Response
      */
-    public function softDeleteCommentAction(Comment $comment, Request $request) {
+    public function softDeleteCommentAction(EntityManager $em, Comment $comment, Request $request) {
         if (!$this->isCsrfTokenValid('softdelete_comment', $request->request->get('token'))) {
             throw $this->createAccessDeniedException('Bad CSRF token');
         }
 
         $comment->softDelete();
 
-        $em = $this->getDoctrine()->getManager();
         $em->flush();
 
         return $this->redirectAfterAction($comment, $request);

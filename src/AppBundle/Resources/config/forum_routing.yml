@@ -48,15 +48,16 @@ raddit_app_delete_forum:
     path: /delete
     methods: [GET, POST]
 
-raddit_app_forum_apperance:
+raddit_app_forum_appearance:
     defaults: { _controller: RadditAppBundle:Forum:appearance }
     path: /appearance
     methods: [GET, POST]
 
 raddit_app_forum_moderators:
-    defaults: { _controller: RadditAppBundle:Forum:moderators }
-    path: /moderators
+    defaults: { _controller: RadditAppBundle:Forum:moderators, page: 1 }
+    path: /moderators/{page}
     methods: [GET]
+    requirements: { page: \d+ }
 
 raddit_app_add_moderator:
     defaults: { _controller: RadditAppBundle:Forum:addModerator }

@@ -4,8 +4,11 @@ namespace Raddit\AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Selectable;
 use Doctrine\ORM\Mapping as ORM;
+use Pagerfanta\Adapter\DoctrineSelectableAdapter;
+use Pagerfanta\Pagerfanta;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -216,6 +219,22 @@ class Forum {
      */
     public function getModerators() {
         return $this->moderators;
+    }
+
+    /**
+     * @param int $page
+     * @param int $maxPerPage
+     *
+     * @return Pagerfanta|Moderator[]
+     */
+    public function getPaginatedModerators(int $page, int $maxPerPage = 25) {
+        $criteria = Criteria::create()->orderBy(['timestamp' => 'DESC']);
+
+        $moderators = new Pagerfanta(new DoctrineSelectableAdapter($this->moderators, $criteria));
+        $moderators->setMaxPerPage($maxPerPage);
+        $moderators->setCurrentPage($page);
+
+        return $moderators;
     }
 
     /**

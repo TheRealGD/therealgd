@@ -2,19 +2,18 @@
 
 namespace Raddit\AppBundle\Controller;
 
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManager;
 use Raddit\AppBundle\Entity\Forum;
-use Raddit\AppBundle\Entity\ForumCategory;
 use Raddit\AppBundle\Entity\ForumSubscription;
 use Raddit\AppBundle\Entity\Moderator;
-use Raddit\AppBundle\Entity\Submission;
 use Raddit\AppBundle\Entity\User;
 use Raddit\AppBundle\Form\ForumAppearanceType;
 use Raddit\AppBundle\Form\ForumType;
 use Raddit\AppBundle\Form\ModeratorType;
 use Raddit\AppBundle\Form\PasswordConfirmType;
+use Raddit\AppBundle\Repository\ForumCategoryRepository;
 use Raddit\AppBundle\Repository\ForumRepository;
+use Raddit\AppBundle\Repository\SubmissionRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -31,16 +30,15 @@ final class ForumController extends Controller {
      *     "repository_method": "findOneByCaseInsensitiveName"
      * })
      *
-     * @param ObjectManager $om
-     * @param Forum         $forum
-     * @param string        $sortBy
-     * @param int           $page
+     * @param SubmissionRepository $sr
+     * @param Forum                $forum
+     * @param string               $sortBy
+     * @param int                  $page
      *
      * @return Response
      */
-    public function frontAction(ObjectManager $om, Forum $forum, string $sortBy, int $page) {
-        $submissions = $om->getRepository(Submission::class)
-            ->findForumSubmissions($forum, $sortBy, $page);
+    public function frontAction(SubmissionRepository $sr, Forum $forum, string $sortBy, int $page) {
+        $submissions = $sr->findForumSubmissions($forum, $sortBy, $page);
 
         return $this->render('@RadditApp/forum.html.twig', [
             'forum' => $forum,
@@ -54,11 +52,12 @@ final class ForumController extends Controller {
      *
      * @Security("is_granted('create_forum')")
      *
-     * @param Request $request
+     * @param Request       $request
+     * @param EntityManager $em
      *
      * @return Response
      */
-    public function createForumAction(Request $request) {
+    public function createForumAction(Request $request, EntityManager $em) {
         $forum = new Forum();
 
         $form = $this->createForm(ForumType::class, $forum);
@@ -74,8 +73,6 @@ final class ForumController extends Controller {
             $subscription->setForum($forum);
             $subscription->setUser($this->getUser());
             $forum->getSubscriptions()->add($subscription);
-
-            $em = $this->getDoctrine()->getManager();
 
             $em->persist($forum);
             $em->flush();
@@ -159,20 +156,20 @@ final class ForumController extends Controller {
     /**
      * @Security("is_granted('ROLE_USER')")
      *
-     * @param Request $request
-     * @param Forum   $forum   one of 'subscribe' or 'unsubscribe'
-     * @param string  $action
+     * @param Request       $request
+     * @param EntityManager $em
+     * @param Forum         $forum one of 'subscribe' or 'unsubscribe'
+     * @param string        $action
      *
      * @return Response
      */
-    public function subscribeAction(Request $request, Forum $forum, string $action) {
+    public function subscribeAction(Request $request, EntityManager $em, Forum $forum, string $action) {
         if (!$this->isCsrfTokenValid('subscribe', $request->request->get('token'))) {
             throw $this->createAccessDeniedException();
         }
 
         /** @var User $user */
         $user = $this->getUser();
-        $em = $this->getDoctrine()->getManager();
 
         switch ($action) {
         case 'subscribe':
@@ -219,18 +216,14 @@ final class ForumController extends Controller {
     }
 
     /**
-     * @param EntityManager $em
+     * @param ForumCategoryRepository $fcr
+     * @param ForumRepository         $fr
      *
      * @return Response
      */
-    public function listCategoriesAction(EntityManager $em) {
-        $forumCategories = $em->getRepository(ForumCategory::class)->findBy(
-            [], ['name' => 'ASC']
-        );
-
-        $uncategorizedForums = $em->getRepository(Forum::class)->findBy(
-            ['category' => null], ['canonicalName' => 'ASC']
-        );
+    public function listCategoriesAction(ForumCategoryRepository $fcr, ForumRepository $fr) {
+        $forumCategories = $fcr->findBy([], ['name' => 'ASC']);
+        $uncategorizedForums = $fr->findBy(['category' => null], ['canonicalName' => 'ASC']);
 
         return $this->render('@RadditApp/forums_by_category.html.twig', [
             'forum_categories' => $forumCategories,
@@ -248,16 +241,14 @@ final class ForumController extends Controller {
      * })
      *
      * @param Forum $forum
+     * @param int   $page
      *
      * @return Response
      */
-    public function moderatorsAction(Forum $forum) {
-        $moderators = $this->getDoctrine()->getRepository(Moderator::class)
-            ->findBy(['forum' => $forum], ['id' => 'ASC']);
-
+    public function moderatorsAction(Forum $forum, int $page) {
         return $this->render('@RadditApp/forum_moderators.html.twig', [
             'forum' => $forum,
-            'moderators' => $moderators,
+            'moderators' => $forum->getPaginatedModerators($page),
         ]);
     }
 
@@ -269,12 +260,13 @@ final class ForumController extends Controller {
      * })
      * @Security("is_granted('ROLE_ADMIN')")
      *
-     * @param Forum   $forum
-     * @param Request $request
+     * @param EntityManager $em
+     * @param Forum         $forum
+     * @param Request       $request
      *
      * @return Response
      */
-    public function addModeratorAction(Forum $forum, Request $request) {
+    public function addModeratorAction(EntityManager $em, Forum $forum, Request $request) {
         $moderator = new Moderator();
         $moderator->setForum($forum);
 
@@ -282,8 +274,6 @@ final class ForumController extends Controller {
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-
             $em->persist($moderator);
             $em->flush();
 
@@ -324,7 +314,7 @@ final class ForumController extends Controller {
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
 
-            return $this->redirectToRoute('raddit_app_forum_apperance', [
+            return $this->redirectToRoute('raddit_app_forum_appearance', [
                 'forum_name' => $forum->getName(),
             ]);
         }

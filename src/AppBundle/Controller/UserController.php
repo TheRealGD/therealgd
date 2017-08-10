@@ -2,14 +2,11 @@
 
 namespace Raddit\AppBundle\Controller;
 
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManager;
-use Pagerfanta\Adapter\DoctrineCollectionAdapter;
-use Pagerfanta\Pagerfanta;
-use Raddit\AppBundle\Entity\Notification;
 use Raddit\AppBundle\Entity\User;
 use Raddit\AppBundle\Form\UserSettingsType;
 use Raddit\AppBundle\Form\UserType;
+use Raddit\AppBundle\Repository\NotificationRepository;
 use Raddit\AppBundle\Repository\UserRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -46,12 +43,8 @@ final class UserController extends Controller {
      * @return Response
      */
     public function submissionsAction(User $user, int $page) {
-        $submissions = new Pagerfanta(new DoctrineCollectionAdapter($user->getSubmissions()));
-        $submissions->setMaxPerPage(25);
-        $submissions->setCurrentPage($page);
-
         return $this->render('@RadditApp/user_submissions.html.twig', [
-            'submissions' => $submissions,
+            'submissions' => $user->getPaginatedSubmissions($page),
             'user' => $user,
         ]);
     }
@@ -63,12 +56,8 @@ final class UserController extends Controller {
      * @return Response
      */
     public function commentsAction(User $user, int $page) {
-        $comments = new Pagerfanta(new DoctrineCollectionAdapter($user->getComments()));
-        $comments->setMaxPerPage(25);
-        $comments->setCurrentPage($page);
-
         return $this->render('@RadditApp/user_comments.html.twig', [
-            'comments' => $comments,
+            'comments' => $user->getPaginatedComments($page),
             'user' => $user,
         ]);
     }
@@ -124,16 +113,15 @@ final class UserController extends Controller {
     /**
      * @Security("is_granted('edit_user', subject)")
      *
-     * @param User    $subject
-     * @param Request $request
+     * @param EntityManager $em
+     * @param User          $subject
+     * @param Request       $request
      *
      * @return Response
      */
-    public function editUserAction(User $subject, Request $request) {
+    public function editUserAction(EntityManager $em, User $subject, Request $request) {
         $form = $this->createForm(UserType::class, $subject);
         $form->handleRequest($request);
-
-        $em = $this->getDoctrine()->getManager();
 
         try {
             if ($form->isSubmitted() && $form->isValid()) {
@@ -158,25 +146,26 @@ final class UserController extends Controller {
     /**
      * @Security("is_granted('edit_user', subject)")
      *
-     * @param User    $subject
-     * @param Request $request
+     * @param EntityManager $em
+     * @param User          $subject
+     * @param Request       $request
      *
      * @return Response
      */
-    public function userSettingsAction(User $subject, Request $request) {
+    public function userSettingsAction(EntityManager $em, User $subject, Request $request) {
         $form = $this->createForm(UserSettingsType::class, $subject);
         $form->handleRequest($request);
 
         try {
             if ($form->isSubmitted() && $form->isValid()) {
-                $this->getDoctrine()->getManager()->flush();
+                $em->flush();
 
                 $this->addFlash('success', 'flash.user_settings_updated');
 
                 return $this->redirect($request->getUri());
             }
         } finally {
-            $this->getDoctrine()->getManager()->refresh($subject);
+            $em->refresh($subject);
         }
 
         return $this->render('@RadditApp/user_settings.html.twig', [
@@ -193,24 +182,25 @@ final class UserController extends Controller {
      * @return Response
      */
     public function inboxAction(int $page) {
-        $notifications = $this->getDoctrine()->getRepository(Notification::class)
-            ->findNotificationsInInbox($this->getUser(), $page);
+        /* @var User $user */
+        $user = $this->getUser();
 
         return $this->render('@RadditApp/inbox.html.twig', [
-            'notifications' => $notifications,
+            'notifications' => $user->getPaginatedNotifications($page),
         ]);
     }
 
     /**
      * @Security("is_granted('ROLE_USER')")
      *
-     * @param Request       $request
-     * @param ObjectManager $em
-     * @param string        $_format
+     * @param Request                $request
+     * @param NotificationRepository $nr
+     * @param EntityManager          $em
+     * @param string                 $_format
      *
      * @return Response
      */
-    public function clearInboxAction(Request $request, ObjectManager $em, string $_format) {
+    public function clearInboxAction(Request $request, NotificationRepository $nr, EntityManager $em, string $_format) {
         if (!$this->isCsrfTokenValid('clear_inbox', $request->request->get('token'))) {
             throw new AccessDeniedHttpException();
         }
@@ -218,7 +208,7 @@ final class UserController extends Controller {
         $user = $this->getUser();
         $max = $request->query->getInt('max', null);
 
-        $em->getRepository(Notification::class)->clearInbox($user, $max);
+        $nr->clearInbox($user, $max);
         $em->flush();
 
         if ($_format === 'json') {

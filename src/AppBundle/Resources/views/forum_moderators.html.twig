@@ -8,6 +8,10 @@
   {{ 'forum_moderators.title'|trans({'%forum_name%': forum.name}) }}
 {% endblock %}
 
+{% block head %}
+  {{ include('@RadditApp/includes/meta_pagination.html.twig', {pager: moderators}, with_context=false) }}
+{% endblock %}
+
 {% block body %}
   <h1>{{ block('title') }}</h1>
 
@@ -39,5 +43,7 @@
       {% endfor %}
     </tbody>
   </table>
+
+  {{ include('@RadditApp/includes/pagination.html.twig', {pager: moderators}, with_context=false) }}
 {% endblock %}
 

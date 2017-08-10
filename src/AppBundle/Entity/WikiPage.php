@@ -4,7 +4,10 @@ namespace Raddit\AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
+use Pagerfanta\Adapter\DoctrineSelectableAdapter;
+use Pagerfanta\Pagerfanta;
 
 /**
  * @ORM\Entity(repositoryClass="Raddit\AppBundle\Repository\WikiPageRepository")
@@ -111,6 +114,22 @@ class WikiPage {
      */
     public function getRevisions() {
         return $this->revisions;
+    }
+
+    /**
+     * @param int $page
+     * @param int $maxPerPage
+     *
+     * @return Pagerfanta|WikiRevision[]
+     */
+    public function getPaginatedRevisions(int $page, int $maxPerPage = 25) {
+        $criteria = Criteria::create()->orderBy(['timestamp' => 'DESC']);
+
+        $revisions = new Pagerfanta(new DoctrineSelectableAdapter($this->revisions, $criteria));
+        $revisions->setMaxPerPage($maxPerPage);
+        $revisions->setCurrentPage($page);
+
+        return $revisions;
     }
 
     /**

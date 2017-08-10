@@ -2,10 +2,23 @@
 
 namespace Raddit\AppBundle\Repository;
 
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityRepository;
+use Pagerfanta\Adapter\DoctrineSelectableAdapter;
+use Pagerfanta\Pagerfanta;
 use Raddit\AppBundle\Entity\Ban;
 
 final class BanRepository extends EntityRepository {
+    public function findAllPaginated($page, $maxPerPage = 25) {
+        $criteria = Criteria::create()->orderBy(['timestamp' => 'DESC']);
+
+        $bans = new Pagerfanta(new DoctrineSelectableAdapter($this, $criteria));
+        $bans->setMaxPerPage($maxPerPage);
+        $bans->setCurrentPage($page);
+
+        return $bans;
+    }
+
     /**
      * @param string $ip
      *

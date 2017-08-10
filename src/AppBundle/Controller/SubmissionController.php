@@ -2,6 +2,7 @@
 
 namespace Raddit\AppBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use Raddit\AppBundle\Entity\Comment;
 use Raddit\AppBundle\Entity\Forum;
 use Raddit\AppBundle\Entity\Submission;
@@ -64,20 +65,19 @@ final class SubmissionController extends Controller {
      *
      * @Security("is_granted('ROLE_USER')")
      *
-     * @param Forum   $forum
-     * @param Request $request
+     * @param EntityManager $em
+     * @param Request       $request
+     * @param Forum         $forum
      *
      * @return Response
      */
-    public function submitAction(Request $request, Forum $forum = null) {
+    public function submitAction(EntityManager $em, Request $request, Forum $forum = null) {
         $submission = Submission::create($forum, $this->getUser());
 
         $form = $this->createForm(SubmissionType::class, $submission);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-
             $em->persist($submission);
             $em->flush();
 
@@ -97,19 +97,18 @@ final class SubmissionController extends Controller {
     /**
      * @Security("is_granted('edit', submission)")
      *
-     * @param Forum      $forum
-     * @param Submission $submission
-     * @param Request    $request
+     * @param EntityManager $em
+     * @param Forum         $forum
+     * @param Submission    $submission
+     * @param Request       $request
      *
      * @return Response
      */
-    public function editSubmissionAction(Forum $forum, Submission $submission, Request $request) {
+    public function editSubmissionAction(EntityManager $em, Forum $forum, Submission $submission, Request $request) {
         $form = $this->createForm(SubmissionType::class, $submission);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-
             if ($form->get('delete')->isClicked()) {
                 $em->remove($submission);
                 $em->flush();

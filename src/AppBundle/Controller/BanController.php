@@ -2,9 +2,7 @@
 
 namespace Raddit\AppBundle\Controller;
 
-use Doctrine\Common\Collections\Criteria;
-use Pagerfanta\Adapter\DoctrineSelectableAdapter;
-use Pagerfanta\Pagerfanta;
+use Doctrine\ORM\EntityManager;
 use Raddit\AppBundle\Entity\Ban;
 use Raddit\AppBundle\Entity\User;
 use Raddit\AppBundle\Form\BanType;
@@ -33,14 +31,8 @@ final class BanController extends Controller {
      * @return Response
      */
     public function listAction(int $page, BanRepository $banRepository) {
-        $criteria = Criteria::create()->orderBy(['id' => 'DESC']);
-
-        $bans = new Pagerfanta(new DoctrineSelectableAdapter($banRepository, $criteria));
-        $bans->setMaxPerPage(25);
-        $bans->setCurrentPage($page);
-
         return $this->render('@RadditApp/ban_list.html.twig', [
-            'bans' => $bans,
+            'bans' => $banRepository->findAllPaginated($page),
         ]);
     }
 
@@ -49,11 +41,12 @@ final class BanController extends Controller {
      *
      * @Security("is_granted('ROLE_ADMIN')")
      *
-     * @param Request $request
+     * @param Request       $request
+     * @param EntityManager $em
      *
      * @return Response
      */
-    public function addAction(Request $request) {
+    public function addAction(Request $request, EntityManager $em) {
         $ban = new Ban();
 
         $ban->setIp($request->query->filter('ip', null, FILTER_VALIDATE_IP));
@@ -61,7 +54,7 @@ final class BanController extends Controller {
         // TODO: use a DTO instead
         if ($request->query->has('user_id')) {
             $id = $request->query->getInt('user_id');
-            $user = $this->getDoctrine()->getManager()->find(User::class, $id);
+            $user = $em->find(User::class, $id);
             $ban->setUser($user);
         }
 
@@ -73,8 +66,8 @@ final class BanController extends Controller {
 
             $this->addFlash('success', 'flash.ban_added');
 
-            $this->getDoctrine()->getManager()->persist($ban);
-            $this->getDoctrine()->getManager()->flush();
+            $em->persist($ban);
+            $em->flush();
 
             return $this->redirectToRoute('raddit_app_bans');
         }
@@ -89,13 +82,14 @@ final class BanController extends Controller {
      *
      * @Security("is_granted('ROLE_ADMIN')")
      *
-     * @param string $entityClass
-     * @param string $id
+     * @param EntityManager $em
+     * @param string        $entityClass
+     * @param string        $id
      *
      * @return Response
      */
-    public function redirectAction($entityClass, $id) {
-        $entity = $this->getDoctrine()->getManager()->find($entityClass, $id);
+    public function redirectAction(EntityManager $em, $entityClass, $id) {
+        $entity = $em->find($entityClass, $id);
 
         return $this->redirectToRoute('raddit_app_add_ban', [
             'ip' => $entity->getIp(),
@@ -106,30 +100,21 @@ final class BanController extends Controller {
     /**
      * @Security("is_granted('ROLE_ADMIN')")
      *
-     * @param Request $request
+     * @param Request       $request
+     * @param EntityManager $em
      *
      * @return Response
      */
-    public function removeAction(Request $request) {
+    public function removeAction(Request $request, EntityManager $em) {
         if (!$this->isCsrfTokenValid('remove_bans', $request->request->get('token'))) {
             throw $this->createAccessDeniedException();
         }
 
-        $banIds = $request->request->get('ban');
-
-        if (!is_array($banIds)) {
-            $banIds = [$banIds];
-        }
-
-        $banIds = array_filter($banIds, function ($a) {
-            return is_numeric($a);
-        });
-
-        $em = $this->getDoctrine()->getManager();
-        $banRepository = $this->getDoctrine()->getRepository(Ban::class);
+        $banIds = (array) $request->request->get('ban');
+        $banIds = array_filter($banIds, 'is_numeric');
 
         foreach ($banIds as $banId) {
-            $ban = $banRepository->find($banId);
+            $ban = $em->find(Ban::class, $banId);
 
             if ($ban) {
                 $em->remove($ban);

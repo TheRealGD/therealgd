@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\Selectable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Raddit\AppBundle\Repository\ForumCategoryRepository")
  * @ORM\Table(name="forum_categories")
  */
 class ForumCategory {

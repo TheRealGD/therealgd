@@ -2,12 +2,10 @@
 
 namespace Raddit\AppBundle\Controller;
 
-use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManager;
-use Pagerfanta\Adapter\DoctrineSelectableAdapter;
-use Pagerfanta\Pagerfanta;
 use Raddit\AppBundle\Entity\Stylesheet;
 use Raddit\AppBundle\Form\StylesheetType;
+use Raddit\AppBundle\Repository\StylesheetRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,21 +13,14 @@ use Symfony\Component\HttpFoundation\Response;
 
 class StylesheetController extends Controller {
     /**
-     * @param EntityManager $em
-     * @param int           $page
+     * @param StylesheetRepository $stylesheetRepository
+     * @param int                  $page
      *
      * @return Response
      */
-    public function listAction(EntityManager $em, int $page) {
-        $repository = $em->getRepository(Stylesheet::class);
-        $criteria = Criteria::create()->orderBy(['timestamp' => 'DESC']);
-
-        $stylesheets = new Pagerfanta(new DoctrineSelectableAdapter($repository, $criteria));
-        $stylesheets->setMaxPerPage(25);
-        $stylesheets->setCurrentPage($page);
-
+    public function listAction(StylesheetRepository $stylesheetRepository, int $page) {
         return $this->render('@RadditApp/stylesheet_list.html.twig', [
-            'stylesheets' => $stylesheets,
+            'stylesheets' => $stylesheetRepository->findAllPaginated($page),
         ]);
     }
 

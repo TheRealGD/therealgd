@@ -7,6 +7,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Selectable;
 use Doctrine\ORM\Mapping as ORM;
+use Pagerfanta\Adapter\DoctrineCollectionAdapter;
+use Pagerfanta\Adapter\DoctrineSelectableAdapter;
+use Pagerfanta\Pagerfanta;
 use Scheb\TwoFactorBundle\Model\Email\TwoFactorInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -420,10 +423,38 @@ class User implements UserInterface, TwoFactorInterface {
     }
 
     /**
+     * @param int $page
+     * @param int $maxPerPage
+     *
+     * @return Pagerfanta|Comment[]
+     */
+    public function getPaginatedSubmissions(int $page, int $maxPerPage = 25) {
+        $submissions = new Pagerfanta(new DoctrineCollectionAdapter($this->submissions));
+        $submissions->setMaxPerPage($maxPerPage);
+        $submissions->setCurrentPage($page);
+
+        return $submissions;
+    }
+
+    /**
      * @return Collection|Selectable|Comment[]
      */
     public function getComments() {
         return $this->comments;
+    }
+
+    /**
+     * @param int $page
+     * @param int $maxPerPage
+     *
+     * @return Pagerfanta|Comment[]
+     */
+    public function getPaginatedComments(int $page, int $maxPerPage = 25) {
+        $comments = new Pagerfanta(new DoctrineCollectionAdapter($this->comments));
+        $comments->setMaxPerPage($maxPerPage);
+        $comments->setCurrentPage($page);
+
+        return $comments;
     }
 
     /**
@@ -466,6 +497,22 @@ class User implements UserInterface, TwoFactorInterface {
      */
     public function getNotifications() {
         return $this->notifications;
+    }
+
+    /**
+     * @param int $page
+     * @param int $maxPerPage
+     *
+     * @return Pagerfanta|Notification[]
+     */
+    public function getPaginatedNotifications(int $page, int $maxPerPage = 25) {
+        $criteria = Criteria::create()->orderBy(['id' => 'DESC']);
+
+        $notifications = new Pagerfanta(new DoctrineSelectableAdapter($this->notifications, $criteria));
+        $notifications->setMaxPerPage($maxPerPage);
+        $notifications->setCurrentPage($page);
+
+        return $notifications;
     }
 
     /**

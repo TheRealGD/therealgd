@@ -7,6 +7,7 @@ use Raddit\AppBundle\Entity\WikiPage;
 use Raddit\AppBundle\Entity\WikiRevision;
 use Raddit\AppBundle\Form\Model\Wiki;
 use Raddit\AppBundle\Form\WikiType;
+use Raddit\AppBundle\Repository\WikiPageRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -17,13 +18,13 @@ final class WikiController extends Controller {
     /**
      * Views a wiki page.
      *
-     * @param string        $path
-     * @param EntityManager $em
+     * @param string             $path
+     * @param WikiPageRepository $wikiPageRepository
      *
      * @return Response
      */
-    public function wikiAction(string $path, EntityManager $em) {
-        $page = $em->getRepository(WikiPage::class)->findOneCaseInsensitively($path);
+    public function wikiAction(string $path, WikiPageRepository $wikiPageRepository) {
+        $page = $wikiPageRepository->findOneCaseInsensitively($path);
 
         if (!$page) {
             return $this->render('@RadditApp/wiki_404.html.twig', [
@@ -133,17 +134,13 @@ final class WikiController extends Controller {
      *
      * @param WikiPage      $wikiPage
      * @param int           $page
-     * @param EntityManager $em
      *
      * @return Response
      */
-    public function historyAction(WikiPage $wikiPage, int $page, EntityManager $em) {
-        $revisions = $em->getRepository(WikiRevision::class)
-            ->findRevisionsForPage($wikiPage, $page);
-
+    public function historyAction(WikiPage $wikiPage, int $page) {
         return $this->render('@RadditApp/wiki_history.html.twig', [
             'page' => $wikiPage,
-            'revisions' => $revisions,
+            'revisions' => $wikiPage->getPaginatedRevisions($page),
         ]);
     }
 
@@ -160,13 +157,13 @@ final class WikiController extends Controller {
     }
 
     /**
-     * @param int           $page
-     * @param EntityManager $em
+     * @param int                $page
+     * @param WikiPageRepository $wikiPageRepository
      *
      * @return Response
      */
-    public function allAction(int $page, EntityManager $em) {
-        $pages = $em->getRepository(WikiPage::class)->findAllPages($page);
+    public function allAction(int $page, WikiPageRepository $wikiPageRepository) {
+        $pages = $wikiPageRepository->findAllPages($page);
 
         return $this->render('@RadditApp/wiki_all.html.twig', [
             'pages' => $pages,

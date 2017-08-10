@@ -5,7 +5,7 @@ namespace Raddit\AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="Raddit\AppBundle\Repository\WikiRevisionRepository")
+ * @ORM\Entity()
  * @ORM\Table(name="wiki_revisions")
  */
 class WikiRevision {

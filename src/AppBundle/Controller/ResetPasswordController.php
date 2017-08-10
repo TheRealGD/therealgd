@@ -2,9 +2,11 @@
 
 namespace Raddit\AppBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use Raddit\AppBundle\Entity\User;
 use Raddit\AppBundle\Form\RequestPasswordResetType;
 use Raddit\AppBundle\Form\UserType;
+use Raddit\AppBundle\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,11 +14,12 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 final class ResetPasswordController extends Controller {
     /**
-     * @param Request $request
+     * @param Request        $request
+     * @param UserRepository $ur
      *
      * @return Response
      */
-    public function requestResetAction(Request $request) {
+    public function requestResetAction(Request $request, UserRepository $ur) {
         if (!$this->getParameter('env(NO_REPLY_ADDRESS)')) {
             throw $this->createNotFoundException();
         }
@@ -25,11 +28,10 @@ final class ResetPasswordController extends Controller {
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $userRepository = $this->getDoctrine()->getRepository(User::class);
             $email = $form->getData()->getEmail();
 
             // TODO - this is susceptible to timing attacks.
-            foreach ($userRepository->lookUpByEmail($email) as $user) {
+            foreach ($ur->lookUpByEmail($email) as $user) {
                 $this->sendPasswordResetEmail($user, $request);
             }
 
@@ -44,14 +46,15 @@ final class ResetPasswordController extends Controller {
     }
 
     /**
-     * @param Request $request
-     * @param User    $user
-     * @param string  $expires
-     * @param string  $checksum
+     * @param Request       $request
+     * @param EntityManager $em
+     * @param User          $user
+     * @param string        $expires
+     * @param string        $checksum
      *
      * @return Response
      */
-    public function resetAction(Request $request, User $user, $expires, $checksum) {
+    public function resetAction(Request $request, EntityManager $em, User $user, $expires, $checksum) {
         $newChecksum = $this->createChecksum($user, $expires);
 
         if (!hash_equals($checksum, $newChecksum)) {
@@ -68,13 +71,14 @@ final class ResetPasswordController extends Controller {
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                $this->getDoctrine()->getManager()->flush();
+                $em->flush();
+
                 $this->addFlash('success', 'flash.user_password_updated');
 
                 return $this->redirectToRoute('raddit_app_front');
             }
         } finally {
-            $this->getDoctrine()->getManager()->refresh($user);
+            $em->refresh($user);
         }
 
         return $this->render('@RadditApp/reset_password.html.twig', [
