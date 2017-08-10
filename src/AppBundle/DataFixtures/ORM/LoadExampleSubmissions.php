@@ -9,6 +9,7 @@ use Raddit\AppBundle\Entity\Forum;
 use Raddit\AppBundle\Entity\Submission;
 use Raddit\AppBundle\Entity\SubmissionVote;
 use Raddit\AppBundle\Entity\User;
+use Raddit\AppBundle\Entity\Votable;
 
 class LoadExampleSubmissions extends AbstractFixture implements DependentFixtureInterface {
     /**
@@ -32,14 +33,7 @@ class LoadExampleSubmissions extends AbstractFixture implements DependentFixture
             $submission->setTimestamp($data['timestamp']);
             $submission->setForum($forum);
             $submission->setUser($user);
-
-            $vote = new SubmissionVote();
-            $vote->setIp($data['ip']);
-            $vote->setSubmission($submission);
-            $vote->setUser($user);
-            $vote->setUpvote(true);
-            $vote->setTimestamp($data['timestamp']);
-            $submission->getVotes()->add($vote);
+            $submission->vote($user, $data['ip'], Votable::VOTE_UP);
 
             $this->addReference('submission-'.++$i, $submission);
 

@@ -6,9 +6,9 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Raddit\AppBundle\Entity\Comment;
-use Raddit\AppBundle\Entity\CommentVote;
 use Raddit\AppBundle\Entity\Submission;
 use Raddit\AppBundle\Entity\User;
+use Raddit\AppBundle\Entity\Votable;
 
 class LoadExampleComments extends AbstractFixture implements DependentFixtureInterface {
     /**
@@ -34,15 +34,7 @@ class LoadExampleComments extends AbstractFixture implements DependentFixtureInt
             $comment->setBody($data['body']);
             $comment->setTimestamp($data['timestamp']);
             $comment->setIp($data['ip']);
-
-            $vote = new CommentVote();
-            $vote->setComment($comment);
-            $vote->setTimestamp($data['timestamp']);
-            $vote->setIp($data['ip']);
-            $vote->setUpvote(true);
-            $vote->setUser($user);
-
-            $comment->getVotes()->add($vote);
+            $comment->vote($user, $data['ip'], Votable::VOTE_UP);
 
             $this->addReference('comment-'.++$i, $comment);
 
