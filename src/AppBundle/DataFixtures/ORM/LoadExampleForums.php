@@ -6,7 +6,6 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Raddit\AppBundle\Entity\Forum;
-use Raddit\AppBundle\Entity\Moderator;
 use Raddit\AppBundle\Entity\User;
 
 class LoadExampleForums extends AbstractFixture implements DependentFixtureInterface {
@@ -26,13 +25,7 @@ class LoadExampleForums extends AbstractFixture implements DependentFixtureInter
             foreach ($data['moderators'] as $modData) {
                 /** @var User $user */
                 $user = $this->getReference('user-'.$modData['username']);
-
-                $moderator = new Moderator();
-                $moderator->setUser($user);
-                $moderator->setForum($forum);
-                $moderator->setTimestamp($modData['added']);
-
-                $forum->addModerator($moderator);
+                $forum->addUserAsModerator($user);
             }
 
             $this->addReference('forum-'.$data['name'], $forum);
@@ -48,10 +41,7 @@ class LoadExampleForums extends AbstractFixture implements DependentFixtureInter
             'name' => 'cats',
             'title' => 'Cat Memes',
             'sidebar' => 'le memes',
-            'moderators' => [
-                ['username' => 'emma', 'added' => new \DateTime('2017-04-20 19:17')],
-                ['username' => 'zach', 'added' => new \DateTime('2017-05-05 05:05')],
-            ],
+            'moderators' => ['emma', 'zach'],
             'created' => new \DateTime('2017-04-20 13:12'),
             'featured' => true,
         ];

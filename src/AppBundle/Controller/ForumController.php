@@ -4,7 +4,6 @@ namespace Raddit\AppBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Raddit\AppBundle\Entity\Forum;
-use Raddit\AppBundle\Entity\Moderator;
 use Raddit\AppBundle\Form\ForumAppearanceType;
 use Raddit\AppBundle\Form\ForumType;
 use Raddit\AppBundle\Form\ModeratorType;
@@ -62,10 +61,7 @@ final class ForumController extends Controller {
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $moderator = new Moderator();
-            $moderator->setUser($this->getUser());
-            $moderator->setForum($forum);
-            $forum->addModerator($moderator);
+            $forum->addUserAsModerator($this->getUser());
             $forum->subscribe($this->getUser());
 
             $em->persist($forum);
@@ -247,14 +243,12 @@ final class ForumController extends Controller {
      * @return Response
      */
     public function addModeratorAction(EntityManager $em, Forum $forum, Request $request) {
-        $moderator = new Moderator();
-        $moderator->setForum($forum);
-
-        $form = $this->createForm(ModeratorType::class, $moderator);
+        $form = $this->createForm(ModeratorType::class, []);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em->persist($moderator);
+            $forum->addUserAsModerator($form->getData()['user']);
+
             $em->flush();
 
             $this->addFlash('success', 'flash.forum_moderator_added');

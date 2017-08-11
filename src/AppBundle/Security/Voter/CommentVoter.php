@@ -82,7 +82,7 @@ final class CommentVoter extends Voter {
         $forum = $comment->getSubmission()->getForum();
 
         // moderators can delete threads with or without replies
-        if ($token->getUser()->isModeratorOfForum($forum)) {
+        if ($forum->userIsModerator($token->getUser())) {
             return true;
         }
 
@@ -110,7 +110,7 @@ final class CommentVoter extends Voter {
         $forum = $comment->getSubmission()->getForum();
 
         // moderators can soft-delete
-        return $token->getUser()->isModeratorOfForum($forum);
+        return $forum->userIsModerator($token->getUser());
     }
 
     /**
@@ -122,7 +122,7 @@ final class CommentVoter extends Voter {
     private function canEdit(Comment $comment, TokenInterface $token) {
         $forum = $comment->getSubmission()->getForum();
 
-        if ($token->getUser()->isModeratorOfForum($forum)) {
+        if ($forum->userIsModerator($token->getUser())) {
             return true;
         }
 

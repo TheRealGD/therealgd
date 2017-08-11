@@ -188,7 +188,6 @@ class User implements UserInterface, TwoFactorInterface {
 
     public function __construct() {
         $this->created = new \DateTime('@'.time());
-        $this->moderatorTokens = new ArrayCollection();
         $this->notifications = new ArrayCollection();
         $this->submissions = new ArrayCollection();
         $this->comments = new ArrayCollection();
@@ -359,20 +358,6 @@ class User implements UserInterface, TwoFactorInterface {
      */
     public function eraseCredentials() {
         $this->plainPassword = null;
-    }
-
-    /**
-     * Check if a user is a moderator on the given forum.
-     *
-     * @param Forum $forum
-     *
-     * @return bool
-     */
-    public function isModeratorOfForum(Forum $forum) {
-        $criteria = Criteria::create();
-        $criteria->where(Criteria::expr()->eq('forum', $forum));
-
-        return count($this->moderatorTokens->matching($criteria)) > 0;
     }
 
     /**

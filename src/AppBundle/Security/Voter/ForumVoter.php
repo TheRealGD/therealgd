@@ -53,7 +53,7 @@ final class ForumVoter extends Voter {
         /** @var User $user */
         $user = $token->getUser();
 
-        return $user->isModeratorOfForum($forum);
+        return $forum->userIsModerator($user);
     }
 
     /**

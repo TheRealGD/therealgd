@@ -229,7 +229,7 @@ class Forum {
      * @return Pagerfanta|Moderator[]
      */
     public function getPaginatedModerators(int $page, int $maxPerPage = 25) {
-        $criteria = Criteria::create()->orderBy(['timestamp' => 'DESC']);
+        $criteria = Criteria::create()->orderBy(['timestamp' => 'ASC']);
 
         $moderators = new Pagerfanta(new DoctrineSelectableAdapter($this->moderators, $criteria));
         $moderators->setMaxPerPage($maxPerPage);
@@ -238,25 +238,16 @@ class Forum {
         return $moderators;
     }
 
-    /**
-     * @param Moderator|Moderator[]|\Traversable $moderator
-     */
-    public function addModerator($moderator) {
-        $moderators = is_iterable($moderator) ? $moderator : [$moderator];
+    public function userIsModerator(User $user): bool {
+        $criteria = Criteria::create()
+            ->where(Criteria::expr()->eq('user', $user));
 
-        foreach ($moderators as $item) {
-            $this->moderators->add($item);
-        }
+        return count($this->moderators->matching($criteria)) > 0;
     }
 
-    /**
-     * @param Moderator|Moderator[]|\Traversable $moderator
-     */
-    public function removeModerator($moderator) {
-        $moderators = is_iterable($moderator) ? $moderator : [$moderator];
-
-        foreach ($moderators as $item) {
-            $this->moderators->removeElement($item);
+    public function addUserAsModerator(User $user) {
+        if (!$this->userIsModerator($user)) {
+            $this->moderators->add(new Moderator($this, $user));
         }
     }
 

@@ -3,22 +3,24 @@
 namespace Raddit\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Ramsey\Uuid\Uuid;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="moderators")
+ * @ORM\Table(name="moderators", uniqueConstraints={
+ *     @ORM\UniqueConstraint(name="moderator_forum_user_idx", columns={"forum_id", "user_id"})
+ * })
  *
  * @UniqueEntity(fields={"forum", "user"}, errorPath="user")
  */
 class Moderator {
     /**
-     * @ORM\Column(type="bigint")
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="uuid")
      * @ORM\Id()
      *
-     * @var int
+     * @var Uuid
      */
     private $id;
 
@@ -47,14 +49,14 @@ class Moderator {
      */
     private $timestamp;
 
-    public function __construct() {
-        $this->timestamp = new \DateTime();
+    public function __construct(Forum $forum, User $user) {
+        $this->id = Uuid::uuid4();
+        $this->forum = $forum;
+        $this->user = $user;
+        $this->timestamp = new \DateTime('@'.time());
     }
 
-    /**
-     * @return int
-     */
-    public function getId() {
+    public function getId(): Uuid {
         return $this->id;
     }
 
@@ -66,13 +68,6 @@ class Moderator {
     }
 
     /**
-     * @param Forum $forum
-     */
-    public function setForum($forum) {
-        $this->forum = $forum;
-    }
-
-    /**
      * @return User
      */
     public function getUser() {
@@ -80,23 +75,9 @@ class Moderator {
     }
 
     /**
-     * @param User $user
-     */
-    public function setUser($user) {
-        $this->user = $user;
-    }
-
-    /**
      * @return \DateTime
      */
     public function getTimestamp(): \DateTime {
         return $this->timestamp;
-    }
-
-    /**
-     * @param \DateTime $timestamp
-     */
-    public function setTimestamp(\DateTime $timestamp) {
-        $this->timestamp = $timestamp;
     }
 }

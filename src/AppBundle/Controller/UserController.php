@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Raddit\AppBundle\Entity\User;
 use Raddit\AppBundle\Form\UserSettingsType;
 use Raddit\AppBundle\Form\UserType;
+use Raddit\AppBundle\Repository\ForumRepository;
 use Raddit\AppBundle\Repository\NotificationRepository;
 use Raddit\AppBundle\Repository\UserRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;

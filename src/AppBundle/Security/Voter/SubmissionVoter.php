@@ -56,7 +56,7 @@ final class SubmissionVoter extends Voter {
             return true;
         }
 
-        if ($token->getUser()->isModeratorOfForum($submission->getForum())) {
+        if ($submission->getForum()->userIsModerator($token->getUser())) {
             return true;
         }
 
@@ -79,6 +79,6 @@ final class SubmissionVoter extends Voter {
             return true;
         }
 
-        return $token->getUser()->isModeratorOfForum($submission->getForum());
+        return $submission->getForum()->userIsModerator($token->getUser());
     }
 }

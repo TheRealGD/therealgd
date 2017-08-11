@@ -60,6 +60,6 @@ trait UserFlagTrait {
             return false;
         }
 
-        return $user->isModeratorOfForum($forum);
+        return $forum->userIsModerator($user);
     }
 }
