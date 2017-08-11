@@ -259,6 +259,8 @@ class Submission extends Votable {
         if (!$this->comments->contains($comment)) {
             $this->comments->add($comment);
         }
+
+        $this->updateRanking();
     }
 
     /**
