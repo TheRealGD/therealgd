@@ -182,6 +182,7 @@ raddit_app_password_reset:
     defaults: { _controller: RadditAppBundle:ResetPassword:reset }
     path: /reset_password/{id}/{expires}/{checksum}
     methods: [GET, POST]
+    requirements: { id: \d+, expires: \d+, checksum: '[0-9a-f]+' }
 
 raddit_app_inbox:
     defaults: { _controller: RadditAppBundle:User:inbox, page: 1 }

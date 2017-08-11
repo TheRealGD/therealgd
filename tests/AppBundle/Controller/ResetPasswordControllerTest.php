@@ -36,7 +36,7 @@ class ResetPasswordControllerTest extends WebTestCase {
         );
 
         $user = $client->getContainer()->get('doctrine')->getRepository(User::class)->findOneBy(['username' => 'emma']);
-        $expires = (new \DateTime('@'.time()))->modify('+24 hours')->format('c');
+        $expires = (new \DateTime('@'.time().' +24 hours'))->format('U');
 
         $resetUrl = $client->getContainer()->get('router')->generate('raddit_app_password_reset', [
             'id' => $user->getId(),

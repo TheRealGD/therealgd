@@ -61,6 +61,12 @@ services:
             - { name: doctrine.event_listener, event: postPersist }
             - { name: kernel.event_listener, event: kernel.terminate }
 
+    Raddit\AppBundle\Mailer\ResetPasswordMailer:
+        arguments:
+            $siteName: "%env(SITE_NAME)%"
+            $noReplyAddress: "%env(NO_REPLY_ADDRESS)%"
+            $salt: "%env(SECRET)%"
+
     Raddit\AppBundle\Repository\BanRepository:
         factory: ["@doctrine.orm.entity_manager", "getRepository"]
         arguments: [Raddit\AppBundle\Entity\Ban]

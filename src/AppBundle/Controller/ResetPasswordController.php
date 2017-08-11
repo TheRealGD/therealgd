@@ -6,20 +6,22 @@ use Doctrine\ORM\EntityManager;
 use Raddit\AppBundle\Entity\User;
 use Raddit\AppBundle\Form\RequestPasswordResetType;
 use Raddit\AppBundle\Form\UserType;
+use Raddit\AppBundle\Mailer\ResetPasswordMailer;
 use Raddit\AppBundle\Repository\UserRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 final class ResetPasswordController extends Controller {
     /**
-     * @param Request        $request
-     * @param UserRepository $ur
+     * @param Request             $request
+     * @param UserRepository      $ur
+     * @param ResetPasswordMailer $mailer
      *
      * @return Response
      */
-    public function requestResetAction(Request $request, UserRepository $ur) {
+    public function requestResetAction(Request $request, UserRepository $ur, ResetPasswordMailer $mailer) {
         if (!$this->getParameter('env(NO_REPLY_ADDRESS)')) {
             throw $this->createNotFoundException();
         }
@@ -31,8 +33,9 @@ final class ResetPasswordController extends Controller {
             $email = $form->getData()->getEmail();
 
             // TODO - this is susceptible to timing attacks.
+            // TODO - send only one email with all the links.
             foreach ($ur->lookUpByEmail($email) as $user) {
-                $this->sendPasswordResetEmail($user, $request);
+                $mailer->mail($user, $request);
             }
 
             $this->addFlash('success', 'flash.reset_password_email_sent');
@@ -46,22 +49,26 @@ final class ResetPasswordController extends Controller {
     }
 
     /**
-     * @param Request       $request
-     * @param EntityManager $em
-     * @param User          $user
-     * @param string        $expires
-     * @param string        $checksum
+     * @ParamConverter("expires", options={"format": "U"})
+     *
+     * @param Request             $request
+     * @param EntityManager       $em
+     * @param User                $user
+     * @param ResetPasswordMailer $mailer
+     * @param \DateTime           $expires
+     * @param string              $checksum
      *
      * @return Response
      */
-    public function resetAction(Request $request, EntityManager $em, User $user, $expires, $checksum) {
-        $newChecksum = $this->createChecksum($user, $expires);
-
-        if (!hash_equals($checksum, $newChecksum)) {
+    public function resetAction(
+        Request $request, EntityManager $em, User $user,
+        ResetPasswordMailer $mailer, \DateTime $expires, string $checksum
+    ) {
+        if (!$mailer->validateChecksum($checksum, $user, $expires)) {
             throw $this->createNotFoundException('Invalid checksum');
         }
 
-        if (new \DateTime('@'.time()) > new \DateTime($expires)) {
+        if (new \DateTime('@'.time()) > $expires) {
             throw $this->createNotFoundException('The link has expired');
         }
 
@@ -84,56 +91,5 @@ final class ResetPasswordController extends Controller {
         return $this->render('@RadditApp/reset_password.html.twig', [
             'form' => $form->createView(),
         ]);
-    }
-
-    /**
-     * @param User    $user
-     * @param Request $request
-     */
-    private function sendPasswordResetEmail(User $user, Request $request) {
-        $expires = (new \DateTime('@'.time()))->modify('+24 hours')->format('c');
-        $translator = $this->get('translator');
-
-        $siteName = $this->getParameter('env(SITE_NAME)');
-        $noReplyAddress = $this->getParameter('env(NO_REPLY_ADDRESS)');
-
-        $message = (new \Swift_Message())
-            ->setFrom([$noReplyAddress => $siteName])
-            ->setTo([$user->getEmail() => $user->getUsername()])
-            ->setSubject($translator->trans('reset_password.email_subject', [
-                '%site_name%' => $siteName,
-                '%username%' => $user->getUsername(),
-            ]))
-            ->setBody($translator->trans('reset_password.email_body', [
-                '%reset_link%' => $this->generateUrl('raddit_app_password_reset', [
-                    'expires' => $expires,
-                    'id' => $user->getId(),
-                    'checksum' => $this->createChecksum($user, $expires),
-                ], UrlGeneratorInterface::ABSOLUTE_URL),
-                '%site_name%' => $siteName,
-            ]));
-
-        $message->getHeaders()->addTextHeader(
-            'X-Originating-IP',
-            '['.implode(', ', $request->getClientIps()).']'
-        );
-
-        $this->get('mailer')->send($message);
-    }
-
-    /**
-     * @param User   $user
-     * @param string $expires
-     *
-     * @return string
-     */
-    private function createChecksum(User $user, $expires) {
-        $message = sprintf('%s~%s~%s',
-            $user->getId(),
-            $user->getPassword(),
-            $expires
-        );
-
-        return hash_hmac('sha256', $message, $this->getParameter('env(SECRET)'));
     }
 }
