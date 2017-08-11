@@ -136,6 +136,8 @@ class Comment extends Votable {
         $comment->parent = $parent;
         $comment->vote($user, null, self::VOTE_UP);
 
+        $submission->addComment($comment);
+
         return $comment;
     }
 

@@ -16,22 +16,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @RateLimit(period="1 hour", max="3", groups={"untrusted_user_create"})
  */
 class Submission extends Votable {
-    /**
-     * Amount to multiply the net score with.
-     *
-     * @todo This should be calculated based on recent site activity.
-     *
-     * @var int
-     */
-    const MULTIPLIER = 1800;
-
-    /**
-     * The time in seconds during which an older post can have a higher rank
-     * than a newer one.
-     *
-     * @var int
-     */
-    const MAX_VISIBILITY = 28800;
+    const NETSCORE_MULTIPLIER = 1800;
+    const COMMENT_MULTIPLIER = 5000;
+    const MAX_ADVANTAGE = 86400;
+    const MAX_PENALTY = 10000;
 
     /**
      * @ORM\Column(type="bigint")
@@ -267,6 +255,12 @@ class Submission extends Votable {
         return $comments;
     }
 
+    public function addComment(Comment $comment) {
+        if (!$this->comments->contains($comment)) {
+            $this->comments->add($comment);
+        }
+    }
+
     /**
      * @return \DateTime
      */
@@ -382,10 +376,12 @@ class Submission extends Votable {
     }
 
     public function updateRanking() {
-        $unixTime = $this->getTimestamp()->getTimestamp();
-        $advantage = max(min(self::MULTIPLIER * $this->getNetScore(), self::MAX_VISIBILITY), 0);
+        $netScoreAdvantage = $this->getNetScore() * self::NETSCORE_MULTIPLIER;
+        $commentAdvantage = count($this->comments) * self::COMMENT_MULTIPLIER;
 
-        $this->ranking = $unixTime + $advantage;
+        $advantage = max(min($netScoreAdvantage + $commentAdvantage, self::MAX_ADVANTAGE), -self::MAX_PENALTY);
+
+        $this->ranking = $this->getTimestamp()->getTimestamp() + $advantage;
     }
 
     /**
