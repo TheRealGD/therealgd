@@ -24,7 +24,7 @@
 
       {% if is_granted('ROLE_USER') %}
         {% from '@RadditApp/macros/forum_macros.html.twig' import subscribe_button %}
-        {% set subscribed = app.user.subscriptionByForum(forum) is not null %}
+        {% set subscribed = forum.subscribed(app.user) %}
         <form action="{{ path(subscribed ? 'raddit_app_unsubscribe' : 'raddit_app_subscribe', {id: forum.id}) }}" method="POST" class="form">
           <input type="hidden" name="token" value="{{ csrf_token('subscribe') }}">
 

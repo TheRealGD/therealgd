@@ -4,9 +4,7 @@ namespace Raddit\AppBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Raddit\AppBundle\Entity\Forum;
-use Raddit\AppBundle\Entity\ForumSubscription;
 use Raddit\AppBundle\Entity\Moderator;
-use Raddit\AppBundle\Entity\User;
 use Raddit\AppBundle\Form\ForumAppearanceType;
 use Raddit\AppBundle\Form\ForumType;
 use Raddit\AppBundle\Form\ModeratorType;
@@ -68,11 +66,7 @@ final class ForumController extends Controller {
             $moderator->setUser($this->getUser());
             $moderator->setForum($forum);
             $forum->addModerator($moderator);
-
-            $subscription = new ForumSubscription();
-            $subscription->setForum($forum);
-            $subscription->setUser($this->getUser());
-            $forum->getSubscriptions()->add($subscription);
+            $forum->subscribe($this->getUser());
 
             $em->persist($forum);
             $em->flush();
@@ -168,25 +162,11 @@ final class ForumController extends Controller {
             throw $this->createAccessDeniedException();
         }
 
-        /** @var User $user */
-        $user = $this->getUser();
-
-        switch ($action) {
-        case 'subscribe':
-            if (!$user->getSubscriptionByForum($forum)) {
-                $user->addForumSubscription($forum);
-            }
-
-            break;
-        case 'unsubscribe':
-            $subscription = $user->getSubscriptionByForum($forum);
-
-            if ($subscription) {
-                $em->remove($subscription);
-            }
-
-            break;
-        default:
+        if ($action === 'subscribe') {
+            $forum->subscribe($this->getUser());
+        } elseif ($action === 'unsubscribe') {
+            $forum->unsubscribe($this->getUser());
+        } else {
             throw new \InvalidArgumentException('$action must be subscribe or unsubscribe');
         }
 

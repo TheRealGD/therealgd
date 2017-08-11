@@ -102,7 +102,8 @@ class Forum {
     private $created;
 
     /**
-     * @ORM\OneToMany(targetEntity="ForumSubscription", mappedBy="forum", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="ForumSubscription", mappedBy="forum",
+     *     cascade={"persist", "remove"}, orphanRemoval=true, fetch="EXTRA_LAZY")
      *
      * @var ForumSubscription[]|Collection|Selectable
      */
@@ -285,6 +286,28 @@ class Forum {
      */
     public function getSubscriptions() {
         return $this->subscriptions;
+    }
+
+    public function isSubscribed(User $user) {
+        $criteria = Criteria::create()
+            ->where(Criteria::expr()->eq('user', $user));
+
+        return count($this->subscriptions->matching($criteria)) > 0;
+    }
+
+    public function subscribe(User $user) {
+        if (!$this->isSubscribed($user)) {
+            $this->subscriptions->add(new ForumSubscription($user, $this));
+        }
+    }
+
+    public function unsubscribe(User $user) {
+        $criteria = Criteria::create()
+            ->where(Criteria::expr()->eq('user', $user));
+
+        $subscription = $this->subscriptions->matching($criteria)->first();
+
+        $this->subscriptions->removeElement($subscription);
     }
 
     /**

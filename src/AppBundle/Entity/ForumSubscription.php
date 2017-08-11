@@ -3,6 +3,7 @@
 namespace Raddit\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Ramsey\Uuid\Uuid;
 
 /**
  * @ORM\Entity()
@@ -12,17 +13,16 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class ForumSubscription {
     /**
-     * @ORM\Column(type="bigint")
-     * @ORM\GeneratedValue()
+     * @ORM\Column(type="uuid")
      * @ORM\Id()
      *
-     * @var int
+     * @var Uuid
      */
     private $id;
 
     /**
      * @ORM\JoinColumn(name="user_id", nullable=false)
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="subscriptions")
+     * @ORM\ManyToOne(targetEntity="User")
      *
      * @var User
      */
@@ -43,56 +43,26 @@ class ForumSubscription {
      */
     private $subscribedAt;
 
-    public function __construct() {
+    public function __construct(User $user, Forum $forum) {
+        $this->id = Uuid::uuid4();
+        $this->user = $user;
+        $this->forum = $forum;
         $this->subscribedAt = new \DateTime('@'.time());
     }
 
-    /**
-     * @return int|null
-     */
-    public function getId() {
+    public function getId(): Uuid {
         return $this->id;
     }
 
-    /**
-     * @return User|null
-     */
-    public function getUser() {
+    public function getUser(): User {
         return $this->user;
     }
 
-    /**
-     * @param User $user
-     */
-    public function setUser(User $user) {
-        $this->user = $user;
-    }
-
-    /**
-     * @return Forum|null
-     */
-    public function getForum() {
+    public function getForum(): Forum {
         return $this->forum;
     }
 
-    /**
-     * @param Forum $forum
-     */
-    public function setForum(Forum $forum) {
-        $this->forum = $forum;
-    }
-
-    /**
-     * @return \DateTime
-     */
     public function getSubscribedAt(): \DateTime {
         return $this->subscribedAt;
-    }
-
-    /**
-     * @param \DateTime $subscribedAt
-     */
-    public function setSubscribedAt(\DateTime $subscribedAt) {
-        $this->subscribedAt = $subscribedAt;
     }
 }

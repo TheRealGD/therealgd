@@ -56,9 +56,10 @@ doctrine:
         charset:  UTF8
         types:
             inet: Doctrine\DBAL\PostgresTypes\InetType
+            uuid: Ramsey\Uuid\Doctrine\UuidType
         mapping_types:
             inet: inet
-
+            uuid: uuid
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         naming_strategy: doctrine.orm.naming_strategy.underscore
