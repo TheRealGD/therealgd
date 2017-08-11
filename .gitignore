@@ -20,6 +20,7 @@ tags
 !var/sessions/.gitkeep
 !var/SymfonyRequirements.php
 /vendor/
+/web/maintenance.php
 /web/build/
 /web/bundles/
 /web/media/

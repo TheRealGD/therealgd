@@ -2,6 +2,9 @@
 
 use Symfony\Component\HttpFoundation\Request;
 
+/* @noinspection PhpIncludeInspection */
+@include __DIR__.'/maintenance.php';
+
 require __DIR__.'/../vendor/autoload.php';
 
 $kernel = new AppKernel('prod', false);
