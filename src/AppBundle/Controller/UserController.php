@@ -4,9 +4,9 @@ namespace Raddit\AppBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Raddit\AppBundle\Entity\User;
+use Raddit\AppBundle\Form\Model\UserSettings;
 use Raddit\AppBundle\Form\UserSettingsType;
 use Raddit\AppBundle\Form\UserType;
-use Raddit\AppBundle\Repository\ForumRepository;
 use Raddit\AppBundle\Repository\NotificationRepository;
 use Raddit\AppBundle\Repository\UserRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -154,19 +154,18 @@ final class UserController extends Controller {
      * @return Response
      */
     public function userSettingsAction(EntityManager $em, User $subject, Request $request) {
-        $form = $this->createForm(UserSettingsType::class, $subject);
+        $userSettings = UserSettings::fromUser($subject);
+
+        $form = $this->createForm(UserSettingsType::class, $userSettings);
         $form->handleRequest($request);
 
-        try {
-            if ($form->isSubmitted() && $form->isValid()) {
-                $em->flush();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $userSettings->updateUser($subject);
+            $em->flush();
 
-                $this->addFlash('success', 'flash.user_settings_updated');
+            $this->addFlash('success', 'flash.user_settings_updated');
 
-                return $this->redirect($request->getUri());
-            }
-        } finally {
-            $em->refresh($subject);
+            return $this->redirect($request->getUri());
         }
 
         return $this->render('@RadditApp/user_settings.html.twig', [
