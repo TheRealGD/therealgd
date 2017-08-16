@@ -84,6 +84,16 @@ final class FrontController extends Controller {
         ]);
     }
 
+    public function featuredFeedAction(ForumRepository $fr, SubmissionRepository $sr, string $sortBy, int $page = 1) {
+        $forums = $fr->findFeaturedForumNames();
+        $submissions = $sr->findFrontPageSubmissions($forums, $sortBy, $page);
+
+        return $this->render('@RadditApp/featured.xml.twig', [
+            'forums' => $forums,
+            'submissions' => $submissions,
+        ]);
+    }
+
     /**
      * Show from forums the user moderates.
      *

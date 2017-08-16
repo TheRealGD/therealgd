@@ -305,6 +305,7 @@ title:
     editing_submission: Editing submission %title%
     log_in: Log in
     sign_up: Sign up
+    submissions_in_featured_forums: Submissions in featured forums
 
 two_factor:
     explanation: To complete the login, you must enter the verification code sent by email to %email%.

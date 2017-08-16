@@ -15,6 +15,8 @@
   <meta property="og:url" content="{{ url('raddit_app_front') }}">
   <meta property="og:image" content="{{ absolute_url(asset('apple-touch-icon-precomposed.png')) }}">
 
+  <link rel="alternate" type="application/atom+xml" href="{{ path('raddit_app_featured_feed') }}" title="{{ 'title.submissions_in_featured_forums'|trans }}">
+
   {% include '@RadditApp/includes/meta_pagination.html.twig' with {pager: submissions} %}
 {% endblock %}
 
