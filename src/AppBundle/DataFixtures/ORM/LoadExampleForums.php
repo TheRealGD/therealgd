@@ -22,9 +22,9 @@ class LoadExampleForums extends AbstractFixture implements DependentFixtureInter
             $forum->setCreated($data['created']);
             $forum->setFeatured($data['featured']);
 
-            foreach ($data['moderators'] as $modData) {
+            foreach ($data['moderators'] as $username) {
                 /** @var User $user */
-                $user = $this->getReference('user-'.$modData['username']);
+                $user = $this->getReference('user-'.$username);
                 $forum->addUserAsModerator($user);
             }
 
@@ -50,9 +50,7 @@ class LoadExampleForums extends AbstractFixture implements DependentFixtureInter
             'name' => 'news',
             'title' => 'News',
             'sidebar' => "Discussion of current events\n\n### Rules\n\n* rulez go here",
-            'moderators' => [
-                ['username' => 'zach', 'added' => new \DateTime('2017-01-02 00:01')],
-            ],
+            'moderators' => ['zach'],
             'created' => new \DateTime('2017-01-01 00:00'),
             'featured' => false,
         ];
