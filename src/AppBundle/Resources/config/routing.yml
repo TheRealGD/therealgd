@@ -165,7 +165,7 @@ raddit_app_edit_theme:
 
 raddit_app_stylesheet:
     defaults: { _controller: RadditAppBundle:Theme:stylesheet, _format: css }
-    path: /user_style/{field}/{id}.css
+    path: /user_style/{field}/{id}.{unixTime}.css
     methods: [GET]
     requirements: { field: common|day|night, id: "%uuid_regex%" }
 

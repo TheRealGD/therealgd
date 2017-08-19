@@ -86,8 +86,20 @@ class ThemeData {
 
     public function updateTheme(Theme $theme) {
         $theme->setName($this->name);
-        $theme->setCss($this->commonCss, $this->dayCss, $this->nightCss);
-        $theme->setAppendToDefaultStyle($this->appendToDefaultStyle);
+
+        if (
+            $this->commonCss !== $theme->getCommonCss() ||
+            $this->dayCss !== $theme->getDayCss() ||
+            $this->nightCss !== $theme->getNightCss()
+        ) {
+            $theme->setCss($this->commonCss, $this->dayCss, $this->nightCss);
+            $theme->updateLastModified();
+        }
+
+        if ($this->appendToDefaultStyle !== $theme->appendToDefaultStyle()) {
+            $theme->setAppendToDefaultStyle($this->appendToDefaultStyle);
+            $theme->updateLastModified();
+        }
     }
 
     /**

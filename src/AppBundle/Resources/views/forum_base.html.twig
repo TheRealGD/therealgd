@@ -10,13 +10,16 @@
     {% endif %}
 
     {% if theme is not null %}
-      <link rel="stylesheet" href="{{ path('raddit_app_stylesheet', {id: theme.id, field: 'common'}) }}">
-
-      {% if not night_mode %}
-        <link rel="stylesheet" href="{{ path('raddit_app_stylesheet', {id: theme.id, field: 'day'}) }}">
-      {% else %}
-        <link rel="stylesheet" href="{{ path('raddit_app_stylesheet', {id: theme.id, field: 'night'}) }}">
-      {% endif %}
+      <link rel="stylesheet" href="{{ path('raddit_app_stylesheet', {
+        id: theme.id,
+        field: 'common',
+        unixTime: theme.lastModified|date('U'),
+      }) }}">
+      <link rel="stylesheet" href="{{ path('raddit_app_stylesheet', {
+        id: theme.id,
+        field: night_mode ? 'night' : 'day',
+        unixTime: theme.lastModified|date('U'),
+      }) }}">
     {% endif %}
   {% else %}
     {{ parent() }}

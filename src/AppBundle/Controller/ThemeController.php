@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ThemeController extends Controller {
     /**
@@ -94,13 +95,19 @@ class ThemeController extends Controller {
      * @param Request $request
      * @param Theme   $theme
      * @param string  $field
+     * @param int     $unixTime
      *
      * @return Response
      */
-    public function stylesheetAction(Request $request, Theme $theme, string $field) {
+    public function stylesheetAction(Request $request, Theme $theme, string $field, int $unixTime) {
+        if ($theme->getLastModified()->getTimestamp() !== $unixTime) {
+            throw new NotFoundHttpException();
+        }
+
         $response = new Response();
         $response->setPublic();
         $response->setLastModified($theme->getLastModified());
+        $response->setExpires(new \DateTime('@'.time().' +2 weeks'));
 
         if ($response->isNotModified($request)) {
             return $response;
