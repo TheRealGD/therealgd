@@ -8,6 +8,10 @@ action:
     downvote: Downvote
     retract_upvote: Retract upvote
     retract_downvote: Retract downvote
+    edit: Edit
+    create_theme: Create theme
+    edit_theme: Edit theme
+    new_theme: New theme
 
 add_moderator:
     title: Add moderator to %forum%
@@ -85,8 +89,8 @@ flash:
     forum_moderator_added: The user has been promoted to moderator.
     inbox_cleared: The inbox was cleared.
     reset_password_email_sent: A reset email has been sent to the address you specified.
-    stylesheet_created: Your stylesheet has been created.
-    stylesheet_updated: The stylesheet has been updated.
+    theme_created: Your theme has been created.
+    theme_updated: The theme has been updated.
     submission_edited: The submission was edited.
     submission_deleted: The submission was deleted.
     user_account_registered: Your account has been registered.
@@ -149,6 +153,7 @@ heading:
 help:
     delete_forum_warning: All content on this forum will be irreversibly deleted!
     forum_description: A short description of the forum. Search engines will present this description in their results.
+    append_to_default_style: Leave this checked unless your CSS provides a complete stylesheet for the entire site.
 
 inbox:
     title: Inbox
@@ -157,10 +162,15 @@ inbox:
     message_reply_head: 'Re: %title%'
 
 label:
+    name: Name
+    author: Author
     password: Password
     confirm: Confirm
     theme: Theme
-    night_theme: Theme (night mode)
+    common_css: Common CSS
+    day_css: Daytime CSS
+    night_css: Night CSS
+    append_to_default_style: Append to default style
     save_settings: Save settings
     source_code: Source code
     sidebar: Sidebar
@@ -249,21 +259,6 @@ reset_password:
 site_footer:
     version: Running %app% %version% (%branch%). Made with ☭.
 
-stylesheets:
-    name: Name
-    css: CSS
-    author: Author
-    edit: Edit
-    append_to_default_style: Append to default style
-    append_to_default_style_description: Leave this checked unless your CSS provides a complete stylesheet for the entire site.
-    night_friendly: Night friendly
-    create_stylesheet: Create stylesheet
-    edit_stylesheet: Edit stylesheet
-    new_stylesheet: New stylesheet
-    list_title: Custom stylesheets
-    create_title: Creating a stylesheet
-    edit_title: Editing stylesheet %name%
-
 submission_form:
     title: Title
     url: URL
@@ -306,6 +301,9 @@ title:
     log_in: Log in
     sign_up: Sign up
     submissions_in_featured_forums: Submissions in featured forums
+    new_theme: New theme
+    editing_theme: Editing theme %name%
+    custom_themes: Custom themes
 
 two_factor:
     explanation: To complete the login, you must enter the verification code sent by email to %email%.

@@ -1,0 +1,24 @@
+{{ form_start(form) }}
+  {{ form_row(form.name) }}
+
+  {{ form_row(form.commonCss, { attr: { rows: 12 } }) }}
+
+  {{ form_row(form.dayCss, { attr: { rows: 12 } }) }}
+
+  {{ form_row(form.nightCss, { attr: { rows: 12 } }) }}
+
+  <div class="form__row">
+    {{ form_label(form.appendToDefaultStyle) }}
+    {{ form_errors(form.appendToDefaultStyle) }}
+    {{ form_widget(form.appendToDefaultStyle) }}
+    <div class="form__help">
+      <p>{{ 'help.append_to_default_style'|trans }}</p>
+    </div>
+  </div>
+
+  <div class="form__row">
+    <button class="button">
+      {{ editing ? 'action.edit_theme'|trans : 'action.create_theme'|trans }}
+    </button>
+  </div>
+{{ form_end(form) }}

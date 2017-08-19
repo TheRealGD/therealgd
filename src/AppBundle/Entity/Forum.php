@@ -124,18 +124,11 @@ class Forum {
     private $category;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Stylesheet")
+     * @ORM\ManyToOne(targetEntity="Theme")
      *
-     * @var Stylesheet|null
+     * @var Theme|null
      */
-    private $stylesheet;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Stylesheet")
-     *
-     * @var Stylesheet|null
-     */
-    private $nightStylesheet;
+    private $theme;
 
     public function __construct() {
         $this->created = new \DateTime('@'.time());
@@ -330,30 +323,16 @@ class Forum {
     }
 
     /**
-     * @return Stylesheet|null
+     * @return Theme|null
      */
-    public function getStylesheet() {
-        return $this->stylesheet;
+    public function getTheme() {
+        return $this->theme;
     }
 
     /**
-     * @param Stylesheet|null $stylesheet
+     * @param Theme|null $theme
      */
-    public function setStylesheet($stylesheet) {
-        $this->stylesheet = $stylesheet;
-    }
-
-    /**
-     * @return Stylesheet|null
-     */
-    public function getNightStylesheet() {
-        return $this->nightStylesheet;
-    }
-
-    /**
-     * @param Stylesheet|null $nightStylesheet
-     */
-    public function setNightStylesheet($nightStylesheet) {
-        $this->nightStylesheet = $nightStylesheet;
+    public function setTheme($theme) {
+        $this->theme = $theme;
     }
 }

@@ -3,6 +3,7 @@ action:
     downvote: Κατοψηφίσει
     retract_upvote: Ανακαλέστε ψήφο
     retract_downvote: Ανακαλέστε καταψήφο
+    edit: Επεξεργασία
 
 add_moderator:
     title: Προσθέστε τον συντονιστή στο %forum%
@@ -139,6 +140,7 @@ front:
 
 help:
     delete_forum_warning: Όλο το περιεχόμενο σε αυτό το φόρουμ θα διαγραφεί για πάντα!
+    append_to_default_style: Αφήστε αυτό το στοιχείο εκτός εάν το CSS σας παρέχει ένα πλήρες φύλλο στυλ για ολόκληρη την ιστοσελίδα.
 
 inbox:
     title: Inbox
@@ -147,12 +149,14 @@ inbox:
     message_reply_head: 'Re: %τίτλος%'
 
 label:
+    name: Ονομα
     password: Κωδικός πρόσβασης
     confirm: Επιβεβαιώνω
     theme: Στυλ
     night_theme: Στυλ νύχτας
     save_settings: Αποθήκευση ρυθμίσεων
     source_code: Κωδικός προγραμματισμού
+    append_to_default_style: Προσάρτηση στο προεπιλεγμένο στυλ
 
 login_form:
     log_in: Σύνδεση
@@ -233,19 +237,6 @@ site_footer:
     version: Λειτουργώντας %app% %version% (%branch%). Φτιαγμένο με ☭.
 
 stylesheets:
-    name: Ονομα
-    css: CSS
-    author: Συντάχθηκε από
-    edit: Επεξεργασία
-    append_to_default_style: Προσάρτηση στο προεπιλεγμένο στυλ
-    append_to_default_style_description: Αφήστε αυτό το στοιχείο εκτός εάν το CSS σας παρέχει ένα πλήρες φύλλο στυλ για ολόκληρη την ιστοσελίδα.
-    night_friendly: Φιλικό στη νυχτερινή λειτουργία
-    create_stylesheet: Δημιουργία φύλλου στυλ
-    edit_stylesheet: Επεξεργασία φύλλου στυλ
-    new_stylesheet: Νέο φύλλο στυλ
-    list_title: Προσαρμοσμένα φύλλα στυλ
-    create_title: Δημιουργία φύλλου στυλ
-    edit_title: Επεξεργασία φύλλου στυλ %name%
 
 submission_form:
     title: Τίτλος

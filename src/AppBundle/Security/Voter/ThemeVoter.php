@@ -2,12 +2,12 @@
 
 namespace Raddit\AppBundle\Security\Voter;
 
-use Raddit\AppBundle\Entity\Stylesheet;
+use Raddit\AppBundle\Entity\Theme;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
-class StylesheetVoter extends Voter {
+class ThemeVoter extends Voter {
     /**
      * @var AccessDecisionManagerInterface
      */
@@ -21,7 +21,7 @@ class StylesheetVoter extends Voter {
      * {@inheritdoc}
      */
     protected function supports($attribute, $subject) {
-        return $subject instanceof Stylesheet && $attribute === 'edit';
+        return $subject instanceof Theme && $attribute === 'edit';
     }
 
     /**
@@ -32,7 +32,7 @@ class StylesheetVoter extends Voter {
             return true;
         }
 
-        /** @var Stylesheet $subject */
+        /** @var Theme $subject */
         return $subject->getUser() === $token->getUser();
     }
 }

@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityRepository;
 use Eo\HoneypotBundle\Form\Type\HoneypotType;
 use Raddit\AppBundle\Entity\Forum;
 use Raddit\AppBundle\Entity\ForumCategory;
-use Raddit\AppBundle\Entity\Stylesheet;
+use Raddit\AppBundle\Entity\Theme;
 use Raddit\AppBundle\Form\Type\MarkdownType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;

@@ -87,13 +87,13 @@ services:
         factory: ["@doctrine.orm.entity_manager", "getRepository"]
         arguments: [Raddit\AppBundle\Entity\Notification]
 
-    Raddit\AppBundle\Repository\StylesheetRepository:
-        factory: ["@doctrine.orm.entity_manager", "getRepository"]
-        arguments: [Raddit\AppBundle\Entity\Stylesheet]
-
     Raddit\AppBundle\Repository\SubmissionRepository:
         factory: ["@doctrine.orm.entity_manager", "getRepository"]
         arguments: [Raddit\AppBundle\Entity\Submission]
+
+    Raddit\AppBundle\Repository\ThemeRepository:
+        factory: ["@doctrine.orm.entity_manager", "getRepository"]
+        arguments: [Raddit\AppBundle\Entity\Theme]
 
     Raddit\AppBundle\Repository\UserRepository:
         factory: ["@doctrine.orm.entity_manager", "getRepository"]

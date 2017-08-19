@@ -13,3 +13,4 @@
 'Embedded data is not allowed on line {{ line }}': 'Embedded data is not allowed on line {{ line }}'
 '@import syntax is not allowed on line {{ line }}': '@import syntax is not allowed on line {{ line }}'
 'You cannot post more. Wait a while before trying again.': 'You cannot post more. Wait a while before trying again.'
+'That name is already taken.': 'That name is already taken.'

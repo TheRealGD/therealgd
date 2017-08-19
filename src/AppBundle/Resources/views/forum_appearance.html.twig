@@ -12,15 +12,13 @@
   </h1>
 
   {{ form_start(form) }}
-    {{ form_row(form.theme) }}
-
-    {{ form_row(form.nightTheme) }}
+    {{ form_row(form.theme, {attr: {class: 'select2'}}) }}
 
     {# todo: some navigation widget thing #}
     <nav>
       <ul>
-        <li><a href="{{ path('raddit_app_stylesheets') }}">{{ 'nav.themes'|trans }}</a></li>
-        <li><a href="{{ path('raddit_app_create_stylesheet') }}">{{ 'nav.create_theme'|trans }}</a></li>
+        <li><a href="{{ path('raddit_app_themes') }}">{{ 'nav.themes'|trans }}</a></li>
+        <li><a href="{{ path('raddit_app_create_theme') }}">{{ 'nav.create_theme'|trans }}</a></li>
       </ul>
     </nav>
   {{ form_end(form) }}

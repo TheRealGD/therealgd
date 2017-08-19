@@ -1,0 +1,43 @@
+{% extends '@RadditApp/base.html.twig' %}
+
+{% block title 'title.custom_themes'|trans %}
+{% block page_classes 'theme-list-page' %}
+
+{% block head %}
+  {{ include('@RadditApp/includes/meta_pagination.html.twig', {pager: themes}, with_context=false) }}
+{% endblock %}
+
+{% block body %}
+  {% from '@RadditApp/macros/user_macros.html.twig' import user_link %}
+
+  <h1>{{ block('title') }}</h1>
+
+  <nav>
+    <p><a href="{{ path('raddit_app_create_theme') }}" class="button">{{ 'action.new_theme'|trans }}</a></p>
+  </nav>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>{{ 'label.name'|trans }}</th>
+        <th>{{ 'label.author'|trans }}</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for theme in themes %}
+        <tr>
+          <td>{{ theme.name }}</td>
+          <td><a href="{{ path('raddit_app_user', {username: theme.author.username}) }}">{{ user_link(theme.author) }}</a></td>
+          <td>
+            {% if is_granted('edit', theme) %}
+              <a href="{{ path('raddit_app_edit_theme', {id: theme.id}) }}" class="button button--inline">{{ 'action.edit_theme'|trans }}</a>
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {{ include('@RadditApp/includes/pagination.html.twig', {pager: themes}, with_context=false) }}
+{% endblock %}

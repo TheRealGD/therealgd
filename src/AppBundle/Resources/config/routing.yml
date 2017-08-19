@@ -146,26 +146,28 @@ raddit_app_unsubscribe:
     path: /unsub/{id}
     methods: [POST]
 
-raddit_app_stylesheets:
-    defaults: { _controller: RadditAppBundle:Stylesheet:list, page: 1 }
-    path: /stylesheets/{page}
+raddit_app_themes:
+    defaults: { _controller: RadditAppBundle:Theme:list, page: 1 }
+    path: /themes/{page}
     methods: [GET]
     requirements: { page: \d+ }
 
-raddit_app_create_stylesheet:
-    defaults: { _controller: RadditAppBundle:Stylesheet:create }
-    path: /create_stylesheet
+raddit_app_create_theme:
+    defaults: { _controller: RadditAppBundle:Theme:create }
+    path: /create_theme
     methods: [GET, POST]
 
-raddit_app_edit_stylesheet:
-    defaults: { _controller: RadditAppBundle:Stylesheet:edit }
-    path: /edit_stylesheet/{id}
+raddit_app_edit_theme:
+    defaults: { _controller: RadditAppBundle:Theme:edit }
+    path: /edit_theme/{id}
     methods: [GET, POST]
+    requirements: { id: "%uuid_regex%" }
 
-raddit_app_raw_stylesheet:
-    defaults: { _controller: RadditAppBundle:Stylesheet:raw, _format: css }
-    path: /user_style/{id}.css
+raddit_app_stylesheet:
+    defaults: { _controller: RadditAppBundle:Theme:stylesheet, _format: css }
+    path: /user_style/{field}/{id}.css
     methods: [GET]
+    requirements: { field: common|day|night, id: "%uuid_regex%" }
 
 raddit_app_fetch_title:
     defaults: { _controller: RadditAppBundle:Ajax:fetchTitle, _format: json }
