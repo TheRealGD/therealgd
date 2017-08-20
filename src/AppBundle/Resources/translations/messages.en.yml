@@ -12,6 +12,7 @@ action:
     create_theme: Create theme
     edit_theme: Edit theme
     new_theme: New theme
+    go_to_home_page: Go to home page
 
 add_moderator:
     title: Add moderator to %forum%

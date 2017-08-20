@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>{% block title '%s %s'|format(status_code, status_text) %}</title>
+    <style>
+      body {
+        background: #f8f8f8;
+        color: #444;
+        font-family: sans-serif;
+        margin: 2em;
+        text-align: center;
+      }
+
+      a {
+        color: #d00;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <p><img src="{{ asset('apple-touch-icon-precomposed.png') }}" width="128" height="128"></p>
+
+      <h1>{{ block('title') }}</h1>
+    </header>
+
+    {% block message '' %}
+
+    <nav>
+      <p><a href="{{ path('raddit_app_front') }}">{{ 'action.go_to_home_page'|trans }}</a></p>
+    </nav>
+  </body>
+</html>
