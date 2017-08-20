@@ -3,7 +3,7 @@
 use Symfony\Component\HttpFoundation\Request;
 
 /* @noinspection PhpIncludeInspection */
-@include __DIR__.'/maintenance.php';
+@include __DIR__.'/../var/maintenance.php';
 
 require __DIR__.'/../vendor/autoload.php';
 

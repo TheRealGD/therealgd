@@ -85,6 +85,6 @@ EOPHP;
     }
 
     private function getIncludeFilePath(): string {
-        return __DIR__.'/../../../web/maintenance.php';
+        return __DIR__.'/../../../var/maintenance.php';
     }
 }
