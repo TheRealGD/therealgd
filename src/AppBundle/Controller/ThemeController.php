@@ -7,6 +7,7 @@ use Raddit\AppBundle\Entity\Theme;
 use Raddit\AppBundle\Form\Model\ThemeData;
 use Raddit\AppBundle\Form\ThemeType;
 use Raddit\AppBundle\Repository\ThemeRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -92,18 +93,22 @@ class ThemeController extends Controller {
     /**
      * Deliver a raw stylesheet.
      *
-     * @param Request $request
-     * @param Theme   $theme
-     * @param string  $field
-     * @param int     $unixTime
+     * @ParamConverter("unixTime", options={"format": "U"})
+     * @ParamConverter("theme", options={"mapping": {"unixTime": "lastModified"}})
+     *
+     * @param Request   $request
+     * @param Theme     $theme
+     * @param string    $field
+     * @param \DateTime $unixTime
      *
      * @return Response
      */
-    public function stylesheetAction(Request $request, Theme $theme, string $field, int $unixTime) {
-        if ($theme->getLastModified()->getTimestamp() !== $unixTime) {
-            throw new NotFoundHttpException();
-        }
-
+    public function stylesheetAction(
+        Request $request,
+        Theme $theme,
+        string $field,
+        /* @noinspection PhpUnusedParameterInspection */ \DateTime $unixTime
+    ) {
         $response = new Response();
         $response->setPublic();
         $response->setLastModified($theme->getLastModified());
