@@ -34,8 +34,7 @@ final class AttachIpToEntityListener {
         if ((
             $entity instanceof Vote ||
             $entity instanceof Submission ||
-            $entity instanceof Comment ||
-            $entity instanceof Message
+            $entity instanceof Comment
         ) && $entity->getIp() === null) {
             $ip = $this->requestStack->getCurrentRequest()->getClientIp();
 

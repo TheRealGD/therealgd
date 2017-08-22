@@ -23,14 +23,14 @@ abstract class Message {
      * @ORM\JoinColumn(nullable=false)
      * @ORM\ManyToOne(targetEntity="User")
      *
-     * @var User|null
+     * @var User
      */
     private $sender;
 
     /**
      * @ORM\Column(type="text")
      *
-     * @var string|null
+     * @var string
      */
     private $body;
 
@@ -48,7 +48,21 @@ abstract class Message {
      */
     private $ip;
 
-    public function __construct() {
+    /**
+     * Message constructor.
+     *
+     * @param User        $sender
+     * @param string      $body
+     * @param string|null $ip
+     */
+    public function __construct(User $sender, string $body, $ip) {
+        if ($ip !== null && !filter_var($ip, FILTER_VALIDATE_IP)) {
+            throw new \InvalidArgumentException('$ip must be valid IP address or NULL');
+        }
+
+        $this->sender = $sender;
+        $this->body = $body;
+        $this->ip = $ip;
         $this->timestamp = new \DateTime('@'.time());
     }
 
@@ -59,46 +73,16 @@ abstract class Message {
         return $this->id;
     }
 
-    /**
-     * @return User|null
-     */
-    public function getSender() {
+    public function getSender(): User {
         return $this->sender;
     }
 
-    /**
-     * @param User|null $sender
-     */
-    public function setSender($sender) {
-        $this->sender = $sender;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getBody() {
+    public function getBody(): string {
         return $this->body;
     }
 
-    /**
-     * @param string|null $body
-     */
-    public function setBody($body) {
-        $this->body = $body;
-    }
-
-    /**
-     * @return \DateTime
-     */
     public function getTimestamp(): \DateTime {
         return $this->timestamp;
-    }
-
-    /**
-     * @param \DateTime $timestamp
-     */
-    public function setTimestamp(\DateTime $timestamp) {
-        $this->timestamp = $timestamp;
     }
 
     /**
@@ -106,13 +90,6 @@ abstract class Message {
      */
     public function getIp() {
         return $this->ip;
-    }
-
-    /**
-     * @param string|null $ip
-     */
-    public function setIp($ip) {
-        $this->ip = $ip;
     }
 
     /**

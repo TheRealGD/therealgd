@@ -16,7 +16,7 @@ class MessageThread extends Message {
      * @ORM\JoinColumn(nullable=false)
      * @ORM\ManyToOne(targetEntity="User")
      *
-     * @var User|null
+     * @var User
      */
     private $receiver;
 
@@ -38,36 +38,25 @@ class MessageThread extends Message {
     /**
      * @ORM\Column(type="text")
      *
-     * @var string|null
+     * @var string
      */
     private $title;
 
-    public function __construct() {
-        parent::__construct();
+    public function __construct(User $sender, string $body, $ip, User $receiver, string $title) {
+        parent::__construct($sender, $body, $ip);
 
-        $this->notifications = new ArrayCollection();
+        $this->receiver = $receiver;
         $this->replies = new ArrayCollection();
+        $this->notifications = new ArrayCollection();
+        $this->title = $title;
     }
 
-    public function createReply(): MessageReply {
-        $reply = new MessageReply();
-        $reply->setThread($this);
-
-        return $reply;
-    }
-
-    /**
-     * @return User|null
-     */
-    public function getReceiver() {
+    public function getReceiver(): User {
         return $this->receiver;
     }
 
-    /**
-     * @param User|null $receiver
-     */
-    public function setReceiver($receiver) {
-        $this->receiver = $receiver;
+    public function getTitle(): string {
+        return $this->title;
     }
 
     /**
@@ -84,17 +73,9 @@ class MessageThread extends Message {
         return $this->notifications;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getTitle() {
-        return $this->title;
-    }
-
-    /**
-     * @param string|null $title
-     */
-    public function setTitle($title) {
-        $this->title = $title;
+    public function addReply(MessageReply $reply) {
+        if (!$this->replies->contains($reply)) {
+            $this->replies->add($reply);
+        }
     }
 }

@@ -16,7 +16,7 @@ class MessageReply extends Message {
      * @ORM\JoinColumn(nullable=false)
      * @ORM\ManyToOne(targetEntity="MessageThread", inversedBy="replies")
      *
-     * @var MessageThread|null
+     * @var MessageThread
      */
     private $thread;
 
@@ -27,24 +27,15 @@ class MessageReply extends Message {
      */
     private $notifications;
 
-    public function __construct() {
-        parent::__construct();
+    public function __construct(User $sender, string $body, $ip, MessageThread $thread) {
+        parent::__construct($sender, $body, $ip);
 
+        $this->thread = $thread;
         $this->notifications = new ArrayCollection();
     }
 
-    /**
-     * @return MessageThread|null
-     */
-    public function getThread() {
+    public function getThread(): MessageThread {
         return $this->thread;
-    }
-
-    /**
-     * @param MessageThread|null $thread
-     */
-    public function setThread($thread) {
-        $this->thread = $thread;
     }
 
     /**

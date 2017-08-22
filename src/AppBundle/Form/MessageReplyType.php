@@ -2,7 +2,7 @@
 
 namespace Raddit\AppBundle\Form;
 
-use Raddit\AppBundle\Entity\MessageReply;
+use Raddit\AppBundle\Form\Model\MessageData;
 use Raddit\AppBundle\Form\Type\MarkdownType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -28,8 +28,9 @@ class MessageReplyType extends AbstractType {
      */
     public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults([
-            'data_class' => MessageReply::class,
+            'data_class' => MessageData::class,
             'label_format' => 'message_form.%name%',
+            'validation_groups' => ['reply'],
         ]);
     }
 }
