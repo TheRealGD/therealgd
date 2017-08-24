@@ -31,11 +31,10 @@ final class AttachIpToEntityListener {
     public function prePersist(LifecycleEventArgs $args) {
         $entity = $args->getEntity();
 
-        if ((
-            $entity instanceof Vote ||
-            $entity instanceof Submission ||
-            $entity instanceof Comment
-        ) && $entity->getIp() === null) {
+        if (
+            ($entity instanceof Vote || $entity instanceof Submission) &&
+            $entity->getIp() === null
+        ) {
             $ip = $this->requestStack->getCurrentRequest()->getClientIp();
 
             $entity->setIp($ip);

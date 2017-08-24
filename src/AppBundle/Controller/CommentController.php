@@ -7,6 +7,7 @@ use Raddit\AppBundle\Entity\Comment;
 use Raddit\AppBundle\Entity\Forum;
 use Raddit\AppBundle\Entity\Submission;
 use Raddit\AppBundle\Form\CommentType;
+use Raddit\AppBundle\Form\Model\CommentData;
 use Raddit\AppBundle\Repository\ForumRepository;
 use Raddit\AppBundle\Utils\Slugger;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -82,12 +83,16 @@ final class CommentController extends Controller {
         Request $request,
         Comment $comment = null
     ) {
-        $reply = Comment::create($submission, $this->getUser(), $comment);
+        $data = new CommentData();
 
-        $form = $this->createForm(CommentType::class, $reply);
+        $form = $this->createForm(CommentType::class, $data);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $user = $this->getUser();
+            $ip = $request->getClientIp();
+            $reply = $data->toComment($submission, $user, $comment, $ip);
+
             $em->persist($reply);
             $em->flush();
 
@@ -127,10 +132,14 @@ final class CommentController extends Controller {
         Comment $comment,
         Request $request
     ) {
-        $form = $this->createForm(CommentType::class, $comment);
+        $data = CommentData::createFromComment($comment);
+
+        $form = $this->createForm(CommentType::class, $data);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $data->updateComment($comment);
+
             $em->flush();
 
             return $this->redirectToRoute('raddit_app_comment', [

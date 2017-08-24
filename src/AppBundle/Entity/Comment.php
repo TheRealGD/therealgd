@@ -6,7 +6,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Selectable;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity()
@@ -24,10 +23,6 @@ class Comment extends Votable {
 
     /**
      * @ORM\Column(type="text")
-     *
-     * @Assert\NotBlank(message="The comment must not be empty.")
-     * @Assert\Regex("/[[:graph:]]/u", message="The comment must not be empty.")
-     * @Assert\Length(max=10000)
      *
      * @var string
      */
@@ -120,95 +115,61 @@ class Comment extends Votable {
      */
     private $userFlag = 0;
 
-    /**
-     * Creates a new comment with an implicit upvote from the comment author.
-     *
-     * @param Submission   $submission
-     * @param User         $user
-     * @param Comment|null $parent
-     *
-     * @return Comment
-     */
-    public static function create(Submission $submission, User $user, Comment $parent = null) {
-        $comment = new self();
-        $comment->user = $user;
-        $comment->submission = $submission;
-        $comment->parent = $parent;
-        $comment->vote($user, null, self::VOTE_UP);
+    public function __construct(
+        string $body,
+        User $user,
+        Submission $submission,
+        int $userFlag = UserFlags::FLAG_NONE,
+        Comment $parent = null,
+        $ip = null,
+        \DateTime $timestamp = null
+    ) {
+        if ($ip !== null && !filter_var($ip, FILTER_VALIDATE_IP)) {
+            throw new \InvalidArgumentException('Invalid IP address');
+        }
 
-        $submission->addComment($comment);
+        if ($parent) {
+            $this->parent = $parent;
+            $parent->children->add($this);
+        }
 
-        return $comment;
-    }
-
-    public function __construct() {
-        $this->timestamp = new \DateTime('@'.time());
+        $this->body = $body;
+        $this->setUserFlag($userFlag);
+        $this->user = $user;
+        $this->submission = $submission;
+        $this->ip = $ip;
+        $this->timestamp = $timestamp ?: new \DateTime('@'.time());
         $this->children = new ArrayCollection();
         $this->votes = new ArrayCollection();
         $this->notifications = new ArrayCollection();
+        $this->vote($user, $ip, Votable::VOTE_UP);
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getId() {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getBody() {
+    public function getBody(): string {
         return $this->body;
     }
 
-    /**
-     * @param string $body
-     */
-    public function setBody($body) {
+    public function setBody(string $body) {
         $this->body = $body;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getTimestamp() {
+    public function getTimestamp(): \DateTime {
         return $this->timestamp;
     }
 
-    /**
-     * @param \DateTime $timestamp
-     */
-    public function setTimestamp(\DateTime $timestamp) {
-        $this->timestamp = $timestamp;
-    }
-
-    /**
-     * @return User
-     */
-    public function getUser() {
+    public function getUser(): User {
         return $this->user;
     }
 
-    /**
-     * @param User $user
-     */
-    public function setUser($user) {
-        $this->user = $user;
-    }
-
-    /**
-     * @return Submission
-     */
-    public function getSubmission() {
+    public function getSubmission(): Submission {
         return $this->submission;
-    }
-
-    /**
-     * @param Submission $submission
-     */
-    public function setSubmission($submission) {
-        $this->submission = $submission;
     }
 
     /**
@@ -219,20 +180,11 @@ class Comment extends Votable {
     }
 
     /**
-     * @param Comment|null $parent
-     */
-    public function setParent($parent) {
-        $this->parent = $parent;
-    }
-
-    /**
      * Get replies, ordered by descending net score.
-     *
-     * Note: This method returns an actual array and not a {@link Collection}.
      *
      * @return Comment[]
      */
-    public function getChildren() {
+    public function getChildren(): array {
         $children = $this->children->toArray();
 
         if ($children) {
@@ -290,13 +242,6 @@ class Comment extends Votable {
     }
 
     /**
-     * @param string|null $ip
-     */
-    public function setIp($ip) {
-        $this->ip = $ip;
-    }
-
-    /**
      * @return Collection|Selectable|CommentNotification[]
      */
     public function getNotifications() {
@@ -317,30 +262,18 @@ class Comment extends Votable {
         $this->editedAt = $editedAt;
     }
 
-    /**
-     * @return bool
-     */
     public function isModerated(): bool {
         return $this->moderated;
     }
 
-    /**
-     * @param bool $moderated
-     */
     public function setModerated(bool $moderated) {
         $this->moderated = $moderated;
     }
 
-    /**
-     * @return int
-     */
     public function getUserFlag(): int {
         return $this->userFlag;
     }
 
-    /**
-     * @param int $userFlag
-     */
     public function setUserFlag(int $userFlag) {
         if (!in_array($userFlag, UserFlags::FLAGS, true)) {
             throw new \InvalidArgumentException('Bad flag');

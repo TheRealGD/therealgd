@@ -8,7 +8,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Raddit\AppBundle\Entity\Comment;
 use Raddit\AppBundle\Entity\Submission;
 use Raddit\AppBundle\Entity\User;
-use Raddit\AppBundle\Entity\Votable;
+use Raddit\AppBundle\Entity\UserFlags;
 
 class LoadExampleComments extends AbstractFixture implements DependentFixtureInterface {
     /**
@@ -27,14 +27,15 @@ class LoadExampleComments extends AbstractFixture implements DependentFixtureInt
             /** @var Comment|null $parent */
             $parent = $data['parent'] ? $this->getReference('comment-'.$data['parent']) : null;
 
-            $comment = new Comment();
-            $comment->setSubmission($submission);
-            $comment->setUser($user);
-            $comment->setParent($parent);
-            $comment->setBody($data['body']);
-            $comment->setTimestamp($data['timestamp']);
-            $comment->setIp($data['ip']);
-            $comment->vote($user, $data['ip'], Votable::VOTE_UP);
+            $comment = new Comment(
+                $data['body'],
+                $user,
+                $submission,
+                UserFlags::FLAG_NONE,
+                $parent,
+                $data['ip'],
+                $data['timestamp']
+            );
 
             $this->addReference('comment-'.++$i, $comment);
 
