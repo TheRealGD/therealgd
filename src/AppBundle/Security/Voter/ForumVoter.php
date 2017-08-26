@@ -9,7 +9,11 @@ use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 final class ForumVoter extends Voter {
-    const ATTRIBUTES = ['edit', 'delete'];
+    const ATTRIBUTES = [
+        'edit', // deprecated
+        'delete', // deprecated
+        'moderator',
+    ];
 
     /**
      * @var AccessDecisionManagerInterface
@@ -37,7 +41,8 @@ final class ForumVoter extends Voter {
 
         switch ($attribute) {
         case 'edit':
-            return $this->canEdit($subject, $token);
+        case 'moderator':
+            return $this->isModerator($subject, $token);
         case 'delete':
             return $this->canDelete($token);
         default:
@@ -45,7 +50,7 @@ final class ForumVoter extends Voter {
         }
     }
 
-    private function canEdit(Forum $forum, TokenInterface $token) {
+    private function isModerator(Forum $forum, TokenInterface $token) {
         if ($this->decisionManager->decide($token, ['ROLE_ADMIN'])) {
             return true;
         }

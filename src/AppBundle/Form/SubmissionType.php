@@ -5,7 +5,7 @@ namespace Raddit\AppBundle\Form;
 use Doctrine\ORM\EntityRepository;
 use Eo\HoneypotBundle\Form\Type\HoneypotType;
 use Raddit\AppBundle\Entity\Forum;
-use Raddit\AppBundle\Entity\Submission;
+use Raddit\AppBundle\Form\Model\SubmissionData;
 use Raddit\AppBundle\Form\Type\MarkdownType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -48,10 +48,10 @@ final class SubmissionType extends AbstractType {
             $builder->add('email', HoneypotType::class);
         }
 
-        /** @var Submission $submission */
-        $submission = $builder->getData();
-
-        $editing = $submission && $submission->getId() !== null;
+        /** @var SubmissionData $data */
+        $data = $builder->getData();
+        $editing = $data->getEntityId() !== null;
+        $forum = $data->getForum();
 
         $builder
             ->add('title', TextareaType::class)
@@ -60,7 +60,7 @@ final class SubmissionType extends AbstractType {
                 'required' => false,
             ]);
 
-        $this->addUserFlagOption($builder, $options);
+        $this->addUserFlagOption($builder, $forum);
 
         if (!$editing) {
             $builder->add('forum', EntityType::class, [
@@ -75,9 +75,7 @@ final class SubmissionType extends AbstractType {
             ]);
         }
 
-        $forum = $submission ? $submission->getForum() : null;
-
-        if ($forum && $this->authorizationChecker->isGranted('sticky', $submission)) {
+        if ($this->authorizationChecker->isGranted('moderator', $forum)) {
             $builder->add('sticky', CheckboxType::class, ['required' => false]);
         }
 
@@ -95,15 +93,17 @@ final class SubmissionType extends AbstractType {
      */
     public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults([
-            'data_class' => Submission::class,
-            'forum' => null,
+            'data_class' => SubmissionData::class,
             'label_format' => 'submission_form.%name%',
             'honeypot' => true,
             'validation_groups' => function (FormInterface $form) {
                 $groups = ['Default'];
                 $trusted = $this->authorizationChecker->isGranted('ROLE_TRUSTED_USER');
 
-                if ($form->getData() && $form->getData()->getId()) {
+                /** @noinspection PhpUndefinedMethodInspection */
+                if ($form->has('delete') && $form->get('delete')->isClicked()) {
+                    $groups[] = 'delete';
+                } elseif ($form->getData() && $form->getData()->getEntityId()) {
                     $groups[] = 'edit';
 
                     if (!$trusted) {
@@ -121,7 +121,6 @@ final class SubmissionType extends AbstractType {
             },
         ]);
 
-        $resolver->setAllowedTypes('forum', [Forum::class, 'null']);
         $resolver->setAllowedTypes('honeypot', ['bool']);
     }
 }

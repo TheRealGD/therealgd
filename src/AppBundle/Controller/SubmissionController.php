@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Raddit\AppBundle\Entity\Comment;
 use Raddit\AppBundle\Entity\Forum;
 use Raddit\AppBundle\Entity\Submission;
+use Raddit\AppBundle\Form\Model\SubmissionData;
 use Raddit\AppBundle\Form\SubmissionType;
 use Raddit\AppBundle\Utils\Slugger;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -72,12 +73,14 @@ final class SubmissionController extends Controller {
      * @return Response
      */
     public function submitAction(EntityManager $em, Request $request, Forum $forum = null) {
-        $submission = Submission::create($forum, $this->getUser());
+        $data = new SubmissionData($forum);
 
-        $form = $this->createForm(SubmissionType::class, $submission);
+        $form = $this->createForm(SubmissionType::class, $data);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $submission = $data->toSubmission($this->getUser(), $request->getClientIp());
+
             $em->persist($submission);
             $em->flush();
 
@@ -105,7 +108,9 @@ final class SubmissionController extends Controller {
      * @return Response
      */
     public function editSubmissionAction(EntityManager $em, Forum $forum, Submission $submission, Request $request) {
-        $form = $this->createForm(SubmissionType::class, $submission);
+        $data = SubmissionData::createFromSubmission($submission);
+
+        $form = $this->createForm(SubmissionType::class, $data);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -120,9 +125,11 @@ final class SubmissionController extends Controller {
                 ]);
             }
 
-            $this->addFlash('notice', 'flash.submission_edited');
+            $data->updateSubmission($submission);
 
             $em->flush();
+
+            $this->addFlash('notice', 'flash.submission_edited');
 
             return $this->redirectToRoute('raddit_app_comments', [
                 'forum_name' => $forum->getName(),

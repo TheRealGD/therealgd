@@ -46,7 +46,7 @@ final class CommentType extends AbstractType {
             'property_path' => 'body',
         ]);
 
-        $this->addUserFlagOption($builder, $options);
+        $this->addUserFlagOption($builder, $options['forum']);
 
         $builder->add('submit', SubmitType::class);
     }

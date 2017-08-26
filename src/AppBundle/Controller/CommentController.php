@@ -85,7 +85,7 @@ final class CommentController extends Controller {
     ) {
         $data = new CommentData();
 
-        $form = $this->createForm(CommentType::class, $data);
+        $form = $this->createForm(CommentType::class, $data, ['forum' => $forum]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -134,7 +134,7 @@ final class CommentController extends Controller {
     ) {
         $data = CommentData::createFromComment($comment);
 
-        $form = $this->createForm(CommentType::class, $data);
+        $form = $this->createForm(CommentType::class, $data, ['forum' => $forum]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

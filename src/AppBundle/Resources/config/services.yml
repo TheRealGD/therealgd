@@ -42,11 +42,6 @@ services:
         public: true
         tags: ['controller.service_arguments']
 
-    Raddit\AppBundle\EventListener\AttachIpToEntityListener:
-        arguments: ["@request_stack"]
-        tags:
-            - { name: doctrine.event_listener, event: prePersist }
-
     Raddit\AppBundle\EventListener\LocaleListener:
         tags:
             - { name: kernel.event_listener, event: kernel.request, priority: 15 }

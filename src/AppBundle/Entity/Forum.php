@@ -231,7 +231,11 @@ class Forum {
         return $moderators;
     }
 
-    public function userIsModerator(User $user): bool {
+    public function userIsModerator($user): bool {
+        if (!$user instanceof User) {
+            return false;
+        }
+
         $criteria = Criteria::create()
             ->where(Criteria::expr()->eq('user', $user));
 

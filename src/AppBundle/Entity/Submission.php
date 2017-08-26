@@ -6,14 +6,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
-use Raddit\AppBundle\Validator\Constraints\RateLimit;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="Raddit\AppBundle\Repository\SubmissionRepository")
  * @ORM\Table(name="submissions")
- *
- * @RateLimit(period="1 hour", max="3", groups={"untrusted_user_create"})
  */
 class Submission extends Votable {
     const NETSCORE_MULTIPLIER = 1800;
@@ -33,9 +29,6 @@ class Submission extends Votable {
     /**
      * @ORM\Column(type="text")
      *
-     * @Assert\NotBlank()
-     * @Assert\Length(max=300)
-     *
      * @var string
      */
     private $title;
@@ -43,19 +36,12 @@ class Submission extends Votable {
     /**
      * @ORM\Column(type="text", nullable=true)
      *
-     * @Assert\Length(max=2000, charset="8bit")
-     * @Assert\Url(protocols={"http", "https"})
-     *
-     * @see https://stackoverflow.com/questions/417142/
-     *
      * @var string
      */
     private $url;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     *
-     * @Assert\Length(max=25000)
      *
      * @var string
      */
@@ -79,8 +65,6 @@ class Submission extends Votable {
     /**
      * @ORM\JoinColumn(nullable=false)
      * @ORM\ManyToOne(targetEntity="Forum", inversedBy="submissions")
-     *
-     * @Assert\NotBlank()
      *
      * @var Forum
      */
@@ -149,34 +133,46 @@ class Submission extends Votable {
      *
      * @var int
      */
-    private $userFlag = 0;
+    private $userFlag;
 
     /**
-     * Creates a new submission with an implicit upvote from its creator.
-     *
-     * @param Forum $forum
-     * @param User  $user
-     *
-     * @return static
+     * @param string         $title
+     * @param string|null    $url
+     * @param string|null    $body
+     * @param Forum          $forum
+     * @param User           $user
+     * @param string|null    $ip
+     * @param bool           $sticky
+     * @param int            $userFlag
+     * @param \DateTime|null $timestamp
      */
-    public static function create(Forum $forum = null, User $user) {
-        $submission = new self();
-
-        if ($forum) {
-            $submission->setForum($forum);
+    public function __construct(
+        string $title,
+        $url,
+        $body,
+        Forum $forum,
+        User $user,
+        $ip,
+        bool $sticky = false,
+        int $userFlag = UserFlags::FLAG_NONE,
+        \DateTime $timestamp = null
+    ) {
+        if ($ip !== null && !filter_var($ip, FILTER_VALIDATE_IP)) {
+            throw new \InvalidArgumentException('Invalid IP address');
         }
 
-        $submission->setUser($user);
-        $submission->vote($user, null, self::VOTE_UP);
-
-        return $submission;
-    }
-
-    public function __construct() {
+        $this->title = $title;
+        $this->url = $url;
+        $this->body = $body;
+        $this->forum = $forum;
+        $this->user = $user;
+        $this->ip = $ip;
+        $this->sticky = $sticky;
+        $this->setUserFlag($userFlag);
+        $this->timestamp = $timestamp ?: new \DateTime('@'.time());
         $this->comments = new ArrayCollection();
-        $this->timestamp = new \DateTime('@'.time());
         $this->votes = new ArrayCollection();
-        $this->ranking = $this->timestamp->getTimestamp();
+        $this->vote($user, $ip, Votable::VOTE_UP);
     }
 
     /**
@@ -186,43 +182,37 @@ class Submission extends Votable {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getTitle() {
+    public function getTitle(): string {
         return $this->title;
     }
 
-    /**
-     * @param string $title
-     */
-    public function setTitle($title) {
+    public function setTitle(string $title) {
         $this->title = $title;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getUrl() {
         return $this->url;
     }
 
     /**
-     * @param string $url
+     * @param string|null $url
      */
     public function setUrl($url) {
         $this->url = $url;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getBody() {
         return $this->body;
     }
 
     /**
-     * @param string $body
+     * @param string|null $body
      */
     public function setBody($body) {
         $this->body = $body;
@@ -238,11 +228,9 @@ class Submission extends Votable {
     /**
      * Get top-level comments, ordered by descending net score.
      *
-     * Note: This method returns an actual array and not a {@link Collection}.
-     *
      * @return Comment[]
      */
-    public function getTopLevelComments() {
+    public function getTopLevelComments(): array {
         $criteria = Criteria::create();
         $criteria->where(Criteria::expr()->isNull('parent'));
 
@@ -263,46 +251,16 @@ class Submission extends Votable {
         $this->updateRanking();
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getTimestamp() {
+    public function getTimestamp(): \DateTime {
         return $this->timestamp;
     }
 
-    /**
-     * @param \DateTime $timestamp
-     */
-    public function setTimestamp($timestamp) {
-        $this->timestamp = $timestamp;
-    }
-
-    /**
-     * @return Forum
-     */
-    public function getForum() {
+    public function getForum(): Forum {
         return $this->forum;
     }
 
-    /**
-     * @param Forum $forum
-     */
-    public function setForum($forum) {
-        $this->forum = $forum;
-    }
-
-    /**
-     * @return User
-     */
-    public function getUser() {
+    public function getUser(): User {
         return $this->user;
-    }
-
-    /**
-     * @param User $user
-     */
-    public function setUser($user) {
-        $this->user = $user;
     }
 
     /**
@@ -349,24 +307,11 @@ class Submission extends Votable {
         return $this->ip;
     }
 
-    /**
-     * @param string|null $ip
-     */
-    public function setIp($ip) {
-        $this->ip = $ip;
-    }
-
-    /**
-     * @return bool
-     */
-    public function getSticky() {
+    public function isSticky(): bool {
         return $this->sticky;
     }
 
-    /**
-     * @param bool $sticky
-     */
-    public function setSticky($sticky) {
+    public function setSticky(bool $sticky) {
         $this->sticky = $sticky;
     }
 
@@ -400,30 +345,18 @@ class Submission extends Votable {
         $this->editedAt = $editedAt;
     }
 
-    /**
-     * @return bool
-     */
     public function isModerated(): bool {
         return $this->moderated;
     }
 
-    /**
-     * @param bool $moderated
-     */
     public function setModerated(bool $moderated) {
         $this->moderated = $moderated;
     }
 
-    /**
-     * @return int
-     */
     public function getUserFlag(): int {
         return $this->userFlag;
     }
 
-    /**
-     * @param int $userFlag
-     */
     public function setUserFlag(int $userFlag) {
         if (!in_array($userFlag, UserFlags::FLAGS, true)) {
             throw new \InvalidArgumentException('Bad flag');

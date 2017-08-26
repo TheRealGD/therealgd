@@ -7,9 +7,8 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Raddit\AppBundle\Entity\Forum;
 use Raddit\AppBundle\Entity\Submission;
-use Raddit\AppBundle\Entity\SubmissionVote;
 use Raddit\AppBundle\Entity\User;
-use Raddit\AppBundle\Entity\Votable;
+use Raddit\AppBundle\Entity\UserFlags;
 
 class LoadExampleSubmissions extends AbstractFixture implements DependentFixtureInterface {
     /**
@@ -25,15 +24,17 @@ class LoadExampleSubmissions extends AbstractFixture implements DependentFixture
             /** @var User $user */
             $user = $this->getReference('user-'.$data['user']);
 
-            $submission = new Submission();
-            $submission->setUrl($data['url']);
-            $submission->setTitle($data['title']);
-            $submission->setBody($data['body']);
-            $submission->setIp($data['ip']);
-            $submission->setTimestamp($data['timestamp']);
-            $submission->setForum($forum);
-            $submission->setUser($user);
-            $submission->vote($user, $data['ip'], Votable::VOTE_UP);
+            $submission = new Submission(
+                $data['title'],
+                $data['url'],
+                $data['body'],
+                $forum,
+                $user,
+                $data['ip'],
+                false,
+                UserFlags::FLAG_NONE,
+                $data['timestamp']
+            );
 
             $this->addReference('submission-'.++$i, $submission);
 
