@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Selectable;
 use Doctrine\ORM\Mapping as ORM;
+use Raddit\AppBundle\Entity\Exception\BannedFromForumException;
 
 /**
  * @ORM\Entity()
@@ -128,6 +129,10 @@ class Comment extends Votable {
             throw new \InvalidArgumentException('Invalid IP address');
         }
 
+        if ($submission->getForum()->userIsBanned($user)) {
+            throw new BannedFromForumException();
+        }
+
         if ($parent) {
             $this->parent = $parent;
             $parent->children->add($this);
@@ -210,6 +215,17 @@ class Comment extends Votable {
      */
     protected function createVote(User $user, $ip, int $choice): Vote {
         return new CommentVote($user, $ip, $choice, $this);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function vote(User $user, $ip, int $choice) {
+        if ($this->submission->getForum()->userIsBanned($user)) {
+            throw new BannedFromForumException();
+        }
+
+        parent::vote($user, $ip, $choice);
     }
 
     /**

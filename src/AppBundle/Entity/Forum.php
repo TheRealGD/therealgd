@@ -110,6 +110,13 @@ class Forum {
     private $subscriptions;
 
     /**
+     * @ORM\OneToMany(targetEntity="ForumBan", mappedBy="forum", cascade={"persist"})
+     *
+     * @var ForumBan[]|Collection|Selectable
+     */
+    private $bans;
+
+    /**
      * @ORM\Column(type="boolean", options={"default": false})
      *
      * @var bool
@@ -132,6 +139,7 @@ class Forum {
 
     public function __construct() {
         $this->created = new \DateTime('@'.time());
+        $this->bans = new ArrayCollection();
         $this->moderators = new ArrayCollection();
         $this->submissions = new ArrayCollection();
         $this->subscriptions = new ArrayCollection();
@@ -296,6 +304,60 @@ class Forum {
         $subscription = $this->subscriptions->matching($criteria)->first();
 
         $this->subscriptions->removeElement($subscription);
+    }
+
+    public function userIsBanned(User $user) {
+        if ($user->isAdmin()) {
+            // should we check for mod permissions too?
+            return false;
+        }
+
+        $criteria = Criteria::create()
+            ->where(Criteria::expr()->eq('user', $user))
+            ->orderBy(['timestamp' => 'DESC'])
+            ->setMaxResults(1);
+
+        /** @var ForumBan|null $ban */
+        $ban = $this->bans->matching($criteria)->first() ?: null;
+
+        if (!$ban || !$ban->isBan()) {
+            return false;
+        }
+
+        $expiryTime = $ban->getExpiryTime();
+
+        if ($expiryTime) {
+            $now = \DateTime::createFromFormat('U.u', microtime(true));
+
+            return $expiryTime > $now;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param User $user
+     * @param int  $page
+     * @param int  $maxPerPage
+     *
+     * @return Pagerfanta|ForumBan[]
+     */
+    public function getPaginatedBansByUser(User $user, int $page, int $maxPerPage = 25) {
+        $criteria = Criteria::create()
+            ->where(Criteria::expr()->eq('user', $user))
+            ->orderBy(['timestamp' => 'DESC']);
+
+        $pager = new Pagerfanta(new DoctrineSelectableAdapter($this->bans, $criteria));
+        $pager->setMaxPerPage($maxPerPage);
+        $pager->setCurrentPage($page);
+
+        return $pager;
+    }
+
+    public function addBan(ForumBan $ban) {
+        if (!$this->bans->contains($ban)) {
+            $this->bans->add($ban);
+        }
     }
 
     /**

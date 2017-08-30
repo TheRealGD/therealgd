@@ -13,6 +13,8 @@ action:
     edit_theme: Edit theme
     new_theme: New theme
     go_to_home_page: Go to home page
+    ban: Ban
+    unban: Unban
 
 add_moderator:
     title: Add moderator to %forum%
@@ -99,6 +101,8 @@ flash:
     user_settings_updated: User settings have been updated.
     user_marked_trusted: The user was marked as trusted.
     user_marked_untrusted: The user was marked as untrusted.
+    user_was_banned: The user was banned.
+    user_was_unbanned: The user was unbanned.
 
 forum:
     moderators: Moderators
@@ -175,6 +179,14 @@ label:
     save_settings: Save settings
     source_code: Source code
     sidebar: Sidebar
+    username: Username
+    banned: Banned
+    reason: Reason
+    expires: Expires
+    never: Never
+    action: Action
+    ban: Ban
+    unban: Unban
 
 login_form:
     log_in: Log in
@@ -223,6 +235,8 @@ nav:
     next: Next
     previous: Previous
     moderated: Moderated
+    bans: Bans
+    ban_history: Ban history
 
 placeholder:
     default: (default)
@@ -305,6 +319,10 @@ title:
     new_theme: New theme
     editing_theme: Editing theme %name%
     custom_themes: Custom themes
+    bans_in_forum: Bans in %forum%
+    showing_ban_history_for_user_in_forum: Showing ban history for %user% in %forum%
+    banning_user_from_forum: Banning %user% from %forum%
+    unbanning_user_from_forum: Unbanning %user% from %forum%
 
 two_factor:
     explanation: To complete the login, you must enter the verification code sent by email to %email%.

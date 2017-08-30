@@ -116,6 +116,7 @@
   {{- block('comment_nav_parent') -}}
   {{- block('comment_nav_delete') -}}
   {{- block('comment_nav_edit') }}
+  {{- block('comment_nav_ban') -}}
   {{- block('comment_nav_ip_ban') -}}
 {%- endblock -%}
 
@@ -204,6 +205,18 @@
       </li>
     {%- endif -%}
   {%- endspaceless -%}
+{%- endblock -%}
+
+{%- block comment_nav_ban -%}
+  {%- if is_granted('moderator', comment.submission.forum) -%}
+    {%- spaceless -%}
+      <li>
+        <a href="{{ path('raddit_app_forum_ban', {forum_name: comment.submission.forum.name, username: comment.user.username}) }}">
+          {{- 'action.ban'|trans -}}
+        </a>
+      </li>
+    {%- endspaceless -%}
+  {%- endif -%}
 {%- endblock -%}
 
 {%- block comment_nav_ip_ban -%}

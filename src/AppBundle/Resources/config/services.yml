@@ -66,6 +66,10 @@ services:
         factory: ["@doctrine.orm.entity_manager", "getRepository"]
         arguments: [Raddit\AppBundle\Entity\Ban]
 
+    Raddit\AppBundle\Repository\ForumBanRepository:
+        factory: ["@doctrine.orm.entity_manager", "getRepository"]
+        arguments: [Raddit\AppBundle\Entity\ForumBan]
+
     Raddit\AppBundle\Repository\ForumCategoryRepository:
         factory: ["@doctrine.orm.entity_manager", "getRepository"]
         arguments: [Raddit\AppBundle\Entity\ForumCategory]

@@ -53,6 +53,28 @@ raddit_app_forum_appearance:
     path: /appearance
     methods: [GET, POST]
 
+raddit_app_forum_bans:
+    defaults: { _controller: RadditAppBundle:Forum:bans, page: 1 }
+    path: /bans
+    methods: [GET]
+    requirements: { page: \d+ }
+
+raddit_app_forum_ban_history:
+    defaults: { _controller: RadditAppBundle:Forum:banHistory, page: 1}
+    path: /bans/history/{username}/{page}
+    methods: [GET]
+    requirements: { page: \d+ }
+
+raddit_app_forum_ban:
+    defaults: { _controller: RadditAppBundle:Forum:ban }
+    path: /ban/{username}
+    methods: [GET, POST]
+
+raddit_app_forum_unban:
+    defaults: { _controller: RadditAppBundle:Forum:unban }
+    path: /unban/{username}
+    methods: [GET, POST]
+
 raddit_app_forum_moderators:
     defaults: { _controller: RadditAppBundle:Forum:moderators, page: 1 }
     path: /moderators/{page}

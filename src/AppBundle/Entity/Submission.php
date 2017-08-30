@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
+use Raddit\AppBundle\Entity\Exception\BannedFromForumException;
 
 /**
  * @ORM\Entity(repositoryClass="Raddit\AppBundle\Repository\SubmissionRepository")
@@ -161,6 +162,10 @@ class Submission extends Votable {
             throw new \InvalidArgumentException('Invalid IP address');
         }
 
+        if ($forum->userIsBanned($user)) {
+            throw new BannedFromForumException();
+        }
+
         $this->title = $title;
         $this->url = $url;
         $this->body = $body;
@@ -281,6 +286,10 @@ class Submission extends Votable {
      * {@inheritdoc}
      */
     public function vote(User $user, $ip, int $choice) {
+        if ($this->forum->userIsBanned($user)) {
+            throw new BannedFromForumException();
+        }
+
         parent::vote($user, $ip, $choice);
 
         $this->updateRanking();

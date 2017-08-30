@@ -4,10 +4,14 @@ namespace Raddit\AppBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Raddit\AppBundle\Entity\Forum;
+use Raddit\AppBundle\Entity\User;
 use Raddit\AppBundle\Form\ForumAppearanceType;
+use Raddit\AppBundle\Form\ForumBanType;
 use Raddit\AppBundle\Form\ForumType;
+use Raddit\AppBundle\Form\Model\ForumBanData;
 use Raddit\AppBundle\Form\ModeratorType;
 use Raddit\AppBundle\Form\PasswordConfirmType;
+use Raddit\AppBundle\Repository\ForumBanRepository;
 use Raddit\AppBundle\Repository\ForumCategoryRepository;
 use Raddit\AppBundle\Repository\ForumRepository;
 use Raddit\AppBundle\Repository\SubmissionRepository;
@@ -296,6 +300,133 @@ final class ForumController extends Controller {
         return $this->render('@RadditApp/forum_appearance.html.twig', [
             'form' => $form->createView(),
             'forum' => $forum,
+        ]);
+    }
+
+    /**
+     * @Security("is_granted('moderator', forum)")
+     *
+     * @ParamConverter("forum", options={
+     *     "mapping": {"forum_name": "name"},
+     *     "map_method_signature": true,
+     *     "repository_method": "findOneByCaseInsensitiveName"
+     * })
+     *
+     * @param Forum              $forum
+     * @param ForumBanRepository $banRepository
+     * @param int                $page
+     *
+     * @return Response
+     */
+    public function bansAction(Forum $forum, ForumBanRepository $banRepository, int $page = 1) {
+        return $this->render('@RadditApp/forum_bans.html.twig', [
+            'bans' => $banRepository->findValidBansInForum($forum, $page),
+            'forum' => $forum,
+        ]);
+    }
+
+    /**
+     * @Security("is_granted('moderator', forum)")
+     *
+     * @ParamConverter("forum", options={
+     *     "mapping": {"forum_name": "name"},
+     *     "map_method_signature": true,
+     *     "repository_method": "findOneByCaseInsensitiveName"
+     * })
+     *
+     * @param Forum $forum
+     * @param User  $subject
+     * @param int   $page
+     *
+     * @return Response
+     */
+    public function banHistoryAction(Forum $forum, User $subject, int $page = 1) {
+        return $this->render('@RadditApp/forum_ban_history.html.twig', [
+            'bans' => $forum->getPaginatedBansByUser($subject, $page),
+            'forum' => $forum,
+            'user' => $subject,
+        ]);
+    }
+
+    /**
+     * @Security("is_granted('moderator', forum)")
+     *
+     * @ParamConverter("forum", options={
+     *     "mapping": {"forum_name": "name"},
+     *     "map_method_signature": true,
+     *     "repository_method": "findOneByCaseInsensitiveName"
+     * })
+     *
+     * @param Forum         $forum
+     * @param User          $subject
+     * @param Request       $request
+     * @param EntityManager $em
+     *
+     * @return Response
+     */
+    public function banAction(Forum $forum, User $subject, Request $request, EntityManager $em) {
+        $data = new ForumBanData();
+
+        $form = $this->createForm(ForumBanType::class, $data, ['intent' => 'ban']);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $forum->addBan($data->toBan($forum, $subject, $this->getUser()));
+
+            $em->flush();
+
+            $this->addFlash('success', 'flash.user_was_banned');
+
+            return $this->redirectToRoute('raddit_app_forum_bans', [
+                'forum_name' => $forum->getName(),
+            ]);
+        }
+
+        return $this->render('@RadditApp/forum_ban.html.twig', [
+            'form' => $form->createView(),
+            'forum' => $forum,
+            'user' => $subject,
+        ]);
+    }
+
+    /**
+     * @Security("is_granted('moderator', forum)")
+     *
+     * @ParamConverter("forum", options={
+     *     "mapping": {"forum_name": "name"},
+     *     "map_method_signature": true,
+     *     "repository_method": "findOneByCaseInsensitiveName"
+     * })
+     *
+     * @param Forum         $forum
+     * @param User          $subject
+     * @param Request       $request
+     * @param EntityManager $em
+     *
+     * @return Response
+     */
+    public function unbanAction(Forum $forum, User $subject, Request $request, EntityManager $em) {
+        $data = new ForumBanData();
+
+        $form = $this->createForm(ForumBanType::class, $data, ['intent' => 'unban']);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $forum->addBan($data->toUnban($forum, $subject, $this->getUser()));
+
+            $em->flush();
+
+            $this->addFlash('success', 'flash.user_was_unbanned');
+
+            return $this->redirectToRoute('raddit_app_forum_bans', [
+                'forum_name' => $forum->getName(),
+            ]);
+        }
+
+        return $this->render('@RadditApp/forum_unban.html.twig', [
+            'form' => $form->createView(),
+            'forum' => $forum,
+            'user' => $subject,
         ]);
     }
 }
