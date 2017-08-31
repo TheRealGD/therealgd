@@ -10,11 +10,10 @@
     <link rel="apple-touch-icon-precomposed" href="{{ asset('apple-touch-icon-precomposed.png') }}">
 
     {% block stylesheets %}
-      {% if not app.user or not app.user.nightMode %}
-        <link rel="stylesheet" href="{{ preload(asset('build/red.css')) }}">
-      {% else %}
-        <link rel="stylesheet" href="{{ preload(asset('build/night.css')) }}">
-      {% endif %}
+      {{ include('@RadditApp/includes/stylesheets.html.twig', {
+        theme: app.user.preferredTheme ?? null,
+        night_mode: app.user.nightMode ?? false,
+      }) }}
     {% endblock %}
 
     {% block head %}{% endblock %}

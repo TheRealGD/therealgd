@@ -1,26 +1,13 @@
 {% extends '@RadditApp/base.html.twig' %}
 
 {% block stylesheets %}
-  {% if app.user and app.user.showCustomStylesheets %}
-    {% set night_mode = app.user and app.user.nightMode %}
-    {% set theme = forum.theme %}
-
-    {% if theme is null or theme.appendToDefaultStyle %}
-      {{ parent() }}
-    {% endif %}
-
-    {% if theme is not null %}
-      <link rel="stylesheet" href="{{ path('raddit_app_stylesheet', {
-        id: theme.id,
-        field: 'common',
-        unixTime: theme.lastModified|date('U'),
-      }) }}">
-      <link rel="stylesheet" href="{{ path('raddit_app_stylesheet', {
-        id: theme.id,
-        field: night_mode ? 'night' : 'day',
-        unixTime: theme.lastModified|date('U'),
-      }) }}">
-    {% endif %}
+  {% if app.user.showCustomStylesheets ?? false %}
+    {% with {night_mode: app.user.nightMode ?? false, theme: forum.theme} %}
+      {{ include('@RadditApp/includes/stylesheets.html.twig', {
+        theme: theme,
+        night_mode: night_mode
+      }, with_context=false) }}
+    {% endwith %}
   {% else %}
     {{ parent() }}
   {% endif %}

@@ -7,7 +7,23 @@
 {% block body %}
   <h1>{{ block('title') }}</h1>
 
-  {{ form(form) }}
+  {{ form_start(form) }}
+    <fieldset class="form__group">
+      <legend class="form__group-header">{{ 'label.general'|trans }}</legend>
+
+      {{ form_row(form.locale) }}
+    </fieldset>
+
+    <fieldset class="form__group">
+      <legend class="form__group-header">{{ 'label.appearance'|trans }}</legend>
+
+      {{ form_row(form.preferred_theme, {attr: {class: 'select2'}}) }}
+
+      {{ form_row(form.night_mode) }}
+
+      {{ form_row(form.show_custom_stylesheets) }}
+    </fieldset>
+  {{ form_end(form) }}
 {% endblock %}
 
 {% block page_classes %}

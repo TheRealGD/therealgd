@@ -186,6 +186,13 @@ class User implements UserInterface, TwoFactorInterface {
      */
     private $trusted = false;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Theme")
+     *
+     * @var Theme|null
+     */
+    private $preferredTheme;
+
     public function __construct() {
         $this->created = new \DateTime('@'.time());
         $this->notifications = new ArrayCollection();
@@ -535,6 +542,20 @@ class User implements UserInterface, TwoFactorInterface {
      */
     public function setTrusted(bool $trusted) {
         $this->trusted = $trusted;
+    }
+
+    /**
+     * @return null|Theme
+     */
+    public function getPreferredTheme() {
+        return $this->preferredTheme;
+    }
+
+    /**
+     * @param null|Theme $preferredTheme
+     */
+    public function setPreferredTheme($preferredTheme) {
+        $this->preferredTheme = $preferredTheme;
     }
 
     /**

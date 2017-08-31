@@ -187,6 +187,9 @@ label:
     action: Action
     ban: Ban
     unban: Unban
+    general: General
+    appearance: Appearance
+    preferred_theme: Preferred theme
 
 login_form:
     log_in: Log in
