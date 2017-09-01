@@ -9,8 +9,6 @@ use Doctrine\Common\Collections\Selectable;
 use Doctrine\ORM\Mapping as ORM;
 use Pagerfanta\Adapter\DoctrineSelectableAdapter;
 use Pagerfanta\Pagerfanta;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * aka Subraddit.
@@ -21,8 +19,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  * }, uniqueConstraints={
  *     @ORM\UniqueConstraint(name="uniq_fe5e5ab8d69c0128", columns={"canonical_name"})
  * })
- *
- * @UniqueEntity("canonicalName", errorPath="name")
  */
 class Forum {
     /**
@@ -30,16 +26,12 @@ class Forum {
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Id()
      *
-     * @var int
+     * @var int|null
      */
     private $id;
 
     /**
      * @ORM\Column(type="text", unique=true)
-     *
-     * @Assert\NotBlank()
-     * @Assert\Length(min=3, max=25)
-     * @Assert\Regex("/^\w+$/", message="The name must contain only contain letters, numbers, and underscores.")
      *
      * @var string
      */
@@ -55,18 +47,12 @@ class Forum {
     /**
      * @ORM\Column(type="text")
      *
-     * @Assert\Length(max=100)
-     * @Assert\NotBlank()
-     *
      * @var string
      */
     private $title;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     *
-     * @Assert\Length(max=300)
-     * @Assert\NotBlank()
      *
      * @var string|null
      */
@@ -75,10 +61,7 @@ class Forum {
     /**
      * @ORM\Column(type="text", nullable=true)
      *
-     * @Assert\Length(max=1500)
-     * @Assert\NotBlank()
-     *
-     * @var string|null
+     * @var string
      */
     private $sidebar;
 
@@ -139,54 +122,55 @@ class Forum {
      */
     private $theme;
 
-    public function __construct() {
-        $this->created = new \DateTime('@'.time());
+    public function __construct(
+        string $name,
+        string $title,
+        string $description,
+        string $sidebar,
+        User $user = null,
+        \DateTime $created = null
+    ) {
+        $this->setName($name);
+        $this->title = $title;
+        $this->description = $description;
+        $this->sidebar = $sidebar;
+        $this->created = $created ?: new \DateTime('@'.time());
         $this->bans = new ArrayCollection();
         $this->moderators = new ArrayCollection();
         $this->submissions = new ArrayCollection();
         $this->subscriptions = new ArrayCollection();
+
+        if ($user) {
+            $this->addUserAsModerator($user);
+            $this->subscribe($user);
+        }
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getId() {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getName() {
+    public function getName(): string {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     */
-    public function setName($name) {
+    public function setName(string $name) {
         $this->name = $name;
-        $this->canonicalName = mb_strtolower($name, 'UTF-8');
+        $this->canonicalName = self::canonicalizeName($name);
     }
 
-    /**
-     * @return string
-     */
     public function getCanonicalName() {
         return $this->canonicalName;
     }
 
-    /**
-     * @return string
-     */
-    public function getTitle() {
+    public function getTitle(): string {
         return $this->title;
     }
 
-    /**
-     * @param string $title
-     */
-    public function setTitle($title) {
+    public function setTitle(string $title) {
         $this->title = $title;
     }
 
@@ -204,17 +188,11 @@ class Forum {
         $this->description = $description;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getSidebar() {
+    public function getSidebar(): string {
         return $this->sidebar;
     }
 
-    /**
-     * @param string|null $sidebar
-     */
-    public function setSidebar($sidebar) {
+    public function setSidebar(string $sidebar) {
         $this->sidebar = $sidebar;
     }
 
@@ -241,7 +219,7 @@ class Forum {
         return $moderators;
     }
 
-    public function userIsModerator($user, $adminsAreMods = true): bool {
+    public function userIsModerator($user, bool $adminsAreMods = true): bool {
         if (!$user instanceof User) {
             return false;
         }
@@ -285,18 +263,8 @@ class Forum {
         return $this->submissions;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getCreated() {
+    public function getCreated(): \DateTime {
         return $this->created;
-    }
-
-    /**
-     * @param \DateTime $created
-     */
-    public function setCreated($created) {
-        $this->created = $created;
     }
 
     /**
@@ -306,7 +274,7 @@ class Forum {
         return $this->subscriptions;
     }
 
-    public function isSubscribed(User $user) {
+    public function isSubscribed(User $user): bool {
         $criteria = Criteria::create()
             ->where(Criteria::expr()->eq('user', $user));
 
@@ -328,7 +296,7 @@ class Forum {
         $this->subscriptions->removeElement($subscription);
     }
 
-    public function userIsBanned(User $user) {
+    public function userIsBanned(User $user): bool {
         if ($user->isAdmin()) {
             // should we check for mod permissions too?
             return false;
@@ -382,16 +350,10 @@ class Forum {
         }
     }
 
-    /**
-     * @return bool
-     */
     public function isFeatured(): bool {
         return $this->featured;
     }
 
-    /**
-     * @param bool $featured
-     */
     public function setFeatured(bool $featured) {
         $this->featured = $featured;
     }
@@ -422,5 +384,9 @@ class Forum {
      */
     public function setTheme($theme) {
         $this->theme = $theme;
+    }
+
+    public static function canonicalizeName(string $name): string {
+        return mb_strtolower($name, 'UTF-8');
     }
 }

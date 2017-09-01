@@ -14,3 +14,4 @@
 '@import syntax is not allowed on line {{ line }}': '@import syntax is not allowed on line {{ line }}'
 'You cannot post more. Wait a while before trying again.': 'You cannot post more. Wait a while before trying again.'
 'That name is already taken.': 'That name is already taken.'
+'A forum by that name already exists.': 'A forum by that name already exists.'

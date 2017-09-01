@@ -5,6 +5,7 @@ namespace Raddit\AppBundle\Form;
 use Doctrine\ORM\EntityRepository;
 use Raddit\AppBundle\Entity\Forum;
 use Raddit\AppBundle\Entity\Theme;
+use Raddit\AppBundle\Form\Model\ForumData;
 use Raddit\AppBundle\Form\Type\UuidAwareEntityType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -40,7 +41,7 @@ class ForumAppearanceType extends AbstractType {
      */
     public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults([
-            'data_class' => Forum::class,
+            'data_class' => ForumData::class,
             'validation_groups' => ['appearance'],
         ]);
     }

@@ -116,7 +116,7 @@ final class ForumRepository extends EntityRepository {
             ->where('f.name = ?1')
             ->orWhere('f.canonicalName = ?2')
             ->setParameter(1, $name)
-            ->setParameter(2, mb_strtolower($name, 'UTF-8'))
+            ->setParameter(2, Forum::canonicalizeName($name))
             ->getQuery()
             ->getOneOrNullResult();
     }

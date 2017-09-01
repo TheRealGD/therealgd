@@ -38,6 +38,6 @@ class ForumControllerTest extends WebTestCase {
         $form = $crawler->filter('.subscribe-button--subscribe')->form();
         $crawler = $client->submit($form);
 
-        $this->assertCount(1, $crawler->filter('.subscribe-button--unsubscribe'));
+        $this->assertCount(2, $crawler->filter('.subscribe-button--unsubscribe'));
     }
 }

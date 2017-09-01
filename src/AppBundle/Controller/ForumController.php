@@ -9,6 +9,7 @@ use Raddit\AppBundle\Form\ForumAppearanceType;
 use Raddit\AppBundle\Form\ForumBanType;
 use Raddit\AppBundle\Form\ForumType;
 use Raddit\AppBundle\Form\Model\ForumBanData;
+use Raddit\AppBundle\Form\Model\ForumData;
 use Raddit\AppBundle\Form\ModeratorType;
 use Raddit\AppBundle\Form\PasswordConfirmType;
 use Raddit\AppBundle\Repository\ForumBanRepository;
@@ -59,14 +60,13 @@ final class ForumController extends Controller {
      * @return Response
      */
     public function createForumAction(Request $request, EntityManager $em) {
-        $forum = new Forum();
+        $data = new ForumData();
 
-        $form = $this->createForm(ForumType::class, $forum);
+        $form = $this->createForm(ForumType::class, $data);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $forum->addUserAsModerator($this->getUser());
-            $forum->subscribe($this->getUser());
+            $forum = $data->toForum($this->getUser());
 
             $em->persist($forum);
             $em->flush();
@@ -96,10 +96,14 @@ final class ForumController extends Controller {
      * @return Response
      */
     public function editForumAction(Request $request, Forum $forum, EntityManager $em) {
-        $form = $this->createForm(ForumType::class, $forum);
+        $data = ForumData::createFromForum($forum);
+
+        $form = $this->createForm(ForumType::class, $data);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $data->updateForum($forum);
+
             $em->flush();
 
             $this->addFlash('success', 'flash.forum_updated');
@@ -286,10 +290,14 @@ final class ForumController extends Controller {
      * @return Response
      */
     public function appearanceAction(Forum $forum, Request $request, EntityManager $em) {
-        $form = $this->createForm(ForumAppearanceType::class, $forum);
+        $data = ForumData::createFromForum($forum);
+
+        $form = $this->createForm(ForumAppearanceType::class, $data);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $data->updateForum($forum);
+
             $em->flush();
 
             return $this->redirectToRoute('raddit_app_forum_appearance', [

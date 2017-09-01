@@ -4,9 +4,8 @@ namespace Raddit\AppBundle\Form;
 
 use Doctrine\ORM\EntityRepository;
 use Eo\HoneypotBundle\Form\Type\HoneypotType;
-use Raddit\AppBundle\Entity\Forum;
 use Raddit\AppBundle\Entity\ForumCategory;
-use Raddit\AppBundle\Entity\Theme;
+use Raddit\AppBundle\Form\Model\ForumData;
 use Raddit\AppBundle\Form\Type\MarkdownType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -15,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
@@ -36,7 +36,9 @@ final class ForumType extends AbstractType {
             $builder->add('email', HoneypotType::class);
         }
 
-        $editing = $builder->getData() && $builder->getData()->getId() !== null;
+        /* @var ForumData $data */
+        $data = $builder->getData();
+        $editing = $data && $data->getEntityId();
 
         $builder
             ->add('name', TextType::class)
@@ -73,9 +75,14 @@ final class ForumType extends AbstractType {
      */
     public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults([
-            'data_class' => Forum::class,
+            'data_class' => ForumData::class,
             'label_format' => 'forum_form.%name%',
             'honeypot' => true,
+            'validation_groups' => function (FormInterface $form) {
+                $editing = $form->getData() && $form->getData()->getEntityId();
+
+                return $editing ? ['edit'] : ['create'];
+            }
         ]);
 
         $resolver->setAllowedTypes('honeypot', ['bool']);
