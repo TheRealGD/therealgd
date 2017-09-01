@@ -241,9 +241,13 @@ class Forum {
         return $moderators;
     }
 
-    public function userIsModerator($user): bool {
+    public function userIsModerator($user, $adminsAreMods = true): bool {
         if (!$user instanceof User) {
             return false;
+        }
+
+        if ($adminsAreMods && $user->isAdmin()) {
+            return true;
         }
 
         $criteria = Criteria::create()
@@ -256,6 +260,22 @@ class Forum {
         if (!$this->userIsModerator($user)) {
             $this->moderators->add(new Moderator($this, $user));
         }
+    }
+
+    public function userCanDelete($user): bool {
+        if (!$user instanceof User) {
+            return false;
+        }
+
+        if ($user->isAdmin()) {
+            return true;
+        }
+
+        if (!$this->userIsModerator($user)) {
+            return false;
+        }
+
+        return count($this->submissions) === 0;
     }
 
     /**

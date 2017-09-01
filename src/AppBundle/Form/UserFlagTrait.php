@@ -12,7 +12,7 @@ trait UserFlagTrait {
         /** @noinspection PhpUndefinedMethodInspection */
         $user = $this->tokenStorage->getToken()->getUser();
 
-        $isModerator = $forum && $forum->userIsModerator($user);
+        $isModerator = $forum && $forum->userIsModerator($user, false);
         /** @noinspection PhpUndefinedMethodInspection */
         $isAdmin = $this->authorizationChecker->isGranted('ROLE_ADMIN');
 

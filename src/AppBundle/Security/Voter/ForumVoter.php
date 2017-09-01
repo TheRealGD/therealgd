@@ -5,24 +5,10 @@ namespace Raddit\AppBundle\Security\Voter;
 use Raddit\AppBundle\Entity\Forum;
 use Raddit\AppBundle\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 final class ForumVoter extends Voter {
-    const ATTRIBUTES = [
-        'edit', // deprecated
-        'delete', // deprecated
-        'moderator',
-    ];
-
-    /**
-     * @var AccessDecisionManagerInterface
-     */
-    private $decisionManager;
-
-    public function __construct(AccessDecisionManagerInterface $decisionManager) {
-        $this->decisionManager = $decisionManager;
-    }
+    const ATTRIBUTES = ['moderator', 'delete'];
 
     /**
      * {@inheritdoc}
@@ -35,38 +21,23 @@ final class ForumVoter extends Voter {
      * {@inheritdoc}
      */
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token) {
-        if (!$token->getUser() instanceof User) {
+        if (!$subject instanceof Forum) {
+            throw new \InvalidArgumentException('$subject must be '.Forum::class);
+        }
+
+        $user = $token->getUser();
+
+        if (!$user instanceof User) {
             return false;
         }
 
         switch ($attribute) {
-        case 'edit':
         case 'moderator':
-            return $this->isModerator($subject, $token);
+            return $subject->userIsModerator($user);
         case 'delete':
-            return $this->canDelete($token);
+            return $subject->userCanDelete($user);
         default:
             throw new \InvalidArgumentException('Bad attribute '.$attribute);
         }
-    }
-
-    private function isModerator(Forum $forum, TokenInterface $token) {
-        if ($this->decisionManager->decide($token, ['ROLE_ADMIN'])) {
-            return true;
-        }
-
-        /** @var User $user */
-        $user = $token->getUser();
-
-        return $forum->userIsModerator($user);
-    }
-
-    /**
-     * @param TokenInterface $token
-     *
-     * @return bool
-     */
-    private function canDelete(TokenInterface $token) {
-        return $this->decisionManager->decide($token, ['ROLE_ADMIN']);
     }
 }

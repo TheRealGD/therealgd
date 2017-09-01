@@ -32,7 +32,7 @@
       {% endif %}
     </section>
 
-    {% if is_granted('edit', forum) %}
+    {% if is_granted('moderator', forum) %}
       <section class="sidebar__section sidebar__section--forum-manage forum-manage">
         <h1 class="sidebar__title">{{ 'forum.manage'|trans }}</h1>
         <ul>

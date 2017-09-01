@@ -82,7 +82,7 @@ final class ForumController extends Controller {
     }
 
     /**
-     * @Security("is_granted('edit', forum)")
+     * @Security("is_granted('moderator', forum)")
      * @ParamConverter("forum", options={
      *     "mapping": {"forum_name": "name"},
      *     "map_method_signature": true,
@@ -271,7 +271,7 @@ final class ForumController extends Controller {
     /**
      * Alter a forum's appearance.
      *
-     * @Security("is_granted('edit', forum)")
+     * @Security("is_granted('moderator', forum)")
      *
      * @ParamConverter("forum", options={
      *     "mapping": {"forum_name": "name"},
