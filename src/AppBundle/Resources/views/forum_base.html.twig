@@ -1,13 +1,11 @@
 {% extends '@RadditApp/base.html.twig' %}
 
 {% block stylesheets %}
-  {% if app.user.showCustomStylesheets ?? false %}
-    {% with {night_mode: app.user.nightMode ?? false, theme: forum.theme} %}
-      {{ include('@RadditApp/includes/stylesheets.html.twig', {
-        theme: theme,
-        night_mode: night_mode
-      }, with_context=false) }}
-    {% endwith %}
+  {% if app.user.showCustomStylesheets ?? false and forum.theme %}
+    {{ include('@RadditApp/includes/stylesheets.html.twig', {
+      theme: forum.theme,
+      night_mode: app.user.nightMode ?? false
+    }, with_context=false) }}
   {% else %}
     {{ parent() }}
   {% endif %}
