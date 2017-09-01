@@ -18,6 +18,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="Raddit\AppBundle\Repository\ForumRepository")
  * @ORM\Table(name="forums", indexes={
  *     @ORM\Index(name="forum_featured_idx", columns={"featured"})
+ * }, uniqueConstraints={
+ *     @ORM\UniqueConstraint(name="uniq_fe5e5ab8d69c0128", columns={"canonical_name"})
  * })
  *
  * @UniqueEntity("canonicalName", errorPath="name")

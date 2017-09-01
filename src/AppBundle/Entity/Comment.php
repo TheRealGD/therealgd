@@ -103,7 +103,7 @@ class Comment extends Votable {
     private $editedAt;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", options={"default": false})
      *
      * @var bool
      */
