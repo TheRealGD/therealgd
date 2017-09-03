@@ -4,7 +4,7 @@ function initAlerts($) {
     $('.alert--dismissable')
         .css('cursor', 'pointer')
         .click(function () {
-            $(this).fadeOut(400, () => {
+            $(this).slideUp(400, () => {
                 $(this).remove();
             });
         });
