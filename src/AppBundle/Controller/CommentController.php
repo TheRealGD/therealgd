@@ -8,6 +8,7 @@ use Raddit\AppBundle\Entity\Forum;
 use Raddit\AppBundle\Entity\Submission;
 use Raddit\AppBundle\Form\CommentType;
 use Raddit\AppBundle\Form\Model\CommentData;
+use Raddit\AppBundle\Repository\CommentRepository;
 use Raddit\AppBundle\Repository\ForumRepository;
 use Raddit\AppBundle\Utils\Slugger;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -26,6 +27,13 @@ use Symfony\Component\HttpFoundation\Response;
  * @ParamConverter("comment", options={"mapping": {"submission": "submission", "comment_id": "id"}})
  */
 final class CommentController extends Controller {
+    public function listAction(CommentRepository $repository, int $page) {
+        // TODO: link this somewhere
+        return $this->render('@RadditApp/comment_list.html.twig', [
+            'comments' => $repository->findRecentPaginated($page),
+        ]);
+    }
+
     /**
      * Render the comment form only (no layout).
      *

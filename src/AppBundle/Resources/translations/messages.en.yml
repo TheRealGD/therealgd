@@ -326,6 +326,7 @@ title:
     showing_ban_history_for_user_in_forum: Showing ban history for %user% in %forum%
     banning_user_from_forum: Banning %user% from %forum%
     unbanning_user_from_forum: Unbanning %user% from %forum%
+    recent_comments: Recent comments
 
 two_factor:
     explanation: To complete the login, you must enter the verification code sent by email to %email%.

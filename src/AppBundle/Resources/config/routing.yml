@@ -33,6 +33,12 @@ raddit_app_moderated:
     methods: [GET]
     requirements: { sortBy: hot|new|top|controversial, page: \d+ }
 
+raddit_app_comment_list:
+    defaults: { _controller: RadditAppBundle:Comment:list, page: 1 }
+    path: /comments/{page}
+    methods: [GET]
+    requirements: { page: \d+ }
+
 raddit_app_user:
     defaults: { _controller: RadditAppBundle:User:userPage }
     path: /user/{username}

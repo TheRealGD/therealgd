@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Raddit\AppBundle\Entity\Exception\BannedFromForumException;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Raddit\AppBundle\Repository\CommentRepository")
  * @ORM\Table(name="comments")
  */
 class Comment extends Votable {
