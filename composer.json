@@ -21,7 +21,7 @@
         ]
     },
     "require": {
-        "php": "^7.0",
+        "php": "^7.0.8",
         "ext-apcu": "*",
         "ext-curl": "*",
         "ext-pdo_pgsql": "*",
@@ -96,7 +96,7 @@
     },
     "config": {
         "platform": {
-            "php": "7.0"
+            "php": "7.0.8"
         },
         "sort-packages": true
     }
