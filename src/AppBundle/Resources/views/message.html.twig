@@ -1,22 +1,15 @@
 {% extends '@RadditApp/base.html.twig' %}
 {% from '@RadditApp/macros/messages.html.twig' import message_thread %}
 
-{% block page_classes %}
-  message-page
-{% endblock %}
-
-{% block title %}
-  {{ thread.title }}
-{% endblock %}
+{% block page_classes 'message-page' %}
+{% block title thread.title %}
 
 {% block body %}
   <h1>{{ thread.title }}</h1>
 
   {{ message_thread(thread) }}
 
-  {{ form_start(form) }}
-    {{ form_row(form.body, {attr: {rows: 6}}) }}
-
-    {{ form_row(form.submit) }}
-  {{ form_end(form) }}
+  {% if is_granted('reply', thread) %}
+    {{ render(controller('RadditAppBundle:Message:replyForm', {threadId: thread.id})) }}
+  {% endif %}
 {% endblock %}

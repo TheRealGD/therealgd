@@ -7,6 +7,7 @@
   {%- from _self import _class_by_flag -%}
   <a href="{{ path('raddit_app_user', {username: user.username}) }}"
      class="{{ (options.submitter ?? false) ? 'submitter' }} {{ _class_by_flag(options.flag ?? 0) }} {{ options.class ?? '' }}">
+    {{- (options.prefix ?? false) ? '/u/' -}}
     {{- user.username -}}
   </a>
   {%- if options.flag ?? 0 == 0 -%}

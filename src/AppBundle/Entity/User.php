@@ -141,7 +141,7 @@ class User implements UserInterface, TwoFactorInterface {
     private $locale = 'en';
 
     /**
-     * @ORM\OneToMany(targetEntity="Notification", mappedBy="user", fetch="EXTRA_LAZY")
+     * @ORM\OneToMany(targetEntity="Notification", mappedBy="user", fetch="EXTRA_LAZY", cascade={"persist"})
      *
      * @var Notification[]|Collection|Selectable
      */
@@ -193,12 +193,21 @@ class User implements UserInterface, TwoFactorInterface {
      */
     private $preferredTheme;
 
+    /**
+     * @ORM\OneToMany(targetEntity="UserBlock", mappedBy="blocker")
+     * @ORM\OrderBy({"timestamp": "DESC"})
+     *
+     * @var UserBlock[]|Collection|Selectable
+     */
+    private $blocks;
+
     public function __construct() {
         $this->created = new \DateTime('@'.time());
         $this->notifications = new ArrayCollection();
         $this->submissions = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->bans = new ArrayCollection();
+        $this->blocks = new ArrayCollection();
     }
 
     /**
@@ -451,6 +460,12 @@ class User implements UserInterface, TwoFactorInterface {
         return $this->notifications;
     }
 
+    public function sendNotification(Notification $notification) {
+        if (!$this->notifications->contains($notification)) {
+            $this->notifications->add($notification);
+        }
+    }
+
     /**
      * @param int $page
      * @param int $maxPerPage
@@ -556,6 +571,41 @@ class User implements UserInterface, TwoFactorInterface {
      */
     public function setPreferredTheme($preferredTheme) {
         $this->preferredTheme = $preferredTheme;
+    }
+
+    /**
+     * @param int $page
+     * @param int $maxPerPage
+     *
+     * @return Pagerfanta|UserBlock[]
+     */
+    public function getPaginatedBlocks(int $page, int $maxPerPage = 25) {
+        $pager = new Pagerfanta(new DoctrineCollectionAdapter($this->blocks));
+        $pager->setMaxPerPage($maxPerPage);
+        $pager->setCurrentPage($page);
+
+        return $pager;
+    }
+
+    public function addBlock(UserBlock $block) {
+        if (!$this->blocks->contains($block)) {
+            $this->blocks->add($block);
+        }
+    }
+
+    public function isBlocking(User $user): bool {
+        $criteria = Criteria::create()
+            ->where(Criteria::expr()->eq('blocked', $user));
+
+        return count($this->blocks->matching($criteria)) > 0;
+    }
+
+    public function canBeMessagedBy($user): bool {
+        if (!$user instanceof User) {
+            return false;
+        }
+
+        return $user->isAdmin() || !$this->isBlocking($user);
     }
 
     /**

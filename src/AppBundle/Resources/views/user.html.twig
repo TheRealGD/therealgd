@@ -35,8 +35,13 @@
     <h1 class="sidebar__title">{{ 'user.toolbox'|trans }}</h1>
     <nav>
       <ul>
-        {% if is_granted('ROLE_USER') %}
-          <li><a href="{{ path('raddit_app_compose_message', {username: user.username}) }}">{{ 'user.message'|trans }}</a></li>
+        {% if is_granted('ROLE_USER') and user is not same as(app.user) %}
+          {% if is_granted('message', user)  %}
+            <li><a href="{{ path('raddit_app_compose_message', {username: user.username}) }}">{{ 'user.message'|trans }}</a></li>
+          {% endif %}
+          {% if not app.user.isBlocking(user) %}
+            <li><a href="{{ path('raddit_app_block_user', {username: user.username}) }}">{{ 'nav.block_user'|trans }}</a></li>
+          {% endif %}
         {% endif %}
         <li><a href="{{ path('raddit_app_user_submissions', {username: user.username}) }}">{{ 'user.submissions'|trans }}</a></li>
         <li><a href="{{ path('raddit_app_user_comments', {username: user.username}) }}">{{ 'user.comments'|trans }}</a></li>

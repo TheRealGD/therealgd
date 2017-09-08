@@ -6,28 +6,25 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="message_reply_notifications")
  */
 class MessageReplyNotification extends Notification {
+    // TODO: figure out why does this requires cascade={"persist"} while thread
+    // notifications don't.
     /**
-     * @ORM\ManyToOne(targetEntity="MessageReply", inversedBy="notifications")
+     * @ORM\ManyToOne(targetEntity="MessageReply", cascade={"persist"})
      *
-     * @var MessageReply|null
+     * @var MessageReply
      */
     private $reply;
 
-    /**
-     * @return MessageReply|null
-     */
-    public function getReply() {
-        return $this->reply;
+    public function __construct(User $receiver, MessageReply $reply) {
+        parent::__construct($receiver);
+
+        $this->reply = $reply;
     }
 
-    /**
-     * @param MessageReply|null $reply
-     */
-    public function setReply($reply) {
-        $this->reply = $reply;
+    public function getReply(): MessageReply {
+        return $this->reply;
     }
 
     public function getType(): string {

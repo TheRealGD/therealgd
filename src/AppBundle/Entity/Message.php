@@ -2,8 +2,6 @@
 
 namespace Raddit\AppBundle\Entity;
 
-use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\Selectable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -91,9 +89,4 @@ abstract class Message {
     public function getIp() {
         return $this->ip;
     }
-
-    /**
-     * @return Notification[]|Collection|Selectable
-     */
-    abstract public function getNotifications();
 }

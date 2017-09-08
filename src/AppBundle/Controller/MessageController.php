@@ -34,7 +34,7 @@ final class MessageController extends Controller {
     /**
      * Start a new message thread.
      *
-     * @Security("is_granted('ROLE_USER')")
+     * @Security("is_granted('message', receiver)")
      *
      * @param Request       $request
      * @param EntityManager $em
@@ -66,9 +66,34 @@ final class MessageController extends Controller {
     }
 
     /**
-     * View and reply to a message thread.
+     * View a message thread.
      *
      * @Security("is_granted('access', thread)")
+     *
+     * @param MessageThread $thread
+     *
+     * @return Response
+     */
+    public function messageAction(MessageThread $thread) {
+        return $this->render('@RadditApp/message.html.twig', [
+            'thread' => $thread,
+        ]);
+    }
+
+    public function replyFormAction($threadId) {
+        $form = $this->createForm(MessageReplyType::class, null, [
+            'action' => $this->generateUrl('raddit_app_reply_to_message', [
+                'id' => $threadId,
+            ]),
+        ]);
+
+        return $this->render('@RadditApp/fragments/message_reply_form.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Security("is_granted('reply', thread)")
      *
      * @param Request       $request
      * @param EntityManager $em
@@ -76,7 +101,7 @@ final class MessageController extends Controller {
      *
      * @return Response
      */
-    public function messageAction(Request $request, EntityManager $em, MessageThread $thread) {
+    public function replyAction(Request $request, EntityManager $em, MessageThread $thread) {
         $data = new MessageData($this->getUser(), $request->getClientIp());
 
         $form = $this->createForm(MessageReplyType::class, $data);
@@ -92,7 +117,7 @@ final class MessageController extends Controller {
             ]);
         }
 
-        return $this->render('@RadditApp/message.html.twig', [
+        return $this->render('@RadditApp/message_reply_errors.html.twig', [
             'form' => $form->createView(),
             'thread' => $thread,
         ]);

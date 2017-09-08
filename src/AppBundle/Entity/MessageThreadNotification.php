@@ -6,28 +6,23 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="message_thread_notifications")
  */
 class MessageThreadNotification extends Notification {
     /**
-     * @ORM\ManyToOne(targetEntity="MessageThread", inversedBy="notifications")
+     * @ORM\ManyToOne(targetEntity="MessageThread")
      *
-     * @var MessageThread|null
+     * @var MessageThread
      */
     private $thread;
 
-    /**
-     * @return MessageThread|null
-     */
-    public function getThread() {
-        return $this->thread;
+    public function __construct(User $receiver, MessageThread $thread) {
+        parent::__construct($receiver);
+
+        $this->thread = $thread;
     }
 
-    /**
-     * @param MessageThread|null $thread
-     */
-    public function setThread($thread) {
-        $this->thread = $thread;
+    public function getThread(): MessageThread {
+        return $this->thread;
     }
 
     public function getType(): string {

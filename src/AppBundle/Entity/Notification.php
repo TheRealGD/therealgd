@@ -33,6 +33,10 @@ abstract class Notification {
      */
     private $user;
 
+    public function __construct(User $receiver) {
+        $this->user = $receiver;
+    }
+
     abstract public function getType(): string;
 
     /**
@@ -42,17 +46,7 @@ abstract class Notification {
         return $this->id;
     }
 
-    /**
-     * @return User|null
-     */
-    public function getUser() {
+    public function getUser(): User {
         return $this->user;
-    }
-
-    /**
-     * @param User|null $user
-     */
-    public function setUser($user) {
-        $this->user = $user;
     }
 }

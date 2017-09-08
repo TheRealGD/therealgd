@@ -9,29 +9,22 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class CommentNotification extends Notification {
     /**
-     * @ORM\ManyToOne(targetEntity="Comment", inversedBy="notifications")
+     * @ORM\ManyToOne(targetEntity="Comment")
      *
-     * @var Comment|null
+     * @var Comment
      */
     private $comment;
 
-    /**
-     * @return Comment|null
-     */
-    public function getComment() {
-        return $this->comment;
-    }
+    public function __construct(User $receiver, Comment $comment) {
+        parent::__construct($receiver);
 
-    /**
-     * @param Comment|null $comment
-     */
-    public function setComment($comment) {
         $this->comment = $comment;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    public function getComment(): Comment {
+        return $this->comment;
+    }
+
     public function getType(): string {
         return 'comment';
     }

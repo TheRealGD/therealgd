@@ -8,7 +8,7 @@ use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 final class UserVoter extends Voter {
-    const ATTRIBUTES = ['edit_user'];
+    const ATTRIBUTES = ['edit_user', 'message'];
 
     /**
      * @var AccessDecisionManagerInterface
@@ -33,9 +33,16 @@ final class UserVoter extends Voter {
      * {@inheritdoc}
      */
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token) {
+        if (!$subject instanceof User) {
+            throw new \InvalidArgumentException('$subject must be '.User::class);
+        }
+
         switch ($attribute) {
         case 'edit_user':
+            // TODO: move to user entity
             return $this->canEditUser($subject, $token);
+        case 'message':
+            return $subject->canBeMessagedBy($token->getUser());
         default:
             throw new \InvalidArgumentException('Unknown attribute '.$attribute);
         }

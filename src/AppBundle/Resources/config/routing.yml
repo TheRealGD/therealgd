@@ -71,6 +71,23 @@ raddit_app_user_settings:
     path: /user_settings/{username}
     methods: [GET, POST]
 
+raddit_app_user_block_list:
+    defaults: { _controller: RadditAppBundle:User:blockList, page: 1 }
+    path: /block_list/{page}
+    methods: [GET, POST]
+    requirements: { page: \d+ }
+
+raddit_app_block_user:
+    defaults: { _controller: RadditAppBundle:User:block }
+    path: /block/{username}
+    methods: [GET, POST]
+
+raddit_app_unblock_user:
+    defaults: { _controller: RadditAppBundle:User:unblock }
+    path: /unblock/{id}
+    methods: [POST]
+    requirements: { id: "%uuid_regex%" }
+
 raddit_app_registration:
     defaults: { _controller: RadditAppBundle:User:registration }
     path: /registration
@@ -248,12 +265,17 @@ raddit_app_message_list:
 raddit_app_message:
     defaults: { _controller: RadditAppBundle:Message:message }
     path: /message/{id}
-    methods: [GET, POST]
+    methods: [GET]
 
 raddit_app_compose_message:
     defaults: { _controller: RadditAppBundle:Message:compose }
     path: /compose_message/{username}
     methods: [GET, POST]
+
+raddit_app_reply_to_message:
+    defaults: { _controller: RadditAppBundle:Message:reply }
+    path: /message_reply/{id}
+    methods: [POST]
 
 raddit_app_wiki:
     defaults: { _controller: RadditAppBundle:Wiki:wiki, path: index }

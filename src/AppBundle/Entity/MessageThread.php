@@ -29,13 +29,6 @@ class MessageThread extends Message {
     private $replies;
 
     /**
-     * @ORM\OneToMany(targetEntity="MessageThreadNotification", mappedBy="thread", cascade={"persist", "remove"})
-     *
-     * @var Notification[]|Collection|Selectable
-     */
-    private $notifications;
-
-    /**
      * @ORM\Column(type="text")
      *
      * @var string
@@ -43,12 +36,16 @@ class MessageThread extends Message {
     private $title;
 
     public function __construct(User $sender, string $body, $ip, User $receiver, string $title) {
+        if (!$receiver->canBeMessagedBy($sender)) {
+            throw new \DomainException('$sender cannot message $receiver');
+        }
+
         parent::__construct($sender, $body, $ip);
 
         $this->receiver = $receiver;
         $this->replies = new ArrayCollection();
-        $this->notifications = new ArrayCollection();
         $this->title = $title;
+        $this->notify();
     }
 
     public function getReceiver(): User {
@@ -66,16 +63,28 @@ class MessageThread extends Message {
         return $this->replies;
     }
 
-    /**
-     * @return Notification[]|Collection|Selectable
-     */
-    public function getNotifications() {
-        return $this->notifications;
-    }
-
     public function addReply(MessageReply $reply) {
+        if (!$this->userCanReply($reply->getSender())) {
+            throw new \DomainException('Sender is not allowed to reply');
+        }
+
         if (!$this->replies->contains($reply)) {
             $this->replies->add($reply);
         }
+    }
+
+    public function userCanAccess($user): bool {
+        return $user === $this->receiver || $user === $this->getSender();
+    }
+
+    public function userCanReply($user): bool {
+        return $user === $this->receiver && $this->getSender()->canBeMessagedBy($user) ||
+            $user === $this->getSender() && $this->receiver->canBeMessagedBy($user);
+    }
+
+    private function notify() {
+        $notification = new MessageThreadNotification($this->receiver, $this);
+
+        $this->receiver->sendNotification($notification);
     }
 }

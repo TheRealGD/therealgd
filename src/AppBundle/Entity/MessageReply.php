@@ -2,9 +2,6 @@
 
 namespace Raddit\AppBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\Selectable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -20,28 +17,24 @@ class MessageReply extends Message {
      */
     private $thread;
 
-    /**
-     * @ORM\OneToMany(targetEntity="MessageReplyNotification", mappedBy="reply", cascade={"persist", "remove"})
-     *
-     * @var Notification[]|Collection|Selectable
-     */
-    private $notifications;
-
     public function __construct(User $sender, string $body, $ip, MessageThread $thread) {
         parent::__construct($sender, $body, $ip);
 
         $this->thread = $thread;
-        $this->notifications = new ArrayCollection();
+        $this->notify();
     }
 
     public function getThread(): MessageThread {
         return $this->thread;
     }
 
-    /**
-     * @return Notification[]|Collection|Selectable
-     */
-    public function getNotifications() {
-        return $this->notifications;
+    public function notify() {
+        if ($this->getSender() === $this->thread->getSender()) {
+            $receiver = $this->thread->getReceiver();
+        } else {
+            $receiver = $this->thread->getSender();
+        }
+
+        $receiver->sendNotification(new MessageReplyNotification($receiver, $this));
     }
 }

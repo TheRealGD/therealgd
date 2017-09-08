@@ -56,6 +56,7 @@
               <li><a href="{{ path('raddit_app_message_list') }}">{{ icon('mail') }} {{ 'nav.messages'|trans }}</a></li>
               <li><a href="{{ path('raddit_app_edit_user', {username: app.user.username}) }}">{{ icon('lock') }} {{ 'nav.my_account'|trans }}</a></li>
               <li><a href="{{ path('raddit_app_user_settings', {username: app.user.username}) }}">{{ icon('settings') }} {{ 'nav.user_settings'|trans }}</a></li>
+              <li><a href="{{ path('raddit_app_user_block_list') }}">{{ icon('block') }} {{ 'nav.block_list'|trans }}</a></li>
               <li><a href="{{ logout_path() }}">{{ icon('logout') }} {{ 'nav.log_out'|trans }}</a></li>
             </ul>
           </li>

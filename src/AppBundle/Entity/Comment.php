@@ -4,7 +4,6 @@ namespace Raddit\AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\Selectable;
 use Doctrine\ORM\Mapping as ORM;
 use Raddit\AppBundle\Entity\Exception\BannedFromForumException;
 
@@ -89,13 +88,6 @@ class Comment extends Votable {
     private $ip;
 
     /**
-     * @ORM\OneToMany(targetEntity="CommentNotification", mappedBy="comment", cascade={"persist", "remove"})
-     *
-     * @var CommentNotification[]|Collection|Selectable
-     */
-    private $notifications;
-
-    /**
      * @ORM\Column(type="datetimetz", nullable=true)
      *
      * @var \DateTime|null
@@ -146,8 +138,8 @@ class Comment extends Votable {
         $this->timestamp = $timestamp ?: new \DateTime('@'.time());
         $this->children = new ArrayCollection();
         $this->votes = new ArrayCollection();
-        $this->notifications = new ArrayCollection();
         $this->vote($user, $ip, Votable::VOTE_UP);
+        $this->notify();
     }
 
     /**
@@ -258,13 +250,6 @@ class Comment extends Votable {
     }
 
     /**
-     * @return Collection|Selectable|CommentNotification[]
-     */
-    public function getNotifications() {
-        return $this->notifications;
-    }
-
-    /**
      * @return \DateTime|null
      */
     public function getEditedAt() {
@@ -296,5 +281,16 @@ class Comment extends Votable {
         }
 
         $this->userFlag = $userFlag;
+    }
+
+    private function notify() {
+        $receiver = ($this->parent ?: $this->submission)->getUser();
+
+        if ($this->user === $receiver || $receiver->isBlocking($this->user)) {
+            // don't send notification to oneself or to a blocking user
+            return;
+        }
+
+        $receiver->sendNotification(new CommentNotification($receiver, $this));
     }
 }

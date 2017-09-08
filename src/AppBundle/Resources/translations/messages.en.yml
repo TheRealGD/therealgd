@@ -15,6 +15,8 @@ action:
     go_to_home_page: Go to home page
     ban: Ban
     unban: Unban
+    block: Block
+    unblock: Unblock
 
 add_moderator:
     title: Add moderator to %forum%
@@ -103,6 +105,8 @@ flash:
     user_marked_untrusted: The user was marked as untrusted.
     user_was_banned: The user was banned.
     user_was_unbanned: The user was unbanned.
+    user_blocked: The user was blocked.
+    user_unblocked: The user was unblocked.
 
 forum:
     moderators: Moderators
@@ -159,6 +163,7 @@ help:
     delete_forum_warning: All content on this forum will be irreversibly deleted!
     forum_description: A short description of the forum. Search engines will present this description in their results.
     append_to_default_style: Leave this checked unless your CSS provides a complete stylesheet for the entire site.
+    block_users: Blocking users prevents them from sending you private messages, and you won't receive notifications when they reply to you.
 
 inbox:
     title: Inbox
@@ -190,6 +195,8 @@ label:
     general: General
     appearance: Appearance
     preferred_theme: Preferred theme
+    blocked: Blocked
+    comment: Comment
 
 login_form:
     log_in: Log in
@@ -240,6 +247,8 @@ nav:
     moderated: Moderated
     bans: Bans
     ban_history: Ban history
+    block_user: Block user
+    block_list: Block list
 
 placeholder:
     default: (default)
@@ -326,6 +335,8 @@ title:
     showing_ban_history_for_user_in_forum: Showing ban history for %user% in %forum%
     banning_user_from_forum: Banning %user% from %forum%
     unbanning_user_from_forum: Unbanning %user% from %forum%
+    block_list: Block list
+    blocking_user: Blocking %user%
     recent_comments: Recent comments
 
 two_factor:

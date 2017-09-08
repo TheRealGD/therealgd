@@ -1,0 +1,46 @@
+{% extends '@RadditApp/base.html.twig' %}
+
+{% block page_classes 'user-block-list-page' %}
+{% block title 'title.block_list'|trans %}
+
+{% from '@RadditApp/macros/user_macros.html.twig' import user_link %}
+
+{% block body %}
+  <h1>{{ block('title') }}</h1>
+
+  <div class="alert alert--notice">
+    <p>{{ 'help.block_users'|trans }}</p>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>{{ 'label.username'|trans }}</th>
+        <th>{{ 'label.blocked'|trans }}</th>
+        <th>{{ 'label.comment'|trans }}</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for block in blocks %}
+        <tr>
+          <td>{{ user_link(block.blocked) }}</td>
+          <td>
+            {% with {date: block.timestamp|localizeddate('long', 'short')} %}
+            <time datetime="{{ block.timestamp|date('c') }}" title="{{ date }}" class="relative-time">
+              {{- date -}}
+            </time>
+            {% endwith %}
+          </td>
+          <td>{{ block.comment }}</td>
+          <td>
+            <form action="{{ path('raddit_app_unblock_user', {id: block.id}) }}" method="post">
+              <input type="hidden" name="token" value="{{ csrf_token('unblock') }}">
+              <button class="button button--inline">{{ 'action.unblock'|trans }}</button>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

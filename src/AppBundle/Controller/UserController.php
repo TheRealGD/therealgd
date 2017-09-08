@@ -4,7 +4,10 @@ namespace Raddit\AppBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Raddit\AppBundle\Entity\User;
+use Raddit\AppBundle\Entity\UserBlock;
+use Raddit\AppBundle\Form\Model\UserBlockData;
 use Raddit\AppBundle\Form\Model\UserSettings;
+use Raddit\AppBundle\Form\UserBlockType;
 use Raddit\AppBundle\Form\UserSettingsType;
 use Raddit\AppBundle\Form\UserType;
 use Raddit\AppBundle\Repository\NotificationRepository;
@@ -172,6 +175,83 @@ final class UserController extends Controller {
             'form' => $form->createView(),
             'user' => $subject,
         ]);
+    }
+
+    /**
+     * @Security("is_granted('ROLE_USER')")
+     *
+     * @param int $page
+     *
+     * @return Response
+     */
+    public function blockListAction(int $page) {
+        /* @var User $user */
+        $user = $this->getUser();
+
+        return $this->render('@RadditApp/user_block_list.html.twig', [
+            'blocks' => $user->getPaginatedBlocks($page),
+        ]);
+    }
+
+    /**
+     * @Security("is_granted('ROLE_USER')")
+     *
+     * @param User          $subject
+     * @param Request       $request
+     * @param EntityManager $em
+     *
+     * @return Response
+     */
+    public function blockAction(User $subject, Request $request, EntityManager $em) {
+        /* @var User $user */
+        $user = $this->getUser();
+
+        if ($user->isBlocking($subject)) {
+            throw $this->createNotFoundException('The user is already blocked');
+        }
+
+        $data = new UserBlockData();
+
+        $form = $this->createForm(UserBlockType::class, $data);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $block = $data->toBlock($user, $subject);
+
+            $em->persist($block);
+            $em->flush();
+
+            $this->addFlash('success', 'flash.user_blocked');
+
+            return $this->redirectToRoute('raddit_app_user_block_list');
+        }
+
+        return $this->render('@RadditApp/user_block.html.twig', [
+            'form' => $form->createView(),
+            'subject' => $subject,
+        ]);
+    }
+
+    /**
+     * @Security("is_granted('ROLE_USER') and user === block.getBlocker()")
+     *
+     * @param UserBlock     $block
+     * @param EntityManager $em
+     * @param Request       $request
+     *
+     * @return Response
+     */
+    public function unblockAction(UserBlock $block, EntityManager $em, Request $request) {
+        if (!$this->isCsrfTokenValid('unblock', $request->request->get('token'))) {
+            throw new AccessDeniedHttpException();
+        }
+
+        $em->remove($block);
+        $em->flush();
+
+        $this->addFlash('success', 'flash.user_unblocked');
+
+        return $this->redirectToRoute('raddit_app_user_block_list');
     }
 
     /**

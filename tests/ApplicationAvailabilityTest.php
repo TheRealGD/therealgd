@@ -144,5 +144,6 @@ class ApplicationAvailabilityTest extends WebTestCase {
         yield ['/inbox'];
         yield ['/submit'];
         yield ['/submit/news'];
+        yield ['/block_list'];
     }
 }

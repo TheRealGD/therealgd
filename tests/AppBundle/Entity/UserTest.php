@@ -5,11 +5,31 @@ namespace Raddit\Tests\AppBundle\Entity;
 use PHPUnit\Framework\TestCase;
 use Raddit\AppBundle\Entity\Ban;
 use Raddit\AppBundle\Entity\User;
+use Raddit\AppBundle\Entity\UserBlock;
 
 /**
  * @group time-sensitive
  */
 class UserTest extends TestCase {
+    public function testUsersCannotMessageUsersWhoBlockThem() {
+        $sender = new User();
+
+        $receiver = new User();
+        $receiver->addBlock(new UserBlock($receiver, $sender, ''));
+
+        $this->assertFalse($receiver->canBeMessagedBy($sender));
+    }
+
+    public function testAdminsCanMessageUsersWhoBlockThem() {
+        $sender = new User();
+        $sender->setAdmin(true);
+
+        $receiver = new User();
+        $receiver->addBlock(new UserBlock($receiver, $sender, ''));
+
+        $this->assertTrue($sender->canBeMessagedBy($receiver));
+    }
+
     /**
      * @dataProvider nonCanonicalUsernameProvider
      *
