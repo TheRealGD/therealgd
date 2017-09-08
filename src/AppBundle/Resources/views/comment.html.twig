@@ -12,7 +12,7 @@
 
   {{ submission(submission) }}
 
-  <div class="alert alert--notice alert--no-animation" role="alert">
+  <div class="alert alert--notice single-comment-alert">
     <p>
       {{ 'comments.viewing_thread'|trans }}
       <a href="{{ path('raddit_app_comments', {forum_name: forum.name, submission_id: submission.id, slug: submission.title|slugify}) }}">
