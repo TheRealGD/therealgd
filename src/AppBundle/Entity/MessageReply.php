@@ -17,11 +17,17 @@ class MessageReply extends Message {
      */
     private $thread;
 
+    /**
+     * @ORM\OneToMany(targetEntity="MessageReplyNotification", mappedBy="reply", cascade={"remove"})
+     */
+    private $notifications;
+
     public function __construct(User $sender, string $body, $ip, MessageThread $thread) {
         parent::__construct($sender, $body, $ip);
 
         $this->thread = $thread;
         $this->notify();
+        $this->notifications = null; // remove unused field warning
     }
 
     public function getThread(): MessageThread {

@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class CommentNotification extends Notification {
     /**
-     * @ORM\ManyToOne(targetEntity="Comment")
+     * @ORM\ManyToOne(targetEntity="Comment", inversedBy="notifications")
      *
      * @var Comment
      */

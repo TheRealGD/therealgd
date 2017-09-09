@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class MessageThreadNotification extends Notification {
     /**
-     * @ORM\ManyToOne(targetEntity="MessageThread")
+     * @ORM\ManyToOne(targetEntity="MessageThread", inversedBy="notifications")
      *
      * @var MessageThread
      */

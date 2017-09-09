@@ -108,6 +108,11 @@ class Comment extends Votable {
      */
     private $userFlag = 0;
 
+    /**
+     * @ORM\OneToMany(targetEntity="CommentNotification", mappedBy="comment", cascade={"remove"})
+     */
+    private $notifications;
+
     public function __construct(
         string $body,
         User $user,
@@ -140,6 +145,7 @@ class Comment extends Votable {
         $this->votes = new ArrayCollection();
         $this->vote($user, $ip, Votable::VOTE_UP);
         $this->notify();
+        $this->notifications = null; // remove unused field warning
     }
 
     /**

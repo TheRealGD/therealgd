@@ -35,6 +35,11 @@ class MessageThread extends Message {
      */
     private $title;
 
+    /**
+     * @ORM\OneToMany(targetEntity="MessageThreadNotification", mappedBy="thread", cascade={"remove"})
+     */
+    private $notifications;
+
     public function __construct(User $sender, string $body, $ip, User $receiver, string $title) {
         if (!$receiver->canBeMessagedBy($sender)) {
             throw new \DomainException('$sender cannot message $receiver');
@@ -46,6 +51,7 @@ class MessageThread extends Message {
         $this->replies = new ArrayCollection();
         $this->title = $title;
         $this->notify();
+        $this->notifications = null; // remove unused field warning
     }
 
     public function getReceiver(): User {
