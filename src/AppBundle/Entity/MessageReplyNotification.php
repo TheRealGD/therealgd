@@ -11,7 +11,7 @@ class MessageReplyNotification extends Notification {
     // TODO: figure out why does this requires cascade={"persist"} while thread
     // notifications don't.
     /**
-     * @ORM\ManyToOne(targetEntity="MessageReply", inversedBy="notifications" cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="MessageReply", inversedBy="notifications", cascade={"persist"})
      *
      * @var MessageReply
      */
