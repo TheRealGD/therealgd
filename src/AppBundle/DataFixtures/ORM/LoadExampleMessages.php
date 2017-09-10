@@ -22,7 +22,7 @@ class LoadExampleMessages extends AbstractFixture implements DependentFixtureInt
             'Example message.'
         );
 
-        /** @noinspection PhpParamsInspection */
+        /* @noinspection PhpParamsInspection */
         $thread->addReply(new MessageReply(
              $this->getReference('user-emma'),
              'This is a reply to the message originating from a fixture.',

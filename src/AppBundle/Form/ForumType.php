@@ -82,7 +82,7 @@ final class ForumType extends AbstractType {
                 $editing = $form->getData() && $form->getData()->getEntityId();
 
                 return $editing ? ['edit'] : ['create'];
-            }
+            },
         ]);
 
         $resolver->setAllowedTypes('honeypot', ['bool']);

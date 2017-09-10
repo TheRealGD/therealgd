@@ -29,7 +29,7 @@ class ModeratorType extends AbstractType {
             ->add('user', TextType::class, [
                 'constraints' => [
                     new NotBlank(),
-                ]
+                ],
             ])
             ->add('submit', SubmitType::class)
         ;

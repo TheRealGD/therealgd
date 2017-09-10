@@ -100,7 +100,7 @@ final class SubmissionType extends AbstractType {
                 $groups = ['Default'];
                 $trusted = $this->authorizationChecker->isGranted('ROLE_TRUSTED_USER');
 
-                /** @noinspection PhpUndefinedMethodInspection */
+                /* @noinspection PhpUndefinedMethodInspection */
                 if ($form->has('delete') && $form->get('delete')->isClicked()) {
                     $groups[] = 'delete';
                 } elseif ($form->getData() && $form->getData()->getEntityId()) {

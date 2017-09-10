@@ -20,7 +20,7 @@ final class VoteController extends Controller {
      * @param Request       $request
      * @param string        $entityClass
      * @param int           $id
-     * @param string        $_format 'html' or 'json'
+     * @param string        $_format     'html' or 'json'
      *
      * @return Response
      */

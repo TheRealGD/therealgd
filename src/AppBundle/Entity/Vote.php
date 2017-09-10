@@ -113,7 +113,7 @@ abstract class Vote {
      */
     public function setIp($ip) {
         if ($ip !== null && !filter_var($ip, FILTER_VALIDATE_IP)) {
-            throw new \InvalidArgumentException("Bad IP address");
+            throw new \InvalidArgumentException('Bad IP address');
         }
 
         $this->ip = $ip;

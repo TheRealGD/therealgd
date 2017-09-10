@@ -26,8 +26,7 @@ use Symfony\Bridge\Doctrine\Form\ChoiceList\EntityLoaderInterface;
  *
  * @todo remove this hack
  */
-class UuidAwareORMQueryBuilderLoader implements EntityLoaderInterface
-{
+class UuidAwareORMQueryBuilderLoader implements EntityLoaderInterface {
     /**
      * Contains the query builder that builds the query for fetching the
      * entities.
@@ -43,24 +42,21 @@ class UuidAwareORMQueryBuilderLoader implements EntityLoaderInterface
      *
      * @param QueryBuilder $queryBuilder The query builder for creating the query builder
      */
-    public function __construct(QueryBuilder $queryBuilder)
-    {
+    public function __construct(QueryBuilder $queryBuilder) {
         $this->queryBuilder = $queryBuilder;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getEntities()
-    {
+    public function getEntities() {
         return $this->queryBuilder->getQuery()->execute();
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getEntitiesByIds($identifier, array $values)
-    {
+    public function getEntitiesByIds($identifier, array $values) {
         $qb = clone $this->queryBuilder;
         $alias = current($qb->getRootAliases());
         $parameter = 'ORMQueryBuilderLoader_getEntitiesByIds_'.$identifier;
@@ -98,4 +94,3 @@ class UuidAwareORMQueryBuilderLoader implements EntityLoaderInterface
             ->getResult();
     }
 }
-

@@ -132,8 +132,8 @@ final class WikiController extends Controller {
      *     "repository_method": "findOneCaseInsensitively"
      * })
      *
-     * @param WikiPage      $wikiPage
-     * @param int           $page
+     * @param WikiPage $wikiPage
+     * @param int      $page
      *
      * @return Response
      */

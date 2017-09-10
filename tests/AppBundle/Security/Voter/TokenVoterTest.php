@@ -17,7 +17,7 @@ class TokenVoterTest extends TestCase {
     private $accessDecisionManager;
 
     protected function setUp() {
-        $this->accessDecisionManager = new class implements AccessDecisionManagerInterface {
+        $this->accessDecisionManager = new class() implements AccessDecisionManagerInterface {
             public function decide(TokenInterface $token, array $attributes, $object = null) {
                 return !array_diff($attributes, array_map(function (Role $role) {
                     return $role->getRole();

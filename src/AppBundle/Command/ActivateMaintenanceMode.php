@@ -35,6 +35,7 @@ EOHELP
         } else {
             if (!@unlink($this->getIncludeFilePath())) {
                 $io->error('Could not remove '.$this->getIncludeFilePath());
+
                 return 1;
             }
 

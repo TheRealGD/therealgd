@@ -601,7 +601,7 @@ class User implements UserInterface, TwoFactorInterface {
     }
 
     public function canBeMessagedBy($user): bool {
-        if (!$user instanceof User) {
+        if (!$user instanceof self) {
             return false;
         }
 

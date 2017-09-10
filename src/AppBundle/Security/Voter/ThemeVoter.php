@@ -32,7 +32,7 @@ class ThemeVoter extends Voter {
             return true;
         }
 
-        /** @var Theme $subject */
+        /* @var Theme $subject */
         return $subject->getAuthor() === $token->getUser();
     }
 }

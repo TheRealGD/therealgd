@@ -55,7 +55,6 @@ class ForumTest extends TestCase {
         $user = new User();
         $user->setAdmin(true);
 
-
         $this->assertTrue($this->forum->userCanDelete($user));
     }
 

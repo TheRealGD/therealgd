@@ -40,5 +40,4 @@ class ForumBanRepository extends EntityRepository {
 
         return $pager;
     }
-
 }

@@ -47,4 +47,3 @@ class UniqueForumValidator extends ConstraintValidator {
         }
     }
 }
-

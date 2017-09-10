@@ -163,7 +163,7 @@ class CssValidator extends ConstraintValidator {
     }
 
     private function validateCharset(Charset $cssValue, Css $constraint) {
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         if (!preg_match('/^utf-?8$/i', $cssValue->getCharset()->getString())) {
             $this->context->buildViolation($constraint->nonUtf8NotAllowedMessage)
                 ->setParameter('{{ line }}', $cssValue->getLineNo())

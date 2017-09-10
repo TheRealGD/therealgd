@@ -156,7 +156,7 @@ final class ForumController extends Controller {
      *
      * @param Request       $request
      * @param EntityManager $em
-     * @param Forum         $forum one of 'subscribe' or 'unsubscribe'
+     * @param Forum         $forum   one of 'subscribe' or 'unsubscribe'
      * @param string        $action
      *
      * @return Response
