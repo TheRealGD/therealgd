@@ -14,16 +14,21 @@ class SubmissionRepository extends EntityRepository {
     const MAX_PER_PAGE = 20;
 
     /**
-     * @param string[] $forumNames
+     * @param string[] $forums array where keys are forum IDs
      * @param string   $sortBy
      * @param int      $page
      *
      * @return Pagerfanta|Submission[]
      */
-    public function findFrontPageSubmissions(array $forumNames, string $sortBy, int $page = 1) {
+    public function findFrontPageSubmissions(array $forums, string $sortBy, int $page = 1) {
+        if (isset($forums[0])) {
+            // make sure $forums is id => forum_name array
+            throw new \InvalidArgumentException('Keys in $forums must be IDs');
+        }
+
         $qb = $this->findSortedQb($sortBy)
-            ->join('s.forum', 'f', 'WITH', 'f.name IN (:forums)')
-            ->setParameter(':forums', $forumNames);
+            ->where('IDENTITY(s.forum) IN (:forums)')
+            ->setParameter(':forums', array_keys($forums));
 
         return $this->paginate($qb, $page);
     }
@@ -83,24 +88,15 @@ class SubmissionRepository extends EntityRepository {
         return $qb;
     }
 
-    /**
-     * @param QueryBuilder $qb
-     */
     private function sortByHot(QueryBuilder $qb) {
         $qb->addOrderBy('s.ranking', 'DESC');
         $qb->addOrderBy('s.id', 'DESC');
     }
 
-    /**
-     * @param QueryBuilder $qb
-     */
     private function sortByNewest(QueryBuilder $qb) {
         $qb->addOrderBy('s.id', 'DESC');
     }
 
-    /**
-     * @param QueryBuilder $qb
-     */
     private function sortByTop(QueryBuilder $qb) {
         $qb->addSelect('COUNT(uv) - COUNT(dv) AS HIDDEN net_score')
             ->leftJoin('s.votes', 'uv', 'WITH', 'uv.upvote = true')
@@ -109,9 +105,6 @@ class SubmissionRepository extends EntityRepository {
             ->addOrderBy('net_score', 'DESC');
     }
 
-    /**
-     * @param QueryBuilder $qb
-     */
     private function sortByControversial(QueryBuilder $qb) {
         $qb->addSelect('COUNT(uv)/NULLIF(COUNT(dv), 0) AS HIDDEN controversy')
             ->leftJoin('s.votes', 'uv', 'WITH', 'uv.upvote = true')
@@ -120,14 +113,10 @@ class SubmissionRepository extends EntityRepository {
             ->addOrderBy('controversy', 'ASC');
     }
 
-    /**
-     * @param QueryBuilder|\Doctrine\ORM\Query $query
-     * @param int                              $page
-     *
-     * @return Pagerfanta
-     */
-    private function paginate($query, int $page) {
-        $pager = new Pagerfanta(new DoctrineORMAdapter($query));
+    private function paginate($query, int $page): Pagerfanta {
+        // I don't think we need to fetch-join when joined entities aren't
+        // included in the result.
+        $pager = new Pagerfanta(new DoctrineORMAdapter($query, false, false));
         $pager->setMaxPerPage(self::MAX_PER_PAGE);
         $pager->setCurrentPage($page);
 

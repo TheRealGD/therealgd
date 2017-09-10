@@ -12,9 +12,11 @@ use Raddit\AppBundle\Entity\User;
 
 final class ForumRepository extends EntityRepository {
     /**
-     * @param int $page
+     * @param int    $page
+     * @param string $sortBy one of 'name', 'title', 'submissions',
+     *                       'subscribers', optionally with 'by_' prefix
      *
-     * @return Forum[]|Pagerfanta
+     * @return Pagerfanta|Forum[]
      */
     public function findForumsByPage(int $page, string $sortBy) {
         if (!preg_match('/^(?:by_)?(name|title|submissions|subscribers)$/', $sortBy, $matches)) {
@@ -54,9 +56,9 @@ final class ForumRepository extends EntityRepository {
      * @return string[]
      */
     public function findSubscribedForumNames(User $user) {
-        /** @noinspection SqlDialectInspection */
+        /* @noinspection SqlDialectInspection */
         $dql =
-            'SELECT f.name FROM '.Forum::class.' f WHERE f IN ('.
+            'SELECT f.id, f.name FROM '.Forum::class.' f WHERE f IN ('.
                 'SELECT IDENTITY(fs.forum) FROM '.ForumSubscription::class.' fs WHERE fs.user = ?1'.
             ') ORDER BY f.canonicalName ASC';
 
@@ -64,7 +66,7 @@ final class ForumRepository extends EntityRepository {
             ->setParameter(1, $user)
             ->getResult();
 
-        return array_column($names, 'name');
+        return array_column($names, 'name', 'id');
     }
 
     /**
@@ -74,13 +76,14 @@ final class ForumRepository extends EntityRepository {
      */
     public function findFeaturedForumNames() {
         $names = $this->createQueryBuilder('f')
-            ->select('f.name')
+            ->select('f.id')
+            ->addSelect('f.name')
             ->where('f.featured = TRUE')
             ->orderBy('f.canonicalName', 'ASC')
             ->getQuery()
             ->execute();
 
-        return array_column($names, 'name');
+        return array_column($names, 'name', 'id');
     }
 
     /**
@@ -89,7 +92,8 @@ final class ForumRepository extends EntityRepository {
      * @return string[]
      */
     public function findModeratedForumNames(User $user) {
-        $dql = 'SELECT f.name FROM '.Forum::class.' f WHERE f IN ('.
+        /* @noinspection SqlDialectInspection */
+        $dql = 'SELECT f.id, f.name FROM '.Forum::class.' f WHERE f IN ('.
             'SELECT IDENTITY(m.forum) FROM '.Moderator::class.' m WHERE m.user = ?1'.
         ') ORDER BY f.canonicalName ASC';
 
@@ -97,7 +101,7 @@ final class ForumRepository extends EntityRepository {
             ->setParameter(1, $user)
             ->getResult();
 
-        return array_column($names, 'name');
+        return array_column($names, 'name', 'id');
     }
 
     /**
