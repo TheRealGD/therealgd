@@ -4,7 +4,7 @@ namespace Raddit\AppBundle\Form;
 
 use Raddit\AppBundle\Entity\Theme;
 use Raddit\AppBundle\Form\Model\UserSettings;
-use Raddit\AppBundle\Form\Type\UuidAwareEntityType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -30,7 +30,7 @@ final class UserSettingsType extends AbstractType {
             ->add('show_custom_stylesheets', CheckboxType::class, [
                 'required' => false,
             ])
-            ->add('preferred_theme', UuidAwareEntityType::class, [
+            ->add('preferred_theme', EntityType::class, [
                 'class' => Theme::class,
                 'choice_label' => 'name',
                 'group_by' => 'author.username',

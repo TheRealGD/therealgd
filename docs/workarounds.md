@@ -18,10 +18,3 @@ If/when Symfony gains a UniqueEntity validator that can deal with DTOs, the
 aforementioned constraint, validator and DTO property can be removed.
 
 See <https://github.com/symfony/symfony/issues/22592>.
-
-## `UuidAwareORMQueryBuilderLoader`/`UuidAwareEntityType`
-
-These classes are temporary workarounds for lack of UUID support in Symfony's
-`ORMQueryBuilderLoader`.
-
-See <https://github.com/symfony/symfony/issues/23808>

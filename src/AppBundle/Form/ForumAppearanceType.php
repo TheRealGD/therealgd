@@ -4,7 +4,7 @@ namespace Raddit\AppBundle\Form;
 
 use Raddit\AppBundle\Entity\Theme;
 use Raddit\AppBundle\Form\Model\ForumData;
-use Raddit\AppBundle\Form\Type\UuidAwareEntityType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -16,7 +16,7 @@ class ForumAppearanceType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-            ->add('theme', UuidAwareEntityType::class, [
+            ->add('theme', EntityType::class, [
                 'class' => Theme::class,
                 'choice_label' => 'name',
                 'group_by' => 'author.username',
