@@ -53,7 +53,7 @@ class ThemeRevision {
     private $appendToDefaultStyle = true;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      *
      * @var string
      */
