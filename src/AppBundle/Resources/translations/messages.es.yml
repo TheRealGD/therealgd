@@ -279,7 +279,7 @@ user_form:
     save: Guardar cambios
 
 user_settings:
-    title: Editandos las opciones del usuario %username%
+    title: Editando las opciones del usuario %username%
 
 user_settings_form:
     locale: Lenguaje
