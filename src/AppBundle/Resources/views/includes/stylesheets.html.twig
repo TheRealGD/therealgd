@@ -1,4 +1,6 @@
-{% if theme is null or theme.appendToDefaultStyle %}
+{% set revision = revision ?? theme.latestRevision ?? null %}
+
+{% if revision is null or revision.appendToDefaultStyle %}
   {% if not night_mode %}
     <link rel="stylesheet" href="{{ preload(asset('build/red.css')) }}">
   {% else %}
@@ -6,15 +8,9 @@
   {% endif %}
 {% endif %}
 
-{% if theme is not null %}
-  <link rel="stylesheet" href="{{ path('raddit_app_stylesheet', {
-    id: theme.id,
-    field: 'common',
-    unixTime: theme.lastModified|date('U'),
-  }) }}">
-  <link rel="stylesheet" href="{{ path('raddit_app_stylesheet', {
-    id: theme.id,
-    field: night_mode ? 'night' : 'day',
-    unixTime: theme.lastModified|date('U'),
-  }) }}">
+{% if revision is not null %}
+  <link rel="stylesheet"
+        href="{{ path('raddit_app_stylesheet', {themeId: revision.id, field: 'common'}) }}">
+  <link rel="stylesheet"
+        href="{{ path('raddit_app_stylesheet', {themeId: revision.id, field: night_mode ? 'night' : 'day'}) }}">
 {% endif %}

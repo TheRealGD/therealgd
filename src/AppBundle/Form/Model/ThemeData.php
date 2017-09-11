@@ -3,6 +3,7 @@
 namespace Raddit\AppBundle\Form\Model;
 
 use Raddit\AppBundle\Entity\Theme;
+use Raddit\AppBundle\Entity\ThemeRevision;
 use Raddit\AppBundle\Entity\User;
 use Raddit\AppBundle\Validator\Constraints\Css;
 use Raddit\AppBundle\Validator\Constraints\UniqueTheme;
@@ -56,6 +57,13 @@ class ThemeData {
 
     public $appendToDefaultStyle = true;
 
+    /**
+     * @Assert\Length(max=300)
+     *
+     * @var string|null
+     */
+    public $comment;
+
     public function __construct(User $author) {
         // needed for UniqueEntity validator to work
         $this->author = $author;
@@ -64,10 +72,10 @@ class ThemeData {
     public static function createFromTheme(Theme $theme): self {
         $self = new self($theme->getAuthor());
         $self->name = $theme->getName();
-        $self->commonCss = $theme->getCommonCss();
-        $self->dayCss = $theme->getDayCss();
-        $self->nightCss = $theme->getNightCss();
-        $self->appendToDefaultStyle = $theme->appendToDefaultStyle();
+        $self->commonCss = $theme->getLatestRevision()->getCommonCss();
+        $self->dayCss = $theme->getLatestRevision()->getDayCss();
+        $self->nightCss = $theme->getLatestRevision()->getNightCss();
+        $self->appendToDefaultStyle = $theme->getLatestRevision()->appendToDefaultStyle();
         $self->entityId = $theme->getId();
 
         return $self;
@@ -76,29 +84,36 @@ class ThemeData {
     public function toTheme(): Theme {
         return new Theme(
             $this->name,
+            $this->author,
             $this->commonCss,
             $this->dayCss,
             $this->nightCss,
             $this->appendToDefaultStyle,
-            $this->author
+            $this->comment
         );
     }
 
     public function updateTheme(Theme $theme) {
         $theme->setName($this->name);
 
-        if (
-            $this->commonCss !== $theme->getCommonCss() ||
-            $this->dayCss !== $theme->getDayCss() ||
-            $this->nightCss !== $theme->getNightCss()
-        ) {
-            $theme->setCss($this->commonCss, $this->dayCss, $this->nightCss);
-            $theme->updateLastModified();
-        }
+        $revision = $theme->getLatestRevision();
 
-        if ($this->appendToDefaultStyle !== $theme->appendToDefaultStyle()) {
-            $theme->setAppendToDefaultStyle($this->appendToDefaultStyle);
-            $theme->updateLastModified();
+        if (
+            $this->commonCss !== $revision->getCommonCss() ||
+            $this->dayCss !== $revision->getDayCss() ||
+            $this->nightCss !== $revision->getNightCss() ||
+            $this->appendToDefaultStyle !== $revision->appendToDefaultStyle()
+        ) {
+            $revision = new ThemeRevision(
+                $theme,
+                $this->commonCss,
+                $this->dayCss,
+                $this->nightCss,
+                $this->appendToDefaultStyle,
+                $this->comment
+            );
+
+            $theme->addRevision($revision);
         }
     }
 

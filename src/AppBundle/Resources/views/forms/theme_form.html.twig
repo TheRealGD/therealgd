@@ -8,6 +8,15 @@
   {{ form_row(form.nightCss, { attr: { rows: 12 } }) }}
 
   <div class="form__row">
+    {{ form_label(form.comment) }}
+    {{ form_errors(form.comment) }}
+    {{ form_widget(form.comment) }}
+    <div class="form__help">
+      <p>{{ 'help.revision_summary'|trans }}</p>
+    </div>
+  </div>
+
+  <div class="form__row">
     {{ form_label(form.appendToDefaultStyle) }}
     {{ form_errors(form.appendToDefaultStyle) }}
     {{ form_widget(form.appendToDefaultStyle) }}

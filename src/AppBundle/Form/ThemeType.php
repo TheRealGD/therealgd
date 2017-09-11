@@ -31,6 +31,10 @@ class ThemeType extends AbstractType {
             ->add('appendToDefaultStyle', CheckboxType::class, [
                 'required' => false,
                 'label' => 'label.append_to_default_style',
+            ])
+            ->add('comment', TextareaType::class, [
+                'label' => 'label.comment',
+                'required' => false,
             ]);
     }
 

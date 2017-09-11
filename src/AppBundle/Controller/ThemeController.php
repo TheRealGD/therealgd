@@ -4,6 +4,8 @@ namespace Raddit\AppBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Raddit\AppBundle\Entity\Theme;
+use Raddit\AppBundle\Entity\ThemeRevision;
+use Raddit\AppBundle\Entity\User;
 use Raddit\AppBundle\Form\Model\ThemeData;
 use Raddit\AppBundle\Form\ThemeType;
 use Raddit\AppBundle\Repository\ThemeRepository;
@@ -12,6 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ThemeController extends Controller {
     /**
@@ -49,7 +52,8 @@ class ThemeController extends Controller {
             $this->addFlash('success', 'flash.theme_created');
 
             return $this->redirectToRoute('raddit_app_edit_theme', [
-                'id' => $theme->getId(),
+                'name' => $theme->getName(),
+                'username' => $theme->getAuthor()->getUsername(),
             ]);
         }
 
@@ -59,15 +63,22 @@ class ThemeController extends Controller {
     }
 
     /**
+     * @ParamConverter("theme", options={"repositoryMethod": "findOneByNameAndUsername"})
      * @Security("is_granted('edit', theme)")
      *
      * @param Request       $request
      * @param EntityManager $em
+     * @param User          $user
      * @param Theme         $theme
      *
      * @return Response
      */
-    public function editAction(Request $request, EntityManager $em, Theme $theme) {
+    public function editAction(
+        Request $request,
+        EntityManager $em,
+        /* @noinspection PhpUnusedParameterInspection */ User $user,
+        Theme $theme
+    ) {
         $data = ThemeData::createFromTheme($theme);
         $form = $this->createForm(ThemeType::class, $data);
         $form->handleRequest($request);
@@ -79,7 +90,8 @@ class ThemeController extends Controller {
             $this->addFlash('success', 'flash.theme_updated');
 
             return $this->redirectToRoute('raddit_app_edit_theme', [
-                'id' => $theme->getId(),
+                'username' => $theme->getAuthor()->getUsername(),
+                'name' => $theme->getName(),
             ]);
         }
 
@@ -92,29 +104,32 @@ class ThemeController extends Controller {
     /**
      * Deliver a raw stylesheet.
      *
-     * @ParamConverter("unixTime", options={"format": "U"})
-     * @ParamConverter("theme", options={"mapping": {"unixTime": "lastModified"}})
-     *
-     * @param Request   $request
-     * @param Theme     $theme
-     * @param string    $field
-     * @param \DateTime $unixTime
+     * @param EntityManager $em
+     * @param Request       $request
+     * @param string        $themeId
+     * @param string        $field
      *
      * @return Response
      */
     public function stylesheetAction(
+        EntityManager $em,
         Request $request,
-        Theme $theme,
-        string $field,
-        /* @noinspection PhpUnusedParameterInspection */ \DateTime $unixTime
+        string $themeId,
+        string $field
     ) {
         $response = new Response();
         $response->setPublic();
-        $response->setLastModified($theme->getLastModified());
         $response->setExpires(new \DateTime('@'.time().' +2 weeks'));
+        $response->setEtag($themeId);
 
         if ($response->isNotModified($request)) {
             return $response;
+        }
+
+        $theme = $em->find(ThemeRevision::class, $themeId);
+
+        if (!$theme) {
+            throw new NotFoundHttpException('No such revision');
         }
 
         $response->setContent($theme->{'get'.ucfirst($field).'Css'}());

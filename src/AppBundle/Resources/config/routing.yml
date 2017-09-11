@@ -182,15 +182,15 @@ raddit_app_create_theme:
 
 raddit_app_edit_theme:
     defaults: { _controller: RadditAppBundle:Theme:edit }
-    path: /edit_theme/{id}
+    path: /edit_theme/{username}/{name}
     methods: [GET, POST]
-    requirements: { id: "%uuid_regex%" }
+    requirements: { name: .+, id: "%uuid_regex%" }
 
 raddit_app_stylesheet:
     defaults: { _controller: RadditAppBundle:Theme:stylesheet, _format: css }
-    path: /user_style/{field}/{id}.{unixTime}.css
+    path: /user_style/{field}/{themeId}.css
     methods: [GET]
-    requirements: { field: common|day|night, id: "%uuid_regex%" }
+    requirements: { field: common|day|night, themeId: "%uuid_regex%" }
 
 raddit_app_fetch_title:
     defaults: { _controller: RadditAppBundle:Ajax:fetchTitle, _format: json }

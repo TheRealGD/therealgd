@@ -20,18 +20,29 @@
     <thead>
       <tr>
         <th>{{ 'label.name'|trans }}</th>
-        <th>{{ 'label.author'|trans }}</th>
+        <th>{{ 'label.last_revised'|trans }}</th>
         <th></th>
       </tr>
     </thead>
     <tbody>
       {% for theme in themes %}
         <tr>
-          <td>{{ theme.name }}</td>
-          <td><a href="{{ path('raddit_app_user', {username: theme.author.username}) }}">{{ user_link(theme.author) }}</a></td>
+          <td><a href="{{ path('raddit_app_user', {username: theme.author.username}) }}">{{ user_link(theme.author) }}</a> / <strong>{{ theme.name }}</strong></td>
+          <td>
+            {% with {date: theme.latestRevision.modified|localizeddate('long', 'short')} %}
+              <time datetime="{{ theme.latestRevision.modified|date('c') }}" title="{{ date }}" class="relative-time">
+                {{- date -}}
+              </time>
+            {% endwith %}
+          </td>
           <td>
             {% if is_granted('edit', theme) %}
-              <a href="{{ path('raddit_app_edit_theme', {id: theme.id}) }}" class="button button--inline">{{ 'action.edit_theme'|trans }}</a>
+              <a href="{{ path('raddit_app_edit_theme', {
+                name: theme.name,
+                username: theme.author.username,
+              }) }}" class="button button--inline">
+                {{- 'action.edit_theme'|trans -}}
+              </a>
             {% endif %}
           </td>
         </tr>

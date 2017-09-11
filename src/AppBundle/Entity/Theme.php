@@ -2,6 +2,9 @@
 
 namespace Raddit\AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 
@@ -28,34 +31,6 @@ class Theme {
     private $name;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
-     *
-     * @var string|null
-     */
-    private $commonCss;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     *
-     * @var string|null
-     */
-    private $dayCss;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     *
-     * @var string|null
-     */
-    private $nightCss;
-
-    /**
-     * @ORM\Column(type="boolean")
-     *
-     * @var bool
-     */
-    private $appendToDefaultStyle = true;
-
-    /**
      * @ORM\JoinColumn(nullable=false)
      * @ORM\ManyToOne(targetEntity="User")
      *
@@ -64,34 +39,45 @@ class Theme {
     private $author;
 
     /**
-     * @ORM\Column(type="datetimetz")
+     * @ORM\OneToMany(targetEntity="ThemeRevision", mappedBy="theme", cascade={"persist"})
+     * @ORM\OrderBy({"modified": "DESC"})
      *
-     * @var \DateTime
+     * @var Collection
      */
-    private $lastModified;
+    private $revisions;
 
     /**
      * @param string      $name
+     * @param User        $author
      * @param null|string $commonCss
      * @param null|string $dayCss
      * @param null|string $nightCss
      * @param bool        $appendToDefaultStyle
-     * @param User        $author
+     * @param string      $comment
      */
     public function __construct(
         string $name,
+        User $author,
         $commonCss,
         $dayCss,
         $nightCss,
         bool $appendToDefaultStyle,
-        User $author
+        string $comment
     ) {
         $this->id = Uuid::uuid4();
         $this->name = $name;
-        $this->setCss($commonCss, $dayCss, $nightCss);
-        $this->appendToDefaultStyle = $appendToDefaultStyle;
         $this->author = $author;
-        $this->updateLastModified();
+
+        $revision = new ThemeRevision(
+            $this,
+            $commonCss,
+            $dayCss,
+            $nightCss,
+            $appendToDefaultStyle,
+            $comment
+        );
+
+        $this->revisions = new ArrayCollection([$revision]);
     }
 
     public function getId(): Uuid {
@@ -106,59 +92,26 @@ class Theme {
         $this->name = $name;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getCommonCss() {
-        return $this->commonCss;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getDayCss() {
-        return $this->dayCss;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getNightCss() {
-        return $this->nightCss;
-    }
-
-    /**
-     * @param string|null $commonCss
-     * @param string|null $dayCss
-     * @param string|null $nightCss
-     */
-    public function setCss($commonCss, $dayCss, $nightCss) {
-        if (!$commonCss && !$dayCss && !$nightCss) {
-            throw new \InvalidArgumentException('At least one CSS field must be filled.');
-        }
-
-        $this->commonCss = $commonCss;
-        $this->dayCss = $dayCss;
-        $this->nightCss = $nightCss;
-    }
-
-    public function appendToDefaultStyle(): bool {
-        return $this->appendToDefaultStyle;
-    }
-
-    public function setAppendToDefaultStyle(bool $appendToDefaultStyle) {
-        $this->appendToDefaultStyle = $appendToDefaultStyle;
-    }
-
     public function getAuthor(): User {
         return $this->author;
     }
 
-    public function getLastModified(): \DateTime {
-        return $this->lastModified;
+    public function getLatestRevision(): ThemeRevision {
+        $criteria = Criteria::create()
+            ->orderBy(['modified' => 'DESC', 'id' => 'ASC']);
+
+        $revision = $this->revisions->matching($criteria)->first();
+
+        if (!$revision instanceof ThemeRevision) {
+            throw new \DomainException('For some reason there is no revision');
+        }
+
+        return $revision;
     }
 
-    public function updateLastModified() {
-        $this->lastModified = new \DateTime('@'.time());
+    public function addRevision(ThemeRevision $revision) {
+        if (!$this->revisions->contains($revision)) {
+            $this->revisions->add($revision);
+        }
     }
 }

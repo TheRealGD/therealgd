@@ -4,6 +4,7 @@ namespace Raddit\Tests\AppBundle\Entity;
 
 use PHPUnit\Framework\TestCase;
 use Raddit\AppBundle\Entity\Theme;
+use Raddit\AppBundle\Entity\ThemeRevision;
 use Raddit\AppBundle\Entity\User;
 
 /**
@@ -11,18 +12,10 @@ use Raddit\AppBundle\Entity\User;
  */
 class ThemeTest extends TestCase {
     /**
-     * @expectedException \InvalidArgumentException
+     * @expectedException \DomainException
      */
     public function testConstructorNeedsAtLeastOneCssField() {
-        new Theme('foo', null, null, null, true, new User());
-    }
-
-    public function testCssSetterNeedsAtLeastOneCssField() {
-        $theme = new Theme('foo', 'body {}', null, null, true, new User());
-
-        $this->expectException(\InvalidArgumentException::class);
-
-        $theme->setCss(null, null, null);
+        new Theme('foo', new User(), null, null, null, true, 'c');
     }
 
     /**
@@ -34,16 +27,14 @@ class ThemeTest extends TestCase {
      * @param $night
      */
     public function testAcceptsAllValidCombinationsOfCssAndNulls($common, $day, $night) {
-        new Theme('boo', $common, $day, $night, true, new User());
+        new Theme('boo', new User(), $common, $day, $night, true, 'c');
     }
 
-    public function testCanUpdateLastModifiedCorrectly() {
-        $theme = new Theme('f', 'body{}', null, null, true, new User());
-        $before = clone $theme->getLastModified();
-        sleep(10);
-        $theme->updateLastModified();
+    public function testGetsLatestRevisionCorrectly() {
+        $theme = new Theme('a', new User(), 'body{}', null, null, true, 'c');
+        $theme->addRevision(new ThemeRevision($theme, null, 'body{}', null, true, 'c', new \DateTime('yesterday')));
 
-        $this->assertEquals(10, $theme->getLastModified()->getTimestamp() - $before->getTimestamp());
+        $this->assertSame('body{}', $theme->getLatestRevision()->getCommonCss());
     }
 
     public function cssParameterProvider() {

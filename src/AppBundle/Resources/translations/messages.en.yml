@@ -164,6 +164,7 @@ help:
     forum_description: A short description of the forum. Search engines will present this description in their results.
     append_to_default_style: Leave this checked unless your CSS provides a complete stylesheet for the entire site.
     block_users: Blocking users prevents them from sending you private messages, and you won't receive notifications when they reply to you.
+    revision_summary: Enter a summary of your changes.
 
 inbox:
     title: Inbox
@@ -197,6 +198,7 @@ label:
     preferred_theme: Preferred theme
     blocked: Blocked
     comment: Comment
+    last_revised: Last revised
 
 login_form:
     log_in: Log in
