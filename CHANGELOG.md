@@ -2,6 +2,33 @@
 
 ## v0.6.0 (2017-xx-xx)
 
+* Added Atom feed for featured forums.
+* Added forum bans.
+* Added maintenance mode that can be toggled via a command. 
+* Added pretty error pages.
+* Added `.single-comment-alert' to container that shows warnings about viewing a
+  single comment.
+* Added unlinked 'recent comments' page.
+* Added user blocking.
+* Added user settings for choosing a preferred theme.
+* Fixed issue where changing from an upvote to a downvote or vice versa wouldn't
+  update a submission's ranking.
+* Fixed issue where disabling 'show custom stylesheets' wouldn't include the
+  built-in stylesheets on the page.
+* Fixed typos in Spanish translation.
+* Refactor most entities to not include validation constraints and add a
+  constructor which ensures the entities are always valid.
+* Refactor some entities to use UUIDs instead of auto-incrementing integers as
+  their primary key.
+* Replaced 'stylesheets' with 'themes'.
+    * Have separate fields for common, day & night CSS.
+    * Make themes version controlled.
+* Optimise performance by removing redundant Twig blocks in the vote widget.
+* Optimise submission listings by pre-hydrating a number of associations,
+  drastically reducing the number of SQL queries made.
+* Updated the submission ranking algorithm to account for the number of
+  comments and make downvotes count for something.
+* Use data transfer objects (DTOs) for most forms.
 * Use the select2 library for the forum selection box on the submit page.
 
 ## v0.5.1 (2017-08-09)

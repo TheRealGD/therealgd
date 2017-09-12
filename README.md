@@ -76,4 +76,4 @@ details.
 
 
 [issues]: https://gitlab.com/edgyemma/raddit-app/issues
-[meta]: https://raddit.me/f/meta
+[meta]: https://raddle.me/f/meta
