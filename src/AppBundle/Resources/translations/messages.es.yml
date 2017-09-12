@@ -8,10 +8,10 @@ add_moderator:
     title: Agrega un moderador a %forum%
 
 ban_add:
-    title: Banea un direccion IP
+    title: Banea una dirección IP
 
 ban_form:
-    ip: Direccion IP
+    ip: Dirección IP
     reason: Razon del baneo
     expiry_date: Expira el (YYYY-MM-DD hh:mm)
     ban: Banear
@@ -19,10 +19,10 @@ ban_form:
 
 ban_list:
     title: Baneos
-    ip: Direccion IP
+    ip: Dirección IP
     timestamp: Hora
     banned_by: Baneado por
-    reason: Razon
+    reason: Razón
     user: Usuario
     user_none: none
     expires: Expira
@@ -43,7 +43,7 @@ comments:
     parent: Parent
     reply: Responder
     admin_ban: Banear IP
-    form_load_error: Error cargando forma. Por favor intente de nuevo.
+    form_load_error: Error cargando formulario. Por favor intente de nuevo.
     info: '%user% escribio %timestamp%'
     info_at_timestamp: el %timestamp%
     not_logged_in: Debes %login_link% o %register_link% para comentar.
@@ -96,7 +96,7 @@ forum:
 
 forum_form:
     name: Nombre
-    title: Titulo
+    title: Título
     description: Descripcion
     category: Categoría
     create: Crear foro
@@ -108,7 +108,7 @@ forum_form:
 
 forum_list:
     name: Nombre
-    title: Titulo
+    title: Título
     subscribers: Subscriptores
     page_title: Lista de foros
     create_forum: Crear foro
@@ -142,20 +142,20 @@ login_form:
     log_in: Ingresar
     username: Usuario
     password: Contraseña
-    reset_password: Resetear Contraseña?
+    reset_password: ¿Resetear Contraseña?
 
 markdown_type:
     help: Referencia de sintaxis
 
 message_form:
-    title: Titulo
+    title: Título
     message: Mensaje
     send: Enviar
     reply: Responder
 
 message_list:
     page_title: Mensajes
-    title: Titulos
+    title: Títulos
     replies: Respuestas
     from: De
     to: A
@@ -189,7 +189,7 @@ request_password_reset:
         Si nunca recibio un email, la direccion que especifico es probablemente incorrecta. Por razones de privacidad, nosotros no confirmaremos si un usuario con ese email existe.
 
 request_password_reset_form:
-    email: Direccion de email
+    email: Dirección de email
     submit: Enviar
 
 reset_password:
@@ -197,12 +197,12 @@ reset_password:
 
     # this should be kept at 76 columns --------------------------------------------
     email_body: |
-        Alguien solicito un cambio de contraseña para su cuenta de %site_name%. Para
+        Alguien solicitó un cambio de contraseña para su cuenta de %site_name%. Para
         resetear su contraseña, haga click en este link:
 
         %reset_link%
 
-        Si usted no solicito un cambio de contraseña, por favor ignore este mensaje.
+        Si usted no solicitó un cambio de contraseña, por favor, ignore este mensaje.
         El link expirará después de 24 horas.
 
     title: Reseteando contraseña
@@ -211,7 +211,7 @@ site_footer:
     version: Usando %app% %version% (%branch%). Hecho con ☭.
 
 submission_form:
-    title: Titulo
+    title: Título
     url: URL
     body: Contenido
     forum: Foro
@@ -230,7 +230,7 @@ submissions:
     sort_by_hot: Activo
     sort_by_new: Nuevo
     sort_by_top: Popular
-    sort_by_controversial: Controversial
+    sort_by_controversial: Controvertido
     total_votes: '{1} %count% voto|[0,Inf[ %count% votos'
     vote_stats: (+%up%, −%down%)
     ip_ban: Banear por IP
@@ -275,11 +275,11 @@ user_form:
     email: Email
     register: Registrar
     verification: Verification
-    two_factor_enabled: Hablitar autenticatión de dos pasos
+    two_factor_enabled: Hablitar autenticación de dos pasos
     save: Guardar cambios
 
 user_settings:
-    title: Editandos las opciones del usuario %username%
+    title: Editando las opciones del usuario %username%
 
 user_settings_form:
     locale: Lenguaje
