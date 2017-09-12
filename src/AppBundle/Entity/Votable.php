@@ -17,13 +17,7 @@ abstract class Votable {
     const VOTE_RETRACT = 0;
     const VOTE_CHOICES = [self::VOTE_UP, self::VOTE_DOWN, self::VOTE_RETRACT];
 
-    /**
-     * @param Votable $a
-     * @param Votable $b
-     *
-     * @return int
-     */
-    final public static function descendingNetScoreCmp(self $a, self $b) {
+    final public static function descendingNetScoreCmp(self $a, self $b): int {
         return $b->getNetScore() <=> $a->getNetScore();
     }
 
@@ -68,6 +62,8 @@ abstract class Votable {
      * @return int
      */
     public function getUpvotes(): int {
+        $this->hydrateVoteCollection();
+
         $criteria = Criteria::create()
             ->where(Criteria::expr()->eq('upvote', true));
 
@@ -75,6 +71,8 @@ abstract class Votable {
     }
 
     public function getDownvotes(): int {
+        $this->hydrateVoteCollection();
+
         $criteria = Criteria::create()
             ->where(Criteria::expr()->eq('upvote', false));
 
@@ -105,5 +103,19 @@ abstract class Votable {
             ->where(Criteria::expr()->eq('user', $user));
 
         return $this->getVotes()->matching($criteria)->first() ?: null;
+    }
+
+    /**
+     * Hydrates the vote collection. This performs essentially the same task as
+     * setting the fetch mode to EAGER, but makes it easier to deal with cases
+     * where you don't want eager fetching, as you don't have to go around
+     * setting the fetch mode manually (which I couldn't even do successfully).
+     *
+     * For the purpose of counting the net score and such, fetching the entire
+     * collection in advance speeds up things considerably when there are
+     * multiple entities.
+     */
+    private function hydrateVoteCollection() {
+        $this->getVotes()->getValues();
     }
 }

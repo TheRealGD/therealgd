@@ -30,7 +30,11 @@ class SubmissionRepository extends EntityRepository {
             ->where('IDENTITY(s.forum) IN (:forums)')
             ->setParameter(':forums', array_keys($forums));
 
-        return $this->paginate($qb, $page);
+        $submissions = $this->paginate($qb, $page);
+
+        $this->hydrateAssociations($submissions);
+
+        return $submissions;
     }
 
     /**
@@ -47,7 +51,11 @@ class SubmissionRepository extends EntityRepository {
 
         PrependOrderBy::prepend($qb, 's.sticky', 'DESC');
 
-        return $this->paginate($qb, $page);
+        $submissions = $this->paginate($qb, $page);
+
+        $this->hydrateAssociations($submissions);
+
+        return $submissions;
     }
 
     /**
@@ -57,7 +65,11 @@ class SubmissionRepository extends EntityRepository {
      * @return Pagerfanta|Submission[]
      */
     public function findAllSubmissions(string $sortBy, int $page = 1) {
-        return $this->paginate($this->findSortedQb($sortBy), $page);
+        $submissions = $this->paginate($this->findSortedQb($sortBy), $page);
+
+        $this->hydrateAssociations($submissions);
+
+        return $submissions;
     }
 
     /**
@@ -86,6 +98,46 @@ class SubmissionRepository extends EntityRepository {
         }
 
         return $qb;
+    }
+
+    public function hydrateAssociations($submissions) {
+        if ($submissions instanceof \Traversable) {
+            $submissions = iterator_to_array($submissions);
+        } elseif (!is_array($submissions)) {
+            throw new \InvalidArgumentException('$submissions must be iterable');
+        }
+
+        $this->_em->createQueryBuilder()
+            ->select('PARTIAL s.{id}')
+            ->addSelect('PARTIAL u.{id,username}')
+            ->addSelect('PARTIAL f.{id,name}')
+            ->from(Submission::class, 's')
+            ->join('s.user', 'u')
+            ->join('s.forum', 'f')
+            ->where('s IN (?1)')
+            ->setParameter(1, $submissions)
+            ->getQuery()
+            ->getResult();
+
+        $this->_em->createQueryBuilder()
+            ->select('PARTIAL s.{id}')
+            ->addSelect('sv')
+            ->from(Submission::class, 's')
+            ->leftJoin('s.votes', 'sv')
+            ->where('s IN (?1)')
+            ->setParameter(1, $submissions)
+            ->getQuery()
+            ->getResult();
+
+        $this->_em->createQueryBuilder()
+            ->select('PARTIAL s.{id}')
+            ->addSelect('PARTIAL c.{id}')
+            ->from(Submission::class, 's')
+            ->leftJoin('s.comments', 'c')
+            ->where('s IN (?1)')
+            ->setParameter(1, $submissions)
+            ->getQuery()
+            ->getResult();
     }
 
     private function sortByHot(QueryBuilder $qb) {

@@ -67,7 +67,7 @@ class Comment extends Votable {
 
     /**
      * @ORM\OneToMany(targetEntity="CommentVote", mappedBy="comment",
-     *      fetch="EAGER", cascade={"persist", "remove"}, orphanRemoval=true)
+     *     fetch="EXTRA_LAZY", cascade={"persist", "remove"}, orphanRemoval=true)
      *
      * @var CommentVote[]|Collection
      */

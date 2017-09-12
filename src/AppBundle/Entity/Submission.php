@@ -81,7 +81,7 @@ class Submission extends Votable {
 
     /**
      * @ORM\OneToMany(targetEntity="SubmissionVote", mappedBy="submission",
-     *     fetch="EAGER", cascade={"persist", "remove"}, orphanRemoval=true)
+     *     fetch="EXTRA_LAZY", cascade={"persist", "remove"}, orphanRemoval=true)
      *
      * @var SubmissionVote[]|Collection
      */
