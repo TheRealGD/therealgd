@@ -1,5 +1,13 @@
 {%- macro vote(entity, route) -%}
-  {{- block('vote') -}}
+  {% with {
+    upvote: constant('Raddit\\AppBundle\\Entity\\Votable::VOTE_UP'),
+    downvote: constant('Raddit\\AppBundle\\Entity\\Votable::VOTE_DOWN'),
+    retract: constant('Raddit\\AppBundle\\Entity\\Votable::VOTE_RETRACT'),
+    upvoted: constant('Raddit\\AppBundle\\Entity\\Votable::USER_UPVOTED'),
+    downvoted: constant('Raddit\\AppBundle\\Entity\\Votable::USER_DOWNVOTED'),
+  } %}
+    {{- block('vote') -}}
+  {% endwith %}
 {%- endmacro -%}
 
 {%- block vote -%}
@@ -7,9 +15,8 @@
 
   {%- set user_choice = is_granted('ROLE_USER') ? entity.userChoice(app.user) : null -%}
   {%- spaceless -%}
-    <form action="{{ path(route, {id: entity.id}) }}"
-          method="post"
-          class="vote {{ block('vote_class') }}"
+    <form action="{{ path(route, {id: entity.id}) }}" method="post"
+          class="vote {{ user_choice == upvoted ? 'vote-user-upvoted' }} {{ user_choice == downvoted ? 'vote-user-downvoted' }}"
           data-ajax-action="{{ path(route, {id: entity.id, _format: 'json'}) }}"
           data-score="{{ entity.netScore }}">
 
@@ -18,53 +25,19 @@
         <input type="hidden" name="token" value="{{ csrf_token('vote') }}">
       {% endif %}
 
-      <button type="submit" name="choice" value="{{ block('vote_choice_up') }}"
-              class="vote-button vote-up" title="{{ block('vote_up_label') }}">
+      <button type="submit" name="choice" value="{{ user_choice == upvoted ? retract : upvote }}"
+              class="vote-button vote-up"
+              title="{{ (user_choice == upvoted ? 'action.retract_upvote' : 'action.upvote')|trans }}">
         <span class="inner" aria-hidden="true">{{ icon('up', 'up') }}</span>
       </button>
 
       <span class="vote-score">{{ entity.netScore }}</span>
 
-      <button type="submit" name="choice" value="{{ block('vote_choice_down') }}"
-              class="vote-button vote-down" title="{{ block('vote_down_label') }}">
+      <button type="submit" name="choice" value="{{ user_choice == downvoted ? retract : downvote }}"
+              class="vote-button vote-down"
+              title="{{ (user_choice == downvoted ? 'action.retract_downvote' : 'action.downvote')|trans }}">
         <span class="inner" aria-hidden="true">{{ icon('down', 'down') }}</span>
       </button>
     </form>
   {%- endspaceless -%}
-{%- endblock -%}
-
-{%- block vote_class -%}
-  {%- if user_choice == constant('Raddit\\AppBundle\\Entity\\Votable::USER_UPVOTED') -%}
-    vote-user-upvoted
-  {%- elseif user_choice == constant('Raddit\\AppBundle\\Entity\\Votable::USER_DOWNVOTED') -%}
-    vote-user-downvoted
-  {%- endif -%}
-{%- endblock -%}
-
-{%- block vote_choice_up -%}
-  {{- user_choice == constant('Raddit\\AppBundle\\Entity\\Votable::USER_UPVOTED')
-    ? constant('Raddit\\AppBundle\\Entity\\Votable::VOTE_RETRACT')
-    : constant('Raddit\\AppBundle\\Entity\\Votable::VOTE_UP')
-  -}}
-{%- endblock -%}
-
-{%- block vote_choice_down -%}
-  {{- user_choice == constant('Raddit\\AppBundle\\Entity\\Votable::USER_DOWNVOTED')
-    ? constant('Raddit\\AppBundle\\Entity\\Votable::VOTE_RETRACT')
-    : constant('Raddit\\AppBundle\\Entity\\Votable::VOTE_DOWN')
-  -}}
-{%- endblock -%}
-
-{%- block vote_up_label -%}
-  {{- (user_choice == constant('Raddit\\AppBundle\\Entity\\Votable::USER_UPVOTED')
-    ? 'action.retract_upvote'
-    : 'action.upvote'
-  )|trans -}}
-{%- endblock -%}
-
-{%- block vote_down_label -%}
-  {{- (user_choice == constant('Raddit\\AppBundle\\Entity\\Votable::USER_DOWNVOTED')
-    ? 'action.retract_downvote'
-    : 'action.downvote'
-  )|trans -}}
 {%- endblock -%}
