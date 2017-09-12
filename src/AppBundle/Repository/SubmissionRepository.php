@@ -109,8 +109,8 @@ class SubmissionRepository extends EntityRepository {
 
         $this->_em->createQueryBuilder()
             ->select('PARTIAL s.{id}')
-            ->addSelect('PARTIAL u.{id,username}')
-            ->addSelect('PARTIAL f.{id,name}')
+            ->addSelect('u')
+            ->addSelect('f')
             ->from(Submission::class, 's')
             ->join('s.user', 'u')
             ->join('s.forum', 'f')
