@@ -2,7 +2,7 @@
 
 {% block title %}
   {{ 'title.showing_revision'|trans({
-    '%revision%': revision.id|localizednumber,
+    '%revision%': revision.id.hex|slice(0, 8),
     '%path%': '<a href="%s">%s</a>'|format(path('raddit_app_wiki', {path: page.path})|e, page.path|e),
   })|raw }}
 {% endblock %}

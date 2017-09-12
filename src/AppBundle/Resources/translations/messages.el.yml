@@ -327,7 +327,6 @@ wiki:
     editing_title: Επεξεργασία "%path%"
     create_title: Δημιουργία "%path%"
     history_title: Εμφάνιση ιστορικού για "%path%"
-    id: "#%id%"
     revision_time: Αναθεωρημένο
     user: Χρήστης
     id_label: Ταυτότητα

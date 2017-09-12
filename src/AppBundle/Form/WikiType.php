@@ -2,7 +2,7 @@
 
 namespace Raddit\AppBundle\Form;
 
-use Raddit\AppBundle\Form\Model\Wiki;
+use Raddit\AppBundle\Form\Model\WikiData;
 use Raddit\AppBundle\Form\Type\MarkdownType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -20,7 +20,7 @@ class WikiType extends AbstractType {
 
     public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults([
-            'data_class' => Wiki::class,
+            'data_class' => WikiData::class,
             'label_format' => 'wiki_form.%name%',
         ]);
     }

@@ -393,7 +393,6 @@ wiki:
     editing_title: Editing "%path%"
     create_title: Creating "%path%"
     history_title: Showing history for "%path%"
-    id: "#%id%"
     revision_time: Revised
     user: User
     id_label: ID

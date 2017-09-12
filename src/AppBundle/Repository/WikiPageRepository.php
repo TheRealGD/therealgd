@@ -19,7 +19,8 @@ class WikiPageRepository extends EntityRepository {
         }
 
         return $this->createQueryBuilder('wp')
-            ->where('wp.path = ?1 OR wp.canonicalPath = ?2')
+            ->where('wp.path = ?1')
+            ->orWhere('wp.canonicalPath = ?2')
             ->setParameter(1, $path)
             ->setParameter(2, WikiPage::canonicalizePath($path))
             ->getQuery()
@@ -33,8 +34,7 @@ class WikiPageRepository extends EntityRepository {
      */
     public function findAllPages(int $page) {
         $qb = $this->createQueryBuilder('wp')
-            ->join('wp.currentRevision', 'wr')
-            ->orderBy('LOWER(wr.title)', 'ASC');
+            ->orderBy('wp.canonicalPath', 'ASC');
 
         $pager = new Pagerfanta(new DoctrineORMAdapter($qb));
         $pager->setMaxPerPage(25);

@@ -282,7 +282,6 @@ wiki:
     editing_title: Alterar "%path%"
     create_title: Criando "%path%"
     history_title: Mostrando histórico para "%path%"
-    id: "#%id%"
     revision_time: Revisado
     user: Usuário
     id_label: ID

@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block title %}
-  {{ page.currentRevision.title }}
+  {{ page.latestRevision.title }}
 {% endblock %}
 
 {% block head %}
@@ -17,7 +17,7 @@
     <h1 class="wiki-page-title">{{ block('title') }}</h1>
 
     <div class="wiki-page-body">
-      {{ page.currentRevision.body|cached_markdown|raw }}
+      {{ page.latestRevision.body|cached_markdown|raw }}
     </div>
   </article>
 {% endblock %}
@@ -28,8 +28,8 @@
       <p>
         {{- 'wiki.last_edited'|trans({
           '%username%': '<a href="%s">%s</a>'|format(
-            path('raddit_app_user', {username: page.currentRevision.user.username})|escape,
-            page.currentRevision.user.username|escape
+            path('raddit_app_user', {username: page.latestRevision.user.username})|escape,
+            page.latestRevision.user.username|escape
           ),
           '%timestamp%': block('_last_edited_time'),
         })|raw -}}
@@ -61,8 +61,8 @@
 {% endblock %}
 
 {% block _last_edited_time %}
-  {% with {time: page.currentRevision.timestamp|localizeddate('long', 'short')} %}
-    <time datetime="{{ page.currentRevision.timestamp|date('c') }}" title="{{ time }}" class="relative-time">
+  {% with {time: page.latestRevision.timestamp|localizeddate('long', 'short')} %}
+    <time datetime="{{ page.latestRevision.timestamp|date('c') }}" title="{{ time }}" class="relative-time">
       {{ 'time.on_timestamp'|trans({'%timestamp%': time}) }}
     </time>
   {% endwith %}

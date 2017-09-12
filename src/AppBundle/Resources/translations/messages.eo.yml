@@ -294,7 +294,6 @@ wiki:
     editing_title: Redaktas "%path%"
     create_title: Kreas "%path%"
     history_title: Montras historion de "%path%"
-    id: "#%id%"
     revision_time: Redaktis
     user: Uzanto
     id_label: ID

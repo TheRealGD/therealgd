@@ -5,7 +5,7 @@ namespace Raddit\AppBundle\Controller;
 use Doctrine\ORM\EntityManager;
 use Raddit\AppBundle\Entity\WikiPage;
 use Raddit\AppBundle\Entity\WikiRevision;
-use Raddit\AppBundle\Form\Model\Wiki;
+use Raddit\AppBundle\Form\Model\WikiData;
 use Raddit\AppBundle\Form\WikiType;
 use Raddit\AppBundle\Repository\WikiPageRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -52,22 +52,13 @@ final class WikiController extends Controller {
      * @todo do something if the page already exists
      */
     public function createAction(Request $request, string $path, EntityManager $em) {
-        $model = new Wiki();
+        $data = new WikiData();
 
-        $form = $this->createForm(WikiType::class, $model);
+        $form = $this->createForm(WikiType::class, $data);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $page = new WikiPage();
-            $page->setPath($path);
-
-            $revision = new WikiRevision();
-            $revision->setPage($page);
-            $revision->setUser($this->getUser());
-            $revision->setTitle($model->title);
-            $revision->setBody($model->body);
-
-            $page->setCurrentRevision($revision);
+            $page = $data->toPage($path, $this->getUser());
 
             $em->persist($page);
             $em->flush();
@@ -100,18 +91,12 @@ final class WikiController extends Controller {
      * @todo handle conflicts
      */
     public function editAction(Request $request, WikiPage $page, EntityManager $em) {
-        $model = Wiki::createFromPage($page);
-        $form = $this->createForm(WikiType::class, $model);
+        $data = WikiData::createFromPage($page);
+        $form = $this->createForm(WikiType::class, $data);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $revision = new WikiRevision();
-            $revision->setPage($page);
-            $revision->setUser($this->getUser());
-            $revision->setTitle($model->title);
-            $revision->setBody($model->body);
-
-            $page->setCurrentRevision($revision);
+            $data->updatePage($page, $this->getUser());
 
             $em->flush();
 

@@ -287,7 +287,6 @@ wiki:
     editing_title: Muokataan "%path%"
     create_title: Tehdään "%path%"
     history_title: Näytetään sivun "%path%" historiaa
-    id: "#%id%"
     revision_time: Tarkistettu
     user: Käyttäjä
     id_label: ID

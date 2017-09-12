@@ -293,7 +293,6 @@ user_settings_form:
     editing_title: Editando "%path%"
     create_title: Creando "%path%"
     history_title: Mostrando historial de "%path%"
-    id: "#%id%"
     revision_time: Revisado
     user: Usuario
     id_label: ID

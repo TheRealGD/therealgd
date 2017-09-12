@@ -28,7 +28,7 @@
       {% for page in pages %}
         <tr>
           <td><a href="{{ path('raddit_app_wiki', {path: page.path}) }}">{{ page.path }}</a></td>
-          <td>{{ page.currentRevision.title }}</td>
+          <td>{{ page.latestRevision.title }}</td>
         </tr>
       {% endfor %}
     </tbody>

@@ -3,6 +3,7 @@
 namespace Raddit\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Ramsey\Uuid\Uuid;
 
 /**
  * @ORM\Entity()
@@ -10,11 +11,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class WikiRevision {
     /**
-     * @ORM\Column(type="bigint")
-     * @ORM\GeneratedValue()
+     * @ORM\Column(type="uuid")
      * @ORM\Id()
      *
-     * @var int|null
+     * @var Uuid
      */
     private $id;
 
@@ -28,7 +28,7 @@ class WikiRevision {
     /**
      * @ORM\Column(type="text")
      *
-     * @var string|null
+     * @var string
      */
     private $body;
 
@@ -36,7 +36,7 @@ class WikiRevision {
      * @ORM\JoinColumn(nullable=false)
      * @ORM\ManyToOne(targetEntity="WikiPage", inversedBy="revisions")
      *
-     * @var WikiPage|null
+     * @var WikiPage
      */
     private $page;
 
@@ -51,88 +51,49 @@ class WikiRevision {
      * @ORM\JoinColumn(nullable=false)
      * @ORM\ManyToOne(targetEntity="User")
      *
-     * @var User|null
+     * @var User
      */
     private $user;
 
-    public function __construct() {
-        $this->timestamp = new \DateTime();
+    public function __construct(
+        WikiPage $page,
+        string $title,
+        string $body,
+        User $user,
+        \DateTime $timestamp = null
+    ) {
+        $this->id = Uuid::uuid4();
+        $this->page = $page;
+        $this->title = $title;
+        $this->body = $body;
+        $this->user = $user;
+        $this->timestamp = $timestamp ?:
+            \DateTime::createFromFormat('U.u', microtime(true));
+
+        $this->page->addRevision($this);
     }
 
-    /**
-     * @return int|null
-     */
-    public function getId() {
+    public function getId(): Uuid {
         return $this->id;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getTitle() {
+    public function getTitle(): string {
         return $this->title;
     }
 
-    /**
-     * @param string|null $title
-     */
-    public function setTitle($title) {
-        $this->title = $title;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getBody() {
+    public function getBody(): string {
         return $this->body;
     }
 
-    /**
-     * @return WikiPage|null
-     */
-    public function getPage() {
+    public function getPage(): WikiPage {
         return $this->page;
     }
 
-    /**
-     * @param WikiPage|null $page
-     */
-    public function setPage($page) {
-        $this->page = $page;
-    }
-
-    /**
-     * @param string|null $body
-     */
-    public function setBody($body) {
-        $this->body = $body;
-    }
-
-    /**
-     * @return \DateTime
-     */
     public function getTimestamp(): \DateTime {
         return $this->timestamp;
     }
 
-    /**
-     * @param \DateTime $timestamp
-     */
-    public function setTimestamp(\DateTime $timestamp) {
-        $this->timestamp = $timestamp;
-    }
-
-    /**
-     * @return User|null
-     */
-    public function getUser() {
+    public function getUser(): User {
         return $this->user;
-    }
-
-    /**
-     * @param User|null $user
-     */
-    public function setUser($user) {
-        $this->user = $user;
     }
 }

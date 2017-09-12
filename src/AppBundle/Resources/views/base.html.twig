@@ -13,7 +13,7 @@
       {{ include('@RadditApp/includes/stylesheets.html.twig', {
         theme: app.user.preferredTheme ?? null,
         night_mode: app.user.nightMode ?? false,
-      }) }}
+      }, with_context=false) }}
     {% endblock %}
 
     {% block head %}{% endblock %}
