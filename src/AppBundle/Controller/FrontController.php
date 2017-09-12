@@ -35,7 +35,7 @@ final class FrontController extends Controller {
 
         $submissions = $sr->findFrontPageSubmissions($forums, $sortBy, $page);
 
-        return $this->render('@RadditApp/front.html.twig', [
+        return $this->render('@RadditApp/front/front.html.twig', [
             'sort_by' => $sortBy,
             'forums' => $forums,
             'has_subscriptions' => $hasSubscriptions ?? false,
@@ -53,7 +53,7 @@ final class FrontController extends Controller {
     public function allAction(SubmissionRepository $sr, string $sortBy, int $page) {
         $submissions = $sr->findAllSubmissions($sortBy, $page);
 
-        return $this->render('@RadditApp/all.html.twig', [
+        return $this->render('@RadditApp/front/all.html.twig', [
             'submissions' => $submissions,
             'sort_by' => $sortBy,
         ]);
@@ -77,7 +77,7 @@ final class FrontController extends Controller {
         $forums = $fr->findFeaturedForumNames();
         $submissions = $sr->findFrontPageSubmissions($forums, $sortBy, $page);
 
-        return $this->render('@RadditApp/featured.html.twig', [
+        return $this->render('@RadditApp/front/featured.html.twig', [
             'forums' => $forums,
             'submissions' => $submissions,
             'sort_by' => $sortBy,
@@ -88,7 +88,7 @@ final class FrontController extends Controller {
         $forums = $fr->findFeaturedForumNames();
         $submissions = $sr->findFrontPageSubmissions($forums, $sortBy, $page);
 
-        return $this->render('@RadditApp/featured.xml.twig', [
+        return $this->render('@RadditApp/front/featured.xml.twig', [
             'forums' => $forums,
             'submissions' => $submissions,
         ]);
@@ -113,7 +113,7 @@ final class FrontController extends Controller {
         $forums = $fr->findModeratedForumNames($user);
         $submissions = $sr->findFrontPageSubmissions($forums, $sortBy, $page);
 
-        return $this->render('@RadditApp/moderated.html.twig', [
+        return $this->render('@RadditApp/front/moderated.html.twig', [
             'forums' => $forums,
             'sort_by' => $sortBy,
             'submissions' => $submissions,

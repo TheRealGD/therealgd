@@ -1,0 +1,12 @@
+{% extends '@RadditApp/base.html.twig' %}
+
+{% block title %}{{ 'edit_user.title'|trans({'%username%': user.username}) }}{% endblock %}
+
+{% block page_classes %}edit-user-page{% endblock %}
+
+{% block body %}
+  <h1>{{ block('title') }}</h1>
+
+  {% include '@RadditApp/user/_form.html.twig' %}
+{% endblock %}
+

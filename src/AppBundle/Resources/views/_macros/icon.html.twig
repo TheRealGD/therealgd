@@ -1,0 +1,14 @@
+{%- macro icon(name, alt_text = '') -%}
+  <span class="icon">
+    {%- if alt_text|length > 0 -%}
+      {#- Attempt to display an empty SVG. If this fails, the alt text will
+          display. We assume that no support for SVG via <img> = no inline SVG
+          support, although this assumption doesn't always hold true for older
+          browsers (which we don't care about anyway). This hack is necessary to
+          provide alternative text for Tor browser in high security mode, where
+          SVG icons are disabled. -#}
+      <img src="data:image/svg+xml,{{ '<svg xmlns="http://www.w3.org/2000/svg"/>'|url_encode }}" alt="{{ alt_text }}" class="icon__alt" aria-hidden="true">
+    {%- endif -%}
+    {{- source('@RadditApp/_icons/%s.svg'|format(name)) -}}
+  </span>
+{%- endmacro -%}

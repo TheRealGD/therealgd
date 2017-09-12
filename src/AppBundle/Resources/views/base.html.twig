@@ -10,7 +10,7 @@
     <link rel="apple-touch-icon-precomposed" href="{{ asset('apple-touch-icon-precomposed.png') }}">
 
     {% block stylesheets %}
-      {{ include('@RadditApp/includes/stylesheets.html.twig', {
+      {{ include('@RadditApp/_includes/stylesheets.html.twig', {
         theme: app.user.preferredTheme ?? null,
         night_mode: app.user.nightMode ?? false,
       }, with_context=false) }}
@@ -20,7 +20,7 @@
   </head>
 
   <body class="{{ block('page_classes')|replace({'\n': ''}) }} {{ app.user ? 'user-logged-in' : 'user-anonymous' }}">
-    {% include '@RadditApp/includes/site_nav.html.twig' %}
+    {% include '@RadditApp/_includes/site_nav.html.twig' %}
 
     <div class="site-alerts">
       {%- for type, notices in app.flashes -%}

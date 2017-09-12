@@ -1,0 +1,14 @@
+{% extends '@RadditApp/base.html.twig' %}
+
+{% block title 'title.editing_theme'|trans({'%name%': theme.name}) %}
+{% block page_classes 'edit-theme-page' %}
+
+{% block body %}
+  <h1>{{ block('title') }}</h1>
+
+  {{ include('@RadditApp/theme/_form.html.twig', {
+    form: form,
+    editing: true
+  }, with_context=false) }}
+{% endblock %}
+

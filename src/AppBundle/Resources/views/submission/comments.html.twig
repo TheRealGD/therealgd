@@ -1,0 +1,36 @@
+{% extends '@RadditApp/Submission/base.html.twig' %}
+
+{% from '@RadditApp/submission/_macros.html.twig' import submission %}
+{% from '@RadditApp/comment/_macros.html.twig' import comment, comment_form %}
+
+{% block page_classes %}
+  comments-page
+{% endblock %}
+
+{% block head %}
+  <meta property="og:site_name" content="{{ raddit_app_site_name() }}">
+  <meta property="og:title" content="{{ submission.title }}">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="{{ url('raddit_app_comments', {forum_name: forum.name, submission_id: submission.id, slug: submission.title|slugify}) }}">
+  <meta property="og:image" content="{{ absolute_url(asset(submission.image ? 'submission_images/%s'|format(submission.image) : 'apple-touch-icon-precomposed.png')) }}">
+  <meta property="og:article:published_time" content="{{ submission.timestamp|date('c') }}">
+  <meta property="og:article:author" content="{{ submission.user.username }}">
+
+  <link rel="canonical" href="{{ url('raddit_app_comments', {forum_name: forum.name, submission_id: submission.id, slug: submission.title|slugify}) }}">
+{% endblock %}
+
+{% block body %}
+  {{ parent() }}
+
+  {{ submission(submission, {show_body: true}) }}
+
+  <h2>{{ 'comments.comments'|trans }}</h2>
+
+  {{ comment_form(submission) }}
+
+  <div class="submission-comments">
+    {% for comment in submission.topLevelComments %}
+      {{ comment(comment) }}
+    {% endfor %}
+  </div>
+{% endblock %}

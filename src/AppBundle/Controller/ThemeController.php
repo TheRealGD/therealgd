@@ -24,7 +24,7 @@ class ThemeController extends Controller {
      * @return Response
      */
     public function listAction(ThemeRepository $themeRepository, int $page) {
-        return $this->render('@RadditApp/theme_list.html.twig', [
+        return $this->render('@RadditApp/theme/list.html.twig', [
             'themes' => $themeRepository->findAllPaginated($page),
         ]);
     }
@@ -57,7 +57,7 @@ class ThemeController extends Controller {
             ]);
         }
 
-        return $this->render('@RadditApp/theme_create.html.twig', [
+        return $this->render('@RadditApp/theme/create.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -95,7 +95,7 @@ class ThemeController extends Controller {
             ]);
         }
 
-        return $this->render('@RadditApp/theme_edit.html.twig', [
+        return $this->render('@RadditApp/theme/edit.html.twig', [
             'form' => $form->createView(),
             'theme' => $theme,
         ]);
