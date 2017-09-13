@@ -6,7 +6,6 @@ use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityRepository;
 use Pagerfanta\Adapter\DoctrineSelectableAdapter;
 use Pagerfanta\Pagerfanta;
-use Raddit\AppBundle\Entity\Ban;
 
 final class BanRepository extends EntityRepository {
     public function findAllPaginated($page, $maxPerPage = 25) {
@@ -25,34 +24,16 @@ final class BanRepository extends EntityRepository {
      * @return bool
      */
     public function ipIsBanned(string $ip): bool {
-        if (!filter_var($ip, FILTER_VALIDATE_IP)) {
-            throw new \InvalidArgumentException('Invalid IP address');
-        }
+        $count = $this->_em->getConnection()->createQueryBuilder()
+            ->select('COUNT(b)')
+            ->from('bans', 'b')
+            ->where('ip >>= :ip')
+            ->andWhere('(expiry_date IS NULL OR expiry_date >= :now)')
+            ->setParameter('ip', $ip, 'inet')
+            ->setParameter('now', new \DateTime(), 'datetimetz')
+            ->execute()
+            ->fetchColumn();
 
-        $sql = 'SELECT COUNT(b) FROM bans b WHERE ip >>= :ip';
-
-        $sth = $this->getEntityManager()->getConnection()->prepare($sql);
-        $sth->execute([$ip]);
-
-        return $sth->fetchColumn() > 0;
-    }
-
-    /**
-     * @param string $ip
-     *
-     * @return Ban[]
-     */
-    public function findBansByIp(string $ip) {
-        if (!filter_var($ip, FILTER_VALIDATE_IP)) {
-            throw new \InvalidArgumentException('Invalid IP address');
-        }
-
-        $rsm = $this->createResultSetMappingBuilder('b');
-        $sql = "SELECT $rsm FROM bans WHERE ip >>= :ip";
-
-        return $this->getEntityManager()
-            ->createNativeQuery($sql, $rsm)
-            ->setParameter(':ip', $ip)
-            ->execute();
+        return $count > 0;
     }
 }
