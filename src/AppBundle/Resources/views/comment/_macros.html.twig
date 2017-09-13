@@ -176,7 +176,7 @@
     <li class="comment-nav-softdelete">
       <form action="{{ path('raddit_app_softdelete_comment', {id: comment.id}) }}" method="POST">
         <input type="hidden" name="token" value="{{ csrf_token('softdelete_comment') }}">
-        <button type="submit">{{ 'comments.delete'|trans }}</button>
+        <button type="submit" class="confirm-comment-delete">{{ 'comments.delete'|trans }}</button>
       </form>
     </li>
   {%- endspaceless -%}
@@ -187,7 +187,7 @@
     <li class="comment-nav-delete-thread">
       <form action="{{ path('raddit_app_delete_comment', {id: comment.id}) }}" method="POST">
         <input type="hidden" name="token" value="{{ csrf_token('delete_comment') }}">
-        <button type="submit">{{ delete_thread_label|trans }}</button>
+        <button type="submit" class="confirm-comment-delete">{{ delete_thread_label|trans }}</button>
       </form>
     </li>
   {%- endspaceless -%}

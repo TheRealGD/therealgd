@@ -1,5 +1,7 @@
 'use strict';
 
+// all of the js needs refactoring - it's so bad i don't even care anymore
+
 window.$ = window.jQuery = require('jquery');
 window.Translator = require('bazinga-translator');
 
@@ -39,4 +41,8 @@ $('.select2').each(function () {
     }).catch(e => {
         console.log(e);
     });
+});
+
+$('.confirm-comment-delete').click(function () {
+    return confirm(Translator.trans('prompt.confirm_comment_delete'));
 });
