@@ -19,7 +19,7 @@
     {% block head %}{% endblock %}
   </head>
 
-  <body class="{{ block('page_classes')|replace({'\n': ''}) }} {{ app.user ? 'user-logged-in' : 'user-anonymous' }}">
+  <body class="{% block page_classes '' %} {{ app.user ? 'user-logged-in' : 'user-anonymous' }} {{ (app.user.nightMode ?? false) ? 'night-mode' }}">
     {% include '@RadditApp/_includes/site_nav.html.twig' %}
 
     <div class="site-alerts">
