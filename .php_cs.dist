@@ -4,8 +4,15 @@ return PhpCsFixer\Config::create()
     ->setRules([
         '@Symfony' => true,
         'array_syntax' => ['syntax' => 'short'],
-        'braces' => ['position_after_functions_and_oop_constructs' => 'same'],
-
+        'braces' => [
+            'position_after_functions_and_oop_constructs' => 'same'
+        ],
+        'pre_increment' => false, // breaks for-loops
+        'yoda_style' => [
+            'equal' => false,
+            'identical' => false,
+            'less_and_greater' => false,
+        ],
     ])
     ->setCacheFile(__DIR__.'/var/php_cs.cache')
     ->setFinder(
