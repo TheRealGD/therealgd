@@ -25,4 +25,22 @@
     display: inline;
     padding: 0.25rem 0.5rem;
   }
+
+  // inverted button
+  &--secondary {
+    background: transparent;
+    color: @button-background-color;
+    border: solid 1px @button-background-color;
+    padding: ~'calc(0.5rem - 1px) calc(1rem - 1px)';
+
+    &.button--inline {
+      padding: ~'calc(0.25rem - 1px) calc(0.5rem - 1px)';
+    }
+
+    &:hover {
+      background: transparent;
+      color: @button-hover-background-color;
+      border-color: @button-hover-background-color;
+    }
+  }
 }

@@ -17,19 +17,21 @@
 
     <div class="form__row">
       <label class="form__label" for="login-username">{{ 'login_form.username'|trans }}</label>
-      <input type="text" name="_username" autocomplete="off" id="login-username">
+      <input type="text" name="_username" autocomplete="off" id="login-username" required>
     </div>
 
     <div class="form__row">
       <label class="form__label" for="login-password">{{ 'login_form.password'|trans }}</label>
-      <input type="password" name="_password" autocomplete="off" id="login-password">
+      <input type="password" name="_password" autocomplete="off" id="login-password" required>
     </div>
 
     <div class="form__row">
       <button type="submit" class="button">{{ 'login_form.log_in'|trans }}</button>
-    </div>
 
-    <p><a href="{{ path('raddit_app_request_password_reset') }}">{{ 'login_form.reset_password'|trans }}</a></p>
+      <a href="{{ path('raddit_app_request_password_reset') }}" class="button button--secondary">
+        {{- 'login_form.reset_password'|trans -}}
+      </a>
+    </div>
   </form>
 {% endblock %}
 
