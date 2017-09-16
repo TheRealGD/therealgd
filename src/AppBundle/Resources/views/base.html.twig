@@ -20,7 +20,7 @@
   </head>
 
   <body class="{% block page_classes '' %} {{ app.user ? 'user-logged-in' : 'user-anonymous' }} {{ (app.user.nightMode ?? false) ? 'night-mode' }}">
-    {% include '@RadditApp/_includes/site_nav.html.twig' %}
+    {{ include('@RadditApp/_includes/site_nav.html.twig', {forum: forum ?? null}, with_context=false) }}
 
     <div class="site-alerts">
       {%- for type, notices in app.flashes -%}
