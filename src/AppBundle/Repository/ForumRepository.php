@@ -104,6 +104,19 @@ final class ForumRepository extends EntityRepository {
         return array_column($names, 'name', 'id');
     }
 
+    public function findForumNames($names) {
+        /** @noinspection SqlDialectInspection */
+        $dql = 'SELECT f.id, f.name FROM '.Forum::class.' f '.
+            'WHERE f.canonicalName IN (?1) '.
+            'ORDER BY f.canonicalName ASC';
+
+        $names = $this->_em->createQuery($dql)
+            ->setParameter(1, $names)
+            ->getResult();
+
+        return array_column($names, 'name', 'id');
+    }
+
     /**
      * @param string|null $name
      *

@@ -33,6 +33,11 @@ raddit_app_moderated:
     methods: [GET]
     requirements: { sortBy: hot|new|top|controversial, page: \d+ }
 
+raddit_app_multi:
+    defaults: { _controller: RadditAppBundle:Forum:multi, sortBy: hot, page: 1}
+    path: /f/{names}/{sortBy}/{page}
+    requirements: { names: '(?:\w{3,25}\+){1,70}\w{3,25}' }
+
 raddit_app_comment_list:
     defaults: { _controller: RadditAppBundle:Comment:list, page: 1 }
     path: /comments/{page}

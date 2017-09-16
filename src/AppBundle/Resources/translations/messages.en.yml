@@ -158,6 +158,7 @@ front:
 heading:
     user_roles: User roles
     forums_you_moderate: Forums you moderate
+    multi_forum_view: Multi-forum view
 
 help:
     delete_forum_warning: All content on this forum will be irreversibly deleted!

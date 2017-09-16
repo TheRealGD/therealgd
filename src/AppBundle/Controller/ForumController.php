@@ -49,6 +49,25 @@ final class ForumController extends Controller {
         ]);
     }
 
+    public function multiAction(ForumRepository $fr, SubmissionRepository $sr,
+                                string $names, string $sortBy, int $page) {
+        $names = preg_split('/[^\w]+/', $names, -1, PREG_SPLIT_NO_EMPTY);
+        $names = array_map(Forum::class.'::canonicalizeName', $names);
+        $names = $fr->findForumNames($names);
+
+        if (!$names) {
+            throw $this->createNotFoundException('no such forums');
+        }
+
+        $submissions = $sr->findFrontPageSubmissions($names, $sortBy, $page);
+
+        return $this->render('@RadditApp/forum/multi.html.twig', [
+            'forums' => $names,
+            'sort_by' => $sortBy,
+            'submissions' => $submissions,
+        ]);
+    }
+
     /**
      * Create a new forum.
      *
