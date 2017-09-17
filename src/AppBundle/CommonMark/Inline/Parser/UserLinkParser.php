@@ -29,4 +29,8 @@ class UserLinkParser extends AbstractLocalLinkParser {
             'username' => $suffix,
         ]);
     }
+
+    public function getRegex(): string {
+        return '/^\w{3,25}\b/';
+    }
 }

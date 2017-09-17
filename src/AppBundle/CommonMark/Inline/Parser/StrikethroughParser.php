@@ -44,7 +44,7 @@ class StrikethroughParser extends AbstractInlineParser {
 
         $previous_state = $cursor->saveState();
 
-        while ($matching_tildes = $cursor->match('/~~+/m')) {
+        while (($matching_tildes = $cursor->match('/~~+/m'))) {
             if ($matching_tildes === $tildes) {
                 $text = mb_substr($cursor->getLine(), $previous_state->getCurrentPosition(),
                     $cursor->getPosition() - $previous_state->getCurrentPosition() - strlen($tildes), 'utf-8');

@@ -21,10 +21,20 @@ class ForumLinkParser extends AbstractLocalLinkParser {
         return 'f';
     }
 
+    public function getRegex(): string {
+        return '/^(?:\w{3,25}\+){0,70}\w{3,25}\b/';
+    }
+
     /**
      * {@inheritdoc}
      */
     public function getUrl(string $suffix): string {
+        if (strpos($suffix, '+') !== false) {
+            return $this->urlGenerator->generate('raddit_app_multi', [
+                'names' => $suffix,
+            ]);
+        }
+
         return $this->urlGenerator->generate('raddit_app_forum', [
             'forum_name' => $suffix,
         ]);

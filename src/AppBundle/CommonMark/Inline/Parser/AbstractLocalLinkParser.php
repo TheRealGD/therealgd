@@ -26,6 +26,8 @@ abstract class AbstractLocalLinkParser extends AbstractInlineParser {
      */
     abstract public function getUrl(string $suffix): string;
 
+    abstract public function getRegex(): string;
+
     /**
      * {@inheritdoc}
      */
@@ -53,7 +55,7 @@ abstract class AbstractLocalLinkParser extends AbstractInlineParser {
             return false;
         }
 
-        $name = $cursor->match('/^\w{3,25}\b/');
+        $name = $cursor->match($this->getRegex());
 
         if ($name === null) {
             $cursor->restoreState($previousState);
