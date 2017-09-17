@@ -148,7 +148,10 @@ services:
         factory: [League\CommonMark\Environment, createCommonMarkEnvironment]
         calls:
             - [addExtension, ['@Raddit\AppBundle\CommonMark\AppExtension']]
+            - [addExtension, ['@Webuni\CommonMark\TableExtension\TableExtension']]
         lazy: true
+
+    Webuni\CommonMark\TableExtension\TableExtension: ~
 
     Symfony\Bundle\SecurityBundle\Security\FirewallMap: "@security.firewall.map"
 
