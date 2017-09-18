@@ -6,6 +6,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
+use Pagerfanta\Adapter\DoctrineCollectionAdapter;
+use Pagerfanta\Pagerfanta;
 use Ramsey\Uuid\Uuid;
 
 /**
@@ -115,5 +117,13 @@ class Theme {
         if (!$this->revisions->contains($revision)) {
             $this->revisions->add($revision);
         }
+    }
+
+    public function getPaginatedRevisions(int $page, int $maxPerPage = 25) {
+        $pager = new Pagerfanta(new DoctrineCollectionAdapter($this->revisions));
+        $pager->setMaxPerPage($maxPerPage);
+        $pager->setCurrentPage($page);
+
+        return $pager;
     }
 }

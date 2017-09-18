@@ -102,6 +102,19 @@ class ThemeController extends Controller {
     }
 
     /**
+     * @param Theme $theme
+     * @param int   $page
+     *
+     * @return Response
+     */
+    public function historyAction(Theme $theme, int $page) {
+        return $this->render('@RadditApp/theme/history.html.twig', [
+            'theme' => $theme,
+            'revisions' => $theme->getPaginatedRevisions($page),
+        ]);
+    }
+
+    /**
      * Deliver a raw stylesheet.
      *
      * @param EntityManager $em

@@ -203,6 +203,9 @@ label:
     comment: Comment
     last_revised: Last revised
     parent_theme: Parent theme
+    history: History
+    id: ID
+    date: Date
 
 login_form:
     log_in: Log in
@@ -347,6 +350,7 @@ title:
     block_list: Block list
     blocking_user: Blocking %user%
     recent_comments: Recent comments
+    history_for_theme: Showing history for theme %theme%
 
 two_factor:
     explanation: To complete the login, you must enter the verification code sent by email to %email%.

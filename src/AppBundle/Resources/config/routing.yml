@@ -180,6 +180,12 @@ raddit_app_themes:
     methods: [GET]
     requirements: { page: \d+ }
 
+raddit_app_theme_history:
+    defaults: { _controller: RadditAppBundle:Theme:history, page: 1}
+    path: /theme_history/{id}/{page}
+    methods: [GET]
+    requirements: { id: "%uuid_regex%", page: \d+ }
+
 raddit_app_create_theme:
     defaults: { _controller: RadditAppBundle:Theme:create }
     path: /create_theme
