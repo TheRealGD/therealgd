@@ -32,7 +32,7 @@ class ThemeTest extends TestCase {
 
     public function testGetsLatestRevisionCorrectly() {
         $theme = new Theme('a', new User(), 'body{}', null, null, true, 'c');
-        $theme->addRevision(new ThemeRevision($theme, null, 'body{}', null, true, 'c', new \DateTime('yesterday')));
+        $theme->addRevision(new ThemeRevision($theme, null, 'body{}', null, true, 'c', null, new \DateTime('yesterday')));
 
         $this->assertSame('body{}', $theme->getLatestRevision()->getCommonCss());
     }

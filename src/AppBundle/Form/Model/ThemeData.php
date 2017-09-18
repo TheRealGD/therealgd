@@ -64,19 +64,30 @@ class ThemeData {
      */
     public $comment;
 
+    /**
+     * @Assert\Expression("value == null or value.getParentCount() < 3",
+     *     message="That theme cannot be extended.")
+     *
+     * @var ThemeRevision|null
+     */
+    public $parent;
+
     public function __construct(User $author) {
         // needed for UniqueEntity validator to work
         $this->author = $author;
     }
 
     public static function createFromTheme(Theme $theme): self {
+        $revision = $theme->getLatestRevision();
+
         $self = new self($theme->getAuthor());
         $self->name = $theme->getName();
-        $self->commonCss = $theme->getLatestRevision()->getCommonCss();
-        $self->dayCss = $theme->getLatestRevision()->getDayCss();
-        $self->nightCss = $theme->getLatestRevision()->getNightCss();
-        $self->appendToDefaultStyle = $theme->getLatestRevision()->appendToDefaultStyle();
+        $self->commonCss = $revision->getCommonCss();
+        $self->dayCss = $revision->getDayCss();
+        $self->nightCss = $revision->getNightCss();
+        $self->appendToDefaultStyle = $revision->appendToDefaultStyle();
         $self->entityId = $theme->getId();
+        $self->parent = $revision->getParent();
 
         return $self;
     }
@@ -89,7 +100,8 @@ class ThemeData {
             $this->dayCss,
             $this->nightCss,
             $this->appendToDefaultStyle,
-            $this->comment
+            $this->comment,
+            $this->parent
         );
     }
 
@@ -102,7 +114,8 @@ class ThemeData {
             $this->commonCss !== $revision->getCommonCss() ||
             $this->dayCss !== $revision->getDayCss() ||
             $this->nightCss !== $revision->getNightCss() ||
-            $this->appendToDefaultStyle !== $revision->appendToDefaultStyle()
+            $this->appendToDefaultStyle !== $revision->appendToDefaultStyle() ||
+            $this->parent !== $revision->getParent()
         ) {
             $revision = new ThemeRevision(
                 $theme,
@@ -110,7 +123,8 @@ class ThemeData {
                 $this->dayCss,
                 $this->nightCss,
                 $this->appendToDefaultStyle,
-                $this->comment
+                $this->comment,
+                $this->parent
             );
 
             $theme->addRevision($revision);

@@ -1,6 +1,6 @@
-{% set revision = revision ?? theme.latestRevision ?? null %}
+{% set hierarchy = revision.hierarchy ?? theme.latestRevision.hierarchy ?? [] %}
 
-{% if revision is null or revision.appendToDefaultStyle %}
+{% if hierarchy[0].appendToDefaultStyle ?? true %}
   {% if not night_mode %}
     <link rel="stylesheet" href="{{ preload(asset('build/red.css')) }}">
   {% else %}
@@ -8,9 +8,11 @@
   {% endif %}
 {% endif %}
 
-{% if revision is not null %}
-  <link rel="stylesheet"
-        href="{{ path('raddit_app_stylesheet', {themeId: revision.id, field: 'common'}) }}">
-  <link rel="stylesheet"
-        href="{{ path('raddit_app_stylesheet', {themeId: revision.id, field: night_mode ? 'night' : 'day'}) }}">
-{% endif %}
+{% for revision in hierarchy %}
+  {% if revision.commonCss is not null %}
+    <link rel="stylesheet" href="{{ path('raddit_app_stylesheet', {themeId: revision.id, field: 'common'}) }}">
+  {% endif %}
+  {% if (night_mode ? revision.nightCss ? revision.dayCss) is not null %}
+    <link rel="stylesheet" href="{{ path('raddit_app_stylesheet', {themeId: revision.id, field: night_mode ? 'night' : 'day'}) }}">
+  {% endif %}
+{% endfor %}

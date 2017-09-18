@@ -66,6 +66,13 @@ class ThemeRevision {
      */
     private $modified;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="ThemeRevision")
+     *
+     * @var ThemeRevision
+     */
+    private $parent;
+
     public function __construct(
         Theme $theme,
         $commonCss,
@@ -73,10 +80,15 @@ class ThemeRevision {
         $nightCss,
         bool $appendToDefaultStyle,
         $comment,
+        ThemeRevision $parent = null,
         \DateTime $modified = null
     ) {
         if (!$commonCss && !$dayCss && !$nightCss) {
             throw new \DomainException('At least one CSS field must be filled');
+        }
+
+        if ($parent->parent->parent->parent ?? false) {
+            throw new \DomainException('A theme cannot have more than three parents');
         }
 
         $this->id = Uuid::uuid4();
@@ -86,7 +98,9 @@ class ThemeRevision {
         $this->nightCss = $nightCss;
         $this->appendToDefaultStyle = $appendToDefaultStyle;
         $this->comment = $comment;
+        $this->parent = $parent;
         $this->modified = $modified ?: new \DateTime('@'.time());
+        $theme->addRevision($this);
     }
 
     public function getId(): Uuid {
@@ -127,6 +141,40 @@ class ThemeRevision {
      */
     public function getComment() {
         return $this->comment;
+    }
+
+    /**
+     * @return ThemeRevision|null
+     */
+    public function getParent() {
+        return $this->parent;
+    }
+
+    public function getParentCount(): int {
+        $count = 0;
+
+        while (($parent = ($parent ?? $this)->getParent())) {
+            $count++;
+        }
+
+        return $count;
+    }
+
+    /**
+     * Get all parents and self in the correct include order.
+     *
+     * @return string[]
+     */
+    public function getHierarchy(): array {
+        $hierarchy = [];
+
+        while (($parent = ($parent ?? $this)->getParent())) {
+            array_unshift($hierarchy, $parent);
+        }
+
+        $hierarchy[] = $this;
+
+        return $hierarchy;
     }
 
     public function getModified(): \DateTime {

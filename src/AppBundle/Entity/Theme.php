@@ -47,13 +47,14 @@ class Theme {
     private $revisions;
 
     /**
-     * @param string      $name
-     * @param User        $author
-     * @param null|string $commonCss
-     * @param null|string $dayCss
-     * @param null|string $nightCss
-     * @param bool        $appendToDefaultStyle
-     * @param string      $comment
+     * @param string             $name
+     * @param User               $author
+     * @param null|string        $commonCss
+     * @param null|string        $dayCss
+     * @param null|string        $nightCss
+     * @param bool               $appendToDefaultStyle
+     * @param string|null        $comment
+     * @param ThemeRevision|null $parent
      */
     public function __construct(
         string $name,
@@ -62,22 +63,23 @@ class Theme {
         $dayCss,
         $nightCss,
         bool $appendToDefaultStyle,
-        string $comment
+        $comment,
+        ThemeRevision $parent = null
     ) {
         $this->id = Uuid::uuid4();
         $this->name = $name;
         $this->author = $author;
+        $this->revisions = new ArrayCollection();
 
-        $revision = new ThemeRevision(
+        new ThemeRevision(
             $this,
             $commonCss,
             $dayCss,
             $nightCss,
             $appendToDefaultStyle,
-            $comment
+            $comment,
+            $parent
         );
-
-        $this->revisions = new ArrayCollection([$revision]);
     }
 
     public function getId(): Uuid {

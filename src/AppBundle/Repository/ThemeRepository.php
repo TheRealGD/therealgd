@@ -40,11 +40,11 @@ class ThemeRepository extends EntityRepository {
         }
 
         return $this->createQueryBuilder('t')
-            ->where('t.author = (SELECT IDENTITY(u) FROM '.User::class.' WHERE username = :username)')
+            ->where('t.author = (SELECT u FROM '.User::class.' u WHERE u.username = :username)')
             ->andWhere('t.name = :name')
             ->setParameter('username', $username)
             ->setParameter('name', $name)
             ->getQuery()
-            ->getSingleResult();
+            ->getOneOrNullResult();
     }
 }

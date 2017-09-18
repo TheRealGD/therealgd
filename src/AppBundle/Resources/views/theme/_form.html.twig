@@ -1,4 +1,16 @@
 {{ form_start(form) }}
+  {% if form.parent is defined %}
+    <div class="form__row">
+      {{ form_label(form.parent) }}
+      {{ form_errors(form.parent) }}
+      {{ form_widget(form.parent) }}
+
+      <div class="form__help">
+        <p>{{ 'help.parent_theme_input'|trans }}</p>
+      </div>
+    </div>
+  {% endif %}
+
   {{ form_row(form.name) }}
 
   {{ form_row(form.commonCss, { attr: { rows: 12 } }) }}
@@ -22,6 +34,7 @@
     {{ form_widget(form.appendToDefaultStyle) }}
     <div class="form__help">
       <p>{{ 'help.append_to_default_style'|trans }}</p>
+      <p>{{ 'help.append_to_default_style_inheritance_warning'|trans }}</p>
     </div>
   </div>
 
