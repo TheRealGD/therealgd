@@ -15,23 +15,53 @@
 {% block body %}
   <h1>{{ block('html_title') }}</h1>
 
-  <dl>
-    <dt>{{ 'label.revision_id'|trans }}</dt>
-    <dd>{{ revision.id }}</dd>
-  </dl>
+  <p>
+    <strong>{{ 'label.revision_id'|trans }}</strong>:
+    <code>{{ revision.id|replace({'-': '-<wbr>'})|raw }}</code>
+  </p>
 
-  <details open>
-    <summary>{{ 'label.common_css'|trans }}</summary>
-    <pre><code class="language-css source-code">{{ revision.commonCss }}</code></pre>
-  </details>
+  {% with {hierarchy: revision.hierarchy} %}
+    {% if hierarchy|length > 1 %}
+      <h2>{{ 'label.hierarchy'|trans }}</h2>
+      {% for member in hierarchy %}
+        <ul>
+          <li>
+            {% if member == revision %}
+              <strong>{{ member.theme.author.username }}/{{ member.theme.name }}</strong>
+            {% else %}
+              {{ member.theme.author.username }}/{{ member.theme.name }}
+            {% endif %}
+            {% if member != revision %}
+              (<a href="{{ path('raddit_app_theme_revision_source', {id: member.id}) }}">
+              <code>{{- member.id|replace({'-': '-<wbr>'})|raw -}}</code>
+            </a>)
+            {% endif %}
+      {% endfor %}
+      {% for i in 0..hierarchy|length %}
+          </li>
+        </ul>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
 
-  <details open>
-    <summary>{{ 'label.day_css'|trans }}</summary>
-    <pre><code class="language-css source-code">{{ revision.dayCss }}</code></pre>
-  </details>
+  {% if revision.commonCss is not empty %}
+    <details open>
+      <summary>{{ 'label.common_css'|trans }}</summary>
+      <pre><code class="language-css source-code">{{ revision.commonCss }}</code></pre>
+    </details>
+  {% endif %}
 
-  <details open>
-    <summary>{{ 'label.night_css'|trans }}</summary>
-    <pre><code class="language-css source-code">{{ revision.nightCss }}</code></pre>
-  </details>
+  {% if revision.dayCss is not empty %}
+    <details open>
+      <summary>{{ 'label.day_css'|trans }}</summary>
+      <pre><code class="language-css source-code">{{ revision.dayCss }}</code></pre>
+    </details>
+  {% endif %}
+
+  {% if revision.nightCss is not empty %}
+    <details open>
+      <summary>{{ 'label.night_css'|trans }}</summary>
+      <pre><code class="language-css source-code">{{ revision.nightCss }}</code></pre>
+    </details>
+  {% endif %}
 {% endblock %}

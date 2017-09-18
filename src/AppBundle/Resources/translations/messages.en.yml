@@ -207,6 +207,7 @@ label:
     id: ID
     date: Date
     revision_id: Revision ID
+    hierarchy: Hierarchy
 
 login_form:
     log_in: Log in
