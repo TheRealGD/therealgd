@@ -206,6 +206,7 @@ label:
     history: History
     id: ID
     date: Date
+    revision_id: Revision ID
 
 login_form:
     log_in: Log in
@@ -351,6 +352,7 @@ title:
     blocking_user: Blocking %user%
     recent_comments: Recent comments
     history_for_theme: Showing history for theme %theme%
+    viewing_theme_source: Viewing source of %theme%
 
 two_factor:
     explanation: To complete the login, you must enter the verification code sent by email to %email%.

@@ -1,0 +1,37 @@
+{% extends '@RadditApp/base.html.twig' %}
+
+{% block html_title %}
+  {{ 'title.viewing_theme_source'|trans({'%theme%': '<a href="%s">%s/%s</a>'|format(
+    path('raddit_app_theme_history', {id: revision.theme.id})|e,
+    revision.theme.author.username|e,
+    revision.theme.name|e
+  )})|raw }}
+{% endblock %}
+
+{% block title block('html_title')|striptags %}
+
+{% block page_classes 'theme-source-page' %}
+
+{% block body %}
+  <h1>{{ block('html_title') }}</h1>
+
+  <dl>
+    <dt>{{ 'label.revision_id'|trans }}</dt>
+    <dd>{{ revision.id }}</dd>
+  </dl>
+
+  <details open>
+    <summary>{{ 'label.common_css'|trans }}</summary>
+    <pre><code class="language-css source-code">{{ revision.commonCss }}</code></pre>
+  </details>
+
+  <details open>
+    <summary>{{ 'label.day_css'|trans }}</summary>
+    <pre><code class="language-css source-code">{{ revision.dayCss }}</code></pre>
+  </details>
+
+  <details open>
+    <summary>{{ 'label.night_css'|trans }}</summary>
+    <pre><code class="language-css source-code">{{ revision.nightCss }}</code></pre>
+  </details>
+{% endblock %}

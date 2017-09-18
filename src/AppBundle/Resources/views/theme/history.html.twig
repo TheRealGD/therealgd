@@ -21,7 +21,11 @@
     <tbody>
       {% for revision in revisions %}
         <tr>
-          <td>{{ revision.id|replace({'-': '-<wbr>'})|raw }}</td>
+          <td>
+            <a href="{{ path('raddit_app_theme_revision_source', {id: revision.id}) }}">
+              {{ revision.id|replace({'-': '-<wbr>'})|raw }}
+            </a>
+          </td>
           <td>
             {% with {date: revision.modified|localizeddate('long', 'short')} %}
               <time datetime="{{ revision.modified|date('c') }}" title="{{ date }}" class="relative-time">

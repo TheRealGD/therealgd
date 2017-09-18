@@ -114,6 +114,12 @@ class ThemeController extends Controller {
         ]);
     }
 
+    public function sourceAction(ThemeRevision $revision) {
+        return $this->render('@RadditApp/theme/source.html.twig', [
+            'revision' => $revision,
+        ]);
+    }
+
     /**
      * Deliver a raw stylesheet.
      *

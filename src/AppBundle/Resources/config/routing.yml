@@ -197,6 +197,12 @@ raddit_app_edit_theme:
     methods: [GET, POST]
     requirements: { name: .+, id: "%uuid_regex%" }
 
+raddit_app_theme_revision_source:
+    defaults: { _controller: RadditAppBundle:Theme:source }
+    path: /theme_source/{id}
+    methods: [GET]
+    requirements: { id: "%uuid_regex%" }
+
 raddit_app_stylesheet:
     defaults: { _controller: RadditAppBundle:Theme:stylesheet, _format: css }
     path: /user_style/{field}/{themeId}.css
