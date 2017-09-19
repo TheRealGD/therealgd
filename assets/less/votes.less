@@ -4,8 +4,15 @@
 .vote {
   display: flex;
   flex-direction: column;
-  padding: 0.5rem 1.5rem;
+  min-width: 4rem;
+  padding: 0.5rem;
   text-align: center;
+}
+
+.vote > * {
+  // needed for the fucking SVG-less tor browser fuckshit
+  min-height: 1rem;
+  min-width: 1rem;
 }
 
 .vote-score {
