@@ -18,7 +18,7 @@ class WikiData {
 
     /**
      * @Assert\NotBlank()
-     * @Assert\Length(min=1, max=10000)
+     * @Assert\Length(min=1, max=250000)
      *
      * @var string|null
      */
