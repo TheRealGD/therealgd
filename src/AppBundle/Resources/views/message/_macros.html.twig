@@ -8,9 +8,16 @@
 {% endmacro %}
 
 {% block message_thread %}
+  {% from _self import message_user %}
   <article class="message-thread" id="mt{{ message.id }}">
     <div class="message-thread-inner">
-      {{ block('message_head') }}
+      <h1 class="message-head">
+        {{ 'heading.message_thread'|trans({
+          '%sender%': message_user(message),
+          '%receiver%': message_user(message, false),
+          '%timestamp%': block('message_date'),
+        })|raw }}
+      </h1>
       {{ block('message_body') }}
     </div>
 
@@ -23,24 +30,31 @@
 {% endblock %}
 
 {% block message_reply %}
+  {% from _self import message_user %}
   <article class="message-reply" id="mr{{ message.id }}">
-    {{ block('message_head') }}
+    <h1 class="message-head">
+      {{ 'heading.message_reply'|trans({
+        '%sender%': message_user(message),
+        '%timestamp%': block('message_date'),
+      })|raw }}
+    </h1>
     {{ block('message_body') }}
   </article>
 {% endblock %}
 
-{% block message_head %}
-  <h1 class="message-head">
-    <a href="{{ path('raddit_app_user', {username: message.sender.username}) }}" class="message-sender {{ message.sender == app.user ? 'message-self' }}">
-      {{- message.sender.username -}}
-    </a>
+{% macro message_user(message, sender=true) %}
+  {%- set user = sender ? message.sender : message.receiver -%}
+  <a href="{{ path('raddit_app_user', {username: user.username}) }}" class="message-{{ sender ? 'sender' : 'receiver' }} {{ user == app.user ? 'message-self' }}">
+    {{- user.username -}}
+  </a>
+{% endmacro %}
 
-    {% with {date: message.timestamp|localizeddate()} %}
-      <time datetime="{{ message.timestamp|date('c') }}" title="{{ date }}" class="relative-time">
-        {{- date -}}
-      </time>
-    {% endwith %}
-  </h1>
+{% block message_date %}
+  {% with {date: message.timestamp|localizeddate()} %}
+    <time datetime="{{ message.timestamp|date('c') }}" title="{{ date }}" class="relative-time">
+      {{- 'time.on_timestamp'|trans({'%timestamp%': date}) -}}
+    </time>
+  {% endwith %}
 {% endblock %}
 
 {% block message_body %}

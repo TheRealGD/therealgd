@@ -159,6 +159,8 @@ heading:
     user_roles: User roles
     forums_you_moderate: Forums you moderate
     multi_forum_view: Multi-forum view
+    message_thread: "%sender% wrote to %receiver% %timestamp%"
+    message_reply: "%sender% replied %timestamp%"
 
 help:
     delete_forum_warning: All content on this forum will be irreversibly deleted!
