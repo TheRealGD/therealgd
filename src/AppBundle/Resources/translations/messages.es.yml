@@ -1,37 +1,51 @@
+# Las nuevas claves deberían usar las categorías genéricas 'title', 'label',
+# 'help', 'nav', etc. Las claves más viejas son susceptibles a ser renombradas.
+
 action:
-    upvote: Votar
-    downvote: Desvotar
-    retract_upvote: Remover voto
-    retract_downvote: Remover desvoto
+    mark_as_trusted: Marcar usuaria como confiable
+    mark_as_untrusted: Marca usuaria como no confiable
+    upvote: Votar positivamente
+    downvote: Votar negativamente
+    retract_upvote: Retirar voto positivo
+    retract_downvote: Retirar voto negativo
+    edit: Editar
+    create_theme: Crear tema
+    edit_theme: Editar tema
+    new_theme: Nuevo tema
+    go_to_home_page: Ir a página principal
+    ban: Vetar
+    unban: Dejar de vetar
+    block: Bloquear
+    unblock: Desbloquar
 
 add_moderator:
-    title: Agrega un moderador a %forum%
+    title: Agrega una moderadora a %forum%
 
 ban_add:
-    title: Banea una dirección IP
+    title: Veta una dirección IP
 
 ban_form:
     ip: Dirección IP
-    reason: Razon del baneo
+    reason: Razón del veto
     expiry_date: Expira el (YYYY-MM-DD hh:mm)
-    ban: Banear
-    user: Usuario asociado con el IP
+    ban: Vetar
+    user: Usuaria asociada con la IP
 
 ban_list:
-    title: Baneos
+    title: Vetos
     ip: Dirección IP
-    timestamp: Hora
-    banned_by: Baneado por
+    timestamp: Tiempo
+    banned_by: Vetada por
     reason: Razón
-    user: Usuario
-    user_none: none
+    user: Usuaria
+    user_none: ninguna
     expires: Expira
     expires_never: Nunca
-    remove: Remover baneos
+    remove: Deshacer vetos
 
 banned:
-    title: Baneado
-    message: Has sido baneado!
+    title: Vetada
+    message: ¡Has sido vetada!
 
 comments:
     author_deleted: '[Eliminado]'
@@ -40,16 +54,16 @@ comments:
     delete_thread: Borrar con respuestas
     edit: Editar
     permalink: Permalink
-    parent: Parent
+    parent: Padre
     reply: Responder
-    admin_ban: Banear IP
-    form_load_error: Error cargando formulario. Por favor intente de nuevo.
-    info: '%user% escribio %timestamp%'
+    admin_ban: Vetar IP
+    form_load_error: Error cargando formulario. Por favor, inténtalo de nuevo.
+    info: '%user% escribió %timestamp%'
     info_at_timestamp: el %timestamp%
     not_logged_in: Debes %login_link% o %register_link% para comentar.
     not_logged_in_login_link_label: ingresar
-    not_logged_in_register_link_label: registrar
-    viewing_thread: Viendo comentario unico.
+    not_logged_in_register_link_label: registrarse
+    viewing_thread: Viendo un único hilo.
     thread_return: Ver todos los comentarios
     return_to_forum: ← Regresar a %forum%
     edit_info: (Editado %edited_at%)
@@ -57,81 +71,104 @@ comments:
 
 comment_form:
     comment: Comentar
-    submit: Presentar
+    submit: Publicar
     edit_title: Editando comentario
-    create_title: Creando un comentario
+    create_title: Publicando un comentario
 
 compose_message:
-    title: Escribe un mensaje para %username%
+    title: Redactando un mensaje para %username%
 
 create_forum:
-    create_new_forum: Crea un nuevo foro
+    create_new_forum: Crear nuevo foro
 
 edit_forum:
     title: Editando %forum%
 
 edit_user:
-    title: Editando usuario %username%
+    title: Editando usuaria %username%
 
 flash:
-    ban_added: La direccion IP ha sido baneada
-    forum_deleted: El foro y todos sus contenidos han sido borrados
-    forum_updated: Los cambios han sido guardados
-    forum_moderator_added: El usuario ha sido promovido a moderador.
-    inbox_cleared: La bandeja de entrada ha sido limpiada
-    reset_password_email_sent: Un email ha sido enviado al email especificado.
-    submission_deleted: El contenido ha sido borrado.
-    submission_edited: El contenido ha sido editado.
-    user_password_updated: Su contraseña ha sido cambiada.
-    user_settings_updated: Las opciones has sido actualizadas.
+    ban_added: La dirección IP ha sido vetada.
+    forum_deleted: El foro y todos sus contenidos han sido borrados.
+    forum_updated: Los cambios han sido guardados.
+    forum_moderator_added: La usuaria ha sido ascendida a moderadora.
+    inbox_cleared: La bandeja de entrada ha sido limpiada.
+    reset_password_email_sent: Un correo de recuperación ha sido enviado a la dirección que especificó.
+    theme_created: Tu tema ha sido creado.
+    theme_updated: El tema ha sido actualizado.
+    submission_edited: La publicación ha sido editada.
+    submission_deleted: La publicación ha sido borrada.
+    user_account_registered: Tu cuenta ha sido registrada.
+    user_password_updated: Tu contraseña ha sido actualizada.
+    user_settings_updated: Las opciones de usuario han sido actualizadas.
+    user_marked_trusted: La usuaria fue marcada como confiable.
+    user_marked_untrusted: La usuaria fue marcada como no confiable.
+    user_was_banned: La usuaria fue vetada.
+    user_was_unbanned: Se dejó de vetar a la usuaria.
+    user_blocked: La usuaria fue bloqueada.
+    user_unblocked: La usuaria fue desbloqueada.
     no_messages: No hay mensajes para mostrar
 
 forum:
-    moderators: Moderadores
+    moderators: Moderadoras
     manage: Administrar
     edit: Editar foro
-    subscribe: Subscribir
-    unsubscribe: Desubscribir
-    subscriber_count: '{0} No subscriptores|{1} %count% subscriptor|[1,Inf[ %count% subscriptores'
-    add_moderator: Agregar moderador
+    subscribe: Suscribirse
+    unsubscribe: Desuscribirse
+    subscriber_count: '{0} Sin suscriptoras|{1} %count% suscriptora|[1,Inf[ %count% suscriptoras'
+    add_moderator: Agregar moderadora
 
 forum_form:
     name: Nombre
     title: Título
-    description: Descripcion
+    description: Descripción
     category: Categoría
     create: Crear foro
     save: Guardar cambios
     delete: Borrar foro
-    confirm_delete: Estas segur@ que desea borrar este foro y todo su contenido y comentarios?
-    featured: Mostrar en la pagina principal
+    confirm_delete: ¿Estás segurá de que deseas borrar este foro y todas sus publicaciones y comentarios?
+    featured: Mostrar en la página principal
     uncategorized_placeholder: (Sin categorizar)
 
 forum_list:
     name: Nombre
     title: Título
-    subscribers: Subscriptores
+    subscribers: Suscriptores
     page_title: Lista de foros
     create_forum: Crear foro
-    list_view: Ver por lista
-    category_view: Ver por categoría
+    list_view: Vista de lista
+    category_view: Vista de categoría
     uncategorized: Sin categorizar
 
 
 forum_moderators:
-    title: Moderadores de /%forum_name%
-    username: Usuario
-    since: desde
-    last_seen: Visto en
+    title: Moderadoras de /%forum_name%
+    username: Usuaria
+    since: Desde
+    last_seen: Visto por última vez
 
 front:
-    subscribed_forums: Subscripto en
-    no_subscriptions: No estas subscripto en ningun foro. Estas viendo los foros principales.
-    featured_forums: Foros principales
-    no_forums: No hay foros principales para mostrar.
+    subscribed_forums: Foros suscritos
+    no_subscriptions: No estás suscrita en ningún foro. Mostrando foros destacados en su lugar.
+    featured_forums: Foros destacados
+    no_forums: No hay foros destacados para mostrar.
     all: Todos
-    featured: Principales
-    subscribed: Subscritos
+    featured: Destacados
+    subscribed: Suscritos
+
+heading:
+    user_roles: Roles de usuario
+    forums_you_moderate: Foros que moderas
+    multi_forum_view: Vista de múltiples foros
+
+help:
+    delete_forum_warning: ¡Todo el contenido de este foro será borrado irreversiblemente!
+    forum_description: Una descripción corta del foro. Los motores de búsqueda presentarán una descripción en sus resultados.
+    append_to_default_style: Deja esto marcado a no ser que tu CSS proporcione una hoja de estilo completa para el sitio entero.
+    block_users: Bloquear usuarias impide que te envíen mensajes privados, y no recibirás notificaciones cuando te respondan.
+    revision_summary: Introducir un resumen de tus cambios.
+    parent_theme_input: Introduce el <username>/<theme> del tema que deseas extender. Alternativamente, puedes introducir un UUID para extender una revisión particular.
+    append_to_default_style_inheritance_warning: Ajustar esto no tiene efecto cuando extiendes un tema existente.
 
 inbox:
     title: Bandeja de entrada
@@ -140,7 +177,40 @@ inbox:
     message_reply_head: 'Re: %title%'
 
 label:
-    title: Títulos
+    name: Nombre
+    author: Autora
+    password: Contraseña
+    confirm: Corfirmar
+    theme: Tema
+    common_css: CSS común
+    day_css: CSS diurno
+    night_css: CSS nocturno
+    append_to_default_style: Añade un estilo predeterminado
+    save_settings: Guardar ajustes
+    source_code: Código fuente
+    sidebar: Barra lateral
+    username: Nombre de usuaria
+    banned: Vetada
+    reason: Razón
+    expires: Expira
+    never: Nunca
+    action: Acción
+    ban: Veto
+    unban: Dejar de vetar
+    general: General
+    appearance: Apariencia
+    preferred_theme: Tema preferido
+    blocked: Bloqueada
+    comment: Comentar
+    last_revised: Revisado por última vez
+    parent_theme: Tema padre
+    history: Historia
+    id: ID
+    date: Fecha
+    revision_id: ID de revisión
+    hierarchy: Jerarquía
+    page_title: Mensajes
+    title: Título
     replies: Respuestas
     from: De
     to: A
@@ -148,9 +218,9 @@ label:
 
 login_form:
     log_in: Ingresar
-    username: Usuario
+    username: Usuaria
     password: Contraseña
-    reset_password: ¿Resetear Contraseña?
+    reset_password: ¿Restablecer Contraseña?
 
 markdown_type:
     help: Referencia de sintaxis
@@ -162,15 +232,19 @@ message_form:
     reply: Responder
 
 moderator_form:
-    user: Usuario
-    submit: Agregar como moderador
+    user: Nombre de usuaria
+    submit: Agregar como moderadora
 
 nav:
-    submit: Presentar
+    appearance: Apariencia
+    create_theme: Crear tema
+    delete_forum: Borrar foro
+    themes: Temas
+    submit: Publicar
     log_in: Ingresar
-    log_out: Salir
+    log_out: Cerrar sesión
     profile: Perfil
-    register: Registrar
+    register: Registrarse
     my_account: Mi cuenta
     user_settings: Opciones de usuario
     forums: Foros
@@ -179,32 +253,48 @@ nav:
     wiki: Wiki
     next: Siguiente
     previous: Anterior
+    previous: Anterior
+    moderated: Moderado
+    bans: Vetos
+    ban_history: Historial de vetos
+    block_user: Bloquear usuarias
+    block_list: Lista de bloqueos
+
+placeholder:
+    default: (predeterminado)
+    choose_one: Elige uno…
+
+prompt:
+    confirm_comment_delete: ¿Estás segura de que quieres eliminar este comentario?
 
 request_password_reset:
     title: Solicitar link para reseteo de contraseña
     multiple_accounts_notice: >
-        Si usted posee varios usuarios bajo la misma direccion de email, usted recibira un link por cada usuario.
+        Si tienes varias cuentas registradas con una dirección de correo,
+        recibirás un correo por cuenta.
     no_confirmation_notice: >
-        Si nunca recibio un email, la direccion que especifico es probablemente incorrecta. Por razones de privacidad, nosotros no confirmaremos si un usuario con ese email existe.
+        Si nunca recibes un correo, la dirección que has especificado es
+        probablemente incorrecta. Por razones de privacidad, nosotros no
+        confirmaremos si una usuaria con el correo especificado existe.
 
 request_password_reset_form:
-    email: Dirección de email
+    email: Dirección de correo electrónico
     submit: Enviar
 
 reset_password:
-    email_subject: '%site_name% - Reset password for user %username%'
+    email_subject: '%site_name% - Restablecer contraseña para %username%'
 
     # this should be kept at 76 columns --------------------------------------------
     email_body: |
-        Alguien solicitó un cambio de contraseña para su cuenta de %site_name%. Para
-        resetear su contraseña, haga click en este link:
+        Alguien solicitó un cambio de contraseña para tu cuenta de %site_name%. Para
+        restablecer tu contraseña, haz click en este enlace:
 
         %reset_link%
 
-        Si usted no solicitó un cambio de contraseña, por favor, ignore este mensaje.
-        El link expirará después de 24 horas.
+        Si no has solicitado un cambio de contraseña, por favor, ignora este mensaje.
+        El enlace expirará después de 24 horas.
 
-    title: Reseteando contraseña
+    title: Restableciendo contraseña
 
 site_footer:
     version: Usando %app% %version% (%branch%). Hecho con ☭.
@@ -214,93 +304,115 @@ submission_form:
     url: URL
     body: Contenido
     forum: Foro
-    sticky: Sticky
-    create: Publicar contenido
-    edit: Editar contenido
-    delete: Borrar contenido
-    confirm_delete: Está seguro que desea borrar este contenido?
+    sticky: Fijo
+    create: Crear publicación
+    edit: Editar publicación
+    delete: Borrar publicación
+    confirm_delete: ¿Estás segura de que deseas borrar esta publicación?
 
 submissions:
     comments: '{0} Sin comentarios|{1} %count% comentario|[1,Inf[ %count% comentarios'
     edit: Editar
-    info_with_forum_name: Presentado por %submitter% %timestamp% en %forum%
-    info_without_forum_name: Presentado por %submitter% %timestamp%
+    info_with_forum_name: Publicado por %submitter% %timestamp% en %forum%
+    info_without_forum_name: Publicado por %submitter% %timestamp%
     info_at_timestamp: el %timestamp%
-    sort_by_hot: Activo
+    sort_by_hot: Caliente
     sort_by_new: Nuevo
-    sort_by_top: Popular
+    sort_by_top: Más votado
     sort_by_controversial: Controvertido
     total_votes: '{1} %count% voto|[0,Inf[ %count% votos'
     vote_stats: (+%up%, −%down%)
-    ip_ban: Banear por IP
+    ip_ban: Vetar por IP
     edit_info: (Editado %edited_at%)
     moderator_info: (editado por un moderador %edited_at%)
 
 time:
     on_timestamp: en %timestamp%
-    earlier_format: '%relative_time% earlier'
-    later_format: '%relative_time% later'
+    earlier_format: '%relative_time% antes'
+    later_format: '%relative_time% después'
 
 title:
+    delete_forum: Borrar foro %forum%
+    forum_appearance: Apariencia para %forum%
+    showing_revision: 'Mostrando revisión #%revision% de página %path%'
+    editing_forum: Editando foro %forum%
+    create_submission: Crear publicación submission
+    editing_submission: Editando publicación %title%
+    log_in: Ingresar
     messages: Mensajes
+    sign_up: Registrarse
+    submissions_in_featured_forums: Publicaciones en foros destacados
+    new_theme: Nuevo tema
+    editing_theme: Editando tema %name%
+    custom_themes: Temas personalizados
+    bans_in_forum: Vetos en %forum%
+    showing_ban_history_for_user_in_forum: Mostrando el historial de vetos de %user% en %forum%
+    banning_user_from_forum: Vetando %user% de %forum%
+    unbanning_user_from_forum: Quitando el veto de %user% de %forum%
+    block_list: Lista de bloqueo
+    blocking_user: Bloqueando %user%
+    recent_comments: Comentarios recientes
+    history_for_theme: Mostrando la historia para el tema %theme%
+    viewing_theme_source: Viendo el código de %theme%
 
 two_factor:
-    explanation: Para completar el logueo debe introducir el código de verficación enviado al correo %email%.
+    explanation: Para completar el inicio de sesión, tienes que introducir el código de verificación enviado por correo a %email%.
 
 user:
-    submissions: Presentaciones
+    submissions: Publicaciones
     comments: Comentarios
-    moderates: '%username% es un moderador en:'
-    username_rules: Los caracteres permitidos son A-Z, a-z, 0-9 y raya baja.
-    password_rules: Mínimo de 8 caracteres; máximo de 72 debido a limitaciones en el algoritmo bcrypt.
-    email_optional: Proveer una dirección de email es opcional. Solo la utilizaremos para reiniciar contraseñas y enviar códigos de autenticación para el logueo de dos pasos.
-    two_factor_explanation: Demanda que un código de autenticación sea entrado cuando te logueas. Este código se te será enviado a tu email.
-    two_factor_warning: Asegúrate que tienes una dirección de email válida antes de habilitar esta opción!
+    moderates: '%username% es una moderadora en:'
+    username_rules: Los caracteres permitidos son A-Z, a-z, 0-9 y barra baja.
+    password_rules: Mínimo de 8 caracteres; máximo de 72 debido a limitaciones del algoritmo bcrypt.
+    email_optional: Proporcionar una dirección correo es opcional. Solo la utilizaremos para restablecer contraseñas y enviar códigos de autenticación de dos factores.
+    two_factor_explanation: Requiere que un código de autenticación sea introducido cuando inicias sesión. Este código se te enviará por correo.
+    two_factor_warning: ¡Asegúrate de que tienes una dirección de correo válida antes de habilitar esta opción!
     toolbox: Herramientas
     message: Enviar mensaje
     registered: Registrado el %timestamp%
 
 user_flag:
     post_as_label: Publicar como
-    none_label: (none)
-    admin: admin
-    admin_label: Admin
-    moderator: moderador
-    moderator_label: Moderador
+    none_label: (ninguna)
+    admin: administradora
+    admin_label: Administradora
+    moderator: moderadora
+    moderator_label: Moderadora
 
 user_form:
-    username: Usuario
+    username: Nombre de usuaria
     password: Contraseña
-    repeat_password: Repetir contraseña
+    repeat_password: Contraseña (repetir)
     new_password: Nueva contraseña
-    repeat_new_password: Repetir nueva contraseña
-    email: Email
-    register: Registrar
-    verification: Verification
-    two_factor_enabled: Hablitar autenticación de dos pasos
+    repeat_new_password: Nueva contraseña (repetir)
+    email: Correo electrónico
+    register: Registrarse
+    verification: Verificación
+    two_factor_enabled: Hablitar autenticación de dos factores
     save: Guardar cambios
 
 user_settings:
     title: Editando las opciones del usuario %username%
 
 user_settings_form:
-    locale: Lenguaje
+    locale: Idioma
     night_mode: Modo nocturno
+    show_custom_stylesheets: Mostrar hojas de estilos personalizadas
     save: Guardar cambios
 
     wiki:
     not_found_title: Página no encontrada
     not_found_message: La página solicitada no ha sido encontrada.
-    create_this_page: Crea esta página
+    create_this_page: Crear esta página
     editing_title: Editando "%path%"
     create_title: Creando "%path%"
     history_title: Mostrando historial de "%path%"
     revision_time: Revisado
-    user: Usuario
+    user: Usuaria
     id_label: ID
-    locked_notice: Esta página está bloqueada, solo puede ser editada por los administradores.
-    page_title: Título
-    path: Dirección
+    locked_notice: Esta página está bloqueada, solo puede ser editada por las administradoras.
+    page_title: Título de página
+    path: Ruta
     all_pages: Todas las páginas
     page_history: Historial de la página
     edit_page: Editar página
