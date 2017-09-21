@@ -85,6 +85,7 @@ flash:
     submission_edited: Lisäystä muokattu.
     user_password_updated: Salasanasi on päivitetty.
     user_settings_updated: Käyttäjän asetukset päivitetty.
+    no_messages: Ei näytettäviä viestejä.
 
 forum:
     moderators: Moderaattorit
@@ -140,6 +141,13 @@ inbox:
     empty: Postilaatikko on tyhjä.
     message_reply_head: 'VS: %title%'
 
+label:
+    title: Otsikko
+    replies: Vastaukset
+    from: Käyttäjältä
+    to: Käyttäjälle
+    sent: Lähetetty
+
 login_form:
     log_in: Kirjaudu
     username: Käyttäjänimi
@@ -154,15 +162,6 @@ message_form:
     message: Viesti
     send: Lähetä
     reply: Vastaa
-
-message_list:
-    page_title: Viestit
-    title: Otsikko
-    replies: Vastaukset
-    from: Käyttäjältä
-    to: Käyttäjälle
-    sent: Lähetetty
-    no_messages: Ei näytettäviä viestejä.
 
 moderator_form:
     user: Käyttäjänimi
@@ -243,6 +242,9 @@ time:
     on_timestamp: aikana %timestamp%
     earlier_format: '%relative_time% sitten'
     later_format: '%relative_time% myöhemmin'
+
+title:
+    messages: Viestit
 
 two_factor:
     explanation: Viimeistelläksesi kirjautumisen, anna sähköpostiin %email% lähetetty varmistuskoodi.

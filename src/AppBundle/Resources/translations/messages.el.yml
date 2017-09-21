@@ -89,6 +89,7 @@ flash:
     user_account_registered: Ο λογαριασμός σας έχει εγγραφεί.
     user_password_updated: Ο κωδικός πρόσβασής σας έχει ενημερωθεί.
     user_settings_updated: Οι προτιμήσεις χρήστη έχουν αλλάξει.
+    no_messages: Δεν υπάρχουν μηνύματα.
 
 forum:
     moderators: Συντονιστές
@@ -157,6 +158,11 @@ label:
     save_settings: Αποθήκευση ρυθμίσεων
     source_code: Κωδικός προγραμματισμού
     append_to_default_style: Προσάρτηση στο προεπιλεγμένο στυλ
+    title: Τίτλος
+    replies: Απαντήσεις
+    from: Από
+    to: Προς
+    sent: Στάλθηκε
 
 login_form:
     log_in: Σύνδεση
@@ -172,15 +178,6 @@ message_form:
     message: Μήνυμα
     send: Στείλε
     reply: Απάντησε
-
-message_list:
-    page_title: Μηνύματα
-    title: Τίτλος
-    replies: Απαντήσεις
-    from: Από
-    to: Προς
-    sent: Στάλθηκε
-    no_messages: Δεν υπάρχουν μηνύματα.
 
 moderator_form:
     user: Ονομα
@@ -274,6 +271,7 @@ title:
     delete_forum: Διαγραφή φόρουμ %forum%
     forum_appearance: Εμφάνιση για %forum%
     showing_revision: 'Εμφάνιση αλλαγής #%revision% της σελίδας %path%'
+    messages: Μηνύματα
 
 two_factor:
     explanation: Για να συνδεθείτε, πρέπει να εισαγάγετε τον κωδικό πρόσβασης που αποστέλλεται μέσω email στη διεύθυνση %email%.

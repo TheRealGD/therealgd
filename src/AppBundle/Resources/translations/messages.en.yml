@@ -107,6 +107,7 @@ flash:
     user_was_unbanned: The user was unbanned.
     user_blocked: The user was blocked.
     user_unblocked: The user was unblocked.
+    no_messages: There are no messages to display.
 
 forum:
     moderators: Moderators
@@ -210,6 +211,11 @@ label:
     date: Date
     revision_id: Revision ID
     hierarchy: Hierarchy
+    title: Title
+    replies: Replies
+    from: From
+    to: To
+    sent: Sent
 
 login_form:
     log_in: Log in
@@ -225,15 +231,6 @@ message_form:
     message: Message
     send: Send
     reply: Reply
-
-message_list:
-    page_title: Messages
-    title: Title
-    replies: Replies
-    from: From
-    to: To
-    sent: Sent
-    no_messages: There are no messages to display.
 
 moderator_form:
     user: Username
@@ -356,6 +353,7 @@ title:
     recent_comments: Recent comments
     history_for_theme: Showing history for theme %theme%
     viewing_theme_source: Viewing source of %theme%
+    messages: Messages
 
 two_factor:
     explanation: To complete the login, you must enter the verification code sent by email to %email%.

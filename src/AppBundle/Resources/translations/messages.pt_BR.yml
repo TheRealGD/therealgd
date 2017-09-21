@@ -84,6 +84,7 @@ flash:
     submission_edited: A submissão foi alterada.
     user_password_updated: Sua senha foi atualizada.
     user_settings_updated: Preferências foram atualizadas.
+    no_messages: Não há mensagens para mostrar.
 
 forum:
     moderators: Moderadores
@@ -138,6 +139,13 @@ inbox:
     empty: A caixa de entrada está vazia.
     message_reply_head: 'Re: %title%'
 
+label:
+    title: Título
+    replies: Respostas
+    from: De
+    to: Para
+    sent: Enviado
+
 login_form:
     log_in: Entrar
     username: Nome de usuário
@@ -152,15 +160,6 @@ message_form:
     message: Mensagem
     send: Enviar
     reply: Responder
-
-message_list:
-    page_title: Mensagens
-    title: Título
-    replies: Respostas
-    from: De
-    to: Para
-    sent: Enviado
-    no_messages: Não há mensagens para mostrar.
 
 moderator_form:
     user: Nome de usuário
@@ -244,6 +243,9 @@ time:
     on_timestamp: em %timestamp%
     earlier_format: '%relative_time% mais cedo'
     later_format: '%relative_time% mais tarde'
+
+title:
+    messages: Mensagens
 
 user:
     submissions: Envios

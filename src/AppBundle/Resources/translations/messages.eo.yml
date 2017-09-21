@@ -84,6 +84,7 @@ flash:
     submission_edited: La sendadon redaktis.
     user_password_updated: Via pasvorto ĝisdatigis.
     user_settings_updated: Uzanto-agordoj ĝisdatigis.
+    no_messages: Sen mesaĝoj montri.
 
 forum:
     moderators: Kontrolantoj
@@ -138,6 +139,13 @@ inbox:
     empty: La enirkesto estas vakiga
     message_reply_head: 'Re: %title%'
 
+label:
+    title: Titolo
+    replies: Respondoj
+    from: de
+    to: al
+    sent: Sendis
+
 login_form:
     log_in: Ensaluti
     username: Uzantonomo
@@ -152,15 +160,6 @@ message_form:
     message: Mesaĝo
     send: Sendi
     reply: Respondi
-
-message_list:
-    page_title: Mesaĝoj
-    title: Titolo
-    replies: Respondoj
-    from: de
-    to: al
-    sent: Sendis
-    no_messages: Sen mesaĝoj montri.
 
 moderator_form:
     user: Uzantonomo
@@ -242,6 +241,9 @@ time:
     on_timestamp: je %timestamp%
     earlier_format: '%relative_time% frue'
     later_format: '%relative_time% poste'
+
+title:
+    messages: Mesaĝoj
 
 two_factor:
     explantation: Por fini la ensaluto, vi devas tajpi la identokontrolo retpoŝtis al %email%.

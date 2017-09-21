@@ -6,7 +6,7 @@
   {{ include('@RadditApp/_includes/meta_pagination.html.twig', {pager: messages}, with_context=false) }}
 {% endblock %}
 
-{% block title 'message_list.page_title'|trans %}
+{% block title 'title.messages'|trans %}
 
 {% block body %}
   <h1>{{ block('title') }}</h1>
@@ -15,11 +15,11 @@
     <table class="table">
       <thead>
         <tr>
-          <th>{{ 'message_list.title'|trans }}</th>
-          <th>{{ 'message_list.sent'|trans }}</th>
-          <th>{{ 'message_list.replies'|trans }}</th>
-          <th>{{ 'message_list.from'|trans }}</th>
-          <th>{{ 'message_list.to'|trans }}</th>
+          <th>{{ 'label.title'|trans }}</th>
+          <th>{{ 'label.sent'|trans }}</th>
+          <th>{{ 'label.replies'|trans }}</th>
+          <th>{{ 'label.from'|trans }}</th>
+          <th>{{ 'label.to'|trans }}</th>
         </tr>
       </thead>
       <tbody>
@@ -39,7 +39,9 @@
       </tbody>
     </table>
   {% else %}
-    <p>{{ 'message_list.no_messages'|trans }}</p>
+    <div class="alert alert--notice">
+      <p>{{ 'flash.no_messages'|trans }}</p>
+    </div>
   {% endif %}
 
   {{ include('@RadditApp/_includes/pagination.html.twig', {pager: messages}, with_context=false) }}

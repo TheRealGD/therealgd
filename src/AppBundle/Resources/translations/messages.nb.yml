@@ -87,6 +87,7 @@ flash:
     submission_edited: Innlegget ble endret.
     user_password_updated: Passordet ditt ble oppdatert.
     user_settings_updated: Innstillingene har blitt oppdatert.
+    no_messages: Det finnes ingen meldinger å vise.
 
 forum:
     moderators: Moderatorer
@@ -141,6 +142,13 @@ inbox:
     empty: Innboksen er tom.
     message_reply_head: 'Sv: %title%'
 
+label:
+    title: Tittel
+    replies: Svar
+    from: Fra
+    to: Til
+    sent: Sendt
+
 login_form:
     log_in: Logg inn
     username: Brukernavn
@@ -155,15 +163,6 @@ message_form:
     message: Melding
     send: Send
     reply: Svar
-
-message_list:
-    page_title: Meldinger
-    title: Tittel
-    replies: Svar
-    from: Fra
-    to: Til
-    sent: Sendt
-    no_messages: Det finnes ingen meldinger å vise.
 
 moderator_form:
     user: Brukernavn
@@ -246,6 +245,9 @@ time:
     on_timestamp: '%timestamp%'
     earlier_format: '%relative_time% tidligere'
     later_format: '%relative_time% senere'
+
+title:
+    messages: Meldinger
 
 user:
     submissions: Innlegg
