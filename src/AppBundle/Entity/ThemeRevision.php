@@ -48,9 +48,11 @@ class ThemeRevision {
     private $nightCss;
 
     /**
+     * @ORM\Column(type="boolean", options={"default": true})
+     *
      * @var bool
      */
-    private $appendToDefaultStyle = true;
+    private $appendToDefaultStyle;
 
     /**
      * @ORM\Column(type="text", nullable=true)
