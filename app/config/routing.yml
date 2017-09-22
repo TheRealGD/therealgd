@@ -1,10 +1,38 @@
-raddit_app_routing:
-    resource: "@RadditAppBundle/Resources/config/routing.yml"
+_raddit_app_ajax:
+    resource: routes/ajax.yml
 
-raddit_app_forum_routing:
-    resource: "@RadditAppBundle/Resources/config/forum_routing.yml"
-    prefix: /f/{forum_name}/
-    requirements: { forum_name: '[^/+]+' }
+_raddit_app_ban:
+    resource: routes/ban.yml
+
+_raddit_app_comment:
+    resource: routes/comment.yml
+
+_raddit_app_forum:
+    resource: routes/forum.yml
+
+_raddit_app_front:
+    resource: routes/front.yml
+
+_raddit_app_message:
+    resource: routes/message.yml
+
+_raddit_app_reset_password:
+    resource: routes/reset_password.yml
+
+_raddit_app_security:
+    resource: routes/security.yml
+
+_raddit_app_submission:
+    resource: routes/submission.yml
+
+_raddit_app_theme:
+    resource: routes/theme.yml
+
+_raddit_app_user:
+    resource: routes/user.yml
+
+_raddit_app_wiki:
+    resource: routes/wiki.yml
 
 _bazinga_jstranslation:
     resource: "@BazingaJsTranslationBundle/Resources/config/routing/routing.yml"
@@ -17,7 +45,7 @@ _gregwar_captcha_routing:
     resource: "@GregwarCaptchaBundle/Resources/config/routing/routing.yml"
     prefix: /_gcb
 
-fos_js_routing:
+_fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
 
 _trailing_slash_redirect:

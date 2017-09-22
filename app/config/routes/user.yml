@@ -1,0 +1,72 @@
+
+raddit_app_user:
+    defaults: { _controller: RadditAppBundle:User:userPage }
+    path: /user/{username}
+    methods: [GET]
+
+raddit_app_user_shortcut:
+    defaults: { _controller: FrameworkBundle:Redirect:redirect, route: raddit_app_user }
+    path: /u/{username}
+    methods: [GET]
+
+raddit_app_user_submissions:
+    defaults: { _controller: RadditAppBundle:User:submissions, page: 1 }
+    path: /user/{username}/submissions/{page}
+    methods: [GET]
+    requirements: { page: \d+ }
+
+raddit_app_user_comments:
+    defaults: { _controller: RadditAppBundle:User:comments, page: 1 }
+    path: /user/{username}/comments/{page}
+    methods: [GET]
+    requirements: { page: \d+ }
+
+raddit_app_edit_user:
+    defaults: { _controller: RadditAppBundle:User:editUser }
+    path: /edit_user/{username}
+    methods: [GET, POST]
+
+raddit_app_user_settings:
+    defaults: { _controller: RadditAppBundle:User:userSettings }
+    path: /user_settings/{username}
+    methods: [GET, POST]
+
+raddit_app_user_block_list:
+    defaults: { _controller: RadditAppBundle:User:blockList, page: 1 }
+    path: /block_list/{page}
+    methods: [GET, POST]
+    requirements: { page: \d+ }
+
+raddit_app_block_user:
+    defaults: { _controller: RadditAppBundle:User:block }
+    path: /block/{username}
+    methods: [GET, POST]
+
+raddit_app_unblock_user:
+    defaults: { _controller: RadditAppBundle:User:unblock }
+    path: /unblock/{id}
+    methods: [POST]
+    requirements: { id: "%uuid_regex%" }
+
+raddit_app_registration:
+    defaults: { _controller: RadditAppBundle:User:registration }
+    path: /registration
+    methods: [GET, POST]
+
+raddit_app_mark_user_trusted:
+    defaults: { _controller: RadditAppBundle:User:markAsTrusted }
+    path: /mark_as_trusted/{id}/{trusted}
+    methods: [POST]
+    requirements: { trusted: '[01]' }
+
+raddit_app_inbox:
+    defaults: { _controller: RadditAppBundle:User:inbox, page: 1 }
+    path: /inbox/{page}
+    methods: [GET]
+    requirements: { page: \d+ }
+
+raddit_app_clear_inbox:
+    defaults: { _controller: RadditAppBundle:User:clearInbox, _format: html }
+    path: /clear_inbox.{_format}
+    methods: [POST]
+    requirements: { _format: html|json }

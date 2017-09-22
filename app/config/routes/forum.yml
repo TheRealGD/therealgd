@@ -1,87 +1,114 @@
-#
-# This file describes forum routes, i.e. routes that have an /f/{forum_name}/
-# prefix.
-#
+raddit_app_multi:
+    defaults: { _controller: RadditAppBundle:Forum:multi, sortBy: hot, page: 1}
+    path: /f/{names}/{sortBy}/{page}
+    requirements: { names: '(?:\w{3,25}\+){1,70}\w{3,25}' }
 
 raddit_app_forum:
     defaults: { _controller: RadditAppBundle:Forum:front, sortBy: hot, page: 1 }
-    path: /{sortBy}/{page}
+    path: /f/{forum_name}/{sortBy}/{page}
     methods: [GET]
     requirements: { sortBy: hot|new|top|controversial, page: \d+ }
 
 raddit_app_comments:
     defaults: { _controller: RadditAppBundle:Submission:commentPage, slug: ~ }
-    path: /{submission_id}/{slug}
+    path: /f/{forum_name}/{submission_id}/{slug}
     methods: [GET]
     requirements:
         submission_id: \d+
 
 raddit_app_comment:
     defaults: { _controller: RadditAppBundle:Submission:commentPermalink }
-    path: /{submission_id}/comment/{comment_id}
+    path: /f/{forum_name}/{submission_id}/comment/{comment_id}
     methods: [GET]
 
 raddit_app_comment_post:
     defaults:
         _controller: RadditAppBundle:Comment:comment
         comment_id: ~
-    path: /{submission_id}/comment_post/{comment_id}
+    path: /f/{forum_name}/{submission_id}/comment_post/{comment_id}
     methods: [POST]
 
 raddit_app_edit_comment:
     defaults: { _controller: RadditAppBundle:Comment:editComment }
-    path: /{submission_id}/edit_comment/{comment_id}
+    path: /f/{forum_name}/{submission_id}/edit_comment/{comment_id}
     methods: [GET, POST]
 
 raddit_app_edit_submission:
     defaults: { _controller: RadditAppBundle:Submission:editSubmission }
-    path: /edit_submission/{submission_id}
+    path: /f/{forum_name}/edit_submission/{submission_id}
     methods: [GET, POST]
 
 raddit_app_edit_forum:
     defaults: { _controller: RadditAppBundle:Forum:editForum }
-    path: /edit
+    path: /f/{forum_name}/edit
     methods: [GET, POST]
 
 raddit_app_delete_forum:
     defaults: { _controller: RadditAppBundle:Forum:delete }
-    path: /delete
+    path: /f/{forum_name}/delete
     methods: [GET, POST]
 
 raddit_app_forum_appearance:
     defaults: { _controller: RadditAppBundle:Forum:appearance }
-    path: /appearance
+    path: /f/{forum_name}/appearance
     methods: [GET, POST]
 
 raddit_app_forum_bans:
     defaults: { _controller: RadditAppBundle:Forum:bans, page: 1 }
-    path: /bans
+    path: /f/{forum_name}/bans
     methods: [GET]
     requirements: { page: \d+ }
 
 raddit_app_forum_ban_history:
     defaults: { _controller: RadditAppBundle:Forum:banHistory, page: 1}
-    path: /bans/history/{username}/{page}
+    path: /f/{forum_name}/bans/history/{username}/{page}
     methods: [GET]
     requirements: { page: \d+ }
 
 raddit_app_forum_ban:
     defaults: { _controller: RadditAppBundle:Forum:ban }
-    path: /ban/{username}
+    path: /f/{forum_name}/ban/{username}
     methods: [GET, POST]
 
 raddit_app_forum_unban:
     defaults: { _controller: RadditAppBundle:Forum:unban }
-    path: /unban/{username}
+    path: /f/{forum_name}/unban/{username}
     methods: [GET, POST]
 
 raddit_app_forum_moderators:
     defaults: { _controller: RadditAppBundle:Forum:moderators, page: 1 }
-    path: /moderators/{page}
+    path: /f/{forum_name}/moderators/{page}
     methods: [GET]
     requirements: { page: \d+ }
 
 raddit_app_add_moderator:
     defaults: { _controller: RadditAppBundle:Forum:addModerator }
-    path: /add_moderator
+    path: /f/{forum_name}/add_moderator
     methods: [GET, POST]
+
+raddit_app_create_forum:
+    defaults: { _controller: RadditAppBundle:Forum:createForum }
+    path: /create_forum
+    methods: [GET, POST]
+
+raddit_app_forum_list:
+    defaults: { _controller: RadditAppBundle:Forum:list, page: 1, sortBy: by_submissions }
+    path: /forums/{sortBy}/{page}
+    methods: [GET]
+    requirements: { forums: \d+, sortBy: by_name|by_title|by_subscribers|by_submissions }
+
+raddit_app_forums_by_category:
+    defaults: { _controller: RadditAppBundle:Forum:listCategories }
+    path: /forums/by_category
+    methods: [GET]
+
+raddit_app_subscribe:
+    defaults: { _controller: RadditAppBundle:Forum:subscribe, action: subscribe }
+    path: /sub/{id}
+    methods: [POST]
+
+raddit_app_unsubscribe:
+    defaults: { _controller: RadditAppBundle:Forum:subscribe, action: unsubscribe }
+    path: /unsub/{id}
+    methods: [POST]
+

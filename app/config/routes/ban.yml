@@ -1,0 +1,29 @@
+raddit_app_bans:
+    defaults: { _controller: RadditAppBundle:Ban:list, page: 1 }
+    path: /bans/{page}
+    methods: [GET]
+    requirements: { page: \d+ }
+
+raddit_app_add_ban:
+    defaults: { _controller: RadditAppBundle:Ban:add }
+    path: /add_ban
+    methods: [GET, POST]
+
+raddit_app_remove_bans:
+    defaults: { _controller: RadditAppBundle:Ban:remove }
+    path: /remove_bans
+    methods: [POST]
+
+raddit_app_ban_ip_by_submission:
+    defaults:
+        _controller: RadditAppBundle:Ban:redirect
+        entityClass: RadditAppBundle:Submission
+    methods: [GET]
+    path: /ban_by_submission/{id}
+
+raddit_app_ban_ip_by_comment:
+    defaults:
+        _controller: RadditAppBundle:Ban:redirect
+        entityClass: RadditAppBundle:Comment
+    path: /ban_by_comment/{id}
+    methods: [GET]

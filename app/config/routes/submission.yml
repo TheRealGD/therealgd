@@ -1,0 +1,13 @@
+raddit_app_submit:
+    defaults: { _controller: RadditAppBundle:Submission:submit, forum_name: null }
+    path: /submit/{forum_name}
+    methods: [GET, POST]
+
+raddit_app_submission_vote:
+    defaults:
+        _controller: RadditAppBundle:Vote:vote
+        _format: html
+        entityClass: Raddit\AppBundle\Entity\Submission
+    path: /sv/{id}.{_format}
+    methods: [POST]
+    requirements: { _format: html|json }

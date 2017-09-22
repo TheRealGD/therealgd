@@ -1,0 +1,34 @@
+raddit_app_wiki:
+    defaults: { _controller: RadditAppBundle:Wiki:wiki, path: index }
+    path: /wiki/{path}
+    methods: [GET]
+    requirements: { path: "%wiki_page_regex%" }
+
+raddit_app_wiki_create:
+    defaults: { _controller: RadditAppBundle:Wiki:create }
+    path: /wiki/_create/{path}
+    methods: [GET, POST]
+    requirements: { path: "%wiki_page_regex%" }
+
+raddit_app_wiki_edit:
+    defaults: { _controller: RadditAppBundle:Wiki:edit }
+    path: /wiki/_edit/{path}
+    methods: [GET, POST]
+    requirements: { path: "%wiki_page_regex%" }
+
+raddit_app_wiki_history:
+    defaults: { _controller: RadditAppBundle:Wiki:history, page: 1 }
+    path: /wiki/_history/{path}/{page}
+    methods: [GET]
+    requirements: { path: "%wiki_page_regex%" }
+
+raddit_app_wiki_all:
+    defaults: { _controller: RadditAppBundle:Wiki:all, page: 1 }
+    path: /wiki/_all/{page}
+    methods: [GET]
+
+raddit_app_wiki_revision:
+    defaults: { _controller: RadditAppBundle:Wiki:revision }
+    path: /wiki/_revision/{id}
+    methods: [GET]
+    requirements: { id: "%uuid_regex%" }
