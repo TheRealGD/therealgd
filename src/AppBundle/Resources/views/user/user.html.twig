@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block body %}
-  <h1>{{ user.username }}</h1>
+  <h1 class="page-heading">{{ user.username }}</h1>
 
   {% for contribution in contributions %}
     {% if contribution.type == 'submission' %}

@@ -4,7 +4,7 @@
 {% block page_classes 'forum-appearance-page' %}
 
 {% block body %}
-  <h1>
+  <h1 class="page-heading">
     {{ 'title.forum_appearance'|trans({'%forum%': '<a href="%s">/f/%s</a>'|format(
       path('raddit_app_forum', {forum_name: forum.name})|escape,
       forum.name|escape

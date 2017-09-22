@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block body %}
-  <h1>{{ block('title') }}</h1>
+  <h1 class="page-heading">{{ block('title') }}</h1>
 
   <form action="{{ path('raddit_app_remove_bans') }}" method="POST" class="form">
     <input type="hidden" name="token" value="{{ csrf_token('remove_bans') }}">

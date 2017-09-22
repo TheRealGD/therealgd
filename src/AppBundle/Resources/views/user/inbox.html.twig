@@ -13,7 +13,7 @@
 {% endblock %}
 
 {% block body %}
-  <h1>{{ 'inbox.title'|trans }}</h1>
+  <h1 class="page-heading">{{ 'inbox.title'|trans }}</h1>
 
   {% if notifications|length > 0 %}
     <form action="{{ path('raddit_app_clear_inbox', { max: notifications|first.id }) }}" method="POST" class="form">

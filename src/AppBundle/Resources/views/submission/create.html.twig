@@ -4,7 +4,7 @@
 {% block title 'title.create_submission'|trans %}
 
 {% block body %}
-  <h1>{{ block('title') }}</h1>
+  <h1 class="page-heading">{{ block('title') }}</h1>
 
   {{ include('@RadditApp/submission/_form.html.twig', {form: form}, with_context=false) }}
 {% endblock %}

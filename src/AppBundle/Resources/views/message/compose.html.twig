@@ -9,10 +9,12 @@
 {% endblock %}
 
 {% block body %}
-  <h1>{{ 'compose_message.title'|trans({'%username%': '<a href="%s">%s</a>'|format(
+  <h1 class="page-heading">
+    {{- 'compose_message.title'|trans({'%username%': '<a href="%s">%s</a>'|format(
       path('raddit_app_user', {username: receiver.username})|escape,
       receiver.username|escape
-    )})|raw }}</h1>
+    )})|raw -}}
+  </h1>
 
   {{ form_start(form) }}
     {{ form_row(form.title, {attr: {rows: 3}}) }}

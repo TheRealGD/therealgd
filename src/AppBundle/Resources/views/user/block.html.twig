@@ -5,7 +5,7 @@
 {% block title 'title.blocking_user'|trans({'%user%': '/u/'~subject.username}) %}
 
 {% block body %}
-  <h1>
+  <h1 class="page-heading">
     {{ 'title.blocking_user'|trans({
       '%user%': user_link(subject, {prefix: true}),
     })|raw }}

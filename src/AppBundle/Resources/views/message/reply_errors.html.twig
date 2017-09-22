@@ -4,7 +4,7 @@
 {% block title thread.title %}
 
 {% block body %}
-  <h1><a href="{{ path('raddit_app_message', {id: thread.id}) }}">{{ thread.title }}</a></h1>
+  <h1 class="page-heading"><a href="{{ path('raddit_app_message', {id: thread.id}) }}">{{ thread.title }}</a></h1>
 
   {{ include('@RadditApp/message/_form.html.twig', {form: form}, with_context=false) }}
 {% endblock %}

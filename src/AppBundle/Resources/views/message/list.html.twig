@@ -9,7 +9,7 @@
 {% block title 'title.messages'|trans %}
 
 {% block body %}
-  <h1>{{ block('title') }}</h1>
+  <h1 class="page-heading">{{ block('title') }}</h1>
 
   {% if messages|length > 0 %}
     <table class="table">

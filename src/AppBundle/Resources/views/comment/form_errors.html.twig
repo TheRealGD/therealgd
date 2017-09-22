@@ -17,7 +17,7 @@
 {% block body %}
   {{ parent() }}
 
-  <h1>{{ block('title') }}</h1>
+  <h1 class="page-heading">{{ block('title') }}</h1>
 
   {% if comment %}
     {{ comment(comment, {recurse: false}) }}

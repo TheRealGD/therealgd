@@ -4,7 +4,7 @@
 {% block title 'title.log_in'|trans %}
 
 {% block body %}
-  <h1>{{ block('title') }}</h1>
+  <h1 class="page-heading">{{ block('title') }}</h1>
 
   <form action="{{ path('raddit_app_login_check') }}" method="POST" class="form form--login">
     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">

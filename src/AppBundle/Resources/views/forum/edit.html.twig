@@ -4,7 +4,7 @@
 {% block title 'edit_forum.title'|trans({'%forum%': '/f/'~forum.name}) %}
 
 {% block body %}
-  <h1>
+  <h1 class="page-heading">
     {{ 'title.editing_forum'|trans({
       '%forum%': '<a href="%s">/f/%s</a>'|format(path('raddit_app_forum', {forum_name: forum.name})|e, forum.name|e)
     })|raw }}

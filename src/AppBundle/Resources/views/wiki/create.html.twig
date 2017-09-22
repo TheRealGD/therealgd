@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block body %}
-  <h1>{{ block('title') }}</h1>
+  <h1 class="page-heading">{{ block('title') }}</h1>
 
   {% include '@RadditApp/wiki/_form.html.twig' with {form: form} only %}
 {% endblock %}
