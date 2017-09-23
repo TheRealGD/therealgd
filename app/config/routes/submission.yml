@@ -1,3 +1,32 @@
+raddit_app_comments:
+    defaults: { _controller: RadditAppBundle:Submission:commentPage, slug: ~ }
+    path: /f/{forum_name}/{submission_id}/{slug}
+    methods: [GET]
+    requirements:
+        submission_id: \d+
+
+raddit_app_comment:
+    defaults: { _controller: RadditAppBundle:Submission:commentPermalink }
+    path: /f/{forum_name}/{submission_id}/comment/{comment_id}
+    methods: [GET]
+
+raddit_app_edit_submission:
+    defaults: { _controller: RadditAppBundle:Submission:editSubmission }
+    path: /f/{forum_name}/edit_submission/{submission_id}
+    methods: [GET, POST]
+
+raddit_app_lock:
+    defaults: { _controller: RadditAppBundle:Submission:lock, lock: true }
+    path: /f/{forum_name}/{submission_id}/lock
+    methods: [POST]
+    requirements: { id: \d+ }
+
+raddit_app_unlock:
+    defaults: { _controller: RadditAppBundle:Submission:lock, lock: false }
+    path: /f/{forum_name}/{submission_id}/unlock
+    methods: [POST]
+    requirements: { id: \d+ }
+
 raddit_app_submit:
     defaults: { _controller: RadditAppBundle:Submission:submit, forum_name: null }
     path: /submit/{forum_name}

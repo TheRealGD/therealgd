@@ -9,7 +9,11 @@
 {% endmacro %}
 
 {% macro comment_form(submission, comment) %}
-  {% if is_granted('ROLE_USER') %}
+  {% if submission.locked and not is_granted('ROLE_ADMIN') %}
+    <div class="alert alert--notice submission-locked-notice">
+      <p>{{ 'flash.submission_is_locked'|trans }}</p>
+    </div>
+  {% elseif is_granted('ROLE_USER') %}
     {{ render(controller('RadditAppBundle:Comment:commentForm', {
       forumName: submission.forum.name,
       submissionId: submission.id,

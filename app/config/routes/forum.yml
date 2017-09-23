@@ -9,18 +9,6 @@ raddit_app_forum:
     methods: [GET]
     requirements: { sortBy: hot|new|top|controversial, page: \d+ }
 
-raddit_app_comments:
-    defaults: { _controller: RadditAppBundle:Submission:commentPage, slug: ~ }
-    path: /f/{forum_name}/{submission_id}/{slug}
-    methods: [GET]
-    requirements:
-        submission_id: \d+
-
-raddit_app_comment:
-    defaults: { _controller: RadditAppBundle:Submission:commentPermalink }
-    path: /f/{forum_name}/{submission_id}/comment/{comment_id}
-    methods: [GET]
-
 raddit_app_comment_post:
     defaults:
         _controller: RadditAppBundle:Comment:comment
@@ -31,11 +19,6 @@ raddit_app_comment_post:
 raddit_app_edit_comment:
     defaults: { _controller: RadditAppBundle:Comment:editComment }
     path: /f/{forum_name}/{submission_id}/edit_comment/{comment_id}
-    methods: [GET, POST]
-
-raddit_app_edit_submission:
-    defaults: { _controller: RadditAppBundle:Submission:editSubmission }
-    path: /f/{forum_name}/edit_submission/{submission_id}
     methods: [GET, POST]
 
 raddit_app_edit_forum:
@@ -111,4 +94,3 @@ raddit_app_unsubscribe:
     defaults: { _controller: RadditAppBundle:Forum:subscribe, action: unsubscribe }
     path: /unsub/{id}
     methods: [POST]
-

@@ -17,6 +17,8 @@ action:
     unban: Unban
     block: Block
     unblock: Unblock
+    lock: Lock
+    unlock: Unlock
 
 add_moderator:
     title: Add moderator to %forum%
@@ -108,6 +110,9 @@ flash:
     user_blocked: The user was blocked.
     user_unblocked: The user was unblocked.
     no_messages: There are no messages to display.
+    submission_locked: The submission was locked.
+    submission_unlocked: The submission was unlocked.
+    submission_is_locked: The submission is locked. You cannot post new comments.
 
 forum:
     moderators: Moderators

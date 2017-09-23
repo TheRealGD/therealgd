@@ -137,6 +137,13 @@ class Submission extends Votable {
     private $userFlag;
 
     /**
+     * @ORM\Column(type="boolean", options={"default": false})
+     *
+     * @var bool
+     */
+    private $locked = false;
+
+    /**
      * @param string         $title
      * @param string|null    $url
      * @param string|null    $body
@@ -372,5 +379,13 @@ class Submission extends Votable {
         }
 
         $this->userFlag = $userFlag;
+    }
+
+    public function isLocked(): bool {
+        return $this->locked;
+    }
+
+    public function setLocked(bool $locked) {
+        $this->locked = $locked;
     }
 }

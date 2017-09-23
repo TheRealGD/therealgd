@@ -14,6 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * @ParamConverter("forum", options={
@@ -142,6 +143,37 @@ final class SubmissionController extends Controller {
             'form' => $form->createView(),
             'forum' => $forum,
             'submission' => $submission,
+        ]);
+    }
+
+    public function lockAction(
+        EntityManager $em,
+        Request $request,
+        Forum $forum,
+        Submission $submission,
+        bool $lock
+    ) {
+        if (!$this->isCsrfTokenValid('lock', $request->request->get('token'))) {
+            throw new BadRequestHttpException('Invalid CSRF token');
+        }
+
+        $submission->setLocked($lock);
+        $em->flush();
+
+        if ($lock) {
+            $this->addFlash('success', 'flash.submission_locked');
+        } else {
+            $this->addFlash('success', 'flash.submission_unlocked');
+        }
+
+        if ($request->headers->has('Referer')) {
+            return $this->redirect($request->headers->get('Referer'));
+        }
+
+        return $this->redirectToRoute('raddit_app_comments', [
+            'forum_name' => $forum->getName(),
+            'submission_id' => $submission->getId(),
+            'slug' => Slugger::slugify($submission->getTitle()),
         ]);
     }
 }
