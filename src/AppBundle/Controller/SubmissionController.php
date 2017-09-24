@@ -146,6 +146,17 @@ final class SubmissionController extends Controller {
         ]);
     }
 
+    /**
+     * @Security("is_granted('moderator', forum)")
+     *
+     * @param EntityManager $em
+     * @param Request       $request
+     * @param Forum         $forum
+     * @param Submission    $submission
+     * @param bool          $lock
+     *
+     * @return Response
+     */
     public function lockAction(
         EntityManager $em,
         Request $request,
