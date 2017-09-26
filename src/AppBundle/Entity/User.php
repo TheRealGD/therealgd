@@ -22,6 +22,20 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @UniqueEntity("canonicalUsername", errorPath="username")
  */
 class User implements UserInterface, TwoFactorInterface {
+    const FRONT_DEFAULT = 'default';
+    const FRONT_FEATURED = 'featured';
+    const FRONT_SUBSCRIBED = 'subscribed';
+    const FRONT_ALL = 'all';
+    const FRONT_MODERATED = 'moderated';
+
+    const FRONT_PAGE_CHOICES = [
+        self::FRONT_DEFAULT,
+        self::FRONT_FEATURED,
+        self::FRONT_SUBSCRIBED,
+        self::FRONT_ALL,
+        self::FRONT_MODERATED,
+    ];
+
     /**
      * @ORM\Column(type="bigint")
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -200,6 +214,13 @@ class User implements UserInterface, TwoFactorInterface {
      * @var UserBlock[]|Collection|Selectable
      */
     private $blocks;
+
+    /**
+     * @ORM\Column(type="text")
+     *
+     * @var string
+     */
+    private $frontPage = self::FRONT_DEFAULT;
 
     public function __construct() {
         $this->created = new \DateTime('@'.time());
@@ -606,6 +627,18 @@ class User implements UserInterface, TwoFactorInterface {
         }
 
         return $user->isAdmin() || !$this->isBlocking($user);
+    }
+
+    public function getFrontPage(): string {
+        return $this->frontPage;
+    }
+
+    public function setFrontPage(string $frontPage) {
+        if (!in_array($frontPage, self::FRONT_PAGE_CHOICES, true)) {
+            throw new \InvalidArgumentException('Unknown choice');
+        }
+
+        $this->frontPage = $frontPage;
     }
 
     /**

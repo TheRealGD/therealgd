@@ -113,6 +113,7 @@ flash:
     submission_locked: The submission was locked.
     submission_unlocked: The submission was unlocked.
     submission_is_locked: The submission is locked. You cannot post new comments.
+    no_moderated_forums: You don't moderate any forums.
 
 forum:
     moderators: Moderators
@@ -221,6 +222,12 @@ label:
     from: From
     to: To
     sent: Sent
+    front_page: Front page
+    default: Default
+    subscribed: Subscribed
+    featured: Featured
+    all: All
+    moderated: Moderated
 
 login_form:
     log_in: Log in

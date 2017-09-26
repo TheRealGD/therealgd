@@ -3,6 +3,7 @@
 namespace Raddit\AppBundle\Form;
 
 use Raddit\AppBundle\Entity\Theme;
+use Raddit\AppBundle\Entity\User;
 use Raddit\AppBundle\Form\Model\UserSettings;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -23,6 +24,16 @@ final class UserSettingsType extends AbstractType {
             ->add('locale', ChoiceType::class, [
                 'choices' => $this->getLocaleChoices(),
                 'choice_translation_domain' => false,
+            ])
+            ->add('front_page', ChoiceType::class, [
+                'choices' => [
+                    'label.default' => User::FRONT_DEFAULT,
+                    'label.featured' => User::FRONT_FEATURED,
+                    'label.subscribed' => User::FRONT_SUBSCRIBED,
+                    'label.all' => User::FRONT_ALL,
+                    'label.moderated' => User::FRONT_MODERATED,
+                ],
+                'label' => 'label.front_page',
             ])
             ->add('night_mode', CheckboxType::class, [
                 'required' => false,

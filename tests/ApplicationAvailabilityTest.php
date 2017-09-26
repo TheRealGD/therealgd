@@ -84,6 +84,14 @@ class ApplicationAvailabilityTest extends WebTestCase {
         yield ['/all/new/1'];
         yield ['/all/top/1'];
         yield ['/all/controversial/1'];
+        yield ['/featured/hot'];
+        yield ['/featured/new'];
+        yield ['/featured/top'];
+        yield ['/featured/controversial'];
+        yield ['/featured/hot/1'];
+        yield ['/featured/new/1'];
+        yield ['/featured/top/1'];
+        yield ['/featured/controversial/1'];
         yield ['/f/news/hot'];
         yield ['/f/news/new'];
         yield ['/f/news/top'];
@@ -124,20 +132,28 @@ class ApplicationAvailabilityTest extends WebTestCase {
     public function redirectUrlProvider() {
         yield ['/f/cats/2', '/f/cats/2/'];
         yield ['/f/cats', '/f/cats/'];
-        yield ['/', '/featured/hot'];
-        yield ['/', '/featured/new'];
-        yield ['/', '/featured/top'];
-        yield ['/', '/featured/controversial'];
-        yield ['/', '/featured/hot/1'];
-        yield ['/', '/featured/new/1'];
-        yield ['/', '/featured/top/1'];
-        yield ['/', '/featured/controversial/1'];
     }
 
     /**
      * URLs that need authentication to access.
      */
     public function authUrlProvider() {
+        yield ['/subscribed/hot'];
+        yield ['/subscribed/new'];
+        yield ['/subscribed/top'];
+        yield ['/subscribed/controversial'];
+        yield ['/subscribed/hot/1'];
+        yield ['/subscribed/new/1'];
+        yield ['/subscribed/top/1'];
+        yield ['/subscribed/controversial/1'];
+        yield ['/moderated/hot'];
+        yield ['/moderated/new'];
+        yield ['/moderated/top'];
+        yield ['/moderated/controversial'];
+        yield ['/moderated/hot/1'];
+        yield ['/moderated/new/1'];
+        yield ['/moderated/top/1'];
+        yield ['/moderated/controversial/1'];
         yield ['/create_forum'];
         yield ['/f/news/edit'];
         yield ['/f/news/appearance'];
