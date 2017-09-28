@@ -4,7 +4,7 @@
 
   <nav class="site-nav">
     <div class="site-nav__header">
-      <a href="{{ path('raddit_app_front') }}" class="site-nav__logo">{{ raddit_app_site_name() }}</a>
+      <a href="{{ path('raddit_app_front') }}" class="site-nav__logo">{{ site_name() }}</a>
       {# todo: accessibility #}
       <a href="#" class="site-nav__mobile-toggle {{ notification_count > 0 ? 'site-nav__mobile-toggle--has-notifications' }}" onclick="$(this).parents('.site-nav').find('.site-nav__inner').toggleClass('site-nav__inner--mobile-visible'); return false">{{ icon('menu') }}</a>
     </div>

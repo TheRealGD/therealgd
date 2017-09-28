@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block head %}
-  <meta property="og:site_name" content="{{ raddit_app_site_name() }}">
+  <meta property="og:site_name" content="{{ site_name() }}">
   <meta property="og:title" content="{{ submission.title }}">
   <meta property="og:type" content="article">
   <meta property="og:url" content="{{ url('raddit_app_comments', {forum_name: forum.name, submission_id: submission.id, slug: submission.title|slugify}) }}">

@@ -9,7 +9,7 @@
   {% include '_includes/meta_pagination.html.twig' with {pager: submissions} %}
 
   <meta property="og:title" content="{{ forum.title }}">
-  <meta property="og:site_name" content="{{ raddit_app_site_name() }}">
+  <meta property="og:site_name" content="{{ site_name() }}">
   <meta property="og:type" content="website">
   <meta property="og:url" content="{{ url('raddit_app_forum', {forum_name: forum.name}) }}">
   <meta property="og:image" content="{{ absolute_url(asset('apple-touch-icon-precomposed.png')) }}">

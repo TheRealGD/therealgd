@@ -53,9 +53,9 @@ final class AppExtension extends \Twig_Extension {
      */
     public function getFunctions() {
         return [
-            new \Twig_SimpleFunction('raddit_app_site_name', [$this, 'getSiteName']),
-            new \Twig_SimpleFunction('raddit_app_branch', [$this, 'getBranch']),
-            new \Twig_SimpleFunction('raddit_app_version', [$this, 'getVersion']),
+            new \Twig_SimpleFunction('site_name', [$this, 'getSiteName']),
+            new \Twig_SimpleFunction('app_branch', [$this, 'getBranch']),
+            new \Twig_SimpleFunction('app_version', [$this, 'getVersion']),
         ];
     }
 

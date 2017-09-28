@@ -2,10 +2,10 @@
 <html lang="{{ app.request.locale }}" prefix="og: http://ogp.me/ns#">
   <head>
     <meta charset="UTF-8" />
-    <title>{% block title %}{{ raddit_app_site_name() }}{% endblock %}</title>
+    <title>{% block title %}{{ site_name() }}{% endblock %}</title>
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="generator" content="raddit {{ raddit_app_version() }}">
+    <meta name="generator" content="raddit {{ app_version() }}">
 
     <link rel="apple-touch-icon-precomposed" href="{{ asset('apple-touch-icon-precomposed.png') }}">
 
@@ -40,8 +40,8 @@
     <footer class="site-footer">
       <p class="site-footer-version">
         {{ 'site_footer.version'|trans({
-          '%branch%': raddit_app_branch(),
-          '%version%': raddit_app_version(),
+          '%branch%': app_branch(),
+          '%version%': app_version(),
           '%app%': '<a href="https://gitlab.com/edgyemma/raddit-app">raddit</a>',
         })|raw }}
       </p>
