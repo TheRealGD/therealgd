@@ -2,7 +2,7 @@
 
 {% block html_title %}
   {{ 'title.viewing_theme_source'|trans({'%theme%': '<a href="%s">%s/%s</a>'|format(
-    path('raddit_app_theme_history', {id: revision.theme.id})|e,
+    path('theme_history', {id: revision.theme.id})|e,
     revision.theme.author.username|e,
     revision.theme.name|e
   )})|raw }}
@@ -32,7 +32,7 @@
               {{ member.theme.author.username }}/{{ member.theme.name }}
             {% endif %}
             {% if member != revision %}
-              (<a href="{{ path('raddit_app_theme_revision_source', {id: member.id}) }}">
+              (<a href="{{ path('theme_revision_source', {id: member.id}) }}">
               <code>{{- member.id|replace({'-': '-<wbr>'})|raw -}}</code>
             </a>)
             {% endif %}

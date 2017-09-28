@@ -6,7 +6,7 @@
 {% block body %}
   <h1 class="page-heading">{{ block('title') }}</h1>
 
-  <form action="{{ path('raddit_app_login_check') }}" method="POST" class="form form--login">
+  <form action="{{ path('login_check') }}" method="POST" class="form form--login">
     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
     {% if error %}
@@ -28,7 +28,7 @@
     <div class="form__row form__button-row">
       <button type="submit" class="button">{{ 'login_form.log_in'|trans }}</button>
 
-      <a href="{{ path('raddit_app_request_password_reset') }}" class="button button--secondary">
+      <a href="{{ path('request_password_reset') }}" class="button button--secondary">
         {{- 'login_form.reset_password'|trans -}}
       </a>
     </div>

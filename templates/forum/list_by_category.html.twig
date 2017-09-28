@@ -19,7 +19,7 @@
         <ul class="forum-group-list">
           {% for forum in category.forums %}
             <li class="forum-group-list-item">
-              <a href="{{ path('raddit_app_forum', {forum_name: forum.name}) }}">{{ forum.name }}</a>
+              <a href="{{ path('forum', {forum_name: forum.name}) }}">{{ forum.name }}</a>
             </li>
           {% endfor %}
         </ul>
@@ -32,7 +32,7 @@
         <ul class="forum-group-list">
           {% for forum in uncategorized_forums %}
             <li class="forum-group-list-item">
-              <a href="{{ path('raddit_app_forum', {forum_name: forum.name}) }}">{{ forum.name }}</a>
+              <a href="{{ path('forum', {forum_name: forum.name}) }}">{{ forum.name }}</a>
             </li>
           {% endfor %}
         </ul>

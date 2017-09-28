@@ -2,7 +2,7 @@
 {% from 'comment/_macros.html.twig' import comment %}
 
 {% block head %}
-  <link rel="canonical" href="{{ url('raddit_app_user_comments', {username: user.username}) }}">
+  <link rel="canonical" href="{{ url('user_comments', {username: user.username}) }}">
   {{ include('_includes/meta_pagination.html.twig', {pager: comments}) }}
 {% endblock %}
 

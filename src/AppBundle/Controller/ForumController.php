@@ -90,7 +90,7 @@ final class ForumController extends Controller {
             $em->persist($forum);
             $em->flush();
 
-            return $this->redirectToRoute('raddit_app_forum', [
+            return $this->redirectToRoute('forum', [
                 'forum_name' => $forum->getName(),
             ]);
         }
@@ -161,7 +161,7 @@ final class ForumController extends Controller {
 
             $this->addFlash('success', 'flash.forum_deleted');
 
-            return $this->redirectToRoute('raddit_app_front');
+            return $this->redirectToRoute('front');
         }
 
         return $this->render('forum/delete.html.twig', [
@@ -201,7 +201,7 @@ final class ForumController extends Controller {
             return $this->redirect($referrer);
         }
 
-        return $this->redirectToRoute('raddit_app_forum', ['forum_name' => $forum->getName()]);
+        return $this->redirectToRoute('forum', ['forum_name' => $forum->getName()]);
     }
 
     /**
@@ -280,7 +280,7 @@ final class ForumController extends Controller {
 
             $this->addFlash('success', 'flash.forum_moderator_added');
 
-            return $this->redirectToRoute('raddit_app_forum_moderators', [
+            return $this->redirectToRoute('forum_moderators', [
                 'forum_name' => $forum->getName(),
             ]);
         }
@@ -319,7 +319,7 @@ final class ForumController extends Controller {
 
             $em->flush();
 
-            return $this->redirectToRoute('raddit_app_forum_appearance', [
+            return $this->redirectToRoute('forum_appearance', [
                 'forum_name' => $forum->getName(),
             ]);
         }
@@ -404,7 +404,7 @@ final class ForumController extends Controller {
 
             $this->addFlash('success', 'flash.user_was_banned');
 
-            return $this->redirectToRoute('raddit_app_forum_bans', [
+            return $this->redirectToRoute('forum_bans', [
                 'forum_name' => $forum->getName(),
             ]);
         }
@@ -445,7 +445,7 @@ final class ForumController extends Controller {
 
             $this->addFlash('success', 'flash.user_was_unbanned');
 
-            return $this->redirectToRoute('raddit_app_forum_bans', [
+            return $this->redirectToRoute('forum_bans', [
                 'forum_name' => $forum->getName(),
             ]);
         }

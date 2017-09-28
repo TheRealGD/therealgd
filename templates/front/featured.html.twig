@@ -9,7 +9,7 @@
     {% if forums|length > 0 %}
       <ul>
         {% for name in forums %}
-          <li><a href="{{ path('raddit_app_forum', {forum_name: name}) }}">{{ name }}</a></li>
+          <li><a href="{{ path('forum', {forum_name: name}) }}">{{ name }}</a></li>
         {% endfor %}
       </ul>
     {% else %}

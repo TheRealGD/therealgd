@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block head %}
-  <link rel="canonical" href="{{ path('raddit_app_wiki_all') }}">
+  <link rel="canonical" href="{{ path('wiki_all') }}">
 
   {% include '_includes/meta_pagination.html.twig' with {pager: pages} only %}
 {% endblock %}
@@ -27,7 +27,7 @@
     <tbody>
       {% for page in pages %}
         <tr>
-          <td><a href="{{ path('raddit_app_wiki', {path: page.path}) }}">{{ page.path }}</a></td>
+          <td><a href="{{ path('wiki', {path: page.path}) }}">{{ page.path }}</a></td>
           <td>{{ page.latestRevision.title }}</td>
         </tr>
       {% endfor %}

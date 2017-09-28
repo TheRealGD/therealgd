@@ -6,7 +6,7 @@
 {% block body %}
   <h1 class="page-heading">
     {{ 'title.forum_appearance'|trans({'%forum%': '<a href="%s">/f/%s</a>'|format(
-      path('raddit_app_forum', {forum_name: forum.name})|escape,
+      path('forum', {forum_name: forum.name})|escape,
       forum.name|escape
     )})|raw }}
   </h1>
@@ -17,8 +17,8 @@
     {# todo: some navigation widget thing #}
     <nav>
       <ul>
-        <li><a href="{{ path('raddit_app_themes') }}">{{ 'nav.themes'|trans }}</a></li>
-        <li><a href="{{ path('raddit_app_create_theme') }}">{{ 'nav.create_theme'|trans }}</a></li>
+        <li><a href="{{ path('themes') }}">{{ 'nav.themes'|trans }}</a></li>
+        <li><a href="{{ path('create_theme') }}">{{ 'nav.create_theme'|trans }}</a></li>
       </ul>
     </nav>
   {{ form_end(form) }}

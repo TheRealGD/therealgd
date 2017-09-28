@@ -50,7 +50,7 @@ final class VoteController extends Controller {
         }
 
         if (!$request->headers->has('Referer')) {
-            return $this->redirectToRoute('raddit_app_front');
+            return $this->redirectToRoute('front');
         }
 
         return $this->redirect($request->headers->get('Referer'));

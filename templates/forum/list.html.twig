@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block head %}
-  <link rel="canonical" href="{{ url('raddit_app_forum_list') }}">
+  <link rel="canonical" href="{{ url('forum_list') }}">
   {% include '_includes/meta_pagination.html.twig' with {pager: forums} %}
 {% endblock %}
 
@@ -32,14 +32,14 @@
     <tbody>
       {% for forum in forums %}
         <tr>
-          <td><a href="{{ path('raddit_app_forum', {forum_name: forum.name}) }}"><strong>{{ forum.name }}</strong></a></td>
+          <td><a href="{{ path('forum', {forum_name: forum.name}) }}"><strong>{{ forum.name }}</strong></a></td>
           <td>{{ forum.title }}</td>
           <td>{{ forum.submissions|length|localizednumber }}</td>
           {% if is_granted('ROLE_USER') %}
             {% from 'forum/_macros.html.twig' import subscribe_button %}
             {% set subscribed = forum.subscribed(app.user) %}
             <td>
-              <form action="{{ path(subscribed ? 'raddit_app_unsubscribe' : 'raddit_app_subscribe', {id: forum.id}) }}" method="POST">
+              <form action="{{ path(subscribed ? 'unsubscribe' : 'subscribe', {id: forum.id}) }}" method="POST">
                 <input type="hidden" name="token" value="{{ csrf_token('subscribe') }}">
                 {{ subscribe_button(forum, subscribed, true) }}
               </form>
@@ -59,7 +59,7 @@
   {%- if newSortBy == currentSortBy -%}
     {{ label }} &#x25BC;
   {% else %}
-    <a href="{{ path('raddit_app_forum_list', app.request.attributes.get('_route_params')|merge({sortBy: newSortBy})) }}">
+    <a href="{{ path('forum_list', app.request.attributes.get('_route_params')|merge({sortBy: newSortBy})) }}">
       {{- label -}}
     </a>
   {%- endif -%}

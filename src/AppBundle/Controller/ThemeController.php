@@ -51,7 +51,7 @@ class ThemeController extends Controller {
 
             $this->addFlash('success', 'flash.theme_created');
 
-            return $this->redirectToRoute('raddit_app_edit_theme', [
+            return $this->redirectToRoute('edit_theme', [
                 'name' => $theme->getName(),
                 'username' => $theme->getAuthor()->getUsername(),
             ]);
@@ -89,7 +89,7 @@ class ThemeController extends Controller {
 
             $this->addFlash('success', 'flash.theme_updated');
 
-            return $this->redirectToRoute('raddit_app_edit_theme', [
+            return $this->redirectToRoute('edit_theme', [
                 'username' => $theme->getAuthor()->getUsername(),
                 'name' => $theme->getName(),
             ]);

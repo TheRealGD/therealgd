@@ -18,7 +18,7 @@
       <h1 class="sidebar__title">{{ 'heading.forums_you_moderate'|trans }}</h1>
       <ul>
         {% for forum in forums %}
-          <li><a href="{{ path('raddit_app_forum', {forum_name: forum}) }}">{{ forum }}</a></li>
+          <li><a href="{{ path('forum', {forum_name: forum}) }}">{{ forum }}</a></li>
         {% endfor %}
       </ul>
     </section>

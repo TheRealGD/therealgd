@@ -47,11 +47,11 @@
             {% endif %}
           </td>
           <td>
-            <a href="{{ path('raddit_app_forum_ban_history', {forum_name: forum.name, username: ban.user.username}) }}"
+            <a href="{{ path('forum_ban_history', {forum_name: forum.name, username: ban.user.username}) }}"
                class="button button--inline">
               {{- 'nav.ban_history'|trans -}}
             </a>
-            <a href="{{ path('raddit_app_forum_unban', {forum_name: forum.name, username: ban.user.username}) }}"
+            <a href="{{ path('forum_unban', {forum_name: forum.name, username: ban.user.username}) }}"
                class="button button--inline">
               {{- 'action.unban'|trans -}}
             </a>

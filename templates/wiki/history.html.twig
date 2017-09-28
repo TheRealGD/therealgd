@@ -10,7 +10,7 @@
 
 {% block body %}
   <h1 class="page-heading">{{ 'wiki.history_title'|trans({
-    '%path%': '<a href="%s">%s</a>'|format(path('raddit_app_wiki', {path: page.path})|escape, page.path|escape)
+    '%path%': '<a href="%s">%s</a>'|format(path('wiki', {path: page.path})|escape, page.path|escape)
   })|raw }}</h1>
 
   <table class="table">
@@ -25,7 +25,7 @@
       {% for revision in revisions %}
         <tr>
           <td>
-            <a href="{{ path('raddit_app_wiki_revision', {id: revision.id}) }}">{{ revision.id.hex|slice(0, 8) }}</a>
+            <a href="{{ path('wiki_revision', {id: revision.id}) }}">{{ revision.id.hex|slice(0, 8) }}</a>
           </td>
           <td>
             {% with {date: revision.timestamp|localizeddate('long', 'short')} %}
@@ -34,7 +34,7 @@
               </time>
             {% endwith %}
           </td>
-          <td><a href="{{ path('raddit_app_user', {username: revision.user.username}) }}">{{ revision.user.username }}</a></td>
+          <td><a href="{{ path('user', {username: revision.user.username}) }}">{{ revision.user.username }}</a></td>
         </tr>
       {% endfor %}
     </tbody>

@@ -10,9 +10,9 @@
 
 {% for revision in hierarchy %}
   {% if revision.commonCss is not null %}
-    <link rel="stylesheet" href="{{ path('raddit_app_stylesheet', {themeId: revision.id, field: 'common'}) }}">
+    <link rel="stylesheet" href="{{ path('stylesheet', {themeId: revision.id, field: 'common'}) }}">
   {% endif %}
   {% if (night_mode ? revision.nightCss ? revision.dayCss) is not null %}
-    <link rel="stylesheet" href="{{ path('raddit_app_stylesheet', {themeId: revision.id, field: night_mode ? 'night' : 'day'}) }}">
+    <link rel="stylesheet" href="{{ path('stylesheet', {themeId: revision.id, field: night_mode ? 'night' : 'day'}) }}">
   {% endif %}
 {% endfor %}

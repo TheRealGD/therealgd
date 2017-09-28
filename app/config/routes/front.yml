@@ -1,34 +1,34 @@
-raddit_app_front:
+front:
     defaults: { _controller: RadditAppBundle:Front:front, sortBy: hot, page: 1 }
     path: /{sortBy}/{page}
     methods: [GET]
     requirements: { sortBy: hot|new|top|controversial, page: \d+ }
 
-raddit_app_featured:
+featured:
     defaults: { _controller: RadditAppBundle:Front:featured, sortBy: hot, page: 1}
     path: /featured/{sortBy}/{page}
     methods: [GET]
     requirements: { sortBy: hot|new|top|controversial, page: \d+ }
 
-raddit_app_subscribed:
+subscribed:
     defaults: { _controller: RadditAppBundle:Front:subscribed, sortBy: hot, page: 1 }
     path: /subscribed/{sortBy}/{page}
     methods: [GET]
     requirements: { sortBy: hot|new|top|controversial, page: \d+ }
 
-raddit_app_all:
+all:
     defaults: { _controller: RadditAppBundle:Front:all, sortBy: hot, page: 1 }
     path: /all/{sortBy}/{page}
     methods: [GET]
     requirements: { sortBy: hot|new|top|controversial, page: \d+ }
 
-raddit_app_moderated:
+moderated:
     defaults: { _controller: RadditAppBundle:Front:moderated, sortBy: hot, page: 1 }
     path: /moderated/{sortBy}/{page}
     methods: [GET]
     requirements: { sortBy: hot|new|top|controversial, page: \d+ }
 
-raddit_app_featured_feed:
+featured_feed:
     defaults: { _controller: RadditAppBundle:Front:featuredFeed, sortBy: hot, page: 1 }
     path: /featured/{sortBy}/{page}.atom
     methods: [GET]

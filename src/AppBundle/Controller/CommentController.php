@@ -60,7 +60,7 @@ final class CommentController extends Controller {
         }
 
         $form = $this->createForm(CommentType::class, null, [
-            'action' => $this->generateUrl('raddit_app_comment_post', $routeParams),
+            'action' => $this->generateUrl('comment_post', $routeParams),
             'forum' => $forumRepository->findOneBy([
                 'canonicalName' => mb_strtolower($forumName, 'UTF-8'),
             ]),
@@ -104,7 +104,7 @@ final class CommentController extends Controller {
             $em->persist($reply);
             $em->flush();
 
-            return $this->redirectToRoute('raddit_app_comment', [
+            return $this->redirectToRoute('comment', [
                 'forum_name' => $forum->getName(),
                 'submission_id' => $submission->getId(),
                 'comment_id' => $reply->getId(),
@@ -150,7 +150,7 @@ final class CommentController extends Controller {
 
             $em->flush();
 
-            return $this->redirectToRoute('raddit_app_comment', [
+            return $this->redirectToRoute('comment', [
                 'forum_name' => $forum->getName(),
                 'submission_id' => $submission->getId(),
                 'comment_id' => $comment->getId(),
@@ -232,7 +232,7 @@ final class CommentController extends Controller {
             return $this->redirect($request->headers->get('Referer'));
         }
 
-        return $this->redirectToRoute('raddit_app_comments', [
+        return $this->redirectToRoute('comments', [
             'forum_name' => $comment->getSubmission()->getForum()->getName(),
             'submission_id' => $comment->getSubmission()->getId(),
             'slug' => Slugger::slugify($comment->getSubmission()->getTitle()),

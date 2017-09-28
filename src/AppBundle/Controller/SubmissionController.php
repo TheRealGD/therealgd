@@ -85,7 +85,7 @@ final class SubmissionController extends Controller {
             $em->persist($submission);
             $em->flush();
 
-            return $this->redirectToRoute('raddit_app_comments', [
+            return $this->redirectToRoute('comments', [
                 'forum_name' => $submission->getForum()->getName(),
                 'submission_id' => $submission->getId(),
                 'slug' => Slugger::slugify($submission->getTitle()),
@@ -121,7 +121,7 @@ final class SubmissionController extends Controller {
 
                 $this->addFlash('notice', 'flash.submission_deleted');
 
-                return $this->redirectToRoute('raddit_app_forum', [
+                return $this->redirectToRoute('forum', [
                     'forum_name' => $forum->getName(),
                 ]);
             }
@@ -132,7 +132,7 @@ final class SubmissionController extends Controller {
 
             $this->addFlash('notice', 'flash.submission_edited');
 
-            return $this->redirectToRoute('raddit_app_comments', [
+            return $this->redirectToRoute('comments', [
                 'forum_name' => $forum->getName(),
                 'submission_id' => $submission->getId(),
                 'slug' => Slugger::slugify($submission->getTitle()),
@@ -181,7 +181,7 @@ final class SubmissionController extends Controller {
             return $this->redirect($request->headers->get('Referer'));
         }
 
-        return $this->redirectToRoute('raddit_app_comments', [
+        return $this->redirectToRoute('comments', [
             'forum_name' => $forum->getName(),
             'submission_id' => $submission->getId(),
             'slug' => Slugger::slugify($submission->getTitle()),

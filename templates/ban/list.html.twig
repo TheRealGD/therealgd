@@ -10,7 +10,7 @@
 {% block body %}
   <h1 class="page-heading">{{ block('title') }}</h1>
 
-  <form action="{{ path('raddit_app_remove_bans') }}" method="POST" class="form">
+  <form action="{{ path('remove_bans') }}" method="POST" class="form">
     <input type="hidden" name="token" value="{{ csrf_token('remove_bans') }}">
 
     <table class="table">
@@ -45,7 +45,7 @@
           </td>
           <td>
             {% if ban.user %}
-              <a href="{{ path('raddit_app_user', {username: ban.user.username}) }}">{{ ban.user.username }}</a>
+              <a href="{{ path('user', {username: ban.user.username}) }}">{{ ban.user.username }}</a>
             {% else %}
               <small>{{ 'ban_list.user_none'|trans }}</small>
             {% endif %}

@@ -26,7 +26,7 @@
     <tbody>
       {% for moderator in moderators %}
       <tr>
-        <td><a href="{{ path('raddit_app_user', {username: moderator.user.username}) }}">{{ moderator.user.username }}</a></td>
+        <td><a href="{{ path('user', {username: moderator.user.username}) }}">{{ moderator.user.username }}</a></td>
         <td>
           <time datetime="{{ moderator.timestamp|date('c') }}" title="{{ moderator.timestamp|localizeddate('long', 'short') }}" class="relative-time">
             {{ moderator.timestamp|localizeddate('long', 'short') }}

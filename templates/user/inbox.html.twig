@@ -16,7 +16,7 @@
   <h1 class="page-heading">{{ 'inbox.title'|trans }}</h1>
 
   {% if notifications|length > 0 %}
-    <form action="{{ path('raddit_app_clear_inbox', { max: notifications|first.id }) }}" method="POST" class="form">
+    <form action="{{ path('clear_inbox', { max: notifications|first.id }) }}" method="POST" class="form">
       <input type="hidden" name="token" value="{{ csrf_token('clear_inbox') }}">
       <div class="form__row">
         <button type="submit" class="button">{{ 'inbox.clear_inbox'|trans }}</button>
@@ -43,7 +43,7 @@
   {% from 'message/_macros.html.twig' import message_thread %}
 
   <h1 class="notification-head">
-    <a href="{{ path('raddit_app_message', {id: notification.thread.id}) }}">
+    <a href="{{ path('message', {id: notification.thread.id}) }}">
       {{- notification.thread.title -}}
     </a>
   </h1>
@@ -55,7 +55,7 @@
   {% from 'message/_macros.html.twig' import message_reply %}
 
   <h1 class="notification-head">
-    <a href="{{ path('raddit_app_message', {id: notification.reply.thread.id}) }}#mr{{ notification.reply.id }}">
+    <a href="{{ path('message', {id: notification.reply.thread.id}) }}#mr{{ notification.reply.id }}">
       {{ 'inbox.message_reply_head'|trans({'%title%': notification.reply.thread.title}) -}}
     </a>
   </h1>

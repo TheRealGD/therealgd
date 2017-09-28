@@ -64,7 +64,7 @@ final class ResetPasswordMailer {
 
         $body = $this->translator->trans('reset_password.email_body', [
             '%reset_link%' => $this->urlGenerator->generate(
-                'raddit_app_password_reset', [
+                'password_reset', [
                     'expires' => $expires->format('U'),
                     'id' => $user->getId(),
                     'checksum' => $this->createChecksum($user, $expires),

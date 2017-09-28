@@ -1,26 +1,26 @@
-raddit_app_comment_form:
+comment_form:
     defaults: { _controller: RadditAppBundle:Comment:commentForm, comment_id: null }
     methods: [GET]
     path: /comment_form/{forumName}/{submissionId}/{commentId}
     requirements: { submissionId: \d+, commentId: \d+ }
 
-raddit_app_delete_comment:
+delete_comment:
     defaults: { _controller: RadditAppBundle:Comment:deleteComment }
     path: /dc/{id}
     methods: [POST]
 
-raddit_app_softdelete_comment:
+softdelete_comment:
     defaults: { _controller: RadditAppBundle:Comment:softDeleteComment }
     path: /sdc/{id}
     methods: [POST]
 
-raddit_app_comment_list:
+comment_list:
     defaults: { _controller: RadditAppBundle:Comment:list, page: 1 }
     path: /comments/{page}
     methods: [GET]
     requirements: { page: \d+ }
 
-raddit_app_comment_vote:
+comment_vote:
     defaults:
         _controller: RadditAppBundle:Vote:vote
         _format: html

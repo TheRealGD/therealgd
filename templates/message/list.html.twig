@@ -25,15 +25,15 @@
       <tbody>
       {% for message in messages %}
         <tr>
-          <td><strong><a href="{{ path('raddit_app_message', {id: message.id}) }}">{{ message.title }}</a></strong></td>
+          <td><strong><a href="{{ path('message', {id: message.id}) }}">{{ message.title }}</a></strong></td>
           <td>
             {% with {date: message.timestamp|localizeddate('long', 'short')} %}
               <time class="relative-time" datetime="{{ message.timestamp|date('c') }}" title="{{ date }}">{{ date }}</time>
             {% endwith %}
           </td>
           <td>{{ message.replies|length|localizednumber }}</td>
-          <td><a href="{{ path('raddit_app_user', {username: message.sender.username}) }}">{{ message.sender.username }}</a></td>
-          <td><a href="{{ path('raddit_app_user', {username: message.receiver.username}) }}">{{ message.receiver.username }}</a></td>
+          <td><a href="{{ path('user', {username: message.sender.username}) }}">{{ message.sender.username }}</a></td>
+          <td><a href="{{ path('user', {username: message.receiver.username}) }}">{{ message.receiver.username }}</a></td>
         </tr>
       {% endfor %}
       </tbody>

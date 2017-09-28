@@ -13,7 +13,7 @@
   <h1 class="page-heading">{{ block('title') }}</h1>
 
   <nav>
-    <p><a href="{{ path('raddit_app_create_theme') }}" class="button">{{ 'action.new_theme'|trans }}</a></p>
+    <p><a href="{{ path('create_theme') }}" class="button">{{ 'action.new_theme'|trans }}</a></p>
   </nav>
 
   <table class="table">
@@ -27,7 +27,7 @@
     <tbody>
       {% for theme in themes %}
         <tr>
-          <td><a href="{{ path('raddit_app_user', {username: theme.author.username}) }}">{{ user_link(theme.author) }}</a> / <strong>{{ theme.name }}</strong></td>
+          <td><a href="{{ path('user', {username: theme.author.username}) }}">{{ user_link(theme.author) }}</a> / <strong>{{ theme.name }}</strong></td>
           <td>
             {% with {date: theme.latestRevision.modified|localizeddate('long', 'short')} %}
               <time datetime="{{ theme.latestRevision.modified|date('c') }}" title="{{ date }}" class="relative-time">
@@ -37,13 +37,13 @@
           </td>
           <td>
             {% if is_granted('edit', theme) %}
-              <a href="{{ path('raddit_app_edit_theme', {name: theme.name, username: theme.author.username}) }}"
+              <a href="{{ path('edit_theme', {name: theme.name, username: theme.author.username}) }}"
                  class="button button--inline">
                 {{- 'action.edit_theme'|trans -}}
               </a>
             {% endif %}
 
-            <a href="{{ path('raddit_app_theme_history', {id: theme.id}) }}"
+            <a href="{{ path('theme_history', {id: theme.id}) }}"
                class="button button--inline button--secondary">{{ 'label.history'|trans }}</a>
           </td>
         </tr>

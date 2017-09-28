@@ -34,7 +34,7 @@
           </td>
           <td>{{ block.comment }}</td>
           <td>
-            <form action="{{ path('raddit_app_unblock_user', {id: block.id}) }}" method="post">
+            <form action="{{ path('unblock_user', {id: block.id}) }}" method="post">
               <input type="hidden" name="token" value="{{ csrf_token('unblock') }}">
               <button class="button button--inline">{{ 'action.unblock'|trans }}</button>
             </form>

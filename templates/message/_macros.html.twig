@@ -44,7 +44,7 @@
 
 {% macro message_user(message, sender=true) %}
   {%- set user = sender ? message.sender : message.receiver -%}
-  <a href="{{ path('raddit_app_user', {username: user.username}) }}" class="message-{{ sender ? 'sender' : 'receiver' }} {{ user == app.user ? 'message-self' }}">
+  <a href="{{ path('user', {username: user.username}) }}" class="message-{{ sender ? 'sender' : 'receiver' }} {{ user == app.user ? 'message-self' }}">
     {{- user.username -}}
   </a>
 {% endmacro %}

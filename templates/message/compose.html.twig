@@ -11,7 +11,7 @@
 {% block body %}
   <h1 class="page-heading">
     {{- 'compose_message.title'|trans({'%username%': '<a href="%s">%s</a>'|format(
-      path('raddit_app_user', {username: receiver.username})|escape,
+      path('user', {username: receiver.username})|escape,
       receiver.username|escape
     )})|raw -}}
   </h1>

@@ -24,7 +24,7 @@
 
 {% block sidebar %}
   <section class="sidebar__section sidebar__section--user-info">
-    <h1 class="sidebar__title"><a href="{{ path('raddit_app_user', {username: user.username}) }}">{{ user.username }}</a></h1>
+    <h1 class="sidebar__title"><a href="{{ path('user', {username: user.username}) }}">{{ user.username }}</a></h1>
 
     <p>{{ 'user.registered'|trans({
       '%timestamp%': timestamp(user.created)
@@ -37,14 +37,14 @@
       <ul>
         {% if is_granted('ROLE_USER') and user is not same as(app.user) %}
           {% if is_granted('message', user)  %}
-            <li><a href="{{ path('raddit_app_compose_message', {username: user.username}) }}">{{ 'user.message'|trans }}</a></li>
+            <li><a href="{{ path('compose_message', {username: user.username}) }}">{{ 'user.message'|trans }}</a></li>
           {% endif %}
           {% if not app.user.isBlocking(user) %}
-            <li><a href="{{ path('raddit_app_block_user', {username: user.username}) }}">{{ 'nav.block_user'|trans }}</a></li>
+            <li><a href="{{ path('block_user', {username: user.username}) }}">{{ 'nav.block_user'|trans }}</a></li>
           {% endif %}
         {% endif %}
-        <li><a href="{{ path('raddit_app_user_submissions', {username: user.username}) }}">{{ 'user.submissions'|trans }}</a></li>
-        <li><a href="{{ path('raddit_app_user_comments', {username: user.username}) }}">{{ 'user.comments'|trans }}</a></li>
+        <li><a href="{{ path('user_submissions', {username: user.username}) }}">{{ 'user.submissions'|trans }}</a></li>
+        <li><a href="{{ path('user_comments', {username: user.username}) }}">{{ 'user.comments'|trans }}</a></li>
       </ul>
     </nav>
   </section>
@@ -52,7 +52,7 @@
   {% if is_granted('ROLE_ADMIN') %}
     <section class="sidebar__section sidebar__section--user-roles">
       <h1 class="sidebar__title">{{ 'heading.user_roles'|trans }}</h1>
-      <form action="{{ path('raddit_app_mark_user_trusted', {id: user.id, trusted: not user.trusted ? 1 : 0}) }}" method="post" class="form">
+      <form action="{{ path('mark_user_trusted', {id: user.id, trusted: not user.trusted ? 1 : 0}) }}" method="post" class="form">
         <input type="hidden" name="token" value="{{ csrf_token('mark_trusted') }}">
         <div class="form__row">
           <button class="button">{{ (not user.trusted ? 'action.mark_as_trusted' : 'action.mark_as_untrusted')|trans }}</button>
@@ -66,7 +66,7 @@
       <h1 class="sidebar__title">{{ 'user.moderates'|trans({'%username%': user.username}) }}</h1>
       <ul>
         {% for token in user.moderatorTokens %}
-          <li><a href="{{ path('raddit_app_forum', {forum_name: token.forum.name}) }}">{{ token.forum.name }}</a></li>
+          <li><a href="{{ path('forum', {forum_name: token.forum.name}) }}">{{ token.forum.name }}</a></li>
         {% endfor %}
       </ul>
     </section>

@@ -4,15 +4,15 @@
 {% from _self import submission_filter %}
 
 {% block head %}
-  <link rel="canonical" href="{{ url('raddit_app_front') }}">
+  <link rel="canonical" href="{{ url('front') }}">
 
   <meta property="og:title" content="{{ site_name() }}">
   <meta property="og:site_name" content="{{ site_name() }}">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="{{ url('raddit_app_front') }}">
+  <meta property="og:url" content="{{ url('front') }}">
   <meta property="og:image" content="{{ absolute_url(asset('apple-touch-icon-precomposed.png')) }}">
 
-  <link rel="alternate" type="application/atom+xml" href="{{ path('raddit_app_featured_feed') }}" title="{{ 'title.submissions_in_featured_forums'|trans }}">
+  <link rel="alternate" type="application/atom+xml" href="{{ path('featured_feed') }}" title="{{ 'title.submissions_in_featured_forums'|trans }}">
 
   {% include '_includes/meta_pagination.html.twig' with {pager: submissions} %}
 {% endblock %}
@@ -32,22 +32,22 @@
 
 {%- macro submission_filter(choice, sort_by) -%}
   <li class="{{ choice == 'featured' ? 'active' }}">
-    <a href="{{ path('raddit_app_featured', {sortBy: sort_by, page: 1}) }}">{{ 'front.featured'|trans }}</a>
+    <a href="{{ path('featured', {sortBy: sort_by, page: 1}) }}">{{ 'front.featured'|trans }}</a>
   </li>
 
   {% if is_granted('ROLE_USER') %}
     <li class="{{ choice == 'subscribed' ? 'active' }}">
-      <a href="{{ path('raddit_app_subscribed', {sortBy: sort_by, page: 1}) }}">{{ 'front.subscribed'|trans }}</a>
+      <a href="{{ path('subscribed', {sortBy: sort_by, page: 1}) }}">{{ 'front.subscribed'|trans }}</a>
     </li>
   {% endif %}
 
   <li class="{{ choice == 'all' ? 'active' }}">
-    <a href="{{ path('raddit_app_all', {sortBy: sort_by, page: 1}) }}">{{ 'front.all'|trans }}</a>
+    <a href="{{ path('all', {sortBy: sort_by, page: 1}) }}">{{ 'front.all'|trans }}</a>
   </li>
 
   {% if choice == 'moderated' or app.user and app.user.moderatorTokens|length > 0 %}
     <li class="{{ choice == 'moderated' ? 'active' }}">
-      <a href="{{ path('raddit_app_moderated', {sortBy: sort_by, page: 1}) }}">{{ 'nav.moderated'|trans }}</a>
+      <a href="{{ path('moderated', {sortBy: sort_by, page: 1}) }}">{{ 'nav.moderated'|trans }}</a>
     </li>
   {% endif %}
 {%- endmacro -%}

@@ -40,7 +40,7 @@ final class ResetPasswordController extends Controller {
 
             $this->addFlash('success', 'flash.reset_password_email_sent');
 
-            return $this->redirectToRoute('raddit_app_front');
+            return $this->redirectToRoute('front');
         }
 
         return $this->render('reset_password/request.html.twig', [
@@ -82,7 +82,7 @@ final class ResetPasswordController extends Controller {
 
                 $this->addFlash('success', 'flash.user_password_updated');
 
-                return $this->redirectToRoute('raddit_app_front');
+                return $this->redirectToRoute('front');
             }
         } finally {
             $em->refresh($user);

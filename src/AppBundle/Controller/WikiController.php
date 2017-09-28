@@ -63,7 +63,7 @@ final class WikiController extends Controller {
             $em->persist($page);
             $em->flush();
 
-            return $this->redirectToRoute('raddit_app_wiki', ['path' => $path]);
+            return $this->redirectToRoute('wiki', ['path' => $path]);
         }
 
         return $this->render('wiki/create.html.twig', [
@@ -100,7 +100,7 @@ final class WikiController extends Controller {
 
             $em->flush();
 
-            return $this->redirectToRoute('raddit_app_wiki', [
+            return $this->redirectToRoute('wiki', [
                 'path' => $page->getPath(),
             ]);
         }

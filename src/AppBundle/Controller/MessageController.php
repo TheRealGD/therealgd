@@ -54,7 +54,7 @@ final class MessageController extends Controller {
             $em->persist($thread);
             $em->flush();
 
-            return $this->redirectToRoute('raddit_app_message', [
+            return $this->redirectToRoute('message', [
                 'id' => $thread->getId(),
             ]);
         }
@@ -82,7 +82,7 @@ final class MessageController extends Controller {
 
     public function replyFormAction($threadId) {
         $form = $this->createForm(MessageReplyType::class, null, [
-            'action' => $this->generateUrl('raddit_app_reply_to_message', [
+            'action' => $this->generateUrl('reply_to_message', [
                 'id' => $threadId,
             ]),
         ]);
@@ -112,7 +112,7 @@ final class MessageController extends Controller {
 
             $em->flush();
 
-            return $this->redirectToRoute('raddit_app_message', [
+            return $this->redirectToRoute('message', [
                 'id' => $thread->getId(),
             ]);
         }

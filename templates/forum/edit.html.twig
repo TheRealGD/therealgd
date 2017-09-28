@@ -6,7 +6,7 @@
 {% block body %}
   <h1 class="page-heading">
     {{ 'title.editing_forum'|trans({
-      '%forum%': '<a href="%s">/f/%s</a>'|format(path('raddit_app_forum', {forum_name: forum.name})|e, forum.name|e)
+      '%forum%': '<a href="%s">/f/%s</a>'|format(path('forum', {forum_name: forum.name})|e, forum.name|e)
     })|raw }}
   </h1>
 

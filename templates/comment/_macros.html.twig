@@ -23,11 +23,11 @@
     <div class="alert alert--notice">
       <p>{{ 'comments.not_logged_in'|trans({
         '%login_link%': '<a href="%s">%s</a>'|format(
-          path('raddit_app_login'),
+          path('login'),
           'comments.not_logged_in_login_link_label'|trans
         ),
         '%register_link%': '<a href="%s">%s</a>'|format(
-          path('raddit_app_registration'),
+          path('registration'),
           'comments.not_logged_in_register_link_label'|trans
         ),
       })|raw }}</p>
@@ -40,7 +40,7 @@
   <article class="comment comment-{{ level|default(0) ? 'level-'~level : 'top-level' }} {{ comment.softDeleted ? 'comment-soft-deleted' }}" id="comment_{{ comment.id }}">
     <div class="comment-row">
       <div class="comment-vote">
-        {{ vote(comment, 'raddit_app_comment_vote') }}
+        {{ vote(comment, 'comment_vote') }}
       </div>
 
       <div class="comment-inner">
@@ -126,7 +126,7 @@
 
 {%- block comment_nav_reply -%}
   <li class="comment-nav-reply" style="display: none">
-    <a href="#" data-form-url="{{ path('raddit_app_comment_form', {
+    <a href="#" data-form-url="{{ path('comment_form', {
       forumName: comment.submission.forum.name,
       submissionId: comment.submission.id,
       commentId: comment.id
@@ -139,7 +139,7 @@
 {%- block comment_nav_permalink -%}
   {%- spaceless -%}
     <li class="comment-nav-permalink">
-      <a href="{{ path('raddit_app_comment', {
+      <a href="{{ path('comment', {
         forum_name: comment.submission.forum.name,
         submission_id: comment.submission.id,
         comment_id: comment.id
@@ -152,7 +152,7 @@
   {%- spaceless -%}
     {%- if comment.parent -%}
       <li class="comment-nav-parent">
-        <a href="{{ path('raddit_app_comment', {
+        <a href="{{ path('comment', {
           forum_name: comment.submission.forum.name,
           submission_id: comment.submission.id,
           comment_id: comment.parent.id
@@ -178,7 +178,7 @@
 {%- block comment_nav_delete_softdelete -%}
   {%- spaceless -%}
     <li class="comment-nav-softdelete">
-      <form action="{{ path('raddit_app_softdelete_comment', {id: comment.id}) }}" method="POST">
+      <form action="{{ path('softdelete_comment', {id: comment.id}) }}" method="POST">
         <input type="hidden" name="token" value="{{ csrf_token('softdelete_comment') }}">
         <button type="submit" class="confirm-comment-delete">{{ 'comments.delete'|trans }}</button>
       </form>
@@ -189,7 +189,7 @@
 {%- block comment_nav_delete_thread -%}
   {%- spaceless -%}
     <li class="comment-nav-delete-thread">
-      <form action="{{ path('raddit_app_delete_comment', {id: comment.id}) }}" method="POST">
+      <form action="{{ path('delete_comment', {id: comment.id}) }}" method="POST">
         <input type="hidden" name="token" value="{{ csrf_token('delete_comment') }}">
         <button type="submit" class="confirm-comment-delete">{{ delete_thread_label|trans }}</button>
       </form>
@@ -201,7 +201,7 @@
   {%- spaceless -%}
     {%- if is_granted('edit', comment) -%}
       <li class="comment-nav-edit">
-        <a href="{{ path('raddit_app_edit_comment', {
+        <a href="{{ path('edit_comment', {
           forum_name: comment.submission.forum.name,
           submission_id: comment.submission.id,
           comment_id: comment.id,
@@ -215,7 +215,7 @@
   {%- if is_granted('moderator', comment.submission.forum) -%}
     {%- spaceless -%}
       <li>
-        <a href="{{ path('raddit_app_forum_ban', {forum_name: comment.submission.forum.name, username: comment.user.username}) }}">
+        <a href="{{ path('forum_ban', {forum_name: comment.submission.forum.name, username: comment.user.username}) }}">
           {{- 'action.ban'|trans -}}
         </a>
       </li>
@@ -227,7 +227,7 @@
   {%- if is_granted('ROLE_ADMIN') %}
     {%- spaceless -%}
       <li class="comment-nav-edit">
-        <a href="{{ path('raddit_app_ban_ip_by_comment', {id: comment.id}) }}">
+        <a href="{{ path('ban_ip_by_comment', {id: comment.id}) }}">
           {{- 'comments.admin_ban'|trans -}}
         </a>
       </li>

@@ -1,37 +1,37 @@
-_raddit_app_ajax:
+_ajax:
     resource: routes/ajax.yml
 
-_raddit_app_ban:
+_ban:
     resource: routes/ban.yml
 
-_raddit_app_comment:
+_comment:
     resource: routes/comment.yml
 
-_raddit_app_forum:
+_forum:
     resource: routes/forum.yml
 
-_raddit_app_front:
+_front:
     resource: routes/front.yml
 
-_raddit_app_message:
+_message:
     resource: routes/message.yml
 
-_raddit_app_reset_password:
+_reset_password:
     resource: routes/reset_password.yml
 
-_raddit_app_security:
+_security:
     resource: routes/security.yml
 
-_raddit_app_submission:
+_submission:
     resource: routes/submission.yml
 
-_raddit_app_theme:
+_theme:
     resource: routes/theme.yml
 
-_raddit_app_user:
+_user:
     resource: routes/user.yml
 
-_raddit_app_wiki:
+_wiki:
     resource: routes/wiki.yml
 
 _bazinga_jstranslation:

@@ -1,33 +1,33 @@
-raddit_app_theme_history:
+theme_history:
     defaults: { _controller: RadditAppBundle:Theme:history, page: 1}
     path: /theme_history/{id}/{page}
     methods: [GET]
     requirements: { id: "%uuid_regex%", page: \d+ }
 
-raddit_app_create_theme:
+create_theme:
     defaults: { _controller: RadditAppBundle:Theme:create }
     path: /create_theme
     methods: [GET, POST]
 
-raddit_app_edit_theme:
+edit_theme:
     defaults: { _controller: RadditAppBundle:Theme:edit }
     path: /edit_theme/{username}/{name}
     methods: [GET, POST]
     requirements: { name: .+, id: "%uuid_regex%" }
 
-raddit_app_theme_revision_source:
+theme_revision_source:
     defaults: { _controller: RadditAppBundle:Theme:source }
     path: /theme_source/{id}
     methods: [GET]
     requirements: { id: "%uuid_regex%" }
 
-raddit_app_stylesheet:
+stylesheet:
     defaults: { _controller: RadditAppBundle:Theme:stylesheet, _format: css }
     path: /user_style/{field}/{themeId}.css
     methods: [GET]
     requirements: { field: common|day|night, themeId: "%uuid_regex%" }
 
-raddit_app_themes:
+themes:
     defaults: { _controller: RadditAppBundle:Theme:list, page: 1 }
     path: /themes/{page}
     methods: [GET]

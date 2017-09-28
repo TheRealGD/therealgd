@@ -22,7 +22,7 @@
       {% for revision in revisions %}
         <tr>
           <td>
-            <a href="{{ path('raddit_app_theme_revision_source', {id: revision.id}) }}">
+            <a href="{{ path('theme_revision_source', {id: revision.id}) }}">
               {{ revision.id|replace({'-': '-<wbr>'})|raw }}
             </a>
           </td>
