@@ -34,7 +34,7 @@ class PruneIpAddressesCommand extends Command implements ContainerAwareInterface
      */
     protected function configure() {
         $this
-            ->setName('raddit:prune-ips')
+            ->setName('app:prune-ips')
             ->setDescription('Prunes IP addresses associated with some entities')
             ->addOption('max-age', 'm', InputOption::VALUE_REQUIRED,
                 'The maximum age (strtotime format) of an entity in seconds before its IP address is cleared.'

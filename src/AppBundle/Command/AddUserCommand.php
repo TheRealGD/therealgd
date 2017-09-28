@@ -39,7 +39,7 @@ class AddUserCommand extends Command implements ContainerAwareInterface {
      */
     protected function configure() {
         $this
-            ->setName('raddit:add-user')
+            ->setName('app:add-user')
             ->setDescription('Add a user account')
             ->addArgument('username', InputArgument::REQUIRED, 'The username for the new account')
             ->addArgument('email', InputArgument::REQUIRED, 'The email address for the account')
