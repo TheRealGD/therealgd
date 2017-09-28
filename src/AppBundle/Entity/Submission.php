@@ -10,7 +10,9 @@ use Raddit\AppBundle\Entity\Exception\BannedFromForumException;
 
 /**
  * @ORM\Entity(repositoryClass="Raddit\AppBundle\Repository\SubmissionRepository")
- * @ORM\Table(name="submissions")
+ * @ORM\Table(name="submissions", indexes={
+ *     @ORM\Index(name="submissions_ranking_id_idx", columns={"ranking", "id"})
+ * })
  */
 class Submission extends Votable {
     const NETSCORE_MULTIPLIER = 1800;
