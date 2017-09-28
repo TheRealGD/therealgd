@@ -15,10 +15,13 @@ parameters:
 
 framework:
     #esi:             ~
-    translator:      { fallbacks: ["%locale%"] }
+    translator:
+        fallbacks:   ["%locale%"]
+        paths:
+            - "%kernel.project_dir%/translations/"
     secret:          "%env(SECRET)%"
     router:
-        resource: "%kernel.root_dir%/config/routing.yml"
+        resource: "%kernel.project_dir%/app/config/routing.yml"
         strict_requirements: ~
     form:            ~
     csrf_protection: ~
@@ -31,11 +34,11 @@ framework:
     session:
         # http://symfony.com/doc/current/reference/configuration/framework.html#handler-id
         handler_id:  session.handler.native_file
-        save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
+        save_path:   "%kernel.project_dir%/var/sessions/%kernel.environment%"
     fragments:       ~
     http_method_override: false
     assets:
-        json_manifest_path: "%kernel.root_dir%/../web/build/manifest.json"
+        json_manifest_path: "%kernel.project_dir%/web/build/manifest.json"
     php_errors:
         log: true
     cache:           { app: cache.system }
@@ -44,6 +47,8 @@ framework:
 
 # Twig Configuration
 twig:
+    paths:
+        "%kernel.project_dir%/templates": RadditApp
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
     form_themes:
@@ -75,7 +80,7 @@ swiftmailer:
     spool:     { type: memory }
 
 doctrine_migrations:
-    dir_name: "%kernel.root_dir%/../src/AppBundle/DoctrineMigrations"
+    dir_name: "%kernel.project_dir%/src/AppBundle/DoctrineMigrations"
     namespace: Raddit\AppBundle\DoctrineMigrations
     name: Raddit migrations
 
@@ -98,7 +103,7 @@ oneup_flysystem:
     adapters:
         submission_images:
             local:
-                directory: "%kernel.root_dir%/../web/submission_images"
+                directory: "%kernel.project_dir%/web/submission_images"
     filesystems:
         submission_images: { adapter: submission_images }
 
@@ -108,7 +113,7 @@ scheb_two_factor:
         enabled: true
         sender_email: "%env(NO_REPLY_ADDRESS)%"
         sender_name: "%env(SITE_NAME)%"
-        template: RadditAppBundle:security:2fa_form.html.twig
+        template: "@RadditApp/security/2fa_form.html.twig"
         digits: 8
     exclude_pattern: ^/((build|bundles|fonts|media|submission_images)/|(favicon\.ico|apple-touch-icon-precomposed\.png)$)
     security_tokens:

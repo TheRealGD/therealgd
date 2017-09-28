@@ -25,7 +25,7 @@ class LocalePass implements CompilerPassInterface {
         }
 
         $filenames = Finder::create()
-            ->in(__DIR__.'/../../Resources/translations')
+            ->in(__DIR__.'/../../../../translations')
             ->name('/^\w+\.\w+\.yml$/')
             ->sortByName()
             ->files();

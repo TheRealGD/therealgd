@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Installs new icons to src/AppBundle/Resources/views/_icons.
+# Installs new icons to templates/_icons.
 # These icons should be committed to the git repository. Old icons are not
 # removed.
 
@@ -9,7 +9,7 @@ set -e
 PROJECT_ROOT=$(dirname $(dirname $(realpath $0)))
 PATH="$PROJECT_ROOT/node_modules/.bin:$PATH"
 TEMP=$(mktemp -d)
-OUT="$PROJECT_ROOT/src/AppBundle/Resources/views/_icons"
+OUT="$PROJECT_ROOT/templates/_icons"
 
 trap 'rm -rf "$TEMP"' EXIT
 
