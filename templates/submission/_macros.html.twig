@@ -20,7 +20,7 @@
 {%- endmacro -%}
 
 {%- block submission_info_submitter -%}
-  {%- from '@RadditApp/user/_macros.html.twig' import user_link -%}
+  {%- from 'user/_macros.html.twig' import user_link -%}
   {{ user_link(submission.user, {
     class: 'submission-submitter',
     flag: submission.userFlag,
@@ -48,7 +48,7 @@
 {%- endblock -%}
 
 {%- block submission -%}
-  {%- from '@RadditApp/vote/_macros.html.twig' import vote -%}
+  {%- from 'vote/_macros.html.twig' import vote -%}
   <article class="submission {{ submission.url ? 'submission-has-url' }} {{ submission.body is not null ? 'submission-has-body' }} {{ not options.show_body ? 'submission-body-hidden' }} {{ submission.sticky ? 'submission-sticky' }} {{ submission.locked ? 'submission-locked' }}">
     <div class="submission-row">
       <div class="submission-vote">
@@ -81,7 +81,7 @@
 
           <p class="submission-info">
             {% if submission.locked %}
-              {% from '@RadditApp/_macros/icon.html.twig' import icon %}
+              {% from '_macros/icon.html.twig' import icon %}
               {{ icon('lock') }}
             {% endif %}
 

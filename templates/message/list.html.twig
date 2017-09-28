@@ -1,9 +1,9 @@
-{% extends '@RadditApp/base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block page_classes 'message-list-page' %}
 
 {% block head %}
-  {{ include('@RadditApp/_includes/meta_pagination.html.twig', {pager: messages}, with_context=false) }}
+  {{ include('_includes/meta_pagination.html.twig', {pager: messages}, with_context=false) }}
 {% endblock %}
 
 {% block title 'title.messages'|trans %}
@@ -44,6 +44,6 @@
     </div>
   {% endif %}
 
-  {{ include('@RadditApp/_includes/pagination.html.twig', {pager: messages}, with_context=false) }}
+  {{ include('_includes/pagination.html.twig', {pager: messages}, with_context=false) }}
 {% endblock %}
 

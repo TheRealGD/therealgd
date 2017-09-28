@@ -1,11 +1,11 @@
-{% extends '@RadditApp/base.html.twig' %}
-{% from '@RadditApp/comment/_macros.html.twig' import comment %}
+{% extends 'base.html.twig' %}
+{% from 'comment/_macros.html.twig' import comment %}
 
 {% block page_classes 'comment-list-page' %}
 {% block title 'title.recent_comments'|trans %}
 
 {% block head %}
-  {{ include('@RadditApp/_includes/meta_pagination.html.twig', {pager: comments}, with_context=false) }}
+  {{ include('_includes/meta_pagination.html.twig', {pager: comments}, with_context=false) }}
 {% endblock %}
 
 {% block body %}
@@ -15,6 +15,6 @@
     {{ comment(comment, {recurse: false}) }}
   {% endfor %}
 
-  {{ include('@RadditApp/_includes/pagination.html.twig', {pager: comments}, with_context=false) }}
+  {{ include('_includes/pagination.html.twig', {pager: comments}, with_context=false) }}
 {% endblock %}
 

@@ -1,4 +1,4 @@
-{% extends '@RadditApp/base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block page_classes %}create-forum-page{% endblock %}
 
@@ -7,5 +7,5 @@
 {% block body %}
   <h1 class="page-heading">{{ block('title') }}</h1>
 
-  {{ include('@RadditApp/forum/_form.html.twig', {form: form}, with_context=false) }}
+  {{ include('forum/_form.html.twig', {form: form}, with_context=false) }}
 {% endblock %}

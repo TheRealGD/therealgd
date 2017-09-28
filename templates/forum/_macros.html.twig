@@ -1,6 +1,6 @@
 {% macro subscribe_button(forum, subscribed, inline) %}
   {% set subscriber_count = forum.subscriptions|length %}
-  {% from '@RadditApp/_macros/icon.html.twig' import icon %}
+  {% from '_macros/icon.html.twig' import icon %}
   <button class="subscribe-button subscribe-button--{{ subscribed ? 'unsubscribe' : 'subscribe' }} {{ inline ? 'subscribe-button--inline' }}">
     <span class="subscribe-button__inner">
       <span class="subscribe-button__label">

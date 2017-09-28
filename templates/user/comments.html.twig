@@ -1,9 +1,9 @@
-{% extends '@RadditApp/user/user.html.twig' %}
-{% from '@RadditApp/comment/_macros.html.twig' import comment %}
+{% extends 'user/user.html.twig' %}
+{% from 'comment/_macros.html.twig' import comment %}
 
 {% block head %}
   <link rel="canonical" href="{{ url('raddit_app_user_comments', {username: user.username}) }}">
-  {{ include('@RadditApp/_includes/meta_pagination.html.twig', {pager: comments}) }}
+  {{ include('_includes/meta_pagination.html.twig', {pager: comments}) }}
 {% endblock %}
 
 {% block page_classes %}
@@ -21,5 +21,5 @@
     {{ comment(comment, {recurse: false}) }}
   {% endfor %}
 
-  {{ include('@RadditApp/_includes/pagination.html.twig', { pager: comments }) }}
+  {{ include('_includes/pagination.html.twig', { pager: comments }) }}
 {% endblock %}

@@ -1,4 +1,4 @@
-{% extends '@RadditApp/wiki/page.html.twig' %}
+{% extends 'wiki/page.html.twig' %}
 
 {% block page_classes %}
   wiki-edit-page
@@ -13,6 +13,6 @@
     '%path%': '<a href="%s">%s</a>'|format(path('raddit_app_wiki', {path: page.path})|escape, page.path|escape)
   })|raw }}</h1>
 
-  {% include '@RadditApp/wiki/_form.html.twig' with {form: form} only %}
+  {% include 'wiki/_form.html.twig' with {form: form} only %}
 {% endblock %}
 

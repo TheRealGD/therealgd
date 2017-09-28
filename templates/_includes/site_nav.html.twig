@@ -1,4 +1,4 @@
-{% from '@RadditApp/_macros/icon.html.twig' import icon %}
+{% from '_macros/icon.html.twig' import icon %}
 {% spaceless %}
   {%- set notification_count = is_granted('ROLE_USER') ? app.user.notifications|length : 0 -%}
 

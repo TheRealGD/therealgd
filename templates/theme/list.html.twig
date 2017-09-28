@@ -1,14 +1,14 @@
-{% extends '@RadditApp/base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title 'title.custom_themes'|trans %}
 {% block page_classes 'theme-list-page' %}
 
 {% block head %}
-  {{ include('@RadditApp/_includes/meta_pagination.html.twig', {pager: themes}, with_context=false) }}
+  {{ include('_includes/meta_pagination.html.twig', {pager: themes}, with_context=false) }}
 {% endblock %}
 
 {% block body %}
-  {% from '@RadditApp/user/_macros.html.twig' import user_link %}
+  {% from 'user/_macros.html.twig' import user_link %}
 
   <h1 class="page-heading">{{ block('title') }}</h1>
 
@@ -51,5 +51,5 @@
     </tbody>
   </table>
 
-  {{ include('@RadditApp/_includes/pagination.html.twig', {pager: themes}, with_context=false) }}
+  {{ include('_includes/pagination.html.twig', {pager: themes}, with_context=false) }}
 {% endblock %}

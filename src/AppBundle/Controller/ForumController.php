@@ -42,7 +42,7 @@ final class ForumController extends Controller {
     public function frontAction(SubmissionRepository $sr, Forum $forum, string $sortBy, int $page) {
         $submissions = $sr->findForumSubmissions($forum, $sortBy, $page);
 
-        return $this->render('@RadditApp/forum/forum.html.twig', [
+        return $this->render('forum/forum.html.twig', [
             'forum' => $forum,
             'sort_by' => $sortBy,
             'submissions' => $submissions,
@@ -61,7 +61,7 @@ final class ForumController extends Controller {
 
         $submissions = $sr->findFrontPageSubmissions($names, $sortBy, $page);
 
-        return $this->render('@RadditApp/forum/multi.html.twig', [
+        return $this->render('forum/multi.html.twig', [
             'forums' => $names,
             'sort_by' => $sortBy,
             'submissions' => $submissions,
@@ -95,7 +95,7 @@ final class ForumController extends Controller {
             ]);
         }
 
-        return $this->render('@RadditApp/forum/create.html.twig', [
+        return $this->render('forum/create.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -130,7 +130,7 @@ final class ForumController extends Controller {
             return $this->redirect($request->getUri());
         }
 
-        return $this->render('@RadditApp/forum/edit.html.twig', [
+        return $this->render('forum/edit.html.twig', [
             'form' => $form->createView(),
             'forum' => $forum,
         ]);
@@ -164,7 +164,7 @@ final class ForumController extends Controller {
             return $this->redirectToRoute('raddit_app_front');
         }
 
-        return $this->render('@RadditApp/forum/delete.html.twig', [
+        return $this->render('forum/delete.html.twig', [
             'form' => $form->createView(),
             'forum' => $forum,
         ]);
@@ -212,7 +212,7 @@ final class ForumController extends Controller {
      * @return Response
      */
     public function listAction(ForumRepository $repository, int $page = 1, string $sortBy) {
-        return $this->render('@RadditApp/forum/list.html.twig', [
+        return $this->render('forum/list.html.twig', [
             'forums' => $repository->findForumsByPage($page, $sortBy),
             'sortBy' => $sortBy,
         ]);
@@ -228,7 +228,7 @@ final class ForumController extends Controller {
         $forumCategories = $fcr->findBy([], ['name' => 'ASC']);
         $uncategorizedForums = $fr->findBy(['category' => null], ['canonicalName' => 'ASC']);
 
-        return $this->render('@RadditApp/forum/list_by_category.html.twig', [
+        return $this->render('forum/list_by_category.html.twig', [
             'forum_categories' => $forumCategories,
             'uncategorized_forums' => $uncategorizedForums,
         ]);
@@ -249,7 +249,7 @@ final class ForumController extends Controller {
      * @return Response
      */
     public function moderatorsAction(Forum $forum, int $page) {
-        return $this->render('@RadditApp/forum/moderators.html.twig', [
+        return $this->render('forum/moderators.html.twig', [
             'forum' => $forum,
             'moderators' => $forum->getPaginatedModerators($page),
         ]);
@@ -285,7 +285,7 @@ final class ForumController extends Controller {
             ]);
         }
 
-        return $this->render('@RadditApp/forum/add_moderator.html.twig', [
+        return $this->render('forum/add_moderator.html.twig', [
             'form' => $form->createView(),
             'forum' => $forum,
         ]);
@@ -324,7 +324,7 @@ final class ForumController extends Controller {
             ]);
         }
 
-        return $this->render('@RadditApp/forum/appearance.html.twig', [
+        return $this->render('forum/appearance.html.twig', [
             'form' => $form->createView(),
             'forum' => $forum,
         ]);
@@ -346,7 +346,7 @@ final class ForumController extends Controller {
      * @return Response
      */
     public function bansAction(Forum $forum, ForumBanRepository $banRepository, int $page = 1) {
-        return $this->render('@RadditApp/forum/bans.html.twig', [
+        return $this->render('forum/bans.html.twig', [
             'bans' => $banRepository->findValidBansInForum($forum, $page),
             'forum' => $forum,
         ]);
@@ -368,7 +368,7 @@ final class ForumController extends Controller {
      * @return Response
      */
     public function banHistoryAction(Forum $forum, User $subject, int $page = 1) {
-        return $this->render('@RadditApp/forum/ban_history.html.twig', [
+        return $this->render('forum/ban_history.html.twig', [
             'bans' => $forum->getPaginatedBansByUser($subject, $page),
             'forum' => $forum,
             'user' => $subject,
@@ -409,7 +409,7 @@ final class ForumController extends Controller {
             ]);
         }
 
-        return $this->render('@RadditApp/forum/ban.html.twig', [
+        return $this->render('forum/ban.html.twig', [
             'form' => $form->createView(),
             'forum' => $forum,
             'user' => $subject,
@@ -450,7 +450,7 @@ final class ForumController extends Controller {
             ]);
         }
 
-        return $this->render('@RadditApp/forum/unban.html.twig', [
+        return $this->render('forum/unban.html.twig', [
             'form' => $form->createView(),
             'forum' => $forum,
             'user' => $subject,

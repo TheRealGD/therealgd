@@ -1,9 +1,9 @@
-{% extends '@RadditApp/user/user.html.twig' %}
-{% from '@RadditApp/submission/_macros.html.twig' import submission %}
+{% extends 'user/user.html.twig' %}
+{% from 'submission/_macros.html.twig' import submission %}
 
 {% block head %}
   <link rel="canonical" href="{{ url('raddit_app_user_submissions', {username: user.username}) }}">
-  {{ include('@RadditApp/_includes/meta_pagination.html.twig', {pager: submissions}) }}
+  {{ include('_includes/meta_pagination.html.twig', {pager: submissions}) }}
 {% endblock %}
 
 {% block page_classes %}
@@ -21,6 +21,6 @@
     {{ submission(submission) }}
   {% endfor %}
 
-  {{ include('@RadditApp/_includes/pagination.html.twig', {pager: submissions}) }}
+  {{ include('_includes/pagination.html.twig', {pager: submissions}) }}
 {% endblock %}
 

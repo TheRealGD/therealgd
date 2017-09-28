@@ -19,7 +19,7 @@ final class BanController extends Controller {
      * @return Response
      */
     public function landingPageAction() {
-        return $this->render('@RadditApp/ban/banned.html.twig');
+        return $this->render('ban/banned.html.twig');
     }
 
     /**
@@ -31,7 +31,7 @@ final class BanController extends Controller {
      * @return Response
      */
     public function listAction(int $page, BanRepository $banRepository) {
-        return $this->render('@RadditApp/ban/list.html.twig', [
+        return $this->render('ban/list.html.twig', [
             'bans' => $banRepository->findAllPaginated($page),
         ]);
     }
@@ -72,7 +72,7 @@ final class BanController extends Controller {
             return $this->redirectToRoute('raddit_app_bans');
         }
 
-        return $this->render('@RadditApp/ban/add.html.twig', [
+        return $this->render('ban/add.html.twig', [
             'form' => $form->createView(),
         ]);
     }

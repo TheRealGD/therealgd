@@ -1,8 +1,8 @@
-{% extends '@RadditApp/base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block stylesheets %}
   {% if app.user.showCustomStylesheets ?? false and forum.theme %}
-    {{ include('@RadditApp/_includes/stylesheets.html.twig', {
+    {{ include('_includes/stylesheets.html.twig', {
       theme: forum.theme,
       night_mode: app.user.nightMode ?? false
     }, with_context=false) }}
@@ -16,7 +16,7 @@
       <h1 class="sidebar__title forum-title"><a href="{{ path('raddit_app_forum', {forum_name: forum.name}) }}">{{ forum.title }}</a></h1>
 
       {% if is_granted('ROLE_USER') %}
-        {% from '@RadditApp/forum/_macros.html.twig' import subscribe_button %}
+        {% from 'forum/_macros.html.twig' import subscribe_button %}
         {% set subscribed = forum.subscribed(app.user) %}
         <form action="{{ path(subscribed ? 'raddit_app_unsubscribe' : 'raddit_app_subscribe', {id: forum.id}) }}" method="POST" class="form">
           <input type="hidden" name="token" value="{{ csrf_token('subscribe') }}">

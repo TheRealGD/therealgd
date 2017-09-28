@@ -29,7 +29,7 @@ use Symfony\Component\HttpFoundation\Response;
 final class CommentController extends Controller {
     public function listAction(CommentRepository $repository, int $page) {
         // TODO: link this somewhere
-        return $this->render('@RadditApp/comment/list.html.twig', [
+        return $this->render('comment/list.html.twig', [
             'comments' => $repository->findRecentPaginated($page),
         ]);
     }
@@ -66,7 +66,7 @@ final class CommentController extends Controller {
             ]),
         ]);
 
-        return $this->render('@RadditApp/comment/form_fragment.html.twig', [
+        return $this->render('comment/form_fragment.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -111,7 +111,7 @@ final class CommentController extends Controller {
             ]);
         }
 
-        return $this->render('@RadditApp/comment/form_errors.html.twig', [
+        return $this->render('comment/form_errors.html.twig', [
             'editing' => false,
             'form' => $form->createView(),
             'forum' => $forum,
@@ -157,7 +157,7 @@ final class CommentController extends Controller {
             ]);
         }
 
-        return $this->render('@RadditApp/comment/form_errors.html.twig', [
+        return $this->render('comment/form_errors.html.twig', [
             'editing' => true,
             'form' => $form->createView(),
             'forum' => $forum,

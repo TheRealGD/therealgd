@@ -35,7 +35,7 @@ final class SubmissionController extends Controller {
      * @return Response
      */
     public function commentPageAction(Forum $forum, Submission $submission) {
-        return $this->render('@RadditApp/submission/comments.html.twig', [
+        return $this->render('submission/comments.html.twig', [
             'forum' => $forum,
             'submission' => $submission,
         ]);
@@ -55,7 +55,7 @@ final class SubmissionController extends Controller {
         Submission $submission,
         Comment $comment
     ) {
-        return $this->render('@RadditApp/submission/comment.html.twig', [
+        return $this->render('submission/comment.html.twig', [
             'comment' => $comment,
             'forum' => $forum,
             'submission' => $submission,
@@ -92,7 +92,7 @@ final class SubmissionController extends Controller {
             ]);
         }
 
-        return $this->render('@RadditApp/submission/create.html.twig', [
+        return $this->render('submission/create.html.twig', [
             'form' => $form->createView(),
             'forum' => $forum,
         ]);
@@ -139,7 +139,7 @@ final class SubmissionController extends Controller {
             ]);
         }
 
-        return $this->render('@RadditApp/submission/edit.html.twig', [
+        return $this->render('submission/edit.html.twig', [
             'form' => $form->createView(),
             'forum' => $forum,
             'submission' => $submission,

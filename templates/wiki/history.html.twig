@@ -1,11 +1,11 @@
-{% extends '@RadditApp/wiki/page.html.twig' %}
+{% extends 'wiki/page.html.twig' %}
 
 {% block title %}
   {{ 'wiki.history_title'|trans({'%path%': page.path}) }}
 {% endblock %}
 
 {% block head %}
-  {% include '@RadditApp/_includes/meta_pagination.html.twig' with {pager: revisions} only %}
+  {% include '_includes/meta_pagination.html.twig' with {pager: revisions} only %}
 {% endblock %}
 
 {% block body %}
@@ -40,5 +40,5 @@
     </tbody>
   </table>
 
-  {% include '@RadditApp/_includes/pagination.html.twig' with {pager: revisions} only %}
+  {% include '_includes/pagination.html.twig' with {pager: revisions} only %}
 {% endblock %}

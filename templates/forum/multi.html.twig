@@ -1,10 +1,10 @@
-{% extends '@RadditApp/base.html.twig' %}
-{% from '@RadditApp/submission/_macros.html.twig' import submission, submission_sort %}
+{% extends 'base.html.twig' %}
+{% from 'submission/_macros.html.twig' import submission, submission_sort %}
 
 {% block page_classes 'multi-forum-page' %}
 
 {% block head %}
-  {{ include('@RadditApp/_includes/meta_pagination.html.twig', {pager: submissions}, with_context=false) }}
+  {{ include('_includes/meta_pagination.html.twig', {pager: submissions}, with_context=false) }}
 {% endblock %}
 
 {% block title '/f/'~forums|join(', /f/') %}
@@ -18,7 +18,7 @@
     {{ submission(submission) }}
   {% endfor %}
 
-  {{ include('@RadditApp/_includes/pagination.html.twig', {pager: submissions}, with_context=false) }}
+  {{ include('_includes/pagination.html.twig', {pager: submissions}, with_context=false) }}
 {% endblock %}
 
 {% block sidebar %}

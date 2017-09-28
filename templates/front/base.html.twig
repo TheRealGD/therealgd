@@ -1,6 +1,6 @@
-{% extends '@RadditApp/base.html.twig' %}
+{% extends 'base.html.twig' %}
 
-{% from '@RadditApp/submission/_macros.html.twig' import submission, submission_sort %}
+{% from 'submission/_macros.html.twig' import submission, submission_sort %}
 {% from _self import submission_filter %}
 
 {% block head %}
@@ -14,7 +14,7 @@
 
   <link rel="alternate" type="application/atom+xml" href="{{ path('raddit_app_featured_feed') }}" title="{{ 'title.submissions_in_featured_forums'|trans }}">
 
-  {% include '@RadditApp/_includes/meta_pagination.html.twig' with {pager: submissions} %}
+  {% include '_includes/meta_pagination.html.twig' with {pager: submissions} %}
 {% endblock %}
 
 {% block body %}
@@ -27,7 +27,7 @@
     {{ submission(submission) }}
   {% endfor %}
 
-  {% include '@RadditApp/_includes/pagination.html.twig' with {pager: submissions} %}
+  {% include '_includes/pagination.html.twig' with {pager: submissions} %}
 {% endblock %}
 
 {%- macro submission_filter(choice, sort_by) -%}

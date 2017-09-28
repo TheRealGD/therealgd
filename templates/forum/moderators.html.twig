@@ -1,4 +1,4 @@
-{% extends '@RadditApp/forum/base.html.twig' %}
+{% extends 'forum/base.html.twig' %}
 
 {% block page_classes %}
   forum-moderators-page
@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block head %}
-  {{ include('@RadditApp/_includes/meta_pagination.html.twig', {pager: moderators}, with_context=false) }}
+  {{ include('_includes/meta_pagination.html.twig', {pager: moderators}, with_context=false) }}
 {% endblock %}
 
 {% block body %}
@@ -44,6 +44,6 @@
     </tbody>
   </table>
 
-  {{ include('@RadditApp/_includes/pagination.html.twig', {pager: moderators}, with_context=false) }}
+  {{ include('_includes/pagination.html.twig', {pager: moderators}, with_context=false) }}
 {% endblock %}
 

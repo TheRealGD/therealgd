@@ -1,4 +1,4 @@
-{% extends '@RadditApp/base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block page_classes %}
   wiki-all-page
@@ -11,7 +11,7 @@
 {% block head %}
   <link rel="canonical" href="{{ path('raddit_app_wiki_all') }}">
 
-  {% include '@RadditApp/_includes/meta_pagination.html.twig' with {pager: pages} only %}
+  {% include '_includes/meta_pagination.html.twig' with {pager: pages} only %}
 {% endblock %}
 
 {% block body %}
@@ -34,6 +34,6 @@
     </tbody>
   </table>
 
-  {% include '@RadditApp/_includes/pagination.html.twig' with {pager: pages} only %}
+  {% include '_includes/pagination.html.twig' with {pager: pages} only %}
 {% endblock %}
 

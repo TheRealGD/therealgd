@@ -36,7 +36,7 @@
 {% endmacro %}
 
 {%- block comment -%}
-  {%- from '@RadditApp/vote/_macros.html.twig' import vote -%}
+  {%- from 'vote/_macros.html.twig' import vote -%}
   <article class="comment comment-{{ level|default(0) ? 'level-'~level : 'top-level' }} {{ comment.softDeleted ? 'comment-soft-deleted' }}" id="comment_{{ comment.id }}">
     <div class="comment-row">
       <div class="comment-vote">
@@ -87,7 +87,7 @@
 {%- endblock -%}
 
 {%- block comment_info_user -%}
-  {%- from '@RadditApp/user/_macros.html.twig' import user_link -%}
+  {%- from 'user/_macros.html.twig' import user_link -%}
 
   {%- if not comment.softDeleted -%}
     {{- user_link(comment.user, {

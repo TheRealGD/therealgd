@@ -17,7 +17,7 @@ final class SecurityController extends Controller {
         $lastUsername = $helper->getLastUsername();
         $error = $helper->getLastAuthenticationError();
 
-        return $this->render('@RadditApp/security/login.html.twig', [
+        return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error,
         ]);

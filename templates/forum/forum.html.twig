@@ -1,12 +1,12 @@
-{% extends '@RadditApp/forum/base.html.twig' %}
+{% extends 'forum/base.html.twig' %}
 
-{% from '@RadditApp/submission/_macros.html.twig' import submission, submission_sort %}
+{% from 'submission/_macros.html.twig' import submission, submission_sort %}
 
 {% block title %}{{ forum.title }}{% endblock %}
 
 {% block head %}
   <link rel="canonical" href="{{ url('raddit_app_forum', {forum_name: forum.name}) }}">
-  {% include '@RadditApp/_includes/meta_pagination.html.twig' with {pager: submissions} %}
+  {% include '_includes/meta_pagination.html.twig' with {pager: submissions} %}
 
   <meta property="og:title" content="{{ forum.title }}">
   <meta property="og:site_name" content="{{ raddit_app_site_name() }}">
@@ -39,5 +39,5 @@
     {{ submission(submission, {show_forum_name: false}) }}
   {% endfor %}
 
-  {% include '@RadditApp/_includes/pagination.html.twig' with {pager: submissions} %}
+  {% include '_includes/pagination.html.twig' with {pager: submissions} %}
 {% endblock %}

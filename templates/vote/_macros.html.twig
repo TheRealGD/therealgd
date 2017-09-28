@@ -11,7 +11,7 @@
 {%- endmacro -%}
 
 {%- block vote -%}
-  {%- from '@RadditApp/_macros/icon.html.twig' import icon -%}
+  {%- from '_macros/icon.html.twig' import icon -%}
 
   {%- set user_choice = is_granted('ROLE_USER') ? entity.userChoice(app.user) : null -%}
   {%- spaceless -%}

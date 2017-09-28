@@ -1,4 +1,4 @@
-{% extends '@RadditApp/forum/base.html.twig' %}
+{% extends 'forum/base.html.twig' %}
 
 {% block page_classes 'submission-edit-page' %}
 {% block title 'title.editing_submission'|trans({'%title%': submission.title}) %}
@@ -6,7 +6,7 @@
 {% block body %}
   <h1 class="page-heading">{{ block('title') }}</h1>
 
-  {{ include('@RadditApp/submission/_form.html.twig', {form: form}, with_context=false) }}
+  {{ include('submission/_form.html.twig', {form: form}, with_context=false) }}
 {% endblock %}
 
 {% block javascripts %}

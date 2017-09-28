@@ -27,12 +27,12 @@ final class WikiController extends Controller {
         $page = $wikiPageRepository->findOneCaseInsensitively($path);
 
         if (!$page) {
-            return $this->render('@RadditApp/wiki/404.html.twig', [
+            return $this->render('wiki/404.html.twig', [
                 'path' => $path,
             ], new Response('', 404));
         }
 
-        return $this->render('@RadditApp/wiki/page.html.twig', [
+        return $this->render('wiki/page.html.twig', [
             'page' => $page,
         ]);
     }
@@ -66,7 +66,7 @@ final class WikiController extends Controller {
             return $this->redirectToRoute('raddit_app_wiki', ['path' => $path]);
         }
 
-        return $this->render('@RadditApp/wiki/create.html.twig', [
+        return $this->render('wiki/create.html.twig', [
             'form' => $form->createView(),
             'path' => $path,
         ]);
@@ -105,7 +105,7 @@ final class WikiController extends Controller {
             ]);
         }
 
-        return $this->render('@RadditApp/wiki/edit.html.twig', [
+        return $this->render('wiki/edit.html.twig', [
             'form' => $form->createView(),
             'page' => $page,
         ]);
@@ -123,7 +123,7 @@ final class WikiController extends Controller {
      * @return Response
      */
     public function historyAction(WikiPage $wikiPage, int $page) {
-        return $this->render('@RadditApp/wiki/history.html.twig', [
+        return $this->render('wiki/history.html.twig', [
             'page' => $wikiPage,
             'revisions' => $wikiPage->getPaginatedRevisions($page),
         ]);
@@ -135,7 +135,7 @@ final class WikiController extends Controller {
      * @return Response
      */
     public function revisionAction(WikiRevision $revision) {
-        return $this->render('@RadditApp/wiki/revision.html.twig', [
+        return $this->render('wiki/revision.html.twig', [
             'page' => $revision->getPage(),
             'revision' => $revision,
         ]);
@@ -150,7 +150,7 @@ final class WikiController extends Controller {
     public function allAction(int $page, WikiPageRepository $wikiPageRepository) {
         $pages = $wikiPageRepository->findAllPages($page);
 
-        return $this->render('@RadditApp/wiki/all.html.twig', [
+        return $this->render('wiki/all.html.twig', [
             'pages' => $pages,
         ]);
     }

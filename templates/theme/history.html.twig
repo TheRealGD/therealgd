@@ -1,10 +1,10 @@
-{% extends '@RadditApp/base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block page_classes 'theme-history-page' %}
 {% block title 'title.history_for_theme'|trans({'%theme%': '%s/%s'|format(theme.author.username, theme.name)}) %}
 
 {% block head %}
-  {{ include('@RadditApp/_includes/meta_pagination.html.twig', {pager: revisions}, with_context=false) }}
+  {{ include('_includes/meta_pagination.html.twig', {pager: revisions}, with_context=false) }}
 {% endblock %}
 
 {% block body %}
@@ -39,5 +39,5 @@
     </tbody>
   </table>
 
-  {{ include('@RadditApp/_includes/pagination.html.twig', {pager: revisions}, with_context=false) }}
+  {{ include('_includes/pagination.html.twig', {pager: revisions}, with_context=false) }}
 {% endblock %}

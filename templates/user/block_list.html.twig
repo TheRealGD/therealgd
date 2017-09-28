@@ -1,9 +1,9 @@
-{% extends '@RadditApp/base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block page_classes 'user-block-list-page' %}
 {% block title 'title.block_list'|trans %}
 
-{% from '@RadditApp/user/_macros.html.twig' import user_link %}
+{% from 'user/_macros.html.twig' import user_link %}
 
 {% block body %}
   <h1 class="page-heading">{{ block('title') }}</h1>

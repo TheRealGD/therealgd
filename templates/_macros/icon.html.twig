@@ -9,6 +9,6 @@
           SVG icons are disabled. -#}
       <img src="data:image/svg+xml,{{ '<svg xmlns="http://www.w3.org/2000/svg"/>'|url_encode }}" alt="{{ alt_text }}" class="icon__alt" aria-hidden="true">
     {%- endif -%}
-    {{- source('@RadditApp/_icons/%s.svg'|format(name)) -}}
+    {{- source('_icons/%s.svg'|format(name)) -}}
   </span>
 {%- endmacro -%}

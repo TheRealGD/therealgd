@@ -1,4 +1,4 @@
-{% extends '@RadditApp/forum/base.html.twig' %}
+{% extends 'forum/base.html.twig' %}
 
 {% block page_classes 'forum-ban-history-page' %}
 {% block title 'title.showing_ban_history_for_user_in_forum'|trans({
@@ -7,7 +7,7 @@
 }) %}
 
 {% block head %}
-  {{ include('@RadditApp/_includes/meta_pagination.html.twig', {pager: bans}, with_context=false) }}
+  {{ include('_includes/meta_pagination.html.twig', {pager: bans}, with_context=false) }}
 {% endblock %}
 
 {% block body %}
@@ -50,6 +50,6 @@
     </tbody>
   </table>
 
-  {{ include('@RadditApp/_includes/pagination.html.twig', {pager: bans}, with_context=false) }}
+  {{ include('_includes/pagination.html.twig', {pager: bans}, with_context=false) }}
 {% endblock %}
 

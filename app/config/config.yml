@@ -48,11 +48,11 @@ framework:
 # Twig Configuration
 twig:
     paths:
-        "%kernel.project_dir%/templates": RadditApp
+        - "%kernel.project_dir%/templates"
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
     form_themes:
-        - "@RadditApp/_forms/standard_form_theme.html.twig"
+        - "_forms/standard_form_theme.html.twig"
 
 # Doctrine Configuration
 doctrine:
@@ -113,7 +113,7 @@ scheb_two_factor:
         enabled: true
         sender_email: "%env(NO_REPLY_ADDRESS)%"
         sender_name: "%env(SITE_NAME)%"
-        template: "@RadditApp/security/2fa_form.html.twig"
+        template: "security/2fa_form.html.twig"
         digits: 8
     exclude_pattern: ^/((build|bundles|fonts|media|submission_images)/|(favicon\.ico|apple-touch-icon-precomposed\.png)$)
     security_tokens:

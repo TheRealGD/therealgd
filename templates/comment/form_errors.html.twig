@@ -1,6 +1,6 @@
-{% extends '@RadditApp/submission/base.html.twig' %}
+{% extends 'submission/base.html.twig' %}
 
-{% from '@RadditApp/comment/_macros.html.twig' import comment %}
+{% from 'comment/_macros.html.twig' import comment %}
 
 {% block title %}
   {% if editing %}
@@ -23,6 +23,6 @@
     {{ comment(comment, {recurse: false}) }}
   {% endif %}
 
-  {% include '@RadditApp/comment/_form.html.twig' with { form: form } only %}
+  {% include 'comment/_form.html.twig' with { form: form } only %}
 {% endblock %}
 
