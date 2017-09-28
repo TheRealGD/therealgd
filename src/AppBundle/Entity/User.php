@@ -216,7 +216,7 @@ class User implements UserInterface, TwoFactorInterface {
     private $blocks;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", options={"default": "default"})
      *
      * @var string
      */
