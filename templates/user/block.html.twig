@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+{% from 'user/_macros.html.twig' import user_link %}
+
+{% block page_classes 'user-block-page' %}
+{% block title 'title.blocking_user'|trans({'%user%': '/u/'~subject.username}) %}
+
+{% block body %}
+  <h1 class="page-heading">
+    {{ 'title.blocking_user'|trans({
+      '%user%': user_link(subject, {prefix: true}),
+    })|raw }}
+  </h1>
+
+  {{ form(form) }}
+{% endblock %}
+

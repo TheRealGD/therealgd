@@ -30,12 +30,12 @@ class ForumLinkParser extends AbstractLocalLinkParser {
      */
     public function getUrl(string $suffix): string {
         if (strpos($suffix, '+') !== false) {
-            return $this->urlGenerator->generate('raddit_app_multi', [
+            return $this->urlGenerator->generate('multi', [
                 'names' => $suffix,
             ]);
         }
 
-        return $this->urlGenerator->generate('raddit_app_forum', [
+        return $this->urlGenerator->generate('forum', [
             'forum_name' => $suffix,
         ]);
     }

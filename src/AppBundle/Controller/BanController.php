@@ -19,7 +19,7 @@ final class BanController extends Controller {
      * @return Response
      */
     public function landingPageAction() {
-        return $this->render('@RadditApp/ban/banned.html.twig');
+        return $this->render('ban/banned.html.twig');
     }
 
     /**
@@ -31,7 +31,7 @@ final class BanController extends Controller {
      * @return Response
      */
     public function listAction(int $page, BanRepository $banRepository) {
-        return $this->render('@RadditApp/ban/list.html.twig', [
+        return $this->render('ban/list.html.twig', [
             'bans' => $banRepository->findAllPaginated($page),
         ]);
     }
@@ -69,10 +69,10 @@ final class BanController extends Controller {
             $em->persist($ban);
             $em->flush();
 
-            return $this->redirectToRoute('raddit_app_bans');
+            return $this->redirectToRoute('bans');
         }
 
-        return $this->render('@RadditApp/ban/add.html.twig', [
+        return $this->render('ban/add.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -91,7 +91,7 @@ final class BanController extends Controller {
     public function redirectAction(EntityManager $em, $entityClass, $id) {
         $entity = $em->find($entityClass, $id);
 
-        return $this->redirectToRoute('raddit_app_add_ban', [
+        return $this->redirectToRoute('add_ban', [
             'ip' => $entity->getIp(),
             'user_id' => $entity->getUser()->getId(),
         ]);
@@ -123,6 +123,6 @@ final class BanController extends Controller {
 
         $em->flush();
 
-        return $this->redirectToRoute('raddit_app_bans');
+        return $this->redirectToRoute('bans');
     }
 }

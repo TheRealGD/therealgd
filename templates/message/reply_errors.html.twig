@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block page_classes 'message-reply-errors-page' %}
+{% block title thread.title %}
+
+{% block body %}
+  <h1 class="page-heading"><a href="{{ path('message', {id: thread.id}) }}">{{ thread.title }}</a></h1>
+
+  {{ include('message/_form.html.twig', {form: form}, with_context=false) }}
+{% endblock %}

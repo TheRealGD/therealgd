@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+  {% if app.user.showCustomStylesheets ?? false and forum.theme %}
+    {{ include('_includes/stylesheets.html.twig', {
+      theme: forum.theme,
+      night_mode: app.user.nightMode ?? false
+    }, with_context=false) }}
+  {% else %}
+    {{ parent() }}
+  {% endif %}
+{% endblock %}
+
+{% block sidebar %}
+    <section class="sidebar__section sidebar__section--forum-meta forum-meta">
+      <h1 class="sidebar__title forum-title"><a href="{{ path('forum', {forum_name: forum.name}) }}">{{ forum.title }}</a></h1>
+
+      {% if is_granted('ROLE_USER') %}
+        {% from 'forum/_macros.html.twig' import subscribe_button %}
+        {% set subscribed = forum.subscribed(app.user) %}
+        <form action="{{ path(subscribed ? 'unsubscribe' : 'subscribe', {id: forum.id}) }}" method="POST" class="form">
+          <input type="hidden" name="token" value="{{ csrf_token('subscribe') }}">
+
+          <div class="form__row">
+            {{ subscribe_button(forum, subscribed, false) }}
+          </div>
+        </form>
+      {% endif %}
+
+      {% if forum.sidebar is not empty %}
+        <div class="forum-sidebar-content">{{ forum.sidebar|cached_markdown|raw }}</div>
+      {% endif %}
+    </section>
+
+    {% if is_granted('moderator', forum) %}
+      <section class="sidebar__section sidebar__section--forum-manage forum-manage">
+        <h1 class="sidebar__title">{{ 'forum.manage'|trans }}</h1>
+        <ul>
+          <li><a href="{{ path('edit_forum', {forum_name: forum.name}) }}">{{ 'forum.edit'|trans }}</a></li>
+          <li><a href="{{ path('forum_appearance', {forum_name: forum.name}) }}">{{ 'nav.appearance'|trans }}</a></li>
+          {% if is_granted('moderator', forum) %}
+            <li><a href="{{ path('forum_bans', {forum_name: forum.name}) }}">{{ 'nav.bans'|trans }}</a></li>
+          {% endif %}
+          {% if is_granted('ROLE_ADMIN') %}
+            <li><a href="{{ path('add_moderator', {forum_name: forum.name}) }}">{{ 'forum.add_moderator'|trans }}</a></li>
+            <li><a href="{{ path('delete_forum', {forum_name: forum.name}) }}">{{ 'nav.delete_forum'|trans }}</a></li>
+          {% endif %}
+        </ul>
+      </section>
+    {% endif %}
+
+    {% if forum.moderators|length > 0 %}
+      <section class="sidebar__section sidebar__section--forum-moderators forum-moderators">
+        <h1 class="sidebar__title"><a href="{{ path('forum_moderators', {forum_name: forum.name}) }}">{{ 'forum.moderators'|trans }}</a></h1>
+        <ul>
+          {% for moderator in forum.moderators %}
+            <li>
+              <a href="{{ path('user', {username: moderator.user.username}) }}">
+                {{- moderator.user.username -}}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </section>
+    {% endif %}
+{% endblock %}

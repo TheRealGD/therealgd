@@ -24,13 +24,13 @@ security:
 
             form_login:
                 csrf_token_generator: security.csrf.token_manager
-                check_path: raddit_app_login_check
-                login_path: raddit_app_login
+                check_path: login_check
+                login_path: login
 
             logout:
                 csrf_parameter: token
                 csrf_token_generator: security.csrf.token_manager
-                path: raddit_app_log_out
+                path: log_out
 
             remember_me:
                 secret: "%secret"

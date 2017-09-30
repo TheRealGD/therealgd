@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block page_classes %}
+  wiki-create-page
+{% endblock %}
+
+{% block title %}
+  {{ 'wiki.create_title'|trans({'%path%': path}) }}
+{% endblock %}
+
+{% block body %}
+  <h1 class="page-heading">{{ block('title') }}</h1>
+
+  {% include 'wiki/_form.html.twig' with {form: form} only %}
+{% endblock %}

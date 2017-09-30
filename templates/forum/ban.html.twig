@@ -1,0 +1,14 @@
+{% extends 'forum/base.html.twig' %}
+
+{% block page_classes 'forum-ban-page' %}
+{% block title 'title.banning_user_from_forum'|trans({
+  '%forum%': forum.name,
+  '%user%': user.username,
+}) %}
+
+{% block body %}
+  <h1 class="page-heading">{{ block('title') }}</h1>
+
+  {{ form(form) }}
+{% endblock %}
+

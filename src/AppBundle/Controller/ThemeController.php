@@ -24,7 +24,7 @@ class ThemeController extends Controller {
      * @return Response
      */
     public function listAction(ThemeRepository $themeRepository, int $page) {
-        return $this->render('@RadditApp/theme/list.html.twig', [
+        return $this->render('theme/list.html.twig', [
             'themes' => $themeRepository->findAllPaginated($page),
         ]);
     }
@@ -51,13 +51,13 @@ class ThemeController extends Controller {
 
             $this->addFlash('success', 'flash.theme_created');
 
-            return $this->redirectToRoute('raddit_app_edit_theme', [
+            return $this->redirectToRoute('edit_theme', [
                 'name' => $theme->getName(),
                 'username' => $theme->getAuthor()->getUsername(),
             ]);
         }
 
-        return $this->render('@RadditApp/theme/create.html.twig', [
+        return $this->render('theme/create.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -89,13 +89,13 @@ class ThemeController extends Controller {
 
             $this->addFlash('success', 'flash.theme_updated');
 
-            return $this->redirectToRoute('raddit_app_edit_theme', [
+            return $this->redirectToRoute('edit_theme', [
                 'username' => $theme->getAuthor()->getUsername(),
                 'name' => $theme->getName(),
             ]);
         }
 
-        return $this->render('@RadditApp/theme/edit.html.twig', [
+        return $this->render('theme/edit.html.twig', [
             'form' => $form->createView(),
             'theme' => $theme,
         ]);
@@ -108,14 +108,14 @@ class ThemeController extends Controller {
      * @return Response
      */
     public function historyAction(Theme $theme, int $page) {
-        return $this->render('@RadditApp/theme/history.html.twig', [
+        return $this->render('theme/history.html.twig', [
             'theme' => $theme,
             'revisions' => $theme->getPaginatedRevisions($page),
         ]);
     }
 
     public function sourceAction(ThemeRevision $revision) {
-        return $this->render('@RadditApp/theme/source.html.twig', [
+        return $this->render('theme/source.html.twig', [
             'revision' => $revision,
         ]);
     }

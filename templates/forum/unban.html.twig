@@ -1,0 +1,8 @@
+{% extends 'forum/ban.html.twig' %}
+
+{% block title 'title.unbanning_user_from_forum'|trans({
+  '%user%': '/u/'~user.username,
+  '%forum%': '/f/'~forum.name,
+}) %}
+
+{% block page_classes 'forum-unban-page' %}

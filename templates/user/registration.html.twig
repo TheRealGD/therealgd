@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block page_classes %}registration-page{% endblock %}
+{% block title 'title.sign_up'|trans %}
+
+{% block body %}
+  <h1 class="page-heading">{{ block('title') }}</h1>
+
+  {% include 'user/_form.html.twig' %}
+{% endblock %}

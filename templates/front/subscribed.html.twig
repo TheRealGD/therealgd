@@ -1,0 +1,33 @@
+{% extends 'front/base.html.twig' %}
+
+{% block page_classes 'subscribed-page' %}
+
+{% block body %}
+  {% if not has_subscriptions %}
+    <div class="alert alert--notice">
+      <p>{{ 'front.no_subscriptions'|trans }}</p>
+    </div>
+  {% endif %}
+
+  {{ parent() }}
+{% endblock %}
+
+{% block sidebar %}
+  <section class="sidebar__section sidebar__section--front-forums">
+    {% if has_subscriptions %}
+      <h1 class="sidebar__title">{{ 'front.subscribed_forums'|trans }}</h1>
+    {% else %}
+      <h1 class="sidebar__title">{{ 'front.featured_forums'|trans }}</h1>
+    {% endif %}
+
+    {% if forums|length > 0 %}
+      <ul>
+        {% for name in forums %}
+          <li><a href="{{ path('forum', {forum_name: name}) }}">{{ name }}</a></li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>{{ 'front.no_forums'|trans }}</p>
+    {% endif %}
+  </section>
+{% endblock %}

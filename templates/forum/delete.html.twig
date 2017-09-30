@@ -1,0 +1,18 @@
+{% extends 'forum/base.html.twig' %}
+
+{% block title 'title.delete_forum'|trans({'%forum%': '/f/%s'|format(forum.name)}) %}
+{% block page_classes 'forum-delete-page' %}
+
+{% block body %}
+  <h1 class="page-heading">
+    {{- 'title.delete_forum'|trans({'%forum%': '<a href="%s">/f/%s</a>'|format(
+      path('forum', {forum_name: forum.name})|escape,
+      forum.name|escape
+      )})|raw
+    -}}
+  </h1>
+
+  <p>{{ 'help.delete_forum_warning'|trans }}</p>
+
+  {{ form(form) }}
+{% endblock %}

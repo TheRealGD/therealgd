@@ -1,0 +1,15 @@
+{% extends 'forum/base.html.twig' %}
+
+{% block page_classes %}
+  add-moderators-page
+{% endblock %}
+
+{% block title %}
+  {{ 'add_moderator.title'|trans({'%forum%': forum.name}) }}
+{% endblock %}
+
+{% block body %}
+  <h1 class="page-heading">{{ block('title') }}</h1>
+
+  {{ form(form) }}
+{% endblock %}

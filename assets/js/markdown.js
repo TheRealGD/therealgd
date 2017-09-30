@@ -6,7 +6,7 @@ import $ from 'jquery';
 
 function createPreview() {
     $.ajax({
-        url: Routing.generate('raddit_app_markdown_preview'),
+        url: Routing.generate('markdown_preview'),
         method: 'POST',
         dataType: 'html',
         data: { markdown: $(this).val() }

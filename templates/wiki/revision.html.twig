@@ -1,0 +1,25 @@
+{% extends 'wiki/page.html.twig' %}
+
+{% block title %}
+  {{ 'title.showing_revision'|trans({
+    '%revision%': revision.id.hex|slice(0, 8),
+    '%path%': '<a href="%s">%s</a>'|format(path('wiki', {path: page.path})|e, page.path|e),
+  })|raw }}
+{% endblock %}
+
+{% block page_classes 'wiki-revision-page' %}
+
+{% block body %}
+  <h1 class="page-heading">{{ block('title') }}</h1>
+  <hr>
+
+  <article>
+    <h1>{{ revision.title }}</h1>
+
+    {{ revision.body|cached_markdown|raw }}
+  </article>
+  <hr>
+
+  <h1>{{ 'label.source_code'|trans }}</h1>
+  <pre class="source-code"><code class="language-markdown">{{ revision.body }}</code></pre>
+{% endblock %}

@@ -11,7 +11,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class ActivateMaintenanceMode extends ContainerAwareCommand {
     public function configure() {
         $this
-            ->setName('raddit:maintenance')
+            ->setName('app:maintenance')
             ->addOption('message', 'm', InputOption::VALUE_REQUIRED, 'Custom message to display.')
             ->addOption('deactivate', 'd', InputOption::VALUE_NONE, 'Deactivate maintenance mode')
             ->setDescription('Manages maintenance mode')

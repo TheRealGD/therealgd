@@ -9,7 +9,7 @@ export default function ($) {
 
         if ($receiver.val().trim() === '' && /^https?:\/\//.test(url)) {
             $.ajax({
-                url: Routing.generate('raddit_app_fetch_title'),
+                url: Routing.generate('fetch_title'),
                 method: 'POST',
                 dataType: 'json',
                 data: { url: url }

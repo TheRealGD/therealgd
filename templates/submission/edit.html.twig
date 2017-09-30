@@ -1,0 +1,20 @@
+{% extends 'forum/base.html.twig' %}
+
+{% block page_classes 'submission-edit-page' %}
+{% block title 'title.editing_submission'|trans({'%title%': submission.title}) %}
+
+{% block body %}
+  <h1 class="page-heading">{{ block('title') }}</h1>
+
+  {{ include('submission/_form.html.twig', {form: form}, with_context=false) }}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+
+  <script>
+    $('.delete-submission-button').click(function () {
+      return confirm(Translator.trans('submission_form.confirm_delete'));
+    });
+  </script>
+{% endblock %}

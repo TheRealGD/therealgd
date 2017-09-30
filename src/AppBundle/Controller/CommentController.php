@@ -29,7 +29,7 @@ use Symfony\Component\HttpFoundation\Response;
 final class CommentController extends Controller {
     public function listAction(CommentRepository $repository, int $page) {
         // TODO: link this somewhere
-        return $this->render('@RadditApp/comment/list.html.twig', [
+        return $this->render('comment/list.html.twig', [
             'comments' => $repository->findRecentPaginated($page),
         ]);
     }
@@ -60,13 +60,13 @@ final class CommentController extends Controller {
         }
 
         $form = $this->createForm(CommentType::class, null, [
-            'action' => $this->generateUrl('raddit_app_comment_post', $routeParams),
+            'action' => $this->generateUrl('comment_post', $routeParams),
             'forum' => $forumRepository->findOneBy([
                 'canonicalName' => mb_strtolower($forumName, 'UTF-8'),
             ]),
         ]);
 
-        return $this->render('@RadditApp/comment/form_fragment.html.twig', [
+        return $this->render('comment/form_fragment.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -104,14 +104,14 @@ final class CommentController extends Controller {
             $em->persist($reply);
             $em->flush();
 
-            return $this->redirectToRoute('raddit_app_comment', [
+            return $this->redirectToRoute('comment', [
                 'forum_name' => $forum->getName(),
                 'submission_id' => $submission->getId(),
                 'comment_id' => $reply->getId(),
             ]);
         }
 
-        return $this->render('@RadditApp/comment/form_errors.html.twig', [
+        return $this->render('comment/form_errors.html.twig', [
             'editing' => false,
             'form' => $form->createView(),
             'forum' => $forum,
@@ -150,14 +150,14 @@ final class CommentController extends Controller {
 
             $em->flush();
 
-            return $this->redirectToRoute('raddit_app_comment', [
+            return $this->redirectToRoute('comment', [
                 'forum_name' => $forum->getName(),
                 'submission_id' => $submission->getId(),
                 'comment_id' => $comment->getId(),
             ]);
         }
 
-        return $this->render('@RadditApp/comment/form_errors.html.twig', [
+        return $this->render('comment/form_errors.html.twig', [
             'editing' => true,
             'form' => $form->createView(),
             'forum' => $forum,
@@ -232,7 +232,7 @@ final class CommentController extends Controller {
             return $this->redirect($request->headers->get('Referer'));
         }
 
-        return $this->redirectToRoute('raddit_app_comments', [
+        return $this->redirectToRoute('comments', [
             'forum_name' => $comment->getSubmission()->getForum()->getName(),
             'submission_id' => $comment->getSubmission()->getId(),
             'slug' => Slugger::slugify($comment->getSubmission()->getTitle()),

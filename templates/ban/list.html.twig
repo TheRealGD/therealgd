@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'ban_list.title'|trans %}
+{% block page_classes 'ban-list-page' %}
+
+{% block head %}
+  {{ include('_includes/meta_pagination.html.twig', {pager: bans}, with_context = false) }}
+{% endblock %}
+
+{% block body %}
+  <h1 class="page-heading">{{ block('title') }}</h1>
+
+  <form action="{{ path('remove_bans') }}" method="POST" class="form">
+    <input type="hidden" name="token" value="{{ csrf_token('remove_bans') }}">
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>{{ 'ban_list.ip'|trans }}</th>
+          <th>{{ 'ban_list.timestamp'|trans }}</th>
+          <th>{{ 'ban_list.expires'|trans }}</th>
+          <th>{{ 'ban_list.user'|trans }}</th>
+          <th>{{ 'ban_list.reason'|trans }}</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for ban in bans %}
+        <tr>
+          <td><input type="checkbox" name="ban[]" value="{{ ban.id }}" id="ban_{{ ban.id }}"></td>
+          <td><label for="ban_{{ ban.id }}">{{ ban.ip }}</label></td>
+          <td>
+            <time datetime="{{ ban.timestamp|date('c') }}" class="relative-time">
+              {{- ban.timestamp|localizeddate('long', 'short') -}}
+            </time>
+          </td>
+          <td>
+            {% if ban.expiryDate %}
+              <time datetime="{{ ban.expiryDate|date('c') }}" class="relative-time">
+                {{- ban.expiryDate|localizeddate('long', 'short') -}}
+              </time>
+            {% else %}
+              <small>{{ 'ban_list.expires_never'|trans }}</small>
+            {% endif %}
+          </td>
+          <td>
+            {% if ban.user %}
+              <a href="{{ path('user', {username: ban.user.username}) }}">{{ ban.user.username }}</a>
+            {% else %}
+              <small>{{ 'ban_list.user_none'|trans }}</small>
+            {% endif %}
+          </td>
+          <td>{{ ban.reason }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+
+    <p><button type="submit" class="button">{{ 'ban_list.remove'|trans }}</button></p>
+  </form>
+
+  {{ include('_includes/pagination.html.twig', {pager: bans}, with_context = false) }}
+{% endblock %}

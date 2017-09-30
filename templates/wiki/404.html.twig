@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block page_classes %}
+  wiki-not-found-page
+{% endblock %}
+
+{% block title %}
+  {{ 'wiki.not_found_title'|trans }}
+{% endblock %}
+
+{% block body %}
+  <h1 class="page-heading">{{ block('title') }}</h1>
+
+  <p>{{ 'wiki.not_found_message'|trans }}</p>
+
+  {% if is_granted('ROLE_USER') %}
+    <p>
+      <a href="{{ path('wiki_create', {path: path}) }}" class="button">
+        {{- 'wiki.create_this_page'|trans -}}
+      </a>
+    </p>
+  {% endif %}
+{% endblock %}
+

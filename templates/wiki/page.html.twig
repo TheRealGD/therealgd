@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block page_classes %}
+  wiki-page
+{% endblock %}
+
+{% block title %}
+  {{ page.latestRevision.title }}
+{% endblock %}
+
+{% block head %}
+  <link rel="canonical" href="{{ url('wiki', {path: page.path}) }}">
+{% endblock %}
+
+{% block body %}
+  <article class="wiki-page">
+    <h1 class="wiki-page-title">{{ block('title') }}</h1>
+
+    <div class="wiki-page-body">
+      {{ page.latestRevision.body|cached_markdown|raw }}
+    </div>
+  </article>
+{% endblock %}
+
+{% block sidebar %}
+  <section class="sidebar__section sidebar__section--wiki-info">
+    <h1 class="sidebar__title">{{ page.path }}</h1>
+      <p>
+        {{- 'wiki.last_edited'|trans({
+          '%username%': '<a href="%s">%s</a>'|format(
+            path('user', {username: page.latestRevision.user.username})|escape,
+            page.latestRevision.user.username|escape
+          ),
+          '%timestamp%': block('_last_edited_time'),
+        })|raw -}}
+      </p>
+
+    {% if page.locked %}
+      <p>{{ 'wiki.locked_notice'|trans }}</p>
+    {% endif %}
+  </section>
+
+  <section class="sidebar__section sidebar__section--wiki-toolbox">
+    <h1 class="sidebar__title">{{ 'wiki.toolbox'|trans }}</h1>
+
+    <ul>
+      {% if is_granted('write', page) %}
+        <li><a href="{{ path('wiki_edit', {path: page.path}) }}">{{ 'wiki.edit_page'|trans }}</a></li>
+      {% endif %}
+      <li><a href="{{ path('wiki_history', {path: page.path}) }}">{{ 'wiki.page_history'|trans }}</a></li>
+    </ul>
+  </section>
+
+  <section class="sidebar__section sidebar__section--wiki-navigation">
+    <h1 class="sidebar__title">{{ 'wiki.navigation'|trans }}</h1>
+
+    <ul>
+      <li><a href="{{ path('wiki_all') }}">{{ 'wiki.all_pages'|trans }}</a></li>
+    </ul>
+  </section>
+{% endblock %}
+
+{% block _last_edited_time %}
+  {% with {time: page.latestRevision.timestamp|localizeddate('long', 'short')} %}
+    <time datetime="{{ page.latestRevision.timestamp|date('c') }}" title="{{ time }}" class="relative-time">
+      {{ 'time.on_timestamp'|trans({'%timestamp%': time}) }}
+    </time>
+  {% endwith %}
+{% endblock %}

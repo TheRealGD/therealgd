@@ -35,7 +35,7 @@ final class SubmissionController extends Controller {
      * @return Response
      */
     public function commentPageAction(Forum $forum, Submission $submission) {
-        return $this->render('@RadditApp/submission/comments.html.twig', [
+        return $this->render('submission/comments.html.twig', [
             'forum' => $forum,
             'submission' => $submission,
         ]);
@@ -55,7 +55,7 @@ final class SubmissionController extends Controller {
         Submission $submission,
         Comment $comment
     ) {
-        return $this->render('@RadditApp/submission/comment.html.twig', [
+        return $this->render('submission/comment.html.twig', [
             'comment' => $comment,
             'forum' => $forum,
             'submission' => $submission,
@@ -85,14 +85,14 @@ final class SubmissionController extends Controller {
             $em->persist($submission);
             $em->flush();
 
-            return $this->redirectToRoute('raddit_app_comments', [
+            return $this->redirectToRoute('comments', [
                 'forum_name' => $submission->getForum()->getName(),
                 'submission_id' => $submission->getId(),
                 'slug' => Slugger::slugify($submission->getTitle()),
             ]);
         }
 
-        return $this->render('@RadditApp/submission/create.html.twig', [
+        return $this->render('submission/create.html.twig', [
             'form' => $form->createView(),
             'forum' => $forum,
         ]);
@@ -121,7 +121,7 @@ final class SubmissionController extends Controller {
 
                 $this->addFlash('notice', 'flash.submission_deleted');
 
-                return $this->redirectToRoute('raddit_app_forum', [
+                return $this->redirectToRoute('forum', [
                     'forum_name' => $forum->getName(),
                 ]);
             }
@@ -132,14 +132,14 @@ final class SubmissionController extends Controller {
 
             $this->addFlash('notice', 'flash.submission_edited');
 
-            return $this->redirectToRoute('raddit_app_comments', [
+            return $this->redirectToRoute('comments', [
                 'forum_name' => $forum->getName(),
                 'submission_id' => $submission->getId(),
                 'slug' => Slugger::slugify($submission->getTitle()),
             ]);
         }
 
-        return $this->render('@RadditApp/submission/edit.html.twig', [
+        return $this->render('submission/edit.html.twig', [
             'form' => $form->createView(),
             'forum' => $forum,
             'submission' => $submission,
@@ -181,7 +181,7 @@ final class SubmissionController extends Controller {
             return $this->redirect($request->headers->get('Referer'));
         }
 
-        return $this->redirectToRoute('raddit_app_comments', [
+        return $this->redirectToRoute('comments', [
             'forum_name' => $forum->getName(),
             'submission_id' => $submission->getId(),
             'slug' => Slugger::slugify($submission->getTitle()),

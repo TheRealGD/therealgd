@@ -1,0 +1,236 @@
+{#
+ # Options:
+ #
+ # - recurse (bool): true
+ # - show_form (bool): false
+ #}
+{% macro comment(comment, options) %}
+  {{- block('comment') -}}
+{% endmacro %}
+
+{% macro comment_form(submission, comment) %}
+  {% if submission.locked and not is_granted('ROLE_ADMIN') %}
+    <div class="alert alert--notice submission-locked-notice">
+      <p>{{ 'flash.submission_is_locked'|trans }}</p>
+    </div>
+  {% elseif is_granted('ROLE_USER') %}
+    {{ render(controller('RadditAppBundle:Comment:commentForm', {
+      forumName: submission.forum.name,
+      submissionId: submission.id,
+      commentId: comment.id|default(null)
+    })) }}
+  {% else %}
+    <div class="alert alert--notice">
+      <p>{{ 'comments.not_logged_in'|trans({
+        '%login_link%': '<a href="%s">%s</a>'|format(
+          path('login'),
+          'comments.not_logged_in_login_link_label'|trans
+        ),
+        '%register_link%': '<a href="%s">%s</a>'|format(
+          path('registration'),
+          'comments.not_logged_in_register_link_label'|trans
+        ),
+      })|raw }}</p>
+    </div>
+  {% endif %}
+{% endmacro %}
+
+{%- block comment -%}
+  {%- from 'vote/_macros.html.twig' import vote -%}
+  <article class="comment comment-{{ level|default(0) ? 'level-'~level : 'top-level' }} {{ comment.softDeleted ? 'comment-soft-deleted' }}" id="comment_{{ comment.id }}">
+    <div class="comment-row">
+      <div class="comment-vote">
+        {{ vote(comment, 'comment_vote') }}
+      </div>
+
+      <div class="comment-inner">
+        <h1 class="comment-info">
+          {{ 'comments.info'|trans({
+            '%user%': block('comment_info_user'),
+            '%timestamp%': block('comment_info_timestamp'),
+          })|raw }}
+
+          {% if comment.editedAt %}
+            <span class="comment-info-edited-at {{ comment.moderated ? 'comment-info-moderated' }}">
+              {{ (comment.moderated ? 'comments.moderator_info' : 'comments.edit_info')|trans({
+                '%edited_at%': block('comment_info_edited_at')
+              })|raw }}
+            </span>
+          {% endif %}
+        </h1>
+
+        <div class="comment-body">
+          {{ comment.body|cached_markdown|raw }}
+        </div>
+
+        <nav class="comment-nav">
+          <ul>{{ block('comment_nav') }}</ul>
+        </nav>
+
+        {% if options.show_form ?? false and is_granted('ROLE_USER') %}
+          {% from _self import comment_form %}
+          {{ comment_form(comment.submission, comment) }}
+        {% endif %}
+      </div>
+    </div>
+
+    {% if options.recurse ?? true and comment.children|length > 0 %}
+      <div class="comment-replies">
+        {%- for reply in comment.children -%}
+          {%- with { comment: reply, level: level|default(0) + 1} only -%}
+            {{- block('comment') -}}
+          {%- endwith -%}
+        {%- endfor -%}
+      </div>
+    {% endif %}
+  </article>
+{%- endblock -%}
+
+{%- block comment_info_user -%}
+  {%- from 'user/_macros.html.twig' import user_link -%}
+
+  {%- if not comment.softDeleted -%}
+    {{- user_link(comment.user, {
+      class: 'comment-user',
+      flag: comment.userFlag,
+      submitter: comment.user is same as(comment.submission.user),
+    }) -}}
+  {%- else -%}
+    {{- 'comments.author_deleted'|trans -}}
+  {%- endif -%}
+{%- endblock -%}
+
+{%- block comment_info_timestamp -%}
+  {%- set date = comment.timestamp|localizeddate('long', 'short') -%}
+  <time datetime="{{ comment.timestamp|date('c') }}" title="{{ date }}" class="comment-timestamp relative-time">
+    {{- 'comments.info_at_timestamp'|trans({'%timestamp%': date}) -}}
+  </time>
+{%- endblock -%}
+
+{%- block comment_info_edited_at -%}
+  {%- set date = comment.editedAt|localizeddate('long', 'short') -%}
+  <time datetime="{{ comment.editedAt|date('c') }}" title="{{ date }}" class="relative-time-diff" data-compare-to="{{ comment.timestamp|date('c') }}">
+    {{- 'comments.info_at_timestamp'|trans({'%timestamp%': date}) -}}
+  </time>
+{%- endblock -%}
+
+{%- block comment_nav -%}
+  {{- block('comment_nav_reply') -}}
+  {{- block('comment_nav_permalink') -}}
+  {{- block('comment_nav_parent') -}}
+  {{- block('comment_nav_delete') -}}
+  {{- block('comment_nav_edit') }}
+  {{- block('comment_nav_ban') -}}
+  {{- block('comment_nav_ip_ban') -}}
+{%- endblock -%}
+
+{%- block comment_nav_reply -%}
+  <li class="comment-nav-reply" style="display: none">
+    <a href="#" data-form-url="{{ path('comment_form', {
+      forumName: comment.submission.forum.name,
+      submissionId: comment.submission.id,
+      commentId: comment.id
+    }) }}">
+      {{- 'comments.reply'|trans -}}
+    </a>
+  </li>
+{%- endblock -%}
+
+{%- block comment_nav_permalink -%}
+  {%- spaceless -%}
+    <li class="comment-nav-permalink">
+      <a href="{{ path('comment', {
+        forum_name: comment.submission.forum.name,
+        submission_id: comment.submission.id,
+        comment_id: comment.id
+      }) }}">{{ 'comments.permalink'|trans }}</a>
+    </li>
+  {%- endspaceless -%}
+{%- endblock -%}
+
+{%- block comment_nav_parent -%}
+  {%- spaceless -%}
+    {%- if comment.parent -%}
+      <li class="comment-nav-parent">
+        <a href="{{ path('comment', {
+          forum_name: comment.submission.forum.name,
+          submission_id: comment.submission.id,
+          comment_id: comment.parent.id
+        }) }}">{{ 'comments.parent'|trans }}</a>
+      </li>
+    {%- endif -%}
+  {%- endspaceless -%}
+{%- endblock -%}
+
+{# Forms are used here because we need to support JS-less browsing and because
+ # GET requests should never mutate the state of the application. #}
+{%- block comment_nav_delete -%}
+  {%- if comment.children|length > 0 and is_granted('delete_thread', comment) -%}
+    {%- set delete_thread_label = 'comments.delete_thread' -%}
+    {{- block('comment_nav_delete_thread') -}}
+    {{- block('comment_nav_delete_softdelete') -}}
+  {%- elseif is_granted('delete', comment) -%}
+    {%- set delete_thread_label = 'comments.delete' -%}
+    {{- block('comment_nav_delete_thread') -}}
+  {%- endif -%}
+{%- endblock -%}
+
+{%- block comment_nav_delete_softdelete -%}
+  {%- spaceless -%}
+    <li class="comment-nav-softdelete">
+      <form action="{{ path('softdelete_comment', {id: comment.id}) }}" method="POST">
+        <input type="hidden" name="token" value="{{ csrf_token('softdelete_comment') }}">
+        <button type="submit" class="confirm-comment-delete">{{ 'comments.delete'|trans }}</button>
+      </form>
+    </li>
+  {%- endspaceless -%}
+{%- endblock -%}
+
+{%- block comment_nav_delete_thread -%}
+  {%- spaceless -%}
+    <li class="comment-nav-delete-thread">
+      <form action="{{ path('delete_comment', {id: comment.id}) }}" method="POST">
+        <input type="hidden" name="token" value="{{ csrf_token('delete_comment') }}">
+        <button type="submit" class="confirm-comment-delete">{{ delete_thread_label|trans }}</button>
+      </form>
+    </li>
+  {%- endspaceless -%}
+{%- endblock -%}
+
+{%- block comment_nav_edit -%}
+  {%- spaceless -%}
+    {%- if is_granted('edit', comment) -%}
+      <li class="comment-nav-edit">
+        <a href="{{ path('edit_comment', {
+          forum_name: comment.submission.forum.name,
+          submission_id: comment.submission.id,
+          comment_id: comment.id,
+        }) }}">{{ 'comments.edit'|trans }}</a>
+      </li>
+    {%- endif -%}
+  {%- endspaceless -%}
+{%- endblock -%}
+
+{%- block comment_nav_ban -%}
+  {%- if is_granted('moderator', comment.submission.forum) -%}
+    {%- spaceless -%}
+      <li>
+        <a href="{{ path('forum_ban', {forum_name: comment.submission.forum.name, username: comment.user.username}) }}">
+          {{- 'action.ban'|trans -}}
+        </a>
+      </li>
+    {%- endspaceless -%}
+  {%- endif -%}
+{%- endblock -%}
+
+{%- block comment_nav_ip_ban -%}
+  {%- if is_granted('ROLE_ADMIN') %}
+    {%- spaceless -%}
+      <li class="comment-nav-edit">
+        <a href="{{ path('ban_ip_by_comment', {id: comment.id}) }}">
+          {{- 'comments.admin_ban'|trans -}}
+        </a>
+      </li>
+    {%- endspaceless -%}
+  {%- endif -%}
+{%- endblock -%}

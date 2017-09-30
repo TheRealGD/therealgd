@@ -1,0 +1,43 @@
+{% extends 'forum/base.html.twig' %}
+
+{% from 'submission/_macros.html.twig' import submission, submission_sort %}
+
+{% block title %}{{ forum.title }}{% endblock %}
+
+{% block head %}
+  <link rel="canonical" href="{{ url('forum', {forum_name: forum.name}) }}">
+  {% include '_includes/meta_pagination.html.twig' with {pager: submissions} %}
+
+  <meta property="og:title" content="{{ forum.title }}">
+  <meta property="og:site_name" content="{{ site_name() }}">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ url('forum', {forum_name: forum.name}) }}">
+  <meta property="og:image" content="{{ absolute_url(asset('apple-touch-icon-precomposed.png')) }}">
+
+  {% if forum.description is not empty %}
+    <meta name="description" content="{{ forum.description }}">
+  {% endif %}
+{% endblock %}
+
+{% block page_classes %}forum-front{% endblock %}
+
+{% block body %}
+  {% spaceless %}
+    <h1 class="page-heading forum-name-heading">
+      <span class="forum-name-heading__prefix">/f/</span>
+      <strong class="forum-name-heading__name">{{ forum.name }}</strong>
+    </h1>
+  {% endspaceless %}
+
+  <nav class="submission-sort">
+    <ul>
+      {{- submission_sort(sort_by) -}}
+    </ul>
+  </nav>
+
+  {% for submission in submissions %}
+    {{ submission(submission, {show_forum_name: false}) }}
+  {% endfor %}
+
+  {% include '_includes/pagination.html.twig' with {pager: submissions} %}
+{% endblock %}

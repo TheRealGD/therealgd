@@ -55,7 +55,7 @@ final class FrontController extends Controller {
         $forums = $fr->findFeaturedForumNames();
         $submissions = $sr->findFrontPageSubmissions($forums, $sortBy, $page);
 
-        return $this->render('@RadditApp/front/featured.html.twig', [
+        return $this->render('front/featured.html.twig', [
             'forums' => $forums,
             'listing' => 'featured',
             'submissions' => $submissions,
@@ -75,7 +75,7 @@ final class FrontController extends Controller {
 
         $submissions = $sr->findFrontPageSubmissions($forums, $sortBy, $page);
 
-        return $this->render('@RadditApp/front/subscribed.html.twig', [
+        return $this->render('front/subscribed.html.twig', [
             'forums' => $forums,
             'has_subscriptions' => $hasSubscriptions,
             'listing' => 'subscribed',
@@ -94,7 +94,7 @@ final class FrontController extends Controller {
     public function allAction(SubmissionRepository $sr, string $sortBy, int $page) {
         $submissions = $sr->findAllSubmissions($sortBy, $page);
 
-        return $this->render('@RadditApp/front/all.html.twig', [
+        return $this->render('front/all.html.twig', [
             'listing' => 'all',
             'sort_by' => $sortBy,
             'submissions' => $submissions,
@@ -107,7 +107,7 @@ final class FrontController extends Controller {
         $forums = $fr->findModeratedForumNames($this->getUser());
         $submissions = $sr->findFrontPageSubmissions($forums, $sortBy, $page);
 
-        return $this->render('@RadditApp/front/moderated.html.twig', [
+        return $this->render('front/moderated.html.twig', [
             'forums' => $forums,
             'listing' => 'moderated',
             'sort_by' => $sortBy,
@@ -119,7 +119,7 @@ final class FrontController extends Controller {
         $forums = $fr->findFeaturedForumNames();
         $submissions = $sr->findFrontPageSubmissions($forums, $sortBy, $page);
 
-        return $this->render('@RadditApp/front/featured.xml.twig', [
+        return $this->render('front/featured.xml.twig', [
             'forums' => $forums,
             'submissions' => $submissions,
         ]);

@@ -1,0 +1,18 @@
+{% extends 'wiki/page.html.twig' %}
+
+{% block page_classes %}
+  wiki-edit-page
+{% endblock %}
+
+{% block title %}
+  {{ 'wiki.editing_title'|trans({'%path%': page.path}) }}
+{% endblock %}
+
+{% block body %}
+  <h1 class="page-heading">{{ 'wiki.editing_title'|trans({
+    '%path%': '<a href="%s">%s</a>'|format(path('wiki', {path: page.path})|escape, page.path|escape)
+  })|raw }}</h1>
+
+  {% include 'wiki/_form.html.twig' with {form: form} only %}
+{% endblock %}
+

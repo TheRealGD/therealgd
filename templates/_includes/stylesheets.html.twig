@@ -1,0 +1,18 @@
+{% set hierarchy = revision.hierarchy ?? theme.latestRevision.hierarchy ?? [] %}
+
+{% if hierarchy[0].appendToDefaultStyle ?? true %}
+  {% if not night_mode %}
+    <link rel="stylesheet" href="{{ preload(asset('build/red.css')) }}">
+  {% else %}
+    <link rel="stylesheet" href="{{ preload(asset('build/night.css')) }}">
+  {% endif %}
+{% endif %}
+
+{% for revision in hierarchy %}
+  {% if revision.commonCss is not null %}
+    <link rel="stylesheet" href="{{ path('stylesheet', {themeId: revision.id, field: 'common'}) }}">
+  {% endif %}
+  {% if (night_mode ? revision.nightCss ? revision.dayCss) is not null %}
+    <link rel="stylesheet" href="{{ path('stylesheet', {themeId: revision.id, field: night_mode ? 'night' : 'day'}) }}">
+  {% endif %}
+{% endfor %}

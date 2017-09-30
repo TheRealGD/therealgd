@@ -1,0 +1,25 @@
+{% extends 'forum/base.html.twig' %}
+
+{% block title 'title.forum_appearance'|trans({'%forum%': '/f/%s'|format(forum.name)}) %}
+{% block page_classes 'forum-appearance-page' %}
+
+{% block body %}
+  <h1 class="page-heading">
+    {{ 'title.forum_appearance'|trans({'%forum%': '<a href="%s">/f/%s</a>'|format(
+      path('forum', {forum_name: forum.name})|escape,
+      forum.name|escape
+    )})|raw }}
+  </h1>
+
+  {{ form_start(form) }}
+    {{ form_row(form.theme, {attr: {class: 'select2'}}) }}
+
+    {# todo: some navigation widget thing #}
+    <nav>
+      <ul>
+        <li><a href="{{ path('themes') }}">{{ 'nav.themes'|trans }}</a></li>
+        <li><a href="{{ path('create_theme') }}">{{ 'nav.create_theme'|trans }}</a></li>
+      </ul>
+    </nav>
+  {{ form_end(form) }}
+{% endblock %}

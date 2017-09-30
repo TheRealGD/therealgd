@@ -26,7 +26,7 @@ final class MessageController extends Controller {
     public function listAction(MessageThreadRepository $repository, int $page) {
         $messages = $repository->findUserMessages($this->getUser(), $page);
 
-        return $this->render('@RadditApp/message/list.html.twig', [
+        return $this->render('message/list.html.twig', [
             'messages' => $messages,
         ]);
     }
@@ -54,12 +54,12 @@ final class MessageController extends Controller {
             $em->persist($thread);
             $em->flush();
 
-            return $this->redirectToRoute('raddit_app_message', [
+            return $this->redirectToRoute('message', [
                 'id' => $thread->getId(),
             ]);
         }
 
-        return $this->render('@RadditApp/message/compose.html.twig', [
+        return $this->render('message/compose.html.twig', [
             'form' => $form->createView(),
             'receiver' => $receiver,
         ]);
@@ -75,19 +75,19 @@ final class MessageController extends Controller {
      * @return Response
      */
     public function messageAction(MessageThread $thread) {
-        return $this->render('@RadditApp/message/message.html.twig', [
+        return $this->render('message/message.html.twig', [
             'thread' => $thread,
         ]);
     }
 
     public function replyFormAction($threadId) {
         $form = $this->createForm(MessageReplyType::class, null, [
-            'action' => $this->generateUrl('raddit_app_reply_to_message', [
+            'action' => $this->generateUrl('reply_to_message', [
                 'id' => $threadId,
             ]),
         ]);
 
-        return $this->render('@RadditApp/message/reply_form_fragment.html.twig', [
+        return $this->render('message/reply_form_fragment.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -112,12 +112,12 @@ final class MessageController extends Controller {
 
             $em->flush();
 
-            return $this->redirectToRoute('raddit_app_message', [
+            return $this->redirectToRoute('message', [
                 'id' => $thread->getId(),
             ]);
         }
 
-        return $this->render('@RadditApp/message/reply_errors.html.twig', [
+        return $this->render('message/reply_errors.html.twig', [
             'form' => $form->createView(),
             'thread' => $thread,
         ]);

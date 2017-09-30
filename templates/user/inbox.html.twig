@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block head %}
+  {% include '_includes/meta_pagination.html.twig' with {pager: notifications} %}
+{% endblock %}
+
+{% block page_classes %}
+  inbox-page
+{% endblock %}
+
+{% block title %}
+  {{ 'inbox.title'|trans }}
+{% endblock %}
+
+{% block body %}
+  <h1 class="page-heading">{{ 'inbox.title'|trans }}</h1>
+
+  {% if notifications|length > 0 %}
+    <form action="{{ path('clear_inbox', { max: notifications|first.id }) }}" method="POST" class="form">
+      <input type="hidden" name="token" value="{{ csrf_token('clear_inbox') }}">
+      <div class="form__row">
+        <button type="submit" class="button">{{ 'inbox.clear_inbox'|trans }}</button>
+      </div>
+    </form>
+  {% else %}
+    <p>{{ 'inbox.empty'|trans }}</p>
+  {% endif %}
+
+  {% for notification in notifications %}
+    {{ block('notification_'~notification.type) }}
+  {% endfor %}
+
+  {% include '_includes/pagination.html.twig' with {pager: notifications} %}
+{% endblock %}
+
+{% block notification_comment %}
+  {% from 'comment/_macros.html.twig' import comment %}
+
+  {{ comment(notification.comment, {recurse: false}) }}
+{% endblock %}
+
+{% block notification_message_thread %}
+  {% from 'message/_macros.html.twig' import message_thread %}
+
+  <h1 class="notification-head">
+    <a href="{{ path('message', {id: notification.thread.id}) }}">
+      {{- notification.thread.title -}}
+    </a>
+  </h1>
+
+  {{ message_thread(notification.thread, {recursive: false}) }}
+{% endblock %}
+
+{% block notification_message_reply %}
+  {% from 'message/_macros.html.twig' import message_reply %}
+
+  <h1 class="notification-head">
+    <a href="{{ path('message', {id: notification.reply.thread.id}) }}#mr{{ notification.reply.id }}">
+      {{ 'inbox.message_reply_head'|trans({'%title%': notification.reply.thread.title}) -}}
+    </a>
+  </h1>
+
+  {{ message_reply(notification.reply) }}
+{% endblock %}

@@ -25,7 +25,7 @@ class UserLinkParser extends AbstractLocalLinkParser {
      * {@inheritdoc}
      */
     public function getUrl(string $suffix): string {
-        return $this->urlGenerator->generate('raddit_app_user', [
+        return $this->urlGenerator->generate('user', [
             'username' => $suffix,
         ]);
     }

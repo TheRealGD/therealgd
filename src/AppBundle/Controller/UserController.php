@@ -34,7 +34,7 @@ final class UserController extends Controller {
     public function userPageAction(User $user, UserRepository $repository) {
         $contributions = $repository->findLatestContributions($user);
 
-        return $this->render('@RadditApp/user/user.html.twig', [
+        return $this->render('user/user.html.twig', [
             'contributions' => $contributions,
             'user' => $user,
         ]);
@@ -47,7 +47,7 @@ final class UserController extends Controller {
      * @return Response
      */
     public function submissionsAction(User $user, int $page) {
-        return $this->render('@RadditApp/user/submissions.html.twig', [
+        return $this->render('user/submissions.html.twig', [
             'submissions' => $user->getPaginatedSubmissions($page),
             'user' => $user,
         ]);
@@ -60,7 +60,7 @@ final class UserController extends Controller {
      * @return Response
      */
     public function commentsAction(User $user, int $page) {
-        return $this->render('@RadditApp/user/comments.html.twig', [
+        return $this->render('user/comments.html.twig', [
             'comments' => $user->getPaginatedComments($page),
             'user' => $user,
         ]);
@@ -85,7 +85,7 @@ final class UserController extends Controller {
         RememberMeServicesInterface $rememberMeServices
     ) {
         if ($this->isGranted('ROLE_USER')) {
-            return $this->redirectToRoute('raddit_app_front');
+            return $this->redirectToRoute('front');
         }
 
         $user = new User();
@@ -96,7 +96,7 @@ final class UserController extends Controller {
             $em->persist($user);
             $em->flush();
 
-            $response = $this->redirectToRoute('raddit_app_front');
+            $response = $this->redirectToRoute('front');
 
             // log in with the new user
             $firewallName = $firewallMap->getFirewallConfig($request)->getName();
@@ -109,7 +109,7 @@ final class UserController extends Controller {
             return $response;
         }
 
-        return $this->render('@RadditApp/user/registration.html.twig', [
+        return $this->render('user/registration.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -131,7 +131,7 @@ final class UserController extends Controller {
             if ($form->isSubmitted() && $form->isValid()) {
                 $em->flush();
 
-                return $this->redirectToRoute('raddit_app_edit_user', [
+                return $this->redirectToRoute('edit_user', [
                     'username' => $subject->getUsername(),
                 ]);
             }
@@ -141,7 +141,7 @@ final class UserController extends Controller {
             $em->refresh($subject);
         }
 
-        return $this->render('@RadditApp/user/edit.html.twig', [
+        return $this->render('user/edit.html.twig', [
             'form' => $form->createView(),
             'user' => $subject,
         ]);
@@ -171,7 +171,7 @@ final class UserController extends Controller {
             return $this->redirect($request->getUri());
         }
 
-        return $this->render('@RadditApp/user/settings.html.twig', [
+        return $this->render('user/settings.html.twig', [
             'form' => $form->createView(),
             'user' => $subject,
         ]);
@@ -188,7 +188,7 @@ final class UserController extends Controller {
         /* @var User $user */
         $user = $this->getUser();
 
-        return $this->render('@RadditApp/user/block_list.html.twig', [
+        return $this->render('user/block_list.html.twig', [
             'blocks' => $user->getPaginatedBlocks($page),
         ]);
     }
@@ -223,10 +223,10 @@ final class UserController extends Controller {
 
             $this->addFlash('success', 'flash.user_blocked');
 
-            return $this->redirectToRoute('raddit_app_user_block_list');
+            return $this->redirectToRoute('user_block_list');
         }
 
-        return $this->render('@RadditApp/user/block.html.twig', [
+        return $this->render('user/block.html.twig', [
             'form' => $form->createView(),
             'subject' => $subject,
         ]);
@@ -251,7 +251,7 @@ final class UserController extends Controller {
 
         $this->addFlash('success', 'flash.user_unblocked');
 
-        return $this->redirectToRoute('raddit_app_user_block_list');
+        return $this->redirectToRoute('user_block_list');
     }
 
     /**
@@ -265,7 +265,7 @@ final class UserController extends Controller {
         /* @var User $user */
         $user = $this->getUser();
 
-        return $this->render('@RadditApp/user/inbox.html.twig', [
+        return $this->render('user/inbox.html.twig', [
             'notifications' => $user->getPaginatedNotifications($page),
         ]);
     }
@@ -297,7 +297,7 @@ final class UserController extends Controller {
 
         $this->addFlash('notice', 'flash.inbox_cleared');
 
-        return $this->redirectToRoute('raddit_app_inbox');
+        return $this->redirectToRoute('inbox');
     }
 
     /**
@@ -318,7 +318,7 @@ final class UserController extends Controller {
 
         $this->addFlash('success', $trusted ? 'flash.user_marked_trusted' : 'flash.user_marked_untrusted');
 
-        return $this->redirectToRoute('raddit_app_user', [
+        return $this->redirectToRoute('user', [
             'username' => $user->getUsername(),
         ]);
     }

@@ -1,15 +1,15 @@
-raddit_app_login:
+login:
     defaults: { _controller: RadditAppBundle:Security:login }
     path: /login
     methods: [GET]
 
-raddit_app_login_check:
+login_check:
     path: /login_check
     methods: [POST]
 
-raddit_app_log_out:
+log_out:
     path: /log_out
 
-raddit_app_2fa_post:
+2fa_post:
     path: /
     methods: [POST]

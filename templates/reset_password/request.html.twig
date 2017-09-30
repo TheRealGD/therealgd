@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block page_classes %}
+  request-password-reset-page
+{% endblock %}
+
+{% block title %}
+  {{ 'request_password_reset.title'|trans }}
+{% endblock %}
+
+{% block body %}
+  <h1 class="page-heading">{{ block('title') }}</h1>
+
+  <p>{{ 'request_password_reset.no_confirmation_notice'|trans }}</p>
+  <p>{{ 'request_password_reset.multiple_accounts_notice'|trans }}</p>
+
+  {{ form(form) }}
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+{% from 'message/_macros.html.twig' import message_thread %}
+
+{% block page_classes 'message-page' %}
+{% block title thread.title %}
+
+{% block body %}
+  <h1 class="page-heading">{{ thread.title }}</h1>
+
+  {{ message_thread(thread) }}
+
+  {% if is_granted('reply', thread) %}
+    {{ render(controller('RadditAppBundle:Message:replyForm', {threadId: thread.id})) }}
+  {% endif %}
+{% endblock %}

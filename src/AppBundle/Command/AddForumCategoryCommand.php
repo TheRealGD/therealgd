@@ -18,7 +18,7 @@ class AddForumCategoryCommand extends ContainerAwareCommand {
 
     protected function configure() {
         $this
-            ->setName('raddit:forum:add-category')
+            ->setName('app:forum:add-category')
             ->setDescription('Adds a new forum category')
             ->addArgument('name', InputArgument::REQUIRED, 'The name of the category to add')
         ;

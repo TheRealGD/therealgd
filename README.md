@@ -43,7 +43,7 @@ Clone the repository somewhere and navigate there with the command line.
 
 3.  Run `bin/console doctrine:migrations:migrate` to load the database schema.
 
-4.  Run `bin/console raddit:add-user <username> <email address>` to create a
+4.  Run `bin/console app:add-user <username> <email address>` to create a
     user account.
 
 5.  Run `bin/console server:run` to start the application.
