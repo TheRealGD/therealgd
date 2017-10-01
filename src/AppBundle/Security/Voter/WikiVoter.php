@@ -43,9 +43,20 @@ final class WikiVoter extends Voter {
         }
     }
 
-    private function canWrite(WikiPage $page, $token) {
+    private function canWrite(WikiPage $page, TokenInterface $token): bool {
         if ($this->decisionManager->decide($token, ['ROLE_ADMIN'])) {
             return true;
+        }
+
+        $user = $token->getUser();
+
+        if (!$user instanceof User) {
+            return false;
+        }
+
+        // TODO: make this configurable
+        if (!$user->isTrusted() && $user->getCreated() > new \DateTime('@'.time().' -24 hours')) {
+            return false;
         }
 
         return !$page->isLocked();
