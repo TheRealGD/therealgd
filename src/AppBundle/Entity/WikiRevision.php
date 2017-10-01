@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Raddit\AppBundle\Repository\WikiRevisionRepository")
  * @ORM\Table(name="wiki_revisions")
  */
 class WikiRevision {

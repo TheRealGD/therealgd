@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block page_classes 'wiki-recent-page' %}
+{% block title 'label.recent_changes'|trans %}
+
+{% block head %}
+  {{ include('_includes/meta_pagination.html.twig', {pager: revisions}, with_context=false) }}
+{% endblock %}
+
+{% block body %}
+  <h1 class="page-heading">{{ 'label.recent_changes'|trans }}</h1>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>{{ 'label.id'|trans }}</th>
+        <th>{{ 'label.title'|trans }}</th>
+        <th>{{ 'label.author'|trans }}</th>
+        <th>{{ 'label.date'|trans }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for revision in revisions %}
+        <tr>
+          <td><a href="{{ path('wiki_revision', {id: revision.id}) }}">{{ revision.id.hex|slice(0, 8) }}</td>
+          <td><a href="{{ path('wiki', {path: revision.page.path}) }}">{{ revision.page.path }}</a></td>
+          <td><a href="{{ path('user', {username: revision.user.username}) }}">{{ revision.user.username }}</a></td>
+          <td>
+            {% with { date: revision.timestamp|localizeddate('long', 'short') } %}
+              <time datetime="{{ revision.timestamp|date('c') }}" title="{{ date }}" class="relative-time">
+                {{- date -}}
+              </time>
+            {% endwith %}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {{ include('_includes/pagination.html.twig', {pager: revisions}, with_context=false) }}
+{% endblock %}

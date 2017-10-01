@@ -106,6 +106,10 @@ services:
         factory: ["@doctrine.orm.entity_manager", "getRepository"]
         arguments: [Raddit\AppBundle\Entity\WikiPage]
 
+    Raddit\AppBundle\Repository\WikiRevisionRepository:
+        factory: ["@doctrine.orm.entity_manager", "getRepository"]
+        arguments: [Raddit\AppBundle\Entity\WikiRevision]
+
     Raddit\AppBundle\Security\Voter\TokenVoter:
         arguments:
             $forumCreationInterval: "%user_forum_creation_interval%"

@@ -32,3 +32,9 @@ wiki_revision:
     path: /wiki/_revision/{id}
     methods: [GET]
     requirements: { id: "%uuid_regex%" }
+
+wiki_recent_changes:
+    defaults: { _controller: RadditAppBundle:Wiki:recentChanges, page: 1 }
+    path: /wiki/_recent/{page}
+    methods: [GET]
+    requirements: { page: \d+ }

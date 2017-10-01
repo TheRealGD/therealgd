@@ -8,6 +8,7 @@ use Raddit\AppBundle\Entity\WikiRevision;
 use Raddit\AppBundle\Form\Model\WikiData;
 use Raddit\AppBundle\Form\WikiType;
 use Raddit\AppBundle\Repository\WikiPageRepository;
+use Raddit\AppBundle\Repository\WikiRevisionRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -152,6 +153,12 @@ final class WikiController extends Controller {
 
         return $this->render('wiki/all.html.twig', [
             'pages' => $pages,
+        ]);
+    }
+
+    public function recentChangesAction(WikiRevisionRepository $repository, int $page) {
+        return $this->render('wiki/recent.html.twig', [
+            'revisions' => $repository->findRecent($page),
         ]);
     }
 }

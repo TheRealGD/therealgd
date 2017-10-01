@@ -228,6 +228,7 @@ label:
     featured: Featured
     all: All
     moderated: Moderated
+    recent_changes: Recent changes
 
 login_form:
     log_in: Log in
