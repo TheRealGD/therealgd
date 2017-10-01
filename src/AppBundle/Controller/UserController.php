@@ -301,6 +301,8 @@ final class UserController extends Controller {
     }
 
     /**
+     * @Security("is_granted('ROLE_ADMIN')")
+     *
      * @param Request       $request
      * @param User          $user
      * @param EntityManager $em
