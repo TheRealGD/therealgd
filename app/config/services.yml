@@ -56,6 +56,10 @@ services:
             - { name: doctrine.event_listener, event: postPersist }
             - { name: kernel.event_listener, event: kernel.terminate }
 
+    Raddit\AppBundle\Form\RequestPasswordResetType:
+        arguments:
+            $bypass: "@=parameter('kernel.environment') === 'test'"
+
     Raddit\AppBundle\Mailer\ResetPasswordMailer:
         arguments:
             $siteName: "%env(SITE_NAME)%"

@@ -229,6 +229,7 @@ label:
     all: All
     moderated: Moderated
     recent_changes: Recent changes
+    verification: Verification
 
 login_form:
     log_in: Log in

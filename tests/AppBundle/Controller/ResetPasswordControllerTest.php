@@ -17,6 +17,7 @@ class ResetPasswordControllerTest extends WebTestCase {
 
         $form = $crawler->selectButton('Submit')->form([
             'request_password_reset[email]' => 'emma@example.com',
+            'request_password_reset[verification]' => 'bypass',
         ]);
 
         $client->enableProfiler();
