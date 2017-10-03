@@ -5,6 +5,8 @@ namespace Raddit\AppBundle\Command;
 use Doctrine\ORM\EntityManagerInterface;
 use Raddit\AppBundle\Entity\Comment;
 use Raddit\AppBundle\Entity\CommentVote;
+use Raddit\AppBundle\Entity\MessageReply;
+use Raddit\AppBundle\Entity\MessageThread;
 use Raddit\AppBundle\Entity\Submission;
 use Raddit\AppBundle\Entity\SubmissionVote;
 use Symfony\Component\Console\Command\Command;
@@ -97,6 +99,8 @@ class PruneIpAddressesCommand extends Command implements ContainerAwareInterface
         $count += $this->clearIpsForEntity(CommentVote::class, $maxTime);
         $count += $this->clearIpsForEntity(Submission::class, $maxTime);
         $count += $this->clearIpsForEntity(SubmissionVote::class, $maxTime);
+        $count += $this->clearIpsForEntity(MessageThread::class, $maxTime);
+        $count += $this->clearIpsForEntity(MessageReply::class, $maxTime);
 
         if ($input->getOption('dry-run')) {
             $this->manager->rollback();

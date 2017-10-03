@@ -180,7 +180,7 @@ class Submission extends Votable {
         $this->body = $body;
         $this->forum = $forum;
         $this->user = $user;
-        $this->ip = $ip;
+        $this->ip = $user->isTrusted() ? null : $ip;
         $this->sticky = $sticky;
         $this->setUserFlag($userFlag);
         $this->timestamp = $timestamp ?: new \DateTime('@'.time());

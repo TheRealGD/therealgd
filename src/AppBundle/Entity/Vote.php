@@ -56,7 +56,7 @@ abstract class Vote {
     public function __construct(User $user, $ip, $choice) {
         $this->timestamp = new \DateTime('@'.time());
         $this->user = $user;
-        $this->setIp($ip);
+        $this->setIp($ip); // must be after $this->user is declared
         $this->setChoice($choice);
     }
 
@@ -116,7 +116,7 @@ abstract class Vote {
             throw new \InvalidArgumentException('Bad IP address');
         }
 
-        $this->ip = $ip;
+        $this->ip = $this->user->isTrusted() ? null : $ip;
     }
 
     /**

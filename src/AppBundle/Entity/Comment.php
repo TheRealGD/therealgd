@@ -144,7 +144,7 @@ class Comment extends Votable {
         $this->setUserFlag($userFlag);
         $this->user = $user;
         $this->submission = $submission;
-        $this->ip = $ip;
+        $this->ip = $user->isTrusted() ? null : $ip;
         $this->timestamp = $timestamp ?: new \DateTime('@'.time());
         $this->children = new ArrayCollection();
         $this->votes = new ArrayCollection();

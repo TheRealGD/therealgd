@@ -40,7 +40,7 @@ abstract class Message {
     private $timestamp;
 
     /**
-     * @ORM\Column(type="inet")
+     * @ORM\Column(type="inet", nullable=true)
      *
      * @var string|null
      */
@@ -60,7 +60,7 @@ abstract class Message {
 
         $this->sender = $sender;
         $this->body = $body;
-        $this->ip = $ip;
+        $this->ip = $sender->isTrusted() ? null : $ip;
         $this->timestamp = new \DateTime('@'.time());
     }
 

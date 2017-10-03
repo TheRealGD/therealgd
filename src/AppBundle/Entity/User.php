@@ -570,7 +570,7 @@ class User implements UserInterface, TwoFactorInterface {
      * @return bool
      */
     public function isTrusted(): bool {
-        return $this->trusted;
+        return $this->admin || $this->trusted;
     }
 
     /**
