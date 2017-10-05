@@ -5,7 +5,6 @@ namespace Raddit\AppBundle\Controller;
 use Doctrine\ORM\EntityManager;
 use Raddit\AppBundle\Entity\Theme;
 use Raddit\AppBundle\Entity\ThemeRevision;
-use Raddit\AppBundle\Entity\User;
 use Raddit\AppBundle\Form\Model\ThemeData;
 use Raddit\AppBundle\Form\ThemeType;
 use Raddit\AppBundle\Repository\ThemeRepository;
@@ -63,22 +62,19 @@ class ThemeController extends Controller {
     }
 
     /**
-     * @ParamConverter("theme", options={"repositoryMethod": "findOneByNameAndUsername"})
+     * @ParamConverter("theme", options={
+     *     "map_method_signature": true,
+     *     "repository_method": "findOneByUsernameAndName"}
+     * )
      * @Security("is_granted('edit', theme)")
      *
      * @param Request       $request
      * @param EntityManager $em
-     * @param User          $user
      * @param Theme         $theme
      *
      * @return Response
      */
-    public function editAction(
-        Request $request,
-        EntityManager $em,
-        /* @noinspection PhpUnusedParameterInspection */ User $user,
-        Theme $theme
-    ) {
+    public function editAction(Request $request, EntityManager $em, Theme $theme) {
         $data = ThemeData::createFromTheme($theme);
         $form = $this->createForm(ThemeType::class, $data);
         $form->handleRequest($request);
