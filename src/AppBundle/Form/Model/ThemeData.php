@@ -6,12 +6,14 @@ use Raddit\AppBundle\Entity\Theme;
 use Raddit\AppBundle\Entity\ThemeRevision;
 use Raddit\AppBundle\Entity\User;
 use Raddit\AppBundle\Validator\Constraints\Css;
-use Raddit\AppBundle\Validator\Constraints\UniqueTheme;
+use Raddit\AppBundle\Validator\Constraints\Unique;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @UniqueTheme()
+ * @Unique({"author", "name"}, idFields={"entityId": "id"},
+ *     entityClass="Raddit\AppBundle\Entity\Theme", errorPath="name",
+ *     message="That name is already taken.")
  */
 class ThemeData {
     /**
