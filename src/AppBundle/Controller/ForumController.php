@@ -10,6 +10,7 @@ use Raddit\AppBundle\Form\ForumBanType;
 use Raddit\AppBundle\Form\ForumType;
 use Raddit\AppBundle\Form\Model\ForumBanData;
 use Raddit\AppBundle\Form\Model\ForumData;
+use Raddit\AppBundle\Form\Model\ModeratorData;
 use Raddit\AppBundle\Form\ModeratorType;
 use Raddit\AppBundle\Form\PasswordConfirmType;
 use Raddit\AppBundle\Repository\ForumBanRepository;
@@ -270,11 +271,12 @@ final class ForumController extends Controller {
      * @return Response
      */
     public function addModeratorAction(EntityManager $em, Forum $forum, Request $request) {
-        $form = $this->createForm(ModeratorType::class, []);
+        $data = new ModeratorData();
+        $form = $this->createForm(ModeratorType::class, $data);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $forum->addUserAsModerator($form->getData()['user']);
+            $forum->addModerator($data->toModerator($forum));
 
             $em->flush();
 

@@ -5,6 +5,7 @@ namespace Raddit\Tests\AppBundle\Entity;
 use PHPUnit\Framework\TestCase;
 use Raddit\AppBundle\Entity\Forum;
 use Raddit\AppBundle\Entity\ForumBan;
+use Raddit\AppBundle\Entity\Moderator;
 use Raddit\AppBundle\Entity\User;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -27,11 +28,11 @@ class ForumTest extends TestCase {
 
     public function testModeratorsAreModerators() {
         $user = new User();
-        $this->forum->addUserAsModerator($user);
+        new Moderator($this->forum, $user);
 
         $admin = new User();
         $admin->setAdmin(true);
-        $this->forum->addUserAsModerator($admin);
+        new Moderator($this->forum, $admin);
 
         $this->assertTrue($this->forum->userIsModerator($user));
         $this->assertTrue($this->forum->userIsModerator($admin));
@@ -60,7 +61,7 @@ class ForumTest extends TestCase {
 
     public function testModeratorCanDeleteEmptyForum() {
         $user = new User();
-        $this->forum->addUserAsModerator($user);
+        new Moderator($this->forum, $user);
 
         $this->assertTrue($this->forum->userCanDelete($user));
     }

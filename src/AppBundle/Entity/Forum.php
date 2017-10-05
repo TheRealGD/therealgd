@@ -141,7 +141,7 @@ class Forum {
         $this->subscriptions = new ArrayCollection();
 
         if ($user) {
-            $this->addUserAsModerator($user);
+            $this->addModerator(new Moderator($this, $user));
             $this->subscribe($user);
         }
     }
@@ -234,9 +234,9 @@ class Forum {
         return count($this->moderators->matching($criteria)) > 0;
     }
 
-    public function addUserAsModerator(User $user) {
-        if (!$this->userIsModerator($user)) {
-            $this->moderators->add(new Moderator($this, $user));
+    public function addModerator(Moderator $moderator) {
+        if (!$this->moderators->contains($moderator)) {
+            $this->moderators->add($moderator);
         }
     }
 

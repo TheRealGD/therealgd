@@ -6,6 +6,7 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Raddit\AppBundle\Entity\Forum;
+use Raddit\AppBundle\Entity\Moderator;
 use Raddit\AppBundle\Entity\User;
 
 class LoadExampleForums extends AbstractFixture implements DependentFixtureInterface {
@@ -28,7 +29,7 @@ class LoadExampleForums extends AbstractFixture implements DependentFixtureInter
             foreach ($data['moderators'] as $username) {
                 /** @var User $user */
                 $user = $this->getReference('user-'.$username);
-                $forum->addUserAsModerator($user);
+                new Moderator($forum, $user);
             }
 
             foreach ($data['subscribers'] as $username) {

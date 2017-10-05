@@ -54,6 +54,7 @@ class Moderator {
         $this->forum = $forum;
         $this->user = $user;
         $this->timestamp = new \DateTime('@'.time());
+        $forum->addModerator($this);
     }
 
     public function getId(): Uuid {

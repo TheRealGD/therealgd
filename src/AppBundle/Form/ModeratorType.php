@@ -3,13 +3,13 @@
 namespace Raddit\AppBundle\Form;
 
 use Raddit\AppBundle\Form\DataTransformer\UserTransformer;
+use Raddit\AppBundle\Form\Model\ModeratorData;
 use Raddit\AppBundle\Repository\UserRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ModeratorType extends AbstractType {
     /**
@@ -26,11 +26,7 @@ class ModeratorType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-            ->add('user', TextType::class, [
-                'constraints' => [
-                    new NotBlank(),
-                ],
-            ])
+            ->add('user', TextType::class)
             ->add('submit', SubmitType::class)
         ;
 
@@ -44,6 +40,7 @@ class ModeratorType extends AbstractType {
      */
     public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults([
+            'data_class' => ModeratorData::class,
             'label_format' => 'moderator_form.%name%',
         ]);
     }
