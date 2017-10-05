@@ -5,9 +5,23 @@ namespace Raddit\AppBundle\Form\Model;
 use Raddit\AppBundle\Entity\Forum;
 use Raddit\AppBundle\Entity\Moderator;
 use Raddit\AppBundle\Entity\User;
+use Raddit\AppBundle\Validator\Constraints\Unique;
 use Symfony\Component\Validator\Constraints as Assert;
 
+/**
+ * @Unique({"forum", "user"}, entityClass="Raddit\AppBundle\Entity\Moderator",
+ *     message="That user is already a moderator.", errorPath="user")
+ */
 class ModeratorData {
+    /**
+     * @var Forum
+     */
+    private $forum;
+
+    public function __construct(Forum $forum) {
+        $this->forum = $forum;
+    }
+
     /**
      * @Assert\NotBlank()
      *
@@ -15,8 +29,12 @@ class ModeratorData {
      */
     private $user;
 
-    public function toModerator(Forum $forum): Moderator {
-        return new Moderator($forum, $this->user);
+    public function toModerator(): Moderator {
+        return new Moderator($this->forum, $this->user);
+    }
+
+    public function getForum(): Forum {
+        return $this->forum;
     }
 
     /**

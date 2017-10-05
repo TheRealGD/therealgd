@@ -271,12 +271,12 @@ final class ForumController extends Controller {
      * @return Response
      */
     public function addModeratorAction(EntityManager $em, Forum $forum, Request $request) {
-        $data = new ModeratorData();
+        $data = new ModeratorData($forum);
         $form = $this->createForm(ModeratorType::class, $data);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $forum->addModerator($data->toModerator($forum));
+            $forum->addModerator($data->toModerator());
 
             $em->flush();
 
