@@ -29,7 +29,7 @@ moderated:
     requirements: { sortBy: hot|new|top|controversial, page: \d+ }
 
 featured_feed:
-    defaults: { _controller: RadditAppBundle:Front:featuredFeed, sortBy: hot, page: 1 }
+    defaults: { _controller: RadditAppBundle:Front:featuredFeed, sortBy: hot, page: 1, _format: xml }
     path: /featured/{sortBy}/{page}.atom
     methods: [GET]
     requirements: { sortBy: hot|new|top|controversial, page: \d+ }

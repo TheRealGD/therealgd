@@ -7,6 +7,7 @@
 }) %}
 
 {% block head %}
+  {{ parent() }}
   {{ include('_includes/meta_pagination.html.twig', {pager: bans}, with_context=false) }}
 {% endblock %}
 

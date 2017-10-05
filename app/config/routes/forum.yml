@@ -9,6 +9,12 @@ forum:
     methods: [GET]
     requirements: { sortBy: hot|new|top|controversial, page: \d+ }
 
+forum_feed:
+    defaults: { _controller: RadditAppBundle:Forum:feed, sortBy: hot, page: 1, _format: xml }
+    path: /f/{forum_name}/{sortBy}/{page}.atom
+    methods: [GET]
+    requirements: { sortBy: hot|new|top|controversial, page: \d+ }
+
 comment_post:
     defaults:
         _controller: RadditAppBundle:Comment:comment

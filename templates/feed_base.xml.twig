@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>{% block title %}{% endblock %}</title>
+  <subtitle>{% block subtitle %}{% endblock %}</subtitle>
+  <updated>{{ 'now'|date('c') }}</updated>
+
+  {% with { route: app.request.attributes.get('_route'), params: app.request.attributes.get('_route_params') } %}
+    <id>{{ url(route, params) }}</id>
+    <link rel="self" href="{{ url(route, params) }}" />
+  {% endwith %}
+
+  {% block body '' %}
+</feed>

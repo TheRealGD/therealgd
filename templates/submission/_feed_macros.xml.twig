@@ -1,0 +1,18 @@
+{% macro submission(submission) %}
+  {% set uri = url('comments', {forum_name: submission.forum.name, submission_id: submission.id}) %}
+  <entry>
+    <id>{{ uri }}</id>
+    <link href="{{ uri }}" />
+    <title>{{ submission.title }}</title>
+    <published>{{ submission.timestamp|date('c') }}</published>
+    <updated>{{ (submission.editedAt ?? submission.timestamp)|date('c') }}</updated>
+    <author>
+      <name>{{ submission.user.username }}</name>
+      <uri>{{ url('user', {username: submission.user.username}) }}</uri>
+    </author>
+    <category term="{{ submission.forum.name }}" label="{{ submission.forum.title }}" scheme="{{ app.request.getUriForPath('/f/') }}"/>
+    {% if submission.body is not null %}
+      <content type="html"><![CDATA[{{ submission.body|cached_markdown|raw }}]]></content>
+    {% endif %}
+  </entry>
+{% endmacro %}

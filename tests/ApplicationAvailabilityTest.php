@@ -92,6 +92,10 @@ class ApplicationAvailabilityTest extends WebTestCase {
         yield ['/featured/new/1'];
         yield ['/featured/top/1'];
         yield ['/featured/controversial/1'];
+        yield ['/featured/hot/1.atom'];
+        yield ['/featured/new/1.atom'];
+        yield ['/featured/top/1.atom'];
+        yield ['/featured/controversial/1.atom'];
         yield ['/f/news/hot'];
         yield ['/f/news/new'];
         yield ['/f/news/top'];
@@ -100,6 +104,10 @@ class ApplicationAvailabilityTest extends WebTestCase {
         yield ['/f/news/new/1'];
         yield ['/f/news/top/1'];
         yield ['/f/news/controversial/1'];
+        yield ['/f/news/hot/1.atom'];
+        yield ['/f/news/new/1.atom'];
+        yield ['/f/news/top/1.atom'];
+        yield ['/f/news/controversial/1.atom'];
         yield ['/f/news/1'];
         yield ['/f/news/1/comment/1'];
         yield ['/f/NeWs/hot'];

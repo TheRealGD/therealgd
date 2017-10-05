@@ -1,5 +1,9 @@
 {% extends 'base.html.twig' %}
 
+{% block head %}
+  <link rel="alternate" type="application/atom+xml" href="{{ path('forum_feed', {forum_name: forum.name}) }}" title="{{ forum.name }}">
+{% endblock %}
+
 {% block stylesheets %}
   {% if app.user.showCustomStylesheets ?? false and forum.theme %}
     {{ include('_includes/stylesheets.html.twig', {

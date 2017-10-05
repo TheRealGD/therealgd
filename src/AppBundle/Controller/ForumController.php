@@ -138,6 +138,27 @@ final class ForumController extends Controller {
     }
 
     /**
+     * @ParamConverter("forum", options={
+     *     "mapping": {"forum_name": "name"},
+     *     "map_method_signature": true,
+     *     "repository_method": "findOneByCaseInsensitiveName"
+     * })
+     *
+     * @param Forum                $forum
+     * @param SubmissionRepository $sr
+     * @param string               $sortBy
+     * @param int                  $page
+     *
+     * @return Response
+     */
+    public function feedAction(Forum $forum, SubmissionRepository $sr, string $sortBy, int $page) {
+        return $this->render('forum/feed.xml.twig', [
+            'forum' => $forum,
+            'submissions' => $sr->findForumSubmissions($forum, $sortBy, $page),
+        ]);
+    }
+
+    /**
      * @Security("is_granted('ROLE_ADMIN')")
      *
      * @ParamConverter("forum", options={

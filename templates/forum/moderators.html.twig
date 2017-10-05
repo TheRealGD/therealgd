@@ -9,6 +9,7 @@
 {% endblock %}
 
 {% block head %}
+  {{ parent() }}
   {{ include('_includes/meta_pagination.html.twig', {pager: moderators}, with_context=false) }}
 {% endblock %}
 

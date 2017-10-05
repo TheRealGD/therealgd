@@ -5,6 +5,7 @@
 {% block title 'title.bans_in_forum'|trans({'%forum%': '/f/'~forum.name}) %}
 
 {% block head %}
+  {{ parent() }}
   {{ include('_includes/meta_pagination.html.twig', {pager: bans}, with_context=false) }}
 {% endblock %}
 
