@@ -10,6 +10,9 @@ use Raddit\AppBundle\Entity\ForumSubscription;
 use Raddit\AppBundle\Entity\Moderator;
 use Raddit\AppBundle\Entity\User;
 
+/**
+ * @method Forum|null findOneByCanonicalName(string $canonicalName)
+ */
 final class ForumRepository extends EntityRepository {
     /**
      * @param int    $page
@@ -129,12 +132,6 @@ final class ForumRepository extends EntityRepository {
             return null;
         }
 
-        return $this->createQueryBuilder('f')
-            ->where('f.name = ?1')
-            ->orWhere('f.canonicalName = ?2')
-            ->setParameter(1, $name)
-            ->setParameter(2, Forum::canonicalizeName($name))
-            ->getQuery()
-            ->getOneOrNullResult();
+        return $this->findOneByCanonicalName(Forum::canonicalizeName($name));
     }
 }

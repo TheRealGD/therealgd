@@ -7,6 +7,9 @@ use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
 use Raddit\AppBundle\Entity\WikiPage;
 
+/**
+ * @method WikiPage|null findOneByCanonicalPath(string $path)
+ */
 class WikiPageRepository extends EntityRepository {
     /**
      * @param string|null $path
@@ -18,13 +21,7 @@ class WikiPageRepository extends EntityRepository {
             return null;
         }
 
-        return $this->createQueryBuilder('wp')
-            ->where('wp.path = ?1')
-            ->orWhere('wp.canonicalPath = ?2')
-            ->setParameter(1, $path)
-            ->setParameter(2, WikiPage::canonicalizePath($path))
-            ->getQuery()
-            ->getOneOrNullResult();
+        return $this->findOneByCanonicalPath(WikiPage::canonicalizePath($path));
     }
 
     /**

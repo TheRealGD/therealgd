@@ -12,18 +12,18 @@ use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 
 /**
  * @method User|null findOneByUsername(string|string[] $username)
+ * @method User|null findOneByCanonicalUsername(string|string[] $canonicalUsername)
  */
 class UserRepository extends EntityRepository implements UserLoaderInterface {
     /**
      * {@inheritdoc}
      */
     public function loadUserByUsername($username) {
-        return $this->createQueryBuilder('u')
-            ->where('u.username = ?1 OR u.canonicalUsername = ?2')
-            ->setParameter(1, $username)
-            ->setParameter(2, User::canonicalizeUsername($username))
-            ->getQuery()
-            ->getOneOrNullResult();
+        if ($username === null) {
+            return null;
+        }
+
+        return $this->findOneByCanonicalUsername(User::canonicalizeUsername($username));
     }
 
     /**
@@ -32,8 +32,11 @@ class UserRepository extends EntityRepository implements UserLoaderInterface {
      * @return User[]|Collection
      */
     public function lookUpByEmail(string $email) {
+        // Canonicalisation of email address is prone to change, so look them up
+        // by both verbatim and canonical variations just in case.
         return $this->createQueryBuilder('u')
-            ->where('u.email = ?1 OR u.canonicalEmail = ?2')
+            ->where('u.email = ?1')
+            ->orWhere('u.canonicalEmail = ?2')
             ->setParameter(1, $email)
             ->setParameter(2, User::canonicalizeEmail($email))
             ->getQuery()
