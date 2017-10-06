@@ -1,3 +1,17 @@
+comment_post:
+    defaults:
+        _controller: RadditAppBundle:Comment:comment
+        comment_id: ~
+    path: /f/{forum_name}/{submission_id}/comment_post/{comment_id}
+    methods: [POST]
+    requirements: { submission_id: \d+, comment_id: \d+ }
+
+edit_comment:
+    defaults: { _controller: RadditAppBundle:Comment:editComment }
+    path: /f/{forum_name}/{submission_id}/edit_comment/{comment_id}
+    methods: [GET, POST]
+    requirements: { submission_id: \d+, comment_id: \d+ }
+
 comment_form:
     defaults: { _controller: RadditAppBundle:Comment:commentForm, comment_id: null }
     methods: [GET]

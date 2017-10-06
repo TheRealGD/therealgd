@@ -22,7 +22,7 @@
       {% if is_granted('ROLE_USER') %}
         {% from 'forum/_macros.html.twig' import subscribe_button %}
         {% set subscribed = forum.subscribed(app.user) %}
-        <form action="{{ path(subscribed ? 'unsubscribe' : 'subscribe', {id: forum.id}) }}" method="POST" class="form">
+        <form action="{{ path(subscribed ? 'unsubscribe' : 'subscribe', {forum_name: forum.name}) }}" method="POST" class="form">
           <input type="hidden" name="token" value="{{ csrf_token('subscribe') }}">
 
           <div class="form__row">

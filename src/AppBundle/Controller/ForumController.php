@@ -23,15 +23,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @ParamConverter("forum", options={
+ *     "mapping": {"forum_name": "name"},
+ *     "map_method_signature": true,
+ *     "repository_method": "findOneByCaseInsensitiveName"
+ * })
+ */
 final class ForumController extends Controller {
     /**
      * Show the front page of a given forum.
-     *
-     * @ParamConverter("forum", options={
-     *     "mapping": {"forum_name": "name"},
-     *     "map_method_signature": true,
-     *     "repository_method": "findOneByCaseInsensitiveName"
-     * })
      *
      * @param SubmissionRepository $sr
      * @param Forum                $forum
@@ -103,11 +104,6 @@ final class ForumController extends Controller {
 
     /**
      * @Security("is_granted('moderator', forum)")
-     * @ParamConverter("forum", options={
-     *     "mapping": {"forum_name": "name"},
-     *     "map_method_signature": true,
-     *     "repository_method": "findOneByCaseInsensitiveName"
-     * })
      *
      * @param Request       $request
      * @param Forum         $forum
@@ -138,12 +134,6 @@ final class ForumController extends Controller {
     }
 
     /**
-     * @ParamConverter("forum", options={
-     *     "mapping": {"forum_name": "name"},
-     *     "map_method_signature": true,
-     *     "repository_method": "findOneByCaseInsensitiveName"
-     * })
-     *
      * @param Forum                $forum
      * @param SubmissionRepository $sr
      * @param string               $sortBy
@@ -160,12 +150,6 @@ final class ForumController extends Controller {
 
     /**
      * @Security("is_granted('ROLE_ADMIN')")
-     *
-     * @ParamConverter("forum", options={
-     *     "mapping": {"forum_name": "name"},
-     *     "map_method_signature": true,
-     *     "repository_method": "findOneByCaseInsensitiveName"
-     * })
      *
      * @param Request       $request
      * @param Forum         $forum
@@ -259,12 +243,6 @@ final class ForumController extends Controller {
     /**
      * Show a list of forum moderators.
      *
-     * @ParamConverter("forum", options={
-     *     "mapping": {"forum_name": "name"},
-     *     "map_method_signature": true,
-     *     "repository_method": "findOneByCaseInsensitiveName"
-     * })
-     *
      * @param Forum $forum
      * @param int   $page
      *
@@ -278,11 +256,6 @@ final class ForumController extends Controller {
     }
 
     /**
-     * @ParamConverter("forum", options={
-     *     "mapping": {"forum_name": "name"},
-     *     "map_method_signature": true,
-     *     "repository_method": "findOneByCaseInsensitiveName"
-     * })
      * @Security("is_granted('ROLE_ADMIN')")
      *
      * @param EntityManager $em
@@ -319,12 +292,6 @@ final class ForumController extends Controller {
      *
      * @Security("is_granted('moderator', forum)")
      *
-     * @ParamConverter("forum", options={
-     *     "mapping": {"forum_name": "name"},
-     *     "map_method_signature": true,
-     *     "repository_method": "findOneByCaseInsensitiveName"
-     * })
-     *
      * @param Forum         $forum
      * @param Request       $request
      * @param EntityManager $em
@@ -356,12 +323,6 @@ final class ForumController extends Controller {
     /**
      * @Security("is_granted('moderator', forum)")
      *
-     * @ParamConverter("forum", options={
-     *     "mapping": {"forum_name": "name"},
-     *     "map_method_signature": true,
-     *     "repository_method": "findOneByCaseInsensitiveName"
-     * })
-     *
      * @param Forum              $forum
      * @param ForumBanRepository $banRepository
      * @param int                $page
@@ -377,12 +338,6 @@ final class ForumController extends Controller {
 
     /**
      * @Security("is_granted('moderator', forum)")
-     *
-     * @ParamConverter("forum", options={
-     *     "mapping": {"forum_name": "name"},
-     *     "map_method_signature": true,
-     *     "repository_method": "findOneByCaseInsensitiveName"
-     * })
      *
      * @param Forum $forum
      * @param User  $subject
@@ -400,12 +355,6 @@ final class ForumController extends Controller {
 
     /**
      * @Security("is_granted('moderator', forum)")
-     *
-     * @ParamConverter("forum", options={
-     *     "mapping": {"forum_name": "name"},
-     *     "map_method_signature": true,
-     *     "repository_method": "findOneByCaseInsensitiveName"
-     * })
      *
      * @param Forum         $forum
      * @param User          $subject
@@ -441,12 +390,6 @@ final class ForumController extends Controller {
 
     /**
      * @Security("is_granted('moderator', forum)")
-     *
-     * @ParamConverter("forum", options={
-     *     "mapping": {"forum_name": "name"},
-     *     "map_method_signature": true,
-     *     "repository_method": "findOneByCaseInsensitiveName"
-     * })
      *
      * @param Forum         $forum
      * @param User          $subject

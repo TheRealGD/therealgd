@@ -1,7 +1,9 @@
 multi:
     defaults: { _controller: RadditAppBundle:Forum:multi, sortBy: hot, page: 1}
     path: /f/{names}/{sortBy}/{page}
-    requirements: { names: '(?:\w{3,25}\+){1,70}\w{3,25}' }
+    requirements:
+        names: '(?:\w{3,25}\+){1,70}\w{3,25}'
+        sortBy: hot|new|top|controversial
 
 forum:
     defaults: { _controller: RadditAppBundle:Forum:front, sortBy: hot, page: 1 }
@@ -14,18 +16,6 @@ forum_feed:
     path: /f/{forum_name}/{sortBy}/{page}.atom
     methods: [GET]
     requirements: { sortBy: hot|new|top|controversial, page: \d+ }
-
-comment_post:
-    defaults:
-        _controller: RadditAppBundle:Comment:comment
-        comment_id: ~
-    path: /f/{forum_name}/{submission_id}/comment_post/{comment_id}
-    methods: [POST]
-
-edit_comment:
-    defaults: { _controller: RadditAppBundle:Comment:editComment }
-    path: /f/{forum_name}/{submission_id}/edit_comment/{comment_id}
-    methods: [GET, POST]
 
 edit_forum:
     defaults: { _controller: RadditAppBundle:Forum:editForum }
@@ -75,6 +65,16 @@ add_moderator:
     path: /f/{forum_name}/add_moderator
     methods: [GET, POST]
 
+subscribe:
+    defaults: { _controller: RadditAppBundle:Forum:subscribe, action: subscribe }
+    path: /f/{forum_name}/subscribe
+    methods: [POST]
+
+unsubscribe:
+    defaults: { _controller: RadditAppBundle:Forum:subscribe, action: unsubscribe }
+    path: /f/{forum_name}/unsubscribe
+    methods: [POST]
+
 create_forum:
     defaults: { _controller: RadditAppBundle:Forum:createForum }
     path: /create_forum
@@ -90,13 +90,3 @@ forums_by_category:
     defaults: { _controller: RadditAppBundle:Forum:listCategories }
     path: /forums/by_category
     methods: [GET]
-
-subscribe:
-    defaults: { _controller: RadditAppBundle:Forum:subscribe, action: subscribe }
-    path: /sub/{id}
-    methods: [POST]
-
-unsubscribe:
-    defaults: { _controller: RadditAppBundle:Forum:subscribe, action: unsubscribe }
-    path: /unsub/{id}
-    methods: [POST]
