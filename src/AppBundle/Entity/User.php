@@ -10,7 +10,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Pagerfanta\Adapter\DoctrineCollectionAdapter;
 use Pagerfanta\Adapter\DoctrineSelectableAdapter;
 use Pagerfanta\Pagerfanta;
-use Scheb\TwoFactorBundle\Model\Email\TwoFactorInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -21,7 +20,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @UniqueEntity("canonicalUsername", errorPath="username")
  */
-class User implements UserInterface, TwoFactorInterface {
+class User implements UserInterface {
     const FRONT_DEFAULT = 'default';
     const FRONT_FEATURED = 'featured';
     const FRONT_SUBSCRIBED = 'subscribed';
@@ -167,24 +166,6 @@ class User implements UserInterface, TwoFactorInterface {
      * @var bool
      */
     private $nightMode = false;
-
-    /**
-     * @ORM\Column(type="boolean", options={"default": false})
-     *
-     * @Assert\Expression("value === false || this.getEmail() !== null",
-     *     message="Two-factor cannot be enabled without providing an email address.",
-     *     groups={"editing"})
-     *
-     * @var bool
-     */
-    private $twoFactorEnabled = false;
-
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     *
-     * @var int|null
-     */
-    private $emailAuthCode;
 
     /**
      * @ORM\Column(type="boolean", options={"default": true})
@@ -515,41 +496,6 @@ class User implements UserInterface, TwoFactorInterface {
      */
     public function setNightMode(bool $nightMode) {
         $this->nightMode = $nightMode;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isTwoFactorEnabled(): bool {
-        return $this->twoFactorEnabled;
-    }
-
-    /**
-     * @param bool $twoFactorEnabled
-     */
-    public function setTwoFactorEnabled(bool $twoFactorEnabled) {
-        $this->twoFactorEnabled = $twoFactorEnabled;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isEmailAuthEnabled() {
-        return $this->email !== null && $this->twoFactorEnabled;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getEmailAuthCode() {
-        return $this->emailAuthCode;
-    }
-
-    /**
-     * @param int|null $authCode
-     */
-    public function setEmailAuthCode($authCode) {
-        $this->emailAuthCode = $authCode;
     }
 
     /**

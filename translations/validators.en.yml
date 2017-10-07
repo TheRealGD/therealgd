@@ -1,6 +1,5 @@
 'The comment must not be empty.': 'The comment must not be empty.'
 'The name must contain only contain letters, numbers, and underscores.': 'The name must contain only contain letters, numbers, and underscores.'
-'Two-factor cannot be enabled without providing an email address.': 'Two-factor cannot be enabled without providing an email address.'
 'No such user.': 'No such user.'
 'Error from CSS parser: {{ error }}': 'Error from CSS parser: {{ error }}'
 '"progid:" syntax is not allowed on line {{ line }}': '"progid:" syntax is not allowed on line {{ line }}'

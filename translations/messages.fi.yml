@@ -246,9 +246,6 @@ time:
 title:
     messages: Viestit
 
-two_factor:
-    explanation: Viimeistelläksesi kirjautumisen, anna sähköpostiin %email% lähetetty varmistuskoodi.
-
 user:
     submissions: Lisäykset
     comments: Kommentit
@@ -256,8 +253,6 @@ user:
     username_rules: Sallitut merkit ovat A-Z, a-z, 0-9 ja alaviiva.
     password_rules: Vähintään 8 merkkiä; enintään 72 bcrypt-algoritmin rajoitusten takia.
     email_optional: Sähköpostiosoite on vapaaehtoinen. Käytämme sitä vain salasanojen nollaamiseen ja kaksivaiheistodennuskoodien lähettämiseen.
-    two_factor_explanation: Vaadi todennuskoodin lähettämistä kirjautuessasi sisään. Koodi lähetetään sähköpostiisi.
-    two_factor_warning: Varmista, että sinulla on voimassa oleva sähköpostiosoite ennen tämän toiminnon käyttämistä!
     toolbox: Työkalut
     message: Lähetä viesti
     registered: Rekisteröity %timestamp%
@@ -271,7 +266,6 @@ user_form:
     email: Sähköpostiosoite
     register: Rekisteröidy
     verification: Varmistus
-    two_factor_enabled: Käytä kaksivaiheistodennusta
     save: Tallenna muutokset
 
 user_settings:

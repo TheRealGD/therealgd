@@ -9,7 +9,3 @@ login_check:
 
 log_out:
     path: /log_out
-
-2fa_post:
-    path: /
-    methods: [POST]

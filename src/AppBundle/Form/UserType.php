@@ -7,7 +7,6 @@ use Gregwar\CaptchaBundle\Type\CaptchaType;
 use Raddit\AppBundle\Entity\User;
 use Raddit\AppBundle\Form\EventListener\PasswordEncodingSubscriber;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -71,14 +70,6 @@ final class UserType extends AbstractType {
                 'as_url' => true,
                 'reload' => true,
             ]);
-        } else {
-            // TODO - fix problems with 2FA and allow everyone to use it
-            if ($this->authorizationChecker->isGranted('ROLE_ADMIN')) {
-                $builder->add('twoFactorEnabled', CheckboxType::class, [
-                    'label' => 'user_form.two_factor_enabled',
-                    'required' => false,
-                ]);
-            }
         }
 
         $builder->add('submit', SubmitType::class, [

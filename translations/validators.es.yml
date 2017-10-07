@@ -1,6 +1,5 @@
 'The comment must not be empty.': 'El comentario no debe estar vacío.'
 'The name must contain only contain letters, numbers, and underscores.': 'El nombre solo puede contener letras, números y barras bajas.'
-'Two-factor cannot be enabled without providing an email address.': 'La autenticación de dos factores no puese ser habilitada sin proporcionar una dirección de correo electrónico válida.'
 'No such user.': 'No existe tal usuaria.'
 'Error from CSS parser: {{ error }}': 'Error del analizador sintáctico de CSS: {{ error }}'
 '"progid:" syntax is not allowed on line {{ line }}': '"progid:" sintaxis no está permitida en la línea {{ line }}'

@@ -245,9 +245,6 @@ time:
 title:
     messages: Mesaĝoj
 
-two_factor:
-    explantation: Por fini la ensaluto, vi devas tajpi la identokontrolo retpoŝtis al %email%.
-
 user:
     submissions: Afiŝoj
     comments: Komentoj
@@ -255,8 +252,6 @@ user:
     username_rules: Permesita karakteroj estas A ĝis Z, a ĝis z, 0 ĝis 9, kaj substrekas.
     password_rules: Minimuma de 8 karakteroj; maksimuma de 72 ĉar limigoj de la «bcrypt» algoritmo.
     email_optional: Provizi retpoŝton nedevigas. Ni nur uzos ĝin por reagordi pasvortojn kaj retpoŝti du-faktorajn identokontrolojn.
-    two_factor_explanation: Postuli ke oni devos tajpi identokontrolojn, kiam ensalutos. La kodo retpoŝtos al vi.
-    two_factor_warning: Certigu ke vi havas prava retpoŝtadreso frue ŝaltas ĉi-tiun agordon!
     toolbox: Ilaro
     message: Sendi mesaĝon
     registered: Registris %timestamp%
@@ -278,7 +273,6 @@ user_form:
     email: Retpoŝto
     register: Registri
     verification: Certigo
-    two_factor_enabled: Ŝalti du-faktoran identokontrolon
     save: Konservi modifiĝojn
 
 user_settings:

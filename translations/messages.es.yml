@@ -354,9 +354,6 @@ title:
     history_for_theme: Mostrando la historia para el tema %theme%
     viewing_theme_source: Viendo el código de %theme%
 
-two_factor:
-    explanation: Para completar el inicio de sesión, tienes que introducir el código de verificación enviado por correo a %email%.
-
 user:
     submissions: Publicaciones
     comments: Comentarios
@@ -364,8 +361,6 @@ user:
     username_rules: Los caracteres permitidos son A-Z, a-z, 0-9 y barra baja.
     password_rules: Mínimo de 8 caracteres; máximo de 72 debido a limitaciones del algoritmo bcrypt.
     email_optional: Proporcionar una dirección correo es opcional. Solo la utilizaremos para restablecer contraseñas y enviar códigos de autenticación de dos factores.
-    two_factor_explanation: Requiere que un código de autenticación sea introducido cuando inicias sesión. Este código se te enviará por correo.
-    two_factor_warning: ¡Asegúrate de que tienes una dirección de correo válida antes de habilitar esta opción!
     toolbox: Herramientas
     message: Enviar mensaje
     registered: Registrado el %timestamp%
@@ -387,7 +382,6 @@ user_form:
     email: Correo electrónico
     register: Registrarse
     verification: Verificación
-    two_factor_enabled: Hablitar autenticación de dos factores
     save: Guardar cambios
 
 user_settings:

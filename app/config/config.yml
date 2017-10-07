@@ -107,18 +107,5 @@ oneup_flysystem:
     filesystems:
         submission_images: { adapter: submission_images }
 
-scheb_two_factor:
-    email:
-        # todo - disable when env(NO_REPLY_ADDRESS) is null
-        enabled: true
-        sender_email: "%env(NO_REPLY_ADDRESS)%"
-        sender_name: "%env(SITE_NAME)%"
-        template: "security/2fa_form.html.twig"
-        digits: 8
-    exclude_pattern: ^/((build|bundles|fonts|media|submission_images)/|(favicon\.ico|apple-touch-icon-precomposed\.png)$)
-    security_tokens:
-        - Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken
-        - Symfony\Component\Security\Core\Authentication\Token\RememberMeToken
-
 eo_honeypot:
     redirect: { enabled: false }
