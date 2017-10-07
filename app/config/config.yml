@@ -80,8 +80,8 @@ swiftmailer:
     spool:     { type: memory }
 
 doctrine_migrations:
-    dir_name: "%kernel.project_dir%/src/AppBundle/DoctrineMigrations"
-    namespace: Raddit\AppBundle\DoctrineMigrations
+    dir_name: "%kernel.project_dir%/src/AppBundle/Migrations"
+    namespace: DoctrineMigrations
     name: Raddit migrations
 
 # todo: use flysystem for thumbnails too
