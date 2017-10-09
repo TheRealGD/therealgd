@@ -15,12 +15,12 @@
   <h1 class="page-heading">{{ 'forum_list.page_title'|trans }}</h1>
 
   {% if is_granted('create_forum') %}
-    {% spaceless %}
-      <nav class="horizontal-nav forum-list-bottom-nav">
-        <ul>
-          <li><a href="{{ path('create_forum') }}" class="button">{{ 'forum_list.create_forum'|trans }}</a></li>
-        </ul>
-      </nav>
-    {% endspaceless %}
+    <p role="navigation">
+      <a href="{{ path('create_forum') }}" class="button">{{ 'forum_list.create_forum'|trans }}</a>
+    </p>
+  {% elseif is_granted('ROLE_USER') %}
+    <div class="alert alert--notice">
+      <p>{{ 'flash.you_cannot_create_forums_yet'|trans }}</p>
+    </div>
   {% endif %}
 {% endmacro %}

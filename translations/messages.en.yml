@@ -114,6 +114,7 @@ flash:
     submission_unlocked: The submission was unlocked.
     submission_is_locked: The submission is locked. You cannot post new comments.
     no_moderated_forums: You don't moderate any forums.
+    you_cannot_create_forums_yet: You cannot create forums yet.
 
 forum:
     moderators: Moderators
