@@ -61,7 +61,7 @@ doctrine:
         url:      "%env(DATABASE_URL)%"
         charset:  UTF8
         types:
-            inet: Doctrine\DBAL\PostgresTypes\InetType
+            inet: Raddit\AppBundle\DBAL\Type\InetType
             uuid: Ramsey\Uuid\Doctrine\UuidType
         mapping_types:
             inet: inet
