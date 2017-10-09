@@ -51,8 +51,8 @@ class Unique extends Constraint {
 
         $fields = $options['fields'] ?? $options['value'];
 
-        if (!is_array($fields)) {
-            throw new UnexpectedTypeException($fields, 'array');
+        if (!is_array($fields) && !is_string($fields)) {
+            throw new UnexpectedTypeException($fields, 'array or string');
         }
 
         if (count($fields) === 0) {

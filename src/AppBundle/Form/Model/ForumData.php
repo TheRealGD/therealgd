@@ -8,7 +8,7 @@ use Raddit\AppBundle\Validator\Constraints\Unique;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @Unique({"name"}, idFields={"entityId": "id"}, groups={"create", "edit"},
+ * @Unique("canonicalName", idFields={"entityId": "id"}, groups={"create", "edit"},
  *     entityClass="Raddit\AppBundle\Entity\Forum", errorPath="name",
  *     message="A forum by that name already exists.")
  */
@@ -24,6 +24,8 @@ class ForumData {
      * )
      */
     private $name;
+
+    private $canonicalName;
 
     /**
      * @Assert\Length(max=100, groups={"create", "edit"})
@@ -52,7 +54,7 @@ class ForumData {
     public static function createFromForum(Forum $forum): self {
         $self = new self();
         $self->entityId = $forum->getId();
-        $self->name = $forum->getName();
+        $self->setName($forum->getName());
         $self->title = $forum->getTitle();
         $self->sidebar = $forum->getSidebar();
         $self->description = $forum->getDescription();
@@ -97,8 +99,18 @@ class ForumData {
         return $this->name;
     }
 
+    /**
+     * For unique validator.
+     *
+     * @return string|null
+     */
+    public function getCanonicalName() {
+        return $this->canonicalName;
+    }
+
     public function setName($name) {
         $this->name = $name;
+        $this->canonicalName = $name !== null ? Forum::canonicalizeName($name) : null;
     }
 
     public function getTitle() {

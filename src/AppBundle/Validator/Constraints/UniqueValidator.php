@@ -37,7 +37,7 @@ class UniqueValidator extends ConstraintValidator {
         $propertyAccessor = PropertyAccess::createPropertyAccessor();
         $param = 0;
 
-        foreach ($constraint->fields as $dtoField => $entityField) {
+        foreach ((array) $constraint->fields as $dtoField => $entityField) {
             if (is_int($dtoField)) {
                 $dtoField = $entityField;
             }
