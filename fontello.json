@@ -59,6 +59,12 @@
       "css": "block",
       "code": 59403,
       "src": "fontawesome"
+    },
+    {
+      "uid": "dec0ce0476433f7e49e096526cf89465",
+      "css": "hammer",
+      "code": 59399,
+      "src": "fontawesome"
     }
   ]
 }
