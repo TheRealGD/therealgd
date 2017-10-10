@@ -1,0 +1,17 @@
+{% from _self import tab %}
+
+{% macro tab(path, label) %}
+  {% with { active: app.request.baseUrl ~ app.request.pathInfo == path } %}
+    <li class="tabs__tab {{ active ? 'tabs__tab--active' }}">
+      <a href="{{ path }}" class="tabs__link {{ active ? 'tabs__link--active' }}">{{ label }}</a>
+    </li>
+  {% endwith %}
+{% endmacro %}
+
+<nav class="tabs user-nav">
+  <ul class="tabs__bar">
+    {{ tab(path('user', {username: user.username}), 'label.overview'|trans) }}
+    {{ tab(path('user_submissions', {username: user.username}), 'user.submissions'|trans) }}
+    {{ tab(path('user_comments', {username: user.username}), 'user.comments'|trans) }}
+  </ul>
+</nav>

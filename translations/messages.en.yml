@@ -234,6 +234,7 @@ label:
     verification: Verification
     admin: Admin
     bans: Bans
+    overview: Overview
 
 login_form:
     log_in: Log in

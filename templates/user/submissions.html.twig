@@ -15,6 +15,8 @@
 {% endblock %}
 
 {% block body %}
+  {{ include('user/_nav.html.twig', {user: user}, with_context=false) }}
+
   <h1 class="page-heading">{{ block('title') }}</h1>
 
   {% for submission in submissions %}
