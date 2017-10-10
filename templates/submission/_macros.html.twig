@@ -137,6 +137,12 @@
                     {{- 'submissions.edit'|trans -}}
                   </a>
                 </li>
+                <li>
+                  <form action="{{ path('delete_submission', {forum_name: submission.forum.name, submission_id: submission.id}) }}" method="POST">
+                    <input type="hidden" name="token" value="{{ csrf_token('delete_submission') }}">
+                    <button class="confirm-submission-delete">{{ 'action.delete'|trans }}</button>
+                  </form>
+                </li>
               {%- endif -%}
               {%- if is_granted('moderator', submission.forum) -%}
                 <li>

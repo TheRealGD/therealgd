@@ -82,10 +82,6 @@ final class SubmissionType extends AbstractType {
         $builder->add('submit', SubmitType::class, [
             'label' => 'submission_form.'.($editing ? 'edit' : 'create'),
         ]);
-
-        if ($editing) {
-            $builder->add('delete', SubmitType::class);
-        }
     }
 
     /**
@@ -101,9 +97,7 @@ final class SubmissionType extends AbstractType {
                 $trusted = $this->authorizationChecker->isGranted('ROLE_TRUSTED_USER');
 
                 /* @noinspection PhpUndefinedMethodInspection */
-                if ($form->has('delete') && $form->get('delete')->isClicked()) {
-                    $groups[] = 'delete';
-                } elseif ($form->getData() && $form->getData()->getEntityId()) {
+                if ($form->getData() && $form->getData()->getEntityId()) {
                     $groups[] = 'edit';
 
                     if (!$trusted) {

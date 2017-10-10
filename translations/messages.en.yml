@@ -19,6 +19,7 @@ action:
     unblock: Unblock
     lock: Lock
     unlock: Unlock
+    delete: Delete
 
 add_moderator:
     title: Add moderator to %forum%
@@ -283,6 +284,7 @@ placeholder:
 
 prompt:
     confirm_comment_delete: Are you sure you want to delete this comment?
+    confirm_submission_delete: Are you sure you want to delete this submission?
 
 request_password_reset:
     title: Request password reset link

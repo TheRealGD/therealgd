@@ -115,17 +115,6 @@ final class SubmissionController extends Controller {
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($form->get('delete')->isClicked()) {
-                $em->remove($submission);
-                $em->flush();
-
-                $this->addFlash('notice', 'flash.submission_deleted');
-
-                return $this->redirectToRoute('forum', [
-                    'forum_name' => $forum->getName(),
-                ]);
-            }
-
             $data->updateSubmission($submission);
 
             $em->flush();
@@ -144,6 +133,33 @@ final class SubmissionController extends Controller {
             'forum' => $forum,
             'submission' => $submission,
         ]);
+    }
+
+    /**
+     * @Security("is_granted('edit', submission)")
+     *
+     * @param Request       $request
+     * @param EntityManager $em
+     * @param Forum         $forum
+     * @param Submission    $submission
+     *
+     * @return Response
+     */
+    public function deleteSubmission(Request $request, EntityManager $em, Forum $forum, Submission $submission) {
+        if (!$this->isCsrfTokenValid('delete_submission', $request->request->get('token'))) {
+            throw new BadRequestHttpException('Invalid CSRF token');
+        }
+
+        $em->remove($submission);
+        $em->flush();
+
+        $this->addFlash('notice', 'flash.submission_deleted');
+
+        if ($request->headers->has('Referer')) {
+            return $this->redirect($request->headers->get('Referer'));
+        }
+
+        return $this->redirectToRoute('forum', ['forum_name' => $forum->getName()]);
     }
 
     /**

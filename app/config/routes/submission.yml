@@ -15,6 +15,11 @@ edit_submission:
     path: /f/{forum_name}/edit_submission/{submission_id}
     methods: [GET, POST]
 
+delete_submission:
+    defaults: { _controller: 'Raddit\AppBundle\Controller\SubmissionController::deleteSubmission' }
+    path: /f/{forum_name}/delete_submission/{submission_id}
+    methods: [POST]
+
 lock:
     defaults: { _controller: RadditAppBundle:Submission:lock, lock: true }
     path: /f/{forum_name}/{submission_id}/lock
