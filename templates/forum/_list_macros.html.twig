@@ -1,16 +1,22 @@
 {% macro forum_list_header() %}
-  {% spaceless %}
-    <nav class="forum-list-view-selector">
-      <ul>
-        <li class="{{ app.request.attributes.get('_route') == 'forum_list' ? 'active' }}">
-          <a href="{{ path('forum_list') }}">{{ 'forum_list.list_view'|trans }}</a>
+  <nav class="tabs forum-list-view-selector">
+    <ul class="tabs__bar">
+      {% with { active: app.request.attributes.get('_route') == 'forum_list' } %}
+        <li class="tabs__tab {{ active ? 'tabs__tab--active active' }}">
+          <a href="{{ path('forum_list') }}" class="tabs__link {{ active ? 'tabs__link--active' }}">
+            {{- 'forum_list.list_view'|trans -}}
+          </a>
         </li>
-        <li class="{{ app.request.attributes.get('_route') == 'forums_by_category' ? 'active' }}">
-          <a href="{{ path('forums_by_category') }}">{{ 'forum_list.category_view'|trans }}</a>
+      {% endwith %}
+      {% with { active: app.request.attributes.get('_route') == 'forums_by_category' } %}
+        <li class="tabs__tab {{ active ? 'tabs__tab--active active' }}">
+          <a href="{{ path('forums_by_category') }}" class="tabs__link {{ active ? 'tabs__link--active' }}">
+            {{- 'forum_list.category_view'|trans -}}
+          </a>
         </li>
-      </ul>
-    </nav>
-  {% endspaceless %}
+      {% endwith %}
+    </ul>
+  </nav>
 
   <h1 class="page-heading">{{ 'forum_list.page_title'|trans }}</h1>
 

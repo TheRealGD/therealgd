@@ -1,0 +1,28 @@
+@import '../settings';
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -1rem;
+
+  &__bar {
+    display: flex;
+    margin: 0 1rem 1rem 0;
+    padding: 0;
+  }
+
+  &__tab {
+    display: block;
+    padding: 0;
+  }
+
+  &__link {
+    display: block;
+    padding: 0.5rem 1rem;
+  }
+
+  &__link--active {
+    background: @tab-active-background-color;
+    color: @tab-active-color;
+  }
+}

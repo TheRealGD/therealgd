@@ -18,9 +18,9 @@
 {% endblock %}
 
 {% block body %}
-  <nav class="submission-sort">
-    <ul>{{ submission_sort(sort_by) }}</ul>
-    <ul>{{ submission_filter(listing, sort_by) }}</ul>
+  <nav class="tabs submission-sort">
+    <ul class="tabs__bar">{{ submission_sort(sort_by) }}</ul>
+    <ul class="tabs__bar">{{ submission_filter(listing, sort_by) }}</ul>
   </nav>
 
   {% for submission in submissions %}
@@ -31,23 +31,39 @@
 {% endblock %}
 
 {%- macro submission_filter(choice, sort_by) -%}
-  <li class="{{ choice == 'featured' ? 'active' }}">
-    <a href="{{ path('featured', {sortBy: sort_by, page: 1}) }}">{{ 'front.featured'|trans }}</a>
-  </li>
+  {% with { active: choice == 'featured' } %}
+    <li class="tabs__tab {{ active ? 'tabs__tab--active active' }}">
+      <a href="{{ path('featured', {sortBy: sort_by, page: 1}) }}" class="tabs__link {{ active ? 'tabs__link--active' }}">
+        {{- 'front.featured'|trans -}}
+      </a>
+    </li>
+  {% endwith %}
 
   {% if is_granted('ROLE_USER') %}
-    <li class="{{ choice == 'subscribed' ? 'active' }}">
-      <a href="{{ path('subscribed', {sortBy: sort_by, page: 1}) }}">{{ 'front.subscribed'|trans }}</a>
-    </li>
+    {% with { active: choice == 'subscribed' } %}
+      <li class="tabs__tab {{ active ? 'tabs__tab--active active' }}">
+        <a href="{{ path('subscribed', {sortBy: sort_by, page: 1}) }}" class="tabs__link {{ active ? 'tabs__link--active' }}">
+          {{- 'front.subscribed'|trans -}}
+        </a>
+      </li>
+    {% endwith %}
   {% endif %}
 
-  <li class="{{ choice == 'all' ? 'active' }}">
-    <a href="{{ path('all', {sortBy: sort_by, page: 1}) }}">{{ 'front.all'|trans }}</a>
-  </li>
+  {% with { active: choice == 'all' } %}
+    <li class="tabs__tab {{ active ? 'tabs__tab--active active' }}">
+      <a href="{{ path('all', {sortBy: sort_by, page: 1}) }}" class="tabs__link {{ active ? 'tabs__link--active' }}">
+        {{- 'front.all'|trans -}}
+      </a>
+    </li>
+  {% endwith %}
 
   {% if choice == 'moderated' or app.user and app.user.moderatorTokens|length > 0 %}
-    <li class="{{ choice == 'moderated' ? 'active' }}">
-      <a href="{{ path('moderated', {sortBy: sort_by, page: 1}) }}">{{ 'nav.moderated'|trans }}</a>
-    </li>
+    {% with { active: choice == 'moderated' } %}
+      <li class="tabs__tab {{ active ? 'tabs__tab--active active' }}">
+        <a href="{{ path('moderated', {sortBy: sort_by, page: 1}) }}" class="tabs__link {{ active ? 'tabs__link--active' }}">
+          {{- 'nav.moderated'|trans -}}
+        </a>
+      </li>
+    {% endwith %}
   {% endif %}
 {%- endmacro -%}

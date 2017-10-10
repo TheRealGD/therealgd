@@ -10,8 +10,8 @@
 {% block title '/f/'~forums|join(', /f/') %}
 
 {% block body %}
-  <nav class="submission-sort">
-    <ul>{{ submission_sort(sort_by) }}</ul>
+  <nav class="tabs submission-sort">
+    <ul class="tabs__bar">{{ submission_sort(sort_by) }}</ul>
   </nav>
 
   {% for submission in submissions %}
