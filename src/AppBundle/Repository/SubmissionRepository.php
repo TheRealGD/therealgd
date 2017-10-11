@@ -49,7 +49,9 @@ class SubmissionRepository extends EntityRepository {
             ->andWhere('s.forum = :forum')
             ->setParameter('forum', $forum);
 
-        PrependOrderBy::prepend($qb, 's.sticky', 'DESC');
+        if ($sortBy === 'hot') {
+            PrependOrderBy::prepend($qb, 's.sticky', 'DESC');
+        }
 
         $submissions = $this->paginate($qb, $page);
 
