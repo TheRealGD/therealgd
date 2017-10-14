@@ -87,7 +87,7 @@ class ThemeType extends AbstractType {
                     $theme = $this->themeRepository->findOneByUsernameAndName($username, $name);
 
                     $revision = $theme ? $theme->getLatestRevision() : null;
-                } elseif (Uuid::isValid(trim($value))) {
+                } elseif (Uuid::isValid($value)) {
                     $revision = $this->em->find(ThemeRevision::class, $value);
                 }
 
