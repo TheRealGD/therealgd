@@ -15,7 +15,7 @@ class ThemeTest extends TestCase {
      * @expectedException \DomainException
      */
     public function testConstructorNeedsAtLeastOneCssField() {
-        new Theme('foo', new User(), null, null, null, true, 'c');
+        new Theme('foo', new User('u', 'p'), null, null, null, true, 'c');
     }
 
     /**
@@ -27,11 +27,11 @@ class ThemeTest extends TestCase {
      * @param $night
      */
     public function testAcceptsAllValidCombinationsOfCssAndNulls($common, $day, $night) {
-        new Theme('boo', new User(), $common, $day, $night, true, 'c');
+        new Theme('boo', new User('u', 'p'), $common, $day, $night, true, 'c');
     }
 
     public function testGetsLatestRevisionCorrectly() {
-        $theme = new Theme('a', new User(), 'body{}', null, null, true, 'c');
+        $theme = new Theme('a', new User('u', 'p'), 'body{}', null, null, true, 'c');
         $theme->addRevision(new ThemeRevision($theme, null, 'body{}', null, true, 'c', null, new \DateTime('yesterday')));
 
         $this->assertSame('body{}', $theme->getLatestRevision()->getCommonCss());

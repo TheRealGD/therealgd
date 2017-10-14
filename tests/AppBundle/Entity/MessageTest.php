@@ -20,8 +20,8 @@ class MessageTest extends TestCase {
     private $receiver;
 
     protected function setUp() {
-        $this->sender = new User();
-        $this->receiver = new User();
+        $this->sender = new User('u', 'p');
+        $this->receiver = new User('u', 'p');
     }
 
     public function testNewMessageThreadsSendNotifications() {
@@ -50,14 +50,14 @@ class MessageTest extends TestCase {
     }
 
     public function testNonParticipantsCannotAccessThread() {
-        $thread = new MessageThread(new User(), 'b', null, new User(), 'a');
+        $thread = new MessageThread(new User('u', 'p'), 'b', null, new User('u', 'p'), 'a');
 
-        $this->assertFalse($thread->userCanAccess(new User()));
+        $this->assertFalse($thread->userCanAccess(new User('u', 'p')));
     }
 
     public function testBothParticipantsCanAccessOwnThread() {
-        $this->sender = new User();
-        $this->receiver = new User();
+        $this->sender = new User('u', 'p');
+        $this->receiver = new User('u', 'p');
 
         $thread = new MessageThread($this->sender, 'b', null, $this->receiver, 'a');
 
@@ -66,8 +66,8 @@ class MessageTest extends TestCase {
     }
 
     public function testBothParticipantsCanReplyToThread() {
-        $this->sender = new User();
-        $this->receiver = new User();
+        $this->sender = new User('u', 'p');
+        $this->receiver = new User('u', 'p');
 
         $thread = new MessageThread($this->sender, 'b', null, $this->receiver, 'a');
 
@@ -76,8 +76,8 @@ class MessageTest extends TestCase {
     }
 
     public function testThrowsExceptionWhenStartingThreadWithBlockedUser() {
-        $this->sender = new User();
-        $this->receiver = new User();
+        $this->sender = new User('u', 'p');
+        $this->receiver = new User('u', 'p');
 
         $this->receiver->addBlock(new UserBlock($this->receiver, $this->sender, 'c'));
 
@@ -87,8 +87,8 @@ class MessageTest extends TestCase {
     }
 
     public function testThrowsExceptionWhenAddingReplyFromBlockedUser() {
-        $this->sender = new User();
-        $this->receiver = new User();
+        $this->sender = new User('u', 'p');
+        $this->receiver = new User('u', 'p');
 
         $thread = new MessageThread($this->sender, 'b', null, $this->receiver, 'a');
 
@@ -100,8 +100,8 @@ class MessageTest extends TestCase {
     }
 
     public function testBlockedUsersCannotReply() {
-        $this->sender = new User();
-        $this->receiver = new User();
+        $this->sender = new User('u', 'p');
+        $this->receiver = new User('u', 'p');
 
         $thread = new MessageThread($this->sender, 'b', null, $this->receiver, 'a');
 

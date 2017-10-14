@@ -27,10 +27,10 @@ class ForumTest extends TestCase {
     }
 
     public function testModeratorsAreModerators() {
-        $user = new User();
+        $user = new User('u', 'p');
         new Moderator($this->forum, $user);
 
-        $admin = new User();
+        $admin = new User('u', 'p');
         $admin->setAdmin(true);
         new Moderator($this->forum, $admin);
 
@@ -39,7 +39,7 @@ class ForumTest extends TestCase {
     }
 
     public function testAdminsAreNotModeratorsWithFlag() {
-        $user = new User();
+        $user = new User('u', 'p');
         $user->setAdmin(true);
 
         $this->assertFalse($this->forum->userIsModerator($user, false));
@@ -53,61 +53,61 @@ class ForumTest extends TestCase {
     }
 
     public function testAdminCanDeleteEmptyForum() {
-        $user = new User();
+        $user = new User('u', 'p');
         $user->setAdmin(true);
 
         $this->assertTrue($this->forum->userCanDelete($user));
     }
 
     public function testModeratorCanDeleteEmptyForum() {
-        $user = new User();
+        $user = new User('u', 'p');
         new Moderator($this->forum, $user);
 
         $this->assertTrue($this->forum->userCanDelete($user));
     }
 
     public function testUserIsNotBannedInNewForum() {
-        $this->assertFalse($this->forum->userIsBanned(new User()));
+        $this->assertFalse($this->forum->userIsBanned(new User('u', 'p')));
     }
 
     public function testBansWithoutExpiryTimesWork() {
-        $user = new User();
+        $user = new User('u', 'p');
 
-        $this->forum->addBan(new ForumBan($this->forum, $user, 'a', true, new User()));
+        $this->forum->addBan(new ForumBan($this->forum, $user, 'a', true, new User('u', 'p')));
 
         $this->assertTrue($this->forum->userIsBanned($user));
     }
 
     public function testBansWithExpiryTimesWork() {
-        $user = new User();
+        $user = new User('u', 'p');
 
-        $this->forum->addBan(new ForumBan($this->forum, $user, 'a', true, new User(), new \DateTime('+2 weeks')));
+        $this->forum->addBan(new ForumBan($this->forum, $user, 'a', true, new User('u', 'p'), new \DateTime('+2 weeks')));
 
         $this->assertTrue($this->forum->userIsBanned($user));
     }
 
     public function testBansCanExpire() {
-        $user = new User();
+        $user = new User('u', 'p');
 
-        $this->forum->addBan(new ForumBan($this->forum, $user, 'a', true, new User(), new \DateTime('-2 weeks')));
+        $this->forum->addBan(new ForumBan($this->forum, $user, 'a', true, new User('u', 'p'), new \DateTime('-2 weeks')));
 
         $this->assertFalse($this->forum->userIsBanned($user));
     }
 
     public function testAdminUserIsNeverBanned() {
-        $user = new User();
+        $user = new User('u', 'p');
         $user->setAdmin(true);
 
-        $this->forum->addBan(new ForumBan($this->forum, $user, 'a', true, new User()));
+        $this->forum->addBan(new ForumBan($this->forum, $user, 'a', true, new User('u', 'p')));
 
         $this->assertFalse($this->forum->userIsBanned($user));
     }
 
     public function testUnbansWork() {
-        $user = new User();
+        $user = new User('u', 'p');
 
-        $this->forum->addBan(new ForumBan($this->forum, $user, 'ben', true, new User()));
-        $this->forum->addBan(new ForumBan($this->forum, $user, 'unben', false, new User()));
+        $this->forum->addBan(new ForumBan($this->forum, $user, 'ben', true, new User('u', 'p')));
+        $this->forum->addBan(new ForumBan($this->forum, $user, 'unben', false, new User('u', 'p')));
 
         $this->assertFalse($this->forum->userIsBanned($user));
     }
@@ -116,6 +116,6 @@ class ForumTest extends TestCase {
         yield [null];
         yield [$this->createMock(UserInterface::class)];
         yield ['anon.'];
-        yield [new User()];
+        yield [new User('u', 'p')];
     }
 }

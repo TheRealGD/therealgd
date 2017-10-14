@@ -4,8 +4,8 @@ namespace Raddit\AppBundle\Form;
 
 use Eo\HoneypotBundle\Form\Type\HoneypotType;
 use Gregwar\CaptchaBundle\Type\CaptchaType;
-use Raddit\AppBundle\Entity\User;
 use Raddit\AppBundle\Form\EventListener\PasswordEncodingSubscriber;
+use Raddit\AppBundle\Form\Model\UserData;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -50,7 +50,7 @@ final class UserType extends AbstractType {
             $builder->add('phone', HoneypotType::class);
         }
 
-        $editing = $builder->getData() && $builder->getData()->getId() !== null;
+        $editing = $builder->getData() && $builder->getData()->getEntityId();
 
         $builder
             ->add('username', TextType::class)
@@ -80,7 +80,7 @@ final class UserType extends AbstractType {
     }
 
     public function finishView(FormView $view, FormInterface $form, array $options) {
-        if ($form->getData() && $form->getData()->getId()) {
+        if ($form->getData() && $form->getData()->getEntityId()) {
             // don't autocomplete the password fields when editing the user
             $view['password']['first']->vars['attr']['auto-complete'] = 'new-password';
             $view['password']['second']->vars['attr']['auto-complete'] = 'new-password';
@@ -92,15 +92,17 @@ final class UserType extends AbstractType {
      */
     public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults([
-            'data_class' => User::class,
+            'data_class' => UserData::class,
             'honeypot' => true,
             'label_format' => 'user_form.%name%',
             'validation_groups' => function (FormInterface $form) {
-                if ($form->getData()->getId() !== null) {
-                    return ['Default', 'editing'];
+                if ($form->getData()->getEntityId() !== null) {
+                    $groups[] = 'edit';
+                } else {
+                    $groups[] = 'registration';
                 }
 
-                return ['Default', 'registration'];
+                return $groups;
             },
         ]);
 

@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Raddit\AppBundle\Entity\User;
 use Raddit\AppBundle\Entity\UserBlock;
 use Raddit\AppBundle\Form\Model\UserBlockData;
-use Raddit\AppBundle\Form\Model\UserSettings;
+use Raddit\AppBundle\Form\Model\UserData;
 use Raddit\AppBundle\Form\UserBlockType;
 use Raddit\AppBundle\Form\UserSettingsType;
 use Raddit\AppBundle\Form\UserType;
@@ -88,11 +88,13 @@ final class UserController extends Controller {
             return $this->redirectToRoute('front');
         }
 
-        $user = new User();
-        $form = $this->createForm(UserType::class, $user);
+        $data = new UserData();
+        $form = $this->createForm(UserType::class, $data);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $user = $data->toUser();
+
             $em->persist($user);
             $em->flush();
 
@@ -124,21 +126,19 @@ final class UserController extends Controller {
      * @return Response
      */
     public function editUserAction(EntityManager $em, User $subject, Request $request) {
-        $form = $this->createForm(UserType::class, $subject);
+        $data = UserData::fromUser($subject);
+
+        $form = $this->createForm(UserType::class, $data);
         $form->handleRequest($request);
 
-        try {
-            if ($form->isSubmitted() && $form->isValid()) {
-                $em->flush();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data->updateUser($subject);
 
-                return $this->redirectToRoute('edit_user', [
-                    'username' => $subject->getUsername(),
-                ]);
-            }
-        } finally {
-            // Always reload the user object from the database. This avoids the
-            // user in TokenStorage staying altered in case the form fails.
-            $em->refresh($subject);
+            $em->flush();
+
+            return $this->redirectToRoute('edit_user', [
+                'username' => $subject->getUsername(),
+            ]);
         }
 
         return $this->render('user/edit.html.twig', [
@@ -157,13 +157,14 @@ final class UserController extends Controller {
      * @return Response
      */
     public function userSettingsAction(EntityManager $em, User $subject, Request $request) {
-        $userSettings = UserSettings::fromUser($subject);
+        $data = UserData::fromUser($subject);
 
-        $form = $this->createForm(UserSettingsType::class, $userSettings);
+        $form = $this->createForm(UserSettingsType::class, $data);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $userSettings->updateUser($subject);
+            $data->updateUser($subject);
+
             $em->flush();
 
             $this->addFlash('success', 'flash.user_settings_updated');

@@ -4,6 +4,7 @@ namespace Raddit\AppBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Raddit\AppBundle\Entity\User;
+use Raddit\AppBundle\Form\Model\UserData;
 use Raddit\AppBundle\Form\RequestPasswordResetType;
 use Raddit\AppBundle\Form\UserType;
 use Raddit\AppBundle\Mailer\ResetPasswordMailer;
@@ -72,20 +73,19 @@ final class ResetPasswordController extends Controller {
             throw $this->createNotFoundException('The link has expired');
         }
 
-        $form = $this->createForm(UserType::class, $user);
+        $data = UserData::fromUser($user);
 
-        try {
-            $form->handleRequest($request);
+        $form = $this->createForm(UserType::class, $data);
+        $form->handleRequest($request);
 
-            if ($form->isSubmitted() && $form->isValid()) {
-                $em->flush();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data->updateUser($user);
 
-                $this->addFlash('success', 'flash.user_password_updated');
+            $em->flush();
 
-                return $this->redirectToRoute('front');
-            }
-        } finally {
-            $em->refresh($user);
+            $this->addFlash('success', 'flash.user_password_updated');
+
+            return $this->redirectToRoute('front');
         }
 
         return $this->render('reset_password/reset.html.twig', [

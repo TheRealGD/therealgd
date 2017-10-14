@@ -3,8 +3,8 @@ security:
         strategy: unanimous
 
     encoders:
-        Raddit\AppBundle\Entity\User:
-            algorithm: bcrypt
+        Raddit\AppBundle\Entity\User:         bcrypt
+        Raddit\AppBundle\Form\Model\UserData: bcrypt
 
     providers:
         user_provider:

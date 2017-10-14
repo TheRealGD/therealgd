@@ -2,7 +2,7 @@
 
 namespace Raddit\AppBundle\Form\EventListener;
 
-use Raddit\AppBundle\Entity\User;
+use Raddit\AppBundle\Form\Model\UserData;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -26,7 +26,7 @@ final class PasswordEncodingSubscriber implements EventSubscriberInterface {
             return;
         }
 
-        /** @var User $user */
+        /** @var UserData $user */
         $user = $event->getForm()->getData();
 
         if ($user->getPlainPassword() !== null) {

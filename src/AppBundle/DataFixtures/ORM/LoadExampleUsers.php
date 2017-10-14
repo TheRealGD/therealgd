@@ -5,22 +5,17 @@ namespace Raddit\AppBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Raddit\AppBundle\Entity\User;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
-class LoadExampleUsers extends AbstractFixture implements ContainerAwareInterface {
-    use ContainerAwareTrait;
-
+class LoadExampleUsers extends AbstractFixture {
     /**
      * {@inheritdoc}
      */
     public function load(ObjectManager $manager) {
-        $encoder = $this->container->get('security.password_encoder');
-
         foreach ($this->provideUsers() as $data) {
-            $user = new User();
-            $user->setUsername($data['username']);
-            $user->setPassword($encoder->encodePassword($user, $data['password']));
+            $user = new User(
+                $data['username'],
+                password_hash($data['password'], PASSWORD_BCRYPT, ['cost' => 13])
+            );
             $user->setAdmin($data['admin']);
             $user->setEmail($data['email']);
 

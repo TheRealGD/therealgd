@@ -30,13 +30,13 @@ class SubmissionTest extends TestCase {
         $this->assertSame($submission->getTimestamp()->getTimestamp() + 1800, $submission->getRanking());
         $this->assertCount(1, $submission->getVotes());
         $this->assertSame($ip, $submission->getVotes()->first()->getIp());
-        $this->assertSame($user, $submission->getVotes()->first()->getUser());
+        $this->assertSame($user, $submission->getVotes()->first()->getUser('u', 'p'));
     }
 
     public function testBannedUserCannotCreateSubmission() {
-        $user = new User();
+        $user = new User('u', 'p');
         $forum = new Forum('a', 'a', 'a', 'a');
-        $forum->addBan(new ForumBan($forum, $user, 'a', true, new User()));
+        $forum->addBan(new ForumBan($forum, $user, 'a', true, new User('u', 'p')));
 
         $this->expectException(BannedFromForumException::class);
 
@@ -44,11 +44,11 @@ class SubmissionTest extends TestCase {
     }
 
     public function testBannedUserCannotVote() {
-        $user = new User();
+        $user = new User('u', 'p');
         $forum = new Forum('a', 'a', 'a', 'a');
-        $forum->addBan(new ForumBan($forum, $user, 'a', true, new User()));
+        $forum->addBan(new ForumBan($forum, $user, 'a', true, new User('u', 'p')));
 
-        $submission = new Submission('a', null, 'a', $forum, new User(), null);
+        $submission = new Submission('a', null, 'a', $forum, new User('u', 'p'), null);
 
         $this->expectException(BannedFromForumException::class);
 

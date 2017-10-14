@@ -4,7 +4,7 @@ namespace Raddit\AppBundle\Form;
 
 use Raddit\AppBundle\Entity\Theme;
 use Raddit\AppBundle\Entity\User;
-use Raddit\AppBundle\Form\Model\UserSettings;
+use Raddit\AppBundle\Form\Model\UserData;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -57,8 +57,9 @@ final class UserSettingsType extends AbstractType {
      */
     public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults([
-            'data_class' => UserSettings::class,
+            'data_class' => UserData::class,
             'label_format' => 'user_settings_form.%name%',
+            'validation_groups' => ['settings'],
         ]);
     }
 

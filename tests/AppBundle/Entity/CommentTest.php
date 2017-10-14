@@ -12,9 +12,9 @@ use Raddit\AppBundle\Entity\UserFlags;
 class CommentTest extends TestCase {
     public function testNewTopLevelCommentSendsNotification() {
         $forum = $this->createMock(Forum::class);
-        $submission = new Submission('a', null, null, $forum, new User(), null);
+        $submission = new Submission('a', null, null, $forum, new User('u', 'p'), null);
 
-        $comment = new Comment('a', new User(), $submission);
+        $comment = new Comment('a', new User('u', 'p'), $submission);
 
         $this->assertCount(0, $comment->getUser()->getNotifications());
         $this->assertCount(1, $submission->getUser()->getNotifications());
@@ -23,15 +23,15 @@ class CommentTest extends TestCase {
     public function testNewChildReplySendsNotifications() {
         $submission = $this->createMock(Submission::class);
 
-        $parent = new Comment('a', new User(), $submission);
-        $child = new Comment('b', new User(), $submission, UserFlags::FLAG_NONE, $parent);
+        $parent = new Comment('a', new User('u', 'p'), $submission);
+        $child = new Comment('b', new User('u', 'p'), $submission, UserFlags::FLAG_NONE, $parent);
 
         $this->assertCount(0, $child->getUser()->getNotifications());
         $this->assertCount(1, $parent->getUser()->getNotifications());
     }
 
     public function testDoesNotSendNotificationsWhenReplyingToSelf() {
-        $user = new User();
+        $user = new User('u', 'p');
 
         $submission = $this->createMock(Submission::class);
 

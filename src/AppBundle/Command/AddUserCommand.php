@@ -61,9 +61,10 @@ class AddUserCommand extends Command implements ContainerAwareInterface {
 
         $password = $io->askHidden('Enter the password for the new account');
 
-        $user = new User();
-        $user->setUsername($input->getArgument('username'));
-        $user->setPassword($this->encoder->encodePassword($user, $password));
+        $user = new User(
+            $input->getArgument('username'),
+            password_hash($password, PASSWORD_BCRYPT, ['cost' => 13])
+        );
         $user->setEmail($input->getArgument('email'));
         $user->setAdmin($input->getOption('admin'));
 

@@ -10,15 +10,11 @@ use Doctrine\ORM\Mapping as ORM;
 use Pagerfanta\Adapter\DoctrineCollectionAdapter;
 use Pagerfanta\Adapter\DoctrineSelectableAdapter;
 use Pagerfanta\Pagerfanta;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="Raddit\AppBundle\Repository\UserRepository")
  * @ORM\Table(name="users")
- *
- * @UniqueEntity("canonicalUsername", errorPath="username")
  */
 class User implements UserInterface {
     const FRONT_DEFAULT = 'default';
@@ -40,16 +36,12 @@ class User implements UserInterface {
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Id()
      *
-     * @var int
+     * @var int|null
      */
     private $id;
 
     /**
      * @ORM\Column(type="text", unique=true)
-     *
-     * @Assert\Length(min=3, max=25)
-     * @Assert\NotBlank()
-     * @Assert\Regex("/^\w+$/")
      *
      * @var string
      */
@@ -70,28 +62,16 @@ class User implements UserInterface {
     private $password;
 
     /**
-     * Note: bcrypt cannot handle more than 72 bytes.
-     *
-     * @Assert\Length(min=8, max=72, charset="8bit")
-     * @Assert\NotBlank(groups={"registration"})
-     *
-     * @var string
-     */
-    private $plainPassword;
-
-    /**
      * @ORM\Column(type="text", nullable=true)
      *
-     * @Assert\Email()
-     *
-     * @var string
+     * @var string|null
      */
     private $email;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      *
-     * @var string
+     * @var string|null
      */
     private $canonicalEmail;
 
@@ -203,8 +183,10 @@ class User implements UserInterface {
      */
     private $frontPage = self::FRONT_DEFAULT;
 
-    public function __construct() {
-        $this->created = new \DateTime('@'.time());
+    public function __construct(string $username, string $password, \DateTime $created = null) {
+        $this->setUsername($username);
+        $this->password = $password;
+        $this->created = $created ?: new \DateTime('@'.time());
         $this->notifications = new ArrayCollection();
         $this->submissions = new ArrayCollection();
         $this->comments = new ArrayCollection();
@@ -213,71 +195,42 @@ class User implements UserInterface {
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getId() {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getUsername() {
+    public function getUsername(): string {
         return $this->username;
     }
 
-    /**
-     * @param string $username
-     */
-    public function setUsername($username) {
+    public function setUsername(string $username) {
         $this->username = $username;
         $this->canonicalUsername = self::canonicalizeUsername($username);
     }
 
-    /**
-     * @return string
-     */
-    public function getCanonicalUsername() {
+    public function getCanonicalUsername(): string {
         return $this->canonicalUsername;
     }
 
-    /**
-     * @return string
-     */
-    public function getPassword() {
+    public function getPassword(): string {
         return $this->password;
     }
 
-    /**
-     * @param string $password
-     */
-    public function setPassword($password) {
+    public function setPassword(string $password) {
         $this->password = $password;
     }
 
     /**
-     * @return string
-     */
-    public function getPlainPassword() {
-        return $this->plainPassword;
-    }
-
-    /**
-     * @param string $plainPassword
-     */
-    public function setPlainPassword($plainPassword) {
-        $this->plainPassword = $plainPassword;
-    }
-
-    /**
-     * @return string
+     * @return string|null
      */
     public function getEmail() {
         return $this->email;
     }
 
     /**
-     * @param string $email
+     * @param string|null $email
      */
     public function setEmail($email) {
         $this->email = $email;
@@ -290,24 +243,14 @@ class User implements UserInterface {
      * Sending email to the canonicalised address is evil. Use this for lookup,
      * but *always* send to the regular, non-canon address.
      *
-     * @return string
+     * @return string|null
      */
     public function getCanonicalEmail() {
         return $this->canonicalEmail;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getCreated() {
+    public function getCreated(): \DateTime {
         return $this->created;
-    }
-
-    /**
-     * @param \DateTime $created
-     */
-    public function setCreated($created) {
-        $this->created = $created;
     }
 
     /**
@@ -324,24 +267,18 @@ class User implements UserInterface {
         $this->lastSeen = $lastSeen;
     }
 
-    /**
-     * @return bool
-     */
-    public function isAdmin() {
+    public function isAdmin(): bool {
         return $this->admin;
     }
 
-    /**
-     * @param bool $admin
-     */
-    public function setAdmin($admin) {
+    public function setAdmin(bool $admin) {
         $this->admin = $admin;
     }
 
     /**
      * @return Collection|Moderator[]
      */
-    public function getModeratorTokens() {
+    public function getModeratorTokens(): Collection {
         return $this->moderatorTokens;
     }
 
@@ -368,20 +305,19 @@ class User implements UserInterface {
     public function getSalt() {
         // Salt is not needed when bcrypt is used, as the password hash contains
         // the salt.
-        return '';
+        return null;
     }
 
     /**
      * {@inheritdoc}
      */
     public function eraseCredentials() {
-        $this->plainPassword = null;
     }
 
     /**
      * @return Collection|Selectable|Submission[]
      */
-    public function getSubmissions() {
+    public function getSubmissions(): Collection {
         return $this->submissions;
     }
 
@@ -391,7 +327,7 @@ class User implements UserInterface {
      *
      * @return Pagerfanta|Comment[]
      */
-    public function getPaginatedSubmissions(int $page, int $maxPerPage = 25) {
+    public function getPaginatedSubmissions(int $page, int $maxPerPage = 25): Pagerfanta {
         $submissions = new Pagerfanta(new DoctrineCollectionAdapter($this->submissions));
         $submissions->setMaxPerPage($maxPerPage);
         $submissions->setCurrentPage($page);
@@ -402,7 +338,7 @@ class User implements UserInterface {
     /**
      * @return Collection|Selectable|Comment[]
      */
-    public function getComments() {
+    public function getComments(): Collection {
         return $this->comments;
     }
 
@@ -412,7 +348,7 @@ class User implements UserInterface {
      *
      * @return Pagerfanta|Comment[]
      */
-    public function getPaginatedComments(int $page, int $maxPerPage = 25) {
+    public function getPaginatedComments(int $page, int $maxPerPage = 25): Pagerfanta {
         $comments = new Pagerfanta(new DoctrineCollectionAdapter($this->comments));
         $comments->setMaxPerPage($maxPerPage);
         $comments->setCurrentPage($page);
@@ -423,15 +359,10 @@ class User implements UserInterface {
     /**
      * @return Collection|Selectable|Ban[]
      */
-    public function getBans() {
+    public function getBans(): Collection {
         return $this->bans;
     }
 
-    /**
-     * Checks if a user is banned.
-     *
-     * @return bool
-     */
     public function isBanned(): bool {
         $criteria = Criteria::create()
             ->where(Criteria::expr()->eq('expiryDate', null))
@@ -441,24 +372,18 @@ class User implements UserInterface {
         return count($this->bans->matching($criteria)) > 0;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getLocale() {
+    public function getLocale(): string {
         return $this->locale;
     }
 
-    /**
-     * @param string|null $locale
-     */
-    public function setLocale($locale) {
+    public function setLocale(string $locale) {
         $this->locale = $locale;
     }
 
     /**
      * @return Collection|Selectable|Notification[]
      */
-    public function getNotifications() {
+    public function getNotifications(): Collection {
         return $this->notifications;
     }
 
@@ -474,7 +399,7 @@ class User implements UserInterface {
      *
      * @return Pagerfanta|Notification[]
      */
-    public function getPaginatedNotifications(int $page, int $maxPerPage = 25) {
+    public function getPaginatedNotifications(int $page, int $maxPerPage = 25): Pagerfanta {
         $criteria = Criteria::create()->orderBy(['id' => 'DESC']);
 
         $notifications = new Pagerfanta(new DoctrineSelectableAdapter($this->notifications, $criteria));
@@ -484,44 +409,26 @@ class User implements UserInterface {
         return $notifications;
     }
 
-    /**
-     * @return bool
-     */
     public function isNightMode(): bool {
         return $this->nightMode;
     }
 
-    /**
-     * @param bool $nightMode
-     */
     public function setNightMode(bool $nightMode) {
         $this->nightMode = $nightMode;
     }
 
-    /**
-     * @return bool
-     */
     public function isShowCustomStylesheets(): bool {
         return $this->showCustomStylesheets;
     }
 
-    /**
-     * @param bool $showCustomStylesheets
-     */
     public function setShowCustomStylesheets(bool $showCustomStylesheets) {
         $this->showCustomStylesheets = $showCustomStylesheets;
     }
 
-    /**
-     * @return bool
-     */
     public function isTrusted(): bool {
         return $this->admin || $this->trusted;
     }
 
-    /**
-     * @param bool $trusted
-     */
     public function setTrusted(bool $trusted) {
         $this->trusted = $trusted;
     }
