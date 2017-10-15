@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block stylesheets %}
-  {% if app.user.showCustomStylesheets ?? false and forum.theme %}
+  {% if (app.user.showCustomStylesheets ?? true) and forum.theme %}
     {{ include('_includes/stylesheets.html.twig', {
       theme: forum.theme,
       night_mode: app.user.nightMode ?? false
