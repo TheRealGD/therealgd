@@ -183,6 +183,13 @@ class User implements UserInterface {
      */
     private $frontPage = self::FRONT_DEFAULT;
 
+    /**
+     * @ORM\Column(type="boolean", options={"default": false})
+     *
+     * @var bool
+     */
+    private $openExternalLinksInNewTab = false;
+
     public function __construct(string $username, string $password, \DateTime $created = null) {
         $this->setUsername($username);
         $this->password = $password;
@@ -492,6 +499,14 @@ class User implements UserInterface {
         }
 
         $this->frontPage = $frontPage;
+    }
+
+    public function openExternalLinksInNewTab(): bool {
+        return $this->openExternalLinksInNewTab;
+    }
+
+    public function setOpenExternalLinksInNewTab(bool $openExternalLinksInNewTab) {
+        $this->openExternalLinksInNewTab = $openExternalLinksInNewTab;
     }
 
     /**

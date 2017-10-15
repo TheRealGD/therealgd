@@ -65,6 +65,8 @@ class UserData implements UserInterface {
      */
     private $preferredTheme;
 
+    private $openExternalLinksInNewTab;
+
     public static function fromUser(User $user): UserData {
         $self = new self();
         $self->entityId = $user->getId();
@@ -75,6 +77,7 @@ class UserData implements UserInterface {
         $self->nightMode = $user->isNightMode();
         $self->showCustomStylesheets = $user->isShowCustomStylesheets();
         $self->preferredTheme = $user->getPreferredTheme();
+        $self->openExternalLinksInNewTab = $user->openExternalLinksInNewTab();
 
         return $self;
     }
@@ -92,6 +95,7 @@ class UserData implements UserInterface {
         $user->setNightMode($this->nightMode);
         $user->setShowCustomStylesheets($this->showCustomStylesheets);
         $user->setPreferredTheme($this->preferredTheme);
+        $user->setOpenExternalLinksInNewTab($this->openExternalLinksInNewTab);
     }
 
     public function toUser(): User {
@@ -103,7 +107,8 @@ class UserData implements UserInterface {
             'frontPage',
             'locale',
             'nightMode',
-            'preferredTheme'
+            'preferredTheme',
+            'openExternalLinksInNewTab',
         ];
 
         foreach ($settings as $setting) {
@@ -197,6 +202,14 @@ class UserData implements UserInterface {
 
     public function setPreferredTheme($preferredTheme) {
         $this->preferredTheme = $preferredTheme;
+    }
+
+    public function openExternalLinksInNewTab() {
+        return $this->openExternalLinksInNewTab;
+    }
+
+    public function setOpenExternalLinksInNewTab($openExternalLinksInNewTab) {
+        $this->openExternalLinksInNewTab = $openExternalLinksInNewTab;
     }
 
     /**

@@ -49,6 +49,10 @@ final class UserSettingsType extends AbstractType {
                 'placeholder' => 'placeholder.default',
                 'required' => false,
             ])
+            ->add('openExternalLinksInNewTab', CheckboxType::class, [
+                'required' => false,
+                'label' => 'label.open_external_links_in_new_tab',
+            ])
             ->add('save', SubmitType::class);
     }
 

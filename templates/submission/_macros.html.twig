@@ -50,6 +50,7 @@
 
 {%- block submission -%}
   {%- from 'vote/_macros.html.twig' import vote -%}
+  {%- set open_external = submission.url is not empty and (app.user.openExternalLinksInNewTab ?? false) -%}
   <article class="submission {{ submission.url ? 'submission-has-url' }} {{ submission.body is not null ? 'submission-has-body' }} {{ not options.show_body ? 'submission-body-hidden' }} {{ submission.sticky ? 'submission-sticky' }} {{ submission.locked ? 'submission-locked' }}">
     <div class="submission-row">
       <div class="submission-vote">
@@ -58,7 +59,7 @@
 
       {% if submission.image %}
         <div class="submission-image-container">
-          <a href="{{ block('submission_url') }}" class="submission-image">
+          <a href="{{ block('submission_url') }}" class="submission-image" {% if submission.url %}rel="nofollow noreferrer noopener" target="{{ open_external ? '_blank' }}"{% endif %}>
             <img src="{{ submission.image|imagine_filter('submission_thumbnail') }}" class="submission-thumbnail" alt="">
           </a>
         </div>
@@ -67,7 +68,7 @@
       <div class="submission-inner">
         <header class="submission-header">
           <h1 class="submission-title">
-            <a href="{{ block('submission_url') }}" class="submission-link">
+            <a href="{{ block('submission_url') }}" class="submission-link" {% if submission.url %}rel="nofollow noreferrer noopener" target="{{ open_external ? '_blank' }}"{% endif %}>
               {{- submission.title -}}
             </a>
 
