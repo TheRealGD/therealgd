@@ -60,24 +60,29 @@ final class SubmissionType extends AbstractType {
                 'required' => false,
             ]);
 
-        $this->addUserFlagOption($builder, $forum);
+        $builder->add('forum', EntityType::class, [
+            'class' => Forum::class,
+            // Don't allow choosing other forums when one is already chosen.
+            // This prevents security issues when form fields should be present
+            // on one forum's submission page, but not another.
+            'disabled' => $editing || $forum,
+            'choice_label' => 'name',
+            'query_builder' => function (EntityRepository $repository) {
+                return $repository->createQueryBuilder('f')
+                    ->orderBy('f.name', 'ASC');
+            },
+            'placeholder' => 'placeholder.choose_one',
+            'required' => false, // enable a blank choice
+        ]);
 
-        if (!$editing) {
-            $builder->add('forum', EntityType::class, [
-                'class' => Forum::class,
-                'choice_label' => 'name',
-                'query_builder' => function (EntityRepository $repository) {
-                    return $repository->createQueryBuilder('f')
-                        ->orderBy('f.name', 'ASC');
-                },
-                'placeholder' => 'placeholder.choose_one',
-                'required' => false, // enable a blank choice
-            ]);
-        }
-
-        if ($editing && $this->authorizationChecker->isGranted('moderator', $forum)) {
+        if (
+            $this->authorizationChecker->isGranted('moderator', $forum) ||
+            $this->authorizationChecker->isGranted('ROLE_ADMIN')
+        ) {
             $builder->add('sticky', CheckboxType::class, ['required' => false]);
         }
+
+        $this->addUserFlagOption($builder, $forum);
 
         $builder->add('submit', SubmitType::class, [
             'label' => 'submission_form.'.($editing ? 'edit' : 'create'),
