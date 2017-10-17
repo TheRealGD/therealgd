@@ -10,13 +10,14 @@ use Doctrine\ORM\Mapping as ORM;
 use Pagerfanta\Adapter\DoctrineCollectionAdapter;
 use Pagerfanta\Adapter\DoctrineSelectableAdapter;
 use Pagerfanta\Pagerfanta;
+use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="Raddit\AppBundle\Repository\UserRepository")
  * @ORM\Table(name="users")
  */
-class User implements UserInterface {
+class User implements UserInterface, EquatableInterface {
     const FRONT_DEFAULT = 'default';
     const FRONT_FEATURED = 'featured';
     const FRONT_SUBSCRIBED = 'subscribed';
@@ -549,5 +550,17 @@ class User implements UserInterface {
         }
 
         return sprintf('%s@%s', $username, $domain);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isEqualTo(UserInterface $user) {
+        return $user instanceof User &&
+            $this->id === $user->id &&
+            $this->username === $user->username &&
+            hash_equals($this->password, $user->password) &&
+            $this->admin === $user->admin &&
+            $this->trusted === $user->trusted;
     }
 }
