@@ -68,7 +68,7 @@ class UserData implements UserInterface {
     private $openExternalLinksInNewTab;
 
     /**
-     * @Assert\Length(max=200)
+     * @Assert\Length(max=300)
      *
      * @var string|null
      */
