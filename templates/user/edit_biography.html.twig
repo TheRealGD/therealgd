@@ -1,0 +1,17 @@
+{% extends 'user/user.html.twig' %}
+
+{% block title 'title.editing_biography_for_user'|trans({'%user%': user.username}) %}
+
+{% block body %}
+  <h1>
+    {{ 'title.editing_biography_for_user'|trans({
+      '%user%': '<a href="%s">/u/%s</a>'|format(path('user', {username: user.username})|e, user.username|e)
+    })|raw }}
+  </h1>
+
+  {{ form_start(form) }}
+    {{ form_row(form.biography, {attr: {rows: 5}}) }}
+
+    {{ form_row(form.save) }}
+  {{ form_end(form) }}
+{% endblock %}

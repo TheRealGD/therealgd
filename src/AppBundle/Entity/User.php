@@ -191,6 +191,13 @@ class User implements UserInterface, EquatableInterface {
      */
     private $openExternalLinksInNewTab = false;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     *
+     * @var string|null
+     */
+    private $biography;
+
     public function __construct(string $username, string $password, \DateTime $created = null) {
         $this->setUsername($username);
         $this->password = $password;
@@ -508,6 +515,20 @@ class User implements UserInterface, EquatableInterface {
 
     public function setOpenExternalLinksInNewTab(bool $openExternalLinksInNewTab) {
         $this->openExternalLinksInNewTab = $openExternalLinksInNewTab;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getBiography() {
+        return $this->biography;
+    }
+
+    /**
+     * @param null|string $biography
+     */
+    public function setBiography($biography) {
+        $this->biography = $biography;
     }
 
     /**

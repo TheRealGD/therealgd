@@ -1,4 +1,3 @@
-
 user:
     defaults: { _controller: RadditAppBundle:User:userPage }
     path: /user/{username}
@@ -24,6 +23,11 @@ user_comments:
 edit_user:
     defaults: { _controller: RadditAppBundle:User:editUser }
     path: /edit_user/{username}
+    methods: [GET, POST]
+
+edit_biography:
+    defaults: { _controller: Raddit\AppBundle\Controller\UserController::editBiography }
+    path: /edit_biography/{username}
     methods: [GET, POST]
 
 user_settings:

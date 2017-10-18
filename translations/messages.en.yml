@@ -116,6 +116,7 @@ flash:
     submission_is_locked: The submission is locked. You cannot post new comments.
     no_moderated_forums: You don't moderate any forums.
     you_cannot_create_forums_yet: You cannot create forums yet.
+    user_biography_updated: The biography was updated.
 
 forum:
     moderators: Moderators
@@ -236,6 +237,7 @@ label:
     bans: Bans
     overview: Overview
     open_external_links_in_new_tab: Open external links in new tab
+    biography: Biography
 
 login_form:
     log_in: Log in
@@ -279,6 +281,7 @@ nav:
     ban_history: Ban history
     block_user: Block user
     block_list: Block list
+    edit_biography: Edit biography
 
 placeholder:
     default: (default)
@@ -375,6 +378,7 @@ title:
     history_for_theme: Showing history for theme %theme%
     viewing_theme_source: Viewing source of %theme%
     messages: Messages
+    editing_biography_for_user: Editing biography for %user%
 
 user:
     submissions: Submissions

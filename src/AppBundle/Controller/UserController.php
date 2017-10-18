@@ -7,6 +7,7 @@ use Raddit\AppBundle\Entity\User;
 use Raddit\AppBundle\Entity\UserBlock;
 use Raddit\AppBundle\Form\Model\UserBlockData;
 use Raddit\AppBundle\Form\Model\UserData;
+use Raddit\AppBundle\Form\UserBiographyType;
 use Raddit\AppBundle\Form\UserBlockType;
 use Raddit\AppBundle\Form\UserSettingsType;
 use Raddit\AppBundle\Form\UserType;
@@ -173,6 +174,37 @@ final class UserController extends Controller {
         }
 
         return $this->render('user/settings.html.twig', [
+            'form' => $form->createView(),
+            'user' => $subject,
+        ]);
+    }
+
+    /**
+     * @Security("is_granted('edit_user', subject)")
+     *
+     * @param EntityManager $em
+     * @param User          $subject
+     * @param Request       $request
+     *
+     * @return Response
+     */
+    public function editBiography(EntityManager $em, User $subject, Request $request) {
+        $data = UserData::fromUser($subject);
+
+        $form = $this->createForm(UserBiographyType::class, $data);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data->updateUser($subject);
+
+            $em->flush();
+
+            $this->addFlash('success', 'flash.user_biography_updated');
+
+            return $this->redirect($request->getUri());
+        }
+
+        return $this->render('user/edit_biography.html.twig', [
             'form' => $form->createView(),
             'user' => $subject,
         ]);

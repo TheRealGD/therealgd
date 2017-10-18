@@ -67,6 +67,13 @@ class UserData implements UserInterface {
 
     private $openExternalLinksInNewTab;
 
+    /**
+     * @Assert\Length(max=200)
+     *
+     * @var string|null
+     */
+    private $biography;
+
     public static function fromUser(User $user): UserData {
         $self = new self();
         $self->entityId = $user->getId();
@@ -78,6 +85,7 @@ class UserData implements UserInterface {
         $self->showCustomStylesheets = $user->isShowCustomStylesheets();
         $self->preferredTheme = $user->getPreferredTheme();
         $self->openExternalLinksInNewTab = $user->openExternalLinksInNewTab();
+        $self->biography = $user->getBiography();
 
         return $self;
     }
@@ -96,11 +104,13 @@ class UserData implements UserInterface {
         $user->setShowCustomStylesheets($this->showCustomStylesheets);
         $user->setPreferredTheme($this->preferredTheme);
         $user->setOpenExternalLinksInNewTab($this->openExternalLinksInNewTab);
+        $user->setBiography($this->biography);
     }
 
     public function toUser(): User {
         $user = new User($this->username, $this->password);
         $user->setEmail($this->email);
+        $user->setBiography($this->biography);
 
         $settings = [
             'showCustomStylesheets',
@@ -210,6 +220,14 @@ class UserData implements UserInterface {
 
     public function setOpenExternalLinksInNewTab($openExternalLinksInNewTab) {
         $this->openExternalLinksInNewTab = $openExternalLinksInNewTab;
+    }
+
+    public function getBiography() {
+        return $this->biography;
+    }
+
+    public function setBiography($biography) {
+        $this->biography = $biography;
     }
 
     /**

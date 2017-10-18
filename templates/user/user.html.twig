@@ -25,12 +25,18 @@
 {% endblock %}
 
 {% block sidebar %}
-  <section class="sidebar__section sidebar__section--user-info">
-    <h1 class="sidebar__title"><a href="{{ path('user', {username: user.username}) }}">{{ user.username }}</a></h1>
+  <section class="sidebar__section user-bio">
+    <h1 class="sidebar__title user-bio__title">
+      <a href="{{ path('user', {username: user.username}) }}" class="user-bio__user-link">{{ user.username }}</a>
+    </h1>
 
-    <p>{{ 'user.registered'|trans({
+    <p class="user-bio__registered">{{ 'user.registered'|trans({
       '%timestamp%': timestamp(user.created)
     })|raw }}</p>
+
+    {% if user.biography is not empty %}
+      <div class="user-bio__biography">{{ user.biography|cached_markdown|raw }}</div>
+    {% endif %}
   </section>
 
   {% set toolbox_items = [] %}
@@ -49,6 +55,13 @@
       {% endset %}
       {% set toolbox_items = toolbox_items|merge([item]) %}
     {% endif %}
+  {% endif %}
+
+  {% if user is same as(app.user) %}
+    {% set item %}
+      <li><a href="{{ path('edit_biography', {username: user.username}) }}">{{ 'nav.edit_biography'|trans }}</a></li>
+    {% endset %}
+    {% set toolbox_items = toolbox_items|merge([item]) %}
   {% endif %}
 
   {% if toolbox_items %}
