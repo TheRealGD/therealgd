@@ -14,6 +14,7 @@ class UserBiographyType extends AbstractType {
         $builder
             ->add('biography', MarkdownType::class, [
                 'label' => 'label.biography',
+                'required' => false,
             ])
             ->add('save', SubmitType::class, [
                 'label' => 'label.save_settings',
