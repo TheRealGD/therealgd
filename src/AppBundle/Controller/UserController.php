@@ -190,7 +190,6 @@ final class UserController extends Controller {
      * @return Response
      */
     public function editBiography(EntityManager $em, User $user, Request $request) {
-        dump($request->attributes);
         $data = UserData::fromUser($user);
 
         $form = $this->createForm(UserBiographyType::class, $data);

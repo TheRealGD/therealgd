@@ -51,7 +51,7 @@ class UserData implements UserInterface {
     private $locale;
 
     /**
-     * @Assert\Choice(User::FRONT_PAGE_CHOICES, groups={"settings"})
+     * @Assert\Choice(User::FRONT_PAGE_CHOICES, groups={"settings"}, strict=true)
      * @Assert\NotBlank(groups={"settings"})
      */
     private $frontPage;
