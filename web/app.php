@@ -8,7 +8,6 @@ use Symfony\Component\HttpFoundation\Request;
 require __DIR__.'/../vendor/autoload.php';
 
 $kernel = new AppKernel('prod', false);
-//$kernel = new AppCache($kernel);
 
 $request = Request::createFromGlobals();
 $response = $kernel->handle($request);
