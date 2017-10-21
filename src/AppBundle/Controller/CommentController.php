@@ -11,18 +11,15 @@ use Raddit\AppBundle\Form\Model\CommentData;
 use Raddit\AppBundle\Repository\CommentRepository;
 use Raddit\AppBundle\Repository\ForumRepository;
 use Raddit\AppBundle\Utils\Slugger;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @ParamConverter("forum", options={
- *     "mapping": {"forum_name": "name"},
- *     "map_method_signature": true,
- *     "repository_method": "findOneByCaseInsensitiveName"
- * })
+ * @Entity("forum", expr="repository.findOneByCaseInsensitiveName(forum_name)")
  * @ParamConverter("submission", options={"mapping": {"forum": "forum", "submission_id": "id"}})
  * @ParamConverter("comment", options={"mapping": {"submission": "submission", "comment_id": "id"}})
  */
@@ -74,7 +71,7 @@ final class CommentController extends Controller {
     /**
      * Submit a comment. This is intended for users without JS enabled.
      *
-     * @Security("is_granted('ROLE_USER')")
+     * @IsGranted("ROLE_USER")
      *
      * @param EntityManager $em
      * @param Forum         $forum
@@ -123,7 +120,7 @@ final class CommentController extends Controller {
     /**
      * Edits a comment.
      *
-     * @Security("is_granted('edit', comment)")
+     * @IsGranted("edit", subject="comment")
      *
      * @param EntityManager $em
      * @param Forum         $forum
@@ -170,7 +167,7 @@ final class CommentController extends Controller {
      * Delete a comment.
      *
      * @ParamConverter("comment", options={"mapping": {"id": "id"}})
-     * @Security("is_granted('delete', comment)")
+     * @IsGranted("delete", subject="comment")
      *
      * @param EntityManager $em
      * @param Comment       $comment
@@ -201,7 +198,7 @@ final class CommentController extends Controller {
      * "Soft deletes" a comment by blanking its body.
      *
      * @ParamConverter("comment", options={"mapping": {"id": "id"}})
-     * @Security("is_granted('softdelete', comment)")
+     * @IsGranted("softdelete", subject="comment")
      *
      * @param EntityManager $em
      * @param Comment       $comment

@@ -50,7 +50,7 @@ final class ResetPasswordController extends Controller {
     }
 
     /**
-     * @ParamConverter("expires", options={"format": "U"})
+     * @ParamConverter("expires", options={"format": "U"}, converter="datetime")
      *
      * @param Request             $request
      * @param EntityManager       $em

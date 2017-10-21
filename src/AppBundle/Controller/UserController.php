@@ -13,6 +13,7 @@ use Raddit\AppBundle\Form\UserSettingsType;
 use Raddit\AppBundle\Form\UserType;
 use Raddit\AppBundle\Repository\NotificationRepository;
 use Raddit\AppBundle\Repository\UserRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Bundle\SecurityBundle\Security\FirewallMap;
@@ -118,53 +119,53 @@ final class UserController extends Controller {
     }
 
     /**
-     * @Security("is_granted('edit_user', subject)")
+     * @IsGranted("edit_user", subject="user")
      *
      * @param EntityManager $em
-     * @param User          $subject
+     * @param User          $user
      * @param Request       $request
      *
      * @return Response
      */
-    public function editUserAction(EntityManager $em, User $subject, Request $request) {
-        $data = UserData::fromUser($subject);
+    public function editUserAction(EntityManager $em, User $user, Request $request) {
+        $data = UserData::fromUser($user);
 
         $form = $this->createForm(UserType::class, $data);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $data->updateUser($subject);
+            $data->updateUser($user);
 
             $em->flush();
 
             return $this->redirectToRoute('edit_user', [
-                'username' => $subject->getUsername(),
+                'username' => $user->getUsername(),
             ]);
         }
 
         return $this->render('user/edit.html.twig', [
             'form' => $form->createView(),
-            'user' => $subject,
+            'user' => $user,
         ]);
     }
 
     /**
-     * @Security("is_granted('edit_user', subject)")
+     * @IsGranted("edit_user", subject="user")
      *
      * @param EntityManager $em
-     * @param User          $subject
+     * @param User          $user
      * @param Request       $request
      *
      * @return Response
      */
-    public function userSettingsAction(EntityManager $em, User $subject, Request $request) {
-        $data = UserData::fromUser($subject);
+    public function userSettingsAction(EntityManager $em, User $user, Request $request) {
+        $data = UserData::fromUser($user);
 
         $form = $this->createForm(UserSettingsType::class, $data);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $data->updateUser($subject);
+            $data->updateUser($user);
 
             $em->flush();
 
@@ -175,27 +176,28 @@ final class UserController extends Controller {
 
         return $this->render('user/settings.html.twig', [
             'form' => $form->createView(),
-            'user' => $subject,
+            'user' => $user,
         ]);
     }
 
     /**
-     * @Security("is_granted('edit_user', subject)")
+     * @IsGranted("edit_user", subject="user")
      *
      * @param EntityManager $em
-     * @param User          $subject
+     * @param User          $user
      * @param Request       $request
      *
      * @return Response
      */
-    public function editBiography(EntityManager $em, User $subject, Request $request) {
-        $data = UserData::fromUser($subject);
+    public function editBiography(EntityManager $em, User $user, Request $request) {
+        dump($request->attributes);
+        $data = UserData::fromUser($user);
 
         $form = $this->createForm(UserBiographyType::class, $data);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $data->updateUser($subject);
+            $data->updateUser($user);
 
             $em->flush();
 
@@ -206,12 +208,12 @@ final class UserController extends Controller {
 
         return $this->render('user/edit_biography.html.twig', [
             'form' => $form->createView(),
-            'user' => $subject,
+            'user' => $user,
         ]);
     }
 
     /**
-     * @Security("is_granted('ROLE_USER')")
+     * @IsGranted("ROLE_USER")
      *
      * @param int $page
      *
@@ -227,19 +229,19 @@ final class UserController extends Controller {
     }
 
     /**
-     * @Security("is_granted('ROLE_USER')")
+     * @IsGranted("ROLE_USER")
      *
-     * @param User          $subject
+     * @param User          $blockee
      * @param Request       $request
      * @param EntityManager $em
      *
      * @return Response
      */
-    public function blockAction(User $subject, Request $request, EntityManager $em) {
-        /* @var User $user */
-        $user = $this->getUser();
+    public function blockAction(User $blockee, Request $request, EntityManager $em) {
+        /* @var User $blocker */
+        $blocker = $this->getUser();
 
-        if ($user->isBlocking($subject)) {
+        if ($blocker->isBlocking($blockee)) {
             throw $this->createNotFoundException('The user is already blocked');
         }
 
@@ -249,7 +251,7 @@ final class UserController extends Controller {
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $block = $data->toBlock($user, $subject);
+            $block = $data->toBlock($blocker, $blockee);
 
             $em->persist($block);
             $em->flush();
@@ -260,8 +262,8 @@ final class UserController extends Controller {
         }
 
         return $this->render('user/block.html.twig', [
+            'blockee' => $blockee,
             'form' => $form->createView(),
-            'subject' => $subject,
         ]);
     }
 
@@ -288,7 +290,7 @@ final class UserController extends Controller {
     }
 
     /**
-     * @Security("is_granted('ROLE_USER')")
+     * @IsGranted("ROLE_USER")
      *
      * @param int $page
      *
@@ -304,7 +306,7 @@ final class UserController extends Controller {
     }
 
     /**
-     * @Security("is_granted('ROLE_USER')")
+     * @IsGranted("ROLE_USER")
      *
      * @param Request                $request
      * @param NotificationRepository $nr
@@ -334,7 +336,7 @@ final class UserController extends Controller {
     }
 
     /**
-     * @Security("is_granted('ROLE_ADMIN')")
+     * @IsGranted("ROLE_ADMIN")
      *
      * @param Request       $request
      * @param User          $user

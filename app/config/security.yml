@@ -18,6 +18,7 @@ security:
 
         main:
             anonymous: true
+            logout_on_user_change: true
 
             # this is enabled for unit tests
             http_basic: ~

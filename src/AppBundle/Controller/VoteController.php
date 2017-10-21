@@ -4,7 +4,7 @@ namespace Raddit\AppBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Raddit\AppBundle\Entity\Votable;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,7 +14,7 @@ final class VoteController extends Controller {
     /**
      * Vote on a votable entity.
      *
-     * @Security("is_granted('ROLE_USER')")
+     * @IsGranted("ROLE_USER")
      *
      * @param EntityManager $em
      * @param Request       $request

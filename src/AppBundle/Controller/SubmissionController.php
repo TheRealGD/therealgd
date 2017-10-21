@@ -9,19 +9,16 @@ use Raddit\AppBundle\Entity\Submission;
 use Raddit\AppBundle\Form\Model\SubmissionData;
 use Raddit\AppBundle\Form\SubmissionType;
 use Raddit\AppBundle\Utils\Slugger;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
- * @ParamConverter("forum", options={
- *     "mapping": {"forum_name": "name"},
- *     "map_method_signature": true,
- *     "repository_method": "findOneByCaseInsensitiveName"
- * })
+ * @Entity("forum", expr="repository.findOneByCaseInsensitiveName(forum_name)")
  * @ParamConverter("submission", options={"mapping": {"forum": "forum", "submission_id": "id"}})
  * @ParamConverter("comment", options={"mapping": {"submission": "submission", "comment_id": "id"}})
  */
@@ -65,7 +62,7 @@ final class SubmissionController extends Controller {
     /**
      * Create a new submission.
      *
-     * @Security("is_granted('ROLE_USER')")
+     * @IsGranted("ROLE_USER")
      *
      * @param EntityManager $em
      * @param Request       $request
@@ -99,7 +96,7 @@ final class SubmissionController extends Controller {
     }
 
     /**
-     * @Security("is_granted('edit', submission)")
+     * @IsGranted("edit", subject="submission")
      *
      * @param EntityManager $em
      * @param Forum         $forum
@@ -136,7 +133,7 @@ final class SubmissionController extends Controller {
     }
 
     /**
-     * @Security("is_granted('edit', submission)")
+     * @IsGranted("edit", subject="submission")
      *
      * @param Request       $request
      * @param EntityManager $em
@@ -163,7 +160,7 @@ final class SubmissionController extends Controller {
     }
 
     /**
-     * @Security("is_granted('moderator', forum)")
+     * @IsGranted("moderator", subject="forum")
      *
      * @param EntityManager $em
      * @param Request       $request

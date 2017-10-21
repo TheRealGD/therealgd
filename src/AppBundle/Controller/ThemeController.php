@@ -8,8 +8,9 @@ use Raddit\AppBundle\Entity\ThemeRevision;
 use Raddit\AppBundle\Form\Model\ThemeData;
 use Raddit\AppBundle\Form\ThemeType;
 use Raddit\AppBundle\Repository\ThemeRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,7 +30,7 @@ class ThemeController extends Controller {
     }
 
     /**
-     * @Security("is_granted('ROLE_USER')")
+     * @IsGranted("ROLE_USER")
      *
      * @param Request       $request
      * @param EntityManager $em
@@ -62,11 +63,8 @@ class ThemeController extends Controller {
     }
 
     /**
-     * @ParamConverter("theme", options={
-     *     "map_method_signature": true,
-     *     "repository_method": "findOneByUsernameAndName"}
-     * )
-     * @Security("is_granted('edit', theme)")
+     * @Entity("theme", expr="repository.findOneByUsernameAndName(username, name)")
+     * @IsGranted("edit", subject="theme")
      *
      * @param Request       $request
      * @param EntityManager $em

@@ -17,18 +17,14 @@ use Raddit\AppBundle\Repository\ForumBanRepository;
 use Raddit\AppBundle\Repository\ForumCategoryRepository;
 use Raddit\AppBundle\Repository\ForumRepository;
 use Raddit\AppBundle\Repository\SubmissionRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @ParamConverter("forum", options={
- *     "mapping": {"forum_name": "name"},
- *     "map_method_signature": true,
- *     "repository_method": "findOneByCaseInsensitiveName"
- * })
+ * @Entity("forum", expr="repository.findOneByCaseInsensitiveName(forum_name)")
  */
 final class ForumController extends Controller {
     /**
@@ -73,7 +69,7 @@ final class ForumController extends Controller {
     /**
      * Create a new forum.
      *
-     * @Security("is_granted('create_forum')")
+     * @IsGranted("create_forum")
      *
      * @param Request       $request
      * @param EntityManager $em
@@ -103,7 +99,7 @@ final class ForumController extends Controller {
     }
 
     /**
-     * @Security("is_granted('moderator', forum)")
+     * @IsGranted("moderator", subject="forum")
      *
      * @param Request       $request
      * @param Forum         $forum
@@ -149,7 +145,7 @@ final class ForumController extends Controller {
     }
 
     /**
-     * @Security("is_granted('ROLE_ADMIN')")
+     * @IsGranted("ROLE_ADMIN")
      *
      * @param Request       $request
      * @param Forum         $forum
@@ -177,7 +173,7 @@ final class ForumController extends Controller {
     }
 
     /**
-     * @Security("is_granted('ROLE_USER')")
+     * @IsGranted("ROLE_USER")
      *
      * @param Request       $request
      * @param EntityManager $em
@@ -256,7 +252,7 @@ final class ForumController extends Controller {
     }
 
     /**
-     * @Security("is_granted('ROLE_ADMIN')")
+     * @IsGranted("ROLE_ADMIN")
      *
      * @param EntityManager $em
      * @param Forum         $forum
@@ -290,7 +286,7 @@ final class ForumController extends Controller {
     /**
      * Alter a forum's appearance.
      *
-     * @Security("is_granted('moderator', forum)")
+     * @IsGranted("moderator", subject="forum")
      *
      * @param Forum         $forum
      * @param Request       $request
@@ -321,7 +317,7 @@ final class ForumController extends Controller {
     }
 
     /**
-     * @Security("is_granted('moderator', forum)")
+     * @IsGranted("moderator", subject="forum")
      *
      * @param Forum              $forum
      * @param ForumBanRepository $banRepository
@@ -337,40 +333,40 @@ final class ForumController extends Controller {
     }
 
     /**
-     * @Security("is_granted('moderator', forum)")
+     * @IsGranted("moderator", subject="forum")
      *
      * @param Forum $forum
-     * @param User  $subject
+     * @param User  $user
      * @param int   $page
      *
      * @return Response
      */
-    public function banHistoryAction(Forum $forum, User $subject, int $page = 1) {
+    public function banHistoryAction(Forum $forum, User $user, int $page = 1) {
         return $this->render('forum/ban_history.html.twig', [
-            'bans' => $forum->getPaginatedBansByUser($subject, $page),
+            'bans' => $forum->getPaginatedBansByUser($user, $page),
             'forum' => $forum,
-            'user' => $subject,
+            'user' => $user,
         ]);
     }
 
     /**
-     * @Security("is_granted('moderator', forum)")
+     * @IsGranted("moderator", subject="forum")
      *
      * @param Forum         $forum
-     * @param User          $subject
+     * @param User          $user
      * @param Request       $request
      * @param EntityManager $em
      *
      * @return Response
      */
-    public function banAction(Forum $forum, User $subject, Request $request, EntityManager $em) {
+    public function banAction(Forum $forum, User $user, Request $request, EntityManager $em) {
         $data = new ForumBanData();
 
         $form = $this->createForm(ForumBanType::class, $data, ['intent' => 'ban']);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $forum->addBan($data->toBan($forum, $subject, $this->getUser()));
+            $forum->addBan($data->toBan($forum, $user, $this->getUser()));
 
             $em->flush();
 
@@ -384,28 +380,28 @@ final class ForumController extends Controller {
         return $this->render('forum/ban.html.twig', [
             'form' => $form->createView(),
             'forum' => $forum,
-            'user' => $subject,
+            'user' => $user,
         ]);
     }
 
     /**
-     * @Security("is_granted('moderator', forum)")
+     * @IsGranted("moderator", subject="forum")
      *
      * @param Forum         $forum
-     * @param User          $subject
+     * @param User          $user
      * @param Request       $request
      * @param EntityManager $em
      *
      * @return Response
      */
-    public function unbanAction(Forum $forum, User $subject, Request $request, EntityManager $em) {
+    public function unbanAction(Forum $forum, User $user, Request $request, EntityManager $em) {
         $data = new ForumBanData();
 
         $form = $this->createForm(ForumBanType::class, $data, ['intent' => 'unban']);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $forum->addBan($data->toUnban($forum, $subject, $this->getUser()));
+            $forum->addBan($data->toUnban($forum, $user, $this->getUser()));
 
             $em->flush();
 
@@ -419,7 +415,7 @@ final class ForumController extends Controller {
         return $this->render('forum/unban.html.twig', [
             'form' => $form->createView(),
             'forum' => $forum,
-            'user' => $subject,
+            'user' => $user,
         ]);
     }
 }

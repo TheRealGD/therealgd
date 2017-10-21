@@ -9,8 +9,8 @@ use Raddit\AppBundle\Form\Model\WikiData;
 use Raddit\AppBundle\Form\WikiType;
 use Raddit\AppBundle\Repository\WikiPageRepository;
 use Raddit\AppBundle\Repository\WikiRevisionRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -41,7 +41,7 @@ final class WikiController extends Controller {
     /**
      * Creates a wiki page.
      *
-     * @Security("is_granted('ROLE_USER')")
+     * @IsGranted("ROLE_USER")
      *
      * @param Request       $request
      * @param string        $path
@@ -76,12 +76,8 @@ final class WikiController extends Controller {
     /**
      * Edits a wiki page.
      *
-     * @ParamConverter("page", options={
-     *     "map_method_signature": true,
-     *     "repository_method": "findOneCaseInsensitively"
-     * })
-     *
-     * @Security("is_granted('write', page)")
+     * @Entity("page", expr="repository.findOneCaseInsensitively(path)")
+     * @IsGranted("write", subject="page")
      *
      * @param Request       $request
      * @param WikiPage      $page
@@ -113,10 +109,7 @@ final class WikiController extends Controller {
     }
 
     /**
-     * @ParamConverter("wikiPage", options={
-     *     "map_method_signature": true,
-     *     "repository_method": "findOneCaseInsensitively"
-     * })
+     * @Entity("wikiPage", expr="repository.findOneCaseInsensitively(path)")
      *
      * @param WikiPage $wikiPage
      * @param int      $page

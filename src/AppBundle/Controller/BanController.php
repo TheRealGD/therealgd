@@ -7,7 +7,7 @@ use Raddit\AppBundle\Entity\Ban;
 use Raddit\AppBundle\Entity\User;
 use Raddit\AppBundle\Form\BanType;
 use Raddit\AppBundle\Repository\BanRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,7 +23,7 @@ final class BanController extends Controller {
     }
 
     /**
-     * @Security("is_granted('ROLE_ADMIN')")
+     * @IsGranted("ROLE_ADMIN")
      *
      * @param int           $page
      * @param BanRepository $banRepository
@@ -39,7 +39,7 @@ final class BanController extends Controller {
     /**
      * Form for adding new bans.
      *
-     * @Security("is_granted('ROLE_ADMIN')")
+     * @IsGranted("ROLE_ADMIN")
      *
      * @param Request       $request
      * @param EntityManager $em
@@ -80,7 +80,7 @@ final class BanController extends Controller {
     /**
      * Redirect to the ban form.
      *
-     * @Security("is_granted('ROLE_ADMIN')")
+     * @IsGranted("ROLE_ADMIN")
      *
      * @param EntityManager $em
      * @param string        $entityClass
@@ -98,7 +98,7 @@ final class BanController extends Controller {
     }
 
     /**
-     * @Security("is_granted('ROLE_ADMIN')")
+     * @IsGranted("ROLE_ADMIN")
      *
      * @param Request       $request
      * @param EntityManager $em

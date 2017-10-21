@@ -9,14 +9,14 @@ use Raddit\AppBundle\Form\MessageReplyType;
 use Raddit\AppBundle\Form\MessageThreadType;
 use Raddit\AppBundle\Form\Model\MessageData;
 use Raddit\AppBundle\Repository\MessageThreadRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 final class MessageController extends Controller {
     /**
-     * @Security("is_granted('ROLE_USER')")
+     * @IsGranted("ROLE_USER")
      *
      * @param MessageThreadRepository $repository
      * @param int                     $page
@@ -34,7 +34,7 @@ final class MessageController extends Controller {
     /**
      * Start a new message thread.
      *
-     * @Security("is_granted('message', receiver)")
+     * @IsGranted("message", subject="receiver")
      *
      * @param Request       $request
      * @param EntityManager $em
@@ -68,7 +68,7 @@ final class MessageController extends Controller {
     /**
      * View a message thread.
      *
-     * @Security("is_granted('access', thread)")
+     * @IsGranted("access", subject="thread")
      *
      * @param MessageThread $thread
      *
@@ -93,7 +93,7 @@ final class MessageController extends Controller {
     }
 
     /**
-     * @Security("is_granted('reply', thread)")
+     * @IsGranted("reply", subject="thread")
      *
      * @param Request       $request
      * @param EntityManager $em

@@ -5,7 +5,7 @@ namespace Raddit\AppBundle\Controller;
 use Embed\Embed;
 use Embed\Exceptions\InvalidUrlException;
 use Raddit\AppBundle\Utils\MarkdownConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Helpers for Ajax-related stuff.
  *
- * @Security("is_granted('ROLE_USER')")
+ * @IsGranted("ROLE_USER")
  */
 class AjaxController {
     /**
