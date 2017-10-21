@@ -24,7 +24,7 @@ final class WikiController extends Controller {
      *
      * @return Response
      */
-    public function wikiAction(string $path, WikiPageRepository $wikiPageRepository) {
+    public function wiki(string $path, WikiPageRepository $wikiPageRepository) {
         $page = $wikiPageRepository->findOneCaseInsensitively($path);
 
         if (!$page) {
@@ -52,7 +52,7 @@ final class WikiController extends Controller {
      * @todo handle conflicts
      * @todo do something if the page already exists
      */
-    public function createAction(Request $request, string $path, EntityManager $em) {
+    public function create(Request $request, string $path, EntityManager $em) {
         $data = new WikiData();
 
         $form = $this->createForm(WikiType::class, $data);
@@ -87,7 +87,7 @@ final class WikiController extends Controller {
      *
      * @todo handle conflicts
      */
-    public function editAction(Request $request, WikiPage $page, EntityManager $em) {
+    public function edit(Request $request, WikiPage $page, EntityManager $em) {
         $data = WikiData::createFromPage($page);
         $form = $this->createForm(WikiType::class, $data);
         $form->handleRequest($request);
@@ -116,7 +116,7 @@ final class WikiController extends Controller {
      *
      * @return Response
      */
-    public function historyAction(WikiPage $wikiPage, int $page) {
+    public function history(WikiPage $wikiPage, int $page) {
         return $this->render('wiki/history.html.twig', [
             'page' => $wikiPage,
             'revisions' => $wikiPage->getPaginatedRevisions($page),
@@ -128,7 +128,7 @@ final class WikiController extends Controller {
      *
      * @return Response
      */
-    public function revisionAction(WikiRevision $revision) {
+    public function revision(WikiRevision $revision) {
         return $this->render('wiki/revision.html.twig', [
             'page' => $revision->getPage(),
             'revision' => $revision,
@@ -141,7 +141,7 @@ final class WikiController extends Controller {
      *
      * @return Response
      */
-    public function allAction(int $page, WikiPageRepository $wikiPageRepository) {
+    public function all(int $page, WikiPageRepository $wikiPageRepository) {
         $pages = $wikiPageRepository->findAllPages($page);
 
         return $this->render('wiki/all.html.twig', [
@@ -149,7 +149,7 @@ final class WikiController extends Controller {
         ]);
     }
 
-    public function recentChangesAction(WikiRevisionRepository $repository, int $page) {
+    public function recentChanges(WikiRevisionRepository $repository, int $page) {
         return $this->render('wiki/recent.html.twig', [
             'revisions' => $repository->findRecent($page),
         ]);

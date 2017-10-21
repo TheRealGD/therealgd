@@ -18,7 +18,7 @@ final class BanController extends Controller {
      *
      * @return Response
      */
-    public function landingPageAction() {
+    public function landingPage() {
         return $this->render('ban/banned.html.twig');
     }
 
@@ -30,7 +30,7 @@ final class BanController extends Controller {
      *
      * @return Response
      */
-    public function listAction(int $page, BanRepository $banRepository) {
+    public function list(int $page, BanRepository $banRepository) {
         return $this->render('ban/list.html.twig', [
             'bans' => $banRepository->findAllPaginated($page),
         ]);
@@ -46,7 +46,7 @@ final class BanController extends Controller {
      *
      * @return Response
      */
-    public function addAction(Request $request, EntityManager $em) {
+    public function add(Request $request, EntityManager $em) {
         $ban = new Ban();
 
         $ban->setIp($request->query->filter('ip', null, FILTER_VALIDATE_IP));
@@ -88,7 +88,7 @@ final class BanController extends Controller {
      *
      * @return Response
      */
-    public function redirectAction(EntityManager $em, $entityClass, $id) {
+    public function redirectToBanForm(EntityManager $em, $entityClass, $id) {
         $entity = $em->find($entityClass, $id);
 
         return $this->redirectToRoute('add_ban', [
@@ -105,7 +105,7 @@ final class BanController extends Controller {
      *
      * @return Response
      */
-    public function removeAction(Request $request, EntityManager $em) {
+    public function remove(Request $request, EntityManager $em) {
         if (!$this->isCsrfTokenValid('remove_bans', $request->request->get('token'))) {
             throw $this->createAccessDeniedException();
         }

@@ -33,7 +33,7 @@ final class UserController extends Controller {
      *
      * @return Response
      */
-    public function userPageAction(User $user, UserRepository $repository) {
+    public function userPage(User $user, UserRepository $repository) {
         $contributions = $repository->findLatestContributions($user);
 
         return $this->render('user/user.html.twig', [
@@ -48,7 +48,7 @@ final class UserController extends Controller {
      *
      * @return Response
      */
-    public function submissionsAction(User $user, int $page) {
+    public function submissions(User $user, int $page) {
         return $this->render('user/submissions.html.twig', [
             'submissions' => $user->getPaginatedSubmissions($page),
             'user' => $user,
@@ -61,7 +61,7 @@ final class UserController extends Controller {
      *
      * @return Response
      */
-    public function commentsAction(User $user, int $page) {
+    public function comments(User $user, int $page) {
         return $this->render('user/comments.html.twig', [
             'comments' => $user->getPaginatedComments($page),
             'user' => $user,
@@ -79,7 +79,7 @@ final class UserController extends Controller {
      *
      * @return Response
      */
-    public function registrationAction(
+    public function registration(
         Request $request,
         EntityManager $em,
         FirewallMap $firewallMap,
@@ -127,7 +127,7 @@ final class UserController extends Controller {
      *
      * @return Response
      */
-    public function editUserAction(EntityManager $em, User $user, Request $request) {
+    public function editUser(EntityManager $em, User $user, Request $request) {
         $data = UserData::fromUser($user);
 
         $form = $this->createForm(UserType::class, $data);
@@ -158,7 +158,7 @@ final class UserController extends Controller {
      *
      * @return Response
      */
-    public function userSettingsAction(EntityManager $em, User $user, Request $request) {
+    public function userSettings(EntityManager $em, User $user, Request $request) {
         $data = UserData::fromUser($user);
 
         $form = $this->createForm(UserSettingsType::class, $data);
@@ -218,7 +218,7 @@ final class UserController extends Controller {
      *
      * @return Response
      */
-    public function blockListAction(int $page) {
+    public function blockList(int $page) {
         /* @var User $user */
         $user = $this->getUser();
 
@@ -236,7 +236,7 @@ final class UserController extends Controller {
      *
      * @return Response
      */
-    public function blockAction(User $blockee, Request $request, EntityManager $em) {
+    public function block(User $blockee, Request $request, EntityManager $em) {
         /* @var User $blocker */
         $blocker = $this->getUser();
 
@@ -275,7 +275,7 @@ final class UserController extends Controller {
      *
      * @return Response
      */
-    public function unblockAction(UserBlock $block, EntityManager $em, Request $request) {
+    public function unblock(UserBlock $block, EntityManager $em, Request $request) {
         if (!$this->isCsrfTokenValid('unblock', $request->request->get('token'))) {
             throw new AccessDeniedHttpException();
         }
@@ -295,7 +295,7 @@ final class UserController extends Controller {
      *
      * @return Response
      */
-    public function inboxAction(int $page) {
+    public function inbox(int $page) {
         /* @var User $user */
         $user = $this->getUser();
 
@@ -314,7 +314,7 @@ final class UserController extends Controller {
      *
      * @return Response
      */
-    public function clearInboxAction(Request $request, NotificationRepository $nr, EntityManager $em, string $_format) {
+    public function clearInbox(Request $request, NotificationRepository $nr, EntityManager $em, string $_format) {
         if (!$this->isCsrfTokenValid('clear_inbox', $request->request->get('token'))) {
             throw new AccessDeniedHttpException();
         }
@@ -344,7 +344,7 @@ final class UserController extends Controller {
      *
      * @return Response
      */
-    public function markAsTrustedAction(Request $request, User $user, EntityManager $em, bool $trusted) {
+    public function markAsTrusted(Request $request, User $user, EntityManager $em, bool $trusted) {
         if (!$this->isCsrfTokenValid('mark_trusted', $request->request->get('token'))) {
             throw new AccessDeniedHttpException();
         }

@@ -1,92 +1,101 @@
 multi:
-    defaults: { _controller: RadditAppBundle:Forum:multi, sortBy: hot, page: 1}
+    controller: Raddit\AppBundle\Controller\ForumController::multi
+    defaults: { sortBy: hot, page: 1 }
     path: /f/{names}/{sortBy}/{page}
     requirements:
         names: '(?:\w{3,25}\+){1,70}\w{3,25}'
         sortBy: hot|new|top|controversial
 
 forum:
-    defaults: { _controller: RadditAppBundle:Forum:front, sortBy: hot, page: 1 }
+    controller: Raddit\AppBundle\Controller\ForumController::front
+    defaults: { sortBy: hot, page: 1 }
     path: /f/{forum_name}/{sortBy}/{page}
     methods: [GET]
     requirements: { sortBy: hot|new|top|controversial, page: \d+ }
 
 forum_feed:
-    defaults: { _controller: RadditAppBundle:Forum:feed, sortBy: hot, page: 1, _format: xml }
+    controller: Raddit\AppBundle\Controller\ForumController::feed
+    defaults: { sortBy: hot, page: 1, _format: xml }
     path: /f/{forum_name}/{sortBy}/{page}.atom
     methods: [GET]
     requirements: { sortBy: hot|new|top|controversial, page: \d+ }
 
 edit_forum:
-    defaults: { _controller: RadditAppBundle:Forum:editForum }
+    controller: Raddit\AppBundle\Controller\ForumController::editForum
     path: /f/{forum_name}/edit
     methods: [GET, POST]
 
 delete_forum:
-    defaults: { _controller: RadditAppBundle:Forum:delete }
+    controller: Raddit\AppBundle\Controller\ForumController::delete
     path: /f/{forum_name}/delete
     methods: [GET, POST]
 
 forum_appearance:
-    defaults: { _controller: RadditAppBundle:Forum:appearance }
+    controller: Raddit\AppBundle\Controller\ForumController::appearance
     path: /f/{forum_name}/appearance
     methods: [GET, POST]
 
 forum_bans:
-    defaults: { _controller: RadditAppBundle:Forum:bans, page: 1 }
+    controller: Raddit\AppBundle\Controller\ForumController::bans
+    defaults: { page: 1 }
     path: /f/{forum_name}/bans
     methods: [GET]
     requirements: { page: \d+ }
 
 forum_ban_history:
-    defaults: { _controller: RadditAppBundle:Forum:banHistory, page: 1}
+    controller: Raddit\AppBundle\Controller\ForumController::banHistory
+    defaults: { page: 1 }
     path: /f/{forum_name}/bans/history/{username}/{page}
     methods: [GET]
     requirements: { page: \d+ }
 
 forum_ban:
-    defaults: { _controller: RadditAppBundle:Forum:ban }
+    controller: Raddit\AppBundle\Controller\ForumController::ban
     path: /f/{forum_name}/ban/{username}
     methods: [GET, POST]
 
 forum_unban:
-    defaults: { _controller: RadditAppBundle:Forum:unban }
+    controller: Raddit\AppBundle\Controller\ForumController::unban
     path: /f/{forum_name}/unban/{username}
     methods: [GET, POST]
 
 forum_moderators:
-    defaults: { _controller: RadditAppBundle:Forum:moderators, page: 1 }
+    controller: Raddit\AppBundle\Controller\ForumController::moderators
+    defaults: { page: 1 }
     path: /f/{forum_name}/moderators/{page}
     methods: [GET]
     requirements: { page: \d+ }
 
 add_moderator:
-    defaults: { _controller: RadditAppBundle:Forum:addModerator }
+    controller: Raddit\AppBundle\Controller\ForumController::addModerator
     path: /f/{forum_name}/add_moderator
     methods: [GET, POST]
 
 subscribe:
-    defaults: { _controller: RadditAppBundle:Forum:subscribe, action: subscribe }
+    controller: Raddit\AppBundle\Controller\ForumController::subscribe
+    defaults: { action: subscribe }
     path: /f/{forum_name}/subscribe
     methods: [POST]
 
 unsubscribe:
-    defaults: { _controller: RadditAppBundle:Forum:subscribe, action: unsubscribe }
+    controller: Raddit\AppBundle\Controller\ForumController::subscribe
+    defaults: { action: unsubscribe }
     path: /f/{forum_name}/unsubscribe
     methods: [POST]
 
 create_forum:
-    defaults: { _controller: RadditAppBundle:Forum:createForum }
+    controller: Raddit\AppBundle\Controller\ForumController::createForum
     path: /create_forum
     methods: [GET, POST]
 
 forum_list:
-    defaults: { _controller: RadditAppBundle:Forum:list, page: 1, sortBy: by_submissions }
+    controller: Raddit\AppBundle\Controller\ForumController::list
+    defaults: { page: 1, sortBy: by_submissions }
     path: /forums/{sortBy}/{page}
     methods: [GET]
     requirements: { forums: \d+, sortBy: by_name|by_title|by_subscribers|by_submissions }
 
 forums_by_category:
-    defaults: { _controller: RadditAppBundle:Forum:listCategories }
+    controller: Raddit\AppBundle\Controller\ForumController::listCategories
     path: /forums/by_category
     methods: [GET]

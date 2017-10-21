@@ -1,34 +1,37 @@
 theme_history:
-    defaults: { _controller: RadditAppBundle:Theme:history, page: 1}
+    controller: Raddit\AppBundle\Controller\ThemeController::history
+    defaults: { page: 1}
     path: /theme_history/{id}/{page}
     methods: [GET]
     requirements: { id: "%uuid_regex%", page: \d+ }
 
 create_theme:
-    defaults: { _controller: RadditAppBundle:Theme:create }
+    controller: Raddit\AppBundle\Controller\ThemeController::create
     path: /create_theme
     methods: [GET, POST]
 
 edit_theme:
-    defaults: { _controller: RadditAppBundle:Theme:edit }
+    controller: Raddit\AppBundle\Controller\ThemeController::edit
     path: /edit_theme/{username}/{name}
     methods: [GET, POST]
     requirements: { name: .+, id: "%uuid_regex%" }
 
 theme_revision_source:
-    defaults: { _controller: RadditAppBundle:Theme:source }
+    controller: Raddit\AppBundle\Controller\ThemeController::source
     path: /theme_source/{id}
     methods: [GET]
     requirements: { id: "%uuid_regex%" }
 
 stylesheet:
-    defaults: { _controller: RadditAppBundle:Theme:stylesheet, _format: css }
+    controller: Raddit\AppBundle\Controller\ThemeController::stylesheet
+    defaults: { _format: css }
     path: /user_style/{field}/{themeId}.css
     methods: [GET]
     requirements: { field: common|day|night, themeId: "%uuid_regex%" }
 
 themes:
-    defaults: { _controller: RadditAppBundle:Theme:list, page: 1 }
+    controller: Raddit\AppBundle\Controller\ThemeController::list
+    defaults: { page: 1 }
     path: /themes/{page}
     methods: [GET]
     requirements: { page: \d+ }

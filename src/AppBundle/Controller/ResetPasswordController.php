@@ -22,7 +22,7 @@ final class ResetPasswordController extends Controller {
      *
      * @return Response
      */
-    public function requestResetAction(Request $request, UserRepository $ur, ResetPasswordMailer $mailer) {
+    public function requestReset(Request $request, UserRepository $ur, ResetPasswordMailer $mailer) {
         if (!$this->getParameter('env(NO_REPLY_ADDRESS)')) {
             throw $this->createNotFoundException();
         }
@@ -61,7 +61,7 @@ final class ResetPasswordController extends Controller {
      *
      * @return Response
      */
-    public function resetAction(
+    public function reset(
         Request $request, EntityManager $em, User $user,
         ResetPasswordMailer $mailer, \DateTime $expires, string $checksum
     ) {

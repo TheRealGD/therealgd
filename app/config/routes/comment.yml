@@ -1,44 +1,43 @@
 comment_post:
-    defaults:
-        _controller: RadditAppBundle:Comment:comment
-        comment_id: ~
+    controller: Raddit\AppBundle\Controller\CommentController::comment
+    defaults: { comment_id: ~ }
     path: /f/{forum_name}/{submission_id}/comment_post/{comment_id}
     methods: [POST]
     requirements: { submission_id: \d+, comment_id: \d+ }
 
 edit_comment:
-    defaults: { _controller: RadditAppBundle:Comment:editComment }
+    controller: Raddit\AppBundle\Controller\CommentController::editComment
     path: /f/{forum_name}/{submission_id}/edit_comment/{comment_id}
     methods: [GET, POST]
     requirements: { submission_id: \d+, comment_id: \d+ }
 
 comment_form:
-    defaults: { _controller: RadditAppBundle:Comment:commentForm, comment_id: null }
+    controller: Raddit\AppBundle\Controller\CommentController::commentForm
+    defaults: { comment_id: null }
     methods: [GET]
     path: /comment_form/{forumName}/{submissionId}/{commentId}
     requirements: { submissionId: \d+, commentId: \d+ }
 
 delete_comment:
-    defaults: { _controller: RadditAppBundle:Comment:deleteComment }
+    controller: Raddit\AppBundle\Controller\CommentController::deleteComment
     path: /dc/{id}
     methods: [POST]
 
 softdelete_comment:
-    defaults: { _controller: RadditAppBundle:Comment:softDeleteComment }
+    controller: Raddit\AppBundle\Controller\CommentController::softDeleteComment
     path: /sdc/{id}
     methods: [POST]
 
 comment_list:
-    defaults: { _controller: RadditAppBundle:Comment:list, page: 1 }
+    controller: Raddit\AppBundle\Controller\CommentController::list
+    defaults: { page: 1 }
     path: /comments/{page}
     methods: [GET]
     requirements: { page: \d+ }
 
 comment_vote:
-    defaults:
-        _controller: RadditAppBundle:Vote:vote
-        _format: html
-        entityClass: Raddit\AppBundle\Entity\Comment
+    controller: Raddit\AppBundle\Controller\VoteController::vote
+    defaults: { _format: html, entityClass: Raddit\AppBundle\Entity\Comment }
     path: /cv/{id}.{_format}
     methods: [POST]
     requirements: { _format: html|json }

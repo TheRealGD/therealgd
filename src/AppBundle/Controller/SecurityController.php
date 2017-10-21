@@ -11,7 +11,7 @@ final class SecurityController extends Controller {
      *
      * @return Response
      */
-    public function loginAction() {
+    public function login() {
         $helper = $this->get('security.authentication_utils');
 
         $lastUsername = $helper->getLastUsername();

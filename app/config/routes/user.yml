@@ -1,76 +1,82 @@
 user:
-    defaults: { _controller: RadditAppBundle:User:userPage }
+    controller: Raddit\AppBundle\Controller\UserController::userPage
     path: /user/{username}
     methods: [GET]
 
 user_shortcut:
-    defaults: { _controller: FrameworkBundle:Redirect:redirect, route: user }
+    controller: FrameworkBundle:Redirect:redirect
+    defaults: { route: user }
     path: /u/{username}
     methods: [GET]
 
 user_submissions:
-    defaults: { _controller: RadditAppBundle:User:submissions, page: 1 }
+    controller: Raddit\AppBundle\Controller\UserController::submissions
+    defaults: { page: 1 }
     path: /user/{username}/submissions/{page}
     methods: [GET]
     requirements: { page: \d+ }
 
 user_comments:
-    defaults: { _controller: RadditAppBundle:User:comments, page: 1 }
+    controller: Raddit\AppBundle\Controller\UserController::comments
+    defaults: { page: 1 }
     path: /user/{username}/comments/{page}
     methods: [GET]
     requirements: { page: \d+ }
 
 edit_user:
-    defaults: { _controller: RadditAppBundle:User:editUser }
+    controller: Raddit\AppBundle\Controller\UserController::editUser
     path: /edit_user/{username}
     methods: [GET, POST]
 
 edit_biography:
-    defaults: { _controller: Raddit\AppBundle\Controller\UserController::editBiography }
+    controller: Raddit\AppBundle\Controller\UserController::editBiography
     path: /edit_biography/{username}
     methods: [GET, POST]
 
 user_settings:
-    defaults: { _controller: RadditAppBundle:User:userSettings }
+    controller: Raddit\AppBundle\Controller\UserController::userSettings
     path: /user_settings/{username}
     methods: [GET, POST]
 
 user_block_list:
-    defaults: { _controller: RadditAppBundle:User:blockList, page: 1 }
+    controller: Raddit\AppBundle\Controller\UserController::blockList
+    defaults: { page: 1 }
     path: /block_list/{page}
     methods: [GET, POST]
     requirements: { page: \d+ }
 
 block_user:
-    defaults: { _controller: RadditAppBundle:User:block }
+    controller: Raddit\AppBundle\Controller\UserController::block
     path: /block/{username}
     methods: [GET, POST]
 
 unblock_user:
-    defaults: { _controller: RadditAppBundle:User:unblock }
+    controller: Raddit\AppBundle\Controller\UserController::unblock
     path: /unblock/{id}
     methods: [POST]
     requirements: { id: "%uuid_regex%" }
 
 registration:
-    defaults: { _controller: RadditAppBundle:User:registration }
+    controller: Raddit\AppBundle\Controller\UserController::registration
     path: /registration
     methods: [GET, POST]
 
 mark_user_trusted:
-    defaults: { _controller: RadditAppBundle:User:markAsTrusted }
+    controller: Raddit\AppBundle\Controller\UserController::markAsTrusted
     path: /mark_as_trusted/{id}/{trusted}
     methods: [POST]
     requirements: { trusted: '[01]' }
 
 inbox:
-    defaults: { _controller: RadditAppBundle:User:inbox, page: 1 }
+    controller: Raddit\AppBundle\Controller\UserController::inbox
+    defaults: { page: 1 }
     path: /inbox/{page}
     methods: [GET]
     requirements: { page: \d+ }
 
 clear_inbox:
-    defaults: { _controller: RadditAppBundle:User:clearInbox, _format: html }
+    controller: Raddit\AppBundle\Controller\UserController::clearInbox
+    defaults: { _format: html }
     path: /clear_inbox.{_format}
     methods: [POST]
     requirements: { _format: html|json }

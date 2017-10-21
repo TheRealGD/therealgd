@@ -24,7 +24,7 @@ final class VoteController extends Controller {
      *
      * @return Response
      */
-    public function voteAction(EntityManager $em, Request $request, $entityClass, $id, $_format) {
+    public function vote(EntityManager $em, Request $request, $entityClass, $id, $_format) {
         if (!$this->isCsrfTokenValid('vote', $request->request->get('token'))) {
             throw $this->createAccessDeniedException('Bad CSRF token');
         }

@@ -23,7 +23,7 @@ final class MessageController extends Controller {
      *
      * @return Response
      */
-    public function listAction(MessageThreadRepository $repository, int $page) {
+    public function list(MessageThreadRepository $repository, int $page) {
         $messages = $repository->findUserMessages($this->getUser(), $page);
 
         return $this->render('message/list.html.twig', [
@@ -42,7 +42,7 @@ final class MessageController extends Controller {
      *
      * @return Response
      */
-    public function composeAction(Request $request, EntityManager $em, User $receiver) {
+    public function compose(Request $request, EntityManager $em, User $receiver) {
         $data = new MessageData($this->getUser(), $request->getClientIp());
 
         $form = $this->createForm(MessageThreadType::class, $data);
@@ -74,13 +74,13 @@ final class MessageController extends Controller {
      *
      * @return Response
      */
-    public function messageAction(MessageThread $thread) {
+    public function message(MessageThread $thread) {
         return $this->render('message/message.html.twig', [
             'thread' => $thread,
         ]);
     }
 
-    public function replyFormAction($threadId) {
+    public function replyForm($threadId) {
         $form = $this->createForm(MessageReplyType::class, null, [
             'action' => $this->generateUrl('reply_to_message', [
                 'id' => $threadId,
@@ -101,7 +101,7 @@ final class MessageController extends Controller {
      *
      * @return Response
      */
-    public function replyAction(Request $request, EntityManager $em, MessageThread $thread) {
+    public function reply(Request $request, EntityManager $em, MessageThread $thread) {
         $data = new MessageData($this->getUser(), $request->getClientIp());
 
         $form = $this->createForm(MessageReplyType::class, $data);

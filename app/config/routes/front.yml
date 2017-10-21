@@ -1,35 +1,41 @@
 front:
-    defaults: { _controller: RadditAppBundle:Front:front, sortBy: hot, page: 1 }
+    controller: Raddit\AppBundle\Controller\FrontController::front
+    defaults: { sortBy: hot, page: 1 }
     path: /{sortBy}/{page}
     methods: [GET]
     requirements: { sortBy: hot|new|top|controversial, page: \d+ }
 
 featured:
-    defaults: { _controller: RadditAppBundle:Front:featured, sortBy: hot, page: 1}
+    controller: Raddit\AppBundle\Controller\FrontController::featured
+    defaults: { sortBy: hot, page: 1}
     path: /featured/{sortBy}/{page}
     methods: [GET]
     requirements: { sortBy: hot|new|top|controversial, page: \d+ }
 
 subscribed:
-    defaults: { _controller: RadditAppBundle:Front:subscribed, sortBy: hot, page: 1 }
+    controller: Raddit\AppBundle\Controller\FrontController::subscribed
+    defaults: { sortBy: hot, page: 1 }
     path: /subscribed/{sortBy}/{page}
     methods: [GET]
     requirements: { sortBy: hot|new|top|controversial, page: \d+ }
 
 all:
-    defaults: { _controller: RadditAppBundle:Front:all, sortBy: hot, page: 1 }
+    controller: Raddit\AppBundle\Controller\FrontController::all
+    defaults: { sortBy: hot, page: 1 }
     path: /all/{sortBy}/{page}
     methods: [GET]
     requirements: { sortBy: hot|new|top|controversial, page: \d+ }
 
 moderated:
-    defaults: { _controller: RadditAppBundle:Front:moderated, sortBy: hot, page: 1 }
+    controller: Raddit\AppBundle\Controller\FrontController::moderated
+    defaults: { sortBy: hot, page: 1 }
     path: /moderated/{sortBy}/{page}
     methods: [GET]
     requirements: { sortBy: hot|new|top|controversial, page: \d+ }
 
 featured_feed:
-    defaults: { _controller: RadditAppBundle:Front:featuredFeed, sortBy: hot, page: 1, _format: xml }
+    controller: Raddit\AppBundle\Controller\FrontController::featuredFeed
+    defaults: { sortBy: hot, page: 1, _format: xml }
     path: /featured/{sortBy}/{page}.atom
     methods: [GET]
     requirements: { sortBy: hot|new|top|controversial, page: \d+ }

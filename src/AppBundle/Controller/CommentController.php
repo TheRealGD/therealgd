@@ -24,7 +24,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @ParamConverter("comment", options={"mapping": {"submission": "submission", "comment_id": "id"}})
  */
 final class CommentController extends Controller {
-    public function listAction(CommentRepository $repository, int $page) {
+    public function list(CommentRepository $repository, int $page) {
         // TODO: link this somewhere
         return $this->render('comment/list.html.twig', [
             'comments' => $repository->findRecentPaginated($page),
@@ -41,7 +41,7 @@ final class CommentController extends Controller {
      *
      * @return Response
      */
-    public function commentFormAction(
+    public function commentForm(
         ForumRepository $forumRepository,
         $forumName,
         $submissionId,
@@ -81,7 +81,7 @@ final class CommentController extends Controller {
      *
      * @return Response
      */
-    public function commentAction(
+    public function comment(
         EntityManager $em,
         Forum $forum,
         Submission $submission,
@@ -130,7 +130,7 @@ final class CommentController extends Controller {
      *
      * @return Response
      */
-    public function editCommentAction(
+    public function editComment(
         EntityManager $em,
         Forum $forum,
         Submission $submission,
@@ -175,7 +175,7 @@ final class CommentController extends Controller {
      *
      * @return Response
      */
-    public function deleteCommentAction(EntityManager $em, Comment $comment, Request $request) {
+    public function deleteComment(EntityManager $em, Comment $comment, Request $request) {
         if (!$this->isCsrfTokenValid('delete_comment', $request->request->get('token'))) {
             throw $this->createAccessDeniedException('Bad CSRF token');
         }
@@ -206,7 +206,7 @@ final class CommentController extends Controller {
      *
      * @return Response
      */
-    public function softDeleteCommentAction(EntityManager $em, Comment $comment, Request $request) {
+    public function softDeleteComment(EntityManager $em, Comment $comment, Request $request) {
         if (!$this->isCsrfTokenValid('softdelete_comment', $request->request->get('token'))) {
             throw $this->createAccessDeniedException('Bad CSRF token');
         }

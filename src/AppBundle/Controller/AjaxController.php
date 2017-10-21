@@ -27,7 +27,7 @@ class AjaxController {
      *
      * @return Response
      */
-    public function fetchTitleAction(Request $request) {
+    public function fetchTitle(Request $request) {
         $url = $request->request->get('url');
         try {
             $title = (Embed::create($url))->getTitle();
@@ -48,7 +48,7 @@ class AjaxController {
      *
      * @return Response
      */
-    public function markdownPreviewAction(Request $request, MarkdownConverter $converter) {
+    public function markdownPreview(Request $request, MarkdownConverter $converter) {
         $markdown = $request->request->get('markdown', '');
 
         return new Response($converter->convertToHtml($markdown));

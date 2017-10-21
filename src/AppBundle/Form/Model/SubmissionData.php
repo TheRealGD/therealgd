@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @RateLimit(period="1 hour", max="3", groups={"untrusted_user_create"},
- *     entityClass="RadditAppBundle:Submission")
+ *     entityClass="Raddit\AppBundle\Entity\Submission")
  */
 class SubmissionData {
     private $entityId;

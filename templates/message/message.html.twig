@@ -10,6 +10,6 @@
   {{ message_thread(thread) }}
 
   {% if is_granted('reply', thread) %}
-    {{ render(controller('RadditAppBundle:Message:replyForm', {threadId: thread.id})) }}
+    {{ render(controller('Raddit\\AppBundle\\Controller\\MessageController::replyForm', {threadId: thread.id})) }}
   {% endif %}
 {% endblock %}

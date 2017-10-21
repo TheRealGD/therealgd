@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
  * Seized from <https://symfony.com/doc/current/routing/redirect_trailing_slash.html>.
  */
 class RedirectingController {
-    public function removeTrailingSlashAction(Request $request) {
+    public function removeTrailingSlash(Request $request) {
         $pathInfo = $request->getPathInfo();
         $requestUri = $request->getRequestUri();
 

@@ -31,7 +31,7 @@ final class SubmissionController extends Controller {
      *
      * @return Response
      */
-    public function commentPageAction(Forum $forum, Submission $submission) {
+    public function commentPage(Forum $forum, Submission $submission) {
         return $this->render('submission/comments.html.twig', [
             'forum' => $forum,
             'submission' => $submission,
@@ -47,7 +47,7 @@ final class SubmissionController extends Controller {
      *
      * @return Response
      */
-    public function commentPermalinkAction(
+    public function commentPermalink(
         Forum $forum,
         Submission $submission,
         Comment $comment
@@ -70,7 +70,7 @@ final class SubmissionController extends Controller {
      *
      * @return Response
      */
-    public function submitAction(EntityManager $em, Request $request, Forum $forum = null) {
+    public function submit(EntityManager $em, Request $request, Forum $forum = null) {
         $data = new SubmissionData($forum);
 
         $form = $this->createForm(SubmissionType::class, $data);
@@ -105,7 +105,7 @@ final class SubmissionController extends Controller {
      *
      * @return Response
      */
-    public function editSubmissionAction(EntityManager $em, Forum $forum, Submission $submission, Request $request) {
+    public function editSubmission(EntityManager $em, Forum $forum, Submission $submission, Request $request) {
         $data = SubmissionData::createFromSubmission($submission);
 
         $form = $this->createForm(SubmissionType::class, $data);
@@ -170,7 +170,7 @@ final class SubmissionController extends Controller {
      *
      * @return Response
      */
-    public function lockAction(
+    public function lock(
         EntityManager $em,
         Request $request,
         Forum $forum,

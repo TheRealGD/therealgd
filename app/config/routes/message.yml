@@ -1,19 +1,20 @@
 message_list:
-    defaults: { _controller: RadditAppBundle:Message:list, page: 1 }
+    controller: Raddit\AppBundle\Controller\MessageController::list
+    defaults: { page: 1 }
     path: /messages/{page}
     methods: [GET]
 
 message:
-    defaults: { _controller: RadditAppBundle:Message:message }
+    controller: Raddit\AppBundle\Controller\MessageController::message
     path: /message/{id}
     methods: [GET]
 
 compose_message:
-    defaults: { _controller: RadditAppBundle:Message:compose }
+    controller: Raddit\AppBundle\Controller\MessageController::compose
     path: /compose_message/{username}
     methods: [GET, POST]
 
 reply_to_message:
-    defaults: { _controller: RadditAppBundle:Message:reply }
+    controller: Raddit\AppBundle\Controller\MessageController::reply
     path: /message_reply/{id}
     methods: [POST]

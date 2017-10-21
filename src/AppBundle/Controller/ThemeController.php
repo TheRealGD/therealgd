@@ -10,7 +10,6 @@ use Raddit\AppBundle\Form\ThemeType;
 use Raddit\AppBundle\Repository\ThemeRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,7 +22,7 @@ class ThemeController extends Controller {
      *
      * @return Response
      */
-    public function listAction(ThemeRepository $themeRepository, int $page) {
+    public function list(ThemeRepository $themeRepository, int $page) {
         return $this->render('theme/list.html.twig', [
             'themes' => $themeRepository->findAllPaginated($page),
         ]);
@@ -37,7 +36,7 @@ class ThemeController extends Controller {
      *
      * @return Response
      */
-    public function createAction(Request $request, EntityManager $em) {
+    public function create(Request $request, EntityManager $em) {
         $data = new ThemeData($this->getUser());
 
         $form = $this->createForm(ThemeType::class, $data);
@@ -72,7 +71,7 @@ class ThemeController extends Controller {
      *
      * @return Response
      */
-    public function editAction(Request $request, EntityManager $em, Theme $theme) {
+    public function edit(Request $request, EntityManager $em, Theme $theme) {
         $data = ThemeData::createFromTheme($theme);
         $form = $this->createForm(ThemeType::class, $data);
         $form->handleRequest($request);
@@ -101,14 +100,14 @@ class ThemeController extends Controller {
      *
      * @return Response
      */
-    public function historyAction(Theme $theme, int $page) {
+    public function history(Theme $theme, int $page) {
         return $this->render('theme/history.html.twig', [
             'theme' => $theme,
             'revisions' => $theme->getPaginatedRevisions($page),
         ]);
     }
 
-    public function sourceAction(ThemeRevision $revision) {
+    public function source(ThemeRevision $revision) {
         return $this->render('theme/source.html.twig', [
             'revision' => $revision,
         ]);
@@ -124,7 +123,7 @@ class ThemeController extends Controller {
      *
      * @return Response
      */
-    public function stylesheetAction(
+    public function stylesheet(
         EntityManager $em,
         Request $request,
         string $themeId,

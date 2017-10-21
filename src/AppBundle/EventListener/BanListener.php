@@ -2,6 +2,7 @@
 
 namespace Raddit\AppBundle\EventListener;
 
+use Raddit\AppBundle\Controller\BanController;
 use Raddit\AppBundle\Repository\BanRepository;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
@@ -28,7 +29,7 @@ final class BanListener implements EventSubscriberInterface {
         }
 
         if ($this->repository->ipIsBanned($request->getClientIp())) {
-            $request->attributes->set('_controller', 'RadditAppBundle:Ban:landingPage');
+            $request->attributes->set('_controller', BanController::class.'::landingPage');
         }
     }
 

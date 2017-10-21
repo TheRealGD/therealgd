@@ -26,7 +26,7 @@ use Symfony\Component\HttpFoundation\Response;
  *   instead.
  */
 final class FrontController extends Controller {
-    public function frontAction(ForumRepository $fr, SubmissionRepository $sr, string $sortBy, int $page) {
+    public function front(ForumRepository $fr, SubmissionRepository $sr, string $sortBy, int $page) {
         $user = $this->getUser();
 
         if (!$user instanceof User) {
@@ -39,19 +39,19 @@ final class FrontController extends Controller {
 
         switch ($listing) {
         case User::FRONT_SUBSCRIBED:
-            return $this->subscribedAction($fr, $sr, $sortBy, $page);
+            return $this->subscribed($fr, $sr, $sortBy, $page);
         case User::FRONT_FEATURED:
-            return $this->featuredAction($fr, $sr, $sortBy, $page);
+            return $this->featured($fr, $sr, $sortBy, $page);
         case User::FRONT_ALL:
-            return $this->allAction($sr, $sortBy, $page);
+            return $this->all($sr, $sortBy, $page);
         case User::FRONT_MODERATED:
-            return $this->moderatedAction($fr, $sr, $sortBy, $page);
+            return $this->moderated($fr, $sr, $sortBy, $page);
         default:
             throw new \InvalidArgumentException('bad front page selection');
         }
     }
 
-    public function featuredAction(ForumRepository $fr, SubmissionRepository $sr, string $sortBy, int $page) {
+    public function featured(ForumRepository $fr, SubmissionRepository $sr, string $sortBy, int $page) {
         $forums = $fr->findFeaturedForumNames();
         $submissions = $sr->findFrontPageSubmissions($forums, $sortBy, $page);
 
@@ -63,7 +63,7 @@ final class FrontController extends Controller {
         ]);
     }
 
-    public function subscribedAction(ForumRepository $fr, SubmissionRepository $sr, string $sortBy, int $page) {
+    public function subscribed(ForumRepository $fr, SubmissionRepository $sr, string $sortBy, int $page) {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
         $forums = $fr->findSubscribedForumNames($this->getUser());
@@ -91,7 +91,7 @@ final class FrontController extends Controller {
      *
      * @return Response
      */
-    public function allAction(SubmissionRepository $sr, string $sortBy, int $page) {
+    public function all(SubmissionRepository $sr, string $sortBy, int $page) {
         $submissions = $sr->findAllSubmissions($sortBy, $page);
 
         return $this->render('front/all.html.twig', [
@@ -101,7 +101,7 @@ final class FrontController extends Controller {
         ]);
     }
 
-    public function moderatedAction(ForumRepository $fr, SubmissionRepository $sr, string $sortBy, int $page) {
+    public function moderated(ForumRepository $fr, SubmissionRepository $sr, string $sortBy, int $page) {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
         $forums = $fr->findModeratedForumNames($this->getUser());
@@ -115,7 +115,7 @@ final class FrontController extends Controller {
         ]);
     }
 
-    public function featuredFeedAction(ForumRepository $fr, SubmissionRepository $sr, string $sortBy, int $page = 1) {
+    public function featuredFeed(ForumRepository $fr, SubmissionRepository $sr, string $sortBy, int $page = 1) {
         $forums = $fr->findFeaturedForumNames();
         $submissions = $sr->findFrontPageSubmissions($forums, $sortBy, $page);
 

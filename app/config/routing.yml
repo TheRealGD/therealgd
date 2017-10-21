@@ -49,6 +49,6 @@ _fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
 
 _trailing_slash_redirect:
-    defaults: { _controller: RadditAppBundle:Redirecting:removeTrailingSlash }
+    controller: Raddit\AppBundle\Controller\RedirectingController::removeTrailingSlash
     path: /{url}
     requirements: { url: '.*/$' }

@@ -1,5 +1,5 @@
 login:
-    defaults: { _controller: RadditAppBundle:Security:login }
+    controller: Raddit\AppBundle\Controller\SecurityController::login
     path: /login
     methods: [GET]
 

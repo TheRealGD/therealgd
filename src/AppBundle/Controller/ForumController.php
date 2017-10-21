@@ -37,7 +37,7 @@ final class ForumController extends Controller {
      *
      * @return Response
      */
-    public function frontAction(SubmissionRepository $sr, Forum $forum, string $sortBy, int $page) {
+    public function front(SubmissionRepository $sr, Forum $forum, string $sortBy, int $page) {
         $submissions = $sr->findForumSubmissions($forum, $sortBy, $page);
 
         return $this->render('forum/forum.html.twig', [
@@ -47,7 +47,7 @@ final class ForumController extends Controller {
         ]);
     }
 
-    public function multiAction(ForumRepository $fr, SubmissionRepository $sr,
+    public function multi(ForumRepository $fr, SubmissionRepository $sr,
                                 string $names, string $sortBy, int $page) {
         $names = preg_split('/[^\w]+/', $names, -1, PREG_SPLIT_NO_EMPTY);
         $names = array_map(Forum::class.'::canonicalizeName', $names);
@@ -76,7 +76,7 @@ final class ForumController extends Controller {
      *
      * @return Response
      */
-    public function createForumAction(Request $request, EntityManager $em) {
+    public function createForum(Request $request, EntityManager $em) {
         $data = new ForumData();
 
         $form = $this->createForm(ForumType::class, $data);
@@ -107,7 +107,7 @@ final class ForumController extends Controller {
      *
      * @return Response
      */
-    public function editForumAction(Request $request, Forum $forum, EntityManager $em) {
+    public function editForum(Request $request, Forum $forum, EntityManager $em) {
         $data = ForumData::createFromForum($forum);
 
         $form = $this->createForm(ForumType::class, $data);
@@ -137,7 +137,7 @@ final class ForumController extends Controller {
      *
      * @return Response
      */
-    public function feedAction(Forum $forum, SubmissionRepository $sr, string $sortBy, int $page) {
+    public function feed(Forum $forum, SubmissionRepository $sr, string $sortBy, int $page) {
         return $this->render('forum/feed.xml.twig', [
             'forum' => $forum,
             'submissions' => $sr->findForumSubmissions($forum, $sortBy, $page),
@@ -153,7 +153,7 @@ final class ForumController extends Controller {
      *
      * @return Response
      */
-    public function deleteAction(Request $request, Forum $forum, EntityManager $em) {
+    public function delete(Request $request, Forum $forum, EntityManager $em) {
         $form = $this->createForm(PasswordConfirmType::class);
         $form->handleRequest($request);
 
@@ -182,7 +182,7 @@ final class ForumController extends Controller {
      *
      * @return Response
      */
-    public function subscribeAction(Request $request, EntityManager $em, Forum $forum, string $action) {
+    public function subscribe(Request $request, EntityManager $em, Forum $forum, string $action) {
         if (!$this->isCsrfTokenValid('subscribe', $request->request->get('token'))) {
             throw $this->createAccessDeniedException();
         }
@@ -213,7 +213,7 @@ final class ForumController extends Controller {
      *
      * @return Response
      */
-    public function listAction(ForumRepository $repository, int $page = 1, string $sortBy) {
+    public function list(ForumRepository $repository, int $page = 1, string $sortBy) {
         return $this->render('forum/list.html.twig', [
             'forums' => $repository->findForumsByPage($page, $sortBy),
             'sortBy' => $sortBy,
@@ -226,7 +226,7 @@ final class ForumController extends Controller {
      *
      * @return Response
      */
-    public function listCategoriesAction(ForumCategoryRepository $fcr, ForumRepository $fr) {
+    public function listCategories(ForumCategoryRepository $fcr, ForumRepository $fr) {
         $forumCategories = $fcr->findBy([], ['name' => 'ASC']);
         $uncategorizedForums = $fr->findBy(['category' => null], ['canonicalName' => 'ASC']);
 
@@ -244,7 +244,7 @@ final class ForumController extends Controller {
      *
      * @return Response
      */
-    public function moderatorsAction(Forum $forum, int $page) {
+    public function moderators(Forum $forum, int $page) {
         return $this->render('forum/moderators.html.twig', [
             'forum' => $forum,
             'moderators' => $forum->getPaginatedModerators($page),
@@ -260,7 +260,7 @@ final class ForumController extends Controller {
      *
      * @return Response
      */
-    public function addModeratorAction(EntityManager $em, Forum $forum, Request $request) {
+    public function addModerator(EntityManager $em, Forum $forum, Request $request) {
         $data = new ModeratorData($forum);
         $form = $this->createForm(ModeratorType::class, $data);
         $form->handleRequest($request);
@@ -294,7 +294,7 @@ final class ForumController extends Controller {
      *
      * @return Response
      */
-    public function appearanceAction(Forum $forum, Request $request, EntityManager $em) {
+    public function appearance(Forum $forum, Request $request, EntityManager $em) {
         $data = ForumData::createFromForum($forum);
 
         $form = $this->createForm(ForumAppearanceType::class, $data);
@@ -325,7 +325,7 @@ final class ForumController extends Controller {
      *
      * @return Response
      */
-    public function bansAction(Forum $forum, ForumBanRepository $banRepository, int $page = 1) {
+    public function bans(Forum $forum, ForumBanRepository $banRepository, int $page = 1) {
         return $this->render('forum/bans.html.twig', [
             'bans' => $banRepository->findValidBansInForum($forum, $page),
             'forum' => $forum,
@@ -341,7 +341,7 @@ final class ForumController extends Controller {
      *
      * @return Response
      */
-    public function banHistoryAction(Forum $forum, User $user, int $page = 1) {
+    public function banHistory(Forum $forum, User $user, int $page = 1) {
         return $this->render('forum/ban_history.html.twig', [
             'bans' => $forum->getPaginatedBansByUser($user, $page),
             'forum' => $forum,
@@ -359,7 +359,7 @@ final class ForumController extends Controller {
      *
      * @return Response
      */
-    public function banAction(Forum $forum, User $user, Request $request, EntityManager $em) {
+    public function ban(Forum $forum, User $user, Request $request, EntityManager $em) {
         $data = new ForumBanData();
 
         $form = $this->createForm(ForumBanType::class, $data, ['intent' => 'ban']);
@@ -394,7 +394,7 @@ final class ForumController extends Controller {
      *
      * @return Response
      */
-    public function unbanAction(Forum $forum, User $user, Request $request, EntityManager $em) {
+    public function unban(Forum $forum, User $user, Request $request, EntityManager $em) {
         $data = new ForumBanData();
 
         $form = $this->createForm(ForumBanType::class, $data, ['intent' => 'unban']);
