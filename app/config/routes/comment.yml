@@ -20,12 +20,12 @@ comment_form:
 
 delete_comment:
     controller: Raddit\AppBundle\Controller\CommentController::deleteComment
-    path: /dc/{id}
+    path: /f/{forum_name}/{submission_id}/delete_comment/{comment_id}
     methods: [POST]
 
 softdelete_comment:
     controller: Raddit\AppBundle\Controller\CommentController::softDeleteComment
-    path: /sdc/{id}
+    path: /f/{forum_name}/{submission_id}/soft_delete_comment/{comment_id}
     methods: [POST]
 
 comment_list:

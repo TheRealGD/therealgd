@@ -5,7 +5,9 @@ namespace Raddit\AppBundle\Controller;
 use Doctrine\ORM\EntityManager;
 use Raddit\AppBundle\Entity\Comment;
 use Raddit\AppBundle\Entity\Forum;
+use Raddit\AppBundle\Entity\ForumLogCommentDeletion;
 use Raddit\AppBundle\Entity\Submission;
+use Raddit\AppBundle\Entity\User;
 use Raddit\AppBundle\Form\CommentType;
 use Raddit\AppBundle\Form\Model\CommentData;
 use Raddit\AppBundle\Repository\CommentRepository;
@@ -166,16 +168,23 @@ final class CommentController extends Controller {
     /**
      * Delete a comment.
      *
-     * @ParamConverter("comment", options={"mapping": {"id": "id"}})
      * @IsGranted("delete", subject="comment")
      *
      * @param EntityManager $em
+     * @param Submission    $submission
+     * @param Forum         $forum
      * @param Comment       $comment
      * @param Request       $request
      *
      * @return Response
      */
-    public function deleteComment(EntityManager $em, Comment $comment, Request $request) {
+    public function deleteComment(
+        EntityManager $em,
+        Submission $submission,
+        Forum $forum,
+        Comment $comment,
+        Request $request
+    ) {
         if (!$this->isCsrfTokenValid('delete_comment', $request->request->get('token'))) {
             throw $this->createAccessDeniedException('Bad CSRF token');
         }
@@ -189,6 +198,8 @@ final class CommentController extends Controller {
             throw new \RuntimeException("This shouldn't happen");
         }
 
+        $this->logDeletion($forum, $submission, $comment);
+
         $em->flush();
 
         return $this->redirectAfterAction($comment, $request);
@@ -197,25 +208,49 @@ final class CommentController extends Controller {
     /**
      * "Soft deletes" a comment by blanking its body.
      *
-     * @ParamConverter("comment", options={"mapping": {"id": "id"}})
      * @IsGranted("softdelete", subject="comment")
      *
      * @param EntityManager $em
+     * @param Forum         $forum
+     * @param Submission    $submission
      * @param Comment       $comment
      * @param Request       $request
      *
      * @return Response
      */
-    public function softDeleteComment(EntityManager $em, Comment $comment, Request $request) {
+    public function softDeleteComment(
+        EntityManager $em,
+        Forum $forum,
+        Submission $submission,
+        Comment $comment,
+        Request $request
+    ) {
         if (!$this->isCsrfTokenValid('softdelete_comment', $request->request->get('token'))) {
             throw $this->createAccessDeniedException('Bad CSRF token');
         }
 
         $comment->softDelete();
 
+        $this->logDeletion($forum, $submission, $comment);
+
         $em->flush();
 
         return $this->redirectAfterAction($comment, $request);
+    }
+
+    private function logDeletion(Forum $forum, Submission $submission, Comment $comment) {
+        /* @var User $user */
+        $user = $this->getUser();
+
+        if ($user !== $comment->getUser()) {
+            $forum->addLogEntry(new ForumLogCommentDeletion(
+                $forum,
+                $user,
+                !$forum->userIsModerator($user, false),
+                $comment->getUser(),
+                $submission
+            ));
+        }
     }
 
     /**

@@ -5,7 +5,9 @@ namespace Raddit\AppBundle\Controller;
 use Doctrine\ORM\EntityManager;
 use Raddit\AppBundle\Entity\Comment;
 use Raddit\AppBundle\Entity\Forum;
+use Raddit\AppBundle\Entity\ForumLogSubmissionDeletion;
 use Raddit\AppBundle\Entity\Submission;
+use Raddit\AppBundle\Entity\User;
 use Raddit\AppBundle\Form\Model\SubmissionData;
 use Raddit\AppBundle\Form\SubmissionType;
 use Raddit\AppBundle\Utils\Slugger;
@@ -147,7 +149,22 @@ final class SubmissionController extends Controller {
             throw new BadRequestHttpException('Invalid CSRF token');
         }
 
+        $em->refresh($submission);
         $em->remove($submission);
+
+        /* @var User $user */
+        $user = $this->getUser();
+
+        if ($user !== $submission->getUser()) {
+            $forum->addLogEntry(new ForumLogSubmissionDeletion(
+                $forum,
+                $user,
+                !$forum->userIsModerator($user, false),
+                $submission->getTitle(),
+                $submission->getUser()
+            ));
+        }
+
         $em->flush();
 
         $this->addFlash('notice', 'flash.submission_deleted');

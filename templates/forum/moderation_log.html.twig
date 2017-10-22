@@ -1,0 +1,65 @@
+{% extends 'forum/base.html.twig' %}
+
+{% block head %}
+  {{ include('_includes/meta_pagination.html.twig', {pager: logs}, with_context=false) }}
+{% endblock %}
+
+{% block html_title 'title.showing_moderation_log_for_forum'|trans({
+  '%forum%': '<a href="%s">/f/%s</a>'|format(path('forum', {forum_name: forum.name})|e , forum.name|e)
+})|raw %}
+{% block title block('html_title')|striptags %}
+
+{% block body %}
+  {% from _self import comment_deletion, submission_deletion %}
+  <h1 class="page-heading">{{ block('html_title') }}</h1>
+
+  {% if logs|length > 0 %}
+    <ul class="moderation-log">
+      {% for entry in logs %}
+          <li class="moderation-log__{{ entry.action|replace({'_': '-'}) }}">
+            <p>
+            {% if entry.action == 'comment_deletion' %}
+              {{ comment_deletion(entry) }}
+            {% elseif entry.action == 'submission_deletion' %}
+              {{ submission_deletion(entry) }}
+            {% endif %}
+            &mdash;
+            {% with {date: entry.timestamp|localizeddate('long', 'short')} %}
+              <time datetime="{{ entry.timestamp|date('c') }}" class="relative-time" title="{{ date }}">
+                {{- date -}}
+              </time>
+            {% endwith %}
+            </p>
+          </li>
+      {% endfor %}
+    </ul>
+
+    {{ include('_includes/pagination.html.twig', {pager: logs}, with_context=false) }}
+  {% else %}
+    <div class="alert alert--notice">
+      <p>
+        {{ 'flash.no_entries_to_display'|trans }}
+      </p>
+    </div>
+  {% endif %}
+{% endblock %}
+
+{% macro comment_deletion(entry) %}
+  {% from 'user/_macros.html.twig' import user_link %}
+  {{ 'log.comment_deletion'|trans({
+    '%user%': user_link(entry.user, {flag: entry.wasAdmin ? 'admin' : 'moderator'}),
+    '%author%': user_link(entry.author),
+    '%submission%': entry.submission
+      ? '<a href="%s">%s</a>'|format(path('comments', {forum_name: entry.submission.forum.name, submission_id: entry.submission.id})|e, entry.submission.title|e)
+      : '<del>%s</del>'|format(entry.title|escape),
+  })|raw }}
+{% endmacro %}
+
+{% macro submission_deletion(entry) %}
+  {% from 'user/_macros.html.twig' import user_link %}
+  {{ 'log.submission_deletion'|trans({
+    '%user%': user_link(entry.user, {flag: entry.wasAdmin ? 'admin' : 'moderator'}),
+    '%author%': user_link(entry.author),
+    '%title%': '<del>%s</del>'|format(entry.title|escape),
+  })|raw }}
+{% endmacro %}

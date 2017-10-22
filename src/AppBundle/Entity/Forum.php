@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Selectable;
 use Doctrine\ORM\Mapping as ORM;
+use Pagerfanta\Adapter\DoctrineCollectionAdapter;
 use Pagerfanta\Adapter\DoctrineSelectableAdapter;
 use Pagerfanta\Pagerfanta;
 
@@ -122,6 +123,14 @@ class Forum {
      */
     private $theme;
 
+    /**
+     * @ORM\OneToMany(targetEntity="ForumLogEntry", mappedBy="forum", cascade={"persist", "remove"})
+     * @ORM\OrderBy({"timestamp": "DESC"})
+     *
+     * @var ForumLogEntry[]|Collection
+     */
+    private $logEntries;
+
     public function __construct(
         string $name,
         string $title,
@@ -139,6 +148,7 @@ class Forum {
         $this->moderators = new ArrayCollection();
         $this->submissions = new ArrayCollection();
         $this->subscriptions = new ArrayCollection();
+        $this->logEntries = new ArrayCollection();
 
         if ($user) {
             $this->addModerator(new Moderator($this, $user));
@@ -384,6 +394,26 @@ class Forum {
      */
     public function setTheme($theme) {
         $this->theme = $theme;
+    }
+
+    /**
+     * @param int $page
+     * @param int $max
+     *
+     * @return Pagerfanta|ForumLogEntry[]
+     */
+    public function getPaginatedLogEntries(int $page, int $max = 50): Pagerfanta {
+        $pager = new Pagerfanta(new DoctrineCollectionAdapter($this->logEntries));
+        $pager->setMaxPerPage($max);
+        $pager->setCurrentPage($page);
+
+        return $pager;
+    }
+
+    public function addLogEntry(ForumLogEntry $entry) {
+        if (!$this->logEntries->contains($entry)) {
+            $this->logEntries->add($entry);
+        }
     }
 
     public static function canonicalizeName(string $name): string {

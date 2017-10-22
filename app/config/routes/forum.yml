@@ -77,6 +77,13 @@ remove_moderator:
     methods: [POST]
     requirements: { moderator_id: "%uuid_regex%" }
 
+moderation_log:
+    controller: Raddit\AppBundle\Controller\ForumController::moderationLog
+    defaults: { page: 1 }
+    path: /f/{forum_name}/moderation_log/{page}
+    methods: [GET]
+    requirements: { page: \d+ }
+
 subscribe:
     controller: Raddit\AppBundle\Controller\ForumController::subscribe
     defaults: { action: subscribe }

@@ -178,7 +178,11 @@
 {%- block comment_nav_delete_softdelete -%}
   {%- spaceless -%}
     <li class="comment-nav-softdelete">
-      <form action="{{ path('softdelete_comment', {id: comment.id}) }}" method="POST">
+      <form action="{{ path('softdelete_comment', {
+        forum_name: comment.submission.forum.name,
+        submission_id: comment.submission.id,
+        comment_id: comment.id,
+      }) }}" method="POST">
         <input type="hidden" name="token" value="{{ csrf_token('softdelete_comment') }}">
         <button type="submit" class="confirm-comment-delete">{{ 'comments.delete'|trans }}</button>
       </form>
@@ -189,7 +193,11 @@
 {%- block comment_nav_delete_thread -%}
   {%- spaceless -%}
     <li class="comment-nav-delete-thread">
-      <form action="{{ path('delete_comment', {id: comment.id}) }}" method="POST">
+      <form action="{{ path('delete_comment', {
+        forum_name: comment.submission.forum.name,
+        submission_id: comment.submission.id,
+        comment_id: comment.id,
+      }) }}" method="POST">
         <input type="hidden" name="token" value="{{ csrf_token('delete_comment') }}">
         <button type="submit" class="confirm-comment-delete">{{ delete_thread_label|trans }}</button>
       </form>

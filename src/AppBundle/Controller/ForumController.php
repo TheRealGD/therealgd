@@ -311,6 +311,13 @@ final class ForumController extends Controller {
         ]);
     }
 
+    public function moderationLog(Forum $forum, int $page) {
+        return $this->render('forum/moderation_log.html.twig', [
+            'forum' => $forum,
+            'logs' => $forum->getPaginatedLogEntries($page),
+        ]);
+    }
+
     /**
      * Alter a forum's appearance.
      *

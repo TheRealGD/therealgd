@@ -49,6 +49,7 @@
             <li><a href="{{ path('add_moderator', {forum_name: forum.name}) }}">{{ 'forum.add_moderator'|trans }}</a></li>
             <li><a href="{{ path('delete_forum', {forum_name: forum.name}) }}">{{ 'nav.delete_forum'|trans }}</a></li>
           {% endif %}
+          <li><a href="{{ path('moderation_log', {forum_name: forum.name}) }}">{{ 'nav.moderation_log'|trans }}</a></li>
         </ul>
       </section>
     {% endif %}

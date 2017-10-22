@@ -1,6 +1,6 @@
 {##
  # - submitter (bool): If comment author is the submission author
- # - flag (int): one of Raddit\AppBundle\Entity\UserFlags constants
+ # - flag (int|string): one of Raddit\AppBundle\Entity\UserFlags constants, or 'admin'/'moderator'
  # - class (string): Additional classes
  #}
 {%- macro user_link(user, options) -%}
@@ -10,20 +10,20 @@
     {{- (options.prefix ?? false) ? '/u/' -}}
     {{- user.username -}}
   </a>
-  {%- if options.flag ?? 0 == 0 -%}
-  {% elseif options.flag == constant('Raddit\\AppBundle\\Entity\\UserFlags::FLAG_ADMIN') %}
+  {%- if options.flag ?? 0 is same as(0) -%}
+  {% elseif options.flag == constant('Raddit\\AppBundle\\Entity\\UserFlags::FLAG_ADMIN') or options.flag == 'admin' %}
     <small class="user-flag user-flag-admin">{{ 'user_flag.admin'|trans }}</small>
-  {% elseif options.flag == constant('Raddit\\AppBundle\\Entity\\UserFlags::FLAG_MODERATOR') %}
+  {% elseif options.flag == constant('Raddit\\AppBundle\\Entity\\UserFlags::FLAG_MODERATOR') or options.flag == 'moderator' %}
     <small class="user-flag user-flag-moderator">{{ 'user_flag.moderator'|trans }}</small>
   {%- endif -%}
 {%- endmacro -%}
 
 {%- macro _class_by_flag(flag) -%}
-  {%- if flag == 0 -%}
+  {%- if flag is same as(0) -%}
     {#- early exit -#}
-  {%- elseif flag == constant('Raddit\\AppBundle\\Entity\\UserFlags::FLAG_ADMIN') -%}
+  {%- elseif flag == constant('Raddit\\AppBundle\\Entity\\UserFlags::FLAG_ADMIN') or flag == 'admin' -%}
     flag-admin
-  {%- elseif flag == constant('Raddit\\AppBundle\\Entity\\UserFlags::FLAG_MODERATOR') -%}
+  {%- elseif flag == constant('Raddit\\AppBundle\\Entity\\UserFlags::FLAG_MODERATOR') or flag == 'moderator' -%}
     flag-moderator
   {%- endif -%}
 {%- endmacro -%}
