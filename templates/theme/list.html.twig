@@ -27,7 +27,7 @@
     <tbody>
       {% for theme in themes %}
         <tr>
-          <td><a href="{{ path('user', {username: theme.author.username}) }}">{{ user_link(theme.author) }}</a> / <strong>{{ theme.name }}</strong></td>
+          <td>{{ user_link(theme.author) }}/<strong>{{ theme.name }}</strong></td>
           <td>
             {% with {date: theme.latestRevision.modified|localizeddate('long', 'short')} %}
               <time datetime="{{ theme.latestRevision.modified|date('c') }}" title="{{ date }}" class="relative-time">

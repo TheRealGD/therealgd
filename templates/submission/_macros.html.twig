@@ -59,7 +59,7 @@
 
       {% if submission.image %}
         <div class="submission-image-container">
-          <a href="{{ block('submission_url') }}" class="submission-image" {% if submission.url %}rel="nofollow noreferrer noopener" target="{{ open_external ? '_blank' }}"{% endif %}>
+          <a href="{{ block('submission_url') }}" class="submission-image" {% if submission.url %}rel="nofollow noreferrer noopener" {% if open_external %}target="_blank"{% endif %}{% endif %}>
             <img src="{{ submission.image|imagine_filter('submission_thumbnail') }}" class="submission-thumbnail" alt="">
           </a>
         </div>
@@ -68,7 +68,7 @@
       <div class="submission-inner">
         <header class="submission-header">
           <h1 class="submission-title">
-            <a href="{{ block('submission_url') }}" class="submission-link" {% if submission.url %}rel="nofollow noreferrer noopener" target="{{ open_external ? '_blank' }}"{% endif %}>
+            <a href="{{ block('submission_url') }}" class="submission-link" {% if submission.url %}rel="nofollow noreferrer noopener" {% if open_external %}target="{{ open_external ? '_blank' }}"{% endif %}{% endif %}>
               {{- submission.title -}}
             </a>
 
