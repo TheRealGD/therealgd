@@ -12,7 +12,8 @@ use Ramsey\Uuid\Uuid;
  * @ORM\DiscriminatorColumn(name="action_type", type="text")
  * @ORM\DiscriminatorMap({
  *     "comment_deletion": "ForumLogCommentDeletion",
- *     "submission_deletion": "ForumLogSubmissionDeletion"
+ *     "submission_deletion": "ForumLogSubmissionDeletion",
+ *     "ban": "ForumLogBan",
  * })
  */
 abstract class ForumLogEntry {

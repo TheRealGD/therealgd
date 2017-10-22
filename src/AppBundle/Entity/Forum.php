@@ -324,15 +324,7 @@ class Forum {
             return false;
         }
 
-        $expiryTime = $ban->getExpiryTime();
-
-        if ($expiryTime) {
-            $now = \DateTime::createFromFormat('U.u', microtime(true));
-
-            return $expiryTime > $now;
-        }
-
-        return true;
+        return !$ban->isExpired();
     }
 
     /**
@@ -357,6 +349,14 @@ class Forum {
     public function addBan(ForumBan $ban) {
         if (!$this->bans->contains($ban)) {
             $this->bans->add($ban);
+
+            $this->logEntries->add(new ForumLogBan(
+                $this,
+                $ban->getBannedBy(),
+                !$this->userIsModerator($ban->getBannedBy(), false),
+                $ban,
+                $ban->getTimestamp()
+            ));
         }
     }
 

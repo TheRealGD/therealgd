@@ -117,6 +117,10 @@ class ForumBan {
         return $this->banned;
     }
 
+    public function getBannedBy(): User {
+        return $this->bannedBy;
+    }
+
     public function getTimestamp(): \DateTime {
         return $this->timestamp;
     }
@@ -126,5 +130,13 @@ class ForumBan {
      */
     public function getExpiryTime() {
         return $this->expiresAt;
+    }
+
+    public function isExpired() {
+        if ($this->expiresAt === null) {
+            return false;
+        }
+
+        return $this->expiresAt < \DateTime::createFromFormat('U.u', microtime(true));
     }
 }
