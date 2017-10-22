@@ -71,6 +71,12 @@ add_moderator:
     path: /f/{forum_name}/add_moderator
     methods: [GET, POST]
 
+remove_moderator:
+    controller: Raddit\AppBundle\Controller\ForumController::removeModerator
+    path: /f/{forum_name}/remove_moderator/{moderator_id}
+    methods: [POST]
+    requirements: { moderator_id: "%uuid_regex%" }
+
 subscribe:
     controller: Raddit\AppBundle\Controller\ForumController::subscribe
     defaults: { action: subscribe }

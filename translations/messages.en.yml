@@ -20,6 +20,7 @@ action:
     lock: Lock
     unlock: Unlock
     delete: Delete
+    remove: Remove
 
 add_moderator:
     title: Add moderator to %forum%
@@ -117,6 +118,7 @@ flash:
     no_moderated_forums: You don't moderate any forums.
     you_cannot_create_forums_yet: You cannot create forums yet.
     user_biography_updated: The biography was updated.
+    user_unmodded: The user was unmodded.
 
 forum:
     moderators: Moderators

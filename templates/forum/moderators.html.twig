@@ -22,6 +22,7 @@
         <th>{{ 'forum_moderators.username'|trans }}</th>
         <th>{{ 'forum_moderators.since'|trans }}</th>
         <th>{{ 'forum_moderators.last_seen'|trans }}</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -38,6 +39,14 @@
           <time datetime="{{ moderator.user.lastSeen|date('c') }}" title="{{ moderator.user.lastSeen|localizeddate('long', 'short') }}" class="relative-time">
             {{ moderator.user.lastSeen|localizeddate('long', 'short') }}
           </time>
+          {% endif %}
+        </td>
+        <td>
+          {% if is_granted('remove', moderator) %}
+            <form action="{{ path('remove_moderator', {forum_name: forum.name, moderator_id: moderator.id}) }}" method="post">
+              <input type="hidden" name="token" value="{{ csrf_token('remove_moderator') }}">
+              <button class="button button--inline">{{ 'action.remove'|trans }}</button>
+            </form>
           {% endif %}
         </td>
       </tr>

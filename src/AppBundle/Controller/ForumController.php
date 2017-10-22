@@ -4,6 +4,7 @@ namespace Raddit\AppBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Raddit\AppBundle\Entity\Forum;
+use Raddit\AppBundle\Entity\Moderator;
 use Raddit\AppBundle\Entity\User;
 use Raddit\AppBundle\Form\ForumAppearanceType;
 use Raddit\AppBundle\Form\ForumBanType;
@@ -22,6 +23,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * @Entity("forum", expr="repository.findOneByCaseInsensitiveName(forum_name)")
@@ -280,6 +282,32 @@ final class ForumController extends Controller {
         return $this->render('forum/add_moderator.html.twig', [
             'form' => $form->createView(),
             'forum' => $forum,
+        ]);
+    }
+
+    /**
+     * @Entity("moderator", expr="repository.findOneBy({'forum': forum, 'id': moderator_id})")
+     * @IsGranted("remove", subject="moderator")
+     *
+     * @param EntityManager $em
+     * @param Forum         $forum
+     * @param Request       $request
+     * @param Moderator     $moderator
+     *
+     * @return Response
+     */
+    public function removeModerator(EntityManager $em, Forum $forum, Request $request, Moderator $moderator) {
+        if (!$this->isCsrfTokenValid('remove_moderator', $request->request->get('token'))) {
+            throw new BadRequestHttpException('Invalid CSRF token');
+        }
+
+        $em->remove($moderator);
+        $em->flush();
+
+        $this->addFlash('success', 'flash.user_unmodded');
+
+        return $this->redirectToRoute('forum_moderators', [
+            'forum_name' => $forum->getName(),
         ]);
     }
 

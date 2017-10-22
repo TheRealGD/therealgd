@@ -55,24 +55,29 @@ class Moderator {
         return $this->id;
     }
 
-    /**
-     * @return Forum
-     */
-    public function getForum() {
+    public function getForum(): Forum {
         return $this->forum;
     }
 
-    /**
-     * @return User
-     */
-    public function getUser() {
+    public function getUser(): User {
         return $this->user;
     }
 
-    /**
-     * @return \DateTime
-     */
     public function getTimestamp(): \DateTime {
         return $this->timestamp;
+    }
+
+    public function userCanRemove($user): bool {
+        if (!$user instanceof User) {
+            return false;
+        }
+
+        if ($user->isAdmin()) {
+            return true;
+        }
+
+        // todo: allow other mods to remove in certain circumstances
+
+        return $user === $this->user;
     }
 }
