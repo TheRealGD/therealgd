@@ -23,6 +23,6 @@ ban_ip_by_submission:
 
 ban_ip_by_comment:
     controller: Raddit\AppBundle\Controller\BanController::redirectToBanForm
-    defaults: { entityClass: Raddit\AppBundle\Entity\Submission }
+    defaults: { entityClass: Raddit\AppBundle\Entity\Comment }
     path: /ban_by_comment/{id}
     methods: [GET]

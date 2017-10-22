@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 final class BanController extends Controller {
     /**
@@ -90,6 +91,10 @@ final class BanController extends Controller {
      */
     public function redirectToBanForm(EntityManager $em, $entityClass, $id) {
         $entity = $em->find($entityClass, $id);
+
+        if (!$entity) {
+            throw new NotFoundHttpException('Entity not found');
+        }
 
         return $this->redirectToRoute('add_ban', [
             'ip' => $entity->getIp(),
