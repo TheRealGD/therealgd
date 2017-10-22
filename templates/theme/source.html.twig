@@ -21,8 +21,12 @@
   </p>
 
   {% with {hierarchy: revision.hierarchy} %}
-    {% if hierarchy|length > 1 %}
+    {% if hierarchy|length > 1 or hierarchy[0].appendToDefaultStyle %}
       <h2>{{ 'label.hierarchy'|trans }}</h2>
+      {% if hierarchy[0].appendToDefaultStyle %}
+        <ul>
+          <li><em>{{ 'label.default'|trans }}</em>
+      {% endif %}
       {% for member in hierarchy %}
         <ul>
           <li>
@@ -33,35 +37,39 @@
             {% endif %}
             {% if member != revision %}
               (<a href="{{ path('theme_revision_source', {id: member.id}) }}">
-              <code>{{- member.id|replace({'-': '-<wbr>'})|raw -}}</code>
-            </a>)
+                <code>{{- member.id|replace({'-': '-<wbr>'})|raw -}}</code>
+              </a>)
             {% endif %}
       {% endfor %}
       {% for i in 0..hierarchy|length %}
           </li>
         </ul>
       {% endfor %}
+      {% if hierarchy[0].appendToDefaultStyle %}
+          </li>
+        </ul>
+      {% endif %}
     {% endif %}
   {% endwith %}
 
   {% if revision.commonCss is not empty %}
     <details open>
       <summary>{{ 'label.common_css'|trans }}</summary>
-      <pre><code class="language-css source-code">{{ revision.commonCss }}</code></pre>
+      <pre class="source-code"><code class="language-css">{{ revision.commonCss }}</code></pre>
     </details>
   {% endif %}
 
   {% if revision.dayCss is not empty %}
     <details open>
       <summary>{{ 'label.day_css'|trans }}</summary>
-      <pre><code class="language-css source-code">{{ revision.dayCss }}</code></pre>
+      <pre class="source-code"><code class="language-css">{{ revision.dayCss }}</code></pre>
     </details>
   {% endif %}
 
   {% if revision.nightCss is not empty %}
     <details open>
       <summary>{{ 'label.night_css'|trans }}</summary>
-      <pre><code class="language-css source-code">{{ revision.nightCss }}</code></pre>
+      <pre class="source-code"><code class="language-css">{{ revision.nightCss }}</code></pre>
     </details>
   {% endif %}
 {% endblock %}
