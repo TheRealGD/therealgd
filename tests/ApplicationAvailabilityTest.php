@@ -120,6 +120,8 @@ class ApplicationAvailabilityTest extends WebTestCase {
         yield ['/f/NeWs/controversial/1'];
         yield ['/f/NeWs/1'];
         yield ['/f/NeWs/1/comment/1'];
+        yield ['/f/news/bans'];
+        yield ['/f/news/moderation_log'];
         yield ['/f/cats/2'];
         yield ['/f/CATS/2'];
         yield ['/forums'];
@@ -165,6 +167,8 @@ class ApplicationAvailabilityTest extends WebTestCase {
         yield ['/create_forum'];
         yield ['/f/news/edit'];
         yield ['/f/news/appearance'];
+        yield ['/f/news/add_moderator'];
+        yield ['/f/news/delete'];
         yield ['/inbox'];
         yield ['/submit'];
         yield ['/submit/news'];

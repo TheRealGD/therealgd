@@ -163,6 +163,7 @@ label:
     from: Από
     to: Προς
     sent: Στάλθηκε
+    toolbox: Εργαλειοθήκη
 
 login_form:
     log_in: Σύνδεση
@@ -280,7 +281,6 @@ user:
     username_rules: Επιτρέπονται χαρακτήρες  είναι A-Z, a-z, 0-9 και _.
     password_rules: Ελάχιστο 8 χαρακτήρες; Το πολύ 72 λόγω περιορισμών του αλγόριθμου bcrypt.
     email_optional: Η παροχή μιας διεύθυνσης email είναι προαιρετική. Θα χρησιμοποιηθεί μόνο για επαναφορά του κωδικού πρόσβασής σας.
-    toolbox: Εργαλειοθήκη
     message: Στείλετε μήνυμα
     registered: Εγγεγραμμένοι στις %timestamp%
 
@@ -328,7 +328,6 @@ wiki:
     all_pages: Ολες οι σελίδες
     page_history: Ιστορικό σελίδας
     edit_page: Επεξεργασία σελίδας
-    toolbox: Εργαλειοθήκη
     navigation: Πλοήγηση
     last_edited: Τελευταία επεξεργασία από %username% %timestamp%
 

@@ -36,23 +36,21 @@
       {% endif %}
     </section>
 
-    {% if is_granted('moderator', forum) %}
-      <section class="sidebar__section sidebar__section--forum-manage forum-manage">
-        <h1 class="sidebar__title">{{ 'forum.manage'|trans }}</h1>
-        <ul>
+    <section class="sidebar__section sidebar__section--forum-manage forum-manage">
+      <h1 class="sidebar__title">{{ 'label.toolbox'|trans }}</h1>
+      <ul>
+        <li><a href="{{ path('forum_bans', {forum_name: forum.name}) }}">{{ 'nav.bans'|trans }}</a></li>
+        <li><a href="{{ path('moderation_log', {forum_name: forum.name}) }}">{{ 'nav.moderation_log'|trans }}</a></li>
+        {% if is_granted('moderator', forum) %}
           <li><a href="{{ path('edit_forum', {forum_name: forum.name}) }}">{{ 'forum.edit'|trans }}</a></li>
           <li><a href="{{ path('forum_appearance', {forum_name: forum.name}) }}">{{ 'nav.appearance'|trans }}</a></li>
-          {% if is_granted('moderator', forum) %}
-            <li><a href="{{ path('forum_bans', {forum_name: forum.name}) }}">{{ 'nav.bans'|trans }}</a></li>
-          {% endif %}
-          {% if is_granted('ROLE_ADMIN') %}
-            <li><a href="{{ path('add_moderator', {forum_name: forum.name}) }}">{{ 'forum.add_moderator'|trans }}</a></li>
-            <li><a href="{{ path('delete_forum', {forum_name: forum.name}) }}">{{ 'nav.delete_forum'|trans }}</a></li>
-          {% endif %}
-          <li><a href="{{ path('moderation_log', {forum_name: forum.name}) }}">{{ 'nav.moderation_log'|trans }}</a></li>
-        </ul>
-      </section>
-    {% endif %}
+        {% endif %}
+        {% if is_granted('ROLE_ADMIN') %}
+          <li><a href="{{ path('add_moderator', {forum_name: forum.name}) }}">{{ 'forum.add_moderator'|trans }}</a></li>
+          <li><a href="{{ path('delete_forum', {forum_name: forum.name}) }}">{{ 'nav.delete_forum'|trans }}</a></li>
+        {% endif %}
+      </ul>
+    </section>
 
     {% if forum.moderators|length > 0 %}
       <section class="sidebar__section sidebar__section--forum-moderators forum-moderators">

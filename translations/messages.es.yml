@@ -215,6 +215,7 @@ label:
     from: De
     to: A
     sent: Enviado
+    toolbox: Herramientas
 
 login_form:
     log_in: Ingresar
@@ -361,7 +362,6 @@ user:
     username_rules: Los caracteres permitidos son A-Z, a-z, 0-9 y barra baja.
     password_rules: Mínimo de 8 caracteres; máximo de 72 debido a limitaciones del algoritmo bcrypt.
     email_optional: Proporcionar una dirección correo es opcional. Solo la utilizaremos para restablecer contraseñas y enviar códigos de autenticación de dos factores.
-    toolbox: Herramientas
     message: Enviar mensaje
     registered: Registrado el %timestamp%
 
@@ -409,7 +409,6 @@ user_settings_form:
     all_pages: Todas las páginas
     page_history: Historial de la página
     edit_page: Editar página
-    toolbox: Herramientas
     navigation: Navigación
     last_edited: Última edición por %username% %timestamp%
 

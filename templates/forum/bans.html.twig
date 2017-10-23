@@ -19,7 +19,9 @@
       <th>{{ 'label.reason'|trans }}</th>
       <th>{{ 'label.banned'|trans }}</th>
       <th>{{ 'label.expires'|trans }}</th>
-      <th></th>
+      {% if is_granted('moderator', forum) %}
+        <th></th>
+      {% endif %}
     </tr>
     </thead>
     <tbody>
@@ -47,16 +49,18 @@
               {{ 'label.never'|trans }}
             {% endif %}
           </td>
-          <td>
-            <a href="{{ path('forum_ban_history', {forum_name: forum.name, username: ban.user.username}) }}"
-               class="button button--inline">
-              {{- 'nav.ban_history'|trans -}}
-            </a>
-            <a href="{{ path('forum_unban', {forum_name: forum.name, username: ban.user.username}) }}"
-               class="button button--inline">
-              {{- 'action.unban'|trans -}}
-            </a>
-          </td>
+          {% if is_granted('moderator', forum) %}
+            <td>
+              <a href="{{ path('forum_ban_history', {forum_name: forum.name, username: ban.user.username}) }}"
+                 class="button button--inline">
+                {{- 'nav.ban_history'|trans -}}
+              </a>
+              <a href="{{ path('forum_unban', {forum_name: forum.name, username: ban.user.username}) }}"
+                 class="button button--inline">
+                {{- 'action.unban'|trans -}}
+              </a>
+            </td>
+          {% endif %}
         </tr>
       {% endfor %}
     </tbody>

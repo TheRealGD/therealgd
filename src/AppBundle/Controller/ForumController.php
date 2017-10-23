@@ -352,8 +352,6 @@ final class ForumController extends Controller {
     }
 
     /**
-     * @IsGranted("moderator", subject="forum")
-     *
      * @param Forum              $forum
      * @param ForumBanRepository $banRepository
      * @param int                $page

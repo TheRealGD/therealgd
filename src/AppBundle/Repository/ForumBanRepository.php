@@ -31,6 +31,7 @@ class ForumBanRepository extends EntityRepository {
             ->andWhere('m.banned = TRUE')
             ->andWhere('m.forum = :forum')
             ->andWhere('m.expiresAt IS NULL OR m.expiresAt >= :now')
+            ->orderBy('m.timestamp', 'DESC')
             ->setParameter('forum', $forum)
             ->setParameter('now', new \DateTime(), 'datetimetz');
 

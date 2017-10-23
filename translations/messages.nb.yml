@@ -148,6 +148,7 @@ label:
     from: Fra
     to: Til
     sent: Sendt
+    toolbox: Verktøy
 
 login_form:
     log_in: Logg inn
@@ -257,7 +258,6 @@ user:
     password_rules: Minst 8 tegn; opptil 72 på grunn av begrensninger med bcrypt-algoritmen.
     email_optional: Å oppgi en epost-adresse er valgfritt. Den vil kun bli brukt til nullstilling av passord.
     message: Send melding
-    toolbox: Verktøy
     registered: Registrert %timestamp%
 
 user_flag:

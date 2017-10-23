@@ -145,6 +145,7 @@ label:
     from: de
     to: al
     sent: Sendis
+    toolbox: Ilaro
 
 login_form:
     log_in: Ensaluti
@@ -252,7 +253,6 @@ user:
     username_rules: Permesita karakteroj estas A ĝis Z, a ĝis z, 0 ĝis 9, kaj substrekas.
     password_rules: Minimuma de 8 karakteroj; maksimuma de 72 ĉar limigoj de la «bcrypt» algoritmo.
     email_optional: Provizi retpoŝton nedevigas. Ni nur uzos ĝin por reagordi pasvortojn kaj retpoŝti du-faktorajn identokontrolojn.
-    toolbox: Ilaro
     message: Sendi mesaĝon
     registered: Registris %timestamp%
 
@@ -299,7 +299,6 @@ wiki:
     all_pages: Ĉiuj paĝoj
     page_history: Paĝa historio
     edit_page: Redakti paĝon
-    toolbox: Ilaro
     navigation: Navigado
     last_edited: Laste redaktis de %username% %timestamp%
 

@@ -147,6 +147,7 @@ label:
     from: Käyttäjältä
     to: Käyttäjälle
     sent: Lähetetty
+    toolbox: Työkalut
 
 login_form:
     log_in: Kirjaudu
@@ -253,7 +254,6 @@ user:
     username_rules: Sallitut merkit ovat A-Z, a-z, 0-9 ja alaviiva.
     password_rules: Vähintään 8 merkkiä; enintään 72 bcrypt-algoritmin rajoitusten takia.
     email_optional: Sähköpostiosoite on vapaaehtoinen. Käytämme sitä vain salasanojen nollaamiseen ja kaksivaiheistodennuskoodien lähettämiseen.
-    toolbox: Työkalut
     message: Lähetä viesti
     registered: Rekisteröity %timestamp%
 

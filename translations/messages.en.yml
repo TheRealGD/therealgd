@@ -241,6 +241,7 @@ label:
     overview: Overview
     open_external_links_in_new_tab: Open external links in new tab
     biography: Biography
+    toolbox: Toolbox
 
 log:
     comment_deletion: '%user% deleted comment by %author% in "%submission%"'
@@ -398,7 +399,6 @@ user:
     username_rules: Allowed characters are A-Z, a-z, 0-9 and underscore.
     password_rules: Minimum of 8 characters; maximum of 72 due to limitations of the bcrypt algorithm.
     email_optional: Providing an email address is optional. We will only use it for resetting passwords.
-    toolbox: Toolbox
     message: Send message
     registered: Registered %timestamp%
 
@@ -446,7 +446,6 @@ wiki:
     all_pages: All pages
     page_history: Page history
     edit_page: Edit page
-    toolbox: Toolbox
     navigation: Navigation
     last_edited: Last edited by %username% %timestamp%
 
