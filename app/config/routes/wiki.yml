@@ -17,6 +17,20 @@ wiki_edit:
     methods: [GET, POST]
     requirements: { path: "%wiki_page_regex%" }
 
+wiki_lock:
+    controller: Raddit\AppBundle\Controller\WikiController::lock
+    defaults: { lock: true }
+    methods: [POST]
+    path: /wiki/_lock/{path}
+    requirements: { path: "%wiki_page_regex%" }
+
+wiki_unlock:
+    controller: Raddit\AppBundle\Controller\WikiController::lock
+    defaults: { lock: false }
+    methods: [POST]
+    path: /wiki/_unlock/{path}
+    requirements: { path: "%wiki_page_regex%" }
+
 wiki_history:
     controller: Raddit\AppBundle\Controller\WikiController::history
     defaults: { page: 1 }

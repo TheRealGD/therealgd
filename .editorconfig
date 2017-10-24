@@ -8,7 +8,10 @@ indent_size = 4
 indent_style = space
 trim_trailing_whitespace = true
 
-[*.{html,xml}.twig]
+[*.html.twig]
+indent_size = 2
+
+[*.xml.twig]
 indent_size = 2
 
 [*.{less,css}]

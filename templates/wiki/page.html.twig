@@ -38,6 +38,15 @@
     {% if page.locked %}
       <p>{{ 'wiki.locked_notice'|trans }}</p>
     {% endif %}
+
+    {% if is_granted('ROLE_ADMIN') %}
+      <form action="{{ path(page.locked ? 'wiki_unlock' : 'wiki_lock', {path: page.path}) }}" method="post">
+        <input type="hidden" name="token" value="{{ csrf_token('wiki_lock') }}">
+        <p>
+          <button class="button button--inline">{{ (page.locked ? 'action.unlock' : 'action.lock')|trans }}</button>
+        </p>
+      </form>
+    {% endif %}
   </section>
 
   <section class="sidebar__section sidebar__section--wiki-toolbox">

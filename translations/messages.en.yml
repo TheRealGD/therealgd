@@ -120,6 +120,8 @@ flash:
     user_biography_updated: The biography was updated.
     user_unmodded: The user was unmodded.
     no_entries_to_display: There are no entries to display.
+    page_locked: The page was locked.
+    page_unlocked: The page was unlocked.
 
 forum:
     moderators: Moderators
