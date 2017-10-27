@@ -11,12 +11,10 @@ use Raddit\AppBundle\Repository\WikiPageRepository;
 use Raddit\AppBundle\Repository\WikiRevisionRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
-final class WikiController extends Controller {
+final class WikiController extends AbstractController {
     /**
      * Views a wiki page.
      *
@@ -120,9 +118,7 @@ final class WikiController extends Controller {
      * @return Response
      */
     public function lock(Request $request, WikiPage $page, bool $lock, EntityManager $em) {
-        if (!$this->isCsrfTokenValid('wiki_lock', $request->request->get('token'))) {
-            throw new BadRequestHttpException('Invalid CSRF token');
-        }
+        $this->validateCsrf('wiki_lock', $request->request->get('token'));
 
         $page->setLocked($lock);
 

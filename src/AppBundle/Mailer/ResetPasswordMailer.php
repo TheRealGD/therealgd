@@ -54,7 +54,15 @@ final class ResetPasswordMailer {
         $this->salt = $salt;
     }
 
+    public function canMail(): bool {
+        return !empty($this->noReplyAddress);
+    }
+
     public function mail(User $user, Request $request) {
+        if (!$this->canMail()) {
+            throw new \RuntimeException('Cannot send mail without a no-reply address');
+        }
+
         $expires = new \DateTime('@'.time().' +24 hours');
 
         $subject = $this->translator->trans('reset_password.email_subject', [

@@ -20,15 +20,13 @@ use Raddit\AppBundle\Repository\ForumRepository;
 use Raddit\AppBundle\Repository\SubmissionRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * @Entity("forum", expr="repository.findOneByCaseInsensitiveName(forum_name)")
  */
-final class ForumController extends Controller {
+final class ForumController extends AbstractController {
     /**
      * Show the front page of a given forum.
      *
@@ -185,9 +183,7 @@ final class ForumController extends Controller {
      * @return Response
      */
     public function subscribe(Request $request, EntityManager $em, Forum $forum, string $action) {
-        if (!$this->isCsrfTokenValid('subscribe', $request->request->get('token'))) {
-            throw $this->createAccessDeniedException();
-        }
+        $this->validateCsrf('subscribe', $request->request->get('token'));
 
         if ($action === 'subscribe') {
             $forum->subscribe($this->getUser());
@@ -297,9 +293,7 @@ final class ForumController extends Controller {
      * @return Response
      */
     public function removeModerator(EntityManager $em, Forum $forum, Request $request, Moderator $moderator) {
-        if (!$this->isCsrfTokenValid('remove_moderator', $request->request->get('token'))) {
-            throw new BadRequestHttpException('Invalid CSRF token');
-        }
+        $this->validateCsrf('remove_moderator', $request->request->get('token'));
 
         $em->remove($moderator);
         $em->flush();
