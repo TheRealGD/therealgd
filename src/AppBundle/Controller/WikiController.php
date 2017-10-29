@@ -11,11 +11,10 @@ use Raddit\AppBundle\Repository\WikiPageRepository;
 use Raddit\AppBundle\Repository\WikiRevisionRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-final class WikiController extends Controller {
+final class WikiController extends AbstractController {
     /**
      * Views a wiki page.
      *
@@ -106,6 +105,32 @@ final class WikiController extends Controller {
             'form' => $form->createView(),
             'page' => $page,
         ]);
+    }
+
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     *
+     * @param Request       $request
+     * @param WikiPage      $page
+     * @param bool          $lock
+     * @param EntityManager $em
+     *
+     * @return Response
+     */
+    public function lock(Request $request, WikiPage $page, bool $lock, EntityManager $em) {
+        $this->validateCsrf('wiki_lock', $request->request->get('token'));
+
+        $page->setLocked($lock);
+
+        $em->flush();
+
+        $this->addFlash('success', 'flash.page_'.($lock ? 'locked' : 'unlocked'));
+
+        if ($request->headers->has('Referer')) {
+            return $this->redirect($request->headers->get('Referer'));
+        }
+
+        return $this->redirectToRoute('wiki', ['path' => $page->getPath()]);
     }
 
     /**

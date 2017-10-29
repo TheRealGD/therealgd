@@ -5,7 +5,6 @@ namespace Raddit\AppBundle\Controller;
 use Raddit\AppBundle\Entity\User;
 use Raddit\AppBundle\Repository\ForumRepository;
 use Raddit\AppBundle\Repository\SubmissionRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -25,7 +24,7 @@ use Symfony\Component\HttpFoundation\Response;
  *   users. To avoid showing them a blank page, we show them the featured forums
  *   instead.
  */
-final class FrontController extends Controller {
+final class FrontController extends AbstractController {
     public function front(ForumRepository $fr, SubmissionRepository $sr, string $sortBy, int $page) {
         $user = $this->getUser();
 

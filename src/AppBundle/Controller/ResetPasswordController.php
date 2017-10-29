@@ -10,11 +10,10 @@ use Raddit\AppBundle\Form\UserType;
 use Raddit\AppBundle\Mailer\ResetPasswordMailer;
 use Raddit\AppBundle\Repository\UserRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-final class ResetPasswordController extends Controller {
+final class ResetPasswordController extends AbstractController {
     /**
      * @param Request             $request
      * @param UserRepository      $ur
@@ -23,7 +22,7 @@ final class ResetPasswordController extends Controller {
      * @return Response
      */
     public function requestReset(Request $request, UserRepository $ur, ResetPasswordMailer $mailer) {
-        if (!$this->getParameter('env(NO_REPLY_ADDRESS)')) {
+        if (!$mailer->canMail()) {
             throw $this->createNotFoundException();
         }
 

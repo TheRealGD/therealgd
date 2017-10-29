@@ -131,6 +131,10 @@ services:
             - [setExpiresAfter, ["%markdown_cache_time%"]]
         lazy: true
 
+    Raddit\AppBundle\Utils\AuthenticationHelper:
+        arguments:
+            $secret: "%env(SECRET)%"
+
 
     ## Misc
 
@@ -166,8 +170,6 @@ services:
     Webuni\CommonMark\TableExtension\TableExtension: ~
 
     Symfony\Bundle\SecurityBundle\Security\FirewallMap: "@security.firewall.map"
-
-    Symfony\Component\Security\Http\RememberMe\RememberMeServicesInterface: "@security.authentication.rememberme.services.simplehash.main"
 
     Symfony\Component\Serializer\Serializer: "@serializer"
 

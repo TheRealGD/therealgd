@@ -13,18 +13,13 @@ use Raddit\AppBundle\Form\UserSettingsType;
 use Raddit\AppBundle\Form\UserType;
 use Raddit\AppBundle\Repository\NotificationRepository;
 use Raddit\AppBundle\Repository\UserRepository;
+use Raddit\AppBundle\Utils\AuthenticationHelper;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Bundle\SecurityBundle\Security\FirewallMap;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\Security\Core\Authentication\Token\RememberMeToken;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Http\RememberMe\RememberMeServicesInterface;
 
-final class UserController extends Controller {
+final class UserController extends AbstractController {
     /**
      * Show the user's profile page.
      *
@@ -71,20 +66,16 @@ final class UserController extends Controller {
     /**
      * User registration form.
      *
-     * @param Request                     $request
-     * @param EntityManager               $em
-     * @param FirewallMap                 $firewallMap
-     * @param TokenStorageInterface       $tokenStorage
-     * @param RememberMeServicesInterface $rememberMeServices
+     * @param Request              $request
+     * @param EntityManager        $em
+     * @param AuthenticationHelper $authenticationHelper
      *
      * @return Response
      */
     public function registration(
         Request $request,
         EntityManager $em,
-        FirewallMap $firewallMap,
-        TokenStorageInterface $tokenStorage,
-        RememberMeServicesInterface $rememberMeServices
+        AuthenticationHelper $authenticationHelper
     ) {
         if ($this->isGranted('ROLE_USER')) {
             return $this->redirectToRoute('front');
@@ -102,11 +93,7 @@ final class UserController extends Controller {
 
             $response = $this->redirectToRoute('front');
 
-            // log in with the new user
-            $firewallName = $firewallMap->getFirewallConfig($request)->getName();
-            $token = new RememberMeToken($user, $firewallName, $this->getParameter('env(SECRET)'));
-            $tokenStorage->setToken($token);
-            $rememberMeServices->loginSuccess($request, $response, $token);
+            $authenticationHelper->login($user, $request, $response);
 
             $this->addFlash('success', 'flash.user_account_registered');
 
@@ -276,9 +263,7 @@ final class UserController extends Controller {
      * @return Response
      */
     public function unblock(UserBlock $block, EntityManager $em, Request $request) {
-        if (!$this->isCsrfTokenValid('unblock', $request->request->get('token'))) {
-            throw new AccessDeniedHttpException();
-        }
+        $this->validateCsrf('unblock', $request->request->get('token'));
 
         $em->remove($block);
         $em->flush();
@@ -315,9 +300,7 @@ final class UserController extends Controller {
      * @return Response
      */
     public function clearInbox(Request $request, NotificationRepository $nr, EntityManager $em, string $_format) {
-        if (!$this->isCsrfTokenValid('clear_inbox', $request->request->get('token'))) {
-            throw new AccessDeniedHttpException();
-        }
+        $this->validateCsrf('clear_inbox', $request->request->get('token'));
 
         $user = $this->getUser();
         $max = $request->query->getInt('max', null);
@@ -345,9 +328,7 @@ final class UserController extends Controller {
      * @return Response
      */
     public function markAsTrusted(Request $request, User $user, EntityManager $em, bool $trusted) {
-        if (!$this->isCsrfTokenValid('mark_trusted', $request->request->get('token'))) {
-            throw new AccessDeniedHttpException();
-        }
+        $this->validateCsrf('mark_trusted', $request->request->get('token'));
 
         $user->setTrusted($trusted);
         $em->flush();

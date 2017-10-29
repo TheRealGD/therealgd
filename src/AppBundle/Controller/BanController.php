@@ -8,12 +8,11 @@ use Raddit\AppBundle\Entity\User;
 use Raddit\AppBundle\Form\BanType;
 use Raddit\AppBundle\Repository\BanRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-final class BanController extends Controller {
+final class BanController extends AbstractController {
     /**
      * What banned users see.
      *
@@ -111,9 +110,7 @@ final class BanController extends Controller {
      * @return Response
      */
     public function remove(Request $request, EntityManager $em) {
-        if (!$this->isCsrfTokenValid('remove_bans', $request->request->get('token'))) {
-            throw $this->createAccessDeniedException();
-        }
+        $this->validateCsrf('remove_bans', $request->request->get('token'));
 
         $banIds = (array) $request->request->get('ban');
         $banIds = array_filter($banIds, 'is_numeric');

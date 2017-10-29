@@ -2,18 +2,10 @@
 
 namespace Raddit\AppBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
-final class SecurityController extends Controller {
-    /**
-     * Shows the login form.
-     *
-     * @return Response
-     */
-    public function login() {
-        $helper = $this->get('security.authentication_utils');
-
+final class SecurityController extends AbstractController {
+    public function login(AuthenticationUtils $helper) {
         $lastUsername = $helper->getLastUsername();
         $error = $helper->getLastAuthenticationError();
 

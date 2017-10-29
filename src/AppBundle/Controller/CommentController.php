@@ -16,7 +16,6 @@ use Raddit\AppBundle\Utils\Slugger;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -25,7 +24,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @ParamConverter("submission", options={"mapping": {"forum": "forum", "submission_id": "id"}})
  * @ParamConverter("comment", options={"mapping": {"submission": "submission", "comment_id": "id"}})
  */
-final class CommentController extends Controller {
+final class CommentController extends AbstractController {
     public function list(CommentRepository $repository, int $page) {
         // TODO: link this somewhere
         return $this->render('comment/list.html.twig', [
@@ -185,9 +184,7 @@ final class CommentController extends Controller {
         Comment $comment,
         Request $request
     ) {
-        if (!$this->isCsrfTokenValid('delete_comment', $request->request->get('token'))) {
-            throw $this->createAccessDeniedException('Bad CSRF token');
-        }
+        $this->validateCsrf('delete_comment', $request->request->get('token'));
 
         if ($this->isGranted('delete_thread', $comment)) {
             $em->refresh($comment);
@@ -225,9 +222,7 @@ final class CommentController extends Controller {
         Comment $comment,
         Request $request
     ) {
-        if (!$this->isCsrfTokenValid('softdelete_comment', $request->request->get('token'))) {
-            throw $this->createAccessDeniedException('Bad CSRF token');
-        }
+        $this->validateCsrf('softdelete_comment', $request->request->get('token'));
 
         $comment->softDelete();
 

@@ -14,17 +14,15 @@ use Raddit\AppBundle\Utils\Slugger;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * @Entity("forum", expr="repository.findOneByCaseInsensitiveName(forum_name)")
  * @ParamConverter("submission", options={"mapping": {"forum": "forum", "submission_id": "id"}})
  * @ParamConverter("comment", options={"mapping": {"submission": "submission", "comment_id": "id"}})
  */
-final class SubmissionController extends Controller {
+final class SubmissionController extends AbstractController {
     /**
      * Show a submission's comment page.
      *
@@ -145,9 +143,7 @@ final class SubmissionController extends Controller {
      * @return Response
      */
     public function deleteSubmission(Request $request, EntityManager $em, Forum $forum, Submission $submission) {
-        if (!$this->isCsrfTokenValid('delete_submission', $request->request->get('token'))) {
-            throw new BadRequestHttpException('Invalid CSRF token');
-        }
+        $this->validateCsrf('delete_submission', $request->request->get('token'));
 
         $em->refresh($submission);
         $em->remove($submission);
@@ -194,9 +190,7 @@ final class SubmissionController extends Controller {
         Submission $submission,
         bool $lock
     ) {
-        if (!$this->isCsrfTokenValid('lock', $request->request->get('token'))) {
-            throw new BadRequestHttpException('Invalid CSRF token');
-        }
+        $this->validateCsrf('lock', $request->request->get('token'));
 
         $submission->setLocked($lock);
         $em->flush();

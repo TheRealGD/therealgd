@@ -10,11 +10,10 @@ use Raddit\AppBundle\Form\MessageThreadType;
 use Raddit\AppBundle\Form\Model\MessageData;
 use Raddit\AppBundle\Repository\MessageThreadRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-final class MessageController extends Controller {
+final class MessageController extends AbstractController {
     /**
      * @IsGranted("ROLE_USER")
      *

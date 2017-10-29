@@ -5,12 +5,11 @@ namespace Raddit\AppBundle\Controller;
 use Doctrine\ORM\EntityManager;
 use Raddit\AppBundle\Entity\Votable;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
-final class VoteController extends Controller {
+final class VoteController extends AbstractController {
     /**
      * Vote on a votable entity.
      *
@@ -25,9 +24,7 @@ final class VoteController extends Controller {
      * @return Response
      */
     public function vote(EntityManager $em, Request $request, $entityClass, $id, $_format) {
-        if (!$this->isCsrfTokenValid('vote', $request->request->get('token'))) {
-            throw $this->createAccessDeniedException('Bad CSRF token');
-        }
+        $this->validateCsrf('vote', $request->request->get('token'));
 
         $choice = $request->request->getInt('choice', null);
 
