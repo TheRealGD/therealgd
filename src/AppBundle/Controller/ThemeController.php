@@ -112,25 +112,11 @@ class ThemeController extends AbstractController {
         ]);
     }
 
-    /**
-     * Deliver a raw stylesheet.
-     *
-     * @param EntityManager $em
-     * @param Request       $request
-     * @param string        $themeId
-     * @param string        $field
-     *
-     * @return Response
-     */
-    public function stylesheet(
-        EntityManager $em,
-        Request $request,
-        string $themeId,
-        string $field
-    ) {
+    public function stylesheet(EntityManager $em, Request $request, string $themeId, string $field) {
         $response = new Response();
         $response->setPublic();
-        $response->setExpires(new \DateTime('@'.time().' +2 weeks'));
+        $response->setImmutable();
+        $response->setMaxAge(86400 * 365);
         $response->setEtag($themeId);
 
         if ($response->isNotModified($request)) {
