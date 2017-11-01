@@ -15,10 +15,12 @@ use Raddit\AppBundle\Entity\Exception\BannedFromForumException;
  * })
  */
 class Submission extends Votable {
+    const DOWNVOTED_CUTOFF = -5;
     const NETSCORE_MULTIPLIER = 1800;
     const COMMENT_MULTIPLIER = 5000;
+    const COMMENT_DOWNVOTED_MULTIPLIER = 500;
     const MAX_ADVANTAGE = 86400;
-    const MAX_PENALTY = 10000;
+    const MAX_PENALTY = 43200;
 
     /**
      * @ORM\Column(type="bigint")
@@ -341,8 +343,14 @@ class Submission extends Votable {
     }
 
     public function updateRanking() {
-        $netScoreAdvantage = $this->getNetScore() * self::NETSCORE_MULTIPLIER;
-        $commentAdvantage = count($this->comments) * self::COMMENT_MULTIPLIER;
+        $netScore = $this->getNetScore();
+        $netScoreAdvantage = $netScore * self::NETSCORE_MULTIPLIER;
+
+        if ($netScore > self::DOWNVOTED_CUTOFF) {
+            $commentAdvantage = count($this->comments) * self::COMMENT_MULTIPLIER;
+        } else {
+            $commentAdvantage = count($this->comments) * self::COMMENT_DOWNVOTED_MULTIPLIER;
+        }
 
         $advantage = max(min($netScoreAdvantage + $commentAdvantage, self::MAX_ADVANTAGE), -self::MAX_PENALTY);
 
