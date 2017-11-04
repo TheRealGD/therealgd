@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title 'ban_list.title'|trans %}
+{% block title 'title.ip_bans'|trans %}
 {% block page_classes 'ban-list-page' %}
 
 {% block head %}
@@ -8,10 +8,16 @@
 {% endblock %}
 
 {% block body %}
+  {{ include('ban/_tabs.html.twig', {page: 'ip_bans'}, with_context=false) }}
+
   <h1 class="page-heading">{{ block('title') }}</h1>
 
-  <form action="{{ path('remove_bans') }}" method="POST" class="form">
-    <input type="hidden" name="token" value="{{ csrf_token('remove_bans') }}">
+  <nav>
+    <p><a href="{{ path('ban_ip') }}" class="button">{{ 'nav.add_ban'|trans }}</a></p>
+  </nav>
+
+  <form action="{{ path('unban_ips') }}" method="POST" class="form">
+    <input type="hidden" name="token" value="{{ csrf_token('unban_ips') }}">
 
     <table class="table">
       <thead>

@@ -18,19 +18,7 @@ class UserCheckerTest extends TestCase {
         $user = $this->createMock(User::class);
         $user->method('isBanned')->willReturn(false, false);
 
-        (new UserChecker())->checkPreAuth($user);
         (new UserChecker())->checkPostAuth($user);
-    }
-
-    /**
-     * @expectedException \Raddit\AppBundle\Security\Exception\AccountBannedException
-     */
-    public function testBannedUserCausesExceptionOnPreAuth() {
-        /** @var User|\PHPUnit_Framework_MockObject_MockObject $user */
-        $user = $this->createMock(User::class);
-        $user->method('isBanned')->willReturn(true);
-
-        (new UserChecker())->checkPreAuth($user);
     }
 
     /**

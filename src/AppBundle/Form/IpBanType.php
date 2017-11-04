@@ -2,8 +2,8 @@
 
 namespace Raddit\AppBundle\Form;
 
-use Raddit\AppBundle\Entity\Ban;
 use Raddit\AppBundle\Form\DataTransformer\UserTransformer;
+use Raddit\AppBundle\Form\Model\IpBanData;
 use Raddit\AppBundle\Repository\UserRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -12,7 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-final class BanType extends AbstractType {
+final class IpBanType extends AbstractType {
     /**
      * @var UserRepository
      */
@@ -29,8 +29,9 @@ final class BanType extends AbstractType {
         $builder
             ->add('ip', TextType::class)
             ->add('reason', TextType::class)
-            ->add('expiry_date', DateTimeType::class, [
+            ->add('expiryDate', DateTimeType::class, [
                 'date_widget' => 'single_text',
+                'label' => 'ban_form.expiry_date',
                 'time_widget' => 'single_text',
                 'required' => false,
             ])
@@ -51,7 +52,7 @@ final class BanType extends AbstractType {
      */
     public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults([
-            'data_class' => Ban::class,
+            'data_class' => IpBanData::class,
             'label_format' => 'ban_form.%name%',
         ]);
     }

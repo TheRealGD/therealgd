@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+{% from 'user/_macros.html.twig' import user_link %}
+
+{% block title block('html_title')|striptags %}
+
+{% block body %}
+  {{ include('ban/_tabs.html.twig', {page: 'user_bans'}, with_context=false) }}
+
+  <h1 class="page-heading">
+    {% block html_title %}
+      {{ 'title.ban_user'|trans({'%user%': user_link(user, {prefix: true})})|raw }}
+    {% endblock %}
+  </h1>
+
+  {{ form_start(form) }}
+    {{ form_row(form.reason) }}
+    {{ form_row(form.expiresAt) }}
+    {{ form_row(form.ban_ip) }}
+    {{ form_row(form.ip) }}
+
+    <button class="button">{{ 'action.ban'|trans }}</button>
+  {{ form_end(form) }}
+{% endblock %}
+

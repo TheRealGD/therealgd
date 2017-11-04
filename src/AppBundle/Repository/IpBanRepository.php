@@ -7,7 +7,7 @@ use Doctrine\ORM\EntityRepository;
 use Pagerfanta\Adapter\DoctrineSelectableAdapter;
 use Pagerfanta\Pagerfanta;
 
-final class BanRepository extends EntityRepository {
+final class IpBanRepository extends EntityRepository {
     public function findAllPaginated($page, $maxPerPage = 25) {
         $criteria = Criteria::create()->orderBy(['timestamp' => 'DESC']);
 

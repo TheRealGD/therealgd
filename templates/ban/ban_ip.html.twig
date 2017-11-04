@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block page_classes 'add-ban-page' %}
+{% block title 'ban_add.title'|trans %}
+
+{% block body %}
+  {{ include('ban/_tabs.html.twig', {page: 'ip_bans'}, with_context=false) }}
+  <h1 class="page-heading">{{ block('title') }}</h1>
+
+  {{ form(form) }}
+{% endblock %}
+

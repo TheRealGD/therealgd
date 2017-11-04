@@ -70,10 +70,6 @@ services:
             $noReplyAddress: "%env(NO_REPLY_ADDRESS)%"
             $salt: "%env(SECRET)%"
 
-    Raddit\AppBundle\Repository\BanRepository:
-        factory: ["@doctrine.orm.entity_manager", "getRepository"]
-        arguments: [Raddit\AppBundle\Entity\Ban]
-
     Raddit\AppBundle\Repository\CommentRepository:
         factory: ["@doctrine.orm.entity_manager", "getRepository"]
         arguments: [Raddit\AppBundle\Entity\Comment]
@@ -89,6 +85,10 @@ services:
     Raddit\AppBundle\Repository\ForumRepository:
         factory: ["@doctrine.orm.entity_manager", "getRepository"]
         arguments: [Raddit\AppBundle\Entity\Forum]
+
+    Raddit\AppBundle\Repository\IpBanRepository:
+        factory: ["@doctrine.orm.entity_manager", "getRepository"]
+        arguments: [Raddit\AppBundle\Entity\IpBan]
 
     Raddit\AppBundle\Repository\MessageThreadRepository:
         factory: ["@doctrine.orm.entity_manager", "getRepository"]
@@ -109,6 +109,10 @@ services:
     Raddit\AppBundle\Repository\UserRepository:
         factory: ["@doctrine.orm.entity_manager", "getRepository"]
         arguments: [Raddit\AppBundle\Entity\User]
+
+    Raddit\AppBundle\Repository\UserBanRepository:
+        factory: ["@doctrine.orm.entity_manager", "getRepository"]
+        arguments: [Raddit\AppBundle\Entity\UserBan]
 
     Raddit\AppBundle\Repository\WikiPageRepository:
         factory: ["@doctrine.orm.entity_manager", "getRepository"]

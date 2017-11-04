@@ -3,91 +3,135 @@
 namespace Raddit\AppBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-use Raddit\AppBundle\Entity\Ban;
 use Raddit\AppBundle\Entity\User;
-use Raddit\AppBundle\Form\BanType;
-use Raddit\AppBundle\Repository\BanRepository;
+use Raddit\AppBundle\Form\IpBanType;
+use Raddit\AppBundle\Form\BanUserType;
+use Raddit\AppBundle\Form\Model\IpBanData;
+use Raddit\AppBundle\Form\Model\UserBanData;
+use Raddit\AppBundle\Form\UnbanUserType;
+use Raddit\AppBundle\Repository\IpBanRepository;
+use Raddit\AppBundle\Repository\UserBanRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
+/**
+ * @IsGranted("ROLE_ADMIN")
+ */
 final class BanController extends AbstractController {
-    /**
-     * What banned users see.
-     *
-     * @return Response
-     */
-    public function landingPage() {
-        return $this->render('ban/banned.html.twig');
-    }
-
-    /**
-     * @IsGranted("ROLE_ADMIN")
-     *
-     * @param int           $page
-     * @param BanRepository $banRepository
-     *
-     * @return Response
-     */
-    public function list(int $page, BanRepository $banRepository) {
-        return $this->render('ban/list.html.twig', [
-            'bans' => $banRepository->findAllPaginated($page),
+    public function userBans(UserBanRepository $repository, int $page) {
+        return $this->render('ban/user_bans.html.twig', [
+            'bans' => $repository->findActiveBans($page),
         ]);
     }
 
-    /**
-     * Form for adding new bans.
-     *
-     * @IsGranted("ROLE_ADMIN")
-     *
-     * @param Request       $request
-     * @param EntityManager $em
-     *
-     * @return Response
-     */
-    public function add(Request $request, EntityManager $em) {
-        $ban = new Ban();
+    public function banUser(User $user, EntityManager $em, Request $request) {
+        $data = new UserBanData($request->query->get('ip'));
 
-        $ban->setIp($request->query->filter('ip', null, FILTER_VALIDATE_IP));
-
-        // TODO: use a DTO instead
-        if ($request->query->has('user_id')) {
-            $id = $request->query->getInt('user_id');
-            $user = $em->find(User::class, $id);
-            $ban->setUser($user);
-        }
-
-        $form = $this->createForm(BanType::class, $ban);
+        $form = $this->createForm(BanUserType::class, $data);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $ban->setBannedBy($this->getUser());
+            $ban = $data->toUserBan($user, $this->getUser(), true);
 
-            $this->addFlash('success', 'flash.ban_added');
+            if ($form->get('ban_ip')->getData()) {
+                $em->persist($data->toIpBan($user, $this->getUser()));
+            }
 
             $em->persist($ban);
             $em->flush();
 
-            return $this->redirectToRoute('bans');
+            return $this->redirectToRoute('user_bans');
         }
 
-        return $this->render('ban/add.html.twig', [
+        return $this->render('ban/ban_user.html.twig', [
+            'form' => $form->createView(),
+            'user' => $user,
+        ]);
+    }
+
+    public function unbanUser(User $user, EntityManager $em, Request $request) {
+        $data = new UserBanData();
+
+        $form = $this->createForm(UnbanUserType::class, $data);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $unban = $data->toUserBan($user, $this->getUser(), false);
+
+            $em->persist($unban);
+
+            if ($form->get('unban_ips')->getData()) {
+                foreach ($user->getIpBans() as $ipBan) {
+                    $em->remove($ipBan);
+                }
+            }
+
+            $em->flush();
+
+            $this->addFlash('success', 'flash.user_was_unbanned');
+
+            return $this->redirectToRoute('user_bans');
+        }
+
+        return $this->render('ban/unban_user.html.twig', [
+            'form' => $form->createView(),
+            'user' => $user,
+        ]);
+    }
+
+    public function ipBans(int $page, IpBanRepository $repository) {
+        return $this->render('ban/ip_bans.html.twig', [
+            'bans' => $repository->findAllPaginated($page),
+        ]);
+    }
+
+    public function banIp(Request $request, EntityManager $em) {
+        $data = new IpBanData();
+
+        if ($request->query->has('ip')) {
+            $data->ip = $request->query->get('ip');
+        }
+
+        if ($request->query->has('user_id')) {
+            $data->user = $em->find(User::class, $request->query->getInt('user_id'));
+        }
+
+        $form = $this->createForm(IpBanType::class, $data);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $ban = $data->toIpBan($this->getUser());
+
+            $em->persist($ban);
+            $em->flush();
+
+            $this->addFlash('success', 'flash.ban_added');
+
+            return $this->redirectToRoute('ip_bans');
+        }
+
+        return $this->render('ban/ban_ip.html.twig', [
             'form' => $form->createView(),
         ]);
     }
 
-    /**
-     * Redirect to the ban form.
-     *
-     * @IsGranted("ROLE_ADMIN")
-     *
-     * @param EntityManager $em
-     * @param string        $entityClass
-     * @param string        $id
-     *
-     * @return Response
-     */
+    public function unbanIps(Request $request, IpBanRepository $repository, EntityManager $em) {
+        $this->validateCsrf('unban_ips', $request->request->get('token'));
+
+        $ids = array_filter((array) $request->request->get('ban'), function ($id) {
+            return is_int(+$id);
+        });
+
+        foreach ($repository->findBy(['id' => $ids]) as $ban) {
+            $em->remove($ban);
+        }
+
+        $em->flush();
+
+        return $this->redirectToRoute('ip_bans');
+    }
+
     public function redirectToBanForm(EntityManager $em, $entityClass, $id) {
         $entity = $em->find($entityClass, $id);
 
@@ -95,36 +139,9 @@ final class BanController extends AbstractController {
             throw new NotFoundHttpException('Entity not found');
         }
 
-        return $this->redirectToRoute('add_ban', [
+        return $this->redirectToRoute('ban_user', [
             'ip' => $entity->getIp(),
-            'user_id' => $entity->getUser()->getId(),
+            'username' => $entity->getUser()->getUsername(),
         ]);
-    }
-
-    /**
-     * @IsGranted("ROLE_ADMIN")
-     *
-     * @param Request       $request
-     * @param EntityManager $em
-     *
-     * @return Response
-     */
-    public function remove(Request $request, EntityManager $em) {
-        $this->validateCsrf('remove_bans', $request->request->get('token'));
-
-        $banIds = (array) $request->request->get('ban');
-        $banIds = array_filter($banIds, 'is_numeric');
-
-        foreach ($banIds as $banId) {
-            $ban = $em->find(Ban::class, $banId);
-
-            if ($ban) {
-                $em->remove($ban);
-            }
-        }
-
-        $em->flush();
-
-        return $this->redirectToRoute('bans');
     }
 }

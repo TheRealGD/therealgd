@@ -121,11 +121,18 @@ class User implements UserInterface, EquatableInterface {
     private $comments;
 
     /**
-     * @ORM\OneToMany(targetEntity="Ban", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="UserBan", mappedBy="user")
      *
-     * @var Ban[]|Collection|Selectable
+     * @var UserBan[]|Collection|Selectable
      */
     private $bans;
+
+    /**
+     * @ORM\OneToMany(targetEntity="IpBan", mappedBy="user")
+     *
+     * @var IpBan[]|Collection|Selectable
+     */
+    private $ipBans;
 
     /**
      * @ORM\Column(type="text")
@@ -206,6 +213,7 @@ class User implements UserInterface, EquatableInterface {
         $this->submissions = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->bans = new ArrayCollection();
+        $this->ipBans = new ArrayCollection();
         $this->blocks = new ArrayCollection();
     }
 
@@ -372,19 +380,34 @@ class User implements UserInterface, EquatableInterface {
     }
 
     /**
-     * @return Collection|Selectable|Ban[]
+     * @return UserBan[]|Collection
      */
     public function getBans(): Collection {
         return $this->bans;
     }
 
+    public function addBan(UserBan $ban) {
+        if (!$this->bans->contains($ban)) {
+            $this->bans->add($ban);
+        }
+    }
+
     public function isBanned(): bool {
         $criteria = Criteria::create()
-            ->where(Criteria::expr()->eq('expiryDate', null))
-            ->orWhere(Criteria::expr()->gte('expiryDate', new \DateTime('@'.time())))
+            ->orderBy(['timestamp' => 'DESC'])
             ->setMaxResults(1);
 
-        return count($this->bans->matching($criteria)) > 0;
+        /* @var UserBan $ban */
+        $ban = $this->bans->matching($criteria)->first() ?: null;
+
+        return $ban && $ban->isBan() && !$ban->isExpired();
+    }
+
+    /**
+     * @return Collection|IpBan[]
+     */
+    public function getIpBans(): Collection {
+        return $this->ipBans;
     }
 
     public function getLocale(): string {

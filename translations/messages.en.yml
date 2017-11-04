@@ -21,6 +21,7 @@ action:
     unlock: Unlock
     delete: Delete
     remove: Remove
+    global_ban: Global ban
 
 add_moderator:
     title: Add moderator to %forum%
@@ -36,7 +37,6 @@ ban_form:
     user: User associated with IP
 
 ban_list:
-    title: Bans
     ip: IP address
     timestamp: Time
     banned_by: Banned by
@@ -60,7 +60,6 @@ comments:
     permalink: Permalink
     parent: Parent
     reply: Reply
-    admin_ban: IP ban
     form_load_error: Error loading form. Please try again.
     info: '%user% wrote %timestamp%'
     info_at_timestamp: at %timestamp%
@@ -244,6 +243,10 @@ label:
     open_external_links_in_new_tab: Open external links in new tab
     biography: Biography
     toolbox: Toolbox
+    banned_by: Banned by
+    unban_associated_ips: Remove associated IP bans
+    ban_ip_address: Ban IP address?
+    ip_address: IP address
 
 log:
     comment_deletion: '%user% deleted comment by %author% in "%submission%"'
@@ -295,6 +298,9 @@ nav:
     block_list: Block list
     edit_biography: Edit biography
     moderation_log: Moderation log
+    user_bans: User bans
+    ip_bans: IP bans
+    add_ban: Add ban
 
 placeholder:
     default: (default)
@@ -359,7 +365,6 @@ submissions:
     sort_by_controversial: Controversial
     total_votes: '{1} %count% point|[0,Inf[ %count% points'
     vote_stats: (+%up%, −%down%)
-    ip_ban: IP ban
     edit_info: (edited %edited_at%)
     moderator_info: (edited by a moderator %edited_at%)
 
@@ -393,6 +398,10 @@ title:
     messages: Messages
     editing_biography_for_user: Editing biography for %user%
     showing_moderation_log_for_forum: Showing moderation log for %forum%
+    active_global_user_bans: Active, global user bans
+    ip_bans: Banned IP addresses
+    ban_user: Banning %user%
+    unban_user: Unbanning %user%
 
 user:
     submissions: Submissions

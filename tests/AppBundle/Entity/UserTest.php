@@ -3,8 +3,8 @@
 namespace Raddit\Tests\AppBundle\Entity;
 
 use PHPUnit\Framework\TestCase;
-use Raddit\AppBundle\Entity\Ban;
 use Raddit\AppBundle\Entity\User;
+use Raddit\AppBundle\Entity\UserBan;
 use Raddit\AppBundle\Entity\UserBlock;
 
 /**
@@ -58,27 +58,23 @@ class UserTest extends TestCase {
 
     public function testUserBanIsEffective() {
         $user = new User('u', 'p');
-        $user->getBans()->add(new Ban());
+        $user->addBan(new UserBan($user, 'foo', true, new User('ben', 'p')));
 
         $this->assertTrue($user->isBanned());
     }
 
     public function testExpiringUserBanIsEffective() {
-        $ban = new Ban();
-        $ban->setExpiryDate(new \DateTime('@'.time().' +1 hour'));
-
         $user = new User('u', 'p');
-        $user->getBans()->add($ban);
+        $expires = new \DateTime('@'.time().' +1 hour');
+        $user->addBan(new UserBan($user, 'foo', true, new User('ben', 'p'), $expires));
 
         $this->assertTrue($user->isBanned());
     }
 
     public function testExpiredUserBanIsIneffective() {
-        $ban = new Ban();
-        $ban->setExpiryDate(new \DateTime('@'.time().' +1 hour'));
-
         $user = new User('u', 'p');
-        $user->getBans()->add($ban);
+        $expires = new \DateTime('@'.time().' +1 hour');
+        $user->addBan(new UserBan($user, 'ofo', true, new User('ben', 'p'), $expires));
 
         sleep(7200); // 2 hours
 

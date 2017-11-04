@@ -1,0 +1,14 @@
+<nav class="tabs">
+  <ul class="tabs__bar">
+    <li class="tabs__tab {{ page == 'user_bans' ? 'tabs__tab--active' }}">
+      <a href="{{ path('user_bans') }}" class="tabs__link {{ page == 'user_bans' ? 'tabs__link--active' }}">
+        {{- 'nav.user_bans'|trans -}}
+      </a>
+    </li>
+    <li class="tabs__tab {{ page == 'ip_bans' ? 'tabs__tab--active' }}">
+      <a href="{{ path('ip_bans') }}" class="tabs__link {{ page == 'ip_bans' ? 'tabs__link--active' }}">
+        {{- 'nav.ip_bans'|trans -}}
+      </a>
+    </li>
+  </ul>
+</nav>

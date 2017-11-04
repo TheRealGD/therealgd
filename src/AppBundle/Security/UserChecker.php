@@ -12,13 +12,6 @@ class UserChecker implements UserCheckerInterface {
      * {@inheritdoc}
      */
     public function checkPreAuth(UserInterface $user) {
-        if (!$user instanceof User) {
-            return;
-        }
-
-        if ($user->isBanned()) {
-            throw new AccountBannedException();
-        }
     }
 
     /**
