@@ -68,7 +68,7 @@ class UserData implements UserInterface {
     private $openExternalLinksInNewTab;
 
     /**
-     * @Assert\Length(max=300)
+     * @Assert\Length(max=300, groups={"edit_biography"})
      *
      * @var string|null
      */
