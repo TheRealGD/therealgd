@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @Unique("canonicalUsername", idFields={"entityId": "id"}, errorPath="username",
- *     entityClass="Raddit\AppBundle\Entity\User")
+ *     entityClass="Raddit\AppBundle\Entity\User", groups={"registration", "edit"})
  */
 class UserData implements UserInterface {
     /**
