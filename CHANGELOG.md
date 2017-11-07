@@ -1,34 +1,79 @@
 # Change Log
 
-## v0.6.0 (2017-xx-xx)
+## v0.6.0 (2017-11-08)
 
-* Added Atom feed for featured forums.
+* Added an admin menu.
+* Added a button for locking wiki pages.
+* Added Atom feed for featured forums and individual forums.
+* Added CAPTCHA on password reset form.
+* Added CSS class for all page headings.
 * Added forum bans.
 * Added maintenance mode that can be toggled via a command. 
+* Added moderation log.
+* Added multi-forum view.
 * Added pretty error pages.
+* Added recent changes page for wiki.
 * Added `.single-comment-alert' to container that shows warnings about viewing a
   single comment.
+* Added source code viewer for themes.
+* Added submission locking.
+* Added syntax highlighting.
+* Added navigation tabs to user pages.
 * Added unlinked 'recent comments' page.
+* Added user biographies.
 * Added user blocking.
 * Added user settings for choosing a preferred theme.
+* Added user setting to choose if links are opened in a new tab.
+* Bind forms to data transfer objects (DTOs) instead of entities.
+* Bumped minimum PHP version to 7.0.8/7.1.3.
+* Changed the alert animation.
+* Don't order by sticky in new/top/controversial sorting modes.
+* Don't store IP addresses of trusted users.
+* Don't show thumbnails on tiny screens.
+* Fixed 500 errors that could occur when hitting 'IP ban' on deleted posts.
+* Fixed authorisation issues that occurred when roles change during a session.
+* Fixed being unable to ban IPv6 addresses with CIDR mask.
 * Fixed issue where changing from an upvote to a downvote or vice versa wouldn't
   update a submission's ranking.
 * Fixed issue where disabling 'show custom stylesheets' wouldn't include the
   built-in stylesheets on the page.
+* Fixed privilege escalation issue where everyone could sticky a thread or post
+  as moderator.
+* Fixed remaining logged in when passwords changed.
 * Fixed typos in Spanish translation.
+* Fixed word-wrapping in \<pre> tags.
+* Improve how private messages are displayed.
+* Increase max size of wiki bodies.
+* Log out on password change.
+* Made forum bans public.
+* Made forum-related route paths more consistent.
+* Mark CSS responses immutable.
+* Move away from `raddit:` namespace in commands.
+* Moved the submission deletion from the edit form to the submission nav.
 * Refactor most entities to not include validation constraints and add a
   constructor which ensures the entities are always valid.
+* Refactored route definitions and removed template namespaces.
 * Refactor some entities to use UUIDs instead of auto-incrementing integers as
   their primary key.
+* Removed broken 2FA.
+* Revamped the entire ban system.
+    * Added user bans in addition to IP bans.
+    * Trusted users are checked for user bans.
+    * Untrusted users are checked for user bans and IP bans.
+    * Logged out users are checked for IP bans.
 * Replaced 'stylesheets' with 'themes'.
     * Have separate fields for common, day & night CSS.
     * Make themes version controlled.
 * Optimise performance by removing redundant Twig blocks in the vote widget.
 * Optimise submission listings by pre-hydrating a number of associations,
   drastically reducing the number of SQL queries made.
+* Restrict wiki editing to trusted users and users that signed up over 24 hours
+  ago.
+* Set width and height on SVG icons.
+* Updated Portuguese, Spanish translations.
 * Updated the submission ranking algorithm to account for the number of
   comments and make downvotes count for something.
-* Use data transfer objects (DTOs) for most forms.
+* Updated to Symfony 3.4.
 * Use the select2 library for the forum selection box on the submit page.
 
 ## v0.5.1 (2017-08-09)
