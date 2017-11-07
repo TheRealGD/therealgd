@@ -21,6 +21,11 @@
 
 .submission-image-container {
   margin-right: 1rem;
+
+  @media screen and (max-width: 480px) {
+    // don't show thumbnails on tiny screens
+    display: none;
+  }
 }
 
 .submission-thumbnail {
