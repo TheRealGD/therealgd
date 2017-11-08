@@ -600,7 +600,7 @@ class User implements UserInterface, EquatableInterface {
      * {@inheritdoc}
      */
     public function isEqualTo(UserInterface $user) {
-        return $user instanceof User &&
+        return $user instanceof self &&
             $this->id === $user->id &&
             $this->username === $user->username &&
             hash_equals($this->password, $user->password) &&

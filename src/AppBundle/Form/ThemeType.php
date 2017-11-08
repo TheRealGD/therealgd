@@ -82,7 +82,7 @@ class ThemeType extends AbstractType {
                 }
 
                 if (preg_match('!^(\w{3,25})\s*/\s*(.+)$!', $value, $matches)) {
-                    list (, $username, $name) = $matches;
+                    list(, $username, $name) = $matches;
 
                     $theme = $this->themeRepository->findOneByUsernameAndName($username, $name);
 

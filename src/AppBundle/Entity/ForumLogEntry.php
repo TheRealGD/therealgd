@@ -70,7 +70,6 @@ abstract class ForumLogEntry {
         $this->timestamp = $timestamp ?? \DateTime::createFromFormat('U.u', microtime(true));
     }
 
-
     public function getId(): Uuid {
         return $this->id;
     }

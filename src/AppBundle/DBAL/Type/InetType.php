@@ -33,7 +33,7 @@ class InetType extends Type {
             return null;
         }
 
-        list ($ip, $cidr) = array_pad(explode('/', $value), 2, null);
+        list($ip, $cidr) = array_pad(explode('/', $value), 2, null);
 
         if (!filter_var($ip, FILTER_VALIDATE_IP)) {
             throw new \InvalidArgumentException('Invalid IP address');

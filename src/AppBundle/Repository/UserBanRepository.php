@@ -10,8 +10,8 @@ use Raddit\AppBundle\Entity\UserBan;
 
 class UserBanRepository extends EntityRepository {
     /**
-     * @param int  $page
-     * @param int  $maxPerPage
+     * @param int $page
+     * @param int $maxPerPage
      *
      * @return Pagerfanta|UserBan[]
      */

@@ -11,7 +11,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Expression;
 
 class BanUserType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
@@ -29,9 +28,6 @@ class BanUserType extends AbstractType {
                 'label' => 'label.ban_ip_address',
                 'mapped' => false,
                 'required' => false,
-                'constraints' => new Expression([
-                    'expression' => 'this.ban_ip === false || '
-                ]),
             ])
             ->add('ip', TextType::class, [
                 'label' => 'label.ip_address',
@@ -51,7 +47,7 @@ class BanUserType extends AbstractType {
                 }
 
                 return $groups;
-            }
+            },
         ]);
     }
 }
