@@ -17,3 +17,6 @@
 'No such theme.': 'No such theme.'
 'That theme cannot be extended.': 'That theme cannot be extended.'
 'That user is already a moderator.': 'That user is already a moderator.'
+'The IP address is not valid.': 'The IP address is not valid.'
+'The CIDR mask is not valid.': 'The CIDR mask is not valid.'
+'Missing CIDR mask.': 'Missing CIDR mask.'

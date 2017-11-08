@@ -5,12 +5,13 @@ namespace Raddit\AppBundle\Form\Model;
 use Raddit\AppBundle\Entity\IpBan;
 use Raddit\AppBundle\Entity\User;
 use Raddit\AppBundle\Entity\UserBan;
+use Raddit\AppBundle\Validator\Constraints\IpWithCidr;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class UserBanData {
     /**
-     * @Assert\Ip(version="all", groups={"ban_ip"})
      * @Assert\NotBlank(groups={"ban_ip"})
+     * @IpWithCidr(groups={"ban_ip"})
      *
      * @var string|null
      */

@@ -4,11 +4,13 @@ namespace Raddit\AppBundle\Form\Model;
 
 use Raddit\AppBundle\Entity\IpBan;
 use Raddit\AppBundle\Entity\User;
+use Raddit\AppBundle\Validator\Constraints\IpWithCidr;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class IpBanData {
     /**
      * @Assert\NotBlank()
+     * @IpWithCidr()
      *
      * @var string|null
      */
