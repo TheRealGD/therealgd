@@ -125,8 +125,12 @@
 {%- endblock -%}
 
 {%- block comment_nav_reply -%}
-  <li class="comment-nav-reply" style="display: none">
-    <a href="#" data-form-url="{{ path('comment_form', {
+  <li class="comment-nav-reply">
+    <a href="{{ path('comment', {
+      forum_name: comment.submission.forum.name,
+      submission_id: comment.submission.id,
+      comment_id: comment.id
+    }) }}" data-form-url="{{ path('comment_form', {
       forumName: comment.submission.forum.name,
       submissionId: comment.submission.id,
       commentId: comment.id
