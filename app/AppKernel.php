@@ -56,3 +56,6 @@ class AppKernel extends Kernel {
         $loader->load($this->getRootDir().'/config/config_'.$this->getEnvironment().'.yml');
     }
 }
+
+// hack: see workarounds.md
+class_alias('AppBundle\Entity\User', 'Raddit\AppBundle\Entity\User');
