@@ -1,14 +1,14 @@
 <?php
 
-namespace Raddit\AppBundle\DataFixtures\ORM;
+namespace AppBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Raddit\AppBundle\Entity\Comment;
-use Raddit\AppBundle\Entity\Submission;
-use Raddit\AppBundle\Entity\User;
-use Raddit\AppBundle\Entity\UserFlags;
+use AppBundle\Entity\Comment;
+use AppBundle\Entity\Submission;
+use AppBundle\Entity\User;
+use AppBundle\Entity\UserFlags;
 
 class LoadExampleComments extends AbstractFixture implements DependentFixtureInterface {
     /**

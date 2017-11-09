@@ -14,7 +14,7 @@
       <p>{{ 'flash.submission_is_locked'|trans }}</p>
     </div>
   {% elseif is_granted('ROLE_USER') %}
-    {{ render(controller('Raddit\\AppBundle\\Controller\\CommentController::commentForm', {
+    {{ render(controller('AppBundle\\Controller\\CommentController::commentForm', {
       forumName: submission.forum.name,
       submissionId: submission.id,
       commentId: comment.id|default(null)

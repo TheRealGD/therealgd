@@ -3,13 +3,13 @@ security:
         strategy: unanimous
 
     encoders:
-        Raddit\AppBundle\Entity\User:         bcrypt
-        Raddit\AppBundle\Form\Model\UserData: bcrypt
+        AppBundle\Entity\User:         bcrypt
+        AppBundle\Form\Model\UserData: bcrypt
 
     providers:
         user_provider:
             entity:
-                class: Raddit\AppBundle\Entity\User
+                class: AppBundle\Entity\User
 
     firewalls:
         dev:
@@ -37,7 +37,7 @@ security:
                 secret: "%secret"
                 always_remember_me: true
 
-            user_checker: Raddit\AppBundle\Security\UserChecker
+            user_checker: AppBundle\Security\UserChecker
 
     role_hierarchy:
         ROLE_ADMIN:        [ROLE_TRUSTED_USER, ROLE_USER]

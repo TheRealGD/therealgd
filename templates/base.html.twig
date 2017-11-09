@@ -5,7 +5,7 @@
     <title>{% block title %}{{ site_name() }}{% endblock %}</title>
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="generator" content="raddit {{ app_version() }}">
+    <meta name="generator" content="postmill {{ app_version() }}">
 
     <link rel="apple-touch-icon-precomposed" href="{{ asset('apple-touch-icon-precomposed.png') }}">
 
@@ -42,7 +42,7 @@
         {{ 'site_footer.version'|trans({
           '%branch%': app_branch(),
           '%version%': app_version(),
-          '%app%': '<a href="https://gitlab.com/edgyemma/raddit-app">raddit</a>',
+          '%app%': '<a href="https://gitlab.com/edgyemma/Postmill">Postmill</a>',
         })|raw }}
       </p>
     </footer>

@@ -1,12 +1,12 @@
 <?php
 
-namespace Raddit\AppBundle\Repository;
+namespace AppBundle\Repository;
 
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityRepository;
 use Pagerfanta\Adapter\DoctrineSelectableAdapter;
 use Pagerfanta\Pagerfanta;
-use Raddit\AppBundle\Entity\Comment;
+use AppBundle\Entity\Comment;
 
 class CommentRepository extends EntityRepository {
     /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace Raddit\AppBundle\Entity;
+namespace AppBundle\Entity;
 
 /**
  * Flags that apply to a submission or comment and which describes the role of

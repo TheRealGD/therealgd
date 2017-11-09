@@ -1,6 +1,6 @@
 <?php
 
-namespace Raddit\AppBundle\Repository;
+namespace AppBundle\Repository;
 
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityRepository;

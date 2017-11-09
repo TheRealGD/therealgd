@@ -1,9 +1,9 @@
 <?php
 
-namespace Raddit\AppBundle\Command;
+namespace AppBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Raddit\AppBundle\Entity\ForumCategory;
+use AppBundle\Entity\ForumCategory;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;

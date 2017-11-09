@@ -1,10 +1,10 @@
 <?php
 
-namespace Raddit\Tests\AppBundle\DBAL\Type;
+namespace Tests\AppBundle\DBAL\Type;
 
 use Doctrine\DBAL\Platforms\PostgreSqlPlatform;
 use Doctrine\DBAL\Types\Type;
-use Raddit\AppBundle\DBAL\Type\InetType;
+use AppBundle\DBAL\Type\InetType;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class InetTypeTest extends KernelTestCase {

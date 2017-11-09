@@ -1,6 +1,6 @@
 <?php
 
-namespace Raddit\AppBundle\Entity;
+namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -11,7 +11,7 @@ use Pagerfanta\Pagerfanta;
 use Ramsey\Uuid\Uuid;
 
 /**
- * @ORM\Entity(repositoryClass="Raddit\AppBundle\Repository\ThemeRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ThemeRepository")
  * @ORM\Table(name="themes", uniqueConstraints={
  *     @ORM\UniqueConstraint(name="themes_author_name_idx", columns={"author_id", "name"})
  * })

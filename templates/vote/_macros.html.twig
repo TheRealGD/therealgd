@@ -1,10 +1,10 @@
 {%- macro vote(entity, route) -%}
   {% with {
-    upvote: constant('Raddit\\AppBundle\\Entity\\Votable::VOTE_UP'),
-    downvote: constant('Raddit\\AppBundle\\Entity\\Votable::VOTE_DOWN'),
-    retract: constant('Raddit\\AppBundle\\Entity\\Votable::VOTE_RETRACT'),
-    upvoted: constant('Raddit\\AppBundle\\Entity\\Votable::USER_UPVOTED'),
-    downvoted: constant('Raddit\\AppBundle\\Entity\\Votable::USER_DOWNVOTED'),
+    upvote: constant('AppBundle\\Entity\\Votable::VOTE_UP'),
+    downvote: constant('AppBundle\\Entity\\Votable::VOTE_DOWN'),
+    retract: constant('AppBundle\\Entity\\Votable::VOTE_RETRACT'),
+    upvoted: constant('AppBundle\\Entity\\Votable::USER_UPVOTED'),
+    downvoted: constant('AppBundle\\Entity\\Votable::USER_DOWNVOTED'),
   } %}
     {{- block('vote') -}}
   {% endwith %}

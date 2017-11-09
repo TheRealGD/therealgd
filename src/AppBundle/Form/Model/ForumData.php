@@ -1,15 +1,15 @@
 <?php
 
-namespace Raddit\AppBundle\Form\Model;
+namespace AppBundle\Form\Model;
 
-use Raddit\AppBundle\Entity\Forum;
-use Raddit\AppBundle\Entity\User;
-use Raddit\AppBundle\Validator\Constraints\Unique;
+use AppBundle\Entity\Forum;
+use AppBundle\Entity\User;
+use AppBundle\Validator\Constraints\Unique;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @Unique("canonicalName", idFields={"entityId": "id"}, groups={"create", "edit"},
- *     entityClass="Raddit\AppBundle\Entity\Forum", errorPath="name",
+ *     entityClass="AppBundle\Entity\Forum", errorPath="name",
  *     message="A forum by that name already exists.")
  */
 class ForumData {

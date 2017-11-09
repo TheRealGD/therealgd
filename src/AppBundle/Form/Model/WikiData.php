@@ -1,10 +1,10 @@
 <?php
 
-namespace Raddit\AppBundle\Form\Model;
+namespace AppBundle\Form\Model;
 
-use Raddit\AppBundle\Entity\User;
-use Raddit\AppBundle\Entity\WikiPage;
-use Raddit\AppBundle\Entity\WikiRevision;
+use AppBundle\Entity\User;
+use AppBundle\Entity\WikiPage;
+use AppBundle\Entity\WikiRevision;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class WikiData {

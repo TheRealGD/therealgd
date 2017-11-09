@@ -1,9 +1,9 @@
 <?php
 
-namespace Raddit\AppBundle\Form;
+namespace AppBundle\Form;
 
 use Gregwar\CaptchaBundle\Type\CaptchaType;
-use Raddit\AppBundle\Form\Model\RequestPasswordReset;
+use AppBundle\Form\Model\RequestPasswordReset;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;

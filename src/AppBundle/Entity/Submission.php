@@ -1,15 +1,15 @@
 <?php
 
-namespace Raddit\AppBundle\Entity;
+namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
-use Raddit\AppBundle\Entity\Exception\BannedFromForumException;
+use AppBundle\Entity\Exception\BannedFromForumException;
 
 /**
- * @ORM\Entity(repositoryClass="Raddit\AppBundle\Repository\SubmissionRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\SubmissionRepository")
  * @ORM\Table(name="submissions", indexes={
  *     @ORM\Index(name="submissions_ranking_id_idx", columns={"ranking", "id"})
  * })

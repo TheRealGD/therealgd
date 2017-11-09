@@ -1,11 +1,11 @@
 <?php
 
-namespace Raddit\AppBundle\Entity;
+namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="Raddit\AppBundle\Repository\IpBanRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\IpBanRepository")
  * @ORM\Table(name="bans")
  */
 class IpBan {

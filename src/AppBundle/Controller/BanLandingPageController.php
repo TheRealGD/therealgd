@@ -1,6 +1,6 @@
 <?php
 
-namespace Raddit\AppBundle\Controller;
+namespace AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 

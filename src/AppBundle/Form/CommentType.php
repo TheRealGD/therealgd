@@ -1,11 +1,11 @@
 <?php
 
-namespace Raddit\AppBundle\Form;
+namespace AppBundle\Form;
 
 use Eo\HoneypotBundle\Form\Type\HoneypotType;
-use Raddit\AppBundle\Entity\Forum;
-use Raddit\AppBundle\Form\Model\CommentData;
-use Raddit\AppBundle\Form\Type\MarkdownType;
+use AppBundle\Entity\Forum;
+use AppBundle\Form\Model\CommentData;
+use AppBundle\Form\Type\MarkdownType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;

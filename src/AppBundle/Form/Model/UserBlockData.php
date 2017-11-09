@@ -1,9 +1,9 @@
 <?php
 
-namespace Raddit\AppBundle\Form\Model;
+namespace AppBundle\Form\Model;
 
-use Raddit\AppBundle\Entity\User;
-use Raddit\AppBundle\Entity\UserBlock;
+use AppBundle\Entity\User;
+use AppBundle\Entity\UserBlock;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class UserBlockData {

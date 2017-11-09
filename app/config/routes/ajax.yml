@@ -1,12 +1,12 @@
 fetch_title:
-    controller: Raddit\AppBundle\Controller\AjaxController::fetchTitle
+    controller: AppBundle\Controller\AjaxController::fetchTitle
     defaults: { _format: json }
     path: /ft.json
     methods: [POST]
     options: { expose: true }
 
 markdown_preview:
-    controller: Raddit\AppBundle\Controller\AjaxController::markdownPreview
+    controller: AppBundle\Controller\AjaxController::markdownPreview
     path: /md
     methods: [POST]
     options: { expose: true }

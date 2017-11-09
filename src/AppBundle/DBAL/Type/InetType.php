@@ -1,6 +1,6 @@
 <?php
 
-namespace Raddit\AppBundle\DBAL\Type;
+namespace AppBundle\DBAL\Type;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Platforms\PostgreSqlPlatform;

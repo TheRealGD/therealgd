@@ -1,8 +1,8 @@
 <?php
 
-namespace Raddit\AppBundle\Form\EventListener;
+namespace AppBundle\Form\EventListener;
 
-use Raddit\AppBundle\Form\Model\UserData;
+use AppBundle\Form\Model\UserData;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;

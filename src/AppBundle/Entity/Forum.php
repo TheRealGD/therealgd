@@ -1,6 +1,6 @@
 <?php
 
-namespace Raddit\AppBundle\Entity;
+namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -12,9 +12,7 @@ use Pagerfanta\Adapter\DoctrineSelectableAdapter;
 use Pagerfanta\Pagerfanta;
 
 /**
- * aka Subraddit.
- *
- * @ORM\Entity(repositoryClass="Raddit\AppBundle\Repository\ForumRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ForumRepository")
  * @ORM\Table(name="forums", indexes={
  *     @ORM\Index(name="forum_featured_idx", columns={"featured"})
  * }, uniqueConstraints={

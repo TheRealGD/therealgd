@@ -1,11 +1,11 @@
 <?php
 
-namespace Raddit\Tests\AppBundle\Entity;
+namespace Tests\AppBundle\Entity;
 
 use PHPUnit\Framework\TestCase;
-use Raddit\AppBundle\Entity\Theme;
-use Raddit\AppBundle\Entity\ThemeRevision;
-use Raddit\AppBundle\Entity\User;
+use AppBundle\Entity\Theme;
+use AppBundle\Entity\ThemeRevision;
+use AppBundle\Entity\User;
 
 /**
  * @group time-sensitive

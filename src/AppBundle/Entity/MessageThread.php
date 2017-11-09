@@ -1,6 +1,6 @@
 <?php
 
-namespace Raddit\AppBundle\Entity;
+namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\Selectable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="Raddit\AppBundle\Repository\MessageThreadRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\MessageThreadRepository")
  * @ORM\Table(name="message_threads")
  */
 class MessageThread extends Message {

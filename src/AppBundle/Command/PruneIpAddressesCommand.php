@@ -1,14 +1,14 @@
 <?php
 
-namespace Raddit\AppBundle\Command;
+namespace AppBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Raddit\AppBundle\Entity\Comment;
-use Raddit\AppBundle\Entity\CommentVote;
-use Raddit\AppBundle\Entity\MessageReply;
-use Raddit\AppBundle\Entity\MessageThread;
-use Raddit\AppBundle\Entity\Submission;
-use Raddit\AppBundle\Entity\SubmissionVote;
+use AppBundle\Entity\Comment;
+use AppBundle\Entity\CommentVote;
+use AppBundle\Entity\MessageReply;
+use AppBundle\Entity\MessageThread;
+use AppBundle\Entity\Submission;
+use AppBundle\Entity\SubmissionVote;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;

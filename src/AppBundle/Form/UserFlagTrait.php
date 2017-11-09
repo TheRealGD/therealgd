@@ -1,9 +1,9 @@
 <?php
 
-namespace Raddit\AppBundle\Form;
+namespace AppBundle\Form;
 
-use Raddit\AppBundle\Entity\Forum;
-use Raddit\AppBundle\Entity\UserFlags;
+use AppBundle\Entity\Forum;
+use AppBundle\Entity\UserFlags;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 

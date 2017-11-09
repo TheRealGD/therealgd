@@ -1,8 +1,8 @@
 <?php
 
-namespace Raddit\AppBundle\Controller;
+namespace AppBundle\Controller;
 
-use Raddit\AppBundle\Entity\User;
+use AppBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Bundle\SwiftmailerBundle\DataCollector\MessageDataCollector;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;

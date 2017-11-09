@@ -1,11 +1,11 @@
 <?php
 
-namespace Raddit\AppBundle\Entity;
+namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="Raddit\AppBundle\Repository\NotificationRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\NotificationRepository")
  * @ORM\Table(name="notifications")
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="notification_type", type="text")

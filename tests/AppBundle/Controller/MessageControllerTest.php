@@ -1,11 +1,11 @@
 <?php
 
-namespace Raddit\Tests\AppBundle\Controller;
+namespace Tests\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
- * @covers \Raddit\AppBundle\Controller\MessageController
+ * @covers \AppBundle\Controller\MessageController
  */
 class MessageControllerTest extends WebTestCase {
     /**

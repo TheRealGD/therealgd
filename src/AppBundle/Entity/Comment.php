@@ -1,15 +1,15 @@
 <?php
 
-namespace Raddit\AppBundle\Entity;
+namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Raddit\AppBundle\Entity\Exception\BannedFromForumException;
-use Raddit\AppBundle\Entity\Exception\SubmissionLockedException;
+use AppBundle\Entity\Exception\BannedFromForumException;
+use AppBundle\Entity\Exception\SubmissionLockedException;
 
 /**
- * @ORM\Entity(repositoryClass="Raddit\AppBundle\Repository\CommentRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\CommentRepository")
  * @ORM\Table(name="comments")
  */
 class Comment extends Votable {

@@ -1,17 +1,17 @@
 <?php
 
-namespace Raddit\AppBundle\Form\Model;
+namespace AppBundle\Form\Model;
 
-use Raddit\AppBundle\Entity\Forum;
-use Raddit\AppBundle\Entity\Submission;
-use Raddit\AppBundle\Entity\User;
-use Raddit\AppBundle\Entity\UserFlags;
-use Raddit\AppBundle\Validator\Constraints\RateLimit;
+use AppBundle\Entity\Forum;
+use AppBundle\Entity\Submission;
+use AppBundle\Entity\User;
+use AppBundle\Entity\UserFlags;
+use AppBundle\Validator\Constraints\RateLimit;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @RateLimit(period="1 hour", max="3", groups={"untrusted_user_create"},
- *     entityClass="Raddit\AppBundle\Entity\Submission")
+ *     entityClass="AppBundle\Entity\Submission")
  */
 class SubmissionData {
     private $entityId;

@@ -1,14 +1,14 @@
 <?php
 
-namespace Raddit\AppBundle\Controller;
+namespace AppBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-use Raddit\AppBundle\Entity\WikiPage;
-use Raddit\AppBundle\Entity\WikiRevision;
-use Raddit\AppBundle\Form\Model\WikiData;
-use Raddit\AppBundle\Form\WikiType;
-use Raddit\AppBundle\Repository\WikiPageRepository;
-use Raddit\AppBundle\Repository\WikiRevisionRepository;
+use AppBundle\Entity\WikiPage;
+use AppBundle\Entity\WikiRevision;
+use AppBundle\Form\Model\WikiData;
+use AppBundle\Form\WikiType;
+use AppBundle\Repository\WikiPageRepository;
+use AppBundle\Repository\WikiRevisionRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;

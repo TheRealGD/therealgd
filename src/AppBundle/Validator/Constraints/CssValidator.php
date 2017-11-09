@@ -1,6 +1,6 @@
 <?php
 
-namespace Raddit\AppBundle\Validator\Constraints;
+namespace AppBundle\Validator\Constraints;
 
 use Sabberworm\CSS\CSSList\CSSList;
 use Sabberworm\CSS\Parser;

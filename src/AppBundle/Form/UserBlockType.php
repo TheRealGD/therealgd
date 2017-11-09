@@ -1,8 +1,8 @@
 <?php
 
-namespace Raddit\AppBundle\Form;
+namespace AppBundle\Form;
 
-use Raddit\AppBundle\Form\Model\UserBlockData;
+use AppBundle\Form\Model\UserBlockData;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;

@@ -1,8 +1,8 @@
 <?php
 
-namespace Raddit\AppBundle\DependencyInjection\Compiler;
+namespace AppBundle\DependencyInjection\Compiler;
 
-use Raddit\AppBundle\Form\UserSettingsType;
+use AppBundle\Form\UserSettingsType;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Finder\Finder;

@@ -1,15 +1,15 @@
 <?php
 
-namespace Raddit\AppBundle\Form\Model;
+namespace AppBundle\Form\Model;
 
-use Raddit\AppBundle\Entity\Forum;
-use Raddit\AppBundle\Entity\Moderator;
-use Raddit\AppBundle\Entity\User;
-use Raddit\AppBundle\Validator\Constraints\Unique;
+use AppBundle\Entity\Forum;
+use AppBundle\Entity\Moderator;
+use AppBundle\Entity\User;
+use AppBundle\Validator\Constraints\Unique;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @Unique({"forum", "user"}, entityClass="Raddit\AppBundle\Entity\Moderator",
+ * @Unique({"forum", "user"}, entityClass="AppBundle\Entity\Moderator",
  *     message="That user is already a moderator.", errorPath="user")
  */
 class ModeratorData {

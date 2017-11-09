@@ -1,12 +1,12 @@
 <?php
 
-namespace Raddit\AppBundle\EventListener;
+namespace AppBundle\EventListener;
 
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
-use Raddit\AppBundle\Entity\Comment;
-use Raddit\AppBundle\Entity\Submission;
-use Raddit\AppBundle\Entity\User;
+use AppBundle\Entity\Comment;
+use AppBundle\Entity\Submission;
+use AppBundle\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**

@@ -1,13 +1,13 @@
 <?php
 
-namespace Raddit\AppBundle\DataFixtures\ORM;
+namespace AppBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Raddit\AppBundle\Entity\Forum;
-use Raddit\AppBundle\Entity\Moderator;
-use Raddit\AppBundle\Entity\User;
+use AppBundle\Entity\Forum;
+use AppBundle\Entity\Moderator;
+use AppBundle\Entity\User;
 
 class LoadExampleForums extends AbstractFixture implements DependentFixtureInterface {
     /**

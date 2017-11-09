@@ -1,6 +1,6 @@
 <?php
 
-namespace Raddit\AppBundle\Controller;
+namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as BaseAbstractController;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;

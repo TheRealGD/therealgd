@@ -1,10 +1,10 @@
 <?php
 
-namespace Raddit\AppBundle\DataFixtures\ORM;
+namespace AppBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
-use Raddit\AppBundle\Entity\User;
+use AppBundle\Entity\User;
 
 class LoadExampleUsers extends AbstractFixture {
     /**

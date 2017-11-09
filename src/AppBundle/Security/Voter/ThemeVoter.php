@@ -1,8 +1,8 @@
 <?php
 
-namespace Raddit\AppBundle\Security\Voter;
+namespace AppBundle\Security\Voter;
 
-use Raddit\AppBundle\Entity\Theme;
+use AppBundle\Entity\Theme;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;

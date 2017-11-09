@@ -9,7 +9,7 @@ parameters:
     env(MAILER_USER):       ~
     env(MAILER_PASSWORD):   ~
 
-    env(SITE_NAME):         Raddit
+    env(SITE_NAME):         Postmill
 
     env(CDN):               ~
 

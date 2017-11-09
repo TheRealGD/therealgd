@@ -1,6 +1,6 @@
 <?php
 
-namespace Raddit\AppBundle\CommonMark;
+namespace AppBundle\CommonMark;
 
 use League\CommonMark\Extension\Extension;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;

@@ -1,16 +1,16 @@
 <?php
 
-namespace Raddit\AppBundle\Controller;
+namespace AppBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-use Raddit\AppBundle\Entity\Comment;
-use Raddit\AppBundle\Entity\Forum;
-use Raddit\AppBundle\Entity\ForumLogSubmissionDeletion;
-use Raddit\AppBundle\Entity\Submission;
-use Raddit\AppBundle\Entity\User;
-use Raddit\AppBundle\Form\Model\SubmissionData;
-use Raddit\AppBundle\Form\SubmissionType;
-use Raddit\AppBundle\Utils\Slugger;
+use AppBundle\Entity\Comment;
+use AppBundle\Entity\Forum;
+use AppBundle\Entity\ForumLogSubmissionDeletion;
+use AppBundle\Entity\Submission;
+use AppBundle\Entity\User;
+use AppBundle\Form\Model\SubmissionData;
+use AppBundle\Form\SubmissionType;
+use AppBundle\Utils\Slugger;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;

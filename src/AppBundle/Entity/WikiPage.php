@@ -1,6 +1,6 @@
 <?php
 
-namespace Raddit\AppBundle\Entity;
+namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -10,7 +10,7 @@ use Pagerfanta\Adapter\DoctrineSelectableAdapter;
 use Pagerfanta\Pagerfanta;
 
 /**
- * @ORM\Entity(repositoryClass="Raddit\AppBundle\Repository\WikiPageRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\WikiPageRepository")
  * @ORM\Table(name="wiki_pages")
  */
 class WikiPage {

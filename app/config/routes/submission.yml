@@ -1,5 +1,5 @@
 comments:
-    controller: Raddit\AppBundle\Controller\SubmissionController::commentPage
+    controller: AppBundle\Controller\SubmissionController::commentPage
     defaults: { slug: ~ }
     path: /f/{forum_name}/{submission_id}/{slug}
     methods: [GET]
@@ -7,43 +7,43 @@ comments:
         submission_id: \d+
 
 comment:
-    controller: Raddit\AppBundle\Controller\SubmissionController::commentPermalink
+    controller: AppBundle\Controller\SubmissionController::commentPermalink
     path: /f/{forum_name}/{submission_id}/comment/{comment_id}
     methods: [GET]
 
 edit_submission:
-    controller: Raddit\AppBundle\Controller\SubmissionController::editSubmission
+    controller: AppBundle\Controller\SubmissionController::editSubmission
     path: /f/{forum_name}/edit_submission/{submission_id}
     methods: [GET, POST]
 
 delete_submission:
-    controller: Raddit\AppBundle\Controller\SubmissionController::deleteSubmission
+    controller: AppBundle\Controller\SubmissionController::deleteSubmission
     path: /f/{forum_name}/delete_submission/{submission_id}
     methods: [POST]
 
 lock:
-    controller: Raddit\AppBundle\Controller\SubmissionController::lock
+    controller: AppBundle\Controller\SubmissionController::lock
     defaults: { lock: true }
     path: /f/{forum_name}/{submission_id}/lock
     methods: [POST]
     requirements: { id: \d+ }
 
 unlock:
-    controller: Raddit\AppBundle\Controller\SubmissionController::lock
+    controller: AppBundle\Controller\SubmissionController::lock
     defaults: { lock: false }
     path: /f/{forum_name}/{submission_id}/unlock
     methods: [POST]
     requirements: { id: \d+ }
 
 submit:
-    controller: Raddit\AppBundle\Controller\SubmissionController::submit
+    controller: AppBundle\Controller\SubmissionController::submit
     defaults: { forum_name: null }
     path: /submit/{forum_name}
     methods: [GET, POST]
 
 submission_vote:
-    controller: Raddit\AppBundle\Controller\VoteController::vote
-    defaults: { _format: html, entityClass: Raddit\AppBundle\Entity\Submission }
+    controller: AppBundle\Controller\VoteController::vote
+    defaults: { _format: html, entityClass: AppBundle\Entity\Submission }
     path: /sv/{id}.{_format}
     methods: [POST]
     requirements: { _format: html|json }

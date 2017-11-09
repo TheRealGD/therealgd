@@ -61,7 +61,7 @@ doctrine:
         url:      "%env(DATABASE_URL)%"
         charset:  UTF8
         types:
-            inet: Raddit\AppBundle\DBAL\Type\InetType
+            inet: AppBundle\DBAL\Type\InetType
             uuid: Ramsey\Uuid\Doctrine\UuidType
         mapping_types:
             inet: inet
@@ -82,7 +82,7 @@ swiftmailer:
 doctrine_migrations:
     dir_name: "%kernel.project_dir%/src/AppBundle/Migrations"
     namespace: DoctrineMigrations
-    name: Raddit migrations
+    name: Postmill migrations
 
 # todo: use flysystem for thumbnails too
 liip_imagine:

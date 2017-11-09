@@ -1,18 +1,18 @@
 <?php
 
-namespace Raddit\AppBundle\Form\Model;
+namespace AppBundle\Form\Model;
 
-use Raddit\AppBundle\Entity\Theme;
-use Raddit\AppBundle\Entity\ThemeRevision;
-use Raddit\AppBundle\Entity\User;
-use Raddit\AppBundle\Validator\Constraints\Css;
-use Raddit\AppBundle\Validator\Constraints\Unique;
+use AppBundle\Entity\Theme;
+use AppBundle\Entity\ThemeRevision;
+use AppBundle\Entity\User;
+use AppBundle\Validator\Constraints\Css;
+use AppBundle\Validator\Constraints\Unique;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @Unique({"author", "name"}, idFields={"entityId": "id"},
- *     entityClass="Raddit\AppBundle\Entity\Theme", errorPath="name",
+ *     entityClass="AppBundle\Entity\Theme", errorPath="name",
  *     message="That name is already taken.")
  */
 class ThemeData {

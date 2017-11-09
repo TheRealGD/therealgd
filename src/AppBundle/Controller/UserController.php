@@ -1,19 +1,19 @@
 <?php
 
-namespace Raddit\AppBundle\Controller;
+namespace AppBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-use Raddit\AppBundle\Entity\User;
-use Raddit\AppBundle\Entity\UserBlock;
-use Raddit\AppBundle\Form\Model\UserBlockData;
-use Raddit\AppBundle\Form\Model\UserData;
-use Raddit\AppBundle\Form\UserBiographyType;
-use Raddit\AppBundle\Form\UserBlockType;
-use Raddit\AppBundle\Form\UserSettingsType;
-use Raddit\AppBundle\Form\UserType;
-use Raddit\AppBundle\Repository\NotificationRepository;
-use Raddit\AppBundle\Repository\UserRepository;
-use Raddit\AppBundle\Utils\AuthenticationHelper;
+use AppBundle\Entity\User;
+use AppBundle\Entity\UserBlock;
+use AppBundle\Form\Model\UserBlockData;
+use AppBundle\Form\Model\UserData;
+use AppBundle\Form\UserBiographyType;
+use AppBundle\Form\UserBlockType;
+use AppBundle\Form\UserSettingsType;
+use AppBundle\Form\UserType;
+use AppBundle\Repository\NotificationRepository;
+use AppBundle\Repository\UserRepository;
+use AppBundle\Utils\AuthenticationHelper;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;

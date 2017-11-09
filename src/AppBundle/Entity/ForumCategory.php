@@ -1,6 +1,6 @@
 <?php
 
-namespace Raddit\AppBundle\Entity;
+namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\Selectable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="Raddit\AppBundle\Repository\ForumCategoryRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ForumCategoryRepository")
  * @ORM\Table(name="forum_categories")
  */
 class ForumCategory {

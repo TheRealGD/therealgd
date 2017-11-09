@@ -1,6 +1,6 @@
 <?php
 
-namespace Raddit\AppBundle\CommonMark\Inline\Parser;
+namespace AppBundle\CommonMark\Inline\Parser;
 
 use League\CommonMark\Inline\Element\Link;
 use League\CommonMark\Inline\Parser\AbstractInlineParser;

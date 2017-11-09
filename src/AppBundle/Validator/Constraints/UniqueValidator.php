@@ -1,6 +1,6 @@
 <?php
 
-namespace Raddit\AppBundle\Validator\Constraints;
+namespace AppBundle\Validator\Constraints;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PropertyAccess\PropertyAccess;

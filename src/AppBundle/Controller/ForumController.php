@@ -1,23 +1,23 @@
 <?php
 
-namespace Raddit\AppBundle\Controller;
+namespace AppBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-use Raddit\AppBundle\Entity\Forum;
-use Raddit\AppBundle\Entity\Moderator;
-use Raddit\AppBundle\Entity\User;
-use Raddit\AppBundle\Form\ForumAppearanceType;
-use Raddit\AppBundle\Form\ForumBanType;
-use Raddit\AppBundle\Form\ForumType;
-use Raddit\AppBundle\Form\Model\ForumBanData;
-use Raddit\AppBundle\Form\Model\ForumData;
-use Raddit\AppBundle\Form\Model\ModeratorData;
-use Raddit\AppBundle\Form\ModeratorType;
-use Raddit\AppBundle\Form\PasswordConfirmType;
-use Raddit\AppBundle\Repository\ForumBanRepository;
-use Raddit\AppBundle\Repository\ForumCategoryRepository;
-use Raddit\AppBundle\Repository\ForumRepository;
-use Raddit\AppBundle\Repository\SubmissionRepository;
+use AppBundle\Entity\Forum;
+use AppBundle\Entity\Moderator;
+use AppBundle\Entity\User;
+use AppBundle\Form\ForumAppearanceType;
+use AppBundle\Form\ForumBanType;
+use AppBundle\Form\ForumType;
+use AppBundle\Form\Model\ForumBanData;
+use AppBundle\Form\Model\ForumData;
+use AppBundle\Form\Model\ModeratorData;
+use AppBundle\Form\ModeratorType;
+use AppBundle\Form\PasswordConfirmType;
+use AppBundle\Repository\ForumBanRepository;
+use AppBundle\Repository\ForumCategoryRepository;
+use AppBundle\Repository\ForumRepository;
+use AppBundle\Repository\SubmissionRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;

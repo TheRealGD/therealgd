@@ -1,10 +1,10 @@
 <?php
 
-namespace Raddit\AppBundle\Controller;
+namespace AppBundle\Controller;
 
-use Raddit\AppBundle\Entity\User;
-use Raddit\AppBundle\Repository\ForumRepository;
-use Raddit\AppBundle\Repository\SubmissionRepository;
+use AppBundle\Entity\User;
+use AppBundle\Repository\ForumRepository;
+use AppBundle\Repository\SubmissionRepository;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

@@ -1,9 +1,9 @@
 <?php
 
-namespace Raddit\AppBundle\Utils;
+namespace AppBundle\Utils;
 
 use Psr\Container\ContainerInterface;
-use Raddit\AppBundle\Entity\User;
+use AppBundle\Entity\User;
 use Symfony\Bundle\SecurityBundle\Security\FirewallMap;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

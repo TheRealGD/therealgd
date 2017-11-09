@@ -1,6 +1,6 @@
 <?php
 
-namespace Raddit\AppBundle\Validator\Constraints;
+namespace AppBundle\Validator\Constraints;
 
 use Doctrine\Common\Annotations\Annotation\Target;
 use Symfony\Component\Validator\Constraint;

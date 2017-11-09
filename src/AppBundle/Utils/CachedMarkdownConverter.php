@@ -1,6 +1,6 @@
 <?php
 
-namespace Raddit\AppBundle\Utils;
+namespace AppBundle\Utils;
 
 use Psr\Cache\CacheItemPoolInterface;
 

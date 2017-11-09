@@ -1,6 +1,6 @@
 <?php
 
-namespace Raddit\AppBundle\Entity\Exception;
+namespace AppBundle\Entity\Exception;
 
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 

@@ -1,14 +1,14 @@
 <?php
 
-namespace Raddit\AppBundle\Controller;
+namespace AppBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-use Raddit\AppBundle\Entity\MessageThread;
-use Raddit\AppBundle\Entity\User;
-use Raddit\AppBundle\Form\MessageReplyType;
-use Raddit\AppBundle\Form\MessageThreadType;
-use Raddit\AppBundle\Form\Model\MessageData;
-use Raddit\AppBundle\Repository\MessageThreadRepository;
+use AppBundle\Entity\MessageThread;
+use AppBundle\Entity\User;
+use AppBundle\Form\MessageReplyType;
+use AppBundle\Form\MessageThreadType;
+use AppBundle\Form\Model\MessageData;
+use AppBundle\Repository\MessageThreadRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

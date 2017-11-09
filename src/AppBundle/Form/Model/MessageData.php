@@ -1,10 +1,10 @@
 <?php
 
-namespace Raddit\AppBundle\Form\Model;
+namespace AppBundle\Form\Model;
 
-use Raddit\AppBundle\Entity\MessageReply;
-use Raddit\AppBundle\Entity\MessageThread;
-use Raddit\AppBundle\Entity\User;
+use AppBundle\Entity\MessageReply;
+use AppBundle\Entity\MessageThread;
+use AppBundle\Entity\User;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class MessageData {

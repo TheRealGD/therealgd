@@ -1,11 +1,11 @@
 <?php
 
-namespace Raddit\AppBundle\Form\Model;
+namespace AppBundle\Form\Model;
 
-use Raddit\AppBundle\Entity\Comment;
-use Raddit\AppBundle\Entity\Submission;
-use Raddit\AppBundle\Entity\User;
-use Raddit\AppBundle\Entity\UserFlags;
+use AppBundle\Entity\Comment;
+use AppBundle\Entity\Submission;
+use AppBundle\Entity\User;
+use AppBundle\Entity\UserFlags;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class CommentData {

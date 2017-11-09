@@ -1,16 +1,16 @@
 <?php
 
-namespace Raddit\AppBundle\Controller;
+namespace AppBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-use Raddit\AppBundle\Entity\User;
-use Raddit\AppBundle\Form\IpBanType;
-use Raddit\AppBundle\Form\BanUserType;
-use Raddit\AppBundle\Form\Model\IpBanData;
-use Raddit\AppBundle\Form\Model\UserBanData;
-use Raddit\AppBundle\Form\UnbanUserType;
-use Raddit\AppBundle\Repository\IpBanRepository;
-use Raddit\AppBundle\Repository\UserBanRepository;
+use AppBundle\Entity\User;
+use AppBundle\Form\IpBanType;
+use AppBundle\Form\BanUserType;
+use AppBundle\Form\Model\IpBanData;
+use AppBundle\Form\Model\UserBanData;
+use AppBundle\Form\UnbanUserType;
+use AppBundle\Repository\IpBanRepository;
+use AppBundle\Repository\UserBanRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;

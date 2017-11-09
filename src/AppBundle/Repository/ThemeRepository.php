@@ -1,12 +1,12 @@
 <?php
 
-namespace Raddit\AppBundle\Repository;
+namespace AppBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
-use Raddit\AppBundle\Entity\Theme;
-use Raddit\AppBundle\Entity\User;
+use AppBundle\Entity\Theme;
+use AppBundle\Entity\User;
 
 class ThemeRepository extends EntityRepository {
     /**

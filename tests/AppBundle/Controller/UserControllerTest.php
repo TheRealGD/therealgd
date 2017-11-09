@@ -1,11 +1,11 @@
 <?php
 
-namespace Raddit\Tests\AppBundle\Controller;
+namespace Tests\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
- * @covers \Raddit\AppBundle\Controller\UserController
+ * @covers \AppBundle\Controller\UserController
  */
 class UserControllerTest extends WebTestCase {
     public function testCanReceiveSubmissionNotifications() {

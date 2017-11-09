@@ -1,9 +1,9 @@
 <?php
 
-namespace Raddit\AppBundle\EventListener;
+namespace AppBundle\EventListener;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
-use Raddit\AppBundle\Entity\User;
+use AppBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;

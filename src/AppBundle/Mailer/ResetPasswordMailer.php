@@ -1,8 +1,8 @@
 <?php
 
-namespace Raddit\AppBundle\Mailer;
+namespace AppBundle\Mailer;
 
-use Raddit\AppBundle\Entity\User;
+use AppBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Translation\TranslatorInterface;

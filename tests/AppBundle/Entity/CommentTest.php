@@ -1,13 +1,13 @@
 <?php
 
-namespace Raddit\Tests\AppBundle\Entity;
+namespace Tests\AppBundle\Entity;
 
 use PHPUnit\Framework\TestCase;
-use Raddit\AppBundle\Entity\Comment;
-use Raddit\AppBundle\Entity\Forum;
-use Raddit\AppBundle\Entity\Submission;
-use Raddit\AppBundle\Entity\User;
-use Raddit\AppBundle\Entity\UserFlags;
+use AppBundle\Entity\Comment;
+use AppBundle\Entity\Forum;
+use AppBundle\Entity\Submission;
+use AppBundle\Entity\User;
+use AppBundle\Entity\UserFlags;
 
 class CommentTest extends TestCase {
     public function testNewTopLevelCommentSendsNotification() {

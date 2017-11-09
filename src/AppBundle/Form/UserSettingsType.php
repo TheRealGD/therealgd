@@ -1,10 +1,10 @@
 <?php
 
-namespace Raddit\AppBundle\Form;
+namespace AppBundle\Form;
 
-use Raddit\AppBundle\Entity\Theme;
-use Raddit\AppBundle\Entity\User;
-use Raddit\AppBundle\Form\Model\UserData;
+use AppBundle\Entity\Theme;
+use AppBundle\Entity\User;
+use AppBundle\Form\Model\UserData;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;

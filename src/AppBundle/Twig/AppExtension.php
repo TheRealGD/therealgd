@@ -1,10 +1,10 @@
 <?php
 
-namespace Raddit\AppBundle\Twig;
+namespace AppBundle\Twig;
 
-use Raddit\AppBundle\Utils\CachedMarkdownConverter;
-use Raddit\AppBundle\Utils\MarkdownConverter;
-use Raddit\AppBundle\Utils\Slugger;
+use AppBundle\Utils\CachedMarkdownConverter;
+use AppBundle\Utils\MarkdownConverter;
+use AppBundle\Utils\Slugger;
 
 /**
  * Twig extension which makes certain parameters available as template

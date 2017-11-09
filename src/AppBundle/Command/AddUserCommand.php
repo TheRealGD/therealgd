@@ -1,9 +1,9 @@
 <?php
 
-namespace Raddit\AppBundle\Command;
+namespace AppBundle\Command;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use Raddit\AppBundle\Entity\User;
+use AppBundle\Entity\User;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;

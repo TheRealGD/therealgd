@@ -1,11 +1,11 @@
 <?php
 
-namespace Raddit\Tests\AppBundle\Entity;
+namespace Tests\AppBundle\Entity;
 
 use PHPUnit\Framework\TestCase;
-use Raddit\AppBundle\Entity\User;
-use Raddit\AppBundle\Entity\UserBan;
-use Raddit\AppBundle\Entity\UserBlock;
+use AppBundle\Entity\User;
+use AppBundle\Entity\UserBan;
+use AppBundle\Entity\UserBlock;
 
 /**
  * @group time-sensitive

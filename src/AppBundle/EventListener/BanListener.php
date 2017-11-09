@@ -1,10 +1,10 @@
 <?php
 
-namespace Raddit\AppBundle\EventListener;
+namespace AppBundle\EventListener;
 
-use Raddit\AppBundle\Controller\BanLandingPageController;
-use Raddit\AppBundle\Entity\User;
-use Raddit\AppBundle\Repository\IpBanRepository;
+use AppBundle\Controller\BanLandingPageController;
+use AppBundle\Entity\User;
+use AppBundle\Repository\IpBanRepository;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;

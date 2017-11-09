@@ -1,12 +1,12 @@
 <?php
 
-namespace Raddit\AppBundle\Repository;
+namespace AppBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
-use Raddit\AppBundle\Entity\Forum;
-use Raddit\AppBundle\Entity\ForumBan;
+use AppBundle\Entity\Forum;
+use AppBundle\Entity\ForumBan;
 
 class ForumBanRepository extends EntityRepository {
     /**

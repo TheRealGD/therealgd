@@ -1,6 +1,6 @@
 <?php
 
-namespace Raddit\Tests;
+namespace Tests;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

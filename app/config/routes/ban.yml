@@ -1,45 +1,45 @@
 user_bans:
-    controller: Raddit\AppBundle\Controller\BanController::userBans
+    controller: AppBundle\Controller\BanController::userBans
     defaults: { page: 1 }
     path: /bans/{page}
     methods: [GET]
     requirements: { page: \d+ }
 
 ban_user:
-    controller: Raddit\AppBundle\Controller\BanController::banUser
+    controller: AppBundle\Controller\BanController::banUser
     methods: [GET, POST]
     path: /bans/ban_user/{username}
 
 unban_user:
-    controller: Raddit\AppBundle\Controller\BanController::unbanUser
+    controller: AppBundle\Controller\BanController::unbanUser
     methods: [GET, POST]
     path: /bans/unban_user/{username}
 
 ip_bans:
-    controller: Raddit\AppBundle\Controller\BanController::ipBans
+    controller: AppBundle\Controller\BanController::ipBans
     defaults: { page: 1 }
     path: /bans/by_ip/{page}
     methods: [GET]
     requirements: { page: \d+ }
 
 ban_ip:
-    controller: Raddit\AppBundle\Controller\BanController::banIp
+    controller: AppBundle\Controller\BanController::banIp
     path: /bans/ban_ip
     methods: [GET, POST]
 
 unban_ips:
-    controller: Raddit\AppBundle\Controller\BanController::unbanIps
+    controller: AppBundle\Controller\BanController::unbanIps
     path: /bans/unban_ips
     methods: [POST]
 
 ban_by_submission:
-    controller: Raddit\AppBundle\Controller\BanController::redirectToBanForm
-    defaults: { entityClass: Raddit\AppBundle\Entity\Submission }
+    controller: AppBundle\Controller\BanController::redirectToBanForm
+    defaults: { entityClass: AppBundle\Entity\Submission }
     methods: [GET]
     path: /bans/ban_by_submission/{id}
 
 ban_by_comment:
-    controller: Raddit\AppBundle\Controller\BanController::redirectToBanForm
-    defaults: { entityClass: Raddit\AppBundle\Entity\Comment }
+    controller: AppBundle\Controller\BanController::redirectToBanForm
+    defaults: { entityClass: AppBundle\Entity\Comment }
     path: /bans/ban_by_comment/{id}
     methods: [GET]

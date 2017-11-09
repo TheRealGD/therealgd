@@ -1,6 +1,6 @@
 <?php
 
-namespace Raddit\AppBundle\Security\Exception;
+namespace AppBundle\Security\Exception;
 
 use Symfony\Component\Security\Core\Exception\AccountStatusException;
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace Raddit\AppBundle\Validator\Constraints;
+namespace AppBundle\Validator\Constraints;
 
 use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\EntityManagerInterface;
-use Raddit\AppBundle\Entity\User;
+use AppBundle\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;

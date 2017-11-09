@@ -1,57 +1,57 @@
 wiki:
-    controller: Raddit\AppBundle\Controller\WikiController::wiki
+    controller: AppBundle\Controller\WikiController::wiki
     defaults: { path: index }
     path: /wiki/{path}
     methods: [GET]
     requirements: { path: "%wiki_page_regex%" }
 
 wiki_create:
-    controller: Raddit\AppBundle\Controller\WikiController::create
+    controller: AppBundle\Controller\WikiController::create
     path: /wiki/_create/{path}
     methods: [GET, POST]
     requirements: { path: "%wiki_page_regex%" }
 
 wiki_edit:
-    controller: Raddit\AppBundle\Controller\WikiController::edit
+    controller: AppBundle\Controller\WikiController::edit
     path: /wiki/_edit/{path}
     methods: [GET, POST]
     requirements: { path: "%wiki_page_regex%" }
 
 wiki_lock:
-    controller: Raddit\AppBundle\Controller\WikiController::lock
+    controller: AppBundle\Controller\WikiController::lock
     defaults: { lock: true }
     methods: [POST]
     path: /wiki/_lock/{path}
     requirements: { path: "%wiki_page_regex%" }
 
 wiki_unlock:
-    controller: Raddit\AppBundle\Controller\WikiController::lock
+    controller: AppBundle\Controller\WikiController::lock
     defaults: { lock: false }
     methods: [POST]
     path: /wiki/_unlock/{path}
     requirements: { path: "%wiki_page_regex%" }
 
 wiki_history:
-    controller: Raddit\AppBundle\Controller\WikiController::history
+    controller: AppBundle\Controller\WikiController::history
     defaults: { page: 1 }
     path: /wiki/_history/{path}/{page}
     methods: [GET]
     requirements: { path: "%wiki_page_regex%" }
 
 wiki_all:
-    controller: Raddit\AppBundle\Controller\WikiController::all
+    controller: AppBundle\Controller\WikiController::all
     defaults: { page: 1 }
     path: /wiki/_all/{page}
     methods: [GET]
 
 wiki_revision:
-    controller: Raddit\AppBundle\Controller\WikiController::revision
+    controller: AppBundle\Controller\WikiController::revision
     path: /wiki/_revision/{id}
     methods: [GET]
     requirements: { id: "%uuid_regex%" }
 
 wiki_recent_changes:
-    controller: Raddit\AppBundle\Controller\WikiController::recentChanges
+    controller: AppBundle\Controller\WikiController::recentChanges
     defaults: { page: 1 }
     path: /wiki/_recent/{page}
     methods: [GET]

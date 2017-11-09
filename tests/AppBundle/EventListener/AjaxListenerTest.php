@@ -1,11 +1,11 @@
 <?php
 
-namespace Raddit\Tests\AppBundle\EventListener;
+namespace Tests\AppBundle\EventListener;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
- * @covers \Raddit\AppBundle\EventListener\AjaxListener
+ * @covers \AppBundle\EventListener\AjaxListener
  */
 class AjaxListenerTest extends WebTestCase {
     public function test403sOnAuthenticationFailure() {

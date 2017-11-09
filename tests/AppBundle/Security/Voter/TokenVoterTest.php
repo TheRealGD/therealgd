@@ -1,10 +1,10 @@
 <?php
 
-namespace Raddit\Tests\AppBundle\Security\Voter;
+namespace Tests\AppBundle\Security\Voter;
 
 use PHPUnit\Framework\TestCase;
-use Raddit\AppBundle\Entity\User;
-use Raddit\AppBundle\Security\Voter\TokenVoter;
+use AppBundle\Entity\User;
+use AppBundle\Security\Voter\TokenVoter;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;

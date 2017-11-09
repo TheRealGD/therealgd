@@ -1,6 +1,6 @@
 <?php
 
-namespace Raddit\AppBundle\EventListener;
+namespace AppBundle\EventListener;
 
 use Eo\HoneypotBundle\Event\BirdInCageEvent;
 use Eo\HoneypotBundle\Events;

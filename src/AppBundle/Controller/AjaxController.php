@@ -1,10 +1,10 @@
 <?php
 
-namespace Raddit\AppBundle\Controller;
+namespace AppBundle\Controller;
 
 use Embed\Embed;
 use Embed\Exceptions\InvalidUrlException;
-use Raddit\AppBundle\Utils\MarkdownConverter;
+use AppBundle\Utils\MarkdownConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

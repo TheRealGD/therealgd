@@ -1,9 +1,9 @@
 <?php
 
-namespace Raddit\AppBundle\Security;
+namespace AppBundle\Security;
 
-use Raddit\AppBundle\Entity\User;
-use Raddit\AppBundle\Security\Exception\AccountBannedException;
+use AppBundle\Entity\User;
+use AppBundle\Security\Exception\AccountBannedException;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 

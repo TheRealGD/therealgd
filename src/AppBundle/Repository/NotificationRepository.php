@@ -1,10 +1,10 @@
 <?php
 
-namespace Raddit\AppBundle\Repository;
+namespace AppBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Raddit\AppBundle\Entity\Notification;
-use Raddit\AppBundle\Entity\User;
+use AppBundle\Entity\Notification;
+use AppBundle\Entity\User;
 
 class NotificationRepository extends EntityRepository {
     /**

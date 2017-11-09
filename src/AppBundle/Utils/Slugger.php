@@ -1,6 +1,6 @@
 <?php
 
-namespace Raddit\AppBundle\Utils;
+namespace AppBundle\Utils;
 
 final class Slugger {
     const MAX_LENGTH = 60;

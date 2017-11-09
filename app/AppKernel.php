@@ -22,7 +22,7 @@ class AppKernel extends Kernel {
             new Gregwar\CaptchaBundle\GregwarCaptchaBundle(),
             new Eo\HoneypotBundle\EoHoneypotBundle(),
             new Oneup\FlysystemBundle\OneupFlysystemBundle(),
-            new Raddit\AppBundle\RadditAppBundle(),
+            new AppBundle\AppBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

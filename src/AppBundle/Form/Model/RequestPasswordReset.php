@@ -1,6 +1,6 @@
 <?php
 
-namespace Raddit\AppBundle\Form\Model;
+namespace AppBundle\Form\Model;
 
 use Symfony\Component\Validator\Constraints as Assert;
 

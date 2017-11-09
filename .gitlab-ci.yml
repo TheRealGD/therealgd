@@ -19,9 +19,9 @@ services:
     - postgres:9.6-alpine
 
 variables:
-    POSTGRES_USER: raddit
+    POSTGRES_USER: postmill
     POSTGRES_PASSWORD: ""
-    DATABASE_URL: "pgsql://raddit@postgres/raddit?serverVersion=9.6"
+    DATABASE_URL: "pgsql://postmill@postgres/postmill?serverVersion=9.6"
 
 test:
     script:

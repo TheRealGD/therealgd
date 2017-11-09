@@ -1,10 +1,10 @@
 <?php
 
-namespace Raddit\AppBundle\Form;
+namespace AppBundle\Form;
 
-use Raddit\AppBundle\Form\DataTransformer\UserTransformer;
-use Raddit\AppBundle\Form\Model\ModeratorData;
-use Raddit\AppBundle\Repository\UserRepository;
+use AppBundle\Form\DataTransformer\UserTransformer;
+use AppBundle\Form\Model\ModeratorData;
+use AppBundle\Repository\UserRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;

@@ -1,5 +1,5 @@
 user:
-    controller: Raddit\AppBundle\Controller\UserController::userPage
+    controller: AppBundle\Controller\UserController::userPage
     path: /user/{username}
     methods: [GET]
 
@@ -10,72 +10,72 @@ user_shortcut:
     methods: [GET]
 
 user_submissions:
-    controller: Raddit\AppBundle\Controller\UserController::submissions
+    controller: AppBundle\Controller\UserController::submissions
     defaults: { page: 1 }
     path: /user/{username}/submissions/{page}
     methods: [GET]
     requirements: { page: \d+ }
 
 user_comments:
-    controller: Raddit\AppBundle\Controller\UserController::comments
+    controller: AppBundle\Controller\UserController::comments
     defaults: { page: 1 }
     path: /user/{username}/comments/{page}
     methods: [GET]
     requirements: { page: \d+ }
 
 edit_user:
-    controller: Raddit\AppBundle\Controller\UserController::editUser
+    controller: AppBundle\Controller\UserController::editUser
     path: /edit_user/{username}
     methods: [GET, POST]
 
 edit_biography:
-    controller: Raddit\AppBundle\Controller\UserController::editBiography
+    controller: AppBundle\Controller\UserController::editBiography
     path: /edit_biography/{username}
     methods: [GET, POST]
 
 user_settings:
-    controller: Raddit\AppBundle\Controller\UserController::userSettings
+    controller: AppBundle\Controller\UserController::userSettings
     path: /user_settings/{username}
     methods: [GET, POST]
 
 user_block_list:
-    controller: Raddit\AppBundle\Controller\UserController::blockList
+    controller: AppBundle\Controller\UserController::blockList
     defaults: { page: 1 }
     path: /block_list/{page}
     methods: [GET, POST]
     requirements: { page: \d+ }
 
 block_user:
-    controller: Raddit\AppBundle\Controller\UserController::block
+    controller: AppBundle\Controller\UserController::block
     path: /block/{username}
     methods: [GET, POST]
 
 unblock_user:
-    controller: Raddit\AppBundle\Controller\UserController::unblock
+    controller: AppBundle\Controller\UserController::unblock
     path: /unblock/{id}
     methods: [POST]
     requirements: { id: "%uuid_regex%" }
 
 registration:
-    controller: Raddit\AppBundle\Controller\UserController::registration
+    controller: AppBundle\Controller\UserController::registration
     path: /registration
     methods: [GET, POST]
 
 mark_user_trusted:
-    controller: Raddit\AppBundle\Controller\UserController::markAsTrusted
+    controller: AppBundle\Controller\UserController::markAsTrusted
     path: /mark_as_trusted/{id}/{trusted}
     methods: [POST]
     requirements: { trusted: '[01]' }
 
 inbox:
-    controller: Raddit\AppBundle\Controller\UserController::inbox
+    controller: AppBundle\Controller\UserController::inbox
     defaults: { page: 1 }
     path: /inbox/{page}
     methods: [GET]
     requirements: { page: \d+ }
 
 clear_inbox:
-    controller: Raddit\AppBundle\Controller\UserController::clearInbox
+    controller: AppBundle\Controller\UserController::clearInbox
     defaults: { _format: html }
     path: /clear_inbox.{_format}
     methods: [POST]

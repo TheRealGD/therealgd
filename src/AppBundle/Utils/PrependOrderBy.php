@@ -1,6 +1,6 @@
 <?php
 
-namespace Raddit\AppBundle\Utils;
+namespace AppBundle\Utils;
 
 use Doctrine\ORM\QueryBuilder as DQLQueryBuilder;
 use Doctrine\DBAL\Query\QueryBuilder as SQLQueryBuilder;

@@ -1,12 +1,12 @@
 <?php
 
-namespace Raddit\Tests\AppBundle\Entity;
+namespace Tests\AppBundle\Entity;
 
 use PHPUnit\Framework\TestCase;
-use Raddit\AppBundle\Entity\Forum;
-use Raddit\AppBundle\Entity\ForumBan;
-use Raddit\AppBundle\Entity\Moderator;
-use Raddit\AppBundle\Entity\User;
+use AppBundle\Entity\Forum;
+use AppBundle\Entity\ForumBan;
+use AppBundle\Entity\Moderator;
+use AppBundle\Entity\User;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class ForumTest extends TestCase {

@@ -1,11 +1,11 @@
 <?php
 
-namespace Raddit\AppBundle\Form;
+namespace AppBundle\Form;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Raddit\AppBundle\Entity\ThemeRevision;
-use Raddit\AppBundle\Form\Model\ThemeData;
-use Raddit\AppBundle\Repository\ThemeRepository;
+use AppBundle\Entity\ThemeRevision;
+use AppBundle\Form\Model\ThemeData;
+use AppBundle\Repository\ThemeRepository;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;

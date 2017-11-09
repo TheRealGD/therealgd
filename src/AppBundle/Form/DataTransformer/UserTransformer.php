@@ -1,9 +1,9 @@
 <?php
 
-namespace Raddit\AppBundle\Form\DataTransformer;
+namespace AppBundle\Form\DataTransformer;
 
-use Raddit\AppBundle\Entity\User;
-use Raddit\AppBundle\Repository\UserRepository;
+use AppBundle\Entity\User;
+use AppBundle\Repository\UserRepository;
 use Symfony\Component\Form\DataTransformerInterface;
 
 /**

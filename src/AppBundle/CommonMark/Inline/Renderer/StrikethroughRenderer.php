@@ -1,12 +1,12 @@
 <?php
 
-namespace Raddit\AppBundle\CommonMark\Inline\Renderer;
+namespace AppBundle\CommonMark\Inline\Renderer;
 
 use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
 use League\CommonMark\Inline\Element\AbstractInline;
 use League\CommonMark\Inline\Renderer\InlineRendererInterface;
-use Raddit\AppBundle\CommonMark\Inline\Element\Strikethrough;
+use AppBundle\CommonMark\Inline\Element\Strikethrough;
 
 /**
  * Seized from <https://github.com/uafrica/commonmark-ext> and modified to

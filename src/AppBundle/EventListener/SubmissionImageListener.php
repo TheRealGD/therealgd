@@ -1,6 +1,6 @@
 <?php
 
-namespace Raddit\AppBundle\EventListener;
+namespace AppBundle\EventListener;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Event\LifecycleEventArgs;
@@ -11,7 +11,7 @@ use League\Flysystem\FilesystemInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\NullLogger;
-use Raddit\AppBundle\Entity\Submission;
+use AppBundle\Entity\Submission;
 use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
 use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesser;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -127,7 +127,7 @@ final class SubmissionImageListener implements LoggerAwareInterface {
 
         try {
             // fixme: don't create temporary files
-            $tempFile = @tempnam(sys_get_temp_dir(), 'raddit');
+            $tempFile = @tempnam(sys_get_temp_dir(), 'postmill');
             $fh = @fopen($tempFile, 'wb+');
 
             if (!$fh) {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Raddit\Tests\AppBundle\Utils;
+namespace Tests\AppBundle\Utils;
 
-use Raddit\AppBundle\Utils\Slugger;
+use AppBundle\Utils\Slugger;
 use PHPUnit\Framework\TestCase;
 
 class SluggerTest extends TestCase {

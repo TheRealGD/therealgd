@@ -1,12 +1,12 @@
 <?php
 
-namespace Raddit\Tests\AppBundle\Entity;
+namespace Tests\AppBundle\Entity;
 
 use PHPUnit\Framework\TestCase;
-use Raddit\AppBundle\Entity\MessageReply;
-use Raddit\AppBundle\Entity\MessageThread;
-use Raddit\AppBundle\Entity\User;
-use Raddit\AppBundle\Entity\UserBlock;
+use AppBundle\Entity\MessageReply;
+use AppBundle\Entity\MessageThread;
+use AppBundle\Entity\User;
+use AppBundle\Entity\UserBlock;
 
 class MessageTest extends TestCase {
     /**

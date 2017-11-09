@@ -1,12 +1,12 @@
 <?php
 
-namespace Raddit\AppBundle\Form;
+namespace AppBundle\Form;
 
 use Doctrine\ORM\EntityRepository;
 use Eo\HoneypotBundle\Form\Type\HoneypotType;
-use Raddit\AppBundle\Entity\ForumCategory;
-use Raddit\AppBundle\Form\Model\ForumData;
-use Raddit\AppBundle\Form\Type\MarkdownType;
+use AppBundle\Entity\ForumCategory;
+use AppBundle\Form\Model\ForumData;
+use AppBundle\Form\Type\MarkdownType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;

@@ -1,13 +1,13 @@
 <?php
 
-namespace Raddit\Tests\AppBundle\Security;
+namespace Tests\AppBundle\Security;
 
-use Raddit\AppBundle\Entity\User;
-use Raddit\AppBundle\Security\UserChecker;
+use AppBundle\Entity\User;
+use AppBundle\Security\UserChecker;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Raddit\AppBundle\Security\UserChecker
+ * @covers \AppBundle\Security\UserChecker
  */
 class UserCheckerTest extends TestCase {
     /**
@@ -22,7 +22,7 @@ class UserCheckerTest extends TestCase {
     }
 
     /**
-     * @expectedException \Raddit\AppBundle\Security\Exception\AccountBannedException
+     * @expectedException \AppBundle\Security\Exception\AccountBannedException
      */
     public function testBannedUserCausesExceptionOnPostAuth() {
         /** @var User|\PHPUnit_Framework_MockObject_MockObject $user */

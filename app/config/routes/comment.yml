@@ -1,43 +1,43 @@
 comment_post:
-    controller: Raddit\AppBundle\Controller\CommentController::comment
+    controller: AppBundle\Controller\CommentController::comment
     defaults: { comment_id: ~ }
     path: /f/{forum_name}/{submission_id}/comment_post/{comment_id}
     methods: [POST]
     requirements: { submission_id: \d+, comment_id: \d+ }
 
 edit_comment:
-    controller: Raddit\AppBundle\Controller\CommentController::editComment
+    controller: AppBundle\Controller\CommentController::editComment
     path: /f/{forum_name}/{submission_id}/edit_comment/{comment_id}
     methods: [GET, POST]
     requirements: { submission_id: \d+, comment_id: \d+ }
 
 comment_form:
-    controller: Raddit\AppBundle\Controller\CommentController::commentForm
+    controller: AppBundle\Controller\CommentController::commentForm
     defaults: { comment_id: null }
     methods: [GET]
     path: /comment_form/{forumName}/{submissionId}/{commentId}
     requirements: { submissionId: \d+, commentId: \d+ }
 
 delete_comment:
-    controller: Raddit\AppBundle\Controller\CommentController::deleteComment
+    controller: AppBundle\Controller\CommentController::deleteComment
     path: /f/{forum_name}/{submission_id}/delete_comment/{comment_id}
     methods: [POST]
 
 softdelete_comment:
-    controller: Raddit\AppBundle\Controller\CommentController::softDeleteComment
+    controller: AppBundle\Controller\CommentController::softDeleteComment
     path: /f/{forum_name}/{submission_id}/soft_delete_comment/{comment_id}
     methods: [POST]
 
 comment_list:
-    controller: Raddit\AppBundle\Controller\CommentController::list
+    controller: AppBundle\Controller\CommentController::list
     defaults: { page: 1 }
     path: /comments/{page}
     methods: [GET]
     requirements: { page: \d+ }
 
 comment_vote:
-    controller: Raddit\AppBundle\Controller\VoteController::vote
-    defaults: { _format: html, entityClass: Raddit\AppBundle\Entity\Comment }
+    controller: AppBundle\Controller\VoteController::vote
+    defaults: { _format: html, entityClass: AppBundle\Entity\Comment }
     path: /cv/{id}.{_format}
     methods: [POST]
     requirements: { _format: html|json }

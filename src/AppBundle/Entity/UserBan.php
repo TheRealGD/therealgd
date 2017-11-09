@@ -1,12 +1,12 @@
 <?php
 
-namespace Raddit\AppBundle\Entity;
+namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 
 /**
- * @ORM\Entity(repositoryClass="Raddit\AppBundle\Repository\UserBanRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UserBanRepository")
  * @ORM\Table(name="user_bans")
  */
 class UserBan {

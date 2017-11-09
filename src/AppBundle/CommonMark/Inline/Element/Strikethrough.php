@@ -1,6 +1,6 @@
 <?php
 
-namespace Raddit\AppBundle\CommonMark\Inline\Element;
+namespace AppBundle\CommonMark\Inline\Element;
 
 use League\CommonMark\Inline\Element\AbstractStringContainer;
 

@@ -1,12 +1,12 @@
 <?php
 
-namespace Raddit\AppBundle\Entity;
+namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 
 /**
- * @ORM\Entity(repositoryClass="Raddit\AppBundle\Repository\WikiRevisionRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\WikiRevisionRepository")
  * @ORM\Table(name="wiki_revisions")
  */
 class WikiRevision {

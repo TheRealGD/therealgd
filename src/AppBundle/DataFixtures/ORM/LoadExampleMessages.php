@@ -1,12 +1,12 @@
 <?php
 
-namespace Raddit\AppBundle\DataFixtures\ORM;
+namespace AppBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Raddit\AppBundle\Entity\MessageReply;
-use Raddit\AppBundle\Entity\MessageThread;
+use AppBundle\Entity\MessageReply;
+use AppBundle\Entity\MessageThread;
 
 class LoadExampleMessages extends AbstractFixture implements DependentFixtureInterface {
     /**

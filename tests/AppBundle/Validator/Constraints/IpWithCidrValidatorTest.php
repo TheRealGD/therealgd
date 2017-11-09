@@ -1,9 +1,9 @@
 <?php
 
-namespace Raddit\Tests\AppBundle\Validator\Constraints;
+namespace Tests\AppBundle\Validator\Constraints;
 
-use Raddit\AppBundle\Validator\Constraints\IpWithCidr;
-use Raddit\AppBundle\Validator\Constraints\IpWithCidrValidator;
+use AppBundle\Validator\Constraints\IpWithCidr;
+use AppBundle\Validator\Constraints\IpWithCidrValidator;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 class IpWithCidrValidatorTest extends ConstraintValidatorTestCase {

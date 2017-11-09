@@ -1,11 +1,10 @@
+![](web/apple-touch-icon-precomposed.png) Postmill
+==================================================
 
-![](web/apple-touch-icon-precomposed.png) raddit
-================================================
-
-**raddit** is a web-based forum with voting and threaded comments. It is built
-on the [Symfony](https://symfony.com/) framework. Any similarities between this
-software and that of a large community symbolised by an alien logo are purely
-coincidental.
+**Postmill** is a free, web-based, social link aggregator with voting and
+threaded comments. It is built on the [Symfony](https://symfony.com/) framework.
+Any similarities between this software and that of a large community symbolised
+by an alien logo are purely coincidental.
 
 ## Requirements
 
@@ -54,7 +53,7 @@ Clone the repository somewhere and navigate there with the command line.
 ## Reporting issues
 
 * Bugs should be reported on the [issue tracker][issues].
-* Feature requests should be discussed on [/f/meta][meta].
+* Feature requests should be discussed on Raddle's [/f/meta][meta].
 
 You can email emma1312@protonmail.ch to disclose or discuss something in private
 with the creator of the software.
@@ -75,5 +74,5 @@ The software is released under the zlib license. See the `LICENSE` file for
 details.
 
 
-[issues]: https://gitlab.com/edgyemma/raddit-app/issues
+[issues]: https://gitlab.com/edgyemma/Postmill/issues
 [meta]: https://raddle.me/f/meta

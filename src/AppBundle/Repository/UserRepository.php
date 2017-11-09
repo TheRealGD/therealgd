@@ -1,13 +1,13 @@
 <?php
 
-namespace Raddit\AppBundle\Repository;
+namespace AppBundle\Repository;
 
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\ResultSetMapping;
-use Raddit\AppBundle\Entity\Comment;
-use Raddit\AppBundle\Entity\Submission;
-use Raddit\AppBundle\Entity\User;
+use AppBundle\Entity\Comment;
+use AppBundle\Entity\Submission;
+use AppBundle\Entity\User;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 
 /**

@@ -1,12 +1,12 @@
 <?php
 
-namespace Raddit\AppBundle\Repository;
+namespace AppBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
-use Raddit\AppBundle\Entity\MessageThread;
-use Raddit\AppBundle\Entity\User;
+use AppBundle\Entity\MessageThread;
+use AppBundle\Entity\User;
 
 class MessageThreadRepository extends EntityRepository {
     /**

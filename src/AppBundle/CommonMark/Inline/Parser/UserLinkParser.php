@@ -1,6 +1,6 @@
 <?php
 
-namespace Raddit\AppBundle\CommonMark\Inline\Parser;
+namespace AppBundle\CommonMark\Inline\Parser;
 
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 

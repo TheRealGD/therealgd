@@ -1,6 +1,6 @@
 <?php
 
-namespace Raddit\AppBundle\Entity;
+namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
@@ -8,7 +8,7 @@ use Ramsey\Uuid\Uuid;
 /**
  * Represents a ban or unban action that applies to a user and a forum.
  *
- * @ORM\Entity(repositoryClass="Raddit\AppBundle\Repository\ForumBanRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ForumBanRepository")
  * @ORM\Table(name="forum_bans")
  */
 class ForumBan {

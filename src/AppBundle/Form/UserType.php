@@ -1,11 +1,11 @@
 <?php
 
-namespace Raddit\AppBundle\Form;
+namespace AppBundle\Form;
 
 use Eo\HoneypotBundle\Form\Type\HoneypotType;
 use Gregwar\CaptchaBundle\Type\CaptchaType;
-use Raddit\AppBundle\Form\EventListener\PasswordEncodingSubscriber;
-use Raddit\AppBundle\Form\Model\UserData;
+use AppBundle\Form\EventListener\PasswordEncodingSubscriber;
+use AppBundle\Form\Model\UserData;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;

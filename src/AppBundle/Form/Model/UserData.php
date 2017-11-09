@@ -1,16 +1,16 @@
 <?php
 
-namespace Raddit\AppBundle\Form\Model;
+namespace AppBundle\Form\Model;
 
-use Raddit\AppBundle\Entity\Theme;
-use Raddit\AppBundle\Entity\User;
-use Raddit\AppBundle\Validator\Constraints\Unique;
+use AppBundle\Entity\Theme;
+use AppBundle\Entity\User;
+use AppBundle\Validator\Constraints\Unique;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @Unique("canonicalUsername", idFields={"entityId": "id"}, errorPath="username",
- *     entityClass="Raddit\AppBundle\Entity\User", groups={"registration", "edit"})
+ *     entityClass="AppBundle\Entity\User", groups={"registration", "edit"})
  */
 class UserData implements UserInterface {
     /**

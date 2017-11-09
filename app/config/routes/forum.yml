@@ -1,5 +1,5 @@
 multi:
-    controller: Raddit\AppBundle\Controller\ForumController::multi
+    controller: AppBundle\Controller\ForumController::multi
     defaults: { sortBy: hot, page: 1 }
     path: /f/{names}/{sortBy}/{page}
     requirements:
@@ -7,108 +7,108 @@ multi:
         sortBy: hot|new|top|controversial
 
 forum:
-    controller: Raddit\AppBundle\Controller\ForumController::front
+    controller: AppBundle\Controller\ForumController::front
     defaults: { sortBy: hot, page: 1 }
     path: /f/{forum_name}/{sortBy}/{page}
     methods: [GET]
     requirements: { sortBy: hot|new|top|controversial, page: \d+ }
 
 forum_feed:
-    controller: Raddit\AppBundle\Controller\ForumController::feed
+    controller: AppBundle\Controller\ForumController::feed
     defaults: { sortBy: hot, page: 1, _format: xml }
     path: /f/{forum_name}/{sortBy}/{page}.atom
     methods: [GET]
     requirements: { sortBy: hot|new|top|controversial, page: \d+ }
 
 edit_forum:
-    controller: Raddit\AppBundle\Controller\ForumController::editForum
+    controller: AppBundle\Controller\ForumController::editForum
     path: /f/{forum_name}/edit
     methods: [GET, POST]
 
 delete_forum:
-    controller: Raddit\AppBundle\Controller\ForumController::delete
+    controller: AppBundle\Controller\ForumController::delete
     path: /f/{forum_name}/delete
     methods: [GET, POST]
 
 forum_appearance:
-    controller: Raddit\AppBundle\Controller\ForumController::appearance
+    controller: AppBundle\Controller\ForumController::appearance
     path: /f/{forum_name}/appearance
     methods: [GET, POST]
 
 forum_bans:
-    controller: Raddit\AppBundle\Controller\ForumController::bans
+    controller: AppBundle\Controller\ForumController::bans
     defaults: { page: 1 }
     path: /f/{forum_name}/bans
     methods: [GET]
     requirements: { page: \d+ }
 
 forum_ban_history:
-    controller: Raddit\AppBundle\Controller\ForumController::banHistory
+    controller: AppBundle\Controller\ForumController::banHistory
     defaults: { page: 1 }
     path: /f/{forum_name}/bans/history/{username}/{page}
     methods: [GET]
     requirements: { page: \d+ }
 
 forum_ban:
-    controller: Raddit\AppBundle\Controller\ForumController::ban
+    controller: AppBundle\Controller\ForumController::ban
     path: /f/{forum_name}/ban/{username}
     methods: [GET, POST]
 
 forum_unban:
-    controller: Raddit\AppBundle\Controller\ForumController::unban
+    controller: AppBundle\Controller\ForumController::unban
     path: /f/{forum_name}/unban/{username}
     methods: [GET, POST]
 
 forum_moderators:
-    controller: Raddit\AppBundle\Controller\ForumController::moderators
+    controller: AppBundle\Controller\ForumController::moderators
     defaults: { page: 1 }
     path: /f/{forum_name}/moderators/{page}
     methods: [GET]
     requirements: { page: \d+ }
 
 add_moderator:
-    controller: Raddit\AppBundle\Controller\ForumController::addModerator
+    controller: AppBundle\Controller\ForumController::addModerator
     path: /f/{forum_name}/add_moderator
     methods: [GET, POST]
 
 remove_moderator:
-    controller: Raddit\AppBundle\Controller\ForumController::removeModerator
+    controller: AppBundle\Controller\ForumController::removeModerator
     path: /f/{forum_name}/remove_moderator/{moderator_id}
     methods: [POST]
     requirements: { moderator_id: "%uuid_regex%" }
 
 moderation_log:
-    controller: Raddit\AppBundle\Controller\ForumController::moderationLog
+    controller: AppBundle\Controller\ForumController::moderationLog
     defaults: { page: 1 }
     path: /f/{forum_name}/moderation_log/{page}
     methods: [GET]
     requirements: { page: \d+ }
 
 subscribe:
-    controller: Raddit\AppBundle\Controller\ForumController::subscribe
+    controller: AppBundle\Controller\ForumController::subscribe
     defaults: { action: subscribe }
     path: /f/{forum_name}/subscribe
     methods: [POST]
 
 unsubscribe:
-    controller: Raddit\AppBundle\Controller\ForumController::subscribe
+    controller: AppBundle\Controller\ForumController::subscribe
     defaults: { action: unsubscribe }
     path: /f/{forum_name}/unsubscribe
     methods: [POST]
 
 create_forum:
-    controller: Raddit\AppBundle\Controller\ForumController::createForum
+    controller: AppBundle\Controller\ForumController::createForum
     path: /create_forum
     methods: [GET, POST]
 
 forum_list:
-    controller: Raddit\AppBundle\Controller\ForumController::list
+    controller: AppBundle\Controller\ForumController::list
     defaults: { page: 1, sortBy: by_submissions }
     path: /forums/{sortBy}/{page}
     methods: [GET]
     requirements: { forums: \d+, sortBy: by_name|by_title|by_subscribers|by_submissions }
 
 forums_by_category:
-    controller: Raddit\AppBundle\Controller\ForumController::listCategories
+    controller: AppBundle\Controller\ForumController::listCategories
     path: /forums/by_category
     methods: [GET]

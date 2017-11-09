@@ -1,13 +1,13 @@
 <?php
 
-namespace Raddit\AppBundle\Controller;
+namespace AppBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-use Raddit\AppBundle\Entity\Theme;
-use Raddit\AppBundle\Entity\ThemeRevision;
-use Raddit\AppBundle\Form\Model\ThemeData;
-use Raddit\AppBundle\Form\ThemeType;
-use Raddit\AppBundle\Repository\ThemeRepository;
+use AppBundle\Entity\Theme;
+use AppBundle\Entity\ThemeRevision;
+use AppBundle\Form\Model\ThemeData;
+use AppBundle\Form\ThemeType;
+use AppBundle\Repository\ThemeRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;

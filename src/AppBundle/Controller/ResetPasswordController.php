@@ -1,14 +1,14 @@
 <?php
 
-namespace Raddit\AppBundle\Controller;
+namespace AppBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
-use Raddit\AppBundle\Entity\User;
-use Raddit\AppBundle\Form\Model\UserData;
-use Raddit\AppBundle\Form\RequestPasswordResetType;
-use Raddit\AppBundle\Form\UserType;
-use Raddit\AppBundle\Mailer\ResetPasswordMailer;
-use Raddit\AppBundle\Repository\UserRepository;
+use AppBundle\Entity\User;
+use AppBundle\Form\Model\UserData;
+use AppBundle\Form\RequestPasswordResetType;
+use AppBundle\Form\UserType;
+use AppBundle\Mailer\ResetPasswordMailer;
+use AppBundle\Repository\UserRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

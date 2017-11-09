@@ -1,11 +1,11 @@
 {
-    "name": "raddit/raddit",
+    "name": "postmill/postmill",
     "license": "Zlib",
     "type": "project",
-    "description": "Web-based forum with voting and threaded comments",
+    "description": "Free, web-based, social link aggregator with voting and nested comments.",
     "autoload": {
         "psr-4": {
-            "Raddit\\": "src/"
+            "AppBundle\\": "src/AppBundle"
         },
         "classmap": [
             "app/AppKernel.php"
@@ -13,7 +13,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Raddit\\Tests\\": "tests/"
+            "Tests\\": "tests/"
         },
         "files": [
             "vendor/symfony/symfony/src/Symfony/Component/VarDumper/Resources/functions/dump.php"

@@ -1,8 +1,8 @@
 <?php
 
-namespace Raddit\AppBundle\DependencyInjection\Compiler;
+namespace AppBundle\DependencyInjection\Compiler;
 
-use Raddit\AppBundle\Twig\AppExtension;
+use AppBundle\Twig\AppExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\Process\Process;

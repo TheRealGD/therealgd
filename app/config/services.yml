@@ -29,113 +29,113 @@ services:
 
     # makes classes in src/AppBundle available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
-    Raddit\AppBundle\:
+    AppBundle\:
         resource: '../../src/AppBundle/*'
         # you can exclude directories or files
         # but if a service is unused, it's removed anyway
         exclude: '../../src/AppBundle/{Entity,Migrations,Repository}'
 
-    Raddit\AppBundle\Command\:
+    AppBundle\Command\:
         resource: '../../src/AppBundle/Command/*'
         tags: ['console.command']
 
     # controllers are imported separately to make sure they're public
     # and have a tag that allows actions to type-hint services
-    Raddit\AppBundle\Controller\:
+    AppBundle\Controller\:
         resource: '../../src/AppBundle/Controller'
         public: true
         tags: ['controller.service_arguments']
 
-    Raddit\AppBundle\EventListener\LocaleListener:
+    AppBundle\EventListener\LocaleListener:
         tags:
             - { name: kernel.event_listener, event: kernel.request, priority: 15 }
             - { name: kernel.event_listener, event: security.interactive_login, method: onInteractiveLogin }
             - { name: doctrine.event_listener, event: postPersist }
             - { name: doctrine.event_listener, event: postUpdate }
 
-    Raddit\AppBundle\EventListener\SubmissionImageListener:
+    AppBundle\EventListener\SubmissionImageListener:
         arguments:
             $filesystem: "@oneup_flysystem.submission_images_filesystem"
         tags:
             - { name: doctrine.event_listener, event: postPersist }
             - { name: kernel.event_listener, event: kernel.terminate }
 
-    Raddit\AppBundle\Form\RequestPasswordResetType:
+    AppBundle\Form\RequestPasswordResetType:
         arguments:
             $bypass: "@=parameter('kernel.environment') === 'test'"
 
-    Raddit\AppBundle\Mailer\ResetPasswordMailer:
+    AppBundle\Mailer\ResetPasswordMailer:
         arguments:
             $siteName: "%env(SITE_NAME)%"
             $noReplyAddress: "%env(NO_REPLY_ADDRESS)%"
             $salt: "%env(SECRET)%"
 
-    Raddit\AppBundle\Repository\CommentRepository:
+    AppBundle\Repository\CommentRepository:
         factory: ["@doctrine.orm.entity_manager", "getRepository"]
-        arguments: [Raddit\AppBundle\Entity\Comment]
+        arguments: [AppBundle\Entity\Comment]
 
-    Raddit\AppBundle\Repository\ForumBanRepository:
+    AppBundle\Repository\ForumBanRepository:
         factory: ["@doctrine.orm.entity_manager", "getRepository"]
-        arguments: [Raddit\AppBundle\Entity\ForumBan]
+        arguments: [AppBundle\Entity\ForumBan]
 
-    Raddit\AppBundle\Repository\ForumCategoryRepository:
+    AppBundle\Repository\ForumCategoryRepository:
         factory: ["@doctrine.orm.entity_manager", "getRepository"]
-        arguments: [Raddit\AppBundle\Entity\ForumCategory]
+        arguments: [AppBundle\Entity\ForumCategory]
 
-    Raddit\AppBundle\Repository\ForumRepository:
+    AppBundle\Repository\ForumRepository:
         factory: ["@doctrine.orm.entity_manager", "getRepository"]
-        arguments: [Raddit\AppBundle\Entity\Forum]
+        arguments: [AppBundle\Entity\Forum]
 
-    Raddit\AppBundle\Repository\IpBanRepository:
+    AppBundle\Repository\IpBanRepository:
         factory: ["@doctrine.orm.entity_manager", "getRepository"]
-        arguments: [Raddit\AppBundle\Entity\IpBan]
+        arguments: [AppBundle\Entity\IpBan]
 
-    Raddit\AppBundle\Repository\MessageThreadRepository:
+    AppBundle\Repository\MessageThreadRepository:
         factory: ["@doctrine.orm.entity_manager", "getRepository"]
-        arguments: [Raddit\AppBundle\Entity\MessageThread]
+        arguments: [AppBundle\Entity\MessageThread]
 
-    Raddit\AppBundle\Repository\NotificationRepository:
+    AppBundle\Repository\NotificationRepository:
         factory: ["@doctrine.orm.entity_manager", "getRepository"]
-        arguments: [Raddit\AppBundle\Entity\Notification]
+        arguments: [AppBundle\Entity\Notification]
 
-    Raddit\AppBundle\Repository\SubmissionRepository:
+    AppBundle\Repository\SubmissionRepository:
         factory: ["@doctrine.orm.entity_manager", "getRepository"]
-        arguments: [Raddit\AppBundle\Entity\Submission]
+        arguments: [AppBundle\Entity\Submission]
 
-    Raddit\AppBundle\Repository\ThemeRepository:
+    AppBundle\Repository\ThemeRepository:
         factory: ["@doctrine.orm.entity_manager", "getRepository"]
-        arguments: [Raddit\AppBundle\Entity\Theme]
+        arguments: [AppBundle\Entity\Theme]
 
-    Raddit\AppBundle\Repository\UserRepository:
+    AppBundle\Repository\UserRepository:
         factory: ["@doctrine.orm.entity_manager", "getRepository"]
-        arguments: [Raddit\AppBundle\Entity\User]
+        arguments: [AppBundle\Entity\User]
 
-    Raddit\AppBundle\Repository\UserBanRepository:
+    AppBundle\Repository\UserBanRepository:
         factory: ["@doctrine.orm.entity_manager", "getRepository"]
-        arguments: [Raddit\AppBundle\Entity\UserBan]
+        arguments: [AppBundle\Entity\UserBan]
 
-    Raddit\AppBundle\Repository\WikiPageRepository:
+    AppBundle\Repository\WikiPageRepository:
         factory: ["@doctrine.orm.entity_manager", "getRepository"]
-        arguments: [Raddit\AppBundle\Entity\WikiPage]
+        arguments: [AppBundle\Entity\WikiPage]
 
-    Raddit\AppBundle\Repository\WikiRevisionRepository:
+    AppBundle\Repository\WikiRevisionRepository:
         factory: ["@doctrine.orm.entity_manager", "getRepository"]
-        arguments: [Raddit\AppBundle\Entity\WikiRevision]
+        arguments: [AppBundle\Entity\WikiRevision]
 
-    Raddit\AppBundle\Security\Voter\TokenVoter:
+    AppBundle\Security\Voter\TokenVoter:
         arguments:
             $forumCreationInterval: "%user_forum_creation_interval%"
 
-    Raddit\AppBundle\Twig\AppExtension:
+    AppBundle\Twig\AppExtension:
         calls:
             - [setSiteName, ["%env(SITE_NAME)%"]]
 
-    Raddit\AppBundle\Utils\CachedMarkdownConverter:
+    AppBundle\Utils\CachedMarkdownConverter:
         calls:
             - [setExpiresAfter, ["%markdown_cache_time%"]]
         lazy: true
 
-    Raddit\AppBundle\Utils\AuthenticationHelper:
+    AppBundle\Utils\AuthenticationHelper:
         arguments:
             $secret: "%env(SECRET)%"
 
@@ -167,7 +167,7 @@ services:
     League\CommonMark\Environment:
         factory: [League\CommonMark\Environment, createCommonMarkEnvironment]
         calls:
-            - [addExtension, ['@Raddit\AppBundle\CommonMark\AppExtension']]
+            - [addExtension, ['@AppBundle\CommonMark\AppExtension']]
             - [addExtension, ['@Webuni\CommonMark\TableExtension\TableExtension']]
         lazy: true
 

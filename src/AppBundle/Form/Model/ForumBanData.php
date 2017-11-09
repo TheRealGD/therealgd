@@ -1,10 +1,10 @@
 <?php
 
-namespace Raddit\AppBundle\Form\Model;
+namespace AppBundle\Form\Model;
 
-use Raddit\AppBundle\Entity\Forum;
-use Raddit\AppBundle\Entity\ForumBan;
-use Raddit\AppBundle\Entity\User;
+use AppBundle\Entity\Forum;
+use AppBundle\Entity\ForumBan;
+use AppBundle\Entity\User;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class ForumBanData {
