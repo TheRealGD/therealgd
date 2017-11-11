@@ -5,6 +5,12 @@ wiki:
     methods: [GET]
     requirements: { path: "%wiki_page_regex%" }
 
+wiki_shortcut:
+    controller: FrameworkBundle:Redirect:redirect
+    defaults: { route: wiki }
+    path: /w/{path}
+    requirements: { path: "%wiki_page_regex%" }
+
 wiki_create:
     controller: AppBundle\Controller\WikiController::create
     path: /wiki/_create/{path}

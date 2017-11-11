@@ -22,6 +22,7 @@ class AppExtension extends Extension {
         return [
             new Inline\Parser\ForumLinkParser($this->urlGenerator),
             new Inline\Parser\UserLinkParser($this->urlGenerator),
+            new Inline\Parser\WikiLinkParser($this->urlGenerator),
             new Inline\Parser\StrikethroughParser(),
         ];
     }
