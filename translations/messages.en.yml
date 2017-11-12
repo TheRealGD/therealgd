@@ -121,6 +121,7 @@ flash:
     no_entries_to_display: There are no entries to display.
     page_locked: The page was locked.
     page_unlocked: The page was unlocked.
+    no_cookies_verification: Does the image not load correctly? Please make sure you aren't blocking cookies and try again.
 
 forum:
     moderators: Moderators

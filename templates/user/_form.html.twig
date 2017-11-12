@@ -32,7 +32,16 @@
   </div>
 
   {% if form.verification is defined %}
-    {{ form_row(form.verification) }}
+    <div class="form__row">
+      {{ form_label(form.verification) }}
+      {{ form_errors(form.verification) }}
+      {% if not app.request.hasPreviousSession %}
+        <div class="alert alert--notice">
+          <p>{{ 'flash.no_cookies_verification'|trans }}</p>
+        </div>
+      {% endif %}
+      {{ form_widget(form.verification) }}
+    </div>
   {% endif %}
 
   {{ form_row(form.submit) }}
