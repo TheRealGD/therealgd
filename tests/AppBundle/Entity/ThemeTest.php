@@ -7,9 +7,6 @@ use AppBundle\Entity\Theme;
 use AppBundle\Entity\ThemeRevision;
 use AppBundle\Entity\User;
 
-/**
- * @group time-sensitive
- */
 class ThemeTest extends TestCase {
     /**
      * @expectedException \DomainException

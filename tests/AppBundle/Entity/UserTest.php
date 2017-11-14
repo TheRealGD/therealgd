@@ -7,9 +7,6 @@ use AppBundle\Entity\User;
 use AppBundle\Entity\UserBan;
 use AppBundle\Entity\UserBlock;
 
-/**
- * @group time-sensitive
- */
 class UserTest extends TestCase {
     public function testUsersCannotMessageUsersWhoBlockThem() {
         $sender = new User('u', 'p');
@@ -71,6 +68,9 @@ class UserTest extends TestCase {
         $this->assertTrue($user->isBanned());
     }
 
+    /**
+     * @group time-sensitive
+     */
     public function testExpiredUserBanIsIneffective() {
         $user = new User('u', 'p');
         $expires = new \DateTime('@'.time().' +1 hour');

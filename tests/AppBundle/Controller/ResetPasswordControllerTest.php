@@ -3,6 +3,8 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\User;
+use AppBundle\Mailer\ResetPasswordMailer;
+use Symfony\Bridge\PhpUnit\ClockMock;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Bundle\SwiftmailerBundle\DataCollector\MessageDataCollector;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -11,6 +13,10 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  * @group time-sensitive
  */
 class ResetPasswordControllerTest extends WebTestCase {
+    public static function setUpBeforeClass() {
+        ClockMock::register(ResetPasswordMailer::class);
+    }
+
     public function testCanSendResetEmails() {
         $client = static::createClient();
         $crawler = $client->request('GET', '/reset_password');
