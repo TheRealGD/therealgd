@@ -10,7 +10,7 @@
 {% block title block('html_title')|striptags %}
 
 {% block body %}
-  {% from _self import submission_deletion, comment_deletion, ban %}
+  {% from _self import submission_deletion, submission_lock, comment_deletion, ban %}
   <h1 class="page-heading">{{ block('html_title') }}</h1>
 
   {% if logs|length > 0 %}
@@ -22,6 +22,8 @@
             {{ comment_deletion(entry) }}
           {% elseif entry.action == 'submission_deletion' %}
             {{ submission_deletion(entry) }}
+          {% elseif entry.action == 'submission_lock' %}
+            {{ submission_lock(entry) }}
           {% elseif entry.action == 'ban' %}
             {{ ban(entry) }}
           {% endif %}
@@ -65,6 +67,15 @@
     '%user%': user_link(entry.user, {flag: entry.wasAdmin ? 'admin' : 'moderator'}),
     '%author%': user_link(entry.author),
     '%title%': '<del>%s</del>'|format(entry.title|e),
+  })|raw }}
+{% endmacro %}
+
+{% macro submission_lock(entry) %}
+  {% from 'user/_macros.html.twig' import user_link %}
+  {{ (entry.locked ? 'log.submission_lock' : 'log.submission_unlock')|trans({
+    '%user%': user_link(entry.user, {flag: entry.wasAdmin ? 'admin' : 'moderator'}),
+    '%author%': user_link(entry.author),
+    '%title%': entry.submission ? entry.submission.title|e : '<del>%s</del>'|format(entry.title|e)
   })|raw }}
 {% endmacro %}
 

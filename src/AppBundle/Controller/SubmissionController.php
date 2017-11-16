@@ -2,15 +2,16 @@
 
 namespace AppBundle\Controller;
 
-use Doctrine\ORM\EntityManager;
 use AppBundle\Entity\Comment;
 use AppBundle\Entity\Forum;
 use AppBundle\Entity\ForumLogSubmissionDeletion;
+use AppBundle\Entity\ForumLogSubmissionLock;
 use AppBundle\Entity\Submission;
 use AppBundle\Entity\User;
 use AppBundle\Form\Model\SubmissionData;
 use AppBundle\Form\SubmissionType;
 use AppBundle\Utils\Slugger;
+use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -193,6 +194,8 @@ final class SubmissionController extends AbstractController {
         $this->validateCsrf('lock', $request->request->get('token'));
 
         $submission->setLocked($lock);
+
+        $em->persist(new ForumLogSubmissionLock($submission, $this->getUser(), $lock));
         $em->flush();
 
         if ($lock) {

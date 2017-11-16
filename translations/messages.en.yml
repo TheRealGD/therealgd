@@ -252,6 +252,8 @@ label:
 log:
     comment_deletion: '%user% deleted comment by %author% in "%submission%"'
     submission_deletion: '%user% deleted submission "%title%" by %author%'
+    submission_lock: '%user% locked submission "%title%" by %author%'
+    submission_unlock: '%user% unlocked submission "%title%" by %author%'
     ban: '%user% banned %banned% (expires: %expires%). Reason: "%reason%"'
     unban: '%user% unbanned %banned%. Reason: "%reason%"'
 

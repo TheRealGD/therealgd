@@ -14,6 +14,7 @@ use Ramsey\Uuid\Uuid;
  *     "comment_deletion": "ForumLogCommentDeletion",
  *     "submission_deletion": "ForumLogSubmissionDeletion",
  *     "ban": "ForumLogBan",
+ *     "submssion_lock": "ForumLogSubmissionLock"
  * })
  */
 abstract class ForumLogEntry {
