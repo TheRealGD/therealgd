@@ -2,8 +2,8 @@
 
 namespace AppBundle\Command;
 
+use AppBundle\Form\Model\UserData;
 use Doctrine\Common\Persistence\ObjectManager;
-use AppBundle\Entity\User;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -39,10 +39,12 @@ class AddUserCommand extends Command implements ContainerAwareInterface {
      */
     protected function configure() {
         $this
-            ->setName('app:add-user')
+            ->setName('app:user:add')
+            ->setAliases(['app:add-user'])
             ->setDescription('Add a user account')
             ->addArgument('username', InputArgument::REQUIRED, 'The username for the new account')
-            ->addArgument('email', InputArgument::REQUIRED, 'The email address for the account')
+            ->addOption('email', null, InputOption::VALUE_REQUIRED, 'The email address for the account')
+            ->addOption('password', 'p', InputOption::VALUE_REQUIRED, 'The password for the account')
             ->addOption('admin', 'a', InputOption::VALUE_NONE, 'Sets this user to be an admin')
         ;
     }
@@ -53,31 +55,44 @@ class AddUserCommand extends Command implements ContainerAwareInterface {
         $this->encoder = $this->container->get('security.password_encoder');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output) {
         $io = new SymfonyStyle($input, $output);
 
-        $password = $io->askHidden('Enter the password for the new account');
+        $password = $input->getOption('password');
 
-        $user = new User(
-            $input->getArgument('username'),
-            password_hash($password, PASSWORD_BCRYPT, ['cost' => 13])
-        );
-        $user->setEmail($input->getArgument('email'));
-        $user->setAdmin($input->getOption('admin'));
+        if (!strlen($password)) {
+            if ($input->isInteractive()) {
+                $password = $io->askHidden('Enter the password for the new account');
+            } else {
+                $io->error([
+                    'You must specify a password with the -p option,',
+                    'or provide one interactively.'
+                ]);
 
-        $errors = $this->validator->validate($user);
+                return 1;
+            }
+        }
 
-        if ($errors->count() > 0) {
+        $data = new UserData();
+        $data->setUsername($input->getArgument('username'));
+        $data->setPlainPassword($password);
+        $data->setEmail($input->getOption('email'));
+
+        $errors = $this->validator->validate($data, null, ['registration']);
+
+        if (count($errors) > 0) {
             /** @var ConstraintViolationInterface $e */
-            foreach ($this->validator->validate($user) as $e) {
-                $io->error($e->getPropertyPath().': '.$e->getMessage());
+            foreach ($errors as $error) {
+                $io->error(sprintf('%s: %s', $error->getPropertyPath(), $error->getMessage()));
             }
 
             return 1;
         }
+
+        $data->setPassword($this->encoder->encodePassword($data, $data->getPlainPassword()));
+
+        $user = $data->toUser();
+        $user->setAdmin($input->getOption('admin'));
 
         $this->manager->persist($user);
         $this->manager->flush();
