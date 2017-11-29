@@ -55,6 +55,8 @@ class Unique extends Constraint {
             throw new UnexpectedTypeException($fields, 'array or string');
         }
 
+        $fields = (array) $fields;
+
         if (count($fields) === 0) {
             throw new InvalidOptionsException(
                 'fields option must have at least one field',
