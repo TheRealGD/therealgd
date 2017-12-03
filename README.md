@@ -1,5 +1,4 @@
-![](web/apple-touch-icon-precomposed.png) Postmill
-==================================================
+# ![](docs/assets/postmill-128.png) Postmill
 
 **Postmill** is a free, web-based, social link aggregator with voting and
 threaded comments. It is built on the [Symfony](https://symfony.com/) framework.
@@ -34,6 +33,9 @@ Clone the repository somewhere and navigate there with the command line.
     mail sending stuff, and a secret token. You can leave the default values for
     the mail stuff, but you must supply valid database credentials.
 
+    Instructions for setting up a database can be found at
+    [docs/database-setup.md](docs/database-setup.md).
+
     If this step fails, you can remove or edit `app/config/parameters.yml` and
     run `composer install` to try again.
 
@@ -52,7 +54,8 @@ Clone the repository somewhere and navigate there with the command line.
 ## Reporting issues
 
 * Bugs should be reported on the [issue tracker][issues].
-* Feature requests should be discussed on Raddle's [/f/meta][meta].
+* Feature requests should be discussed on Raddle's [/f/meta][f/meta].
+* Support questions belong on Raddle's [/f/Postmill][f/postmill].
 
 You can email emma1312@protonmail.ch to disclose or discuss something in private
 with the creator of the software.
@@ -74,4 +77,5 @@ details.
 
 
 [issues]: https://gitlab.com/edgyemma/Postmill/issues
-[meta]: https://raddle.me/f/meta
+[f/meta]: https://raddle.me/f/meta
+[f/postmill]: https://raddle.me/f/Postmill
