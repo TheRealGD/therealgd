@@ -17,6 +17,11 @@ action:
     unban: Dejar de vetar
     block: Bloquear
     unblock: Desbloquar
+    lock: anclar
+    unlock: desanclar
+    delete: Eliminar
+    remove: Quitar
+    global_ban: Veto global
 
 add_moderator:
     title: Agrega una moderadora a %forum%
@@ -107,7 +112,18 @@ flash:
     user_was_unbanned: Se dejó de vetar a la usuaria.
     user_blocked: La usuaria fue bloqueada.
     user_unblocked: La usuaria fue desbloqueada.
-    no_messages: No hay mensajes para mostrar
+    no_messages: No hay mensajes que mostrar.
+    submission_locked: La publicación fue bloqueada,
+    submission_unlocked: La publicación fue desbloqueada.
+    submission_is_locked: La publicación está bloqueada. No puedes publicar nuevos comentarios.
+    no_moderated_forums: No moderas ningún foro.
+    you_cannot_create_forums_yet: No puedes crear foros aún.
+    user_biography_updated: Se actualizó la biografía.
+    user_unmodded: Se le quitó la función de moderadora a la usuaria.
+    no_entries_to_display: No hay entradas que mostrar.
+    page_locked: Se ha anclado la página.
+    page_unlocked: Se ha desanclado la página.
+    no_cookies_verification: ¿La imagen no carga correctamente? Asegúrate de que no estás bloqueando las cookies e inténtalo de nuevo.
 
 forum:
     moderators: Moderadoras
@@ -136,6 +152,7 @@ forum_list:
     subscribers: Suscriptores
     page_title: Lista de foros
     create_forum: Crear foro
+    submission_count: Publicaciones
     list_view: Vista de lista
     category_view: Vista de categoría
     uncategorized: Sin categorizar
@@ -151,7 +168,7 @@ front:
     subscribed_forums: Foros suscritos
     no_subscriptions: No estás suscrita en ningún foro. Mostrando foros destacados en su lugar.
     featured_forums: Foros destacados
-    no_forums: No hay foros destacados para mostrar.
+    no_forums: No hay foros destacados que mostrar.
     all: Todos
     featured: Destacados
     subscribed: Suscritos
@@ -160,6 +177,8 @@ heading:
     user_roles: Roles de usuario
     forums_you_moderate: Foros que moderas
     multi_forum_view: Vista de múltiples foros
+    message_thread: "%sender% le escribió a %receiver% %timestamp%"
+    message_reply: "%sender% respondió %timestamp%"
 
 help:
     delete_forum_warning: ¡Todo el contenido de este foro será borrado irreversiblemente!
@@ -215,7 +234,32 @@ label:
     from: De
     to: A
     sent: Enviado
+    front_page: Página principal
+    default: Predeterminado
+    subscribed: Suscrito
+    featured: destacado
+    all: Todo
+    moderated: Moderado
+    recent_changes: Cambios recientes
+    verification: Verificación
+    admin: Administradora
+    bans: Vetos
+    overview: Vista general
+    open_external_links_in_new_tab: Abre enlaces externos en nueva pestaña
+    biography: Biografía
     toolbox: Herramientas
+    banned_by: Vetada por
+    unban_associated_ips: Elimina vetos asociados a IP
+    ban_ip_address: ¿Vetar dirección IP?
+    ip_address: Dirección IP
+
+log:
+    comment_deletion: '%user% eliminó comentario por %author% en "%submission%"'
+    submission_deletion: '%user% eliminó publicación "%title%" por %author%'
+    submission_lock: '%user% ancló publicación "%title%" por %author%'
+    submission_unlock: '%user% desancló publicación "%title%" por %author%'
+    ban: '%user% vetó %banned% (expira: %expires%). Razón: "%reason%"'
+    unban: '%user% quitó el veto a %banned%. Razón: "%reason%"'
 
 login_form:
     log_in: Ingresar
@@ -259,6 +303,11 @@ nav:
     ban_history: Historial de vetos
     block_user: Bloquear usuarias
     block_list: Lista de bloqueos
+    edit_biography: Editar biografía
+    moderation_log: Registro de moderación
+    user_bans: Vetos de usuarias
+    ip_bans: Vetos IP
+    add_ban: Añadir veto
 
 placeholder:
     default: (predeterminado)
@@ -266,6 +315,7 @@ placeholder:
 
 prompt:
     confirm_comment_delete: ¿Estás segura de que quieres eliminar este comentario?
+    confirm_submission_delete: ¿Estás segura de que quieres eliminar esta publicación?
 
 request_password_reset:
     title: Solicitar link para reseteo de contraseña
@@ -354,6 +404,12 @@ title:
     recent_comments: Comentarios recientes
     history_for_theme: Mostrando la historia para el tema %theme%
     viewing_theme_source: Viendo el código de %theme%
+    editing_biography_for_user: Editando biografía para %user%
+    showing_moderation_log_for_forum: Mostrando registro de moderación para %forum%
+    active_global_user_bans: Vetos de usuarias activos, globales
+    ip_bans: Direcciones IP vetadas
+    ban_user: Vetando %user%
+    unban_user: Quitando el veto a %user%
 
 user:
     submissions: Publicaciones
@@ -393,7 +449,7 @@ user_settings_form:
     show_custom_stylesheets: Mostrar hojas de estilos personalizadas
     save: Guardar cambios
 
-    wiki:
+wiki:
     not_found_title: Página no encontrada
     not_found_message: La página solicitada no ha sido encontrada.
     create_this_page: Crear esta página
