@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @Unique({"author", "name"}, idFields={"entityId": "id"},
  *     entityClass="AppBundle\Entity\Theme", errorPath="name",
- *     message="That name is already taken.")
+ *     message="That name is already taken.", groups={"settings"})
  */
 class ThemeData {
     /**
@@ -24,8 +24,8 @@ class ThemeData {
     public $author;
 
     /**
-     * @Assert\NotBlank()
-     * @Assert\Length(max=50)
+     * @Assert\NotBlank(groups={"settings"})
+     * @Assert\Length(max=50, groups={"settings"})
      *
      * @var string|null
      */
@@ -33,25 +33,25 @@ class ThemeData {
 
     /**
      * @Assert\Expression("value || this.dayCss || this.nightCss",
-     *     message="At least one CSS field must be filled.")
-     * @Assert\Length(max=100000)
-     * @Css()
+     *     message="At least one CSS field must be filled.", groups={"css"})
+     * @Assert\Length(max=100000, groups={"css"})
+     * @Css(groups={"css"})
      *
      * @var string|null
      */
     public $commonCss;
 
     /**
-     * @Assert\Length(max=100000)
-     * @Css()
+     * @Assert\Length(max=100000, groups={"css"})
+     * @Css(groups={"css"})
      *
      * @var string|null
      */
     public $dayCss;
 
     /**
-     * @Assert\Length(max=100000)
-     * @Css()
+     * @Assert\Length(max=100000, groups={"css"})
+     * @Css(groups={"css"})
      *
      * @var string|null
      */
@@ -60,7 +60,7 @@ class ThemeData {
     public $appendToDefaultStyle = true;
 
     /**
-     * @Assert\Length(max=300)
+     * @Assert\Length(max=300, groups={"css"})
      *
      * @var string|null
      */
@@ -68,7 +68,7 @@ class ThemeData {
 
     /**
      * @Assert\Expression("value == null or value.getParentCount() < 3",
-     *     message="That theme cannot be extended.")
+     *     message="That theme cannot be extended.", groups={"css"})
      *
      * @var ThemeRevision|null
      */
@@ -80,16 +80,19 @@ class ThemeData {
     }
 
     public static function createFromTheme(Theme $theme): self {
-        $revision = $theme->getLatestRevision();
-
         $self = new self($theme->getAuthor());
         $self->name = $theme->getName();
-        $self->commonCss = $revision->getCommonCss();
-        $self->dayCss = $revision->getDayCss();
-        $self->nightCss = $revision->getNightCss();
-        $self->appendToDefaultStyle = $revision->appendToDefaultStyle();
         $self->entityId = $theme->getId();
-        $self->parent = $revision->getParent();
+
+        $revision = $theme->getLatestRevision();
+
+        if ($revision) {
+            $self->commonCss = $revision->getCommonCss();
+            $self->dayCss = $revision->getDayCss();
+            $self->nightCss = $revision->getNightCss();
+            $self->appendToDefaultStyle = $revision->appendToDefaultStyle();
+            $self->parent = $revision->getParent();
+        }
 
         return $self;
     }
@@ -98,9 +101,6 @@ class ThemeData {
         return new Theme(
             $this->name,
             $this->author,
-            $this->commonCss,
-            $this->dayCss,
-            $this->nightCss,
             $this->appendToDefaultStyle,
             $this->comment,
             $this->parent
@@ -113,6 +113,7 @@ class ThemeData {
         $revision = $theme->getLatestRevision();
 
         if (
+            !$revision ||
             $this->commonCss !== $revision->getCommonCss() ||
             $this->dayCss !== $revision->getDayCss() ||
             $this->nightCss !== $revision->getNightCss() ||

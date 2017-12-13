@@ -1,0 +1,9 @@
+{{ form_start(form) }}
+  {{ form_row(form.name) }}
+
+  <div class="form__row form__button-row">
+    <button class="button">
+      {{ (editing ? 'action.edit_theme' : 'action.create_theme')|trans }}
+    </button>
+  </div>
+{{ form_end(form) }}

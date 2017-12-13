@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'title.editing_theme'|trans({'%name%': theme.name}) %}
+{% block page_classes 'edit-theme-settings-page' %}
+
+{% block body %}
+  {{ include('theme/_nav.html.twig', {
+    current_page: 'settings',
+    theme: theme,
+  }, with_context=false) }}
+
+  <h1 class="page-heading">{{ block('title') }}</h1>
+
+  {{ include('theme/_settings_form.html.twig', {
+    form: form,
+    editing: true,
+  }, with_context=false) }}
+{% endblock %}

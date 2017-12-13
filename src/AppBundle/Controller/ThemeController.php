@@ -2,11 +2,12 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Form\ThemeSettingsType;
 use Doctrine\ORM\EntityManager;
 use AppBundle\Entity\Theme;
 use AppBundle\Entity\ThemeRevision;
 use AppBundle\Form\Model\ThemeData;
-use AppBundle\Form\ThemeType;
+use AppBundle\Form\ThemeCssType;
 use AppBundle\Repository\ThemeRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -38,7 +39,7 @@ class ThemeController extends AbstractController {
     public function create(Request $request, EntityManager $em) {
         $data = new ThemeData($this->getUser());
 
-        $form = $this->createForm(ThemeType::class, $data);
+        $form = $this->createForm(ThemeSettingsType::class, $data);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -49,7 +50,7 @@ class ThemeController extends AbstractController {
 
             $this->addFlash('success', 'flash.theme_created');
 
-            return $this->redirectToRoute('edit_theme', [
+            return $this->redirectToRoute('edit_theme_css', [
                 'name' => $theme->getName(),
                 'username' => $theme->getAuthor()->getUsername(),
             ]);
@@ -70,9 +71,9 @@ class ThemeController extends AbstractController {
      *
      * @return Response
      */
-    public function edit(Request $request, EntityManager $em, Theme $theme) {
+    public function editCss(Request $request, EntityManager $em, Theme $theme) {
         $data = ThemeData::createFromTheme($theme);
-        $form = $this->createForm(ThemeType::class, $data);
+        $form = $this->createForm(ThemeCssType::class, $data);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -81,13 +82,46 @@ class ThemeController extends AbstractController {
 
             $this->addFlash('success', 'flash.theme_updated');
 
-            return $this->redirectToRoute('edit_theme', [
+            return $this->redirectToRoute('edit_theme_css', [
                 'username' => $theme->getAuthor()->getUsername(),
                 'name' => $theme->getName(),
             ]);
         }
 
-        return $this->render('theme/edit.html.twig', [
+        return $this->render('theme/edit_css.html.twig', [
+            'form' => $form->createView(),
+            'theme' => $theme,
+        ]);
+    }
+
+    /**
+     * @Entity("theme", expr="repository.findOneByUsernameAndName(username, name)")
+     * @IsGranted("edit", subject="theme")
+     *
+     * @param Request       $request
+     * @param EntityManager $em
+     * @param Theme         $theme
+     *
+     * @return Response
+     */
+    public function editSettings(Request $request, EntityManager $em, Theme $theme) {
+        $data = ThemeData::createFromTheme($theme);
+        $form = $this->createForm(ThemeSettingsType::class, $data);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data->updateTheme($theme);
+            $em->flush();
+
+            $this->addFlash('success', 'flash.theme_updated');
+
+            return $this->redirectToRoute('edit_theme_settings', [
+                'username' => $theme->getAuthor()->getUsername(),
+                'name' => $theme->getName(),
+            ]);
+        }
+
+        return $this->render('theme/edit_settings.html.twig', [
             'form' => $form->createView(),
             'theme' => $theme,
         ]);

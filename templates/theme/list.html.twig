@@ -37,7 +37,7 @@
           </td>
           <td>
             {% if is_granted('edit', theme) %}
-              <a href="{{ path('edit_theme', {name: theme.name, username: theme.author.username}) }}"
+              <a href="{{ path('edit_theme_css', {name: theme.name, username: theme.author.username}) }}"
                  class="button button--inline">
                 {{- 'action.edit_theme'|trans -}}
               </a>

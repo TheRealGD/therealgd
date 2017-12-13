@@ -2,9 +2,8 @@
 
 namespace AppBundle\Form;
 
-use AppBundle\Entity\Theme;
 use AppBundle\Form\Model\ForumData;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use AppBundle\Form\Type\ThemeSelectorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -16,14 +15,8 @@ class ForumAppearanceType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-            ->add('theme', EntityType::class, [
-                'class' => Theme::class,
-                'choice_label' => 'name',
-                'group_by' => 'author.username',
+            ->add('theme', ThemeSelectorType::class, [
                 'label' => 'label.theme',
-                'placeholder' => 'placeholder.default',
-                'property_path' => 'theme',
-                'required' => false,
             ])
             ->add('save', SubmitType::class, [
                 'label' => 'label.save_settings',

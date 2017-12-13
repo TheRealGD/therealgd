@@ -304,6 +304,8 @@ nav:
     user_bans: User bans
     ip_bans: IP bans
     add_ban: Add ban
+    css: CSS
+    theme_settings: Theme settings
 
 placeholder:
     default: (default)

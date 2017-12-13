@@ -53,7 +53,7 @@
         "willdurand/js-translation-bundle": "^2.6"
     },
     "require-dev": {
-        "dama/doctrine-test-bundle": "^3.2",
+        "dama/doctrine-test-bundle": "^4.0",
         "friendsofphp/php-cs-fixer": "^2.3",
         "sensio/generator-bundle": "^3.0",
         "symfony/phpunit-bridge": "^3.0"

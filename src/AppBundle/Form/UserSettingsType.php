@@ -2,10 +2,9 @@
 
 namespace AppBundle\Form;
 
-use AppBundle\Entity\Theme;
 use AppBundle\Entity\User;
 use AppBundle\Form\Model\UserData;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use AppBundle\Form\Type\ThemeSelectorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -41,13 +40,8 @@ final class UserSettingsType extends AbstractType {
             ->add('show_custom_stylesheets', CheckboxType::class, [
                 'required' => false,
             ])
-            ->add('preferred_theme', EntityType::class, [
-                'class' => Theme::class,
-                'choice_label' => 'name',
-                'group_by' => 'author.username',
+            ->add('preferred_theme', ThemeSelectorType::class, [
                 'label' => 'label.preferred_theme',
-                'placeholder' => 'placeholder.default',
-                'required' => false,
             ])
             ->add('openExternalLinksInNewTab', CheckboxType::class, [
                 'required' => false,

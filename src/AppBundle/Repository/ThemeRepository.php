@@ -18,6 +18,7 @@ class ThemeRepository extends EntityRepository {
     public function findAllPaginated(int $page, int $maxPerPage = 25) {
         $qb = $this->createQueryBuilder('t')
             ->join('t.author', 'a')
+            ->join('t.revisions', 'tr')
             ->orderBy('LOWER(a.username)', 'ASC')
             ->addOrderBy('LOWER(t.name)', 'ASC');
 

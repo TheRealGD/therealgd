@@ -16,7 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ThemeType extends AbstractType {
+class ThemeCssType extends AbstractType {
     /**
      * @var ThemeRepository
      */
@@ -41,9 +41,6 @@ class ThemeType extends AbstractType {
                 'invalid_message' => 'No such theme.',
                 'label' => 'label.parent_theme',
                 'required' => false,
-            ])
-            ->add('name', TextType::class, [
-                'label' => 'label.name',
             ])
             ->add('commonCss', TextareaType::class, [
                 'label' => 'label.common_css',
@@ -103,6 +100,7 @@ class ThemeType extends AbstractType {
     public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults([
             'data_class' => ThemeData::class,
+            'validation_groups' => ['css'],
         ]);
     }
 }

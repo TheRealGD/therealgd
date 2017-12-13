@@ -10,11 +10,17 @@ create_theme:
     path: /create_theme
     methods: [GET, POST]
 
-edit_theme:
-    controller: AppBundle\Controller\ThemeController::edit
+edit_theme_css:
+    controller: AppBundle\Controller\ThemeController::editCss
     path: /edit_theme/{username}/{name}
     methods: [GET, POST]
-    requirements: { name: .+, id: "%uuid_regex%" }
+    requirements: { name: .+ }
+
+edit_theme_settings:
+    controller: AppBundle\Controller\ThemeController::editSettings
+    path: /edit_theme_settings/{username}/{name}
+    methods: [GET, POST]
+    requirements: { name: .+ }
 
 theme_revision_source:
     controller: AppBundle\Controller\ThemeController::source

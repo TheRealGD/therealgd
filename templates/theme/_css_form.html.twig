@@ -1,17 +1,13 @@
 {{ form_start(form) }}
-  {% if form.parent is defined %}
-    <div class="form__row">
-      {{ form_label(form.parent) }}
-      {{ form_errors(form.parent) }}
-      {{ form_widget(form.parent) }}
+  <div class="form__row">
+    {{ form_label(form.parent) }}
+    {{ form_errors(form.parent) }}
+    {{ form_widget(form.parent) }}
 
-      <div class="form__help">
-        <p>{{ 'help.parent_theme_input'|trans }}</p>
-      </div>
+    <div class="form__help">
+      <p>{{ 'help.parent_theme_input'|trans }}</p>
     </div>
-  {% endif %}
-
-  {{ form_row(form.name) }}
+  </div>
 
   {{ form_row(form.commonCss, { attr: { rows: 12 } }) }}
 
@@ -39,8 +35,6 @@
   </div>
 
   <div class="form__row form__button-row">
-    <button class="button">
-      {{ editing ? 'action.edit_theme'|trans : 'action.create_theme'|trans }}
-    </button>
+    <button class="button">{{ 'action.edit_theme'|trans }}</button>
   </div>
 {{ form_end(form) }}

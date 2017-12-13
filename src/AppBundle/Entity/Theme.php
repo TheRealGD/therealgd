@@ -51,9 +51,6 @@ class Theme {
     /**
      * @param string             $name
      * @param User               $author
-     * @param null|string        $commonCss
-     * @param null|string        $dayCss
-     * @param null|string        $nightCss
      * @param bool               $appendToDefaultStyle
      * @param string|null        $comment
      * @param ThemeRevision|null $parent
@@ -61,9 +58,6 @@ class Theme {
     public function __construct(
         string $name,
         User $author,
-        $commonCss,
-        $dayCss,
-        $nightCss,
         bool $appendToDefaultStyle,
         $comment,
         ThemeRevision $parent = null
@@ -72,16 +66,6 @@ class Theme {
         $this->name = $name;
         $this->author = $author;
         $this->revisions = new ArrayCollection();
-
-        new ThemeRevision(
-            $this,
-            $commonCss,
-            $dayCss,
-            $nightCss,
-            $appendToDefaultStyle,
-            $comment,
-            $parent
-        );
     }
 
     public function getId(): Uuid {
@@ -100,17 +84,14 @@ class Theme {
         return $this->author;
     }
 
-    public function getLatestRevision(): ThemeRevision {
+    /**
+     * @return ThemeRevision|null
+     */
+    public function getLatestRevision() {
         $criteria = Criteria::create()
             ->orderBy(['modified' => 'DESC', 'id' => 'ASC']);
 
-        $revision = $this->revisions->matching($criteria)->first();
-
-        if (!$revision instanceof ThemeRevision) {
-            throw new \DomainException('For some reason there is no revision');
-        }
-
-        return $revision;
+        return $this->revisions->matching($criteria)->first() ?: null;
     }
 
     public function addRevision(ThemeRevision $revision) {
