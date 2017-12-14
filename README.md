@@ -12,9 +12,9 @@ by an alien logo are purely coincidental.
 * [Composer](https://getcomposer.org/)
 * [Node.js](https://nodejs.org/en/) (>= 8.x preferred)
 
-My dev environment runs PHP 7.1 and PostgreSQL 9.5 under macOS Sierra. If any
-compatibility issues with other software versions or operating systems should
-arise, a bug report would be most appreciated.
+Postmill should be able to run under any Unix environment. It has been tested to
+work under Linux, macOS, and Windows 10's Linux subsystem. Running directly on
+Windows may work, but is unsupported.
 
 ## Getting started
 
