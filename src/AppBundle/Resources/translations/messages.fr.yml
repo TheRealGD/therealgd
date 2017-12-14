@@ -1,0 +1,400 @@
+# New keys should use the generic categories 'title', 'label', 'help', 'nav',
+# etc. Older keys are subject to renaming.
+
+action:
+    mark_as_trusted: Marquer ce compte comme fiable
+    mark_as_untrusted: Marquer ce compte comme non fiable
+    upvote: Provote
+    downvote: Antivote
+    retract_upvote: Retirer provote
+    retract_downvote: Retirer antivote
+    edit: Modifier
+    create_theme: Créer thème
+    edit_theme: Modifier thème
+    new_theme: Nouveau thème
+    go_to_home_page: Aller à la page d'accueil
+    ban: Bannir
+    unban: Ne plus bannir
+
+add_moderator:
+    title: Ajouter à la modération de %forum%
+
+ban_add:
+    title: Bannir une adresse IP
+
+ban_form:
+    ip: Adresse IP
+    reason: Raison de bannir
+    expiry_date: Expire le (AAAA-MM-JJ hh:mm)
+    ban: Bannir
+    user: Compte associé à l'IP
+
+ban_list:
+    title: Bannissements
+    ip: Adresse IP
+    timestamp: Heure
+    banned_by: Bannis par
+    reason: Raison
+    user: Compte
+    user_none: aucun
+    expires: Expire
+    expires_never: jamais
+    remove: Retirer bannissement
+
+banned:
+    title: Bannis
+    message: Tu es bannis!
+
+comments:
+    author_deleted: '[supprimé]'
+    comments: Commentaires
+    delete: Supprimer
+    delete_thread: Supprimer avec les réponses
+    edit: Modifier
+    permalink: Permalien
+    parent: Parent
+    reply: Réponse
+    admin_ban: Bannir l'IP
+    form_load_error: Erreur du chargement du formulaire. Réessais.
+    info: '%user% a écrit %timestamp%'
+    info_at_timestamp: à %timestamp%
+    not_logged_in: Tu dois te %login_link% ou te %register_link% pour commenter.
+    not_logged_in_login_link_label: connecter
+    not_logged_in_register_link_label: enregistrer
+    viewing_thread: Affichage d'un seul fil de commentaire.
+    thread_return: Voir tous les commentaires
+    return_to_forum: ← Retourner à %forum%
+    edit_info: (modifié %edited_at%)
+    moderator_info: (modéré %edited_at%)
+
+comment_form:
+    comment: Commentaire
+    submit: Envoyer
+    edit_title: Modifier commentaire
+    create_title: Publier un commentaire
+
+compose_message:
+    title: Écrire un message à %username%
+
+create_forum:
+    create_new_forum: Créer un nouveau forum
+
+edit_forum:
+    title: Modifier %forum%
+
+edit_user:
+    title: Modifier le compte %username%
+
+flash:
+    ban_added: L'adresse IP a été banni.
+    forum_deleted: Le forum et tout ce qu'il contient a été supprimé.
+    forum_updated: Les changements ont été sauvegardés.
+    forum_moderator_added: Le compte peut maintenant modérer.
+    inbox_cleared: La boîte de réception a été vidée.
+    reset_password_email_sent: Un courrier électronique pour réinitialiser ton compte à été envoyé à l'adresse spécifiée.
+    theme_created: Ton thème a été créé.
+    theme_updated: Le thème a été mis à jour.
+    submission_edited: La soumission a été modifiée.
+    submission_deleted: La soumission a été supprimée.
+    user_account_registered: Ton compte a été enregistré.
+    user_password_updated: Ton mot de passe a été mis à jour.
+    user_settings_updated: Les paramètres du compte ont été mis à jour.
+    user_marked_trusted: Le compte a été marqué comme fiable.
+    user_marked_untrusted: Le compte a été marqué comme non fiable.
+    user_was_banned: Le compte est banni.
+    user_was_unbanned: Le compte n'est plus banni.
+
+forum:
+    moderators: Personnes modératrices
+    manage: Gérer
+    edit: Modifier le forum
+    subscribe: Abonnement
+    unsubscribe: Désabonnement
+    subscriber_count: '{0} Aucun abonnement|{1} %count% personne abonnée|[1,Inf[ %count% personnes abonnées'
+    add_moderator: Ajouter une personne à la modération
+
+forum_form:
+    name: Nom
+    title: Titre
+    description: Description
+    category: Catégorie
+    create: Créer forum
+    save: Sauvegarder les changements
+    delete: Supprimer le forum
+    confirm_delete: Confirmes-tu vouloir supprimer ce forum et toutes ces soumissions et commentaires?
+    featured: Montrer sur la première page
+    uncategorized_placeholder: (non classé)
+
+forum_list:
+    name: Nom
+    title: Titre
+    subscribers: Personnes abonnements
+    page_title: Liste des forums
+    create_forum: Créer forum
+    submission_count: Soumissions
+    list_view: Affichage en liste
+    category_view: Affichage en catégories
+    uncategorized: Non classé
+
+forum_moderators:
+    title: Personnes qui modèrent /%forum_name%
+    username: Nom
+    since: Depuis
+    last_seen: Dernière connexion
+
+front:
+    subscribed_forums: Forums abonnés
+    no_subscriptions: Aucun abonnement. Voici les forums en vedette à la place.
+    featured_forums: Forums en vedette
+    no_forums: Il m'y a pas de forum en vedette à montrer.
+    all: Tout
+    featured: En vedette
+    subscribed: Abonnements
+
+heading:
+    user_roles: Rôles
+    forums_you_moderate: Forums que tu modères
+
+help:
+    delete_forum_warning: Tout le contenu de ce forum sera supprimé pour toujours!
+    forum_description: Une courte description du forum. Les moteurs de recherche présenteront cette description dans leurs résultats.
+    append_to_default_style: Laisse décoché sauf si ton CSS est une feuille de style complète visant le site tout entier.
+
+inbox:
+    title: Boîte de réception
+    clear_inbox: Vider la boîte de réception
+    empty: La boîte de réception est vide.
+    message_reply_head: 'Re: %title%'
+
+label:
+    name: Nom
+    author: Auteur
+    password: Mot de passe
+    confirm: Confirmer
+    theme: Thème
+    common_css: CSS commun
+    day_css: CSS de jour
+    night_css: CSS de nuit
+    append_to_default_style: Ajouté au style par défaut
+    save_settings: Sauvegarder les configurations
+    source_code: Code source
+    sidebar: Barre latérale
+    username: Nom
+    banned: Banni
+    reason: Raison
+    expires: Expire le
+    never: Jamais
+    action: Action
+    ban: Bannir
+    unban: Ne plus bannir
+    general: Général
+    appearance: Apparence
+    preferred_theme: Thème préféré
+
+login_form:
+    log_in: Connexion
+    username: Nom
+    password: Mot de passe
+    reset_password: Réinitialiser le mot de passe?
+
+markdown_type:
+    help: Référence syntaxe
+
+message_form:
+    title: Titre
+    message: Message
+    send: Envoyer
+    reply: Répondre
+
+message_list:
+    page_title: Messages
+    title: Titre
+    replies: Réponses
+    from: De
+    to: À
+    sent: Envoyé
+    no_messages: Aucun message à afficher.
+
+moderator_form:
+    user: Nom
+    submit: Ajouter au groupe de modération
+
+nav:
+    appearance: Apparence
+    create_theme: Créer thème
+    delete_forum: Supprimer forum
+    themes: Thèmes
+    submit: Envoyer
+    log_in: Connexion
+    log_out: Déconnexion
+    profile: Profil
+    register: Enregistrement
+    my_account: Mon compte
+    user_settings: Configurations
+    forums: Forums
+    inbox_count: Boîte de réception (%count%)
+    messages: Messages
+    wiki: Wiki
+    next: Suivant
+    previous: Précédent
+    moderated: Modéré
+    bans: Bannissements
+    ban_history: Historique de banissement
+
+placeholder:
+    default: (default)
+    choose_one: En choisir un…
+
+request_password_reset:
+    title: Requête de lien de réinitialisation de mot de passe
+    multiple_accounts_notice: >
+        Si tu as plusieurs comptes enregistrés sur cette adresse de courrier 
+        électronique, tu auras un message par compte.
+    no_confirmation_notice: >
+        Si tu ne reçois pas de courrier électronique, l'adresse que tu as
+        spécifié est probablement incorrecte. Pour des raisons de 
+        confidentialité, nous ne confirmons pas si l'adresse 
+        spécifié est enregistrée.
+
+request_password_reset_form:
+    email: Adresse de courrier électronique
+    submit: Envoyer
+
+reset_password:
+    email_subject: '%site_name% - Réinitialiser le mot de passe pour %username%'
+
+    # this should be kept at 76 columns --------------------------------------------
+    email_body: |
+        Quelqu'un a fait une demande de réinitialisation pour ton compte 
+        %site_name%. Pour réinitialiser ton mot de passe, clique le lien suivant:
+        
+        %reset_link%
+
+        Si tu n'a pas demandé à réinitialiser ton mot de passe, tu peux ignorer ce 
+        message en toute sécurité. Le lien expirera après 24 heures.
+
+    title: Réinitialisation de mot de passe
+
+site_footer:
+    version: %app% %version% (%branch%) en cours d'exécution. Fait avec ☭.
+
+submission_form:
+    title: Titre
+    url: URL
+    body: Corps
+    forum: Forum
+    sticky: Collant
+    create: Créer soumission
+    edit: Modifier soumission
+    delete: Supprimer soumission
+    confirm_delete: Es-tu certain de vouloir supprimer cette soumission?
+
+submissions:
+    comments: '{0} Aucun commentaire|{1} %count% commentaire|[1,Inf[ %count% commentaires'
+    edit: Modifier
+    info_with_forum_name: Soumis par %submitter% %timestamp% dans %forum%
+    info_without_forum_name: Soumis pas %submitter% %timestamp%
+    info_at_timestamp: à %timestamp%
+    sort_by_hot: Chaud
+    sort_by_new: Nouveau
+    sort_by_top: Top
+    sort_by_controversial: Controversé
+    total_votes: '{1} %count% point|[0,Inf[ %count% points'
+    vote_stats: (+%up%, −%down%)
+    ip_ban: Bannir IP
+    edit_info: (modifié %edited_at%)
+    moderator_info: (modifié par la modération %edited_at%)
+
+time:
+    on_timestamp: le %timestamp%
+    earlier_format: '%relative_time% plus tôt'
+    later_format: '%relative_time% plus tard'
+
+title:
+    delete_forum: Supprimer forum %forum%
+    forum_appearance: Apparence pour %forum%
+    showing_revision: 'Affichage de la révision #%revision% de la page %path%'
+    editing_forum: Modification forum %forum%
+    create_submission: Créer soumission
+    editing_submission: Modification soumission %title%
+    log_in: Connexion
+    sign_up: Enregistrement
+    submissions_in_featured_forums: Soumissions dans les forums en vedette
+    new_theme: Nouveau thème
+    editing_theme: Modification thème %name%
+    custom_themes: Thèmes personnalisés
+    bans_in_forum: Banissements dans %forum%
+    showing_ban_history_for_user_in_forum: Affichage de l'historique de banissement de %user% dans %forum%
+    banning_user_from_forum: Bannir %user% de %forum%
+    unbanning_user_from_forum: Ne plus bannir %user% de %forum%
+
+two_factor:
+    explanation: Pour compléter la connexion, entre le code de vérification envoyé par courrier électronique à %email%.
+
+user:
+    submissions: Soumissions
+    comments: Commentaires
+    moderates: '%username% modère:'
+    username_rules: Les caractères autorisés sont A-Z, a-z, 0-9 et le trait de soulignement.
+    password_rules: Minimum de 8 caractères, maximum de 72, en raison des limites de l'algorithme bcrypt.
+    email_optional: Providing an email address is optional. We will only use it for resetting passwords and sending two-factor authentication codes.
+    two_factor_explanation: Fournir une adresse de courrier électronique est facultatif. Nous ne l'utiliserons que pour la réinitialisation des mots de passe et l'envoi de codes d'authentification à deux facteurs.
+    two_factor_warning: Assure toi d'avoir une adresse de courrier électronique valide avant d'activer cette option!
+    toolbox: Boîte à outils
+    message: Envoyer message
+    registered: Enregistré %timestamp%
+
+user_flag:
+    post_as_label: Publié comme
+    none_label: (aucun)
+    admin: admin
+    admin_label: Admin
+    moderator: modération
+    moderator_label: Modération
+
+user_form:
+    username: Nom
+    password: Mot de passe
+    repeat_password: Mot de passe (répéter)
+    new_password: Nouveau mot de passe
+    repeat_new_password: Nouveau mot de passe (répéter)
+    email: Courrier électronique
+    register: Enregistrer
+    verification: Vérification
+    two_factor_enabled: Activer l'authentification à deux facteurs
+    save: Sauvegarder les modifications
+
+user_settings:
+    title: Modification des configurations de %username%
+
+user_settings_form:
+    locale: Langue
+    night_mode: Mode nuit
+    show_custom_stylesheets: Afficher des feuilles de style personnalisées
+    save: Sauvegarder les modifications
+
+wiki:
+    not_found_title: Page non trouvée
+    not_found_message: The requested page was not found.
+    create_this_page: La page demandée n'a pas été trouvée.
+    editing_title: Modification "%path%"
+    create_title: Création "%path%"
+    history_title: Afficher l'historique pour "%path%"
+    id: "#%id%"
+    revision_time: Modifié
+    user: Nom
+    id_label: ID
+    locked_notice: La page est verrouillée. Seuls les admins peuvent la modifier.
+    page_title: Titre de la page
+    path: Chemin
+    all_pages: Toutes les pages
+    page_history: Historique de la page
+    edit_page: Modifier la page
+    toolbox: Boîte à outils
+    navigation: Navigation
+    last_edited: Dernière modification par %username% %timestamp%
+
+wiki_form:
+    title: Titre
+    body: Corps
+    submit: Envoyer
