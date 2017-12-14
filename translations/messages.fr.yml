@@ -248,12 +248,12 @@ placeholder:
 request_password_reset:
     title: Requête de lien de réinitialisation de mot de passe
     multiple_accounts_notice: >
-        Si tu as plusieurs comptes enregistrés sur cette adresse de courrier 
+        Si tu as plusieurs comptes enregistrés sur cette adresse de courrier
         électronique, tu auras un message par compte.
     no_confirmation_notice: >
         Si tu ne reçois pas de courrier électronique, l'adresse que tu as
-        spécifié est probablement incorrecte. Pour des raisons de 
-        confidentialité, nous ne confirmons pas si l'adresse 
+        spécifié est probablement incorrecte. Pour des raisons de
+        confidentialité, nous ne confirmons pas si l'adresse
         spécifié est enregistrée.
 
 request_password_reset_form:
@@ -265,18 +265,18 @@ reset_password:
 
     # this should be kept at 76 columns --------------------------------------------
     email_body: |
-        Quelqu'un a fait une demande de réinitialisation pour ton compte 
+        Quelqu'un a fait une demande de réinitialisation pour ton compte
         %site_name%. Pour réinitialiser ton mot de passe, clique le lien suivant:
-        
+
         %reset_link%
 
-        Si tu n'a pas demandé à réinitialiser ton mot de passe, tu peux ignorer ce 
+        Si tu n'a pas demandé à réinitialiser ton mot de passe, tu peux ignorer ce
         message en toute sécurité. Le lien expirera après 24 heures.
 
     title: Réinitialisation de mot de passe
 
 site_footer:
-    version: %app% %version% (%branch%) en cours d'exécution. Fait avec ☭.
+    version: '%app% %version% (%branch%) en cours d''exécution. Fait avec ☭.'
 
 submission_form:
     title: Titre
