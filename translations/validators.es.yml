@@ -16,3 +16,7 @@
 'A forum by that name already exists.': 'Un foro con ese nombre ya existe.'
 'No such theme.': 'No existe ese tema.'
 'That theme cannot be extended.': 'Ese tema no puede ser extendido.'
+'That user is already a moderator.': 'Esa usuaria ya es moderadora.'
+'The IP address is not valid.': 'La dirección IP no es válida.'
+'The CIDR mask is not valid.': 'La máscara CIDR no es válida.'
+'Missing CIDR mask.': 'Falta la máscara CIDR.'
