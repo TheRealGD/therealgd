@@ -78,3 +78,14 @@
     {{- form_widget(form) -}}
   {%- endspaceless -%}
 {%- endblock -%}
+
+{%- block honeypot_row -%}
+  <div style="display: none">
+    {{- form_widget(form) -}}
+  </div>
+{%- endblock -%}
+
+{% block honeypot_widget %}
+  {%- set attr = attr|merge({'style': 'display: none'}) -%}
+  {{- block('form_widget') -}}
+{% endblock %}

@@ -2,8 +2,8 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Form\Type\HoneypotType;
 use Doctrine\ORM\EntityRepository;
-use Eo\HoneypotBundle\Form\Type\HoneypotType;
 use AppBundle\Entity\Forum;
 use AppBundle\Form\Model\SubmissionData;
 use AppBundle\Form\Type\MarkdownType;

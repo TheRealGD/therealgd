@@ -2,7 +2,7 @@
 
 namespace AppBundle\Form;
 
-use Eo\HoneypotBundle\Form\Type\HoneypotType;
+use AppBundle\Form\Type\HoneypotType;
 use Gregwar\CaptchaBundle\Type\CaptchaType;
 use AppBundle\Form\EventListener\PasswordEncodingSubscriber;
 use AppBundle\Form\Model\UserData;

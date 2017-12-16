@@ -2,9 +2,9 @@
 
 namespace AppBundle\Form;
 
-use Eo\HoneypotBundle\Form\Type\HoneypotType;
 use AppBundle\Entity\Forum;
 use AppBundle\Form\Model\CommentData;
+use AppBundle\Form\Type\HoneypotType;
 use AppBundle\Form\Type\MarkdownType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
