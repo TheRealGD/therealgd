@@ -15,7 +15,7 @@
   <div class="alert alert--notice single-comment-alert">
     <p>
       {{ 'comments.viewing_thread'|trans }}
-      <a href="{{ path('comments', {forum_name: forum.name, submission_id: submission.id, slug: submission.title|slugify}) }}">
+      <a href="{{ path('submission', {forum_name: forum.name, submission_id: submission.id, slug: submission.title|slugify}) }}">
         {{- 'comments.thread_return'|trans -}}
       </a>
     </p>

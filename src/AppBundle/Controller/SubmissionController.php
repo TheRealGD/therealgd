@@ -32,8 +32,8 @@ final class SubmissionController extends AbstractController {
      *
      * @return Response
      */
-    public function commentPage(Forum $forum, Submission $submission) {
-        return $this->render('submission/comments.html.twig', [
+    public function submission(Forum $forum, Submission $submission) {
+        return $this->render('submission/submission.html.twig', [
             'forum' => $forum,
             'submission' => $submission,
         ]);
@@ -83,7 +83,7 @@ final class SubmissionController extends AbstractController {
             $em->persist($submission);
             $em->flush();
 
-            return $this->redirectToRoute('comments', [
+            return $this->redirectToRoute('submission', [
                 'forum_name' => $submission->getForum()->getName(),
                 'submission_id' => $submission->getId(),
                 'slug' => Slugger::slugify($submission->getTitle()),
@@ -119,7 +119,7 @@ final class SubmissionController extends AbstractController {
 
             $this->addFlash('notice', 'flash.submission_edited');
 
-            return $this->redirectToRoute('comments', [
+            return $this->redirectToRoute('submission', [
                 'forum_name' => $forum->getName(),
                 'submission_id' => $submission->getId(),
                 'slug' => Slugger::slugify($submission->getTitle()),
@@ -208,7 +208,7 @@ final class SubmissionController extends AbstractController {
             return $this->redirect($request->headers->get('Referer'));
         }
 
-        return $this->redirectToRoute('comments', [
+        return $this->redirectToRoute('submission', [
             'forum_name' => $forum->getName(),
             'submission_id' => $submission->getId(),
             'slug' => Slugger::slugify($submission->getTitle()),

@@ -259,7 +259,7 @@ final class CommentController extends AbstractController {
             return $this->redirect($request->headers->get('Referer'));
         }
 
-        return $this->redirectToRoute('comments', [
+        return $this->redirectToRoute('submission', [
             'forum_name' => $comment->getSubmission()->getForum()->getName(),
             'submission_id' => $comment->getSubmission()->getId(),
             'slug' => Slugger::slugify($comment->getSubmission()->getTitle()),

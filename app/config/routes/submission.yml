@@ -1,10 +1,9 @@
-comments:
-    controller: AppBundle\Controller\SubmissionController::commentPage
+submission:
+    controller: AppBundle\Controller\SubmissionController::submission
     defaults: { slug: ~ }
     path: /f/{forum_name}/{submission_id}/{slug}
     methods: [GET]
-    requirements:
-        submission_id: \d+
+    requirements: { submission_id: \d+ }
 
 comment:
     controller: AppBundle\Controller\SubmissionController::commentPermalink

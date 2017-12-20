@@ -1,5 +1,5 @@
 {% macro submission(submission) %}
-  {% set uri = url('comments', {forum_name: submission.forum.name, submission_id: submission.id}) %}
+  {% set uri = url('submission', {forum_name: submission.forum.name, submission_id: submission.id}) %}
   <entry>
     <id>{{ uri }}</id>
     <link href="{{ uri }}" />

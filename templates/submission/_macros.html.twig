@@ -128,7 +128,7 @@
           <nav class="submission-nav">
             <ul>
               <li>
-                <a href="{{ path('comments', {forum_name: submission.forum.name, submission_id: submission.id, slug: submission.title|slugify}) }}">
+                <a href="{{ path('submission', {forum_name: submission.forum.name, submission_id: submission.id, slug: submission.title|slugify}) }}">
                   {{- 'submissions.comments'|transchoice(submission.comments|length) -}}
                 </a>
               </li>
@@ -178,7 +178,7 @@
   {%- if submission.url -%}
     {{- submission.url -}}
   {%- else -%}
-    {{- path('comments', {forum_name: submission.forum.name, submission_id: submission.id, slug: submission.title|slugify}) -}}
+    {{- path('submission', {forum_name: submission.forum.name, submission_id: submission.id, slug: submission.title|slugify}) -}}
   {%- endif -%}
 {%- endblock -%}
 
