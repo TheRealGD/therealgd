@@ -11,8 +11,6 @@ parameters:
 
     env(SITE_NAME):         Postmill
 
-    env(CDN):               ~
-
     # The email address automated messages will be sent from
     env(NO_REPLY_ADDRESS):  no-reply@example.com
 
