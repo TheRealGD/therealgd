@@ -2,7 +2,6 @@
 
 namespace AppBundle\Controller;
 
-use Doctrine\ORM\EntityManager;
 use AppBundle\Entity\Forum;
 use AppBundle\Entity\Moderator;
 use AppBundle\Entity\User;
@@ -16,8 +15,10 @@ use AppBundle\Form\ModeratorType;
 use AppBundle\Form\PasswordConfirmType;
 use AppBundle\Repository\ForumBanRepository;
 use AppBundle\Repository\ForumCategoryRepository;
+use AppBundle\Repository\ForumLogEntryRepository;
 use AppBundle\Repository\ForumRepository;
 use AppBundle\Repository\SubmissionRepository;
+use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
@@ -309,6 +310,12 @@ final class ForumController extends AbstractController {
         return $this->render('forum/moderation_log.html.twig', [
             'forum' => $forum,
             'logs' => $forum->getPaginatedLogEntries($page),
+        ]);
+    }
+
+    public function globalModerationLog(ForumLogEntryRepository $forumLogs, int $page) {
+        return $this->render('forum/global_moderation_log.html.twig', [
+            'logs' => $forumLogs->findAllPaginated($page),
         ]);
     }
 

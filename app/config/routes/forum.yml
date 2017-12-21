@@ -84,6 +84,13 @@ moderation_log:
     methods: [GET]
     requirements: { page: \d+ }
 
+global_moderation_log:
+    controller: AppBundle\Controller\ForumController::globalModerationLog
+    defaults: { page: 1 }
+    path: /moderation_log/{page}
+    methods: [GET]
+    requirements: { page: \d+ }
+
 subscribe:
     controller: AppBundle\Controller\ForumController::subscribe
     defaults: { action: subscribe }

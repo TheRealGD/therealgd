@@ -1,23 +1,22 @@
-{% extends 'forum/base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block head %}
   {{ include('_includes/meta_pagination.html.twig', {pager: logs}, with_context=false) }}
 {% endblock %}
 
-{% block html_title 'title.showing_moderation_log_for_forum'|trans({
-  '%forum%': '<a href="%s">/f/%s</a>'|format(path('forum', {forum_name: forum.name})|e , forum.name|e)
-})|raw %}
-{% block title block('html_title')|striptags %}
+{% block title 'title.global_moderation_log'|trans %}
 
 {% block body %}
   {% from 'forum/_macros.html.twig' import log_line %}
-  <h1 class="page-heading">{{ block('html_title') }}</h1>
+  <h1 class="page-heading">{{ block('title') }}</h1>
 
   {% if logs|length > 0 %}
     <ul class="moderation-log">
       {% for entry in logs %}
         <li class="moderation-log__entry moderation-log__entry--{{ entry.action|replace({'_': '-'}) }}">
           <p>
+            <a href="{{ path('forum', {forum_name: entry.forum.name}) }}">/f/{{ entry.forum.name }}</a>
+            &mdash;
             {{ log_line(entry) }}
             &mdash;
             {% with {date: entry.timestamp|localizeddate('long', 'short')} %}
@@ -39,3 +38,4 @@
     </div>
   {% endif %}
 {% endblock %}
+

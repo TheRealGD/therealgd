@@ -13,3 +13,82 @@
     </span>
   </button>
 {% endmacro %}
+
+{%- macro log_line(entry) -%}
+  {%- from _self import _log_submission_deletion as submission_deletion,
+                        _log_submission_lock as submission_lock,
+                        _log_comment_deletion as comment_deletion,
+                        _log_ban as ban -%}
+  {%- if entry.action == 'comment_deletion' -%}
+    {{- comment_deletion(entry) -}}
+  {%- elseif entry.action == 'submission_deletion' -%}
+    {{- submission_deletion(entry) -}}
+  {%- elseif entry.action == 'submission_lock' -%}
+    {{- submission_lock(entry) -}}
+  {%- elseif entry.action == 'ban' -%}
+    {{- ban(entry) -}}
+  {%- endif -%}
+{%- endmacro -%}
+
+{% macro _log_comment_deletion(entry) %}
+  {% from 'user/_macros.html.twig' import user_link %}
+  {{ 'log.comment_deletion'|trans({
+    '%user%': user_link(entry.user, {flag: entry.wasAdmin ? 'admin' : 'moderator'}),
+    '%author%': user_link(entry.author),
+    '%submission%': entry.submission
+    ? '<a href="%s">%s</a>'|format(
+      path('submission', {forum_name: entry.submission.forum.name, submission_id: entry.submission.id})|e,
+      entry.submission.title|e
+    ) : '<del>%s</del>'|format(entry.title|e),
+  })|raw }}
+{% endmacro %}
+
+{% macro _log_submission_deletion(entry) %}
+  {% from 'user/_macros.html.twig' import user_link %}
+  {{ 'log.submission_deletion'|trans({
+    '%user%': user_link(entry.user, {flag: entry.wasAdmin ? 'admin' : 'moderator'}),
+    '%author%': user_link(entry.author),
+    '%title%': '<del>%s</del>'|format(entry.title|e),
+  })|raw }}
+{% endmacro %}
+
+{% macro _log_submission_lock(entry) %}
+  {% from 'user/_macros.html.twig' import user_link %}
+  {{ (entry.locked ? 'log.submission_lock' : 'log.submission_unlock')|trans({
+    '%user%': user_link(entry.user, {flag: entry.wasAdmin ? 'admin' : 'moderator'}),
+    '%author%': user_link(entry.author),
+    '%title%': entry.submission ? entry.submission.title|e : '<del>%s</del>'|format(entry.title|e)
+  })|raw }}
+{% endmacro %}
+
+{% macro _log_ban(entry) %}
+  {% from 'user/_macros.html.twig' import user_link %}
+  {% from _self import _log_diff_timestamp as diff_timestamp %}
+  {% if entry.ban.ban %}
+    {% if entry.ban.expired %}<del>{% endif %}
+    {{ 'log.ban'|trans({
+      '%user%': user_link(entry.user, {flag: entry.wasAdmin ? 'admin' : 'moderator'}),
+      '%banned%': user_link(entry.ban.user),
+      '%expires%': entry.ban.expiryTime ? diff_timestamp(entry.ban.expiryTime, entry.ban.timestamp) : 'label.never'|trans,
+      '%reason%': entry.ban.reason|e,
+    })|raw }}
+    {% if entry.ban.expired %}</del>{% endif %}
+  {% else %}
+    {{ 'log.unban'|trans({
+      '%user%': user_link(entry.user, {flag: entry.wasAdmin ? 'admin' : 'moderator'}),
+      '%banned%': user_link(entry.ban.user),
+      '%reason%': entry.ban.reason|e,
+    })|raw }}
+  {% endif %}
+{% endmacro %}
+
+{%- macro _log_diff_timestamp(datetime, compareTo) -%}
+  {%- with {date: datetime|localizeddate('long', 'short')} -%}
+    <time datetime="{{ datetime|date('c') }}"
+          class="relative-time-diff"
+          data-compare-to="{{ compareTo|date('c') }}"
+          title="{{ date }}">
+      {{- date -}}
+    </time>
+  {%- endwith -%}
+{%- endmacro -%}

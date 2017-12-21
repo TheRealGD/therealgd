@@ -82,6 +82,10 @@ services:
         factory: ["@doctrine.orm.entity_manager", "getRepository"]
         arguments: [AppBundle\Entity\ForumCategory]
 
+    AppBundle\Repository\ForumLogEntryRepository:
+        factory: ["@doctrine.orm.entity_manager", "getRepository"]
+        arguments: [AppBundle\Entity\ForumLogEntry]
+
     AppBundle\Repository\ForumRepository:
         factory: ["@doctrine.orm.entity_manager", "getRepository"]
         arguments: [AppBundle\Entity\Forum]

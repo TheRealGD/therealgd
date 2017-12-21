@@ -248,6 +248,7 @@ label:
     unban_associated_ips: Remove associated IP bans
     ban_ip_address: Ban IP address?
     ip_address: IP address
+    forum: Forum
 
 log:
     comment_deletion: '%user% deleted comment by %author% in "%submission%"'
@@ -407,6 +408,7 @@ title:
     ip_bans: Banned IP addresses
     ban_user: Banning %user%
     unban_user: Unbanning %user%
+    global_moderation_log: Global moderation log
 
 user:
     submissions: Submissions
