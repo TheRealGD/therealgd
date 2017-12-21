@@ -22,7 +22,7 @@ class ThemeRepository extends EntityRepository {
             ->orderBy('LOWER(a.username)', 'ASC')
             ->addOrderBy('LOWER(t.name)', 'ASC');
 
-        $themes = new Pagerfanta(new DoctrineORMAdapter($qb, false, false));
+        $themes = new Pagerfanta(new DoctrineORMAdapter($qb));
         $themes->setMaxPerPage($maxPerPage);
         $themes->setCurrentPage($page);
 
