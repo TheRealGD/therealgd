@@ -28,9 +28,11 @@
     <div class="form__row form__button-row">
       <button type="submit" class="button">{{ 'login_form.log_in'|trans }}</button>
 
-      <a href="{{ path('request_password_reset') }}" class="button button--secondary">
-        {{- 'login_form.reset_password'|trans -}}
-      </a>
+      {% if can_reset_password %}
+        <a href="{{ path('request_password_reset') }}" class="button button--secondary">
+          {{- 'login_form.reset_password'|trans -}}
+        </a>
+      {% endif %}
     </div>
   </form>
 {% endblock %}

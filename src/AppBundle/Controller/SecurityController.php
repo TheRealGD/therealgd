@@ -2,16 +2,15 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Mailer\ResetPasswordMailer;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 final class SecurityController extends AbstractController {
-    public function login(AuthenticationUtils $helper) {
-        $lastUsername = $helper->getLastUsername();
-        $error = $helper->getLastAuthenticationError();
-
+    public function login(AuthenticationUtils $helper, ResetPasswordMailer $mailer) {
         return $this->render('security/login.html.twig', [
-            'last_username' => $lastUsername,
-            'error' => $error,
+            'can_reset_password' => $mailer->canMail(),
+            'error' => $helper->getLastAuthenticationError(),
+            'last_username' => $helper->getLastUsername(),
         ]);
     }
 }

@@ -122,6 +122,7 @@ flash:
     page_locked: The page was locked.
     page_unlocked: The page was unlocked.
     no_cookies_verification: Does the image not load correctly? Please make sure you aren't blocking cookies and try again.
+    no_password_resets: Password resets have been disabled by the administrator.
 
 forum:
     moderators: Moderators

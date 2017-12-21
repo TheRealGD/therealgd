@@ -24,7 +24,7 @@ final class ResetPasswordMailer {
     private $urlGenerator;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $noReplyAddress;
 
@@ -43,7 +43,7 @@ final class ResetPasswordMailer {
         TranslatorInterface $translator,
         UrlGeneratorInterface $urlGenerator,
         string $siteName,
-        string $noReplyAddress,
+        $noReplyAddress,
         string $salt
     ) {
         $this->mailer = $mailer;

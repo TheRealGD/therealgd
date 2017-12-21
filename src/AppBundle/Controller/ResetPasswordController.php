@@ -14,16 +14,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 final class ResetPasswordController extends AbstractController {
-    /**
-     * @param Request             $request
-     * @param UserRepository      $ur
-     * @param ResetPasswordMailer $mailer
-     *
-     * @return Response
-     */
-    public function requestReset(Request $request, UserRepository $ur, ResetPasswordMailer $mailer) {
+    public function requestReset(
+        Request $request,
+        UserRepository $users,
+        ResetPasswordMailer $mailer
+    ) {
         if (!$mailer->canMail()) {
-            throw $this->createNotFoundException();
+            return $this->render('reset_password/cannot_reset.html.twig', [],
+                new Response('', 403)
+            );
         }
 
         $form = $this->createForm(RequestPasswordResetType::class);
@@ -34,7 +33,7 @@ final class ResetPasswordController extends AbstractController {
 
             // TODO - this is susceptible to timing attacks.
             // TODO - send only one email with all the links.
-            foreach ($ur->lookUpByEmail($email) as $user) {
+            foreach ($users->lookUpByEmail($email) as $user) {
                 $mailer->mail($user, $request);
             }
 
