@@ -82,7 +82,7 @@ class ThemeRevision {
         $nightCss,
         bool $appendToDefaultStyle,
         $comment,
-        ThemeRevision $parent = null,
+        self $parent = null,
         \DateTime $modified = null
     ) {
         if (!$commonCss && !$dayCss && !$nightCss) {

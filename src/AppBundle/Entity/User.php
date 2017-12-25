@@ -505,7 +505,7 @@ class User implements UserInterface, EquatableInterface {
         }
     }
 
-    public function isBlocking(User $user): bool {
+    public function isBlocking(self $user): bool {
         $criteria = Criteria::create()
             ->where(Criteria::expr()->eq('blocked', $user));
 

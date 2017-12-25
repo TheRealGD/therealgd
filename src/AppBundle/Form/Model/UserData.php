@@ -74,7 +74,7 @@ class UserData implements UserInterface {
      */
     private $biography;
 
-    public static function fromUser(User $user): UserData {
+    public static function fromUser(User $user): self {
         $self = new self();
         $self->entityId = $user->getId();
         $self->username = $user->getUsername();

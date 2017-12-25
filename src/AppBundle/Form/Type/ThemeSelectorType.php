@@ -15,7 +15,7 @@ class ThemeSelectorType extends AbstractType {
             'choice_label' => 'name',
             'group_by' => 'author.username',
             'query_builder' => function (EntityRepository $er) {
-                return $er->createQueryBuilder('t') ->join('t.revisions', 'tr');
+                return $er->createQueryBuilder('t')->join('t.revisions', 'tr');
             },
             'placeholder' => 'placeholder.default',
             'required' => false,

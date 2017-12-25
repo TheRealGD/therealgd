@@ -119,7 +119,7 @@ class Comment extends Votable {
         User $user,
         Submission $submission,
         int $userFlag = UserFlags::FLAG_NONE,
-        Comment $parent = null,
+        self $parent = null,
         $ip = null,
         \DateTime $timestamp = null
     ) {

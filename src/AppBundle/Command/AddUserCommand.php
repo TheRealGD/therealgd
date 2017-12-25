@@ -66,7 +66,7 @@ class AddUserCommand extends Command implements ContainerAwareInterface {
             } else {
                 $io->error([
                     'You must specify a password with the -p option,',
-                    'or provide one interactively.'
+                    'or provide one interactively.',
                 ]);
 
                 return 1;
@@ -81,7 +81,7 @@ class AddUserCommand extends Command implements ContainerAwareInterface {
         $errors = $this->validator->validate($data, null, ['registration']);
 
         if (count($errors) > 0) {
-            /** @var ConstraintViolationInterface $e */
+            /* @var ConstraintViolationInterface $e */
             foreach ($errors as $error) {
                 $io->error(sprintf('%s: %s', $error->getPropertyPath(), $error->getMessage()));
             }
