@@ -7,7 +7,7 @@ by an alien logo are purely coincidental.
 
 ## Requirements
 
-* PHP >= 7.0 with the APCu, curl, and PDO_PGSQL extensions.
+* PHP >= 7.1 with the APCu, curl, gd, mbstring, and PDO_PGSQL extensions.
 * PostgreSQL >= 9.3
 * [Composer](https://getcomposer.org/)
 * [Node.js](https://nodejs.org/en/) (>= 8.x preferred)
