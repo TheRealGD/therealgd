@@ -2,13 +2,18 @@
 
 namespace AppBundle\Repository;
 
-use Doctrine\ORM\EntityRepository;
-use Pagerfanta\Adapter\DoctrineORMAdapter;
-use Pagerfanta\Pagerfanta;
 use AppBundle\Entity\MessageThread;
 use AppBundle\Entity\User;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Persistence\ManagerRegistry;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\Pagerfanta;
 
-class MessageThreadRepository extends EntityRepository {
+class MessageThreadRepository extends ServiceEntityRepository {
+    public function __construct(ManagerRegistry $registry) {
+        parent::__construct($registry, MessageThread::class);
+    }
+
     /**
      * @param User $user
      * @param int  $page

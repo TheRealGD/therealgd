@@ -2,13 +2,18 @@
 
 namespace AppBundle\Repository;
 
-use Doctrine\ORM\EntityRepository;
-use Pagerfanta\Adapter\DoctrineORMAdapter;
-use Pagerfanta\Pagerfanta;
 use AppBundle\Entity\Theme;
 use AppBundle\Entity\User;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Persistence\ManagerRegistry;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\Pagerfanta;
 
-class ThemeRepository extends EntityRepository {
+class ThemeRepository extends ServiceEntityRepository {
+    public function __construct(ManagerRegistry $registry) {
+        parent::__construct($registry, Theme::class);
+    }
+
     /**
      * @param int $page
      * @param int $maxPerPage

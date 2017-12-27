@@ -2,16 +2,21 @@
 
 namespace AppBundle\Repository;
 
-use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\QueryBuilder;
-use Pagerfanta\Adapter\DoctrineORMAdapter;
-use Pagerfanta\Pagerfanta;
 use AppBundle\Entity\Forum;
 use AppBundle\Entity\Submission;
 use AppBundle\Utils\PrependOrderBy;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\QueryBuilder;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\Pagerfanta;
 
-class SubmissionRepository extends EntityRepository {
+class SubmissionRepository extends ServiceEntityRepository {
     const MAX_PER_PAGE = 20;
+
+    public function __construct(ManagerRegistry $registry) {
+        parent::__construct($registry, Submission::class);
+    }
 
     /**
      * @param string[] $forums array where keys are forum IDs

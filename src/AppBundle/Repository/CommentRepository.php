@@ -2,13 +2,18 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\Comment;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Criteria;
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Pagerfanta\Adapter\DoctrineSelectableAdapter;
 use Pagerfanta\Pagerfanta;
-use AppBundle\Entity\Comment;
 
-class CommentRepository extends EntityRepository {
+class CommentRepository extends ServiceEntityRepository {
+    public function __construct(ManagerRegistry $registry) {
+        parent::__construct($registry, Comment::class);
+    }
+
     /**
      * @param int $page
      * @param int $maxPerPage

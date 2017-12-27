@@ -2,13 +2,18 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\UserBan;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\DBAL\Types\Type;
-use Doctrine\ORM\EntityRepository;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
-use AppBundle\Entity\UserBan;
 
-class UserBanRepository extends EntityRepository {
+class UserBanRepository extends ServiceEntityRepository {
+    public function __construct(ManagerRegistry $registry) {
+        parent::__construct($registry, UserBan::class);
+    }
+
     /**
      * @param int $page
      * @param int $maxPerPage

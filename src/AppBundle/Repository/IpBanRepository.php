@@ -2,12 +2,18 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\IpBan;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Criteria;
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Pagerfanta\Adapter\DoctrineSelectableAdapter;
 use Pagerfanta\Pagerfanta;
 
-final class IpBanRepository extends EntityRepository {
+final class IpBanRepository extends ServiceEntityRepository {
+    public function __construct(ManagerRegistry $registry) {
+        parent::__construct($registry, IpBan::class);
+    }
+
     public function findAllPaginated($page, $maxPerPage = 25) {
         $criteria = Criteria::create()->orderBy(['timestamp' => 'DESC']);
 

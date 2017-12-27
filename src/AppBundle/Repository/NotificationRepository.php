@@ -2,11 +2,16 @@
 
 namespace AppBundle\Repository;
 
-use Doctrine\ORM\EntityRepository;
 use AppBundle\Entity\Notification;
 use AppBundle\Entity\User;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Persistence\ManagerRegistry;
 
-class NotificationRepository extends EntityRepository {
+class NotificationRepository extends ServiceEntityRepository {
+    public function __construct(ManagerRegistry $registry) {
+        parent::__construct($registry, Notification::class);
+    }
+
     /**
      * @param User     $user
      * @param int|null $max

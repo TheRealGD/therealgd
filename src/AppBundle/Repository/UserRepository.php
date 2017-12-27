@@ -2,19 +2,24 @@
 
 namespace AppBundle\Repository;
 
-use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Query\ResultSetMapping;
 use AppBundle\Entity\Comment;
 use AppBundle\Entity\Submission;
 use AppBundle\Entity\User;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query\ResultSetMapping;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 
 /**
  * @method User|null findOneByUsername(string|string[] $username)
  * @method User|null findOneByCanonicalUsername(string|string[] $canonicalUsername)
  */
-class UserRepository extends EntityRepository implements UserLoaderInterface {
+class UserRepository extends ServiceEntityRepository implements UserLoaderInterface {
+    public function __construct(ManagerRegistry $registry) {
+        parent::__construct($registry, User::class);
+    }
+
     /**
      * {@inheritdoc}
      */

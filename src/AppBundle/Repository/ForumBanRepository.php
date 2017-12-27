@@ -2,13 +2,18 @@
 
 namespace AppBundle\Repository;
 
-use Doctrine\ORM\EntityRepository;
-use Pagerfanta\Adapter\DoctrineORMAdapter;
-use Pagerfanta\Pagerfanta;
 use AppBundle\Entity\Forum;
 use AppBundle\Entity\ForumBan;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Persistence\ManagerRegistry;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\Pagerfanta;
 
-class ForumBanRepository extends EntityRepository {
+class ForumBanRepository extends ServiceEntityRepository {
+    public function __construct(ManagerRegistry $registry) {
+        parent::__construct($registry, ForumBan::class);
+    }
+
     /**
      * Find all bans in a forum that haven't been undone and which haven't
      * expired.

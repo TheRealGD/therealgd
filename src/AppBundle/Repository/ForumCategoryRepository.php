@@ -2,7 +2,12 @@
 
 namespace AppBundle\Repository;
 
-use Doctrine\ORM\EntityRepository;
+use AppBundle\Entity\ForumCategory;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Persistence\ManagerRegistry;
 
-class ForumCategoryRepository extends EntityRepository {
+class ForumCategoryRepository extends ServiceEntityRepository {
+    public function __construct(ManagerRegistry $registry) {
+        parent::__construct($registry, ForumCategory::class);
+    }
 }
