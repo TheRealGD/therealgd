@@ -113,24 +113,15 @@ class ThemeRevision {
         return $this->theme;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getCommonCss() {
+    public function getCommonCss(): ?string {
         return $this->commonCss;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getDayCss() {
+    public function getDayCss(): ?string {
         return $this->dayCss;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getNightCss() {
+    public function getNightCss(): ?string {
         return $this->nightCss;
     }
 
@@ -138,17 +129,11 @@ class ThemeRevision {
         return $this->appendToDefaultStyle;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getComment() {
+    public function getComment(): ?string {
         return $this->comment;
     }
 
-    /**
-     * @return ThemeRevision|null
-     */
-    public function getParent() {
+    public function getParent(): ?ThemeRevision {
         return $this->parent;
     }
 

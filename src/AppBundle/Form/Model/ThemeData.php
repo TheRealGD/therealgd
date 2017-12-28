@@ -98,13 +98,7 @@ class ThemeData {
     }
 
     public function toTheme(): Theme {
-        return new Theme(
-            $this->name,
-            $this->author,
-            $this->appendToDefaultStyle,
-            $this->comment,
-            $this->parent
-        );
+        return new Theme($this->name, $this->author);
     }
 
     public function updateTheme(Theme $theme) {

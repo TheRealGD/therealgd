@@ -44,24 +44,11 @@ class Theme {
      * @ORM\OneToMany(targetEntity="ThemeRevision", mappedBy="theme", cascade={"persist"})
      * @ORM\OrderBy({"modified": "DESC"})
      *
-     * @var Collection
+     * @var Collection|ThemeRevision[]
      */
     private $revisions;
 
-    /**
-     * @param string             $name
-     * @param User               $author
-     * @param bool               $appendToDefaultStyle
-     * @param string|null        $comment
-     * @param ThemeRevision|null $parent
-     */
-    public function __construct(
-        string $name,
-        User $author,
-        bool $appendToDefaultStyle,
-        $comment,
-        ThemeRevision $parent = null
-    ) {
+    public function __construct(string $name, User $author) {
         $this->id = Uuid::uuid4();
         $this->name = $name;
         $this->author = $author;
@@ -84,10 +71,7 @@ class Theme {
         return $this->author;
     }
 
-    /**
-     * @return ThemeRevision|null
-     */
-    public function getLatestRevision() {
+    public function getLatestRevision(): ?ThemeRevision {
         $criteria = Criteria::create()
             ->orderBy(['modified' => 'DESC', 'id' => 'ASC']);
 
