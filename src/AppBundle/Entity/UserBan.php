@@ -108,14 +108,11 @@ class UserBan {
         return $this->timestamp;
     }
 
-    /**
-     * @return \DateTime|null
-     */
-    public function getExpiresAt() {
+    public function getExpiresAt(): ?\DateTime {
         return $this->expiresAt;
     }
 
-    public function isExpired() {
+    public function isExpired(): bool {
         if ($this->expiresAt === null) {
             return false;
         }

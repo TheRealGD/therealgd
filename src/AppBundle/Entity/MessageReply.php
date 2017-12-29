@@ -22,7 +22,7 @@ class MessageReply extends Message {
      */
     private $notifications;
 
-    public function __construct(User $sender, string $body, $ip, MessageThread $thread) {
+    public function __construct(User $sender, string $body, ?string $ip, MessageThread $thread) {
         parent::__construct($sender, $body, $ip);
 
         $this->thread = $thread;

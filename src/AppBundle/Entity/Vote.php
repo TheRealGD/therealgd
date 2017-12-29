@@ -53,17 +53,14 @@ abstract class Vote {
      * @param string|null $ip
      * @param bool|int    $choice
      */
-    public function __construct(User $user, $ip, $choice) {
+    public function __construct(User $user, ?string $ip, $choice) {
         $this->timestamp = new \DateTime('@'.time());
         $this->user = $user;
         $this->setIp($ip); // must be after $this->user is declared
         $this->setChoice($choice);
     }
 
-    /**
-     * @return int|null
-     */
-    public function getId() {
+    public function getId(): ?int {
         return $this->id;
     }
 
@@ -87,31 +84,19 @@ abstract class Vote {
         }
     }
 
-    /**
-     * @return \DateTime
-     */
     public function getTimestamp(): \DateTime {
         return $this->timestamp;
     }
 
-    /**
-     * @return User
-     */
-    public function getUser() {
+    public function getUser(): User {
         return $this->user;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getIp() {
+    public function getIp(): ?string {
         return $this->ip;
     }
 
-    /**
-     * @param string|null $ip
-     */
-    public function setIp($ip) {
+    public function setIp(?string $ip) {
         if ($ip !== null && !filter_var($ip, FILTER_VALIDATE_IP)) {
             throw new \InvalidArgumentException('Bad IP address');
         }

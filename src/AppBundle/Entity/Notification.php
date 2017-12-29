@@ -39,10 +39,7 @@ abstract class Notification {
 
     abstract public function getType(): string;
 
-    /**
-     * @return int|null
-     */
-    public function getId() {
+    public function getId(): ?int {
         return $this->id;
     }
 

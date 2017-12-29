@@ -64,7 +64,7 @@ class IpBan {
     public function __construct(
         string $ip,
         string $reason,
-        $user,
+        ?User $user,
         User $bannedBy,
         \DateTime $expiryDate = null,
         \DateTime $timestamp = null
@@ -77,10 +77,7 @@ class IpBan {
         $this->timestamp = $timestamp ?: new \DateTime();
     }
 
-    /**
-     * @return int|null
-     */
-    public function getId() {
+    public function getId(): ?int {
         return $this->id;
     }
 
@@ -92,10 +89,7 @@ class IpBan {
         return $this->reason;
     }
 
-    /**
-     * @return null|User
-     */
-    public function getUser() {
+    public function getUser(): ?User {
         return $this->user;
     }
 
@@ -107,10 +101,7 @@ class IpBan {
         return $this->timestamp;
     }
 
-    /**
-     * @return \DateTime|null
-     */
-    public function getExpiryDate() {
+    public function getExpiryDate(): ?\DateTime {
         return $this->expiryDate;
     }
 }

@@ -46,14 +46,7 @@ abstract class Message {
      */
     private $ip;
 
-    /**
-     * Message constructor.
-     *
-     * @param User        $sender
-     * @param string      $body
-     * @param string|null $ip
-     */
-    public function __construct(User $sender, string $body, $ip) {
+    public function __construct(User $sender, string $body, ?string $ip) {
         if ($ip !== null && !filter_var($ip, FILTER_VALIDATE_IP)) {
             throw new \InvalidArgumentException('$ip must be valid IP address or NULL');
         }
@@ -64,10 +57,7 @@ abstract class Message {
         $this->timestamp = new \DateTime('@'.time());
     }
 
-    /**
-     * @return int|null
-     */
-    public function getId() {
+    public function getId(): ?int {
         return $this->id;
     }
 
@@ -83,10 +73,7 @@ abstract class Message {
         return $this->timestamp;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getIp() {
+    public function getIp(): ?string {
         return $this->ip;
     }
 }

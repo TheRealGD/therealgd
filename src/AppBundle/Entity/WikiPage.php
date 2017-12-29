@@ -64,10 +64,7 @@ class WikiPage {
         new WikiRevision($this, $title, $body, $user, $timestamp);
     }
 
-    /**
-     * @return int|null
-     */
-    public function getId() {
+    public function getId(): ?int {
         return $this->id;
     }
 
@@ -87,7 +84,7 @@ class WikiPage {
     /**
      * @return Collection|WikiRevision[]
      */
-    public function getRevisions() {
+    public function getRevisions(): Collection {
         return $this->revisions;
     }
 
@@ -111,7 +108,7 @@ class WikiPage {
      *
      * @return Pagerfanta|WikiRevision[]
      */
-    public function getPaginatedRevisions(int $page, int $maxPerPage = 25) {
+    public function getPaginatedRevisions(int $page, int $maxPerPage = 25): Pagerfanta {
         $criteria = Criteria::create()->orderBy(['timestamp' => 'DESC']);
 
         $revisions = new Pagerfanta(new DoctrineSelectableAdapter($this->revisions, $criteria));

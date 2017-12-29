@@ -77,11 +77,11 @@ class ThemeRevision {
 
     public function __construct(
         Theme $theme,
-        $commonCss,
-        $dayCss,
-        $nightCss,
+        ?string $commonCss,
+        ?string $dayCss,
+        ?string $nightCss,
         bool $appendToDefaultStyle,
-        $comment,
+        ?string $comment,
         self $parent = null,
         \DateTime $modified = null
     ) {

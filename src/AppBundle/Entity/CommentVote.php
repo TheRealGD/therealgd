@@ -22,16 +22,13 @@ class CommentVote extends Vote {
      */
     private $comment;
 
-    public function __construct(User $user, $ip, $choice, Comment $comment) {
+    public function __construct(User $user, ?string $ip, $choice, Comment $comment) {
         parent::__construct($user, $ip, $choice);
 
         $this->comment = $comment;
     }
 
-    /**
-     * @return Comment
-     */
-    public function getComment() {
+    public function getComment(): Comment {
         return $this->comment;
     }
 }

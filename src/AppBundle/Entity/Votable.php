@@ -24,16 +24,9 @@ abstract class Votable {
     /**
      * @return Vote[]|Collection|Selectable
      */
-    abstract public function getVotes();
+    abstract public function getVotes(): Collection;
 
-    /**
-     * @param User        $user
-     * @param string|null $ip
-     * @param int         $choice
-     *
-     * @return Vote
-     */
-    abstract protected function createVote(User $user, $ip, int $choice): Vote;
+    abstract protected function createVote(User $user, ?string $ip, int $choice): Vote;
 
     /**
      * @param User        $user
@@ -42,7 +35,7 @@ abstract class Votable {
      *
      * @throws \InvalidArgumentException if the vote is not a VOTE_* constant
      */
-    public function vote(User $user, $ip, int $choice) {
+    public function vote(User $user, ?string $ip, int $choice) {
         $vote = $this->getUserVote($user);
 
         if ($choice === self::VOTE_UP || $choice === self::VOTE_DOWN) {
@@ -58,9 +51,6 @@ abstract class Votable {
         }
     }
 
-    /**
-     * @return int
-     */
     public function getUpvotes(): int {
         $this->hydrateVoteCollection();
 
@@ -93,12 +83,7 @@ abstract class Votable {
         return $vote->getChoice();
     }
 
-    /**
-     * @param User $user
-     *
-     * @return null|Vote
-     */
-    private function getUserVote(User $user) {
+    private function getUserVote(User $user): ?Vote {
         $criteria = Criteria::create()
             ->where(Criteria::expr()->eq('user', $user));
 

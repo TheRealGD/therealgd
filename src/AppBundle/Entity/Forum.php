@@ -154,10 +154,7 @@ class Forum {
         }
     }
 
-    /**
-     * @return int|null
-     */
-    public function getId() {
+    public function getId(): ?int {
         return $this->id;
     }
 
@@ -182,17 +179,11 @@ class Forum {
         $this->title = $title;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getDescription() {
+    public function getDescription(): ?string {
         return $this->description;
     }
 
-    /**
-     * @param string|null $description
-     */
-    public function setDescription($description) {
+    public function setDescription(?string $description) {
         $this->description = $description;
     }
 
@@ -366,31 +357,19 @@ class Forum {
         $this->featured = $featured;
     }
 
-    /**
-     * @return null|ForumCategory
-     */
-    public function getCategory() {
+    public function getCategory(): ?ForumCategory {
         return $this->category;
     }
 
-    /**
-     * @param null|ForumCategory $category
-     */
-    public function setCategory($category) {
+    public function setCategory(?ForumCategory $category) {
         $this->category = $category;
     }
 
-    /**
-     * @return Theme|null
-     */
-    public function getTheme() {
+    public function getTheme(): ?Theme {
         return $this->theme;
     }
 
-    /**
-     * @param Theme|null $theme
-     */
-    public function setTheme($theme) {
+    public function setTheme(?Theme $theme) {
         $this->theme = $theme;
     }
 

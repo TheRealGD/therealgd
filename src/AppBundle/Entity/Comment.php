@@ -153,10 +153,7 @@ class Comment extends Votable {
         $this->notifications = null; // remove unused field warning
     }
 
-    /**
-     * @return int|null
-     */
-    public function getId() {
+    public function getId(): ?int {
         return $this->id;
     }
 
@@ -180,10 +177,7 @@ class Comment extends Votable {
         return $this->submission;
     }
 
-    /**
-     * @return Comment|null
-     */
-    public function getParent() {
+    public function getParent(): ?Comment {
         return $this->parent;
     }
 
@@ -205,25 +199,18 @@ class Comment extends Votable {
     /**
      * {@inheritdoc}
      */
-    public function getVotes() {
+    public function getVotes(): Collection {
         return $this->votes;
     }
 
-    /**
-     * @param User        $user
-     * @param string|null $ip
-     * @param int         $choice
-     *
-     * @return Vote
-     */
-    protected function createVote(User $user, $ip, int $choice): Vote {
+    protected function createVote(User $user, ?string $ip, int $choice): Vote {
         return new CommentVote($user, $ip, $choice, $this);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function vote(User $user, $ip, int $choice) {
+    public function vote(User $user, ?string $ip, int $choice) {
         if ($this->submission->getForum()->userIsBanned($user)) {
             throw new BannedFromForumException();
         }
@@ -231,17 +218,11 @@ class Comment extends Votable {
         parent::vote($user, $ip, $choice);
     }
 
-    /**
-     * @return bool
-     */
-    public function isSoftDeleted() {
+    public function isSoftDeleted(): bool {
         return $this->softDeleted;
     }
 
-    /**
-     * @param bool $softDeleted
-     */
-    public function setSoftDeleted($softDeleted) {
+    public function setSoftDeleted(bool $softDeleted) {
         $this->softDeleted = $softDeleted;
     }
 
@@ -253,24 +234,15 @@ class Comment extends Votable {
         $this->body = '';
     }
 
-    /**
-     * @return string|null
-     */
-    public function getIp() {
+    public function getIp(): ?string {
         return $this->ip;
     }
 
-    /**
-     * @return \DateTime|null
-     */
-    public function getEditedAt() {
+    public function getEditedAt(): ?\DateTime {
         return $this->editedAt;
     }
 
-    /**
-     * @param \DateTime|null $editedAt
-     */
-    public function setEditedAt($editedAt) {
+    public function setEditedAt(?\DateTime $editedAt) {
         $this->editedAt = $editedAt;
     }
 

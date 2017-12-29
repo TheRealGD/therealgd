@@ -54,10 +54,7 @@ class ForumLogSubmissionLock extends ForumLogEntry {
         parent::__construct($forum, $user, $wasAdmin, $timestamp);
     }
 
-    /**
-     * @return Submission|null
-     */
-    public function getSubmission() {
+    public function getSubmission(): ?Submission {
         return $this->submission;
     }
 

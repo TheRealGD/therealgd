@@ -67,6 +67,8 @@ class ForumBan {
 
     /**
      * @ORM\Column(type="datetimetz", nullable=true)
+     *
+     * @var \DateTime|null
      */
     private $expiresAt;
 
@@ -125,10 +127,7 @@ class ForumBan {
         return $this->timestamp;
     }
 
-    /**
-     * @return \DateTime|null
-     */
-    public function getExpiryTime() {
+    public function getExpiryTime(): ?\DateTime {
         return $this->expiresAt;
     }
 

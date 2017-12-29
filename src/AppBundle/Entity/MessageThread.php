@@ -40,7 +40,7 @@ class MessageThread extends Message {
      */
     private $notifications;
 
-    public function __construct(User $sender, string $body, $ip, User $receiver, string $title) {
+    public function __construct(User $sender, string $body, ?string $ip, User $receiver, string $title) {
         if (!$receiver->canBeMessagedBy($sender)) {
             throw new \DomainException('$sender cannot message $receiver');
         }

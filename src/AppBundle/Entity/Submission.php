@@ -147,24 +147,13 @@ class Submission extends Votable {
      */
     private $locked = false;
 
-    /**
-     * @param string         $title
-     * @param string|null    $url
-     * @param string|null    $body
-     * @param Forum          $forum
-     * @param User           $user
-     * @param string|null    $ip
-     * @param bool           $sticky
-     * @param int            $userFlag
-     * @param \DateTime|null $timestamp
-     */
     public function __construct(
         string $title,
-        $url,
-        $body,
+        ?string $url,
+        ?string $body,
         Forum $forum,
         User $user,
-        $ip,
+        ?string $ip,
         bool $sticky = false,
         int $userFlag = UserFlags::FLAG_NONE,
         \DateTime $timestamp = null
@@ -191,10 +180,7 @@ class Submission extends Votable {
         $this->vote($user, $ip, Votable::VOTE_UP);
     }
 
-    /**
-     * @return int
-     */
-    public function getId() {
+    public function getId(): ?int {
         return $this->id;
     }
 
@@ -206,38 +192,26 @@ class Submission extends Votable {
         $this->title = $title;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getUrl() {
+    public function getUrl(): ?string {
         return $this->url;
     }
 
-    /**
-     * @param string|null $url
-     */
-    public function setUrl($url) {
+    public function setUrl(?string $url) {
         $this->url = $url;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getBody() {
+    public function getBody(): ?string {
         return $this->body;
     }
 
-    /**
-     * @param string|null $body
-     */
-    public function setBody($body) {
+    public function setBody(?string $body) {
         $this->body = $body;
     }
 
     /**
      * @return Collection|Comment[]
      */
-    public function getComments() {
+    public function getComments(): Collection {
         return $this->comments;
     }
 
@@ -282,21 +256,21 @@ class Submission extends Votable {
     /**
      * {@inheritdoc}
      */
-    public function getVotes() {
+    public function getVotes(): Collection {
         return $this->votes;
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function createVote(User $user, $ip, int $choice): Vote {
+    protected function createVote(User $user, ?string $ip, int $choice): Vote {
         return new SubmissionVote($user, $ip, $choice, $this);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function vote(User $user, $ip, int $choice) {
+    public function vote(User $user, ?string $ip, int $choice) {
         if ($this->forum->userIsBanned($user)) {
             throw new BannedFromForumException();
         }
@@ -306,24 +280,15 @@ class Submission extends Votable {
         $this->updateRanking();
     }
 
-    /**
-     * @return string|null
-     */
-    public function getImage() {
+    public function getImage(): ?string {
         return $this->image;
     }
 
-    /**
-     * @param string|null $image
-     */
-    public function setImage($image) {
+    public function setImage(?string $image) {
         $this->image = $image;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getIp() {
+    public function getIp(): ?string {
         return $this->ip;
     }
 
@@ -357,17 +322,11 @@ class Submission extends Votable {
         $this->ranking = $this->getTimestamp()->getTimestamp() + $advantage;
     }
 
-    /**
-     * @return \DateTime|null
-     */
-    public function getEditedAt() {
+    public function getEditedAt(): ?\DateTime {
         return $this->editedAt;
     }
 
-    /**
-     * @param \DateTime|null $editedAt
-     */
-    public function setEditedAt($editedAt) {
+    public function setEditedAt(?\DateTime $editedAt) {
         $this->editedAt = $editedAt;
     }
 

@@ -217,10 +217,7 @@ class User implements UserInterface, EquatableInterface {
         $this->blocks = new ArrayCollection();
     }
 
-    /**
-     * @return int|null
-     */
-    public function getId() {
+    public function getId(): ?int {
         return $this->id;
     }
 
@@ -245,17 +242,11 @@ class User implements UserInterface, EquatableInterface {
         $this->password = $password;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getEmail() {
+    public function getEmail(): ?string {
         return $this->email;
     }
 
-    /**
-     * @param string|null $email
-     */
-    public function setEmail($email) {
+    public function setEmail(?string $email) {
         $this->email = $email;
         $this->canonicalEmail = $email ? self::canonicalizeEmail($email) : null;
     }
@@ -268,7 +259,7 @@ class User implements UserInterface, EquatableInterface {
      *
      * @return string|null
      */
-    public function getCanonicalEmail() {
+    public function getCanonicalEmail(): ?string {
         return $this->canonicalEmail;
     }
 
@@ -276,17 +267,11 @@ class User implements UserInterface, EquatableInterface {
         return $this->created;
     }
 
-    /**
-     * @return \DateTime|null
-     */
-    public function getLastSeen() {
+    public function getLastSeen(): ?\DateTime {
         return $this->lastSeen;
     }
 
-    /**
-     * @param \DateTime|null $lastSeen
-     */
-    public function setLastSeen($lastSeen) {
+    public function setLastSeen(?\DateTime $lastSeen) {
         $this->lastSeen = $lastSeen;
     }
 
@@ -471,17 +456,11 @@ class User implements UserInterface, EquatableInterface {
         $this->trusted = $trusted;
     }
 
-    /**
-     * @return null|Theme
-     */
-    public function getPreferredTheme() {
+    public function getPreferredTheme(): ?Theme {
         return $this->preferredTheme;
     }
 
-    /**
-     * @param null|Theme $preferredTheme
-     */
-    public function setPreferredTheme($preferredTheme) {
+    public function setPreferredTheme(?Theme $preferredTheme) {
         $this->preferredTheme = $preferredTheme;
     }
 
@@ -540,17 +519,11 @@ class User implements UserInterface, EquatableInterface {
         $this->openExternalLinksInNewTab = $openExternalLinksInNewTab;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getBiography() {
+    public function getBiography(): ?string {
         return $this->biography;
     }
 
-    /**
-     * @param null|string $biography
-     */
-    public function setBiography($biography) {
+    public function setBiography(?string $biography) {
         $this->biography = $biography;
     }
 

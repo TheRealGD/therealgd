@@ -40,31 +40,22 @@ class ForumCategory {
         $this->forums = new ArrayCollection();
     }
 
-    /**
-     * @return int|null
-     */
-    public function getId() {
+    public function getId(): ?int {
         return $this->id;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getName() {
+    public function getName(): ?string {
         return $this->name;
     }
 
-    /**
-     * @param null|string $name
-     */
-    public function setName($name) {
+    public function setName(?string $name) {
         $this->name = $name;
     }
 
     /**
      * @return Collection|Selectable|Forum[]
      */
-    public function getForums() {
+    public function getForums(): Collection {
         return $this->forums;
     }
 }

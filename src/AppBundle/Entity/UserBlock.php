@@ -50,7 +50,7 @@ class UserBlock {
      */
     private $timestamp;
 
-    public function __construct(User $blocker, User $blocked, $comment) {
+    public function __construct(User $blocker, User $blocked, ?string $comment) {
         if ($blocker === $blocked) {
             throw new \InvalidArgumentException();
         }
@@ -74,10 +74,7 @@ class UserBlock {
         return $this->blocked;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getComment() {
+    public function getComment(): ?string {
         return $this->comment;
     }
 

@@ -49,10 +49,7 @@ class ForumLogCommentDeletion extends ForumLogEntry {
         return $this->author;
     }
 
-    /**
-     * @return null|Submission
-     */
-    public function getSubmission() {
+    public function getSubmission(): ?Submission {
         return $this->submission;
     }
 
