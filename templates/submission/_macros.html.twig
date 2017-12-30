@@ -138,11 +138,19 @@
                     {{- 'submissions.edit'|trans -}}
                   </a>
                 </li>
+              {%- endif -%}
+              {%- if is_granted('delete_immediately', submission) %}
                 <li>
-                  <form action="{{ path('delete_submission', {forum_name: submission.forum.name, submission_id: submission.id}) }}" method="POST">
+                  <form action="{{ path('submission_delete_immediately', {forum_name: submission.forum.name, submission_id: submission.id}) }}" method="POST">
                     <input type="hidden" name="token" value="{{ csrf_token('delete_submission') }}">
                     <button class="confirm-submission-delete">{{ 'action.delete'|trans }}</button>
                   </form>
+                </li>
+              {%- elseif is_granted('delete_with_reason', submission) %}
+                <li>
+                  <a href="{{ path('submission_delete_with_reason', {forum_name: submission.forum.name, submission_id: submission.id}) }}">
+                    {{- 'action.delete'|trans -}}
+                  </a>
                 </li>
               {%- endif -%}
               {%- if is_granted('moderator', submission.forum) -%}

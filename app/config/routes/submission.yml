@@ -15,10 +15,15 @@ edit_submission:
     path: /f/{forum_name}/edit_submission/{submission_id}
     methods: [GET, POST]
 
-delete_submission:
-    controller: AppBundle\Controller\SubmissionController::deleteSubmission
+submission_delete_immediately:
+    controller: AppBundle\Controller\SubmissionController::deleteImmediately
     path: /f/{forum_name}/delete_submission/{submission_id}
     methods: [POST]
+
+submission_delete_with_reason:
+    controller: AppBundle\Controller\SubmissionController::deleteWithReason
+    path: /f/{forum_name}/delete_submission_with_reason/{submission_id}
+    methods: [GET, POST]
 
 lock:
     controller: AppBundle\Controller\SubmissionController::lock

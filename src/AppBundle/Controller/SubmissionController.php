@@ -7,7 +7,7 @@ use AppBundle\Entity\Forum;
 use AppBundle\Entity\ForumLogSubmissionDeletion;
 use AppBundle\Entity\ForumLogSubmissionLock;
 use AppBundle\Entity\Submission;
-use AppBundle\Entity\User;
+use AppBundle\Form\DeleteReasonType;
 use AppBundle\Form\Model\SubmissionData;
 use AppBundle\Form\SubmissionType;
 use AppBundle\Utils\Slugger;
@@ -134,7 +134,7 @@ final class SubmissionController extends AbstractController {
     }
 
     /**
-     * @IsGranted("edit", subject="submission")
+     * @IsGranted("delete_with_reason", subject="submission")
      *
      * @param Request       $request
      * @param EntityManager $em
@@ -143,25 +143,51 @@ final class SubmissionController extends AbstractController {
      *
      * @return Response
      */
-    public function deleteSubmission(Request $request, EntityManager $em, Forum $forum, Submission $submission) {
+    public function deleteWithReason(Request $request, EntityManager $em, Forum $forum, Submission $submission) {
+        $form = $this->createForm(DeleteReasonType::class, []);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->refresh($submission);
+            $em->remove($submission);
+
+            $forum->addLogEntry(new ForumLogSubmissionDeletion(
+                $submission,
+                $this->getUser(),
+                $form->getData()['reason']
+            ));
+
+            $em->flush();
+
+            $this->addFlash('notice', 'flash.submission_deleted');
+
+            return $this->redirectToRoute('forum', [
+                'forum_name' => $forum->getName(),
+            ]);
+        }
+
+        return $this->render('submission/delete_with_reason.html.twig', [
+            'form' => $form->createView(),
+            'forum' => $forum,
+            'submission' => $submission,
+        ]);
+    }
+
+    /**
+     * @IsGranted("delete_immediately", subject="submission")
+     *
+     * @param Request       $request
+     * @param EntityManager $em
+     * @param Forum         $forum
+     * @param Submission    $submission
+     *
+     * @return Response
+     */
+    public function deleteImmediately(Request $request, EntityManager $em, Forum $forum, Submission $submission) {
         $this->validateCsrf('delete_submission', $request->request->get('token'));
 
         $em->refresh($submission);
         $em->remove($submission);
-
-        /* @var User $user */
-        $user = $this->getUser();
-
-        if ($user !== $submission->getUser()) {
-            $forum->addLogEntry(new ForumLogSubmissionDeletion(
-                $forum,
-                $user,
-                !$forum->userIsModerator($user, false),
-                $submission->getTitle(),
-                $submission->getUser()
-            ));
-        }
-
         $em->flush();
 
         $this->addFlash('notice', 'flash.submission_deleted');

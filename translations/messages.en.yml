@@ -254,6 +254,7 @@ label:
 log:
     comment_deletion: '%user% deleted comment by %author% in "%submission%"'
     submission_deletion: '%user% deleted submission "%title%" by %author%'
+    submission_deletion_with_reason: '%user% deleted submission "%title%" by %author%. Reason: "%reason%"'
     submission_lock: '%user% locked submission "%title%" by %author%'
     submission_unlock: '%user% unlocked submission "%title%" by %author%'
     ban: '%user% banned %banned% (expires: %expires%). Reason: "%reason%"'
@@ -410,6 +411,7 @@ title:
     ban_user: Banning %user%
     unban_user: Unbanning %user%
     global_moderation_log: Global moderation log
+    delete_submission: Delete submission
 
 user:
     submissions: Submissions

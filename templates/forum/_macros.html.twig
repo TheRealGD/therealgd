@@ -45,10 +45,11 @@
 
 {% macro _log_submission_deletion(entry) %}
   {% from 'user/_macros.html.twig' import user_link %}
-  {{ 'log.submission_deletion'|trans({
+  {{ (entry.reason is null ? 'log.submission_deletion' : 'log.submission_deletion_with_reason')|trans({
     '%user%': user_link(entry.user, {flag: entry.wasAdmin ? 'admin' : 'moderator'}),
     '%author%': user_link(entry.author),
     '%title%': '<del>%s</del>'|format(entry.title|e),
+    '%reason%': entry.reason,
   })|raw }}
 {% endmacro %}
 

@@ -1,0 +1,20 @@
+{% extends 'submission/base.html.twig' %}
+
+{% block title 'title.delete_submission'|trans %}
+{% block page_classes 'submission-delete-with-reason-page' %}
+
+{% block body %}
+  {% from 'submission/_macros.html.twig' import submission %}
+
+  <h1 class="page-heading">{{ block('title') }}</h1>
+
+  {{ submission(submission) }}
+
+  {{ form_start(form) }}
+    {{ form_row(form.reason) }}
+
+    <div class="form__button-row">
+      <button class="button">{{ 'action.delete'|trans }}</button>
+    </div>
+  {{ form_end(form) }}
+{% endblock %}
