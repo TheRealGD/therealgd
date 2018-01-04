@@ -153,13 +153,11 @@ class ThemeRevision {
      * @return string[]
      */
     public function getHierarchy(): array {
-        $hierarchy = [];
+        $hierarchy = [$this];
 
         while (($parent = ($parent ?? $this)->getParent())) {
             array_unshift($hierarchy, $parent);
         }
-
-        $hierarchy[] = $this;
 
         return $hierarchy;
     }
