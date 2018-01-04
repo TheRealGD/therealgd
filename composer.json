@@ -24,37 +24,37 @@
         "ext-apcu": "*",
         "ext-curl": "*",
         "ext-pdo_pgsql": "*",
+        "derrabus/composer-parameter-handler": "^2.1",
         "doctrine/doctrine-fixtures-bundle": "^2.3",
         "doctrine/doctrine-migrations-bundle": "^1.2",
         "embed/embed": "^3.0",
         "ezyang/htmlpurifier": "^4.8",
-        "friendsofsymfony/jsrouting-bundle": "^1.6",
-        "gregwar/captcha-bundle": "^2.0",
-        "incenteev/composer-parameter-handler": "^2.0",
+        "friendsofsymfony/jsrouting-bundle": "^2.1",
+        "gregwar/captcha": "dev-master#1d06ac8e12d2b3e0df39586d78b9f50e086a0bea as 1.1",
+        "gregwar/captcha-bundle": "dev-master#639430383fd6aaedd421e39404445cd65d377f10 as 2.0",
         "league/commonmark": "^0.15.2",
-        "liip/imagine-bundle": "^1.7",
-        "oneup/flysystem-bundle": "^2.0",
+        "liip/imagine-bundle": "^2.0-dev",
+        "oneup/flysystem-bundle": "^3.0",
         "ramsey/uuid": "^3.7",
         "ramsey/uuid-doctrine": "^1.4",
         "sabberworm/php-css-parser": "^8.1",
-        "sensio/distribution-bundle": "^5.0.19",
         "sensio/framework-extra-bundle": "^5.0.1",
         "symfony/monolog-bundle": "^3.0",
         "symfony/orm-pack": "^1.0",
         "symfony/polyfill-intl-grapheme": "^1.4",
         "symfony/polyfill-php71": "^1.3",
+        "symfony/requirements-checker": "^1.0",
         "symfony/swiftmailer-bundle": "^3.0",
-        "symfony/symfony": "3.4.*",
+        "symfony/symfony": "4.0.*",
         "twig/extensions": "^1.4",
         "twig/twig": "^2.0",
         "webuni/commonmark-table-extension": "^0.6.1",
         "white-october/pagerfanta-bundle": "^1.0",
-        "willdurand/js-translation-bundle": "^2.6"
+        "willdurand/js-translation-bundle": "^2.7-dev"
     },
     "require-dev": {
         "dama/doctrine-test-bundle": "^4.0",
         "friendsofphp/php-cs-fixer": "^2.3",
-        "sensio/generator-bundle": "^3.0",
         "symfony/phpunit-bridge": "^3.0"
     },
     "suggest": {
@@ -63,10 +63,11 @@
     "scripts": {
         "symfony-scripts": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
+            "bin/console cache:clear",
+            "bin/console assets:install --symlink --relative web",
+            "cp vendor/symfony/requirements-checker/src/SymfonyRequirements.php var/",
+            "cp vendor/symfony/requirements-checker/public/check.php web/check.php",
+            "cp vendor/symfony/requirements-checker/bin/requirements-checker.php bin/symfony_requirements"
         ],
         "post-install-cmd": [
             "@symfony-scripts"
