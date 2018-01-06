@@ -1,6 +1,6 @@
 {##
  # - submitter (bool): If comment author is the submission author
- # - flag (int|string): one of AppBundle\Entity\UserFlags constants, or 'admin'/'moderator'
+ # - flag (int|string): one of App\Entity\UserFlags constants, or 'admin'/'moderator'
  # - class (string): Additional classes
  #}
 {%- macro user_link(user, options) -%}
@@ -11,9 +11,9 @@
     {{- user.username -}}
   </a>
   {%- if options.flag ?? 0 is same as(0) -%}
-  {% elseif options.flag == constant('AppBundle\\Entity\\UserFlags::FLAG_ADMIN') or options.flag == 'admin' %}
+  {% elseif options.flag == constant('App\\Entity\\UserFlags::FLAG_ADMIN') or options.flag == 'admin' %}
     <small class="user-flag user-flag-admin">{{ 'user_flag.admin'|trans }}</small>
-  {% elseif options.flag == constant('AppBundle\\Entity\\UserFlags::FLAG_MODERATOR') or options.flag == 'moderator' %}
+  {% elseif options.flag == constant('App\\Entity\\UserFlags::FLAG_MODERATOR') or options.flag == 'moderator' %}
     <small class="user-flag user-flag-moderator">{{ 'user_flag.moderator'|trans }}</small>
   {%- endif -%}
 {%- endmacro -%}
@@ -21,9 +21,9 @@
 {%- macro _class_by_flag(flag) -%}
   {%- if flag is same as(0) -%}
     {#- early exit -#}
-  {%- elseif flag == constant('AppBundle\\Entity\\UserFlags::FLAG_ADMIN') or flag == 'admin' -%}
+  {%- elseif flag == constant('App\\Entity\\UserFlags::FLAG_ADMIN') or flag == 'admin' -%}
     flag-admin
-  {%- elseif flag == constant('AppBundle\\Entity\\UserFlags::FLAG_MODERATOR') or flag == 'moderator' -%}
+  {%- elseif flag == constant('App\\Entity\\UserFlags::FLAG_MODERATOR') or flag == 'moderator' -%}
     flag-moderator
   {%- endif -%}
 {%- endmacro -%}

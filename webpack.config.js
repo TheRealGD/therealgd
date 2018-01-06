@@ -4,7 +4,7 @@ const Encore = require('@symfony/webpack-encore');
 const merge = require('webpack-merge');
 
 Encore
-    .setOutputPath('web/build/')
+    .setOutputPath('public/build/')
     .setPublicPath('/build')
     .cleanupOutputBeforeBuild()
     .enableLessLoader()

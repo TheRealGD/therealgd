@@ -1,0 +1,64 @@
+wiki:
+    controller: App\Controller\WikiController::wiki
+    defaults: { path: index }
+    path: /wiki/{path}
+    methods: [GET]
+    requirements: { path: "%wiki_page_regex%" }
+
+wiki_shortcut:
+    controller: FrameworkBundle:Redirect:redirect
+    defaults: { route: wiki }
+    path: /w/{path}
+    requirements: { path: "%wiki_page_regex%" }
+
+wiki_create:
+    controller: App\Controller\WikiController::create
+    path: /wiki/_create/{path}
+    methods: [GET, POST]
+    requirements: { path: "%wiki_page_regex%" }
+
+wiki_edit:
+    controller: App\Controller\WikiController::edit
+    path: /wiki/_edit/{path}
+    methods: [GET, POST]
+    requirements: { path: "%wiki_page_regex%" }
+
+wiki_lock:
+    controller: App\Controller\WikiController::lock
+    defaults: { lock: true }
+    methods: [POST]
+    path: /wiki/_lock/{path}
+    requirements: { path: "%wiki_page_regex%" }
+
+wiki_unlock:
+    controller: App\Controller\WikiController::lock
+    defaults: { lock: false }
+    methods: [POST]
+    path: /wiki/_unlock/{path}
+    requirements: { path: "%wiki_page_regex%" }
+
+wiki_history:
+    controller: App\Controller\WikiController::history
+    defaults: { page: 1 }
+    path: /wiki/_history/{path}/{page}
+    methods: [GET]
+    requirements: { path: "%wiki_page_regex%" }
+
+wiki_all:
+    controller: App\Controller\WikiController::all
+    defaults: { page: 1 }
+    path: /wiki/_all/{page}
+    methods: [GET]
+
+wiki_revision:
+    controller: App\Controller\WikiController::revision
+    path: /wiki/_revision/{id}
+    methods: [GET]
+    requirements: { id: "%uuid_regex%" }
+
+wiki_recent_changes:
+    controller: App\Controller\WikiController::recentChanges
+    defaults: { page: 1 }
+    path: /wiki/_recent/{page}
+    methods: [GET]
+    requirements: { page: \d+ }

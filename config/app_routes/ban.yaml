@@ -1,0 +1,45 @@
+user_bans:
+    controller: App\Controller\BanController::userBans
+    defaults: { page: 1 }
+    path: /bans/{page}
+    methods: [GET]
+    requirements: { page: \d+ }
+
+ban_user:
+    controller: App\Controller\BanController::banUser
+    methods: [GET, POST]
+    path: /bans/ban_user/{username}
+
+unban_user:
+    controller: App\Controller\BanController::unbanUser
+    methods: [GET, POST]
+    path: /bans/unban_user/{username}
+
+ip_bans:
+    controller: App\Controller\BanController::ipBans
+    defaults: { page: 1 }
+    path: /bans/by_ip/{page}
+    methods: [GET]
+    requirements: { page: \d+ }
+
+ban_ip:
+    controller: App\Controller\BanController::banIp
+    path: /bans/ban_ip
+    methods: [GET, POST]
+
+unban_ips:
+    controller: App\Controller\BanController::unbanIps
+    path: /bans/unban_ips
+    methods: [POST]
+
+ban_by_submission:
+    controller: App\Controller\BanController::redirectToBanForm
+    defaults: { entityClass: App\Entity\Submission }
+    methods: [GET]
+    path: /bans/ban_by_submission/{id}
+
+ban_by_comment:
+    controller: App\Controller\BanController::redirectToBanForm
+    defaults: { entityClass: App\Entity\Comment }
+    path: /bans/ban_by_comment/{id}
+    methods: [GET]

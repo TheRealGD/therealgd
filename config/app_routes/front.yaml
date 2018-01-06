@@ -1,0 +1,41 @@
+front:
+    controller: App\Controller\FrontController::front
+    defaults: { sortBy: hot, page: 1 }
+    path: /{sortBy}/{page}
+    methods: [GET]
+    requirements: { sortBy: hot|new|top|controversial, page: \d+ }
+
+featured:
+    controller: App\Controller\FrontController::featured
+    defaults: { sortBy: hot, page: 1}
+    path: /featured/{sortBy}/{page}
+    methods: [GET]
+    requirements: { sortBy: hot|new|top|controversial, page: \d+ }
+
+subscribed:
+    controller: App\Controller\FrontController::subscribed
+    defaults: { sortBy: hot, page: 1 }
+    path: /subscribed/{sortBy}/{page}
+    methods: [GET]
+    requirements: { sortBy: hot|new|top|controversial, page: \d+ }
+
+all:
+    controller: App\Controller\FrontController::all
+    defaults: { sortBy: hot, page: 1 }
+    path: /all/{sortBy}/{page}
+    methods: [GET]
+    requirements: { sortBy: hot|new|top|controversial, page: \d+ }
+
+moderated:
+    controller: App\Controller\FrontController::moderated
+    defaults: { sortBy: hot, page: 1 }
+    path: /moderated/{sortBy}/{page}
+    methods: [GET]
+    requirements: { sortBy: hot|new|top|controversial, page: \d+ }
+
+featured_feed:
+    controller: App\Controller\FrontController::featuredFeed
+    defaults: { sortBy: hot, page: 1, _format: xml }
+    path: /featured/{sortBy}/{page}.atom
+    methods: [GET]
+    requirements: { sortBy: hot|new|top|controversial, page: \d+ }

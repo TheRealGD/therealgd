@@ -1,0 +1,11 @@
+login:
+    controller: App\Controller\SecurityController::login
+    path: /login
+    methods: [GET]
+
+login_check:
+    path: /login_check
+    methods: [POST]
+
+log_out:
+    path: /log_out

@@ -24,32 +24,30 @@ Clone the repository somewhere and navigate there with the command line.
 
 1. Run `npm install`.
 
-2. Run `npm run build-dev`. The `web/build/` directory should now contain some
-   files.
+2. Run `npm run build-dev`. The `public/build/` directory should now contain
+   some files.
 
 ### Setting up the backend
 
-1.  Run `composer install`. You should be prompted for database credentials,
-    mail sending stuff, and a secret token. You can leave the default values for
-    the mail stuff, but you must supply valid database credentials.
+1.  Run `composer install`.
+
+2.  You should now have a `.env` file in the project root. Edit this to your
+    liking or leave the defaults alone, but you *must* change `DATABASE_URL`.
 
     Instructions for setting up a database can be found at
     [docs/database-setup.md](docs/database-setup.md).
 
-    If this step fails, you can remove or edit `app/config/parameters.yml` and
-    run `composer install` to try again.
+3.  Run `vendor/bin/requirements-checker` to ensure your environment meets
+    necessary requirements needed to run Postmill. Fix any errors that arise.
 
-2.  Run `bin/symfony_requirements` to check that your environment meets the
-    requirements needed to run the software. Fix any errors that arise.
+4.  Run `bin/console doctrine:migrations:migrate` to load the database schema.
 
-3.  Run `bin/console doctrine:migrations:migrate` to load the database schema.
+5.  Run `bin/console app:user:add <username> --admin` to create a user account.
 
-4.  Run `bin/console app:user:add <username> --admin` to create a user account.
+6.  Run `bin/console server:run` to start the application.
 
-5.  Run `bin/console server:run` to start the application.
-
-6.  Navigate to <http://localhost:8000/>. Log in with the credentials you chose
-    in step 4.
+7.  Navigate to <http://localhost:8000/>. Log in with the credentials you chose
+    in step 2.
 
 ## Reporting issues
 

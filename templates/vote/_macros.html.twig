@@ -1,10 +1,10 @@
 {%- macro vote(entity, route) -%}
   {% with {
-    upvote: constant('AppBundle\\Entity\\Votable::VOTE_UP'),
-    downvote: constant('AppBundle\\Entity\\Votable::VOTE_DOWN'),
-    retract: constant('AppBundle\\Entity\\Votable::VOTE_RETRACT'),
-    upvoted: constant('AppBundle\\Entity\\Votable::USER_UPVOTED'),
-    downvoted: constant('AppBundle\\Entity\\Votable::USER_DOWNVOTED'),
+    upvote: constant('App\\Entity\\Votable::VOTE_UP'),
+    downvote: constant('App\\Entity\\Votable::VOTE_DOWN'),
+    retract: constant('App\\Entity\\Votable::VOTE_RETRACT'),
+    upvoted: constant('App\\Entity\\Votable::USER_UPVOTED'),
+    downvoted: constant('App\\Entity\\Votable::USER_DOWNVOTED'),
   } %}
     {{- block('vote') -}}
   {% endwith %}

@@ -1,0 +1,19 @@
+framework:
+    secret: '%env(APP_SECRET)%'
+    default_locale: '%locale%'
+    csrf_protection: ~
+    http_method_override: false
+    session:
+        # With this config, PHP's native session handling is used
+        handler_id: ~
+        save_path: "%kernel.project_dir%/var/sessions"
+    fragments: ~
+    php_errors:
+        log: true
+    assets:
+        json_manifest_path: "%kernel.project_dir%/public/build/manifest.json"
+    # we need to enable the templating component in order for
+    # liip/imagine-bundle to work, and for gregwar/captcha-bundle not to break
+    # when trying to load its form resources
+    templating:
+        engines: [twig]

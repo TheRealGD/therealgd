@@ -25,4 +25,4 @@ variables:
 
 test:
     script:
-        - vendor/bin/simple-phpunit --coverage-text --colors=never
+        - bin/phpunit --coverage-text --colors=never

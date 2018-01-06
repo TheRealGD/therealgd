@@ -1,0 +1,43 @@
+theme_history:
+    controller: App\Controller\ThemeController::history
+    defaults: { page: 1}
+    path: /theme_history/{id}/{page}
+    methods: [GET]
+    requirements: { id: "%uuid_regex%", page: \d+ }
+
+create_theme:
+    controller: App\Controller\ThemeController::create
+    path: /create_theme
+    methods: [GET, POST]
+
+edit_theme_css:
+    controller: App\Controller\ThemeController::editCss
+    path: /edit_theme/{username}/{name}
+    methods: [GET, POST]
+    requirements: { name: .+ }
+
+edit_theme_settings:
+    controller: App\Controller\ThemeController::editSettings
+    path: /edit_theme_settings/{username}/{name}
+    methods: [GET, POST]
+    requirements: { name: .+ }
+
+theme_revision_source:
+    controller: App\Controller\ThemeController::source
+    path: /theme_source/{id}
+    methods: [GET]
+    requirements: { id: "%uuid_regex%" }
+
+stylesheet:
+    controller: App\Controller\ThemeController::stylesheet
+    defaults: { _format: css }
+    path: /user_style/{field}/{themeId}.css
+    methods: [GET]
+    requirements: { field: common|day|night, themeId: "%uuid_regex%" }
+
+themes:
+    controller: App\Controller\ThemeController::list
+    defaults: { page: 1 }
+    path: /themes/{page}
+    methods: [GET]
+    requirements: { page: \d+ }

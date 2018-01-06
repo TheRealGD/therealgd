@@ -1,0 +1,7 @@
+oneup_flysystem:
+    adapters:
+        submission_images:
+            local:
+                directory: "%kernel.project_dir%/public/submission_images"
+    filesystems:
+        submission_images: { adapter: submission_images }

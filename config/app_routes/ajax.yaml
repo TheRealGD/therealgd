@@ -1,0 +1,12 @@
+fetch_title:
+    controller: App\Controller\AjaxController::fetchTitle
+    defaults: { _format: json }
+    path: /ft.json
+    methods: [POST]
+    options: { expose: true }
+
+markdown_preview:
+    controller: App\Controller\AjaxController::markdownPreview
+    path: /md
+    methods: [POST]
+    options: { expose: true }

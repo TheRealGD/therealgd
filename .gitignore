@@ -1,32 +1,37 @@
 .idea/
-*.phar
 *.iml
 .DS_Store
+*.phar
+*.sw[a-z]
+*~
 tags
-.web-server-pid
-/app/config/parameters.yml
-/build/
 /node_modules/
-/phpunit.xml
-/var/*
-!/var/cache
-/var/cache/*
-!var/cache/.gitkeep
-!/var/logs
-/var/logs/*
-!var/logs/.gitkeep
-!/var/sessions
-/var/sessions/*
-!var/sessions/.gitkeep
-!var/SymfonyRequirements.php
-/vendor/
-/web/build/
-/web/bundles/
-/web/media/
-/web/submission_images/
+/public/build/
+/public/media/
+/public/submission_images/
 
 ## legacy
 
-/web/css/
-/web/js/
-/web/fonts/
+/app/
+/web/
+
+###> symfony/framework-bundle ###
+.env
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
+
+###> friendsofphp/php-cs-fixer ###
+.php_cs
+.php_cs.cache
+###< friendsofphp/php-cs-fixer ###
+
+###> symfony/phpunit-bridge ###
+.phpunit
+/phpunit.xml
+###< symfony/phpunit-bridge ###
+
+###> symfony/web-server-bundle ###
+.web-server-pid
+###< symfony/web-server-bundle ###

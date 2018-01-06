@@ -1,0 +1,41 @@
+_ajax:
+    resource: app_routes/ajax.yaml
+
+_ban:
+    resource: app_routes/ban.yaml
+
+_comment:
+    resource: app_routes/comment.yaml
+
+_forum:
+    resource: app_routes/forum.yaml
+
+_front:
+    resource: app_routes/front.yaml
+
+_message:
+    resource: app_routes/message.yaml
+
+_reset_password:
+    resource: app_routes/reset_password.yaml
+
+_security:
+    resource: app_routes/security.yaml
+
+_submission:
+    resource: app_routes/submission.yaml
+
+_theme:
+    resource: app_routes/theme.yaml
+
+_user:
+    resource: app_routes/user.yaml
+
+_wiki:
+    resource: app_routes/wiki.yaml
+
+_trailing_slash_redirect:
+    controller: App\Controller\RedirectingController::removeTrailingSlash
+    methods: [GET]
+    path: /{url}
+    requirements: { url: '.*/$' }

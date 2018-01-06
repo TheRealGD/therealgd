@@ -1,0 +1,43 @@
+comment_post:
+    controller: App\Controller\CommentController::comment
+    defaults: { comment_id: ~ }
+    path: /f/{forum_name}/{submission_id}/comment_post/{comment_id}
+    methods: [POST]
+    requirements: { submission_id: \d+, comment_id: \d+ }
+
+edit_comment:
+    controller: App\Controller\CommentController::editComment
+    path: /f/{forum_name}/{submission_id}/edit_comment/{comment_id}
+    methods: [GET, POST]
+    requirements: { submission_id: \d+, comment_id: \d+ }
+
+comment_form:
+    controller: App\Controller\CommentController::commentForm
+    defaults: { comment_id: null }
+    methods: [GET]
+    path: /comment_form/{forumName}/{submissionId}/{commentId}
+    requirements: { submissionId: \d+, commentId: \d+ }
+
+delete_comment:
+    controller: App\Controller\CommentController::deleteComment
+    path: /f/{forum_name}/{submission_id}/delete_comment/{comment_id}
+    methods: [POST]
+
+softdelete_comment:
+    controller: App\Controller\CommentController::softDeleteComment
+    path: /f/{forum_name}/{submission_id}/soft_delete_comment/{comment_id}
+    methods: [POST]
+
+comment_list:
+    controller: App\Controller\CommentController::list
+    defaults: { page: 1 }
+    path: /comments/{page}
+    methods: [GET]
+    requirements: { page: \d+ }
+
+comment_vote:
+    controller: App\Controller\VoteController::vote
+    defaults: { _format: html, entityClass: App\Entity\Comment }
+    path: /cv/{id}.{_format}
+    methods: [POST]
+    requirements: { _format: html|json }

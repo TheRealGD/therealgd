@@ -1,0 +1,20 @@
+message_list:
+    controller: App\Controller\MessageController::list
+    defaults: { page: 1 }
+    path: /messages/{page}
+    methods: [GET]
+
+message:
+    controller: App\Controller\MessageController::message
+    path: /message/{id}
+    methods: [GET]
+
+compose_message:
+    controller: App\Controller\MessageController::compose
+    path: /compose_message/{username}
+    methods: [GET, POST]
+
+reply_to_message:
+    controller: App\Controller\MessageController::reply
+    path: /message_reply/{id}
+    methods: [POST]
