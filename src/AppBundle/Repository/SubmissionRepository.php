@@ -12,7 +12,7 @@ use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
 
 class SubmissionRepository extends ServiceEntityRepository {
-    const MAX_PER_PAGE = 20;
+    const MAX_PER_PAGE = 25;
 
     public function __construct(ManagerRegistry $registry) {
         parent::__construct($registry, Submission::class);
