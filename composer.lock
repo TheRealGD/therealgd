@@ -3325,16 +3325,16 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "v4.0.2",
+            "version": "v4.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "aca1ac2ac6d45c5e94be39a22c91948920226207"
+                "reference": "8cc66bf6746c278755609b7b158f8444d0633456"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/aca1ac2ac6d45c5e94be39a22c91948920226207",
-                "reference": "aca1ac2ac6d45c5e94be39a22c91948920226207",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/8cc66bf6746c278755609b7b158f8444d0633456",
+                "reference": "8cc66bf6746c278755609b7b158f8444d0633456",
                 "shasum": ""
             },
             "require": {
@@ -3472,7 +3472,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2017-12-15T03:06:38+00:00"
+            "time": "2018-01-05T08:55:01+00:00"
         },
         {
             "name": "twig/extensions",
@@ -4217,16 +4217,16 @@
         },
         {
             "name": "symfony/phpunit-bridge",
-            "version": "v3.4.2",
+            "version": "v3.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/phpunit-bridge.git",
-                "reference": "074c2e205c849a5fb37b1c24ade03cc975ac8079"
+                "reference": "24ffb71a115c25f5ee56cbfd38e56ed2cdbeb0a9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/074c2e205c849a5fb37b1c24ade03cc975ac8079",
-                "reference": "074c2e205c849a5fb37b1c24ade03cc975ac8079",
+                "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/24ffb71a115c25f5ee56cbfd38e56ed2cdbeb0a9",
+                "reference": "24ffb71a115c25f5ee56cbfd38e56ed2cdbeb0a9",
                 "shasum": ""
             },
             "require": {
@@ -4246,6 +4246,10 @@
             "extra": {
                 "branch-alias": {
                     "dev-master": "3.4-dev"
+                },
+                "thanks": {
+                    "name": "phpunit/phpunit",
+                    "url": "https://github.com/sebastianbergmann/phpunit"
                 }
             },
             "autoload": {
@@ -4275,7 +4279,7 @@
             ],
             "description": "Symfony PHPUnit Bridge",
             "homepage": "https://symfony.com",
-            "time": "2017-12-14T19:40:10+00:00"
+            "time": "2018-01-04T17:19:23+00:00"
         },
         {
             "name": "symfony/polyfill-php70",
