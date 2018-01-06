@@ -17,8 +17,7 @@ return PhpCsFixer\Config::create()
     ->setCacheFile(__DIR__.'/var/php_cs.cache')
     ->setFinder(
         PhpCsFixer\Finder::create()
-            ->in(__DIR__.'/app')
+            ->in(__DIR__.'/config')
             ->in(__DIR__.'/src')
             ->in(__DIR__.'/tests')
-            ->exclude('Resources')
     );

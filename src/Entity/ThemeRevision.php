@@ -133,7 +133,7 @@ class ThemeRevision {
         return $this->comment;
     }
 
-    public function getParent(): ?ThemeRevision {
+    public function getParent(): ?self {
         return $this->parent;
     }
 

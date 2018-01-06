@@ -13,7 +13,7 @@ final class SubmissionVoter extends Voter {
         'edit',
         'delete_with_reason',
         'delete_immediately',
-        'sticky'
+        'sticky',
     ];
 
     /**

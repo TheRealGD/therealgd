@@ -177,7 +177,7 @@ class Comment extends Votable {
         return $this->submission;
     }
 
-    public function getParent(): ?Comment {
+    public function getParent(): ?self {
         return $this->parent;
     }
 
