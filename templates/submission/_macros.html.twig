@@ -60,7 +60,7 @@
       {% if submission.image %}
         <div class="submission-image-container">
           <a href="{{ block('submission_url') }}" class="submission-image" {% if submission.url %}rel="nofollow noreferrer noopener" {% if open_external %}target="_blank"{% endif %}{% endif %}>
-            <img src="{{ submission.image|imagine_filter('submission_thumbnail') }}" class="submission-thumbnail" alt="">
+            <img src="{{ path('liip_imagine_filter', {'filter': 'submission_thumbnail', 'path': submission.image}) }}" class="submission-thumbnail" alt="">
           </a>
         </div>
       {% endif %}

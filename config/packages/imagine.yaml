@@ -4,6 +4,11 @@ liip_imagine:
         submission_images:
             flysystem:
                 filesystem_service: oneup_flysystem.submission_images_filesystem
+        # fixme: we change the root here because things break otherwise
+        # this loader is unused
+        default:
+            filesystem:
+                data_root: "%kernel.project_dir%/public"
     filter_sets:
         submission_thumbnail:
             data_loader: submission_images
@@ -12,6 +17,10 @@ liip_imagine:
                     size: [200, 200]
                     mode: outbound
             quality: 70
+    resolvers:
+        default:
+            web_path:
+                web_root: "%kernel.project_dir%/public"
 
 #liip_imagine:
 #    # valid drivers options include "gd" or "gmagick" or "imagick"
