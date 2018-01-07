@@ -7,8 +7,11 @@ use App\Entity\Submission;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query\ResultSetMapping;
+use Pagerfanta\Adapter\DoctrineSelectableAdapter;
+use Pagerfanta\Pagerfanta;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 
 /**
@@ -111,5 +114,19 @@ EOSQL;
         });
 
         return $combined;
+    }
+
+    /**
+     * @param int      $page
+     * @param Criteria $criteria
+     *
+     * @return User[]|Pagerfanta
+     */
+    public function findPaginated(int $page, Criteria $criteria) {
+        $pager = new Pagerfanta(new DoctrineSelectableAdapter($this, $criteria));
+        $pager->setMaxPerPage(25);
+        $pager->setCurrentPage($page);
+
+        return $pager;
     }
 }

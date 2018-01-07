@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Form\Model\UserFilterData;
+use App\Form\UserFilterType;
 use Doctrine\ORM\EntityManager;
 use App\Entity\User;
 use App\Entity\UserBlock;
@@ -60,6 +62,33 @@ final class UserController extends AbstractController {
         return $this->render('user/comments.html.twig', [
             'comments' => $user->getPaginatedComments($page),
             'user' => $user,
+        ]);
+    }
+
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     *
+     * @param UserRepository $users
+     * @param int            $page
+     * @param Request        $request
+     *
+     * @return Response
+     */
+    public function list(UserRepository $users, int $page, Request $request) {
+        $filter = new UserFilterData();
+        $criteria = $filter->buildCriteria();
+
+        $form = $this->createForm(UserFilterType::class, $filter);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $criteria = $filter->buildCriteria();
+        }
+
+        return $this->render('user/list.html.twig', [
+            'form' => $form->createView(),
+            'page' => $page,
+            'users' => $users->findPaginated($page, $criteria),
         ]);
     }
 

@@ -101,7 +101,7 @@ abstract class Vote {
             throw new \InvalidArgumentException('Bad IP address');
         }
 
-        $this->ip = $this->user->isTrusted() ? null : $ip;
+        $this->ip = $this->user->isTrustedOrAdmin() ? null : $ip;
     }
 
     /**

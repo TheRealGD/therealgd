@@ -22,6 +22,7 @@ action:
     delete: Delete
     remove: Remove
     global_ban: Global ban
+    filter: Filter
 
 add_moderator:
     title: Add moderator to %forum%
@@ -250,6 +251,22 @@ label:
     ban_ip_address: Ban IP address?
     ip_address: IP address
     forum: Forum
+    trusted: Trusted
+    submissions: Submissions
+    submissions_short: S
+    comments: Comments
+    comments_short: C
+    submission_votes: Submission votes
+    submission_votes_short: SV
+    comment_votes: Comment votes
+    comment_votes_short: CV
+    role: Role
+    moderates: Moderates
+    forums_count: '{0} No forums|{1} %count% forum|]1,Inf[ %count% forums'
+    any: Any
+    none: None
+    order_by: Order by
+    registration_date: Registration date
 
 log:
     comment_deletion: '%user% deleted comment by %author% in "%submission%"'
@@ -309,6 +326,8 @@ nav:
     add_ban: Add ban
     css: CSS
     theme_settings: Theme settings
+    filter_results: Filter results
+    users: Users
 
 placeholder:
     default: (default)
@@ -412,6 +431,7 @@ title:
     unban_user: Unbanning %user%
     global_moderation_log: Global moderation log
     delete_submission: Delete submission
+    list_of_users: 'List of users, page #%page%'
 
 user:
     submissions: Submissions

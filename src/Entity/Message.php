@@ -53,7 +53,7 @@ abstract class Message {
 
         $this->sender = $sender;
         $this->body = $body;
-        $this->ip = $sender->isTrusted() ? null : $ip;
+        $this->ip = $sender->isTrustedOrAdmin() ? null : $ip;
         $this->timestamp = new \DateTime('@'.time());
     }
 

@@ -23,6 +23,13 @@ user_comments:
     methods: [GET]
     requirements: { page: \d+ }
 
+users:
+    controller: App\Controller\UserController::list
+    defaults: { page: 1 }
+    path: /users/{page}
+    methods: [GET]
+    requirements: { page: \d+ }
+
 edit_user:
     controller: App\Controller\UserController::editUser
     path: /edit_user/{username}

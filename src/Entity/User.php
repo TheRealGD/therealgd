@@ -105,7 +105,7 @@ class User implements UserInterface, EquatableInterface {
     private $moderatorTokens;
 
     /**
-     * @ORM\OneToMany(targetEntity="Submission", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="Submission", mappedBy="user", fetch="EXTRA_LAZY")
      * @ORM\OrderBy({"id": "DESC"})
      *
      * @var Submission[]|Collection|Selectable
@@ -113,12 +113,26 @@ class User implements UserInterface, EquatableInterface {
     private $submissions;
 
     /**
-     * @ORM\OneToMany(targetEntity="Comment", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="SubmissionVote", mappedBy="user", fetch="EXTRA_LAZY")
+     *
+     * @var SubmissionVote[]|Collection
+     */
+    private $submissionVotes;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="user", fetch="EXTRA_LAZY")
      * @ORM\OrderBy({"id": "DESC"})
      *
      * @var Comment[]|Collection|Selectable
      */
     private $comments;
+
+    /**
+     * @ORM\OneToMany(targetEntity="CommentVote", mappedBy="user", fetch="EXTRA_LAZY")
+     *
+     * @var CommentVote[]|Collection
+     */
+    private $commentVotes;
 
     /**
      * @ORM\OneToMany(targetEntity="UserBan", mappedBy="user")
@@ -343,6 +357,10 @@ class User implements UserInterface, EquatableInterface {
         return $submissions;
     }
 
+    public function getSubmissionVotes(): Collection {
+        return $this->submissionVotes;
+    }
+
     /**
      * @return Collection|Selectable|Comment[]
      */
@@ -362,6 +380,10 @@ class User implements UserInterface, EquatableInterface {
         $comments->setCurrentPage($page);
 
         return $comments;
+    }
+
+    public function getCommentVotes(): Collection {
+        return $this->commentVotes;
     }
 
     /**
@@ -449,6 +471,10 @@ class User implements UserInterface, EquatableInterface {
     }
 
     public function isTrusted(): bool {
+        return $this->trusted;
+    }
+
+    public function isTrustedOrAdmin(): bool {
         return $this->admin || $this->trusted;
     }
 

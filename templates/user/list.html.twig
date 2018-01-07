@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block page_classes 'user-list-page' %}
+{% block title 'title.list_of_users'|trans({'%page%': page|localizednumber}) %}
+
+{% block head %}
+  {{ include('_includes/meta_pagination.html.twig', {pager: users}, with_context=false) }}
+{% endblock %}
+
+{% block body %}
+  <h1 class="page-heading">{{ block('title') }}</h1>
+
+  <details>
+    <summary>{{ 'nav.filter_results'|trans }}</summary>
+
+    {{ form_start(form) }}
+      {{ form_rest(form) }}
+
+      <div class="form__row">
+        <button class="button">{{ 'action.filter'|trans }}</button>
+      </div>
+    {{ form_end(form) }}
+  </details>
+
+  {% from 'user/_macros.html.twig' import user_link %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th>{{ 'label.id'|trans }}</th>
+        <th>{{ 'label.username'|trans }}</th>
+        <th>{{ 'label.registration_date'|trans }}</th>
+        <th>{{ 'label.role'|trans }}</th>
+        <th>{{ 'label.moderates'|trans }}</th>
+        <th><abbr title="{{ 'label.submissions'|trans }}">{{ 'label.submissions_short'|trans }}</abbr></th>
+        <th><abbr title="{{ 'label.comments'|trans }}">{{ 'label.comments_short'|trans }}</abbr></th>
+        <th><abbr title="{{ 'label.submission_votes'|trans }}">{{ 'label.submission_votes_short'|trans }}</abbr></th>
+        <th><abbr title="{{ 'label.comment_votes'|trans }}">{{ 'label.comment_votes_short'|trans }}</abbr></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for user in users %}
+        <tr>
+          <td>{{ user.id }}</td>
+          <td>{{ user_link(user) }}</td>
+          <td>
+            {% with { date: user.created|localizeddate('long', 'short')} %}
+              <time datetime="{{ user.created|date('c') }}" class="relative-time" title="{{ date }}">
+                {{- date -}}
+              </time>
+            {% endwith %}
+          </td>
+          <td>{{ user.admin ? ('label.admin'|trans) : user.trusted ? ('label.trusted'|trans) : '-' }}</td>
+          <td>
+            {% with { count: user.moderatorTokens|length } %}
+              {{ count > 0 ? 'label.forums_count'|transchoice(count) : '-' }}
+            {% endwith %}
+          </td>
+          <td>
+            {% with { count: user.submissions|length } %}
+              {{ count > 0 ? count|localizednumber : '-' }}
+            {% endwith %}
+          </td>
+          <td>
+            {% with { count: user.comments|length } %}
+              {{ count > 0 ? count|localizednumber : '-' }}
+            {% endwith %}
+          </td>
+          <td>
+            {% with { count: user.submissionVotes|length } %}
+              {{ count > 0 ? count|localizednumber : '-' }}
+            {% endwith %}
+          </td>
+          <td>
+            {% with { count: user.commentVotes|length } %}
+              {{ count > 0 ? count|localizednumber : '-' }}
+            {% endwith %}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {{ include('_includes/pagination.html.twig', {pager: users}, with_context=false) }}
+{% endblock %}
+

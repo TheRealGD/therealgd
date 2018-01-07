@@ -55,7 +55,7 @@ final class WikiVoter extends Voter {
         }
 
         // TODO: make this configurable
-        if (!$user->isTrusted() && $user->getCreated() > new \DateTime('@'.time().' -24 hours')) {
+        if (!$user->isTrustedOrAdmin() && $user->getCreated() > new \DateTime('@'.time().' -24 hours')) {
             return false;
         }
 

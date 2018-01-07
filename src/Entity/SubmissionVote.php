@@ -12,6 +12,9 @@ use Doctrine\ORM\Mapping as ORM;
  *         columns={"submission_id", "user_id"}
  *     )
  * })
+ * @ORM\AssociationOverrides({
+ *     @ORM\AssociationOverride(name="user", inversedBy="submissionVotes")
+ * })
  */
 class SubmissionVote extends Vote {
     /**
