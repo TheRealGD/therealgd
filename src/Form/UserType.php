@@ -81,9 +81,9 @@ final class UserType extends AbstractType {
 
     public function finishView(FormView $view, FormInterface $form, array $options) {
         if ($form->getData() && $form->getData()->getEntityId()) {
-            // don't autocomplete the password fields when editing the user
-            $view['password']['first']->vars['attr']['auto-complete'] = 'new-password';
-            $view['password']['second']->vars['attr']['auto-complete'] = 'new-password';
+            // don't auto-complete the password fields when editing the user
+            $view['password']['first']->vars['attr']['autocomplete'] = 'new-password';
+            $view['password']['second']->vars['attr']['autocomplete'] = 'new-password';
         }
     }
 
