@@ -1,9 +1,24 @@
 action:
+    mark_as_trusted: Σημειώστε το χρήστη ως αξιόπιστο
+    mark_as_untrusted: Mark user as untrusted
     upvote: Πανοψηφίσει
     downvote: Κατοψηφίσει
     retract_upvote: Ανακαλέστε ψήφο
     retract_downvote: Ανακαλέστε καταψήφο
     edit: Επεξεργασία
+    create_theme: Δημιουργία φύλλο στυλ
+    edit_theme: Επεξεργασία φύλλο στυλ
+    new_theme: Νέο φύλλο στυλ
+    go_to_home_page: Επιστροφή στην Αρχική σελίδα
+    ban: Απαγόρευση
+    unban: Αντιστρέψτε την απαγόρευση
+    block: Αποκλεισμός
+    unblock: Ξεμπλοκάρισμα
+    lock: Κλείδωμα
+    unlock: Ξεκλείδωμα
+    delete: Διέγραψε
+    remove: Αφαίρεσε
+    global_ban: Πλήρης απαγόρευση
 
 add_moderator:
     title: Προσθέστε τον συντονιστή στο %forum%
@@ -65,7 +80,6 @@ comment_form:
 compose_message:
     title: Γράφοντας μήνυμα στον/στη %username%
 
-
 create_forum:
     create_new_forum: Δημιουργία νέου φόρουμ
 
@@ -82,14 +96,32 @@ flash:
     forum_moderator_added: Ο χρήστης έχει γίνει συντονιστής.
     inbox_cleared: Το inbox εκκαθαρίστηκε.
     reset_password_email_sent: Ένα μήνυμα επαναφοράς στάλθηκε στη διεύθυνση που καθορίσατε.
-    stylesheet_created: Το φύλλο στυλ σας έχει δημιουργηθεί.
-    stylesheet_updated: Το φύλλο στυλ σας έχει ενημερωθεί.
+    theme_created: Το φύλλο στυλ σας έχει δημιουργηθεί.
+    theme_updated: Το φύλλο στυλ σας έχει αναβαθμιστεί.
     submission_edited: Έχετε κάνει τις αλλαγές
     submission_deleted: Η υποβολή διαγράφηκε.
     user_account_registered: Ο λογαριασμός σας έχει εγγραφεί.
     user_password_updated: Ο κωδικός πρόσβασής σας έχει ενημερωθεί.
     user_settings_updated: Οι προτιμήσεις χρήστη έχουν αλλάξει.
+    user_marked_trusted: Ο χρήστης επισημάνθηκε ως αξιόπιστος.
+    user_marked_untrusted: Ο χρήστης επισημάνθηκε ως μη αξιόπιστος.
+    user_was_banned: Ο χρήστης απαγορεύτηκε.
+    user_was_unbanned: Η απαγόρευση του χρήστη αντιστράφηκε.
+    user_blocked: Ο χρήστης αποκλείστηκε.
+    user_unblocked: Ο χρήστης ξεκλειδώθηκε.
     no_messages: Δεν υπάρχουν μηνύματα.
+    submission_locked: Η υποβολή έχει κλειδωθεί.
+    submission_unlocked: Η υποβολή έχει ξεκλειδωθεί.
+    submission_is_locked: Η υποβολή είναι κλειδωμένη. Δεν μπορείτε να δημοσιεύσετε νέα σχόλια.
+    no_moderated_forums: Δεν συντονίζετε κανένα φόρουμ.
+    you_cannot_create_forums_yet: Δεν μπορείτε να δημιουργήσετε ακόμη φόρουμ.
+    user_biography_updated: Η βιογραφία ενημερώθηκε.
+    user_unmodded: Ο χρήστης δεν είναι πλέον συντονιστής.
+    no_entries_to_display: Δεν υπάρχουν καταχωρήσεις για εμφάνιση.
+    page_locked: Η σελίδα έχει κλειδωθεί.
+    page_unlocked: Η σελίδα έχει ξεκλειδωθεί.
+    no_cookies_verification: Η εικόνα δεν φορτώνεται σωστά; Βεβαιωθείτε ότι δεν αποκλείετε τα cookies και προσπαθήστε ξανά.
+    no_password_resets: Η επαναφορά κωδικών πρόσβασης έχει απενεργοποιηθεί από το διαχειριστή.
 
 forum:
     moderators: Συντονιστές
@@ -138,9 +170,21 @@ front:
     all: Ολα
     featured: Προεπιλεγμένα
     subscribed: Συνδρομητής
+    
+heading:
+    user_roles: Ρόλοι χρηστών
+    forums_you_moderate: Φόρουμ στα οποία είστε συντονιστής
+    multi_forum_view: Εμφάνιση πολλαπλών φόρουμ
+    message_thread: "%sender% έγραψε στον %receiver% %timestamp%"
+    message_reply: "%sender% απάντησε στον %timestamp%"
 
 help:
     delete_forum_warning: Όλο το περιεχόμενο σε αυτό το φόρουμ θα διαγραφεί για πάντα!
+    forum_description: Σύντομη περιγραφή του φόρουμ. Οι μηχανές αναζήτησης θα παρουσιάσουν αυτήν την περιγραφή στα αποτελέσματά τους.
+    block_users: Ο αποκλεισμός χρηστών τους εμποδίζει να σας στέλνουν προσωπικά μηνύματα και δεν θα λαμβάνετε ειδοποιήσεις όταν σας απαντούν.
+    revision_summary: Εισαγάγετε μια σύνοψη των αλλαγών σας.
+    parent_theme_input: Καταχωρίστε το <όνομα χρήστη> / <φύλλο στυλ> του θέματος που θέλετε να επεκτείνετε. Εναλλακτικά, μπορείτε να εισαγάγετε ένα UUID για να επεκτείνετε μια συγκεκριμένη αναθεώρηση.
+    append_to_default_style_inheritance_warning: Η ρύθμιση αυτή δεν επηρεάζει την επέκταση ενός υπάρχοντος φύλλου στυλ.
     append_to_default_style: Αφήστε αυτό το στοιχείο εκτός εάν το CSS σας παρέχει ένα πλήρες φύλλο στυλ για ολόκληρη την ιστοσελίδα.
 
 inbox:
@@ -151,19 +195,69 @@ inbox:
 
 label:
     name: Ονομα
+    author: Author
     password: Κωδικός πρόσβασης
     confirm: Επιβεβαιώνω
     theme: Στυλ
-    night_theme: Στυλ νύχτας
+    common_css: Κοινός CSS
+    day_css: CSS ημέρας
+    night_css: CSS νύχτας
+    append_to_default_style: Προσάρτηση στο προεπιλεγμένο στυλ
     save_settings: Αποθήκευση ρυθμίσεων
     source_code: Κωδικός προγραμματισμού
-    append_to_default_style: Προσάρτηση στο προεπιλεγμένο στυλ
+    sidebar: Πλευρικός πίνακας
+    username: Όνομα χρήστη
+    banned: Αποκλεισμένος
+    reason: Λόγος
+    expires: Λήγει
+    never: Ποτέ
+    action: Δράση
+    ban: Απαγόρευση
+    unban: Αντιστρέψτε την απαγόρευση
+    general: Γενικός
+    appearance: Εμφάνιση
+    preferred_theme: Προτιμώμενο φύλλο στυλ
+    blocked: Αποκλεισμένος
+    comment: Σχόλιο
+    last_revised: Τελευταία αναθεώρηση
+    parent_theme: Γονικό φύλλο στυλ
+    history: Ιστορία
+    id: Ταυτότητα
+    date: Ημερομηνία
+    revision_id: Αναθεώρησης Ταυτότητα
+    hierarchy: Ιεραρχία
     title: Τίτλος
     replies: Απαντήσεις
     from: Από
     to: Προς
     sent: Στάλθηκε
+    front_page: Μπροστινή σελίδα
+    default: Προκαθορισμένο
+    subscribed: Συνδρομητής
+    featured: Προτεινόμενα
+    all: Ολα
+    moderated: Συντονιστείτε
+    recent_changes: Πρόσφατες αλλαγές
+    verification: Επαλήθευση
+    admin: Διαχειριστής
+    bans: Λίστα απαγορεύσεων
+    overview: Επισκόπηση
+    open_external_links_in_new_tab: Ανοίξτε εξωτερικούς συνδέσμους σε νέα καρτέλα
+    biography: Βιογραφία
     toolbox: Εργαλειοθήκη
+    banned_by: Απαγορεύτηκε από τον
+    unban_associated_ips: Αφαιρέστε τις σχετικές απαγορεύσεις IP
+    ban_ip_address: Απαγόρευση της διεύθυνσης IP;
+    ip_address: Διεύθυνσης IP
+    forum: Φόρουμ
+    
+log:
+    comment_deletion: '%user% διαγράψει σχόλιο που έκανε ο %author% στο "%submission%"'
+    submission_deletion: '%user% διέγραψε την υποβολή "%title%" του %author%'
+    submission_lock: '%user% έχει κλειδώσει την υποβολή "%title%" του %author%'
+    submission_unlock: '%user% έχει ξεκλειδώσει την υποβολή "%title%" του %author%'
+    ban: '%user% έχει απαγορεύσει %banned% (λήγει: %expires%). Λόγος: "%reason%"'
+    unban: '%user% Η απαγόρευσή αντιστράφηκε %banned%. Λόγος: "%reason%"'
 
 login_form:
     log_in: Σύνδεση
@@ -202,9 +296,26 @@ nav:
     wiki: Wiki
     next: Επόμενο
     previous: Προηγούμενο
+    moderated: Συντονιστείτε
+    bans: Απαγορεύσεων
+    ban_history: Ιστορία των απαγορεύσεων
+    block_user: Αποκλεισμός χρήστη
+    block_list: Λίστα των μπλοκαρισμένων
+    edit_biography: Επεξεργασία βιογραφίας
+    moderation_log: Δραστηριότητα του Συντονιστή
+    user_bans: Απαγορεύσεις χρηστών
+    ip_bans: Απαγορεύσεις IP
+    add_ban: Προσθέστε απαγόρευση
+    css: CSS
+    theme_settings: Ρυθμίσεις φύλλου στυλ
 
 placeholder:
     default: (Προκαθορισμένο)
+    choose_one: Διάλεξε ένα…
+
+prompt:
+    confirm_comment_delete: Είστε σίγουροι ότι θέλετε να διαγράψετε αυτό το σχόλιο;
+    confirm_submission_delete: Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτήν την υποβολή;
 
 request_password_reset:
     title: Ζητήστε να επαναφέρουμε τον κωδικό σας
@@ -234,8 +345,6 @@ reset_password:
 site_footer:
     version: Λειτουργώντας %app% %version% (%branch%). Φτιαγμένο με ☭.
 
-stylesheets:
-
 submission_form:
     title: Τίτλος
     url: URL
@@ -259,7 +368,6 @@ submissions:
     sort_by_controversial: Αμφιλεγόμενα
     total_votes: '{1} %count% βαθμος|[0,Inf[ %count% βαθμοί'
     vote_stats: (+%up%, −%down%)
-    ip_ban: Απαγόρευση IP
     edit_info: (Επεξεργασία %edited_at%)
     moderator_info: (Επεξεργασία από έναν συντονιστή %edited_at%)
 
@@ -272,7 +380,32 @@ title:
     delete_forum: Διαγραφή φόρουμ %forum%
     forum_appearance: Εμφάνιση για %forum%
     showing_revision: 'Εμφάνιση αλλαγής #%revision% της σελίδας %path%'
+    editing_forum: Επεξεργασία φόρουμ %forum%
+    create_submission: Δημιουργία υποβολής
+    editing_submission: Επεξεργασία υποβολής %title%
+    log_in: Σύνδεση
+    sign_up: Εγγραφείτε
+    submissions_in_featured_forums: Υποβολές σε επιλεγμένα φόρουμ
+    new_theme: Νέο φύλλο στυλ
+    editing_theme: Επεξεργασία φύλλο στυλ %name%
+    custom_themes: Προσαρμοσμένα φύλλα στυλ
+    bans_in_forum: Λίστα απαγορεύσεων στο %forum%
+    showing_ban_history_for_user_in_forum: Εμφάνιση του ιστορικού απαγόρευσης για %user% στο %forum%
+    banning_user_from_forum: Απαγόρευση %user% από %forum%
+    unbanning_user_from_forum: Αντιστροφή της απαγόρευσης του %user% από %forum%
+    block_list: Λίστα των μπλοκαρισμένων
+    blocking_user: Αποκλείοντας τον %user%
+    recent_comments: Πρόσφατα σχόλια
+    history_for_theme: Εμφάνιση ιστορικού για φύλλο στυλ %theme%
+    viewing_theme_source: Προβολή πηγής %theme%
     messages: Μηνύματα
+    editing_biography_for_user: Επεξεργασία βιογραφίας για τον %user%
+    showing_moderation_log_for_forum: Εμφανίζεται λίστα των ενεργειών του συντονιστή για τον %forum%
+    active_global_user_bans: Τρέχουσες, πλήρεις απαγορεύσεις χρηστών
+    ip_bans: Απαγορευμένες διευθύνσεις IP
+    ban_user: Απαγορεύοντας τον %user%
+    unban_user: Αντιστροφή της απαγόρευσης του %user%
+    global_moderation_log: Πλήρης λίστα των ενεργειών του συντονιστή
 
 user:
     submissions: Υποβολές
