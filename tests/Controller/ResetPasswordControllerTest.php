@@ -34,11 +34,13 @@ class ResetPasswordControllerTest extends WebTestCase {
 
         $this->assertEquals(1, $collector->getMessageCount());
 
-        /** @var \Swift_Message $message */
+        /* @var \Swift_Message $message */
         $message = $collector->getMessages()[0];
 
+        $mailer = $client->getContainer()->get(ResetPasswordMailer::class);
+
         $this->assertEquals(
-            sprintf('%s - Reset password for user emma', $client->getContainer()->getParameter('env(SITE_NAME)')),
+            sprintf('%s - Reset password for user emma', $mailer->getSiteName()),
             $message->getSubject()
         );
 
@@ -50,7 +52,7 @@ class ResetPasswordControllerTest extends WebTestCase {
             'expires' => $expires,
             'checksum' => hash_hmac(
                 'sha256', $user->getId().'~'.$user->getPassword().'~'.$expires,
-                $client->getContainer()->getParameter('env(APP_SECRET)')
+                $mailer->getSalt()
             ),
         ], UrlGeneratorInterface::ABSOLUTE_URL);
 

@@ -2,13 +2,30 @@
 
 namespace App\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class ActivateMaintenanceMode extends ContainerAwareCommand {
+class ActivateMaintenanceMode extends Command {
+    /**
+     * @var string
+     */
+    private $siteName;
+
+    /**
+     * @var string
+     */
+    private $includeFilePath;
+
+    public function __construct(string $siteName, string $includeFilePath) {
+        parent::__construct();
+
+        $this->siteName = $siteName;
+        $this->includeFilePath = $includeFilePath;
+    }
+
     public function configure() {
         $this
             ->setName('app:maintenance')
@@ -33,8 +50,8 @@ EOHELP
 
             $io->success('Maintenance mode has been activated.');
         } else {
-            if (!@unlink($this->getIncludeFilePath())) {
-                $io->error('Could not remove '.$this->getIncludeFilePath());
+            if (!@unlink($this->includeFilePath)) {
+                $io->error('Could not remove '.$this->includeFilePath);
 
                 return 1;
             }
@@ -43,12 +60,14 @@ EOHELP
         }
 
         if (function_exists('opcache_invalidate')) {
-            opcache_invalidate($this->getIncludeFilePath(), true);
+            opcache_invalidate($this->includeFilePath, true);
         }
+
+        return 0;
     }
 
     private function writeIncludeFile($message) {
-        $title = $this->getContainer()->getParameter('env(SITE_NAME)');
+        $title = $this->siteName;
         $img = base64_encode(file_get_contents(__DIR__.'/../../public/apple-touch-icon-precomposed.png'));
         $message = nl2br($message ?: 'The site will return shortly.');
 
@@ -80,12 +99,8 @@ EOPHP;
 
         @chmod($tempnam, 0666 & ~umask());
 
-        if (!@rename($tempnam, $this->getIncludeFilePath())) {
+        if (!@rename($tempnam, $this->includeFilePath)) {
             throw new \RuntimeException("Couldn't write to file");
         }
-    }
-
-    private function getIncludeFilePath(): string {
-        return __DIR__.'/../../var/maintenance.php';
     }
 }

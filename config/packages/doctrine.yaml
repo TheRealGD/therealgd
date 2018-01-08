@@ -9,6 +9,7 @@ doctrine:
     dbal:
         driver: pdo_pgsql
         charset: utf-8
+        server_version: 9.3
         url: '%env(resolve:DATABASE_URL)%'
         types:
             inet: App\DBAL\Type\InetType

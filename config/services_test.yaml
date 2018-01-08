@@ -1,14 +1,11 @@
-parameters:
-    # um...
-    env(SITE_NAME): "%env(resolve:SITE_NAME)%"
-    env(APP_SECRET): "%env(resolve:APP_SECRET)%"
-
 services:
     _defaults:
         public: true
+        autowire: true
+        autoconfigure: true
 
-    # If you need to access services in a test, create an alias
-    # and then fetch that alias from the container. As a convention,
-    # aliases are prefixed with test. For example:
-    #
-    # test.App\Service\MyService: '@App\Service\MyService'
+    App\Mailer\ResetPasswordMailer:
+        arguments:
+            $siteName: "%env(SITE_NAME)%"
+            $noReplyAddress: "%env(NO_REPLY_ADDRESS)%"
+            $salt: "%env(APP_SECRET)%"

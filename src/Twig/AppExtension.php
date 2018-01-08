@@ -36,14 +36,12 @@ final class AppExtension extends \Twig_Extension {
      */
     private $version;
 
-    /**
-     * @param MarkdownConverter       $markdownConverter
-     * @param CachedMarkdownConverter $cachedMarkdownConverter
-     */
     public function __construct(
+        string $siteName,
         MarkdownConverter $markdownConverter,
         CachedMarkdownConverter $cachedMarkdownConverter
     ) {
+        $this->siteName = $siteName;
         $this->markdownConverter = $markdownConverter;
         $this->cachedMarkdownConverter = $cachedMarkdownConverter;
     }
@@ -67,18 +65,8 @@ final class AppExtension extends \Twig_Extension {
         ];
     }
 
-    /**
-     * @return string
-     */
-    public function getSiteName() {
+    public function getSiteName(): string {
         return $this->siteName;
-    }
-
-    /**
-     * @param string $siteName
-     */
-    public function setSiteName($siteName) {
-        $this->siteName = $siteName;
     }
 
     /**

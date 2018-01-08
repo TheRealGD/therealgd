@@ -48,6 +48,11 @@ services:
         public: true
         tags: ['controller.service_arguments']
 
+    App\Command\ActivateMaintenanceMode:
+        arguments:
+            $siteName: "%env(SITE_NAME)%"
+            $includeFilePath: "%kernel.project_dir%/var/maintenance.php"
+
     App\EventListener\AjaxListener:
         arguments:
             $serializer: "@serializer"
@@ -82,8 +87,8 @@ services:
             $forumCreationInterval: "%user_forum_creation_interval%"
 
     App\Twig\AppExtension:
-        calls:
-            - [setSiteName, ["%env(SITE_NAME)%"]]
+        arguments:
+            $siteName: "%env(SITE_NAME)%"
 
     App\Utils\CachedMarkdownConverter:
         calls:

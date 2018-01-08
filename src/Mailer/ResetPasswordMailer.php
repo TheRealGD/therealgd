@@ -118,4 +118,16 @@ final class ResetPasswordMailer {
 
         return hash_hmac('sha256', $data, $this->salt);
     }
+
+    public function getNoReplyAddress(): ?string {
+        return $this->noReplyAddress;
+    }
+
+    public function getSalt(): string {
+        return $this->salt;
+    }
+
+    public function getSiteName(): string {
+        return $this->siteName;
+    }
 }
