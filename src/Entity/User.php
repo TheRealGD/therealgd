@@ -225,7 +225,9 @@ class User implements UserInterface, EquatableInterface {
         $this->created = $created ?: new \DateTime('@'.time());
         $this->notifications = new ArrayCollection();
         $this->submissions = new ArrayCollection();
+        $this->submissionVotes = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->commentVotes = new ArrayCollection();
         $this->bans = new ArrayCollection();
         $this->ipBans = new ArrayCollection();
         $this->blocks = new ArrayCollection();
