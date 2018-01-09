@@ -9,6 +9,8 @@ tags
 /public/build/
 /public/media/
 /public/submission_images/
+/templates/overrides
+!/templates/overrides/.gitignore
 
 ## legacy
 

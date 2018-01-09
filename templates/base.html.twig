@@ -20,32 +20,40 @@
   </head>
 
   <body class="{% block page_classes '' %} {{ app.user ? 'user-logged-in' : 'user-anonymous' }} {{ (app.user.nightMode ?? false) ? 'night-mode' }}">
-    {{ include('_includes/site_nav.html.twig', {forum: forum ?? null}, with_context=false) }}
+    {% block site_nav %}
+      {{ include('_includes/site_nav.html.twig', {forum: forum ?? null}, with_context=false) }}
+    {% endblock %}
 
-    <div class="site-alerts">
-      {%- for type, notices in app.flashes -%}
-        {%- for notice in notices -%}
-          <div class="alert alert--{{ type }} alert--animate alert--dismissable" role="alert">
-            <p>{{ notice|trans }}</p>
-          </div>
+    {% block site_alerts %}
+      <div class="site-alerts">
+        {%- for type, notices in app.flashes -%}
+          {%- for notice in notices -%}
+            <div class="alert alert--{{ type }} alert--animate alert--dismissable" role="alert">
+              <p>{{ notice|trans }}</p>
+            </div>
+          {%- endfor -%}
         {%- endfor -%}
-      {%- endfor -%}
-    </div>
+      </div>
+    {% endblock %}
 
-    <div class="content-wrapper">
-      <main class="body">{% block body %}{% endblock %}</main>
-      <aside class="sidebar">{% block sidebar %}{% endblock %}</aside>
-    </div>
+    {% block site_main %}
+      <div class="content-wrapper">
+        <main class="body">{% block body %}{% endblock %}</main>
+        <aside class="sidebar">{% block sidebar %}{% endblock %}</aside>
+      </div>
+    {% endblock %}
 
-    <footer class="site-footer">
-      <p class="site-footer-version">
-        {{ 'site_footer.version'|trans({
-          '%branch%': app_branch(),
-          '%version%': app_version(),
-          '%app%': '<a href="https://gitlab.com/edgyemma/Postmill">Postmill</a>',
-        })|raw }}
-      </p>
-    </footer>
+    {% block site_footer %}
+      <footer class="site-footer">
+        <p class="site-footer-version">
+          {{ 'site_footer.version'|trans({
+            '%branch%': app_branch(),
+            '%version%': app_version(),
+            '%app%': '<a href="https://gitlab.com/edgyemma/Postmill">Postmill</a>',
+          })|raw }}
+        </p>
+      </footer>
+    {% endblock %}
 
     {% block javascripts %}
       <script src="{{ preload(asset('bundles/fosjsrouting/js/router.js')) }}"></script>
