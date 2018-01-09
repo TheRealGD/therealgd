@@ -5,9 +5,9 @@ templates of your own. By creating new template files in `templates/overrides`,
 these templates will take precedence over Postmill's own templates. This allows
 you to add custom HTML or replace some of Postmill's HTML with your own.
 
-Templates are written in the [https://twig.symfony.com/doc/2.x/](Twig templating
-language. You should familiarise yourself with some basic Twig concepts before
-writing your own templates.
+Templates are written in the [Twig templating language][twig]. You should
+familiarise yourself with some basic Twig concepts before writing your own
+templates.
 
 ## Example: replacing the site's footer
 
@@ -39,3 +39,6 @@ Template overriding is a very new addition. As such, there are a lot of things
 that seem like they should be overridable, but aren't, as the templates weren't
 created with third-party overriding in mind. If you run into an issue trying to
 accomplish something with overrides, please file a report on our issue tracker.
+
+
+[twig]: https://twig.symfony.com/doc/2.x/
