@@ -5,6 +5,11 @@ submission:
     methods: [GET]
     requirements: { submission_id: \d+ }
 
+submission_shortcut:
+    controller: App\Controller\SubmissionController::shortcut
+    path: /{id}
+    requirements: { id: \d+ }
+
 comment:
     controller: App\Controller\SubmissionController::commentPermalink
     path: /f/{forum_name}/{submission_id}/comment/{comment_id}

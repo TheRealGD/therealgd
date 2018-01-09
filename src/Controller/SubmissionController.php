@@ -61,6 +61,21 @@ final class SubmissionController extends AbstractController {
     }
 
     /**
+     * @Entity("submission", expr="repository.find(id)")
+     *
+     * @param Submission $submission
+     *
+     * @return Response
+     */
+    public function shortcut(Submission $submission) {
+        return $this->redirectToRoute('submission', [
+            'forum_name' => $submission->getForum()->getName(),
+            'submission_id' => $submission->getId(),
+            'slug' => Slugger::slugify($submission->getTitle()),
+        ]);
+    }
+
+    /**
      * Create a new submission.
      *
      * @IsGranted("ROLE_USER")
