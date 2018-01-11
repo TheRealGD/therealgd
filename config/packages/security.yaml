@@ -34,7 +34,7 @@ security:
                 path: log_out
 
             remember_me:
-                secret: "%secret"
+                secret: "%env(APP_SECRET)%"
                 always_remember_me: true
 
             user_checker: App\Security\UserChecker
