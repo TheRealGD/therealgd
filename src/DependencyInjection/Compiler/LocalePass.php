@@ -26,7 +26,9 @@ class LocalePass implements CompilerPassInterface {
 
         $filenames = Finder::create()
             ->in(__DIR__.'/../../../translations')
-            ->name('/^\w+\.\w+\.yml$/')
+            ->in(__DIR__.'/../../../translations/overrides')
+            ->depth(0)
+            ->name('/^\w+\.\w+\.\w+$/')
             ->sortByName()
             ->files();
 
@@ -35,7 +37,7 @@ class LocalePass implements CompilerPassInterface {
 
         /** @var \SplFileInfo $file */
         foreach ($filenames as $file) {
-            $locale = preg_replace('/^\w+\.(\w+)\.yml$/', '$1', $file->getFilename());
+            $locale = preg_replace('/^\w+\.(\w+)\.\w+$/', '$1', $file->getFilename());
             $name = $localeBundle->getLocaleName($locale, $locale);
 
             if ($name !== null) {
@@ -44,13 +46,22 @@ class LocalePass implements CompilerPassInterface {
         }
 
         // sort by language name
-        if (function_exists('iconv')) {
+        if (function_exists('transliterator_transliterate')) {
             uksort($localeChoices, function ($a, $b) {
-                $a = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $a);
-                $b = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $b);
+                $a = transliterator_transliterate(
+                    'NFKD; Latin; Latin/US-ASCII; [:Nonspacing Mark:] Remove; Lower',
+                    $a
+                );
+
+                $b = transliterator_transliterate(
+                    'NFKD; Latin; Latin/US-ASCII; [:Nonspacing Mark:] Remove; Lower',
+                    $b
+                );
 
                 return strnatcasecmp($a, $b);
             });
+        } else {
+            ksort($localeChoices);
         }
 
         $container->getDefinition(UserSettingsType::class)->addMethodCall(

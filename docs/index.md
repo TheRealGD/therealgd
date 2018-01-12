@@ -6,7 +6,7 @@
 
     * [Database setup](database-setup.md)
     * [Pruning IP addresses automatically](pruning-ips.md)
-    * [Overriding a template](template-overrides.md)
+    * [Overriding templates & translations](overrides.md)
     * [Deployment][deploy] (external link)
     * [Configuring a web server][web server] (external link)
 
