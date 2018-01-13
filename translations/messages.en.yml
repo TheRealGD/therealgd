@@ -194,6 +194,9 @@ inbox:
     empty: The inbox is empty.
     message_reply_head: 'Re: %title%'
 
+item:
+    short_url: 'Short URL: %url%'
+
 label:
     name: Name
     author: Author
