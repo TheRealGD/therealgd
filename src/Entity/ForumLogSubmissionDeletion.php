@@ -40,7 +40,7 @@ class ForumLogSubmissionDeletion extends ForumLogEntry {
         $this->reason = $reason;
 
         $forum = $submission->getForum();
-        $wasAdmin = $forum->userIsModerator($user);
+        $wasAdmin = !$forum->userIsModerator($user);
 
         parent::__construct($forum, $user, $wasAdmin, $timestamp);
     }
