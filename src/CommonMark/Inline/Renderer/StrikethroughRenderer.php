@@ -7,6 +7,7 @@ use League\CommonMark\HtmlElement;
 use League\CommonMark\Inline\Element\AbstractInline;
 use League\CommonMark\Inline\Renderer\InlineRendererInterface;
 use App\CommonMark\Inline\Element\Strikethrough;
+use League\CommonMark\Util\Xml;
 
 /**
  * Seized from <https://github.com/uafrica/commonmark-ext> and modified to
@@ -29,9 +30,9 @@ class StrikethroughRenderer implements InlineRendererInterface {
 
         $attrs = [];
         foreach ($inline->getData('attributes', []) as $key => $value) {
-            $attrs[$key] = $htmlRenderer->escape($value, true);
+            $attrs[$key] = Xml::escape($value, true);
         }
 
-        return new HtmlElement('del', $attrs, $htmlRenderer->escape($inline->getContent()));
+        return new HtmlElement('del', $attrs, Xml::escape($inline->getContent()));
     }
 }
