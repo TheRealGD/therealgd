@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "02052c58af033f1e77e173240a3c4910",
+    "content-hash": "c4d896c7df38301bba37c5db7cda4290",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -767,20 +767,20 @@
         },
         {
             "name": "doctrine/inflector",
-            "version": "v1.2.0",
+            "version": "v1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/inflector.git",
-                "reference": "e11d84c6e018beedd929cff5220969a3c6d1d462"
+                "reference": "5527a48b7313d15261292c149e55e26eae771b0a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/inflector/zipball/e11d84c6e018beedd929cff5220969a3c6d1d462",
-                "reference": "e11d84c6e018beedd929cff5220969a3c6d1d462",
+                "url": "https://api.github.com/repos/doctrine/inflector/zipball/5527a48b7313d15261292c149e55e26eae771b0a",
+                "reference": "5527a48b7313d15261292c149e55e26eae771b0a",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.0"
+                "php": "^7.1"
             },
             "require-dev": {
                 "phpunit/phpunit": "^6.2"
@@ -788,7 +788,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.2.x-dev"
+                    "dev-master": "1.3.x-dev"
                 }
             },
             "autoload": {
@@ -830,7 +830,7 @@
                 "singularize",
                 "string"
             ],
-            "time": "2017-07-22T12:18:28+00:00"
+            "time": "2018-01-09T20:05:19+00:00"
         },
         {
             "name": "doctrine/instantiator",
@@ -1153,16 +1153,16 @@
         },
         {
             "name": "embed/embed",
-            "version": "v3.2.2",
+            "version": "v3.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/oscarotero/Embed.git",
-                "reference": "f772982c26034d3d58cd82c4b18e1410dd74625e"
+                "reference": "c71e62f3c15d8693e045eccad987038eba8a22ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/oscarotero/Embed/zipball/f772982c26034d3d58cd82c4b18e1410dd74625e",
-                "reference": "f772982c26034d3d58cd82c4b18e1410dd74625e",
+                "url": "https://api.github.com/repos/oscarotero/Embed/zipball/c71e62f3c15d8693e045eccad987038eba8a22ea",
+                "reference": "c71e62f3c15d8693e045eccad987038eba8a22ea",
                 "shasum": ""
             },
             "require": {
@@ -1202,7 +1202,7 @@
                 "opengraph",
                 "twitter cards"
             ],
-            "time": "2017-11-13T17:56:44+00:00"
+            "time": "2018-01-11T22:43:43+00:00"
         },
         {
             "name": "ezyang/htmlpurifier",
@@ -1366,7 +1366,7 @@
         },
         {
             "name": "gregwar/captcha",
-            "version": "dev-master",
+            "version": "v1.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gregwar/Captcha.git",
@@ -1580,34 +1580,34 @@
         },
         {
             "name": "league/commonmark",
-            "version": "0.15.7",
+            "version": "0.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/commonmark.git",
-                "reference": "36d82f166e441dfa28643f8d01dd8bdd3a579adf"
+                "reference": "3b4c2224524776a584de663c7a04bc8eb2e1544d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/36d82f166e441dfa28643f8d01dd8bdd3a579adf",
-                "reference": "36d82f166e441dfa28643f8d01dd8bdd3a579adf",
+                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/3b4c2224524776a584de663c7a04bc8eb2e1544d",
+                "reference": "3b4c2224524776a584de663c7a04bc8eb2e1544d",
                 "shasum": ""
             },
             "require": {
                 "ext-mbstring": "*",
-                "php": ">=5.4.8"
+                "php": ">=5.6.5"
             },
             "replace": {
                 "colinodell/commonmark-php": "*"
             },
             "require-dev": {
                 "cebe/markdown": "~1.0",
+                "commonmark/commonmark.js": "0.28",
                 "erusev/parsedown": "~1.0",
-                "jgm/commonmark": "0.28",
                 "michelf/php-markdown": "~1.4",
                 "mikehaertl/php-shellcommand": "~1.2.0",
-                "phpunit/phpunit": "~4.3|~5.0",
+                "phpunit/phpunit": "~5.7|~6.5",
                 "scrutinizer/ocular": "~1.1",
-                "symfony/finder": "~2.3|~3.0"
+                "symfony/finder": "~3.0|~4.0"
             },
             "suggest": {
                 "league/commonmark-extras": "Library of useful extensions including smart punctuation"
@@ -1618,7 +1618,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.16-dev"
+                    "dev-master": "0.18-dev"
                 }
             },
             "autoload": {
@@ -1645,7 +1645,7 @@
                 "markdown",
                 "parser"
             ],
-            "time": "2017-10-26T15:41:07+00:00"
+            "time": "2017-12-30T22:08:48+00:00"
         },
         {
             "name": "league/flysystem",
@@ -2028,16 +2028,16 @@
         },
         {
             "name": "oneup/flysystem-bundle",
-            "version": "3.0.0",
+            "version": "3.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/1up-lab/OneupFlysystemBundle.git",
-                "reference": "9b47dcb3ebb700b9f6550b22c71ab08383ce6f6b"
+                "reference": "e03a6aa8ebce2dca674d75aff42ecce46c1d64e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/1up-lab/OneupFlysystemBundle/zipball/9b47dcb3ebb700b9f6550b22c71ab08383ce6f6b",
-                "reference": "9b47dcb3ebb700b9f6550b22c71ab08383ce6f6b",
+                "url": "https://api.github.com/repos/1up-lab/OneupFlysystemBundle/zipball/e03a6aa8ebce2dca674d75aff42ecce46c1d64e0",
+                "reference": "e03a6aa8ebce2dca674d75aff42ecce46c1d64e0",
                 "shasum": ""
             },
             "require": {
@@ -2117,7 +2117,7 @@
                 "abstraction",
                 "filesystem"
             ],
-            "time": "2017-11-16T09:18:56+00:00"
+            "time": "2018-01-12T15:45:56+00:00"
         },
         {
             "name": "pagerfanta/pagerfanta",
@@ -2629,16 +2629,16 @@
         },
         {
             "name": "ramsey/uuid",
-            "version": "3.7.1",
+            "version": "3.7.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ramsey/uuid.git",
-                "reference": "45cffe822057a09e05f7bd09ec5fb88eeecd2334"
+                "reference": "bba83ad77bb9deb6d3c352a7361b818e415b221d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ramsey/uuid/zipball/45cffe822057a09e05f7bd09ec5fb88eeecd2334",
-                "reference": "45cffe822057a09e05f7bd09ec5fb88eeecd2334",
+                "url": "https://api.github.com/repos/ramsey/uuid/zipball/bba83ad77bb9deb6d3c352a7361b818e415b221d",
+                "reference": "bba83ad77bb9deb6d3c352a7361b818e415b221d",
                 "shasum": ""
             },
             "require": {
@@ -2650,7 +2650,7 @@
             },
             "require-dev": {
                 "apigen/apigen": "^4.1",
-                "codeception/aspect-mock": "^1.0 | ^2.0",
+                "codeception/aspect-mock": "^1.0 | ~2.0.0",
                 "doctrine/annotations": "~1.2.0",
                 "goaop/framework": "1.0.0-alpha.2 | ^1.0 | ^2.1",
                 "ircmaxell/random-lib": "^1.1",
@@ -2658,7 +2658,7 @@
                 "mockery/mockery": "^0.9.4",
                 "moontoast/math": "^1.1",
                 "php-mock/php-mock-phpunit": "^0.3|^1.1",
-                "phpunit/phpunit": "^4.7|>=5.0 <5.4",
+                "phpunit/phpunit": "^4.7|^5.0",
                 "satooshi/php-coveralls": "^0.6.1",
                 "squizlabs/php_codesniffer": "^2.3"
             },
@@ -2707,7 +2707,7 @@
                 "identifier",
                 "uuid"
             ],
-            "time": "2017-09-22T20:46:04+00:00"
+            "time": "2018-01-13T22:22:03+00:00"
         },
         {
             "name": "ramsey/uuid-doctrine",
@@ -2811,16 +2811,16 @@
         },
         {
             "name": "sensio/framework-extra-bundle",
-            "version": "v5.1.3",
+            "version": "v5.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioFrameworkExtraBundle.git",
-                "reference": "0696496cb3e2d23add645d424699e5c723238aad"
+                "reference": "072c00c52b947e88a1e619e9ff426cee6c8c482b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioFrameworkExtraBundle/zipball/0696496cb3e2d23add645d424699e5c723238aad",
-                "reference": "0696496cb3e2d23add645d424699e5c723238aad",
+                "url": "https://api.github.com/repos/sensiolabs/SensioFrameworkExtraBundle/zipball/072c00c52b947e88a1e619e9ff426cee6c8c482b",
+                "reference": "072c00c52b947e88a1e619e9ff426cee6c8c482b",
                 "shasum": ""
             },
             "require": {
@@ -2876,7 +2876,7 @@
                 "annotations",
                 "controllers"
             ],
-            "time": "2017-12-04T18:33:55+00:00"
+            "time": "2018-01-12T13:08:16+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -3605,16 +3605,16 @@
         },
         {
             "name": "symfony/flex",
-            "version": "v1.0.57",
+            "version": "v1.0.61",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/flex.git",
-                "reference": "73423de7560c492f159aeb3eb9687b470bc87aec"
+                "reference": "f872f8faccf5ff95678e1e428f460a333ba1e5d0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/flex/zipball/73423de7560c492f159aeb3eb9687b470bc87aec",
-                "reference": "73423de7560c492f159aeb3eb9687b470bc87aec",
+                "url": "https://api.github.com/repos/symfony/flex/zipball/f872f8faccf5ff95678e1e428f460a333ba1e5d0",
+                "reference": "f872f8faccf5ff95678e1e428f460a333ba1e5d0",
                 "shasum": ""
             },
             "require": {
@@ -3647,7 +3647,7 @@
                     "email": "fabien.potencier@gmail.com"
                 }
             ],
-            "time": "2018-01-03T11:28:30+00:00"
+            "time": "2018-01-12T13:09:44+00:00"
         },
         {
             "name": "symfony/form",
@@ -5821,27 +5821,26 @@
         },
         {
             "name": "webuni/commonmark-table-extension",
-            "version": "0.6.1",
+            "version": "0.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webuni/commonmark-table-extension.git",
-                "reference": "ebbd69b63436283ec726658835b213ec634485e8"
+                "reference": "6326245c1e198cc839ef4f6dc070cf99cffb1a84"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webuni/commonmark-table-extension/zipball/ebbd69b63436283ec726658835b213ec634485e8",
-                "reference": "ebbd69b63436283ec726658835b213ec634485e8",
+                "url": "https://api.github.com/repos/webuni/commonmark-table-extension/zipball/6326245c1e198cc839ef4f6dc070cf99cffb1a84",
+                "reference": "6326245c1e198cc839ef4f6dc070cf99cffb1a84",
                 "shasum": ""
             },
             "require": {
-                "league/commonmark": "^0.14|^0.15",
-                "php": "^5.5|^7.0"
+                "league/commonmark": "^0.16|^0.17",
+                "php": "^5.6|^7.0"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^1.9",
-                "phpunit/phpunit": "^4.3|^5.0",
-                "sllh/php-cs-fixer-styleci-bridge": "^2.0",
-                "symfony/var-dumper": "^2.7|^3.0"
+                "friendsofphp/php-cs-fixer": "^2.9",
+                "phpunit/phpunit": "^5.4|^6.0",
+                "symfony/var-dumper": "^3.0|^4.0"
             },
             "type": "library",
             "extra": {
@@ -5861,8 +5860,7 @@
             "authors": [
                 {
                     "name": "Martin Hasoň",
-                    "email": "martin.hason@gmail.com",
-                    "role": "Lead Developer"
+                    "email": "martin.hason@gmail.com"
                 },
                 {
                     "name": "Webuni s.r.o.",
@@ -5876,7 +5874,7 @@
                 "markdown",
                 "table"
             ],
-            "time": "2017-01-11T14:52:17+00:00"
+            "time": "2018-01-09T11:11:46+00:00"
         },
         {
             "name": "white-october/pagerfanta-bundle",
@@ -6205,16 +6203,16 @@
         },
         {
             "name": "dama/doctrine-test-bundle",
-            "version": "v4.0.1",
+            "version": "v4.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dmaicher/doctrine-test-bundle.git",
-                "reference": "8567a6ebfc73822f1d105ce852edec1b06748d8f"
+                "reference": "438346b3380cc7675e37fbcdca912fdc33471d32"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dmaicher/doctrine-test-bundle/zipball/8567a6ebfc73822f1d105ce852edec1b06748d8f",
-                "reference": "8567a6ebfc73822f1d105ce852edec1b06748d8f",
+                "url": "https://api.github.com/repos/dmaicher/doctrine-test-bundle/zipball/438346b3380cc7675e37fbcdca912fdc33471d32",
+                "reference": "438346b3380cc7675e37fbcdca912fdc33471d32",
                 "shasum": ""
             },
             "require": {
@@ -6258,20 +6256,20 @@
                 "symfony 2",
                 "tests"
             ],
-            "time": "2017-10-19T11:52:38+00:00"
+            "time": "2018-01-13T13:14:27+00:00"
         },
         {
             "name": "easycorp/easy-log-handler",
-            "version": "v1.0.3",
+            "version": "v1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EasyCorp/easy-log-handler.git",
-                "reference": "79104f113f562ab6c677d482457d4474204d34a5"
+                "reference": "1a617a37ab9389eac4e2e1d14cb70ee0087d724d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EasyCorp/easy-log-handler/zipball/79104f113f562ab6c677d482457d4474204d34a5",
-                "reference": "79104f113f562ab6c677d482457d4474204d34a5",
+                "url": "https://api.github.com/repos/EasyCorp/easy-log-handler/zipball/1a617a37ab9389eac4e2e1d14cb70ee0087d724d",
+                "reference": "1a617a37ab9389eac4e2e1d14cb70ee0087d724d",
                 "shasum": ""
             },
             "require": {
@@ -6308,20 +6306,20 @@
                 "monolog",
                 "productivity"
             ],
-            "time": "2017-10-20T08:47:57+00:00"
+            "time": "2018-01-10T08:34:20+00:00"
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v2.9.0",
+            "version": "v2.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/PHP-CS-Fixer.git",
-                "reference": "454ddbe65da6a9297446f442bad244e8a99a9a38"
+                "reference": "513a3765b56dd029175f9f32995566657ee89dda"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/454ddbe65da6a9297446f442bad244e8a99a9a38",
-                "reference": "454ddbe65da6a9297446f442bad244e8a99a9a38",
+                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/513a3765b56dd029175f9f32995566657ee89dda",
+                "reference": "513a3765b56dd029175f9f32995566657ee89dda",
                 "shasum": ""
             },
             "require": {
@@ -6348,10 +6346,12 @@
             "require-dev": {
                 "johnkary/phpunit-speedtrap": "^1.1 || ^2.0@dev",
                 "justinrainbow/json-schema": "^5.0",
+                "keradus/cli-executor": "^1.0",
                 "mikey179/vfsstream": "^1.6",
                 "php-coveralls/php-coveralls": "^2.0",
                 "php-cs-fixer/accessible-object": "^1.0",
                 "phpunit/phpunit": "^5.7.23 || ^6.4.3",
+                "phpunitgoodpractices/traits": "^1.0",
                 "symfony/phpunit-bridge": "^3.2.2 || ^4.0"
             },
             "suggest": {
@@ -6362,16 +6362,22 @@
                 "php-cs-fixer"
             ],
             "type": "application",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.10-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "PhpCsFixer\\": "src/"
                 },
                 "classmap": [
-                    "tests/Test/Assert/AssertTokensTrait.php",
                     "tests/Test/AbstractFixerTestCase.php",
                     "tests/Test/AbstractIntegrationTestCase.php",
+                    "tests/Test/Assert/AssertTokensTrait.php",
                     "tests/Test/IntegrationCase.php",
-                    "tests/Test/IntegrationCaseFactory.php"
+                    "tests/Test/IntegrationCaseFactory.php",
+                    "tests/TestCase.php"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -6389,7 +6395,7 @@
                 }
             ],
             "description": "A tool to automatically fix PHP code style",
-            "time": "2017-12-08T16:36:20+00:00"
+            "time": "2018-01-10T17:16:15+00:00"
         },
         {
             "name": "gecko-packages/gecko-php-unit",
@@ -7201,12 +7207,6 @@
     ],
     "aliases": [
         {
-            "alias": "1.1",
-            "alias_normalized": "1.1.0.0",
-            "version": "9999999-dev",
-            "package": "gregwar/captcha"
-        },
-        {
             "alias": "2.0",
             "alias_normalized": "2.0.0.0",
             "version": "9999999-dev",
@@ -7215,7 +7215,6 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
-        "gregwar/captcha": 20,
         "gregwar/captcha-bundle": 20,
         "liip/imagine-bundle": 20,
         "willdurand/js-translation-bundle": 20
