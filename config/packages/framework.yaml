@@ -1,3 +1,6 @@
+parameters:
+    markdown_cache_time: 86400
+
 framework:
     secret: '%env(APP_SECRET)%'
     default_locale: '%locale%'
@@ -17,3 +20,9 @@ framework:
     # when trying to load its form resources
     templating:
         engines: [twig]
+    cache:
+        pools:
+            cache.markdown:
+                adapter: cache.app
+                default_lifetime: "%markdown_cache_time%"
+                public: true

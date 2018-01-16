@@ -60,7 +60,7 @@
         </h1>
 
         <div class="comment-body">
-          {{ comment.body|cached_markdown|raw }}
+          {{ comment.body|cached_markdown(markdown_context())|raw }}
         </div>
 
         <nav class="comment-nav">

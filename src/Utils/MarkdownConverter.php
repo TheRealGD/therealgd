@@ -2,47 +2,79 @@
 
 namespace App\Utils;
 
+use App\CommonMark\AppExtension;
 use League\CommonMark\CommonMarkConverter;
+use League\CommonMark\Environment;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Webuni\CommonMark\TableExtension\TableExtension;
 
 /**
- * Utility class for formatting user-inputted Markdown.
+ * Service for formatting user-inputted Markdown.
  *
- * Unfortunately, the league/commonmark library is not safe for user input on
- * its own, even with the safety options. We could write custom parser and
- * renderer classes to try and make it safe, or we could just use HTMLPurifier
- * which, in addition to making input safe, gives us desired functionality like
- * autolinking and adding `target=_blank` to links.
+ * @todo refactor using events and listeners
  */
 class MarkdownConverter {
-    /**
-     * @var CommonMarkConverter
-     */
-    private $converter;
+    private const OPTIONS = [
+        'base_path' => '', // TODO: does nothing yet
+        'open_external_links_in_new_tab' => false,
+    ];
+
+    private const HTML_PURIFIER_CONFIG = [
+        'AutoFormat.Linkify' => true,           // Convert non-link URLs to links.
+        'Cache.DefinitionImpl' => null,         // Disable cache
+        'HTML.Nofollow' => true,                // Add rel="nofollow" to outgoing links.
+        'URI.DisableExternalResources' => true, // Disable embedding of external resources like images.
+    ];
+
+    private const COMMONMARK_CONFIG = [
+        'html_input' => 'escape',
+    ];
 
     /**
-     * @var \HTMLPurifier
+     * @var UrlGeneratorInterface
      */
-    private $purifier;
+    private $urlGenerator;
 
-    /**
-     * @param CommonMarkConverter $converter
-     * @param \HTMLPurifier       $purifier
-     */
-    public function __construct(CommonMarkConverter $converter, \HTMLPurifier $purifier) {
-        $this->converter = $converter;
-        $this->purifier = $purifier;
+    public static function resolveOptions(array $options): array {
+        $options = array_replace(self::OPTIONS, $options);
+        $unknownOptions = array_diff_key($options, self::OPTIONS);
+
+        if ($unknownOptions) {
+            throw new \InvalidArgumentException(sprintf(
+                'Unknown option(s) "%s"',
+                implode('", "', array_keys($unknownOptions))
+            ));
+        }
+
+        return $options;
     }
 
-    /**
-     * @param string $markdown
-     *
-     * @return string
-     */
-    public function convertToHtml($markdown) {
-        $html = $this->converter->convertToHtml($markdown);
+    public function __construct(UrlGeneratorInterface $urlGenerator) {
+        $this->urlGenerator = $urlGenerator;
+    }
 
-        $html = $this->purifier->purify($html);
+    public function convertToHtml(string $markdown, array $options = []): string {
+        $environment = Environment::createCommonMarkEnvironment();
+        $environment->addExtension(new AppExtension($this->urlGenerator));
+        $environment->addExtension(new TableExtension());
+
+        $converter = new CommonMarkConverter(self::COMMONMARK_CONFIG, $environment);
+
+        $options = self::resolveOptions($options);
+
+        $config = \HTMLPurifier_Config::create($this->getHtmlPurifierOptions($options));
+
+        $purifier = new \HTMLPurifier($config);
+
+        $html = $converter->convertToHtml($markdown);
+        $html = $purifier->purify($html);
 
         return $html;
+    }
+
+    private function getHtmlPurifierOptions(array $options): array {
+        return array_replace(self::HTML_PURIFIER_CONFIG, [
+            'HTML.TargetBlank' => $options['open_external_links_in_new_tab'],
+        ]);
     }
 }

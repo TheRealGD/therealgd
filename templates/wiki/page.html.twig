@@ -17,7 +17,7 @@
     <h1 class="wiki-page-title">{{ block('title') }}</h1>
 
     <div class="wiki-page-body">
-      {{ page.latestRevision.body|cached_markdown|raw }}
+      {{ page.latestRevision.body|cached_markdown(markdown_context())|raw }}
     </div>
   </article>
 {% endblock %}

@@ -12,7 +12,7 @@
     </author>
     <category term="{{ submission.forum.name }}" label="{{ submission.forum.title }}" scheme="{{ app.request.getUriForPath('/f/') }}"/>
     {% if submission.body is not null %}
-      <content type="html"><![CDATA[{{ submission.body|cached_markdown|raw }}]]></content>
+      <content type="html"><![CDATA[{{ submission.body|cached_markdown(markdown_context())|raw }}]]></content>
     {% endif %}
   </entry>
 {% endmacro %}

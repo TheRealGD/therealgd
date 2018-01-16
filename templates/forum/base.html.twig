@@ -32,7 +32,7 @@
     {% endif %}
 
     {% if forum.sidebar is not empty %}
-      <div class="forum-sidebar-content">{{ forum.sidebar|cached_markdown|raw }}</div>
+      <div class="forum-sidebar-content">{{ forum.sidebar|cached_markdown(markdown_context())|raw }}</div>
     {% endif %}
   </section>
 

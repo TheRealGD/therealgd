@@ -35,7 +35,7 @@
     })|raw }}</p>
 
     {% if user.biography is not empty %}
-      <div class="user-bio__biography">{{ user.biography|cached_markdown|raw }}</div>
+      <div class="user-bio__biography">{{ user.biography|cached_markdown(markdown_context())|raw }}</div>
     {% endif %}
   </section>
 

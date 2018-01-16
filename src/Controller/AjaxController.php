@@ -2,9 +2,10 @@
 
 namespace App\Controller;
 
+use App\Utils\MarkdownContext;
+use App\Utils\MarkdownConverter;
 use Embed\Embed;
 use Embed\Exceptions\InvalidUrlException;
-use App\Utils\MarkdownConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,7 +31,7 @@ class AjaxController {
     public function fetchTitle(Request $request) {
         $url = $request->request->get('url');
         try {
-            $title = (Embed::create($url))->getTitle();
+            $title = Embed::create($url)->getTitle();
 
             if (!strlen($title)) {
                 return new JsonResponse(null, 404);
@@ -42,15 +43,14 @@ class AjaxController {
         }
     }
 
-    /**
-     * @param Request           $request
-     * @param MarkdownConverter $converter
-     *
-     * @return Response
-     */
-    public function markdownPreview(Request $request, MarkdownConverter $converter) {
+    public function markdownPreview(
+        Request $request,
+        MarkdownConverter $converter,
+        MarkdownContext $context
+    ) {
         $markdown = $request->request->get('markdown', '');
+        $options = $context->getContextAwareOptions();
 
-        return new Response($converter->convertToHtml($markdown));
+        return new Response($converter->convertToHtml($markdown, $options));
     }
 }

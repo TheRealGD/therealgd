@@ -58,5 +58,5 @@
 {% endblock %}
 
 {% block message_body %}
-  <div class="message-body">{{ message.body|cached_markdown|raw }}</div>
+  <div class="message-body">{{ message.body|cached_markdown(markdown_context())|raw }}</div>
 {% endblock %}

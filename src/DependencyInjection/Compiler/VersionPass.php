@@ -24,30 +24,19 @@ final class VersionPass implements CompilerPassInterface {
         $tagName = $this->getGitTagName();
 
         $extensionDefinition = $container->getDefinition(AppExtension::class);
-        $extensionDefinition->addMethodCall('setBranch', [$branchAlias ?? $branchName]);
-        $extensionDefinition->addMethodCall('setVersion', [$tagName]);
+        $extensionDefinition->setArgument('$branch', $branchAlias ?? $branchName);
+        $extensionDefinition->setArgument('$version', $tagName);
     }
 
-    /**
-     * @return string|null
-     */
-    private function getGitBranchName() {
+    private function getGitBranchName(): ?string {
         return $this->getVersionFromCommand('git rev-parse --abbrev-ref HEAD');
     }
 
-    /**
-     * @return string|null
-     */
-    private function getGitTagName() {
+    private function getGitTagName(): ?string {
         return $this->getVersionFromCommand('git describe --tags');
     }
 
-    /**
-     * @param string $branch
-     *
-     * @return string|null
-     */
-    private function getComposerBranchAlias($branch) {
+    private function getComposerBranchAlias(?string $branch): ?string {
         if ($branch !== null) {
             $content = json_decode(file_get_contents(self::COMPOSER_JSON));
             $key = preg_match('/^\d+(\.\d+){1,2}$/', $branch) ? $branch : "dev-$branch";
@@ -60,12 +49,7 @@ final class VersionPass implements CompilerPassInterface {
         return null;
     }
 
-    /**
-     * @param string $commandLine
-     *
-     * @return string|null
-     */
-    private function getVersionFromCommand($commandLine) {
+    private function getVersionFromCommand(string $commandLine): ?string {
         $process = new Process($commandLine);
         $process->run();
 

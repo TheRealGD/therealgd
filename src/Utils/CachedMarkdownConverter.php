@@ -15,11 +15,6 @@ class CachedMarkdownConverter {
      */
     private $converter;
 
-    /**
-     * @var int|\DateInterval|null
-     */
-    private $expiresAfter;
-
     public function __construct(
         CacheItemPoolInterface $cacheItemPool,
         MarkdownConverter $converter
@@ -28,36 +23,23 @@ class CachedMarkdownConverter {
         $this->converter = $converter;
     }
 
-    /**
-     * @param string $markdown
-     *
-     * @return string
-     */
-    public function convertToHtml(string $markdown) {
-        $hash = hash('sha256', $markdown);
-        $item = $this->cacheItemPool->getItem($hash);
+    public function convertToHtml(string $markdown, array $options = []): string {
+        // normalize options for hash - should probably be done better
+        $options = MarkdownConverter::resolveOptions($options);
+
+        $key = sprintf('cached_markdown.%s.%s',
+            hash('sha256', $markdown),
+            hash('sha256', json_encode($options))
+        );
+
+        $item = $this->cacheItemPool->getItem($key);
 
         if (!$item->isHit()) {
-            $item->set($this->converter->convertToHtml($markdown));
-            $item->expiresAfter($this->expiresAfter);
+            $item->set($this->converter->convertToHtml($markdown, $options));
 
             $this->cacheItemPool->saveDeferred($item);
         }
 
         return $item->get();
-    }
-
-    /**
-     * @return \DateInterval|int|null
-     */
-    public function getExpiresAfter() {
-        return $this->expiresAfter;
-    }
-
-    /**
-     * @param \DateInterval|int|null $expiresAfter
-     */
-    public function setExpiresAfter($expiresAfter) {
-        $this->expiresAfter = $expiresAfter;
     }
 }
