@@ -251,8 +251,9 @@ label:
     toolbox: Toolbox
     banned_by: Banned by
     unban_associated_ips: Remove associated IP bans
-    ban_ip_address: Ban IP address?
+    ban_ip_addresses: Ban IP address(es)?
     ip_address: IP address
+    ip_addresses: IP addresses
     forum: Forum
     trusted: Trusted
     submissions: Submissions

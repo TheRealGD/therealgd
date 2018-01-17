@@ -171,7 +171,7 @@
               {%- endif -%}
               {%- if is_granted('ROLE_ADMIN') -%}
                 <li>
-                  <a href="{{ path('ban_by_submission', {id: submission.id}) }}">{{ 'action.global_ban'|trans }}</a>
+                  <a href="{{ path('ban_user', {'username': submission.user.username}) }}">{{ 'action.global_ban'|trans }}</a>
                 </li>
               {%- endif -%}
             </ul>

@@ -250,7 +250,6 @@ label:
     toolbox: Herramientas
     banned_by: Vetada por
     unban_associated_ips: Elimina vetos asociados a IP
-    ban_ip_address: ¿Vetar dirección IP?
     ip_address: Dirección IP
 
 log:

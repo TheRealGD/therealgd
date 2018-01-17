@@ -55,6 +55,17 @@
       {% endset %}
       {% set toolbox_items = toolbox_items|merge([item]) %}
     {% endif %}
+
+    {% if is_granted('ROLE_ADMIN') %}
+      {% set item %}
+        {% if not user.banned %}
+          <li><a href="{{ path('ban_user', {username: user.username}) }}">{{ 'action.ban'|trans }}</a></li>
+        {% else %}
+          <li><a href="{{ path('unban_user', {username: user.username}) }}">{{ 'action.unban'|trans }}</a></li>
+        {% endif %}
+      {% endset %}
+      {% set toolbox_items = toolbox_items|merge([item]) %}
+    {% endif %}
   {% endif %}
 
   {% if user is same as(app.user) %}

@@ -10,12 +10,14 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class UserBanData {
     /**
-     * @Assert\NotBlank(groups={"ban_ip"})
-     * @IpWithCidr(groups={"ban_ip"})
+     * @Assert\All({
+     *     @IpWithCidr(groups={"ban_ip"})
+     * })
+     * @Assert\NotBlank(groups={"ban_ip"}),
      *
-     * @var string|null
+     * @var string[]|iterable
      */
-    public $ip;
+    private $ips = [];
 
     /**
      * @Assert\Length(max=300, groups={"ban_user", "ban_ip"})
@@ -25,21 +27,31 @@ class UserBanData {
 
     public $expiresAt;
 
-    public function __construct(string $ip = null) {
-        if ($ip === null || filter_var($ip, FILTER_VALIDATE_IP)) {
-            $this->ip = $ip;
-        }
+    public function __construct(iterable $ips = null) {
+        $this->ips = $ips;
     }
 
     public function toUserBan(User $user, User $bannedBy, bool $ban): UserBan {
         return new UserBan($user, $this->reason, $ban, $bannedBy, $this->expiresAt);
     }
 
-    public function toIpBan(User $user, User $bannedBy): IpBan {
-        if (!$this->ip) {
-            throw new \BadMethodCallException('Cannot call toIpBan() without an IP address');
+    /**
+     * @param User $user
+     * @param User $bannedBy
+     *
+     * @return IpBan[]|\Traversable
+     */
+    public function toIpBans(User $user, User $bannedBy): \Traversable {
+        foreach ($this->ips as $ip) {
+            yield new IpBan($ip, $this->reason, $user, $bannedBy, $this->expiresAt);
         }
+    }
 
-        return new IpBan($this->ip, $this->reason, $user, $bannedBy, $this->expiresAt);
+    public function getIps(): iterable {
+        return $this->ips;
+    }
+
+    public function setIps(iterable $ips): void {
+        $this->ips = $ips;
     }
 }

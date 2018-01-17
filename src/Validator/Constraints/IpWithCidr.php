@@ -7,7 +7,7 @@ use Symfony\Component\Validator\Constraint;
 
 /**
  * @Annotation
- * @Target({"CLASS", "PROPERTY"})
+ * @Target({"CLASS", "PROPERTY", "ANNOTATION"})
  */
 class IpWithCidr extends Constraint {
     const INVALID_IP = '24672f6c-5a23-4067-8566-e44c35db9556';

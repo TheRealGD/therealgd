@@ -239,7 +239,7 @@
   {%- if is_granted('ROLE_ADMIN') %}
     {%- spaceless -%}
       <li class="comment-nav-edit">
-        <a href="{{ path('ban_by_comment', {id: comment.id}) }}">
+        <a href="{{ path('ban_user', {'username': comment.user.username}) }}">
           {{- 'action.global_ban'|trans -}}
         </a>
       </li>

@@ -129,4 +129,23 @@ EOSQL;
 
         return $pager;
     }
+
+    public function findIpsUsedByUser(User $user): \Traversable {
+        $sql = 'SELECT DISTINCT ip FROM ('.
+            'SELECT ip FROM submissions WHERE user_id = :id AND ip IS NOT NULL UNION ALL '.
+            'SELECT ip FROM comments WHERE user_id = :id AND ip IS NOT NULL UNION ALL '.
+            'SELECT ip FROM submission_votes WHERE user_id = :id AND ip IS NOT NULL UNION ALL '.
+            'SELECT ip FROM comment_votes WHERE user_id = :id AND ip IS NOT NULL UNION ALL '.
+            'SELECT ip FROM message_threads WHERE sender_id = :id AND ip IS NOT NULL UNION ALL '.
+            'SELECT ip FROM message_replies WHERE sender_id = :id AND ip IS NOT NULL'.
+        ') q';
+
+        $sth = $this->_em->getConnection()->prepare($sql);
+        $sth->bindValue(':id', $user->getId());
+        $sth->execute();
+
+        while ($ip = $sth->fetchColumn()) {
+            yield $ip;
+        }
+    }
 }

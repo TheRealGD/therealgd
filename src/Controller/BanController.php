@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManager;
 use App\Entity\User;
 use App\Form\IpBanType;
@@ -25,8 +26,8 @@ final class BanController extends AbstractController {
         ]);
     }
 
-    public function banUser(User $user, EntityManager $em, Request $request) {
-        $data = new UserBanData($request->query->get('ip'));
+    public function banUser(User $user, UserRepository $repository, EntityManager $em, Request $request) {
+        $data = new UserBanData($repository->findIpsUsedByUser($user));
 
         $form = $this->createForm(BanUserType::class, $data);
         $form->handleRequest($request);
@@ -35,7 +36,9 @@ final class BanController extends AbstractController {
             $ban = $data->toUserBan($user, $this->getUser(), true);
 
             if ($form->get('ban_ip')->getData()) {
-                $em->persist($data->toIpBan($user, $this->getUser()));
+                foreach ($data->toIpBans($user, $this->getUser()) as $ipBan) {
+                    $em->persist($ipBan);
+                }
             }
 
             $em->persist($ban);
@@ -130,18 +133,5 @@ final class BanController extends AbstractController {
         $em->flush();
 
         return $this->redirectToRoute('ip_bans');
-    }
-
-    public function redirectToBanForm(EntityManager $em, $entityClass, $id) {
-        $entity = $em->find($entityClass, $id);
-
-        if (!$entity) {
-            throw new NotFoundHttpException('Entity not found');
-        }
-
-        return $this->redirectToRoute('ban_user', [
-            'ip' => $entity->getIp(),
-            'username' => $entity->getUser()->getUsername(),
-        ]);
     }
 }

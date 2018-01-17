@@ -170,7 +170,7 @@ front:
     all: Ολα
     featured: Προεπιλεγμένα
     subscribed: Συνδρομητής
-    
+
 heading:
     user_roles: Ρόλοι χρηστών
     forums_you_moderate: Φόρουμ στα οποία είστε συντονιστής
@@ -247,10 +247,9 @@ label:
     toolbox: Εργαλειοθήκη
     banned_by: Απαγορεύτηκε από τον
     unban_associated_ips: Αφαιρέστε τις σχετικές απαγορεύσεις IP
-    ban_ip_address: Απαγόρευση της διεύθυνσης IP;
     ip_address: Διεύθυνσης IP
     forum: Φόρουμ
-    
+
 log:
     comment_deletion: '%user% διαγράψει σχόλιο που έκανε ο %author% στο "%submission%"'
     submission_deletion: '%user% διέγραψε την υποβολή "%title%" του %author%'
