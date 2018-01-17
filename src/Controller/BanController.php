@@ -14,7 +14,6 @@ use App\Repository\IpBanRepository;
 use App\Repository\UserBanRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @IsGranted("ROLE_ADMIN")
@@ -91,14 +90,6 @@ final class BanController extends AbstractController {
 
     public function banIp(Request $request, EntityManager $em) {
         $data = new IpBanData();
-
-        if ($request->query->has('ip')) {
-            $data->ip = $request->query->get('ip');
-        }
-
-        if ($request->query->has('user_id')) {
-            $data->user = $em->find(User::class, $request->query->getInt('user_id'));
-        }
 
         $form = $this->createForm(IpBanType::class, $data);
         $form->handleRequest($request);
