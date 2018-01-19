@@ -19,6 +19,12 @@
     </fieldset>
 
     <fieldset class="form__group">
+      <legend class="form__group-header">{{ 'label.posting'|trans }}</legend>
+
+      {{ form_row(form.autoFetchSubmissionTitles) }}
+    </fieldset>
+
+    <fieldset class="form__group">
       <legend class="form__group-header">{{ 'label.appearance'|trans }}</legend>
 
       {{ form_row(form.preferred_theme, {attr: {class: 'select2'}}) }}

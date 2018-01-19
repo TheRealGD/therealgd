@@ -271,6 +271,8 @@ label:
     none: None
     order_by: Order by
     registration_date: Registration date
+    posting: Posting
+    auto_fetch_submission_titles: Auto-fetch submission titles
 
 log:
     comment_deletion: '%user% deleted comment by %author% in "%submission%"'

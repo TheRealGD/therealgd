@@ -219,6 +219,13 @@ class User implements UserInterface, EquatableInterface {
      */
     private $biography;
 
+    /**
+     * @ORM\Column(type="boolean", options={"default": true})
+     *
+     * @var bool
+     */
+    private $autoFetchSubmissionTitles = true;
+
     public function __construct(string $username, string $password, \DateTime $created = null) {
         $this->setUsername($username);
         $this->password = $password;
@@ -553,6 +560,14 @@ class User implements UserInterface, EquatableInterface {
 
     public function setBiography(?string $biography) {
         $this->biography = $biography;
+    }
+
+    public function autoFetchSubmissionTitles(): bool {
+        return $this->autoFetchSubmissionTitles;
+    }
+
+    public function setAutoFetchSubmissionTitles(bool $autoFetchSubmissionTitles): void {
+        $this->autoFetchSubmissionTitles = $autoFetchSubmissionTitles;
     }
 
     /**

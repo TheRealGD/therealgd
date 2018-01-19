@@ -47,6 +47,10 @@ final class UserSettingsType extends AbstractType {
                 'required' => false,
                 'label' => 'label.open_external_links_in_new_tab',
             ])
+            ->add('autoFetchSubmissionTitles', CheckboxType::class, [
+                'label' => 'label.auto_fetch_submission_titles',
+                'required' => false,
+            ])
             ->add('save', SubmitType::class);
     }
 

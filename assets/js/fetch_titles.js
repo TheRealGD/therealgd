@@ -3,7 +3,7 @@
 const Routing = require('fosjsrouting');
 
 export default function ($) {
-    $('.fetch-title').blur(function () {
+    $('.auto-fetch-submission-titles .fetch-title').blur(function () {
         const $receiver = $('.receive-title');
         const url = $(this).val().trim();
 

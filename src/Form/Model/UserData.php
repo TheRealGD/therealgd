@@ -74,6 +74,8 @@ class UserData implements UserInterface {
      */
     private $biography;
 
+    private $autoFetchSubmissionTitles;
+
     public static function fromUser(User $user): self {
         $self = new self();
         $self->entityId = $user->getId();
@@ -86,6 +88,7 @@ class UserData implements UserInterface {
         $self->preferredTheme = $user->getPreferredTheme();
         $self->openExternalLinksInNewTab = $user->openExternalLinksInNewTab();
         $self->biography = $user->getBiography();
+        $self->autoFetchSubmissionTitles = $user->autoFetchSubmissionTitles();
 
         return $self;
     }
@@ -105,6 +108,7 @@ class UserData implements UserInterface {
         $user->setPreferredTheme($this->preferredTheme);
         $user->setOpenExternalLinksInNewTab($this->openExternalLinksInNewTab);
         $user->setBiography($this->biography);
+        $user->setAutoFetchSubmissionTitles($this->autoFetchSubmissionTitles);
     }
 
     public function toUser(): User {
@@ -119,6 +123,7 @@ class UserData implements UserInterface {
             'nightMode',
             'preferredTheme',
             'openExternalLinksInNewTab',
+            'autoFetchSubmissionTitles',
         ];
 
         foreach ($settings as $setting) {
@@ -228,6 +233,14 @@ class UserData implements UserInterface {
 
     public function setBiography($biography) {
         $this->biography = $biography;
+    }
+
+    public function getAutoFetchSubmissionTitles(): ?bool {
+        return $this->autoFetchSubmissionTitles;
+    }
+
+    public function setAutoFetchSubmissionTitles(?bool $autoFetchSubmissionTitles): void {
+        $this->autoFetchSubmissionTitles = $autoFetchSubmissionTitles;
     }
 
     /**
