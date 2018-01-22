@@ -1736,12 +1736,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/liip/LiipImagineBundle.git",
-                "reference": "8943f6696553d6bad4575151a12ea770996e8c2b"
+                "reference": "4eaf557e201ffa276c6315f6f752d588e4bdc65a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/liip/LiipImagineBundle/zipball/8943f6696553d6bad4575151a12ea770996e8c2b",
-                "reference": "8943f6696553d6bad4575151a12ea770996e8c2b",
+                "url": "https://api.github.com/repos/liip/LiipImagineBundle/zipball/4eaf557e201ffa276c6315f6f752d588e4bdc65a",
+                "reference": "4eaf557e201ffa276c6315f6f752d588e4bdc65a",
                 "shasum": ""
             },
             "require": {
@@ -1828,7 +1828,7 @@
                 "symfony",
                 "transformation"
             ],
-            "time": "2018-01-03T07:26:02+00:00"
+            "time": "2018-01-20T10:48:38+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -2028,16 +2028,16 @@
         },
         {
             "name": "oneup/flysystem-bundle",
-            "version": "3.0.1",
+            "version": "3.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/1up-lab/OneupFlysystemBundle.git",
-                "reference": "e03a6aa8ebce2dca674d75aff42ecce46c1d64e0"
+                "reference": "7dd3413d4b87779df489039c025d9cf5ffbd814a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/1up-lab/OneupFlysystemBundle/zipball/e03a6aa8ebce2dca674d75aff42ecce46c1d64e0",
-                "reference": "e03a6aa8ebce2dca674d75aff42ecce46c1d64e0",
+                "url": "https://api.github.com/repos/1up-lab/OneupFlysystemBundle/zipball/7dd3413d4b87779df489039c025d9cf5ffbd814a",
+                "reference": "7dd3413d4b87779df489039c025d9cf5ffbd814a",
                 "shasum": ""
             },
             "require": {
@@ -2117,7 +2117,7 @@
                 "abstraction",
                 "filesystem"
             ],
-            "time": "2018-01-12T15:45:56+00:00"
+            "time": "2018-01-17T13:19:31+00:00"
         },
         {
             "name": "pagerfanta/pagerfanta",
@@ -2629,16 +2629,16 @@
         },
         {
             "name": "ramsey/uuid",
-            "version": "3.7.2",
+            "version": "3.7.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ramsey/uuid.git",
-                "reference": "bba83ad77bb9deb6d3c352a7361b818e415b221d"
+                "reference": "44abcdad877d9a46685a3a4d221e3b2c4b87cb76"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ramsey/uuid/zipball/bba83ad77bb9deb6d3c352a7361b818e415b221d",
-                "reference": "bba83ad77bb9deb6d3c352a7361b818e415b221d",
+                "url": "https://api.github.com/repos/ramsey/uuid/zipball/44abcdad877d9a46685a3a4d221e3b2c4b87cb76",
+                "reference": "44abcdad877d9a46685a3a4d221e3b2c4b87cb76",
                 "shasum": ""
             },
             "require": {
@@ -2649,17 +2649,15 @@
                 "rhumsaa/uuid": "self.version"
             },
             "require-dev": {
-                "apigen/apigen": "^4.1",
                 "codeception/aspect-mock": "^1.0 | ~2.0.0",
                 "doctrine/annotations": "~1.2.0",
                 "goaop/framework": "1.0.0-alpha.2 | ^1.0 | ^2.1",
                 "ircmaxell/random-lib": "^1.1",
                 "jakub-onderka/php-parallel-lint": "^0.9.0",
-                "mockery/mockery": "^0.9.4",
+                "mockery/mockery": "^0.9.9",
                 "moontoast/math": "^1.1",
                 "php-mock/php-mock-phpunit": "^0.3|^1.1",
                 "phpunit/phpunit": "^4.7|^5.0",
-                "satooshi/php-coveralls": "^0.6.1",
                 "squizlabs/php_codesniffer": "^2.3"
             },
             "suggest": {
@@ -2707,7 +2705,7 @@
                 "identifier",
                 "uuid"
             ],
-            "time": "2018-01-13T22:22:03+00:00"
+            "time": "2018-01-20T00:28:24+00:00"
         },
         {
             "name": "ramsey/uuid-doctrine",
@@ -3605,24 +3603,24 @@
         },
         {
             "name": "symfony/flex",
-            "version": "v1.0.61",
+            "version": "v1.0.66",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/flex.git",
-                "reference": "f872f8faccf5ff95678e1e428f460a333ba1e5d0"
+                "reference": "b366e902710c8dc8d8be97ed8d64ef574d9bffcb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/flex/zipball/f872f8faccf5ff95678e1e428f460a333ba1e5d0",
-                "reference": "f872f8faccf5ff95678e1e428f460a333ba1e5d0",
+                "url": "https://api.github.com/repos/symfony/flex/zipball/b366e902710c8dc8d8be97ed8d64ef574d9bffcb",
+                "reference": "b366e902710c8dc8d8be97ed8d64ef574d9bffcb",
                 "shasum": ""
             },
             "require": {
-                "composer-plugin-api": "^1.1",
+                "composer-plugin-api": "^1.0",
                 "php": "^7.0"
             },
             "require-dev": {
-                "composer/composer": "^1.4",
+                "composer/composer": "^1.0.2",
                 "symfony/phpunit-bridge": "^3.2.8"
             },
             "type": "composer-plugin",
@@ -3647,7 +3645,7 @@
                     "email": "fabien.potencier@gmail.com"
                 }
             ],
-            "time": "2018-01-12T13:09:44+00:00"
+            "time": "2018-01-21T09:15:48+00:00"
         },
         {
             "name": "symfony/form",
