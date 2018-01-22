@@ -94,7 +94,7 @@ function vote($form, isUp) {
     });
 }
 
-export default function ($) {
+$(function () {
     $('.user-logged-in .vote').each(function () {
         const $form = $(this);
 
@@ -104,4 +104,4 @@ export default function ($) {
             vote($form, $(this).hasClass('vote-up'));
         });
     });
-}
+});

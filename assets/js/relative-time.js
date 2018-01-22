@@ -1,9 +1,10 @@
 'use strict';
 
+import $ from 'jquery';
 import moment from 'moment/src/moment';
 import Translator from 'bazinga-translator';
 
-function makeTimesRelative($) {
+function makeTimesRelative() {
     $('.relative-time[datetime]').each(function () {
         const isoTime = $(this).attr('datetime');
 
@@ -24,7 +25,7 @@ function makeTimesRelative($) {
     });
 }
 
-function loadLocaleAndMakeTimesRelative($, locale) {
+function loadLocaleAndMakeTimesRelative(locale) {
     locale = locale.toLowerCase().replace('_', '-');
 
     import(`moment/src/locale/${locale}.js`).then(() => {
@@ -39,20 +40,20 @@ function loadLocaleAndMakeTimesRelative($, locale) {
                 console.log(`Couldn't load ${locale}; trying ${newLocale}`);
             }
 
-            loadLocaleAndMakeTimesRelative($, newLocale);
+            loadLocaleAndMakeTimesRelative(newLocale);
         } else if (console) {
             console.log(error.toString());
         }
     });
 }
 
-export default function ($) {
+$(function () {
     const locale = $(':root').attr('lang');
 
     if (!locale || locale === 'en') {
         // english is the default, always-loaded locale in moment
-        makeTimesRelative($);
+        makeTimesRelative();
     } else {
-        loadLocaleAndMakeTimesRelative($, locale);
+        loadLocaleAndMakeTimesRelative(locale);
     }
-};
+});

@@ -1,6 +1,7 @@
 'use strict';
 
 import { debounce } from 'underscore';
+// noinspection NpmUsedModulesInstalled
 import Routing from 'fosjsrouting';
 import $ from 'jquery';
 
@@ -22,6 +23,6 @@ function createPreview() {
     });
 }
 
-export default function ($) {
-    $('.markdown-input__input').on('input', debounce(createPreview, 600));
-};
+$(function () {
+    $(document).on('input', '.markdown-input__input', debounce(createPreview, 600));
+});

@@ -1,6 +1,8 @@
 'use strict';
 
-function initAlerts($) {
+import $ from 'jquery';
+
+$(function () {
     $('.alert--dismissable')
         .css('cursor', 'pointer')
         .click(function () {
@@ -8,6 +10,4 @@ function initAlerts($) {
                 $(this).remove();
             });
         });
-}
-
-export { initAlerts as init };
+});

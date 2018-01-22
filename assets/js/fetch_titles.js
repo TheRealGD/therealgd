@@ -1,8 +1,9 @@
 'use strict';
 
-const Routing = require('fosjsrouting');
+import $ from 'jquery';
+import Routing from 'fosjsrouting';
 
-export default function ($) {
+$(function () {
     $('.auto-fetch-submission-titles .fetch-title').blur(function () {
         const $receiver = $('.receive-title');
         const url = $(this).val().trim();
@@ -22,4 +23,4 @@ export default function ($) {
             });
         }
     });
-}
+});

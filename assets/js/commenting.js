@@ -1,10 +1,11 @@
 'use strict';
 
+import $ from 'jquery';
 import Translator from 'bazinga-translator';
 
 // load comment forms via ajax
 
-export default function ($) {
+$(function () {
     $('.comment-nav-reply').show();
 
     // hide open forms (they're initially visible for non-js users)
@@ -38,4 +39,4 @@ export default function ($) {
             });
         }
     });
-}
+});

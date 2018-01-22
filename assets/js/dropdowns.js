@@ -2,10 +2,8 @@
 
 import $ from 'jquery';
 
-/**
- * Make all dropdown menus interactive.
- */
-function initRoot($) {
+$(function () {
+    // Make all dropdown menus interactive.
     $('.dropdown-container')
         .addClass('js')
         .find('.dropdown-toggle')
@@ -28,19 +26,13 @@ function initRoot($) {
 
             return false;
         });
-}
 
-/**
- * Adds a global click handler that closes dropdowns when clicking on something
- * that isn't a toggle.
- */
-function initWindow() {
+    // Adds a global click handler that closes dropdowns when clicking on
+    // something that isn't a toggle.
     $(window).click(() => {
         $('.dropdown-container.expanded')
             .removeClass('expanded')
             .find('.dropdown-toggle')
             .attr('aria-expanded', false);
     });
-}
-
-export { initWindow, initRoot };
+});
