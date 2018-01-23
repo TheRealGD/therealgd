@@ -87,3 +87,10 @@ clear_inbox:
     path: /clear_inbox.{_format}
     methods: [POST]
     requirements: { _format: html|json }
+
+user_forum_bans:
+    controller: App\Controller\UserController::listForumBans
+    defaults: { page: 1 }
+    path: /user/{username}/forum_bans/{page}
+    methods: [GET]
+    requirements: { username: \w+, page: \d+ }

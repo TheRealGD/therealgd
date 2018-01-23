@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'title.user_forum_bans'|trans({'%user%': user.username}) %}
+
+{% block head %}
+  {{ parent() }}
+
+  {{ include('_includes/meta_pagination.html.twig', {pager: bans}, with_context=false) }}
+{% endblock %}
+
+{% block body %}
+  {% from 'user/_macros.html.twig' import user_link %}
+
+  <h1 class="page-heading">
+    {{ 'title.user_forum_bans'|trans({'%user%': user_link(user, {prefix: true})})|raw }}
+  </h1>
+
+  {% if bans|length > 0 %}
+    <table class="table">
+      <thead>
+        <tr>
+          <th>{{ 'label.forum'|trans }}</th>
+          <th>{{ 'label.banned_by'|trans }}</th>
+          <th>{{ 'label.banned'|trans }}</th>
+          <th>{{ 'label.expires'|trans }}</th>
+          <th>{{ 'label.reason'|trans }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for ban in bans %}
+          <tr>
+            <td><a href="{{ path('forum', {forum_name: ban.forum.name}) }}">/f/{{ ban.forum.name }}</a></td>
+            <td>{{ user_link(ban.bannedBy) }}</td>
+            <td>
+              {% with { date: ban.timestamp|localizeddate('long', 'short') } %}
+                <time datetime="{{ ban.timestamp|date('c') }}" class="relative-time" title="{{ date }}">
+                  {{- date -}}
+                </time>
+              {% endwith %}
+            </td>
+            <td>
+              {% if ban.expiryTime %}
+                {% set date = ban.expiryTime|localizeddate('long', 'short') %}
+                <time datetime="{{ ban.expiryTime|date('c') }}" class="relative-time" title="{{ date }}">
+                  {{- date -}}
+                </time>
+              {% else %}
+                <small>{{ 'label.never'|trans }}</small>
+              {% endif %}
+            </td>
+            <td>{{ ban.reason }}</td>
+            <td>
+              <a href="{{ path('unban_user', {username: ban.user.username}) }}" class="button button--inline">
+                {{ 'action.unban'|trans }}
+              </a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <div class="alert alert--notice">
+      <p>{{ 'flash.no_entries_to_display'|trans }}</p>
+    </div>
+  {% endif %}
+
+  {{ include('_includes/pagination.html.twig', {pager: bans}, with_context=false) }}
+{% endblock %}

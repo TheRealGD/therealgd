@@ -334,6 +334,7 @@ nav:
     theme_settings: Theme settings
     filter_results: Filter results
     users: Users
+    forum_bans: Forum bans
 
 placeholder:
     default: (default)
@@ -438,6 +439,7 @@ title:
     global_moderation_log: Global moderation log
     delete_submission: Delete submission
     list_of_users: 'List of users, page #%page%'
+    user_forum_bans: "%user%'s forum bans"
 
 user:
     submissions: Submissions

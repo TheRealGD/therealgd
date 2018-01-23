@@ -4,8 +4,10 @@ namespace App\Repository;
 
 use App\Entity\Forum;
 use App\Entity\ForumBan;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\DBAL\Types\Type;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
 
@@ -38,7 +40,29 @@ class ForumBanRepository extends ServiceEntityRepository {
             ->andWhere('m.expiresAt IS NULL OR m.expiresAt >= :now')
             ->orderBy('m.timestamp', 'DESC')
             ->setParameter('forum', $forum)
-            ->setParameter('now', new \DateTime(), 'datetimetz');
+            ->setParameter('now', new \DateTime(), Type::DATETIMETZ);
+
+        $pager = new Pagerfanta(new DoctrineORMAdapter($qb));
+        $pager->setMaxPerPage($maxPerPage);
+        $pager->setCurrentPage($page);
+
+        return $pager;
+    }
+
+    public function findActiveBansByUser(User $user, int $page, int $maxPerPage = 25) {
+        $qb = $this->createQueryBuilder('m')
+            ->leftJoin(ForumBan::class, 'b',
+                'WITH', 'm.user = b.user AND '.
+                        'm.forum = b.forum AND '.
+                        'm.timestamp < b.timestamp'
+            )
+            ->where('b.timestamp IS NULL')
+            ->andWhere('m.banned = TRUE')
+            ->andWhere('m.user = :user')
+            ->andWhere('m.expiresAt IS NULL OR m.expiresAt >= :now')
+            ->orderBy('m.timestamp', 'DESC')
+            ->setParameter('user', $user)
+            ->setParameter('now', new \DateTime(), Type::DATETIMETZ);
 
         $pager = new Pagerfanta(new DoctrineORMAdapter($qb));
         $pager->setMaxPerPage($maxPerPage);

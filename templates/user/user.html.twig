@@ -65,6 +65,11 @@
         {% endif %}
       {% endset %}
       {% set toolbox_items = toolbox_items|merge([item]) %}
+
+      {% set item %}
+        <li><a href="{{ path('user_forum_bans', {username: user.username}) }}">{{ 'nav.forum_bans'|trans }}</a></li>
+      {% endset %}
+      {% set toolbox_items = toolbox_items|merge([item]) %}
     {% endif %}
   {% endif %}
 

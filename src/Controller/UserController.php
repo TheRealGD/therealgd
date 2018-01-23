@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Form\Model\UserFilterData;
 use App\Form\UserFilterType;
+use App\Repository\ForumBanRepository;
 use Doctrine\ORM\EntityManager;
 use App\Entity\User;
 use App\Entity\UserBlock;
@@ -366,6 +367,22 @@ final class UserController extends AbstractController {
 
         return $this->redirectToRoute('user', [
             'username' => $user->getUsername(),
+        ]);
+    }
+
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     *
+     * @param User               $user
+     * @param ForumBanRepository $repository
+     * @param int                $page
+     *
+     * @return Response
+     */
+    public function listForumBans(User $user, ForumBanRepository $repository, int $page) {
+        return $this->render('user/forum_bans.html.twig', [
+            'bans' => $repository->findActiveBansByUser($user, $page),
+            'user' => $user,
         ]);
     }
 }
