@@ -9,7 +9,7 @@ use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
 
 /**
- * @method WikiPage|null findOneByCanonicalPath(string $path)
+ * @method WikiPage|null findOneByNormalizedPath(string $path)
  */
 class WikiPageRepository extends ServiceEntityRepository {
     public function __construct(ManagerRegistry $registry) {
@@ -26,7 +26,7 @@ class WikiPageRepository extends ServiceEntityRepository {
             return null;
         }
 
-        return $this->findOneByCanonicalPath(WikiPage::canonicalizePath($path));
+        return $this->findOneByNormalizedPath(WikiPage::normalizePath($path));
     }
 
     /**
@@ -36,7 +36,7 @@ class WikiPageRepository extends ServiceEntityRepository {
      */
     public function findAllPages(int $page) {
         $qb = $this->createQueryBuilder('wp')
-            ->orderBy('wp.canonicalPath', 'ASC');
+            ->orderBy('wp.normalizedPath', 'ASC');
 
         $pager = new Pagerfanta(new DoctrineORMAdapter($qb));
         $pager->setMaxPerPage(25);

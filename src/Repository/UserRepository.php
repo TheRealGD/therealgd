@@ -16,7 +16,7 @@ use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 
 /**
  * @method User|null findOneByUsername(string|string[] $username)
- * @method User|null findOneByCanonicalUsername(string|string[] $canonicalUsername)
+ * @method User|null findOneByNormalizedUsername(string|string[] $normalizedUsername)
  */
 class UserRepository extends ServiceEntityRepository implements UserLoaderInterface {
     public function __construct(ManagerRegistry $registry) {
@@ -31,7 +31,7 @@ class UserRepository extends ServiceEntityRepository implements UserLoaderInterf
             return null;
         }
 
-        return $this->findOneByCanonicalUsername(User::canonicalizeUsername($username));
+        return $this->findOneByNormalizedUsername(User::normalizeUsername($username));
     }
 
     /**
@@ -40,13 +40,13 @@ class UserRepository extends ServiceEntityRepository implements UserLoaderInterf
      * @return User[]|Collection
      */
     public function lookUpByEmail(string $email) {
-        // Canonicalisation of email address is prone to change, so look them up
-        // by both verbatim and canonical variations just in case.
+        // Normalization of email address is prone to change, so look them up
+        // by both canonical and normalized variations just in case.
         return $this->createQueryBuilder('u')
             ->where('u.email = ?1')
-            ->orWhere('u.canonicalEmail = ?2')
+            ->orWhere('u.normalizedEmail = ?2')
             ->setParameter(1, $email)
-            ->setParameter(2, User::canonicalizeEmail($email))
+            ->setParameter(2, User::normalizeEmail($email))
             ->getQuery()
             ->execute();
     }

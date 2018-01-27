@@ -30,7 +30,7 @@ class ForumCategory {
 
     /**
      * @ORM\OneToMany(targetEntity="Forum", mappedBy="category")
-     * @ORM\OrderBy({"canonicalName": "ASC"})
+     * @ORM\OrderBy({"normalizedName": "ASC"})
      *
      * @var Forum[]|Collection|Selectable
      */

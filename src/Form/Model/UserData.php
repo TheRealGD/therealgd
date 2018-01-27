@@ -9,7 +9,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @Unique("canonicalUsername", idFields={"entityId": "id"}, errorPath="username",
+ * @Unique("normalizedUsername", idFields={"entityId": "id"}, errorPath="username",
  *     entityClass="App\Entity\User", groups={"registration", "edit"})
  */
 class UserData implements UserInterface {
@@ -30,7 +30,7 @@ class UserData implements UserInterface {
     /**
      * @var string|null
      */
-    private $canonicalUsername;
+    private $normalizedUsername;
 
     private $password;
 
@@ -148,11 +148,11 @@ class UserData implements UserInterface {
 
     public function setUsername($username) {
         $this->username = $username;
-        $this->canonicalUsername = isset($username) ? User::canonicalizeUsername($username) : null;
+        $this->normalizedUsername = isset($username) ? User::normalizeUsername($username) : null;
     }
 
-    public function getCanonicalUsername() {
-        return $this->canonicalUsername;
+    public function getNormalizedUsername() {
+        return $this->normalizedUsername;
     }
 
     public function getPassword() {

@@ -8,7 +8,7 @@ use App\Validator\Constraints\Unique;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @Unique("canonicalName", idFields={"entityId": "id"}, groups={"create", "edit"},
+ * @Unique("normalizedName", idFields={"entityId": "id"}, groups={"create", "edit"},
  *     entityClass="App\Entity\Forum", errorPath="name",
  *     message="A forum by that name already exists.")
  */
@@ -25,7 +25,7 @@ class ForumData {
      */
     private $name;
 
-    private $canonicalName;
+    private $normalizedName;
 
     /**
      * @Assert\Length(max=100, groups={"create", "edit"})
@@ -104,13 +104,13 @@ class ForumData {
      *
      * @return string|null
      */
-    public function getCanonicalName() {
-        return $this->canonicalName;
+    public function getNormalizedName() {
+        return $this->normalizedName;
     }
 
     public function setName($name) {
         $this->name = $name;
-        $this->canonicalName = $name !== null ? Forum::canonicalizeName($name) : null;
+        $this->normalizedName = $name !== null ? Forum::normalizeName($name) : null;
     }
 
     public function getTitle() {

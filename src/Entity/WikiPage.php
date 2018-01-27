@@ -11,7 +11,10 @@ use Pagerfanta\Pagerfanta;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\WikiPageRepository")
- * @ORM\Table(name="wiki_pages")
+ * @ORM\Table(name="wiki_pages", uniqueConstraints={
+ *     @ORM\UniqueConstraint(name="wiki_pages_path_idx", columns={"path"}),
+ *     @ORM\UniqueConstraint(name="wiki_pages_normalized_path_idx", columns={"normalized_path"}),
+ * })
  */
 class WikiPage {
     /**
@@ -35,7 +38,7 @@ class WikiPage {
      *
      * @var string|null
      */
-    private $canonicalPath;
+    private $normalizedPath;
 
     /**
      * @ORM\OneToMany(targetEntity="WikiRevision", mappedBy="page", cascade={"persist"})
@@ -74,11 +77,11 @@ class WikiPage {
 
     public function setPath(string $path) {
         $this->path = $path;
-        $this->canonicalPath = self::canonicalizePath($path);
+        $this->normalizedPath = self::normalizePath($path);
     }
 
-    public function getCanonicalPath(): string {
-        return $this->canonicalPath;
+    public function getNormalizedPath(): string {
+        return $this->normalizedPath;
     }
 
     /**
@@ -126,7 +129,7 @@ class WikiPage {
         $this->locked = $locked;
     }
 
-    public static function canonicalizePath(string $path): string {
+    public static function normalizePath(string $path): string {
         return strtolower(str_replace('-', '_', $path));
     }
 }

@@ -15,7 +15,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @ORM\Table(name="users")
+ * @ORM\Table(name="users", uniqueConstraints={
+ *     @ORM\UniqueConstraint(name="users_username_idx", columns={"username"}),
+ *     @ORM\UniqueConstraint(name="users_normalized_username_idx", columns={"normalized_username"}),
+ * })
  */
 class User implements UserInterface, EquatableInterface {
     const FRONT_DEFAULT = 'default';
@@ -53,7 +56,7 @@ class User implements UserInterface, EquatableInterface {
      *
      * @var string
      */
-    private $canonicalUsername;
+    private $normalizedUsername;
 
     /**
      * @ORM\Column(type="text")
@@ -74,7 +77,7 @@ class User implements UserInterface, EquatableInterface {
      *
      * @var string|null
      */
-    private $canonicalEmail;
+    private $normalizedEmail;
 
     /**
      * @ORM\Column(type="datetimetz")
@@ -250,11 +253,11 @@ class User implements UserInterface, EquatableInterface {
 
     public function setUsername(string $username) {
         $this->username = $username;
-        $this->canonicalUsername = self::canonicalizeUsername($username);
+        $this->normalizedUsername = self::normalizeUsername($username);
     }
 
-    public function getCanonicalUsername(): string {
-        return $this->canonicalUsername;
+    public function getNormalizedUsername(): string {
+        return $this->normalizedUsername;
     }
 
     public function getPassword(): string {
@@ -271,19 +274,19 @@ class User implements UserInterface, EquatableInterface {
 
     public function setEmail(?string $email) {
         $this->email = $email;
-        $this->canonicalEmail = $email ? self::canonicalizeEmail($email) : null;
+        $this->normalizedEmail = $email ? self::normalizeEmail($email) : null;
     }
 
     /**
-     * Retrieve the canonical email address.
+     * Retrieve the normalized email address.
      *
-     * Sending email to the canonicalised address is evil. Use this for lookup,
-     * but *always* send to the regular, non-canon address.
+     * Sending email to the normalized address is evil. Use this for lookup,
+     * but *always* send to the regular, canon address.
      *
      * @return string|null
      */
-    public function getCanonicalEmail(): ?string {
-        return $this->canonicalEmail;
+    public function getNormalizedEmail(): ?string {
+        return $this->normalizedEmail;
     }
 
     public function getCreated(): \DateTime {
@@ -571,13 +574,13 @@ class User implements UserInterface, EquatableInterface {
     }
 
     /**
-     * Returns the canonical form of the username.
+     * Returns the normalized form of the username.
      *
      * @param string $username
      *
      * @return string
      */
-    public static function canonicalizeUsername(string $username): string {
+    public static function normalizeUsername(string $username): string {
         return mb_strtolower($username, 'UTF-8');
     }
 
@@ -588,7 +591,7 @@ class User implements UserInterface, EquatableInterface {
      *
      * @throws \InvalidArgumentException if `$email` is not a valid address
      */
-    public static function canonicalizeEmail(string $email): string {
+    public static function normalizeEmail(string $email): string {
         if (substr_count($email, '@') !== 1) {
             throw new \InvalidArgumentException('Invalid email address');
         }

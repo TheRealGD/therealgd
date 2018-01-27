@@ -57,7 +57,7 @@ class UserFilterData {
 
         case self::ORDER_USERNAME:
             $criteria
-                ->orderBy(['canonicalUsername' => 'ASC']);
+                ->orderBy(['normalizedUsername' => 'ASC']);
             break;
 
         default:

@@ -58,9 +58,7 @@ final class CommentController extends AbstractController {
 
         $form = $this->createForm(CommentType::class, null, [
             'action' => $this->generateUrl('comment_post', $routeParams),
-            'forum' => $forumRepository->findOneBy([
-                'canonicalName' => mb_strtolower($forumName, 'UTF-8'),
-            ]),
+            'forum' => $forumRepository->findOneByCaseInsensitiveName($forumName),
         ]);
 
         return $this->render('comment/form_fragment.html.twig', [

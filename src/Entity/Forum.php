@@ -16,7 +16,8 @@ use Pagerfanta\Pagerfanta;
  * @ORM\Table(name="forums", indexes={
  *     @ORM\Index(name="forum_featured_idx", columns={"featured"})
  * }, uniqueConstraints={
- *     @ORM\UniqueConstraint(name="uniq_fe5e5ab8d69c0128", columns={"canonical_name"})
+ *     @ORM\UniqueConstraint(name="forums_name_idx", columns={"name"}),
+ *     @ORM\UniqueConstraint(name="forums_normalized_name_idx", columns={"normalized_name"}),
  * })
  */
 class Forum {
@@ -41,7 +42,7 @@ class Forum {
      *
      * @var string
      */
-    private $canonicalName;
+    private $normalizedName;
 
     /**
      * @ORM\Column(type="text")
@@ -164,11 +165,11 @@ class Forum {
 
     public function setName(string $name) {
         $this->name = $name;
-        $this->canonicalName = self::canonicalizeName($name);
+        $this->normalizedName = self::normalizeName($name);
     }
 
-    public function getCanonicalName() {
-        return $this->canonicalName;
+    public function getNormalizedName(): ?string {
+        return $this->normalizedName;
     }
 
     public function getTitle(): string {
@@ -393,7 +394,7 @@ class Forum {
         }
     }
 
-    public static function canonicalizeName(string $name): string {
+    public static function normalizeName(string $name): string {
         return mb_strtolower($name, 'UTF-8');
     }
 }

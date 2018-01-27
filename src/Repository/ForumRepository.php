@@ -15,7 +15,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
- * @method Forum|null findOneByCanonicalName(string $canonicalName)
+ * @method Forum|null findOneByNormalizedName(string $normalizedName)
  */
 final class ForumRepository extends ServiceEntityRepository {
     /**
@@ -69,7 +69,7 @@ final class ForumRepository extends ServiceEntityRepository {
             break;
         }
 
-        $qb->addOrderBy('f.canonicalName', 'ASC')->groupBy('f.id');
+        $qb->addOrderBy('f.normalizedName', 'ASC')->groupBy('f.id');
 
         $pager = new Pagerfanta(new DoctrineORMAdapter($qb));
         $pager->setMaxPerPage(25);
@@ -88,7 +88,7 @@ final class ForumRepository extends ServiceEntityRepository {
         $dql =
             'SELECT f.id, f.name FROM '.Forum::class.' f WHERE f IN ('.
                 'SELECT IDENTITY(fs.forum) FROM '.ForumSubscription::class.' fs WHERE fs.user = ?1'.
-            ') ORDER BY f.canonicalName ASC';
+            ') ORDER BY f.normalizedName ASC';
 
         $names = $this->getEntityManager()->createQuery($dql)
             ->setParameter(1, $user)
@@ -107,7 +107,7 @@ final class ForumRepository extends ServiceEntityRepository {
             ->select('f.id')
             ->addSelect('f.name')
             ->where('f.featured = TRUE')
-            ->orderBy('f.canonicalName', 'ASC')
+            ->orderBy('f.normalizedName', 'ASC')
             ->getQuery()
             ->execute();
 
@@ -123,7 +123,7 @@ final class ForumRepository extends ServiceEntityRepository {
         /* @noinspection SqlDialectInspection */
         $dql = 'SELECT f.id, f.name FROM '.Forum::class.' f WHERE f IN ('.
             'SELECT IDENTITY(m.forum) FROM '.Moderator::class.' m WHERE m.user = ?1'.
-        ') ORDER BY f.canonicalName ASC';
+        ') ORDER BY f.normalizedName ASC';
 
         $names = $this->getEntityManager()->createQuery($dql)
             ->setParameter(1, $user)
@@ -135,8 +135,8 @@ final class ForumRepository extends ServiceEntityRepository {
     public function findForumNames($names) {
         /** @noinspection SqlDialectInspection */
         $dql = 'SELECT f.id, f.name FROM '.Forum::class.' f '.
-            'WHERE f.canonicalName IN (?1) '.
-            'ORDER BY f.canonicalName ASC';
+            'WHERE f.normalizedName IN (?1) '.
+            'ORDER BY f.normalizedName ASC';
 
         $names = $this->_em->createQuery($dql)
             ->setParameter(1, $names)
@@ -152,7 +152,7 @@ final class ForumRepository extends ServiceEntityRepository {
             return null;
         }
 
-        return $this->findOneByCanonicalName(Forum::canonicalizeName($name));
+        return $this->findOneByNormalizedName(Forum::normalizeName($name));
     }
 
     public function findOneOrRedirectToCanonical(?string $name, string $param): ?Forum {

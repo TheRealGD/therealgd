@@ -51,7 +51,7 @@ final class ForumController extends AbstractController {
     public function multi(ForumRepository $fr, SubmissionRepository $sr,
                                 string $names, string $sortBy, int $page) {
         $names = preg_split('/[^\w]+/', $names, -1, PREG_SPLIT_NO_EMPTY);
-        $names = array_map(Forum::class.'::canonicalizeName', $names);
+        $names = array_map(Forum::class.'::normalizeName', $names);
         $names = $fr->findForumNames($names);
 
         if (!$names) {
@@ -227,7 +227,7 @@ final class ForumController extends AbstractController {
      */
     public function listCategories(ForumCategoryRepository $fcr, ForumRepository $fr) {
         $forumCategories = $fcr->findBy([], ['name' => 'ASC']);
-        $uncategorizedForums = $fr->findBy(['category' => null], ['canonicalName' => 'ASC']);
+        $uncategorizedForums = $fr->findBy(['category' => null], ['normalizedName' => 'ASC']);
 
         return $this->render('forum/list_by_category.html.twig', [
             'forum_categories' => $forumCategories,
