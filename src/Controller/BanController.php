@@ -12,11 +12,13 @@ use App\Form\Model\UserBanData;
 use App\Form\UnbanUserType;
 use App\Repository\IpBanRepository;
 use App\Repository\UserBanRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @IsGranted("ROLE_ADMIN")
+ * @Entity("user", expr="repository.findOneOrRedirectToCanonical(username, 'username')")
  */
 final class BanController extends AbstractController {
     public function userBans(UserBanRepository $repository, int $page) {

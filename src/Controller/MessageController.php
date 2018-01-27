@@ -9,6 +9,7 @@ use App\Form\MessageReplyType;
 use App\Form\MessageThreadType;
 use App\Form\Model\MessageData;
 use App\Repository\MessageThreadRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,6 +35,7 @@ final class MessageController extends AbstractController {
      * Start a new message thread.
      *
      * @IsGranted("message", subject="receiver")
+     * @Entity("receiver", expr="repository.findOneOrRedirectToCanonical(username, 'username')")
      *
      * @param Request       $request
      * @param EntityManager $em

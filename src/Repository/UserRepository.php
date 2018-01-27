@@ -13,14 +13,34 @@ use Doctrine\ORM\Query\ResultSetMapping;
 use Pagerfanta\Adapter\DoctrineSelectableAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * @method User|null findOneByUsername(string|string[] $username)
  * @method User|null findOneByNormalizedUsername(string|string[] $normalizedUsername)
  */
 class UserRepository extends ServiceEntityRepository implements UserLoaderInterface {
-    public function __construct(ManagerRegistry $registry) {
+    /**
+     * @var UrlGeneratorInterface
+     */
+    private $urlGenerator;
+
+    /**
+     * @var RequestStack
+     */
+    private $requestStack;
+
+    public function __construct(
+        ManagerRegistry $registry,
+        UrlGeneratorInterface $urlGenerator,
+        RequestStack $requestStack
+    ) {
         parent::__construct($registry, User::class);
+
+        $this->urlGenerator = $urlGenerator;
+        $this->requestStack = $requestStack;
     }
 
     /**
@@ -32,6 +52,32 @@ class UserRepository extends ServiceEntityRepository implements UserLoaderInterf
         }
 
         return $this->findOneByNormalizedUsername(User::normalizeUsername($username));
+    }
+
+    public function findOneOrRedirectToCanonical(?string $username, string $param): ?User {
+        $user = $this->loadUserByUsername($username);
+
+        if ($user && $user->getUsername() !== $username) {
+            $request = $this->requestStack->getCurrentRequest();
+
+            if (
+                !$request ||
+                $this->requestStack->getParentRequest() ||
+                !$request->isMethodCacheable()
+            ) {
+                return $user;
+            }
+
+            $route = $request->attributes->get('_route');
+            $params = $request->attributes->get('_route_params', []);
+            $params[$param] = $user->getUsername();
+
+            throw new HttpException(302, 'Redirecting to canonical', null, [
+                'Location' => $this->urlGenerator->generate($route, $params),
+            ]);
+        }
+
+        return $user;
     }
 
     /**

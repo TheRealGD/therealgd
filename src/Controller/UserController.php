@@ -2,26 +2,30 @@
 
 namespace App\Controller;
 
-use App\Form\Model\UserFilterData;
-use App\Form\UserFilterType;
-use App\Repository\ForumBanRepository;
-use Doctrine\ORM\EntityManager;
 use App\Entity\User;
 use App\Entity\UserBlock;
 use App\Form\Model\UserBlockData;
 use App\Form\Model\UserData;
+use App\Form\Model\UserFilterData;
 use App\Form\UserBiographyType;
 use App\Form\UserBlockType;
+use App\Form\UserFilterType;
 use App\Form\UserSettingsType;
 use App\Form\UserType;
+use App\Repository\ForumBanRepository;
 use App\Repository\NotificationRepository;
 use App\Repository\UserRepository;
 use App\Utils\AuthenticationHelper;
+use Doctrine\ORM\EntityManager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @Entity("user", expr="repository.findOneOrRedirectToCanonical(username, 'username')")
+ */
 final class UserController extends AbstractController {
     /**
      * Show the user's profile page.
@@ -246,6 +250,7 @@ final class UserController extends AbstractController {
 
     /**
      * @IsGranted("ROLE_USER")
+     * @Entity("blockee", expr="repository.findOneOrRedirectToCanonical(username, 'username')")
      *
      * @param User          $blockee
      * @param Request       $request

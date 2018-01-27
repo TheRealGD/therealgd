@@ -26,6 +26,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Entity("forum", expr="repository.findOneOrRedirectToCanonical(forum_name, 'forum_name')")
+ * @Entity("user", expr="repository.findOneOrRedirectToCanonical(username, 'username')")
  */
 final class ForumController extends AbstractController {
     /**
