@@ -15,14 +15,13 @@ use App\Repository\ForumRepository;
 use App\Utils\Slugger;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @Entity("forum", expr="repository.findOneByCaseInsensitiveName(forum_name)")
- * @ParamConverter("submission", options={"mapping": {"forum": "forum", "submission_id": "id"}})
- * @ParamConverter("comment", options={"mapping": {"submission": "submission", "comment_id": "id"}})
+ * @Entity("forum", expr="repository.findOneOrRedirectToCanonical(forum_name, 'forum_name')")
+ * @Entity("submission", expr="repository.findOneBy({forum: forum, id: submission_id})")
+ * @Entity("comment", expr="repository.findOneBy({submission: submission, id: comment_id})")
  */
 final class CommentController extends AbstractController {
     public function list(CommentRepository $repository, int $page) {
@@ -248,13 +247,7 @@ final class CommentController extends AbstractController {
         }
     }
 
-    /**
-     * @param Comment $comment
-     * @param Request $request
-     *
-     * @return Response
-     */
-    private function redirectAfterAction(Comment $comment, Request $request) {
+    private function redirectAfterAction(Comment $comment, Request $request): Response {
         if ($request->headers->has('Referer')) {
             return $this->redirect($request->headers->get('Referer'));
         }

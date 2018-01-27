@@ -10,13 +10,33 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * @method Forum|null findOneByCanonicalName(string $canonicalName)
  */
 final class ForumRepository extends ServiceEntityRepository {
-    public function __construct(ManagerRegistry $registry) {
+    /**
+     * @var UrlGeneratorInterface
+     */
+    private $urlGenerator;
+
+    /**
+     * @var RequestStack
+     */
+    private $requestStack;
+
+    public function __construct(
+        ManagerRegistry $registry,
+        UrlGeneratorInterface $urlGenerator,
+        RequestStack $requestStack
+    ) {
         parent::__construct($registry, Forum::class);
+
+        $this->urlGenerator = $urlGenerator;
+        $this->requestStack = $requestStack;
     }
 
     /**
@@ -125,12 +145,7 @@ final class ForumRepository extends ServiceEntityRepository {
         return array_column($names, 'name', 'id');
     }
 
-    /**
-     * @param string|null $name
-     *
-     * @return Forum|null
-     */
-    public function findOneByCaseInsensitiveName($name) {
+    public function findOneByCaseInsensitiveName(?string $name): ?Forum {
         if ($name === null) {
             // for the benefit of param converters which for some reason insist
             // on calling repository methods with null parameters.
@@ -138,5 +153,32 @@ final class ForumRepository extends ServiceEntityRepository {
         }
 
         return $this->findOneByCanonicalName(Forum::canonicalizeName($name));
+    }
+
+    public function findOneOrRedirectToCanonical(?string $name, string $param): ?Forum {
+        $forum = $this->findOneByCaseInsensitiveName($name);
+
+        if ($forum && $forum->getName() !== $name) {
+            $request = $this->requestStack->getCurrentRequest();
+
+            if (
+                !$request ||
+                $this->requestStack->getParentRequest() ||
+                !$request->isMethodCacheable()
+            ) {
+                // no request/is sub-request/not cacheable
+                return $forum;
+            }
+
+            $route = $request->attributes->get('_route');
+            $params = $request->attributes->get('_route_params', []);
+            $params[$param] = $forum->getName();
+
+            throw new HttpException(302, 'Redirecting to canonical', null, [
+                'Location' => $this->urlGenerator->generate($route, $params),
+            ]);
+        }
+
+        return $forum;
     }
 }

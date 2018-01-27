@@ -25,7 +25,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @Entity("forum", expr="repository.findOneByCaseInsensitiveName(forum_name)")
+ * @Entity("forum", expr="repository.findOneOrRedirectToCanonical(forum_name, 'forum_name')")
  */
 final class ForumController extends AbstractController {
     /**

@@ -56,10 +56,13 @@ class ApplicationAvailabilityTest extends WebTestCase {
      */
     public function testRedirectedUrlsGoToExpectedLocation($expectedLocation, $url) {
         $client = $this->createClient();
+        $client->followRedirects();
         $client->request('GET', $url);
 
-        $this->assertTrue($client->getResponse()->isRedirect());
-        $this->assertStringEndsWith($expectedLocation, $client->getResponse()->headers->get('Location'));
+        $this->assertEquals(
+            "http://localhost{$expectedLocation}",
+            $client->getCrawler()->getUri()
+        );
     }
 
     /**
@@ -110,20 +113,9 @@ class ApplicationAvailabilityTest extends WebTestCase {
         yield ['/f/news/controversial/1.atom'];
         yield ['/f/news/1'];
         yield ['/f/news/1/comment/1'];
-        yield ['/f/NeWs/hot'];
-        yield ['/f/NeWs/new'];
-        yield ['/f/NeWs/top'];
-        yield ['/f/NeWs/controversial'];
-        yield ['/f/NeWs/hot/1'];
-        yield ['/f/NeWs/new/1'];
-        yield ['/f/NeWs/top/1'];
-        yield ['/f/NeWs/controversial/1'];
-        yield ['/f/NeWs/1'];
-        yield ['/f/NeWs/1/comment/1'];
         yield ['/f/news/bans'];
         yield ['/f/news/moderation_log'];
         yield ['/f/cats/2'];
-        yield ['/f/CATS/2'];
         yield ['/forums'];
         yield ['/forums/by_name'];
         yield ['/forums/by_title'];
@@ -142,6 +134,18 @@ class ApplicationAvailabilityTest extends WebTestCase {
     public function redirectUrlProvider() {
         yield ['/f/cats/2', '/f/cats/2/'];
         yield ['/f/cats', '/f/cats/'];
+        yield ['/f/cats/2', '/f/CATS/2/'];
+        yield ['/f/cats/2', '/f/CATS/2'];
+        yield ['/f/news', '/f/NeWs/hot'];
+        yield ['/f/news/new', '/f/NeWs/new'];
+        yield ['/f/news/top', '/f/NeWs/top'];
+        yield ['/f/news/controversial', '/f/NeWs/controversial'];
+        yield ['/f/news', '/f/NeWs/hot/1'];
+        yield ['/f/news/new', '/f/NeWs/new/1'];
+        yield ['/f/news/top', '/f/NeWs/top/1'];
+        yield ['/f/news/controversial', '/f/NeWs/controversial/1'];
+        yield ['/f/news/1', '/f/NeWs/1'];
+        yield ['/f/news/1/comment/1', '/f/NeWs/1/comment/1'];
     }
 
     /**
