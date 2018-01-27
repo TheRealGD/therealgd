@@ -2,13 +2,13 @@
 
 namespace App\Controller;
 
-use Doctrine\ORM\EntityManager;
 use App\Entity\WikiPage;
 use App\Entity\WikiRevision;
 use App\Form\Model\WikiData;
 use App\Form\WikiType;
 use App\Repository\WikiPageRepository;
 use App\Repository\WikiRevisionRepository;
+use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;

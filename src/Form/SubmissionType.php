@@ -2,11 +2,11 @@
 
 namespace App\Form;
 
-use App\Form\Type\HoneypotType;
-use Doctrine\ORM\EntityRepository;
 use App\Entity\Forum;
 use App\Form\Model\SubmissionData;
+use App\Form\Type\HoneypotType;
 use App\Form\Type\MarkdownType;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;

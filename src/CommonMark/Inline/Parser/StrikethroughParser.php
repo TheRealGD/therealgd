@@ -2,11 +2,11 @@
 
 namespace App\CommonMark\Inline\Parser;
 
+use App\CommonMark\Inline\Element\Strikethrough;
 use League\CommonMark\ContextInterface;
 use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\Inline\Parser\AbstractInlineParser;
 use League\CommonMark\InlineParserContext;
-use App\CommonMark\Inline\Element\Strikethrough;
 
 /**
  * Seized from <https://github.com/uafrica/commonmark-ext> and modified to

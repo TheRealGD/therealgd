@@ -2,16 +2,16 @@
 
 namespace App\Controller;
 
-use App\Repository\UserRepository;
-use Doctrine\ORM\EntityManager;
 use App\Entity\User;
-use App\Form\IpBanType;
 use App\Form\BanUserType;
+use App\Form\IpBanType;
 use App\Form\Model\IpBanData;
 use App\Form\Model\UserBanData;
 use App\Form\UnbanUserType;
 use App\Repository\IpBanRepository;
 use App\Repository\UserBanRepository;
+use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;

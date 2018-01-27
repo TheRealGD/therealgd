@@ -2,10 +2,10 @@
 
 namespace App\Tests\Entity;
 
-use PHPUnit\Framework\TestCase;
 use App\Entity\User;
 use App\Entity\UserBan;
 use App\Entity\UserBlock;
+use PHPUnit\Framework\TestCase;
 
 class UserTest extends TestCase {
     public function testUsersCannotMessageUsersWhoBlockThem() {

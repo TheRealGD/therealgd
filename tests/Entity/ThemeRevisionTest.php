@@ -2,9 +2,9 @@
 
 namespace App\Tests\Entity;
 
-use PHPUnit\Framework\TestCase;
 use App\Entity\Theme;
 use App\Entity\ThemeRevision;
+use PHPUnit\Framework\TestCase;
 
 class ThemeRevisionTest extends TestCase {
     public function testCannotHaveMoreThanThreeParents() {

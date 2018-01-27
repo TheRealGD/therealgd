@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use Doctrine\ORM\EntityManager;
 use App\Entity\Votable;
+use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

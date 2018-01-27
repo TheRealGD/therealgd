@@ -2,11 +2,11 @@
 
 namespace App\CommonMark\Inline\Renderer;
 
+use App\CommonMark\Inline\Element\Strikethrough;
 use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
 use League\CommonMark\Inline\Element\AbstractInline;
 use League\CommonMark\Inline\Renderer\InlineRendererInterface;
-use App\CommonMark\Inline\Element\Strikethrough;
 use League\CommonMark\Util\Xml;
 
 /**

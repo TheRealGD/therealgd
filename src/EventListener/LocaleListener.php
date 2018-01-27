@@ -2,8 +2,8 @@
 
 namespace App\EventListener;
 
-use Doctrine\ORM\Event\LifecycleEventArgs;
 use App\Entity\User;
+use Doctrine\ORM\Event\LifecycleEventArgs;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;

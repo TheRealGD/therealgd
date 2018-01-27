@@ -2,8 +2,8 @@
 
 namespace App\Command;
 
-use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\ForumCategory;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;

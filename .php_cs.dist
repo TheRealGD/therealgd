@@ -7,6 +7,7 @@ return PhpCsFixer\Config::create()
         'braces' => [
             'position_after_functions_and_oop_constructs' => 'same'
         ],
+        'ordered_imports' => true,
         'increment_style' => null,
         'yoda_style' => [
             'equal' => false,

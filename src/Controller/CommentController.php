@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use Doctrine\ORM\EntityManager;
 use App\Entity\Comment;
 use App\Entity\Forum;
 use App\Entity\ForumLogCommentDeletion;
@@ -13,6 +12,7 @@ use App\Form\Model\CommentData;
 use App\Repository\CommentRepository;
 use App\Repository\ForumRepository;
 use App\Utils\Slugger;
+use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;

@@ -2,11 +2,11 @@
 
 namespace App\Tests\Entity;
 
-use PHPUnit\Framework\TestCase;
 use App\Entity\MessageReply;
 use App\Entity\MessageThread;
 use App\Entity\User;
 use App\Entity\UserBlock;
+use PHPUnit\Framework\TestCase;
 
 class MessageTest extends TestCase {
     /**

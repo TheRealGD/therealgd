@@ -2,9 +2,9 @@
 
 namespace App\DataFixtures\ORM;
 
+use App\Entity\User;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
-use App\Entity\User;
 
 class LoadExampleUsers extends AbstractFixture {
     /**

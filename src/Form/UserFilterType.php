@@ -16,7 +16,7 @@ class UserFilterType extends AbstractType {
                 'choices' => [
                     'label.registration_date' => UserFilterData::ORDER_CREATED,
                     'label.username' => UserFilterData::ORDER_USERNAME,
-                ]
+                ],
             ])
             ->add('role', ChoiceType::class, [
                 'label' => 'label.role',

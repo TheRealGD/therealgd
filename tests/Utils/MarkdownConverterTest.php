@@ -75,5 +75,4 @@ class MarkdownConverterTest extends TestCase {
             'base_path' => '/foo',
         ]];
     }
-
 }

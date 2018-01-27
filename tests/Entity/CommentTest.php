@@ -2,12 +2,12 @@
 
 namespace App\Tests\Entity;
 
-use PHPUnit\Framework\TestCase;
 use App\Entity\Comment;
 use App\Entity\Forum;
 use App\Entity\Submission;
 use App\Entity\User;
 use App\Entity\UserFlags;
+use PHPUnit\Framework\TestCase;
 
 class CommentTest extends TestCase {
     public function testNewTopLevelCommentSendsNotification() {

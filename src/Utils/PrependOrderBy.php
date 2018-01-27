@@ -2,8 +2,8 @@
 
 namespace App\Utils;
 
-use Doctrine\ORM\QueryBuilder as DQLQueryBuilder;
 use Doctrine\DBAL\Query\QueryBuilder as SQLQueryBuilder;
+use Doctrine\ORM\QueryBuilder as DQLQueryBuilder;
 
 /**
  * Work around missing ability to prepend orderBy clauses in Doctrine's query

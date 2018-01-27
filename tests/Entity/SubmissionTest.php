@@ -2,7 +2,6 @@
 
 namespace App\Tests\Entity;
 
-use PHPUnit\Framework\TestCase;
 use App\Entity\Exception\BannedFromForumException;
 use App\Entity\Forum;
 use App\Entity\ForumBan;
@@ -10,6 +9,7 @@ use App\Entity\Submission;
 use App\Entity\User;
 use App\Entity\UserFlags;
 use App\Entity\Votable;
+use PHPUnit\Framework\TestCase;
 
 class SubmissionTest extends TestCase {
     /**

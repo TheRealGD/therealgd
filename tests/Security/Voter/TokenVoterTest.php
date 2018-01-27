@@ -2,9 +2,9 @@
 
 namespace App\Tests\Security\Voter;
 
-use PHPUnit\Framework\TestCase;
 use App\Entity\User;
 use App\Security\Voter\TokenVoter;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;

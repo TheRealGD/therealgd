@@ -2,13 +2,13 @@
 
 namespace App\Controller;
 
-use App\Form\ThemeSettingsType;
-use Doctrine\ORM\EntityManager;
 use App\Entity\Theme;
 use App\Entity\ThemeRevision;
 use App\Form\Model\ThemeData;
 use App\Form\ThemeCssType;
+use App\Form\ThemeSettingsType;
 use App\Repository\ThemeRepository;
+use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;

@@ -2,11 +2,11 @@
 
 namespace App\EventListener;
 
-use Doctrine\Common\EventSubscriber;
-use Doctrine\ORM\Event\PreUpdateEventArgs;
 use App\Entity\Comment;
 use App\Entity\Submission;
 use App\Entity\User;
+use Doctrine\Common\EventSubscriber;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**

@@ -2,11 +2,11 @@
 
 namespace App\Tests\Entity;
 
-use PHPUnit\Framework\TestCase;
 use App\Entity\Forum;
 use App\Entity\ForumBan;
 use App\Entity\Moderator;
 use App\Entity\User;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class ForumTest extends TestCase {

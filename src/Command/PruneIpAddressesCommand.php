@@ -2,13 +2,13 @@
 
 namespace App\Command;
 
-use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Comment;
 use App\Entity\CommentVote;
 use App\Entity\MessageReply;
 use App\Entity\MessageThread;
 use App\Entity\Submission;
 use App\Entity\SubmissionVote;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;

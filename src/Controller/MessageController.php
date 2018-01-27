@@ -2,13 +2,13 @@
 
 namespace App\Controller;
 
-use Doctrine\ORM\EntityManager;
 use App\Entity\MessageThread;
 use App\Entity\User;
 use App\Form\MessageReplyType;
 use App\Form\MessageThreadType;
 use App\Form\Model\MessageData;
 use App\Repository\MessageThreadRepository;
+use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;

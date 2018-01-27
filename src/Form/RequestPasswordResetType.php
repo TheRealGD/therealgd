@@ -2,8 +2,8 @@
 
 namespace App\Form;
 
-use Gregwar\CaptchaBundle\Type\CaptchaType;
 use App\Form\Model\RequestPasswordReset;
+use Gregwar\CaptchaBundle\Type\CaptchaType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;

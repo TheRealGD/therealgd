@@ -3,8 +3,8 @@
 namespace App\DependencyInjection\Compiler;
 
 use App\Twig\AppExtension;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Process\Process;
 
 /**

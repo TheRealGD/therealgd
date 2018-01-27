@@ -2,13 +2,13 @@
 
 namespace App\Controller;
 
-use Doctrine\ORM\EntityManager;
 use App\Entity\User;
 use App\Form\Model\UserData;
 use App\Form\RequestPasswordResetType;
 use App\Form\UserType;
 use App\Mailer\ResetPasswordMailer;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

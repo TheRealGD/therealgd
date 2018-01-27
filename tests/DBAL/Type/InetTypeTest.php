@@ -2,9 +2,9 @@
 
 namespace App\Tests\DBAL\Type;
 
+use App\DBAL\Type\InetType;
 use Doctrine\DBAL\Platforms\PostgreSqlPlatform;
 use Doctrine\DBAL\Types\Type;
-use App\DBAL\Type\InetType;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class InetTypeTest extends KernelTestCase {

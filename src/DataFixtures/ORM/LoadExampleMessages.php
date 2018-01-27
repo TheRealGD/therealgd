@@ -2,11 +2,11 @@
 
 namespace App\DataFixtures\ORM;
 
+use App\Entity\MessageReply;
+use App\Entity\MessageThread;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use App\Entity\MessageReply;
-use App\Entity\MessageThread;
 
 class LoadExampleMessages extends AbstractFixture implements DependentFixtureInterface {
     /**

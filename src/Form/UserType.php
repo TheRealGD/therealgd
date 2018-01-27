@@ -2,10 +2,10 @@
 
 namespace App\Form;
 
-use App\Form\Type\HoneypotType;
-use Gregwar\CaptchaBundle\Type\CaptchaType;
 use App\Form\EventListener\PasswordEncodingSubscriber;
 use App\Form\Model\UserData;
+use App\Form\Type\HoneypotType;
+use Gregwar\CaptchaBundle\Type\CaptchaType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
