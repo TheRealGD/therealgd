@@ -353,6 +353,7 @@ final class UserController extends AbstractController {
     }
 
     /**
+     * @Entity("user", expr="repository.find(id)")
      * @IsGranted("ROLE_ADMIN")
      *
      * @param Request       $request
