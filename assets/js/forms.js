@@ -2,7 +2,7 @@
 
 import $ from 'jquery';
 
-let widgetsChanged = new Set();
+const widgetsChanged = new Set();
 let hasBeforeUnloadListener = false;
 
 function beforeUnloadHandler(event) {
@@ -40,5 +40,7 @@ $(document)
     .on('submit', '.form', event => {
         if (!event.isPropagationStopped()) {
             $(window).off('beforeunload', beforeUnloadHandler);
+
+            hasBeforeUnloadListener = false;
         }
     });
