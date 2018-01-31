@@ -28,7 +28,7 @@
         "ezyang/htmlpurifier": "^4.8",
         "friendsofsymfony/jsrouting-bundle": "^2.1",
         "gregwar/captcha": "^1.1",
-        "gregwar/captcha-bundle": "dev-master#639430383fd6aaedd421e39404445cd65d377f10 as 2.0",
+        "gregwar/captcha-bundle": "^2.0.4",
         "league/commonmark": "^0.17.0",
         "liip/imagine-bundle": "^2.0-dev",
         "oneup/flysystem-bundle": "^3.0",
