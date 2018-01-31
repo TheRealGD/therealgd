@@ -10,6 +10,7 @@ import './commenting';
 import './delete';
 import './dropdowns';
 import './fetch_titles';
+import './forms';
 import './markdown';
 import './relative-time';
 import './select2';
