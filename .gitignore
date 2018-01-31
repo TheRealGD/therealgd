@@ -7,6 +7,7 @@
 tags
 /node_modules/
 /public/build/
+/public/js/
 /public/media/
 /public/submission_images/
 /templates/overrides/*

@@ -56,12 +56,24 @@
     {% endblock %}
 
     {% block javascripts %}
-      <script src="{{ preload(asset('bundles/fosjsrouting/js/router.js')) }}"></script>
-      <script src="{{ path('fos_js_routing_js', {callback: 'fos.Router.setData'}) }}"></script>
+      <script src="{{ preload(asset('bundles/fosjsrouting/js/router.js', 'static_asset')) }}"></script>
+
+      {% if app.environment != 'dev' or app.request.query.has('static_assets') %}
+        <script src="{{ preload(asset('js/routing.js', 'static_asset')) }}"></script>
+      {% else %}
+        <script src="{{ path('fos_js_routing_js', {callback: 'fos.Router.setData'}) }}"></script>
+      {% endif %}
+
       <script src="{{ preload(asset('build/manifest.js')) }}"></script>
       <script src="{{ preload(asset('build/vendor.js')) }}"></script>
       <script src="{{ preload(asset('build/main.js')) }}"></script>
-      <script src="{{ path('bazinga_jstranslation_js') }}"></script>
+
+      {% if app.environment != 'dev' or app.request.query.has('static_assets') %}
+        <script src="{{ preload(asset('js/translations/config.js', 'static_asset')) }}"></script>
+        <script src="{{ preload(asset('js/translations/%s.js'|format(app.request.locale), 'static_asset')) }}"></script>
+      {% else %}
+        <script src="{{ path('bazinga_jstranslation_js') }}"></script>
+      {% endif %}
     {% endblock %}
   </body>
 </html>
