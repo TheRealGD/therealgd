@@ -179,28 +179,29 @@ final class ForumController extends AbstractController {
      *
      * @param Request       $request
      * @param EntityManager $em
-     * @param Forum         $forum   one of 'subscribe' or 'unsubscribe'
-     * @param string        $action
+     * @param Forum         $forum
+     * @param bool          $subscribe
+     * @param string        $_format
      *
      * @return Response
      */
-    public function subscribe(Request $request, EntityManager $em, Forum $forum, string $action) {
+    public function subscribe(Request $request, EntityManager $em, Forum $forum, bool $subscribe, string $_format) {
         $this->validateCsrf('subscribe', $request->request->get('token'));
 
-        if ($action === 'subscribe') {
+        if ($subscribe) {
             $forum->subscribe($this->getUser());
-        } elseif ($action === 'unsubscribe') {
-            $forum->unsubscribe($this->getUser());
         } else {
-            throw new \InvalidArgumentException('$action must be subscribe or unsubscribe');
+            $forum->unsubscribe($this->getUser());
         }
 
         $em->flush();
 
-        $referrer = $request->headers->get('Referer');
+        if ($_format === 'json') {
+            return $this->json(['subscribed' => $subscribe]);
+        }
 
-        if ($referrer) {
-            return $this->redirect($referrer);
+        if ($request->headers->has('Referer')) {
+            return $this->redirect($request->headers->get('Referer'));
         }
 
         return $this->redirectToRoute('forum', ['forum_name' => $forum->getName()]);

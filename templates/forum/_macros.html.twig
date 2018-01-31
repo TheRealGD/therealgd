@@ -1,17 +1,23 @@
 {% macro subscribe_button(forum, subscribed, inline) %}
-  {% set subscriber_count = forum.subscriptions|length %}
-  {% from '_macros/icon.html.twig' import icon %}
-  <button class="subscribe-button subscribe-button--{{ subscribed ? 'unsubscribe' : 'subscribe' }} {{ inline ? 'subscribe-button--inline' }}">
-    <span class="subscribe-button__inner">
-      <span class="subscribe-button__label">
-        {{- (subscribed ? 'forum.unsubscribe' : 'forum.subscribe')|trans -}}
-      </span>
-
-      <span class="subscribe-button__subscriber-count" aria-label="{{ 'forum.subscriber_count'|transchoice(subscriber_count) }}">
-        {{- subscriber_count|localizednumber -}}
-      </span>
-    </span>
+  {%- set subscriber_count = subscriber_count ?? forum.subscriptions|length -%}
+  {%- from '_macros/icon.html.twig' import icon -%}
+  {%- from _self import subscribe_button, _subscribe_button_inner -%}
+  <button class="subscribe-button subscribe-button--{{ subscribed ? 'unsubscribe' : 'subscribe' }} {{ inline ? 'subscribe-button--inline' }}"
+          data-toggle-prototype="{{ _subscribe_button_inner(not subscribed, subscriber_count + (subscribed ? -1 : 1))|e }}">
+    {{- _subscribe_button_inner(subscribed, subscriber_count) -}}
   </button>
+{%- endmacro %}
+
+{% macro _subscribe_button_inner(subscribed, subscriber_count) %}
+  <span class="subscribe-button__inner">
+    <span class="subscribe-button__label">
+      {{- (subscribed ? 'forum.unsubscribe' : 'forum.subscribe')|trans -}}
+    </span>
+
+    <span class="subscribe-button__subscriber-count" aria-label="{{ 'forum.subscriber_count'|transchoice(subscriber_count) }}">
+      {{- subscriber_count|localizednumber -}}
+    </span>
+  </span>
 {% endmacro %}
 
 {%- macro log_line(entry) -%}

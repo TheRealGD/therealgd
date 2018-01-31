@@ -93,15 +93,19 @@ global_moderation_log:
 
 subscribe:
     controller: App\Controller\ForumController::subscribe
-    defaults: { action: subscribe }
-    path: /f/{forum_name}/subscribe
+    defaults: { subscribe: true, _format: html }
+    path: /f/{forum_name}/subscribe.{_format}
     methods: [POST]
+    requirements: { _format: html|json }
+    options: { expose: true }
 
 unsubscribe:
     controller: App\Controller\ForumController::subscribe
-    defaults: { action: unsubscribe }
-    path: /f/{forum_name}/unsubscribe
+    defaults: { subscribe: false, _format: html }
+    path: /f/{forum_name}/unsubscribe.{_format}
     methods: [POST]
+    requirements: { _format: html|json }
+    options: { expose: true }
 
 create_forum:
     controller: App\Controller\ForumController::createForum

@@ -293,7 +293,9 @@ class Forum {
 
         $subscription = $this->subscriptions->matching($criteria)->first();
 
-        $this->subscriptions->removeElement($subscription);
+        if ($subscription) {
+            $this->subscriptions->removeElement($subscription);
+        }
     }
 
     public function userIsBanned(User $user): bool {
