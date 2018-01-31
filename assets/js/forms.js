@@ -34,10 +34,11 @@ function changeHandler(event) {
     }
 }
 
-$(document).on('change', '.form', changeHandler);
-$(document).on('input', '.form', changeHandler);
-$(document).on('submit', '.form', event => {
-    if (!event.isPropagationStopped()) {
-        $(window).off('beforeunload', beforeUnloadHandler);
-    }
-});
+$(document)
+    .on('change', '.form', changeHandler)
+    .on('input', '.form', changeHandler)
+    .on('submit', '.form', event => {
+        if (!event.isPropagationStopped()) {
+            $(window).off('beforeunload', beforeUnloadHandler);
+        }
+    });
