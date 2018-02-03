@@ -30,4 +30,21 @@ class NotificationRepository extends ServiceEntityRepository {
 
         return $qb->getQuery()->execute();
     }
+
+    /**
+     * @param User $user
+     * @param int  $notificationId
+     *
+     * @return int numbers of rows cleared
+     */
+    public function clearNotification(User $user, int $notificationId = null) {
+        $qb = $this->getEntityManager()->createQueryBuilder()
+            ->delete(Notification::class, 'n')
+            ->where('n.user = ?1')
+            ->setParameter(1, $user)
+            ->andWhere('n.id = ?2')
+            ->setparameter(2, $notificationId);
+
+        return $qb->getQuery()->execute();
+    }
 }

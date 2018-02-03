@@ -353,6 +353,34 @@ final class UserController extends AbstractController {
     }
 
     /**
+     * @IsGranted("ROLE_USER")
+     *
+     * @param Request                $request
+     * @param NotificationRepository $nr
+     * @param EntityManager          $em
+     * @param string                 $_format
+     *
+     * @return Response
+     */
+    public function clearNotification(Request $request, NotificationRepository $nr, EntityManager $em, string $_format) {
+        $this->validateCsrf('clear_notification', $request->request->get('token'));
+
+        $user = $this->getUser();
+        $notificationId = $request->query->getInt('id', null);
+
+        $nr->clearNotification($user, $notificationId);
+        $em->flush();
+
+        if ($_format === 'json') {
+            return $this->json(['message' => 'The notification was successfully cleared.']);
+        }
+
+        $this->addFlash('notice', 'flash.notification_cleared');
+
+        return $this->redirectToRoute('inbox');
+    }
+
+    /**
      * @Entity("user", expr="repository.find(id)")
      * @IsGranted("ROLE_ADMIN")
      *

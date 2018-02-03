@@ -97,6 +97,7 @@ flash:
     forum_updated: The changes have been saved.
     forum_moderator_added: The user has been promoted to moderator.
     inbox_cleared: The inbox was cleared.
+    notification_cleared: The notification was successfully cleared.
     reset_password_email_sent: A reset email has been sent to the address you specified.
     theme_created: Your theme has been created.
     theme_updated: The theme has been updated.

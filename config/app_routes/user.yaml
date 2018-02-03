@@ -94,3 +94,10 @@ user_forum_bans:
     path: /user/{username}/forum_bans/{page}
     methods: [GET]
     requirements: { username: \w+, page: \d+ }
+
+clear_notification:
+    controller: App\Controller\UserController::clearNotification
+    defaults: { _format: html }
+    path: /clear_notification.{_format}
+    methods: [POST]
+    requirements: { _format: html|json }
