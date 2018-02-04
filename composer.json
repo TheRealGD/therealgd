@@ -87,7 +87,13 @@
             "assets:install --symlink --relative %PUBLIC_DIR%": "symfony-cmd",
             "fos:js-routing:dump --target=public/js/routing.js": "symfony-cmd",
             "bazinga:js-translation:dump public/js --merge-domains --format=js": "symfony-cmd"
-        }
+        },
+        "post-install-cmd": [
+            "@auto-scripts"
+        ],
+        "post-update-cmd": [
+            "@auto-scripts"
+        ]
     },
     "extra": {
         "branch-alias": {
