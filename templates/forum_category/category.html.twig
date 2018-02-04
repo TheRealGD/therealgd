@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% from 'submission/_macros.html.twig' import submission, submission_sort %}
+
+{% block page_classes 'forum-category-page' %}
+{% block title 'heading.category'|trans({'%category%': category.title}) %}
+
+{% block sidebar %}
+  <section class="sidebar__section">
+    <h2 class="sidebar__title">/c/{{ category.name }}</h2>
+
+    <ul>
+      {% for forum in forums %}
+        <li><a href="{{ path('forum', {forum_name: forum}) }}">{{ forum }}</a></li>
+      {% endfor %}
+    </ul>
+  </section>
+{% endblock %}
+
+{% block body %}
+  <nav class="tabs submission-sort">
+    <ul class="tabs__bar">
+      {{- submission_sort(sort_by) -}}
+    </ul>
+  </nav>
+
+  <h1 class="page-heading">{{ 'heading.category'|trans({'%category%': category.title}) }}</h1>
+
+  {% for submission in submissions %}
+    {{ submission(submission) }}
+  {% endfor %}
+
+  {% include '_includes/pagination.html.twig' with {pager: submissions} %}
+{% endblock %}

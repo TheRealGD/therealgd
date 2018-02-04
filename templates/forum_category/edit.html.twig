@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block page_classes 'forum-category-edit-page' %}
+{% block title 'title.editing_forum_category'|trans({
+  '%category%': category.title
+}) %}
+
+{% block body %}
+  <h1>{{ 'title.editing_forum_category'|trans({
+    '%category%': '<a href="%s">%s</a>'|format(
+      path('forum_category', {name: category.name})|e,
+      category.title|e
+    )})|raw }}</h1>
+
+  {{ include('forum_category/_form.html.twig', {form: form, editing: true}, with_context=false) }}
+{% endblock %}

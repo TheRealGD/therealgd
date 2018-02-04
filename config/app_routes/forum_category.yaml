@@ -1,0 +1,22 @@
+manage_forum_categories:
+    controller: App\Controller\ForumCategoryController::manage
+    defaults: { page: 1 }
+    methods: [GET]
+    path: /manage_forum_categories/{page}
+
+forum_category:
+    controller: App\Controller\ForumCategoryController::category
+    defaults: { sortBy: hot, page: 1 }
+    path: /c/{name}/{sortBy}/{page}
+    methods: [GET]
+    requirements: { sortBy: hot|new|top|controversial, page: \d+ }
+
+create_forum_category:
+    controller: App\Controller\ForumCategoryController::create
+    methods: [GET, POST]
+    path: /create_forum_category
+
+edit_forum_category:
+    controller: App\Controller\ForumCategoryController::edit
+    methods: [GET, POST]
+    path: /edit_forum_category/{name}

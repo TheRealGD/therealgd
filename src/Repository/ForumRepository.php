@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Forum;
+use App\Entity\ForumCategory;
 use App\Entity\ForumSubscription;
 use App\Entity\Moderator;
 use App\Entity\User;
@@ -133,13 +134,26 @@ final class ForumRepository extends ServiceEntityRepository {
     }
 
     public function findForumNames($names) {
-        /** @noinspection SqlDialectInspection */
+        /* @noinspection SqlDialectInspection */
         $dql = 'SELECT f.id, f.name FROM '.Forum::class.' f '.
             'WHERE f.normalizedName IN (?1) '.
             'ORDER BY f.normalizedName ASC';
 
         $names = $this->_em->createQuery($dql)
             ->setParameter(1, $names)
+            ->getResult();
+
+        return array_column($names, 'name', 'id');
+    }
+
+    public function findForumsInCategory(ForumCategory $category) {
+        /* @noinspection SqlDialectInspection */
+        $dql = 'SELECT f.id, f.name FROM '.Forum::class.' f '.
+            'WHERE f.category = :category '.
+            'ORDER BY f.normalizedName ASC';
+
+        $names = $this->_em->createQuery($dql)
+            ->setParameter('category', $category)
             ->getResult();
 
         return array_column($names, 'name', 'id');

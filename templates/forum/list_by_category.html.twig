@@ -15,7 +15,10 @@
   <ul class="grouped-forum-listing">
     {% for category in forum_categories %}
       <li class="forum-group">
-        <h1 class="forum-group-heading">{{ category.name }}</h1>
+        <h1 class="forum-group-heading">
+          <a href="{{ path('forum_category', {name: category.name}) }}">{{ category.title }}</a>
+        </h1>
+
         <ul class="forum-group-list">
           {% for forum in category.forums %}
             <li class="forum-group-list-item">

@@ -23,6 +23,7 @@ action:
     remove: Remove
     global_ban: Global ban
     filter: Filter
+    create: Create
 
 add_moderator:
     title: Add moderator to %forum%
@@ -179,6 +180,7 @@ heading:
     multi_forum_view: Multi-forum view
     message_thread: "%sender% wrote to %receiver% %timestamp%"
     message_reply: "%sender% replied %timestamp%"
+    category: 'Category: %category%'
 
 help:
     delete_forum_warning: All content on this forum will be irreversibly deleted!
@@ -188,6 +190,7 @@ help:
     revision_summary: Enter a summary of your changes.
     parent_theme_input: Enter the <username>/<theme> of the theme you wish to extend. Alternatively, you can enter a UUID to extend a particular revision.
     append_to_default_style_inheritance_warning: Setting this has no effect when extending an existing theme.
+    will_appear_in_the_url: Will appear in the URL.
 
 inbox:
     title: Inbox
@@ -336,6 +339,8 @@ nav:
     filter_results: Filter results
     users: Users
     forum_bans: Forum bans
+    forum_categories: Forum categories
+    new_category: New category
 
 placeholder:
     default: (default)
@@ -441,6 +446,9 @@ title:
     delete_submission: Delete submission
     list_of_users: 'List of users, page #%page%'
     user_forum_bans: "%user%'s forum bans"
+    manage_forum_categories: Manage forum categories
+    create_forum_category: Create forum category
+    editing_forum_category: 'Editing forum category: %category%'
 
 user:
     submissions: Submissions
