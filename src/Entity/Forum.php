@@ -95,7 +95,7 @@ class Forum {
     private $subscriptions;
 
     /**
-     * @ORM\OneToMany(targetEntity="ForumBan", mappedBy="forum", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="ForumBan", mappedBy="forum", cascade={"persist", "remove"})
      *
      * @var ForumBan[]|Collection|Selectable
      */
