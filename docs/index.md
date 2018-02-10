@@ -9,6 +9,7 @@
     * [Overriding templates & translations](overrides.md)
     * [Deployment][deploy] (external link)
     * [Configuring a web server][web server] (external link)
+    * [How to upgrade Postmill](upgrading.md)
 
 * **For developers**
     * [Ugly hacks & workarounds](workarounds.md)
