@@ -22,6 +22,8 @@ action:
     delete: Eliminar
     remove: Quitar
     global_ban: Veto global
+    filter: Filtrar
+    create: Crear
 
 add_moderator:
     title: Agrega una moderadora a %forum%
@@ -98,6 +100,7 @@ flash:
     forum_updated: Los cambios han sido guardados.
     forum_moderator_added: La usuaria ha sido ascendida a moderadora.
     inbox_cleared: La bandeja de entrada ha sido limpiada.
+    notification_cleared: La notificación fue eliminada exitosamente.
     reset_password_email_sent: Un correo de recuperación ha sido enviado a la dirección que especificó.
     theme_created: Tu tema ha sido creado.
     theme_updated: El tema ha sido actualizado.
@@ -124,6 +127,7 @@ flash:
     page_locked: Se ha anclado la página.
     page_unlocked: Se ha desanclado la página.
     no_cookies_verification: ¿La imagen no carga correctamente? Asegúrate de que no estás bloqueando las cookies e inténtalo de nuevo.
+    no_password_resets: Los restablecimientos de contraseña han sido deshabilitados por la administradora.
 
 forum:
     moderators: Moderadoras
@@ -188,12 +192,16 @@ help:
     revision_summary: Introducir un resumen de tus cambios.
     parent_theme_input: Introduce el <username>/<theme> del tema que deseas extender. Alternativamente, puedes introducir un UUID para extender una revisión particular.
     append_to_default_style_inheritance_warning: Ajustar esto no tiene efecto cuando extiendes un tema existente.
+    will_appear_in_the_url: Aparecerá en la URL.
 
 inbox:
     title: Bandeja de entrada
     clear_inbox: Limpiar bandeja
     empty: Su bandeja de entrada esta vacía
     message_reply_head: 'Re: %title%'
+
+item:
+    short_url: 'URL corta: %url%'
 
 label:
     name: Nombre
@@ -250,7 +258,28 @@ label:
     toolbox: Herramientas
     banned_by: Vetada por
     unban_associated_ips: Elimina vetos asociados a IP
+    ban_ip_addresses: ¿Vetar dirección(es) IP?
     ip_address: Dirección IP
+    ip_addresses: Direcciones IP
+    forum: Foro
+    trusted: Confiable
+    submissions: Publicaciones
+    submissions_short: P
+    comments: Comentarios
+    comments_short: C
+    submission_votes: Votos de publicaciones
+    submission_votes_short: VP
+    comment_votes: Votos de comentarios
+    comment_votes_short: VC
+    role: Rol
+    moderates: Modera
+    forums_count: '{0} Ningún foro|{1} %count% foro|]1,Inf[ %count% foros'
+    any: Cualquiera
+    none: Ninguno
+    order_by: Ordenar por
+    registration_date: Fecha de registro
+    posting: Publicando
+    auto_fetch_submission_titles: Obtener automáticamente títulos de publicaciones
 
 log:
     comment_deletion: '%user% eliminó comentario por %author% en "%submission%"'
@@ -307,6 +336,13 @@ nav:
     user_bans: Vetos de usuarias
     ip_bans: Vetos IP
     add_ban: Añadir veto
+    css: CSS
+    theme_settings: Ajustes del tema
+    filter_results: Filtrar resultados
+    users: Usuarias
+    forum_bans: Vetos de foro
+    forum_categories: Categorías de foro
+    new_category: Nueva categoría
 
 placeholder:
     default: (predeterminado)
@@ -405,10 +441,17 @@ title:
     viewing_theme_source: Viendo el código de %theme%
     editing_biography_for_user: Editando biografía para %user%
     showing_moderation_log_for_forum: Mostrando registro de moderación para %forum%
-    active_global_user_bans: Vetos de usuarias activos, globales
+    active_global_user_bans: Vetos de usuarias activas, globales
     ip_bans: Direcciones IP vetadas
     ban_user: Vetando %user%
     unban_user: Quitando el veto a %user%
+    global_moderation_log: Registro global de moderación
+    delete_submission: Borrar publicación
+    list_of_users: 'Lista de usuarias, página #%page%'
+    user_forum_bans: "Vetos de %user%"
+    manage_forum_categories: Gestionar cagegorías de foro
+    create_forum_category: Crear categoría de foro
+    editing_forum_category: 'Editando categoría de foro: %category%'
 
 user:
     submissions: Publicaciones
