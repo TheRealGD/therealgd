@@ -14,8 +14,10 @@ Encore
     .createSharedEntry('vendor', [
         'babel-polyfill',
         'bazinga-translator',
+        'date-fns/distance_in_words',
+        'date-fns/distance_in_words_to_now',
+        'date-fns/is_before',
         'jquery',
-        'moment/src/moment',
         'underscore',
     ])
     .addEntry('main', './assets/js/main.js')

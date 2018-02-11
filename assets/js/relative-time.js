@@ -1,48 +1,51 @@
 'use strict';
 
 import $ from 'jquery';
-import moment from 'moment/src/moment';
-import Translator from 'bazinga-translator';
+import distanceInWords from 'date-fns/distance_in_words';
+import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
+import isBefore from 'date-fns/is_before';
 
-function makeTimesRelative() {
+function makeTimesRelative(locale) {
     $('.relative-time[datetime]').each(function () {
         const isoTime = $(this).attr('datetime');
 
-        $(this).text(moment(isoTime).fromNow());
+        $(this).text(distanceInWordsToNow(isoTime, {
+            addSuffix: true,
+            locale: locale,
+        }));
     });
 
     $('.relative-time-diff[datetime][data-compare-to]').each(function () {
-        const momentA = moment($(this).attr('datetime'));
-        const momentB = moment($(this).data('compare-to'));
+        const timeA = $(this).attr('datetime');
+        const timeB = $(this).data('compare-to');
 
-        const relativeTime = momentA.from(momentB, true);
+        const relativeTime = distanceInWords(timeA, timeB, { locale: locale });
 
-        const format = momentB.isBefore(momentA)
+        const format = isBefore(timeB, timeA)
             ? 'time.later_format'
             : 'time.earlier_format';
 
-        $(this).text(Translator.trans(format, {relative_time: relativeTime}));
+        $(this).text(Translator.trans(format, { relative_time: relativeTime }));
     });
 }
 
-function loadLocaleAndMakeTimesRelative(locale) {
-    locale = locale.toLowerCase().replace('_', '-');
+function loadLocaleAndMakeTimesRelative(lang) {
+    lang = lang.toLowerCase().replace('-', '_');
 
-    import(`moment/src/locale/${locale}.js`).then(() => {
-        moment.locale(locale);
-
-        makeTimesRelative($);
+    import(`date-fns/locale/${lang}`).then(locale => {
+        makeTimesRelative(locale);
     }).catch(error => {
-        if (locale.indexOf('-') !== -1) {
-            const newLocale = locale.replace(/-.*/, '');
+        if (lang.indexOf('_') !== -1) {
+            const newLang = lang.replace(/_.*/, '');
 
-            if (console) {
-                console.log(`Couldn't load ${locale}; trying ${newLocale}`);
-            }
+            console && console.log(`Couldn't load ${lang}; trying ${newLang}`);
 
-            loadLocaleAndMakeTimesRelative(newLocale);
-        } else if (console) {
-            console.log(error.toString());
+            loadLocaleAndMakeTimesRelative(newLang);
+        } else {
+            console && console.log(error.toString());
+
+            // give up and just do english
+            makeTimesRelative();
         }
     });
 }
@@ -51,7 +54,7 @@ $(function () {
     const locale = $(':root').attr('lang');
 
     if (!locale || locale === 'en') {
-        // english is the default, always-loaded locale in moment
+        // english is the default, always-loaded locale
         makeTimesRelative();
     } else {
         loadLocaleAndMakeTimesRelative(locale);
