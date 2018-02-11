@@ -1,6 +1,6 @@
 'use strict';
 
-import { debounce } from 'underscore';
+import debounce from 'lodash.debounce';
 // noinspection NpmUsedModulesInstalled
 import Routing from 'fosjsrouting';
 import $ from 'jquery';

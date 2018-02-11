@@ -18,7 +18,7 @@ Encore
         'date-fns/distance_in_words_to_now',
         'date-fns/is_before',
         'jquery',
-        'underscore',
+        'lodash.debounce',
     ])
     .addEntry('main', './assets/js/main.js')
     .configureBabel(babelConfig => {
