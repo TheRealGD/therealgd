@@ -14,8 +14,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 /**
  * Command for removing IP addresses associated with some entities.
@@ -23,13 +21,17 @@ use Symfony\Component\DependencyInjection\ContainerAwareTrait;
  * This is intended to be run in a cron job or similar to ensure visitor
  * privacy.
  */
-class PruneIpAddressesCommand extends Command implements ContainerAwareInterface {
-    use ContainerAwareTrait;
-
+class PruneIpAddressesCommand extends Command {
     /**
      * @var EntityManagerInterface
      */
     private $manager;
+
+    public function __construct(EntityManagerInterface $manager) {
+        parent::__construct();
+
+        $this->manager = $manager;
+    }
 
     /**
      * {@inheritdoc}
@@ -45,13 +47,6 @@ class PruneIpAddressesCommand extends Command implements ContainerAwareInterface
                 'Don\'t apply the changes to the database.'
             )
         ;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function initialize(InputInterface $input, OutputInterface $output) {
-        $this->manager = $this->container->get('doctrine.orm.entity_manager');
     }
 
     /**
@@ -121,20 +116,12 @@ class PruneIpAddressesCommand extends Command implements ContainerAwareInterface
         return 0;
     }
 
-    /**
-     * @param string         $entity
-     * @param \DateTime|null $maxTime
-     * @param string         $ipField
-     * @param string         $timestampField
-     *
-     * @return int number of affected rows
-     */
-    protected function clearIpsForEntity(
+    private function clearIpsForEntity(
         string $entity,
-        $maxTime,
+        ?\DateTime $maxTime,
         string $ipField = 'ip',
         string $timestampField = 'timestamp'
-    ) {
+    ): int {
         $qb = $this->manager->createQueryBuilder()
             ->update($entity, 'e')
             ->set('e.'.$ipField, '?1')
