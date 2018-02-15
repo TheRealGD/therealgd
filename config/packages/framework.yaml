@@ -1,9 +1,10 @@
 parameters:
+    env(APP_LOCALE): 'en'
     markdown_cache_time: 86400
 
 framework:
     secret: '%env(APP_SECRET)%'
-    default_locale: '%locale%'
+    default_locale: '%env(APP_LOCALE)%'
     csrf_protection: ~
     http_method_override: false
     session:

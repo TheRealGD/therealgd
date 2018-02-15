@@ -28,6 +28,15 @@ use Symfony\Component\HttpFoundation\Response;
  */
 final class UserController extends AbstractController {
     /**
+     * @var string
+     */
+    private $defaultLocale;
+
+    public function __construct(string $defaultLocale) {
+        $this->defaultLocale = $defaultLocale;
+    }
+
+    /**
      * Show the user's profile page.
      *
      * @param User           $user
@@ -97,15 +106,6 @@ final class UserController extends AbstractController {
         ]);
     }
 
-    /**
-     * User registration form.
-     *
-     * @param Request              $request
-     * @param EntityManager        $em
-     * @param AuthenticationHelper $authenticationHelper
-     *
-     * @return Response
-     */
     public function registration(
         Request $request,
         EntityManager $em,
@@ -116,6 +116,8 @@ final class UserController extends AbstractController {
         }
 
         $data = new UserData();
+        $data->setLocale($this->defaultLocale);
+
         $form = $this->createForm(UserType::class, $data);
         $form->handleRequest($request);
 

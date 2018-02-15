@@ -3,29 +3,25 @@
 namespace App\Command;
 
 use App\Form\Model\UserData;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class AddUserCommand extends Command implements ContainerAwareInterface {
-    use ContainerAwareTrait;
-
+class AddUserCommand extends Command {
     /**
      * @var ValidatorInterface
      */
     private $validator;
 
     /**
-     * @var ObjectManager
+     * @var EntityManagerInterface
      */
     private $manager;
 
@@ -33,6 +29,22 @@ class AddUserCommand extends Command implements ContainerAwareInterface {
      * @var UserPasswordEncoderInterface
      */
     private $encoder;
+
+    private $defaultLocale;
+
+    public function __construct(
+        EntityManagerInterface $manager,
+        ValidatorInterface $validator,
+        UserPasswordEncoderInterface $encoder,
+        string $defaultLocale
+    ) {
+        $this->manager = $manager;
+        $this->validator = $validator;
+        $this->encoder = $encoder;
+        $this->defaultLocale = $defaultLocale;
+
+        parent::__construct();
+    }
 
     /**
      * {@inheritdoc}
@@ -47,12 +59,6 @@ class AddUserCommand extends Command implements ContainerAwareInterface {
             ->addOption('password', 'p', InputOption::VALUE_REQUIRED, 'The password for the account')
             ->addOption('admin', 'a', InputOption::VALUE_NONE, 'Sets this user to be an admin')
         ;
-    }
-
-    protected function initialize(InputInterface $input, OutputInterface $output) {
-        $this->manager = $this->container->get('doctrine.orm.entity_manager');
-        $this->validator = $this->container->get('validator');
-        $this->encoder = $this->container->get('security.password_encoder');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {
@@ -74,6 +80,7 @@ class AddUserCommand extends Command implements ContainerAwareInterface {
         }
 
         $data = new UserData();
+        $data->setLocale($this->defaultLocale);
         $data->setUsername($input->getArgument('username'));
         $data->setPlainPassword($password);
         $data->setEmail($input->getOption('email'));
