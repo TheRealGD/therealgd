@@ -122,7 +122,9 @@ final class ForumController extends AbstractController {
 
             $this->addFlash('success', 'flash.forum_updated');
 
-            return $this->redirect($request->getUri());
+            return $this->redirectToRoute('edit_forum', [
+                'forum_name' => $forum->getName(),
+            ]);
         }
 
         return $this->render('forum/edit.html.twig', [
