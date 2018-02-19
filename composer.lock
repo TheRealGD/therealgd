@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "eb940f53e1e61f9c37be989077fb4a34",
+    "content-hash": "973023e25f8bb085634a8058b7ad8838",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -1737,12 +1737,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/liip/LiipImagineBundle.git",
-                "reference": "2eafbe8d398dff488fbdd6d8c7a98c94de331c0d"
+                "reference": "ef42b7a357646062cce8f849af2cf421e04768d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/liip/LiipImagineBundle/zipball/2eafbe8d398dff488fbdd6d8c7a98c94de331c0d",
-                "reference": "2eafbe8d398dff488fbdd6d8c7a98c94de331c0d",
+                "url": "https://api.github.com/repos/liip/LiipImagineBundle/zipball/ef42b7a357646062cce8f849af2cf421e04768d9",
+                "reference": "ef42b7a357646062cce8f849af2cf421e04768d9",
                 "shasum": ""
             },
             "require": {
@@ -1829,7 +1829,7 @@
                 "symfony",
                 "transformation"
             ],
-            "time": "2018-02-16T09:27:40+00:00"
+            "time": "2018-02-18T08:55:44+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -5820,16 +5820,16 @@
         },
         {
             "name": "webuni/commonmark-table-extension",
-            "version": "0.7.1",
+            "version": "0.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webuni/commonmark-table-extension.git",
-                "reference": "de50839663ad4a03f049724a14d7405f60477657"
+                "reference": "4304b1f56b26e5213a4a781b654f62ef5ed8fbe3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webuni/commonmark-table-extension/zipball/de50839663ad4a03f049724a14d7405f60477657",
-                "reference": "de50839663ad4a03f049724a14d7405f60477657",
+                "url": "https://api.github.com/repos/webuni/commonmark-table-extension/zipball/4304b1f56b26e5213a4a781b654f62ef5ed8fbe3",
+                "reference": "4304b1f56b26e5213a4a781b654f62ef5ed8fbe3",
                 "shasum": ""
             },
             "require": {
@@ -5874,7 +5874,7 @@
                 "markdown",
                 "table"
             ],
-            "time": "2018-01-23T11:31:42+00:00"
+            "time": "2018-01-24T12:30:02+00:00"
         },
         {
             "name": "white-october/pagerfanta-bundle",
