@@ -9,14 +9,29 @@ liip_imagine:
         default:
             filesystem:
                 data_root: "%kernel.project_dir%/public"
+
     filter_sets:
+        # deprecated: legacy filter
         submission_thumbnail:
             data_loader: submission_images
             filters:
-                thumbnail:
-                    size: [200, 200]
-                    mode: outbound
+                thumbnail: { size: [200, 200], mode: outbound }
             quality: 70
+
+        submission_thumbnail_1x:
+            data_loader: submission_images
+            filters:
+                strip: ~
+                thumbnail: { size: [70, 70], mode: outbound, allow_upscale: true }
+            quality: 60
+
+        submission_thumbnail_2x:
+            data_loader: submission_images
+            filters:
+                strip: ~
+                thumbnail: { size: [140, 140], mode: outbound, allow_upscale: true }
+            quality: 60
+
     resolvers:
         default:
             web_path:

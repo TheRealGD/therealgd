@@ -60,7 +60,12 @@
       {% if submission.image %}
         <div class="submission-image-container">
           <a href="{{ block('submission_url') }}" class="submission-image" {% if submission.url %}rel="nofollow noreferrer noopener" {% if open_external %}target="_blank"{% endif %}{% endif %}>
-            <img src="{{ submission.image|imagine_filter('submission_thumbnail') }}" class="submission-thumbnail" alt="">
+            <img src="{{ submission.image|imagine_filter('submission_thumbnail_1x') }}"
+                 srcset="{{ submission.image|imagine_filter('submission_thumbnail_2x') }} 2x"
+                 class="submission-thumbnail"
+                 alt=""
+                 width="70"
+                 height="70">
           </a>
         </div>
       {% endif %}
