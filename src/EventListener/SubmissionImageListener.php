@@ -9,8 +9,7 @@ use Embed\Embed;
 use Embed\Exceptions\EmbedException;
 use League\Flysystem\FileExistsException;
 use League\Flysystem\FilesystemInterface;
-use Psr\Log\LoggerAwareInterface;
-use Psr\Log\LoggerAwareTrait;
+use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
 use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesser;
@@ -24,9 +23,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 /**
  * Download related image after submission.
  */
-final class SubmissionImageListener implements LoggerAwareInterface {
-    use LoggerAwareTrait;
-
+final class SubmissionImageListener {
     const QUEUE_KEY = 'submission_thumbnail_queue';
 
     /**
@@ -53,7 +50,8 @@ final class SubmissionImageListener implements LoggerAwareInterface {
         ManagerRegistry $registry,
         FilesystemInterface $filesystem,
         RequestStack $requestStack,
-        ValidatorInterface $validator
+        ValidatorInterface $validator,
+        LoggerInterface $logger = null
     ) {
         // we must inject the registry rather than the manager because of a
         // nasty infinite loop bug that would occur in the container
@@ -61,8 +59,7 @@ final class SubmissionImageListener implements LoggerAwareInterface {
         $this->filesystem = $filesystem;
         $this->requestStack = $requestStack;
         $this->validator = $validator;
-
-        $this->setLogger(new NullLogger());
+        $this->logger = $logger ?: new NullLogger();
     }
 
     /**

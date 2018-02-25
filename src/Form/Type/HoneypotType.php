@@ -2,8 +2,7 @@
 
 namespace App\Form\Type;
 
-use Psr\Log\LoggerAwareInterface;
-use Psr\Log\LoggerAwareTrait;
+use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -18,17 +17,20 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * Hidden form field that should never be filled out by the user, only by poorly
  * written bots.
  */
-class HoneypotType extends AbstractType implements LoggerAwareInterface {
-    use LoggerAwareTrait;
-
+class HoneypotType extends AbstractType {
     /**
      * @var RequestStack
      */
     private $requestStack;
 
-    public function __construct(RequestStack $requestStack) {
-        $this->logger = new NullLogger();
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    public function __construct(RequestStack $requestStack, LoggerInterface $logger = null) {
         $this->requestStack = $requestStack;
+        $this->logger = $logger ?: new NullLogger();
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
