@@ -8,7 +8,9 @@ use App\Form\Model\WikiData;
 use App\Form\WikiType;
 use App\Repository\WikiPageRepository;
 use App\Repository\WikiRevisionRepository;
+use App\Utils\Differ;
 use Doctrine\ORM\EntityManager;
+use Ramsey\Uuid\Uuid;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
@@ -145,6 +147,32 @@ final class WikiController extends AbstractController {
         return $this->render('wiki/history.html.twig', [
             'page' => $wikiPage,
             'revisions' => $wikiPage->getPaginatedRevisions($page),
+        ]);
+    }
+
+    public function diff(Request $request, WikiRevisionRepository $repository) {
+        /* @var WikiRevision $from
+         * @var WikiRevision $to */
+        [$from, $to] = array_map(function ($q) use ($request, $repository) {
+            $id = $request->query->get($q);
+
+            if (!Uuid::isValid($id)) {
+                throw $this->createNotFoundException();
+            }
+
+            $revision = $repository->find($id);
+
+            if (!$revision) {
+                throw $this->createNotFoundException();
+            }
+
+            return $revision;
+        }, ['from', 'to']);
+
+        return $this->render('wiki/diff.html.twig', [
+            'diff' => Differ::diff($from->getBody(), $to->getBody()),
+            'from' => $from,
+            'to' => $to,
         ]);
     }
 

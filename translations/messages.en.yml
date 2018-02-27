@@ -24,6 +24,7 @@ action:
     global_ban: Global ban
     filter: Filter
     create: Create
+    compare: Compare
 
 add_moderator:
     title: Add moderator to %forum%
@@ -277,6 +278,7 @@ label:
     registration_date: Registration date
     posting: Posting
     auto_fetch_submission_titles: Auto-fetch submission titles
+    compare: Compare
 
 log:
     comment_deletion: '%user% deleted comment by %author% in "%submission%"'
@@ -449,6 +451,7 @@ title:
     manage_forum_categories: Manage forum categories
     create_forum_category: Create forum category
     editing_forum_category: 'Editing forum category: %category%'
+    wiki_diff: Showing difference between revisions %from% and %to%
 
 user:
     submissions: Submissions

@@ -44,6 +44,11 @@ wiki_history:
     methods: [GET]
     requirements: { path: "%wiki_page_regex%" }
 
+wiki_diff:
+    controller: App\Controller\WikiController::diff
+    path: /wiki/_diff
+    methods: [GET]
+
 wiki_all:
     controller: App\Controller\WikiController::all
     defaults: { page: 1 }

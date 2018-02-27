@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block page_classes 'wiki-diff-page' %}
+{% block title 'title.wiki_diff'|trans({
+  'from': from.id[0:8],
+  'to': to.id[0:8],
+}) %}
+
+{% block body %}
+  {% from _self import time_ago, time_since %}
+  <h1 class="page-heading">
+    {{ 'title.wiki_diff'|trans({
+      '%from%': '<a href="%s">%s</a>'|format(
+        path('wiki_revision', {id: from.id})|e,
+        from.id[0:8]
+      ),
+      '%to%': '<a href="%s">%s</a>'|format(
+        path('wiki_revision', {id: to.id})|e,
+        to.id[0:8]
+      )
+    })|raw }}
+  </h1>
+
+  <table class="diff-table">
+    <thead>
+    <tr>
+      <th class="diff-table__header diff-table__header--from" colspan="2">
+        {% with { date: from.timestamp|localizeddate('long', 'short') } %}
+          <time datetime="{{ from.timestamp|date('c') }}" class="relative-time" title="{{ date }}">
+            {{- date -}}
+          </time>
+        {% endwith %}
+      </th>
+      <th class="diff-table__header diff-table__header--to" colspan="2">
+        {% with { date: to.timestamp|localizeddate('long', 'short') } %}
+          <time datetime="{{ to.timestamp|date('c') }}"
+                class="relative-time-diff"
+                data-compare-to="{{ from.timestamp|date('c') }}"
+                title="{{ date }}">
+            {{- date -}}
+          </time>
+        {% endwith %}
+      </th>
+    </tr>
+    </thead>
+    <tbody class="diff-table__line-group">
+    {% with { lastOldLineNo: 0, lastNewLineNo: 0 } %}
+      {% for entry in diff %}
+        {% if not loop.first and
+            (entry.oldLineNo ?? lastOldLineNo) != lastOldLineNo + 1 and
+            (entry.newLineNo ?? lastNewLineNo) != lastNewLineNo + 1 %}
+          </tbody><tbody class="diff-table__line-group">
+        {% endif %}
+
+        {% set lastOldLineNo = entry.oldLineNo ?? lastOldLineNo %}
+        {% set lastNewLineNo = entry.newLineNo ?? lastNewLineNo %}
+
+        <tr>
+          {% if entry.oldLineNo is defined %}
+            <th class="diff-table__line-no diff-table__line-no--{{ entry.type }}">{{ entry.oldLineNo }}</th>
+            <td class="diff-table__content diff-table__content--{{ entry.type }}"><code>{{ entry.old }}</code></td>
+          {% else %}
+            <td class="diff-table__col-spacer" colspan="2"></td>
+          {% endif %}
+
+          {% if entry.newLineNo is defined %}
+            <th class="diff-table__line-no diff-table__line-no--{{ entry.type }}">{{ entry.newLineNo }}</th>
+            <td class="diff-table__content diff-table__content--{{ entry.type }}"><code>{{ entry.new }}</code></td>
+          {% else %}
+            <td class="diff-table__col-spacer" colspan="2"></td>
+          {% endif %}
+        </tr>
+      {% endfor %}
+    {% endwith %}
+    </tbody>
+  </table>
+{% endblock %}

@@ -1,0 +1,38 @@
+@import '../settings';
+
+.diff-table {
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+  width: 100%;
+
+  &__line-group {
+    border-bottom: solid 0.5rem @diff-table-line-group-border-color;
+  }
+
+  &__line-no {
+    background: @diff-table-line-no-background-color;
+    padding: 0.25rem 0.5rem;
+    text-align: right;
+    vertical-align: top;
+    width: 5%;
+  }
+
+  &__content {
+    padding: 0.25rem 0.5rem;
+    min-width: 4rem;
+    vertical-align: top;
+    width: 45%;
+
+    &--changed {
+      background: @diff-table-changed-background-color;
+    }
+
+    &--removed {
+      background: @diff-table-removed-background-color;
+    }
+
+    &--added {
+      background: @diff-table-added-background-color;
+    }
+  }
+}

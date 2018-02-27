@@ -13,32 +13,47 @@
     '%path%': '<a href="%s">%s</a>'|format(path('wiki', {path: page.path})|escape, page.path|escape)
   })|raw }}</h1>
 
-  <table class="table">
-    <thead>
-      <tr>
-        <th>{{ 'wiki.id_label'|trans }}</th>
-        <th>{{ 'wiki.revision_time'|trans }}</th>
-        <th>{{ 'wiki.user'|trans }}</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for revision in revisions %}
+  <form action="{{ path('wiki_diff') }}">
+    <table class="table">
+      <thead>
         <tr>
-          <td>
-            <a href="{{ path('wiki_revision', {id: revision.id}) }}">{{ revision.id.hex|slice(0, 8) }}</a>
-          </td>
-          <td>
-            {% with {date: revision.timestamp|localizeddate('long', 'short')} %}
-              <time datetime="{{ revision.timestamp|date('c') }}" class="relative-time" title="{{ date }}">
-                {{- date -}}
-              </time>
-            {% endwith %}
-          </td>
-          <td><a href="{{ path('user', {username: revision.user.username}) }}">{{ revision.user.username }}</a></td>
+          <th colspan="2">{{ 'label.compare'|trans }}</th>
+          <th>{{ 'wiki.id_label'|trans }}</th>
+          <th>{{ 'wiki.revision_time'|trans }}</th>
+          <th>{{ 'wiki.user'|trans }}</th>
         </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        {% for revision in revisions %}
+          <tr>
+            <td><input type="radio"
+                       name="from"
+                       value="{{ revision.id }}"
+                       {{ loop.index == 2 ? 'checked' }}></td>
+            <td><input type="radio"
+                       name="to"
+                       value="{{ revision.id }}"
+                       {{ loop.index == 1 ? 'checked' }}></td>
+            <td>
+              <a href="{{ path('wiki_revision', {id: revision.id}) }}">{{ revision.id.hex|slice(0, 8) }}</a>
+            </td>
+            <td>
+              {% with {date: revision.timestamp|localizeddate('long', 'short')} %}
+                <time datetime="{{ revision.timestamp|date('c') }}" class="relative-time" title="{{ date }}">
+                  {{- date -}}
+                </time>
+              {% endwith %}
+            </td>
+            <td><a href="{{ path('user', {username: revision.user.username}) }}">{{ revision.user.username }}</a></td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="form__row form__button-row">
+      <button class="button">{{ 'action.compare'|trans }}</button>
+    </div>
+  </form>
 
   {% include '_includes/pagination.html.twig' with {pager: revisions} only %}
 {% endblock %}
