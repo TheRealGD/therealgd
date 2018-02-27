@@ -80,7 +80,7 @@ class SubmissionRepository extends ServiceEntityRepository {
     }
 
     /**
-     * @param string $sortType one of 'hot', 'new', 'top' or 'controversial'
+     * @param string $sortType one of 'hot' or 'new'
      *
      * @return QueryBuilder
      */
@@ -95,11 +95,9 @@ class SubmissionRepository extends ServiceEntityRepository {
             $this->sortByNewest($qb);
             break;
         case 'top':
-            $this->sortByTop($qb);
-            break;
+            throw new \InvalidArgumentException('Sorting by "top" is no longer supported');
         case 'controversial':
-            $this->sortByControversial($qb);
-            break;
+            throw new \InvalidArgumentException('Sorting by "controversial" is no longer supported');
         default:
             throw new \InvalidArgumentException('Bad sort type');
         }
@@ -154,22 +152,6 @@ class SubmissionRepository extends ServiceEntityRepository {
 
     private function sortByNewest(QueryBuilder $qb) {
         $qb->addOrderBy('s.id', 'DESC');
-    }
-
-    private function sortByTop(QueryBuilder $qb) {
-        $qb->addSelect('COUNT(uv) - COUNT(dv) AS HIDDEN net_score')
-            ->leftJoin('s.votes', 'uv', 'WITH', 'uv.upvote = true')
-            ->leftJoin('s.votes', 'dv', 'WITH', 'dv.upvote = false')
-            ->groupBy('s')
-            ->addOrderBy('net_score', 'DESC');
-    }
-
-    private function sortByControversial(QueryBuilder $qb) {
-        $qb->addSelect('COUNT(uv)/NULLIF(COUNT(dv), 0) AS HIDDEN controversy')
-            ->leftJoin('s.votes', 'uv', 'WITH', 'uv.upvote = true')
-            ->leftJoin('s.votes', 'dv', 'WITH', 'dv.upvote = false')
-            ->addGroupBy('s')
-            ->addOrderBy('controversy', 'ASC');
     }
 
     private function paginate($query, int $page): Pagerfanta {

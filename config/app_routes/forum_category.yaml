@@ -9,7 +9,7 @@ forum_category:
     defaults: { sortBy: hot, page: 1 }
     path: /c/{name}/{sortBy}/{page}
     methods: [GET]
-    requirements: { sortBy: hot|new|top|controversial, page: \d+ }
+    requirements: { sortBy: hot|new, page: \d+ }
 
 create_forum_category:
     controller: App\Controller\ForumCategoryController::create

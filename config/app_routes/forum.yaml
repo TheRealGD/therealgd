@@ -4,21 +4,21 @@ multi:
     path: /f/{names}/{sortBy}/{page}
     requirements:
         names: '(?:\w{3,25}\+){1,70}\w{3,25}'
-        sortBy: hot|new|top|controversial
+        sortBy: hot|new
 
 forum:
     controller: App\Controller\ForumController::front
     defaults: { sortBy: hot, page: 1 }
     path: /f/{forum_name}/{sortBy}/{page}
     methods: [GET]
-    requirements: { sortBy: hot|new|top|controversial, page: \d+ }
+    requirements: { sortBy: hot|new, page: \d+ }
 
 forum_feed:
     controller: App\Controller\ForumController::feed
     defaults: { sortBy: hot, page: 1, _format: xml }
     path: /f/{forum_name}/{sortBy}/{page}.atom
     methods: [GET]
-    requirements: { sortBy: hot|new|top|controversial, page: \d+ }
+    requirements: { sortBy: hot|new, page: \d+ }
 
 edit_forum:
     controller: App\Controller\ForumController::editForum
