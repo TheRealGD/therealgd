@@ -19,7 +19,7 @@ final class SecurityController extends AbstractController {
         if (!$this->getTargetPath($request->getSession(), 'main')) {
             $referer = $request->headers->get('Referer');
 
-            if ($referer && \strpos($referer, $request->getUriForPath('/')) === 0) {
+            if ($referer) {
                 $this->saveTargetPath($request->getSession(), 'main', $referer);
             }
         }
