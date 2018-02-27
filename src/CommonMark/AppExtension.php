@@ -20,6 +20,7 @@ class AppExtension extends Extension {
      */
     public function getInlineParsers() {
         return [
+            new Inline\Parser\CategoryLinkParser($this->urlGenerator),
             new Inline\Parser\ForumLinkParser($this->urlGenerator),
             new Inline\Parser\UserLinkParser($this->urlGenerator),
             new Inline\Parser\WikiLinkParser($this->urlGenerator),

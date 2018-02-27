@@ -17,8 +17,9 @@ final class ForumCategoryData {
     private $entityId;
 
     /**
-     * @Assert\Length(max=40, min=1)
+     * @Assert\Length(min=3, max=40)
      * @Assert\NotBlank()
+     * @Assert\Regex("/^\w+$/")
      *
      * @var string|null
      */
