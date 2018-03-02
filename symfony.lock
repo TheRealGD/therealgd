@@ -116,9 +116,6 @@
             "ref": "370bcf99b04c0dfd0b545745aad622d757af5e1b"
         }
     },
-    "gecko-packages/gecko-php-unit": {
-        "version": "v3.0"
-    },
     "gregwar/captcha": {
         "version": "dev-master"
     },
