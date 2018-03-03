@@ -17,6 +17,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * @Entity("forum", expr="repository.findOneOrRedirectToCanonical(forum_name, 'forum_name')")
@@ -194,7 +195,24 @@ final class CommentController extends AbstractController {
 
         $this->logDeletion($forum, $submission, $comment);
 
+        $commentId = $comment->getId(); // not available on entity after flush()
+
         $em->flush();
+
+        if ($request->headers->has('Referer')) {
+            $commentUrl = $this->generateUrl('comment', [
+                'forum_name' => $forum->getName(),
+                'submission_id' => $submission->getId(),
+                'comment_id' => $commentId,
+            ], UrlGeneratorInterface::ABSOLUTE_URL);
+
+            if (strpos($request->headers->get('Referer'), $commentUrl) === 0) {
+                // redirect to forum since redirect to referrer will 404
+                return $this->redirectToRoute('forum', [
+                    'forum_name' => $forum->getName()
+                ]);
+            }
+        }
 
         return $this->redirectAfterAction($comment, $request);
     }
