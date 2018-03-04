@@ -19,9 +19,12 @@ services:
     - postgres:9.6-alpine
 
 variables:
+    APP_ENV: test
+    APP_SECRET: foo
+    DATABASE_URL: "pgsql://postmill@postgres/postmill?serverVersion=9.6"
     POSTGRES_USER: postmill
     POSTGRES_PASSWORD: ""
-    DATABASE_URL: "pgsql://postmill@postgres/postmill?serverVersion=9.6"
+    SITE_NAME: Postmill
 
 test:
     script:

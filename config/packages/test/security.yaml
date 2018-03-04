@@ -1,0 +1,5 @@
+security:
+    # speed up unit tests
+    encoders:
+        App\Entity\User: plaintext
+        App\Form\Model\UserData: plaintext

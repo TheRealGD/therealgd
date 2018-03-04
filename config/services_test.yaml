@@ -4,8 +4,15 @@ services:
         autowire: true
         autoconfigure: true
 
+    _instanceof:
+        Doctrine\Common\DataFixtures\FixtureInterface:
+            tags: ['doctrine.fixture.orm']
+
     App\Mailer\ResetPasswordMailer:
         arguments:
             $siteName: "%env(SITE_NAME)%"
             $noReplyAddress: "%env(NO_REPLY_ADDRESS)%"
             $salt: "%env(APP_SECRET)%"
+
+    App\Tests\Fixtures\:
+        resource: '../tests/Fixtures'

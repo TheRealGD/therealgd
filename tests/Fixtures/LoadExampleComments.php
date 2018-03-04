@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DataFixtures\ORM;
+namespace App\Tests\Fixtures;
 
 use App\Entity\Comment;
 use App\Entity\Submission;

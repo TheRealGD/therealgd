@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DataFixtures\ORM;
+namespace App\Tests\Fixtures;
 
 use App\Entity\User;
 use Doctrine\Common\DataFixtures\AbstractFixture;
@@ -12,10 +12,8 @@ class LoadExampleUsers extends AbstractFixture {
      */
     public function load(ObjectManager $manager) {
         foreach ($this->provideUsers() as $data) {
-            $user = new User(
-                $data['username'],
-                password_hash($data['password'], PASSWORD_BCRYPT, ['cost' => 13])
-            );
+            // use plaintext passwords in fixtures to speed up tests
+            $user = new User($data['username'], $data['password']);
             $user->setAdmin($data['admin']);
             $user->setEmail($data['email']);
 

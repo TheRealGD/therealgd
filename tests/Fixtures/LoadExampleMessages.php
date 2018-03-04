@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DataFixtures\ORM;
+namespace App\Tests\Fixtures;
 
 use App\Entity\MessageReply;
 use App\Entity\MessageThread;

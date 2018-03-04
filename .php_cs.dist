@@ -15,7 +15,6 @@ return PhpCsFixer\Config::create()
             'less_and_greater' => false,
         ],
     ])
-    ->setCacheFile(__DIR__.'/var/php_cs.cache')
     ->setFinder(
         PhpCsFixer\Finder::create()
             ->in(__DIR__.'/config')
