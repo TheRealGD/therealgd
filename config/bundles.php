@@ -4,7 +4,7 @@ return [
     Symfony\Bundle\FrameworkBundle\FrameworkBundle::class => ['all' => true],
     Doctrine\Bundle\DoctrineCacheBundle\DoctrineCacheBundle::class => ['all' => true],
     Doctrine\Bundle\DoctrineBundle\DoctrineBundle::class => ['all' => true],
-    Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class => ['all' => true],
+    Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class => ['test' => true],
     FOS\JsRoutingBundle\FOSJsRoutingBundle::class => ['all' => true],
     Liip\ImagineBundle\LiipImagineBundle::class => ['all' => true],
     Oneup\FlysystemBundle\OneupFlysystemBundle::class => ['all' => true],
