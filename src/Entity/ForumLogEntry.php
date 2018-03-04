@@ -58,17 +58,12 @@ abstract class ForumLogEntry {
 
     abstract public function getAction(): string;
 
-    public function __construct(
-        Forum $forum,
-        User $user,
-        bool $wasAdmin,
-        \DateTime $timestamp = null
-    ) {
+    public function __construct(Forum $forum, User $user) {
         $this->id = Uuid::uuid4();
         $this->forum = $forum;
         $this->user = $user;
-        $this->wasAdmin = $wasAdmin;
-        $this->timestamp = $timestamp ?? \DateTime::createFromFormat('U.u', microtime(true));
+        $this->wasAdmin = !$forum->userIsModerator($user, false);
+        $this->timestamp = \DateTime::createFromFormat('U.u', microtime(true));
     }
 
     public function getId(): Uuid {

@@ -342,13 +342,7 @@ class Forum {
         if (!$this->bans->contains($ban)) {
             $this->bans->add($ban);
 
-            $this->logEntries->add(new ForumLogBan(
-                $this,
-                $ban->getBannedBy(),
-                !$this->userIsModerator($ban->getBannedBy(), false),
-                $ban,
-                $ban->getTimestamp()
-            ));
+            $this->logEntries->add(new ForumLogBan($ban));
         }
     }
 

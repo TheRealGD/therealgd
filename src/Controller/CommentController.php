@@ -193,7 +193,7 @@ final class CommentController extends AbstractController {
             throw new \RuntimeException("This shouldn't happen");
         }
 
-        $this->logDeletion($forum, $submission, $comment);
+        $this->logDeletion($forum, $comment);
 
         $commentId = $comment->getId(); // not available on entity after flush()
 
@@ -233,7 +233,7 @@ final class CommentController extends AbstractController {
     public function softDeleteComment(
         EntityManager $em,
         Forum $forum,
-        Submission $submission,
+        /* @noinspection PhpUnusedParameterInspection */ Submission $submission,
         Comment $comment,
         Request $request
     ) {
@@ -241,25 +241,19 @@ final class CommentController extends AbstractController {
 
         $comment->softDelete();
 
-        $this->logDeletion($forum, $submission, $comment);
+        $this->logDeletion($forum, $comment);
 
         $em->flush();
 
         return $this->redirectAfterAction($comment, $request);
     }
 
-    private function logDeletion(Forum $forum, Submission $submission, Comment $comment) {
+    private function logDeletion(Forum $forum, Comment $comment) {
         /* @var User $user */
         $user = $this->getUser();
 
         if ($user !== $comment->getUser()) {
-            $forum->addLogEntry(new ForumLogCommentDeletion(
-                $forum,
-                $user,
-                !$forum->userIsModerator($user, false),
-                $comment->getUser(),
-                $submission
-            ));
+            $forum->addLogEntry(new ForumLogCommentDeletion($comment, $user));
         }
     }
 

@@ -30,19 +30,12 @@ class ForumLogCommentDeletion extends ForumLogEntry {
      */
     private $title;
 
-    public function __construct(
-        Forum $forum,
-        User $user,
-        bool $wasAdmin,
-        User $author,
-        Submission $submission,
-        \DateTime $timestamp = null
-    ) {
-        $this->author = $author;
-        $this->submission = $submission;
-        $this->title = $submission->getTitle();
+    public function __construct(Comment $comment, User $user) {
+        $this->author = $comment->getUser();
+        $this->submission = $comment->getSubmission();
+        $this->title = $this->submission->getTitle();
 
-        parent::__construct($forum, $user, $wasAdmin, $timestamp);
+        parent::__construct($comment->getSubmission()->getForum(), $user);
     }
 
     public function getAuthor(): User {

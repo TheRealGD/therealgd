@@ -37,21 +37,13 @@ class ForumLogSubmissionLock extends ForumLogEntry {
      */
     private $locked;
 
-    public function __construct(
-        Submission $submission,
-        User $user,
-        bool $locked,
-        \DateTime $timestamp = null
-    ) {
+    public function __construct(Submission $submission, User $user, bool $locked) {
         $this->submission = $submission;
         $this->author = $submission->getUser();
         $this->title = $submission->getTitle();
         $this->locked = $locked;
 
-        $forum = $submission->getForum();
-        $wasAdmin = !$forum->userIsModerator($user, false);
-
-        parent::__construct($forum, $user, $wasAdmin, $timestamp);
+        parent::__construct($submission->getForum(), $user);
     }
 
     public function getSubmission(): ?Submission {

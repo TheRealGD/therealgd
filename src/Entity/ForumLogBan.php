@@ -15,10 +15,10 @@ class ForumLogBan extends ForumLogEntry {
      */
     private $ban;
 
-    public function __construct(Forum $forum, User $user, bool $wasAdmin, ForumBan $ban, \DateTime $timestamp = null) {
+    public function __construct(ForumBan $ban) {
         $this->ban = $ban;
 
-        parent::__construct($forum, $user, $wasAdmin, $timestamp);
+        parent::__construct($ban->getForum(), $ban->getBannedBy());
     }
 
     public function getBan(): ForumBan {

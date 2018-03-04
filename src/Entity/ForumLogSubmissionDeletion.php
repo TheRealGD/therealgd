@@ -29,20 +29,12 @@ class ForumLogSubmissionDeletion extends ForumLogEntry {
      */
     private $reason;
 
-    public function __construct(
-        Submission $submission,
-        User $user,
-        string $reason,
-        \DateTime $timestamp = null
-    ) {
+    public function __construct(Submission $submission, User $user, string $reason) {
         $this->title = $submission->getTitle();
         $this->author = $submission->getUser();
         $this->reason = $reason;
 
-        $forum = $submission->getForum();
-        $wasAdmin = !$forum->userIsModerator($user);
-
-        parent::__construct($forum, $user, $wasAdmin, $timestamp);
+        parent::__construct($submission->getForum(), $user);
     }
 
     public function getTitle(): string {
