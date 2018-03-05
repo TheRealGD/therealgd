@@ -67,7 +67,7 @@ final class ResetPasswordController extends AbstractController {
             throw $this->createNotFoundException('Invalid checksum');
         }
 
-        if (new \DateTime('@'.time()) > $expires) {
+        if (new \DateTime('@'.time()) >= $expires) {
             throw $this->createNotFoundException('The link has expired');
         }
 

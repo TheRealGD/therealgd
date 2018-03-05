@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Controller;
+namespace App\Tests\Controller;
 
+use App\Controller\ResetPasswordController;
 use App\Entity\User;
 use App\Mailer\ResetPasswordMailer;
 use Symfony\Bridge\PhpUnit\ClockMock;
@@ -15,6 +16,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class ResetPasswordControllerTest extends WebTestCase {
     public static function setUpBeforeClass() {
         ClockMock::register(ResetPasswordMailer::class);
+        ClockMock::register(ResetPasswordController::class);
     }
 
     public function testCanSendResetEmails() {

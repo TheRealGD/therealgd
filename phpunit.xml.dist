@@ -6,6 +6,12 @@
          colors="true"
          bootstrap="vendor/autoload.php"
 >
+    <filter>
+        <whitelist>
+            <directory>src/</directory>
+        </whitelist>
+    </filter>
+
     <php>
         <ini name="error_reporting" value="-1" />
         <server name="KERNEL_CLASS" value="App\Kernel" />
