@@ -10,10 +10,3 @@ removed when better solutions exist.
 
 These aliases (found in src/Kernel.php) were added to keep serialised instances
 of the class working after the software switched names.
-
-## Bundle versions pinned to specific commits
-
-All bundles have been made compatible with Symfony 4.0, but a few haven't tagged
-compatible releases yet. Because these bundles are fairly low in development
-activity and unlikely to break completely, we decided to pin specific commits in
-the version constraints.
