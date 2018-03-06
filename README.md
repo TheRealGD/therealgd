@@ -51,9 +51,7 @@ Clone the repository somewhere and navigate there with the command line.
 
 ## Reporting issues
 
-* Bugs should be reported on the [issue tracker][issues].
-* Feature requests should be discussed on Raddle's [/f/meta][f/meta].
-* Support questions belong on Raddle's [/f/Postmill][f/postmill].
+* Bugs and feature requests should be reported on the [issue tracker][issues].
 
 You can email emma1312@protonmail.ch to disclose or discuss something in private
 with the creator of the software.
@@ -75,5 +73,3 @@ details.
 
 
 [issues]: https://gitlab.com/edgyemma/Postmill/issues
-[f/meta]: https://raddle.me/f/meta
-[f/postmill]: https://raddle.me/f/Postmill
