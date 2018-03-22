@@ -1,5 +1,5 @@
 **Notice**: New Fork of Postmill. Lets see what we can do ladies an gents!
-Message me in discord to becom a collaborator.
+Message me in discord to become a collaborator/dev team member.
 
 ***
 
