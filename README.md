@@ -1,23 +1,5 @@
-**Notice**: Now that the community Postmill was created for has become
-unpalatable for me, the future of this project is uncertain. Previously, I
-could spend time implementing a feature or improving something, and see the
-community embrace (or, on occasion, deride) my hard work. Now that I have no
-community, this is no longer the case, and I cannot imagine what motivation I
-could have to keep working on this project.
-
-For now, if you want to report issues or submit pull requests, I'll take a look
-at them. Any security holes I become aware of (either in Postmill itself or in
-its dependencies) will be fixed. But active development probably won't happen
-unless someone steps up. Consider Postmill to be on life support.
-
-I'm passionate about building communities, and I will probably make another
-effort to build something cool in the future, using the experience I made from
-Postmill. Until then, I'm taking a break.
-
-Thanks to everyone who contributed to Postmill, or merely sent kind words my
-way. You made it all worth it.
-
--- Emma
+**Notice**: New Fork of Postmill. Lets see what we can do ladies an gents!
+Message me in discord to becom a collaborator.
 
 ***
 
