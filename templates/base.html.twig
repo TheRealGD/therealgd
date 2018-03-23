@@ -44,15 +44,7 @@
     {% endblock %}
 
     {% block site_footer %}
-      <footer class="site-footer">
-        <p class="site-footer-version">
-          {{ 'site_footer.version'|trans({
-            '%branch%': app_branch(),
-            '%version%': app_version(),
-            '%app%': '<a href="https://github.com/TheRealGD/therealgd">TheRealGD</a>',
-          })|raw }}
-        </p>
-      </footer>
+      {{ include('_includes/site_footer.html.twig', {forum: forum ?? null}, with_context=false) }}
     {% endblock %}
 
     {% block javascripts %}

@@ -324,6 +324,14 @@ nav:
     inbox_count: Inbox (%count%)
     messages: Messages
     wiki: Wiki
+
+    # <New Strings>
+    wiki_copyright: Copyright
+    wiki_privacy: Privacy Policy
+    wiki_terms: Terms of Service
+    wiki_use_policy: Use Policy
+    # </New Strings>
+
     next: Next
     previous: Previous
     moderated: Moderated
