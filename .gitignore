@@ -21,7 +21,8 @@ tags
 /web/
 
 ###> symfony/framework-bundle ###
-.env
+!.env
+.env.dist
 /public/bundles/
 /var/
 /vendor/
@@ -40,3 +41,5 @@ tags
 ###> symfony/web-server-bundle ###
 .web-server-pid
 ###< symfony/web-server-bundle ###
+
+symfony.lock
