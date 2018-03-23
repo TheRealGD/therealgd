@@ -1,0 +1,51 @@
+@import (reference) '../settings';
+
+@media screen and (min-width: @desktop-min-width) {
+  .site-footer {
+
+    .site-footer-menu {
+      text-align: center;
+        ul {
+          display: block;
+          margin: 0 auto;
+          li {
+              display: inline-block;
+          }
+        }
+    }
+
+    &__link {
+      color: @footer-link-color;
+      display: block;
+      font-size: @footer-font-size;
+      padding: 1rem;
+    }
+  }
+}
+
+// mobile
+@media screen and (max-width: (@desktop-min-width - 1px)) {
+  .site-footer {
+
+    .site-footer-menu {
+      text-align: center;
+
+        ul {
+          display: block;
+          margin: 0 auto;
+
+          li {
+              display: block;
+              width: 100%;
+          }
+        }
+    }
+
+    &__link {
+      color: @footer-link-color;
+      font-size: @footer-font-size;
+      padding: 1rem;
+    }
+
+  }
+}
