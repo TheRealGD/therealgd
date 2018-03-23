@@ -382,7 +382,8 @@ reset_password:
     title: Resetting password
 
 site_footer:
-    version: Running %app% %version% (%branch%). Made with ☭.
+    #version: Running %app% %version% (%branch%). Made with ☭.
+    version: Running %app% %version% (%branch%).
 
 submission_form:
     title: Title
