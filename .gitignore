@@ -21,7 +21,8 @@ tags
 /web/
 
 ###> symfony/framework-bundle ###
-.env
+!.env
+.env.dist
 /public/bundles/
 /var/
 /vendor/
