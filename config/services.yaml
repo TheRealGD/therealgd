@@ -5,6 +5,7 @@ parameters:
     user_forum_creation_interval: 1 day
     uuid_regex:      '[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}'
     wiki_page_regex: '[A-Za-z][A-Za-z0-9_-]*(/[A-Za-z][A-Za-z0-9_-]*)*'
+    locale: 'en'
 
 services:
     _defaults:
