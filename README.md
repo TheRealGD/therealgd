@@ -34,8 +34,6 @@ The software is released under the zlib license. See the `LICENSE` file for
 details.
 
 ## GUNDEALS MAIN REPO:
-https://github.com/TKsM151/PostPostmill
-Please request access from @TKsM151 for this repo.
 Please use pull requests from your own fork for any non-trivial changes, so we can have code review.
 @psineur volunteers to help with code-review.
 
