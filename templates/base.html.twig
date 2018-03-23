@@ -67,5 +67,11 @@
         <script src="{{ path('bazinga_jstranslation_js') }}"></script>
       {% endif %}
     {% endblock %}
+
+    {% block site_tracking %}
+      {% if app.environment != 'dev' %}
+        {% include '_includes/site_tracking.html.twig' %}
+      {% endif %}
+    {% endblock %}
   </body>
 </html>
