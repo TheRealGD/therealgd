@@ -37,8 +37,13 @@
   color: @submission-link-color-visited;
 }
 
-.submission-sticky .submission-link {
-  color: @submission-sticky-link-color;
+.submission-sticky {
+  .submission-link {
+    color: @submission-sticky-link-color;
+  }
+  .vote {
+    visibility: hidden;
+  }
 }
 
 .submission-info {
