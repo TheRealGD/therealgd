@@ -22,7 +22,7 @@ We also recommend you forward your SSH client to your github from you computer i
 (You will need to setup .ssh forwarding in .ssh/config on your local machine). 
 
 * Image linked in Discord should provide everything you need, make sure to pull latest master branch.
-* Then simply Run `sudo bin/console server:run *:80` to start the application.
+* Then simply Run `cp .env.dev .env; sudo bin/console server:run *:80` to start the application.
 * Navigate to <http://YOURBOXIP:80/>. Log in with: 
   * gundealsdev 
   * senditree
