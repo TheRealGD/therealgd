@@ -1,0 +1,12 @@
+version: "2"
+
+services:
+  nginx-dev:
+    build: ./nginx-container
+    ports:
+      - "443:443"
+      - "80:80"
+    volumes:
+      - "./volumes/nginx.conf.dev:/etc/nginx/nginx.conf:rw"
+      - "./volumes/nginxlogs/:/var/log/nginx/:rw"
+      - "./volumes/www-static:/www/:ro"
