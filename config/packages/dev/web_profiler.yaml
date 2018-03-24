@@ -2,5 +2,10 @@ web_profiler:
     toolbar: true
     intercept_redirects: false
 
+    # HACK: Added this to fix the symphony 4.0.x profiler bug effecting all ajax calls when debug toobar is enabled.
+    # (Comments/Up/Downvoting)
+    # https://github.com/symfony/symfony/issues/26364
+    
+    excluded_ajax_paths: '.*' # <= This disable the ajax logging
 framework:
     profiler: { only_exceptions: false }
