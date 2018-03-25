@@ -116,6 +116,22 @@ final class ForumRepository extends ServiceEntityRepository {
     }
 
     /**
+     * Get the names of all forums, this will get heavy if site is expanded.
+     *
+     * @return string[]
+     */
+    public function findAllForumNames() {
+        $names = $this->createQueryBuilder('f')
+            ->select('f.id')
+            ->addSelect('f.name')
+            ->orderBy('f.normalizedName', 'ASC')
+            ->getQuery()
+            ->execute();
+
+        return array_column($names, 'name', 'id');
+    }
+
+    /**
      * @param User $user
      *
      * @return string[]

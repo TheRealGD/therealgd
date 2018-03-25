@@ -2,7 +2,16 @@
 @import (reference) 'settings';
 
 .submission {
-  margin-bottom: 1rem;
+  &.odd {
+    background: #ddd;
+  }
+
+  padding: 1rem;
+  margin-right: 1rem;
+
+  &:last-of-type {
+    margin-bottom: 1rem;
+  }
 }
 
 .submission-header > * {
