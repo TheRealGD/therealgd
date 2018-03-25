@@ -1,0 +1,27 @@
+copyright:
+  controller: App\Controller\WikiController::wiki
+  defaults: { path: copyright }
+  path: /copyright
+  methods: [GET]
+  requirements: { path: "%page_regex%" }
+
+privacy:
+  controller: App\Controller\WikiController::wiki
+  defaults: { path: privacy }
+  path: /privacy
+  methods: [GET]
+  requirements: { path: "%page_regex%" }
+
+terms:
+  controller: App\Controller\WikiController::wiki
+  defaults: { path: terms }
+  path: /terms
+  methods: [GET]
+  requirements: { path: "%page_regex%" }
+
+usepolicy:
+  controller: App\Controller\WikiController::wiki
+  defaults: { path: usepolicy }
+  path: /usepolicy
+  methods: [GET]
+  requirements: { path: "%page_regex%" }

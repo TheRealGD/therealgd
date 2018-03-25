@@ -90,10 +90,13 @@ final class FrontController extends AbstractController {
      *
      * @return Response
      */
-    public function all(SubmissionRepository $sr, string $sortBy, int $page) {
+    public function all(ForumRepository $fr, SubmissionRepository $sr, string $sortBy, int $page) {
+        # Added for v1.
+        $forums = $fr->findAllForumNames();
         $submissions = $sr->findAllSubmissions($sortBy, $page);
 
         return $this->render('front/all.html.twig', [
+            'forums' => $forums, # Added for v1.
             'listing' => 'all',
             'sort_by' => $sortBy,
             'submissions' => $submissions,

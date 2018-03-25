@@ -20,6 +20,10 @@
   </head>
 
   <body class="{% block page_classes '' %} {{ app.user ? 'user-logged-in' : 'user-anonymous' }} {{ (app.user.nightMode ?? false) ? 'night-mode' }}">
+    {% block site_banner %}
+      {{ include('_includes/site_banner.html.twig', {forum: forum ?? null}, with_context=false) }}
+    {% endblock %}
+
     {% block site_nav %}
       {{ include('_includes/site_nav.html.twig', {forum: forum ?? null}, with_context=false) }}
     {% endblock %}

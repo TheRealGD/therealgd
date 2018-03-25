@@ -1,0 +1,19 @@
+@import (reference) '../settings';
+
+@media screen and (min-width: @desktop-min-width) {
+  .site-banner {
+    background: #444;
+    text-align: center;
+  }
+}
+
+// mobile
+@media screen and (max-width: (@desktop-min-width - 1px)) {
+  .site-banner {
+    img {
+      max-width: 100%;
+    }
+    background: #444;
+    text-align: left;
+  }
+}

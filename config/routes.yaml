@@ -37,6 +37,9 @@ _user:
 _wiki:
     resource: app_routes/wiki.yaml
 
+_static_pages:
+    resource: app_routes/static_pages.yaml
+
 _trailing_slash_redirect:
     controller: App\Controller\RedirectingController::removeTrailingSlash
     methods: [GET]

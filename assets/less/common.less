@@ -12,6 +12,13 @@
     min-width: 0;
   }
 
+  @media screen and (min-width: @desktop-min-width) {
+    & > .body {
+      border-right: 2px solid @page-color;
+    }
+  }
+
+
   & > .sidebar {
     flex: none;
     min-width: 0;

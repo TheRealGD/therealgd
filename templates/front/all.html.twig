@@ -1,3 +1,27 @@
 {% extends 'front/base.html.twig' %}
 
 {% block page_classes 'all-page' %}
+
+{% block sidebar %}
+  <section class="sidebar__section sidebar__section--featured-forums">
+    <h1 class="sidebar__title">{{ 'front.all_forums'|trans }}</h1>
+
+    {% if forums|length > 0 %}
+      <ul>
+        {% for name in forums %}
+          {# <li><a href="{{ path('forum', {forum_name: name}) }}">{{ name }}</a></li> #}
+
+          {% if name|lower != 'gundeals' %}
+            {% set myName = name|split('Deals') %}
+            <li><a href="{{ path('forum', {forum_name: name}) }}">[{{ myName[0]|lower }}]</a></li>
+          {% else %}
+            {# <li><a href="{{ path('forum', {forum_name: name}) }}">[{{ name|lower }}]</a></li> #}
+          {% endif %}
+
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>{{ 'front.no_forums'|trans }}</p>
+    {% endif %}
+  </section>
+{% endblock %}
