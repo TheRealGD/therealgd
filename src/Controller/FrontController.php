@@ -29,24 +29,27 @@ final class FrontController extends AbstractController {
         $user = $this->getUser();
 
         if (!$user instanceof User) {
-            $listing = User::FRONT_FEATURED;
+            //$listing = User::FRONT_FEATURED;
+            $listing = User::FRONT_ALL;
         } elseif ($user->getFrontPage() === 'default') {
-            $listing = User::FRONT_SUBSCRIBED;
+            //$listing = User::FRONT_SUBSCRIBED;
+            $listing = User::FRONT_ALL;
         } else {
             $listing = $user->getFrontPage();
         }
 
         switch ($listing) {
-        case User::FRONT_SUBSCRIBED:
-            return $this->subscribed($fr, $sr, $sortBy, $page);
-        case User::FRONT_FEATURED:
-            return $this->featured($fr, $sr, $sortBy, $page);
-        case User::FRONT_ALL:
-            return $this->all($sr, $sortBy, $page);
-        case User::FRONT_MODERATED:
-            return $this->moderated($fr, $sr, $sortBy, $page);
-        default:
-            throw new \InvalidArgumentException('bad front page selection');
+          case User::FRONT_SUBSCRIBED:
+              return $this->subscribed($fr, $sr, $sortBy, $page);
+          case User::FRONT_FEATURED:
+              return $this->featured($fr, $sr, $sortBy, $page);
+          case User::FRONT_ALL:
+              //return $this->all($sr, $sortBy, $page);
+              return $this->all($fr, $sr, $sortBy, $page);
+          case User::FRONT_MODERATED:
+              return $this->moderated($fr, $sr, $sortBy, $page);
+          default:
+              throw new \InvalidArgumentException('bad front page selection');
         }
     }
 

@@ -311,6 +311,9 @@ moderator_form:
     user: Username
     submit: Add as moderator
 
+sidebar:
+  submit_deal: Submit a new deal
+
 nav:
     appearance: Appearance
     create_theme: Create theme
