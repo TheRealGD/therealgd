@@ -20,6 +20,27 @@
     font-size: 1.5rem;
   }
 
+  &__actions {
+    width: 100%;
+  }
+
+  &__button {
+    background:@button-background-color;
+    color: @button-text-color;
+    width: 100%;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: 10px;
+    display: block;
+    font-weight: bold;
+
+    &:hover {
+      text-decoration: none;
+      background: @button-hover-background-color;
+      color: @button-active-text-color;
+    }
+  }
+
   &:empty {
     display: none;
   }
