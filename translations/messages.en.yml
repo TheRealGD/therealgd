@@ -167,9 +167,17 @@ forum_moderators:
     last_seen: Last seen
 
 front:
-    subscribed_forums: Subscribed forums
+    # <New Strings>
+    all_forums: All Deals
+    # </New Strings>
+
+    #subscribed_forums: Subscribed forums
+    subscribed_forums: Subscribed Deals
+
+    #featured_forums: Featured forums
+    featured_forums: Featured Deals
+
     no_subscriptions: You are not subscribed to any forum. Showing featured forums instead.
-    featured_forums: Featured forums
     no_forums: There are no featured forums to display.
     all: All
     featured: Featured
@@ -324,6 +332,16 @@ nav:
     inbox_count: Inbox (%count%)
     messages: Messages
     wiki: Wiki
+
+
+    # <New Strings>
+    forums: Categories
+    wiki_copyright: Copyright
+    wiki_privacy: Privacy Policy
+    wiki_terms: Terms of Service
+    wiki_use_policy: Use Policy
+    # </New Strings>
+
     next: Next
     previous: Previous
     moderated: Moderated
