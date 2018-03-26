@@ -47,12 +47,15 @@ final class ForumRepository extends ServiceEntityRepository {
      *
      * @return Pagerfanta|Forum[]
      */
-    public function findForumsByPage(int $page, string $sortBy) {
+    public function findForumsByPage(int $page, string $sortBy, ?User $user) {
         if (!preg_match('/^(?:by_)?(name|title|submissions|subscribers)$/', $sortBy, $matches)) {
             throw new \InvalidArgumentException('invalid sort type');
         }
 
         $qb = $this->createQueryBuilder('f');
+        if (is_null($user) || !$user->isAdmin()) {
+            $qb->where('f.id > 0');
+        }
 
         switch ($matches[1]) {
         case 'subscribers':
@@ -86,11 +89,17 @@ final class ForumRepository extends ServiceEntityRepository {
      */
     public function findSubscribedForumNames(User $user) {
         /* @noinspection SqlDialectInspection */
-        $dql =
-            'SELECT f.id, f.name FROM '.Forum::class.' f WHERE f IN ('.
-                'SELECT IDENTITY(fs.forum) FROM '.ForumSubscription::class.' fs WHERE fs.user = ?1'.
-            ') ORDER BY f.normalizedName ASC';
-
+        if ($user->isAdmin()) {
+            $dql =
+                'SELECT f.id, f.name FROM '.Forum::class.' f WHERE f IN ('.
+                    'SELECT IDENTITY(fs.forum) FROM '.ForumSubscription::class.' fs WHERE fs.user = ?1'.
+                ') ORDER BY f.normalizedName ASC';
+        } else {
+            $dql =
+                'SELECT f.id, f.name FROM '.Forum::class.' f WHERE f IN ('.
+                    'SELECT IDENTITY(fs.forum) FROM '.ForumSubscription::class.' fs WHERE fs.user = ?1 and f.id > 0'.
+                ') ORDER BY f.normalizedName ASC';
+        }
         $names = $this->getEntityManager()->createQuery($dql)
             ->setParameter(1, $user)
             ->getResult();
@@ -108,6 +117,7 @@ final class ForumRepository extends ServiceEntityRepository {
             ->select('f.id')
             ->addSelect('f.name')
             ->where('f.featured = TRUE')
+            ->andWhere('f.id > 0')
             ->orderBy('f.normalizedName', 'ASC')
             ->getQuery()
             ->execute();
@@ -136,7 +146,7 @@ final class ForumRepository extends ServiceEntityRepository {
     public function findForumNames($names) {
         /* @noinspection SqlDialectInspection */
         $dql = 'SELECT f.id, f.name FROM '.Forum::class.' f '.
-            'WHERE f.normalizedName IN (?1) '.
+            'WHERE f.normalizedName IN (?1) and f.id > 0'.
             'ORDER BY f.normalizedName ASC';
 
         $names = $this->_em->createQuery($dql)
@@ -149,7 +159,7 @@ final class ForumRepository extends ServiceEntityRepository {
     public function findForumsInCategory(ForumCategory $category) {
         /* @noinspection SqlDialectInspection */
         $dql = 'SELECT f.id, f.name FROM '.Forum::class.' f '.
-            'WHERE f.category = :category '.
+            'WHERE f.category = :category and f.id > 0'.
             'ORDER BY f.normalizedName ASC';
 
         $names = $this->_em->createQuery($dql)

@@ -136,6 +136,7 @@ forum:
     unsubscribe: Unsubscribe
     subscriber_count: '{0} No subscribers|{1} %count% subscriber|[1,Inf[ %count% subscribers'
     add_moderator: Add moderator
+    mod_page: Moderation Posts
 
 forum_form:
     name: Name
@@ -403,6 +404,7 @@ submission_form:
     edit: Edit submission
     delete: Delete submission
     confirm_delete: Are you sure you want to delete this submission?
+    mod_thread: Post in Moderation section
 
 submissions:
     comments: '{0} No comments|{1} %count% comment|[1,Inf[ %count% comments'

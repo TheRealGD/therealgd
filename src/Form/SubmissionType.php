@@ -78,6 +78,7 @@ final class SubmissionType extends AbstractType {
             $this->authorizationChecker->isGranted('ROLE_ADMIN')
         ) {
             $builder->add('sticky', CheckboxType::class, ['required' => false]);
+            $builder->add('mod_thread', CheckboxType::class, ['required' => false]);
 
             $this->addUserFlagOption($builder, $forum);
         }

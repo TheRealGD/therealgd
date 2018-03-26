@@ -56,6 +56,11 @@
 
       {% if is_granted('moderator', forum) %}
         {% set item %}
+          <li><a href="{{ path('mod_forum', {forum_name: forum.name}) }}">{{ 'forum.mod_page'|trans }}</a></li>
+        {% endset %}
+        {% set items = items|merge({('forum.mod_page'|trans): item}) %}
+
+        {% set item %}
           <li><a href="{{ path('edit_forum', {forum_name: forum.name}) }}">{{ 'forum.edit'|trans }}</a></li>
         {% endset %}
         {% set items = items|merge({('forum.edit'|trans): item}) %}

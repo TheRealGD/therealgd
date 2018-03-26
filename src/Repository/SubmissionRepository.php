@@ -33,8 +33,10 @@ class SubmissionRepository extends ServiceEntityRepository {
 
         $qb = $this->findSortedQb($sortBy)
             ->where('IDENTITY(s.forum) IN (:forums)')
+            ->andWhere('s.modThread = false')
             ->setParameter(':forums', array_keys($forums));
 
+        
         $submissions = $this->paginate($qb, $page);
 
         $this->hydrateAssociations($submissions);
@@ -52,6 +54,31 @@ class SubmissionRepository extends ServiceEntityRepository {
     public function findForumSubmissions(Forum $forum, string $sortBy, int $page = 1) {
         $qb = $this->findSortedQb($sortBy)
             ->andWhere('s.forum = :forum')
+            ->andWhere('s.modThread = false')
+            ->setParameter('forum', $forum);
+
+        if ($sortBy === 'hot') {
+            PrependOrderBy::prepend($qb, 's.sticky', 'DESC');
+        }
+
+        $submissions = $this->paginate($qb, $page);
+
+        $this->hydrateAssociations($submissions);
+
+        return $submissions;
+    }
+
+    /**
+     * @param Forum  $forum
+     * @param string $sortBy
+     * @param int    $page
+     *
+     * @return Pagerfanta|Submission[]
+     */
+    public function findModForumSubmissions(Forum $forum, string $sortBy, int $page = 1) {
+        $qb = $this->findSortedQb($sortBy)
+            ->andWhere('s.forum = :forum')
+            ->andWhere('s.modThread = true')
             ->setParameter('forum', $forum);
 
         if ($sortBy === 'hot') {

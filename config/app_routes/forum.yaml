@@ -20,6 +20,13 @@ forum_feed:
     methods: [GET]
     requirements: { sortBy: hot|new, page: \d+ }
 
+mod_forum:
+    controller: App\Controller\ForumController::modFront
+    defaults: { page: 1 }
+    path: /f/{forum_name}/mod/{page}
+    methods: [GET]
+    requirements: { page: \d+ }
+
 edit_forum:
     controller: App\Controller\ForumController::editForum
     path: /f/{forum_name}/edit
