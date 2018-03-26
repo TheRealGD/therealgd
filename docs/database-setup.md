@@ -8,18 +8,23 @@ Okay, maybe you got scared of that DBA thing and you're just a dev.
 Do this:
 
     $ sudo apt-get install postgresql
-    $ sudo -u postgres createuser -P <username>
-    $ sudo -u postgres createdb -O <username> <database name>
+    $ sudo -u postgres createuser -P youwish_root
+    $ sudo -u postgres createdb -O youwish_root youwish_devlocal
     # test it's there
-    $ psql -U <username> -h localhost <database name>
+    $ psql -U youwish_root -h localhost youwish_devlocal
 
 Modify your .env with following URL:
 
-    pgsql://<username>:<password>@localhost/<database name>?serverVersion=9.6
+    pgsql://youwish_root:SRONGPASSWORDlol@localhost/youwish_devlocal?serverVersion=9.6
 
 Enjoy!
 
 ## Real Deal
+
+> DO NOT SIMPLY COPY-PASTE!
+> CHANGE ROLES (youwish_devuser, youwish_testuser, etc) AND PASSWORD/DB VALUES.
+> IF YOU NEED ONLY dev (test, prod) - DO ONLY dev (test, prod)
+> DON'T FORGET TO ADD REAL VALUES TO PASSWORD SAFE if it's prod or shared dbs.
 
 Still here? Awesome. Get Some!
 
@@ -54,9 +59,9 @@ Still here? Awesome. Get Some!
      // For each db - create schema and default priveleges
      \connect youwish_prod
      CREATE SCHEMA schma AUTHORIZATION youwish_prodadmin;
-     SET search_path = schma;
-     ALTER ROLE youwish_prodadmin IN DATABASE youwish_prod SET search_path = schma;
-     ALTER ROLE youwish_produser IN DATABASE youwish_prod SET search_path = schma;
+     SET search_path = schma,public;
+     ALTER ROLE youwish_prodadmin IN DATABASE youwish_prod SET search_path = schma,public;
+     ALTER ROLE youwish_produser IN DATABASE youwish_prod SET search_path = schma,public;
      GRANT USAGE ON SCHEMA schma TO youwish_produser;
      GRANT CREATE ON SCHEMA schma TO youwish_prodadmin;
      ALTER DEFAULT PRIVILEGES FOR ROLE youwish_prodadmin GRANT INSERT, UPDATE, DELETE, TRUNCATE ON TABLES TO youwish_prod;
