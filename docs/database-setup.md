@@ -63,6 +63,14 @@ Still here? Awesome. Get Some!
      ALTER DEFAULT PRIVILEGES FOR ROLE youwish_prodadmin GRANT USAGE, SELECT, UPDATE ON SEQUENCES TO youwish_prod;
      GRANT TEMP ON DATABASE youwish_prod TO youwish_produser;
      //< REPEAT STEPS ^ABOVE^ FOR test and dev, except combine roles since there is no admin/user distinction
+     
+## Manually Copying One DB to Another 
+This is the same for prod to dev/test or one RDS to another one...
+
+```
+   pg_dump -Fc --no-acl -n public -h RDS_URL_BLA_BLA.amazonaws.com -U userthatcanreadolddb dbname > ./sql.dump
+   pg_restore -U userThatCanWriteToNewDB -d NEW_DB -h NEW_RDS_BLA_LBA.amazonaws.com sql.dump
+```
 
 ## Links Used for Real Deal
 
