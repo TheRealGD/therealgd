@@ -133,6 +133,7 @@ final class ForumRepository extends ServiceEntityRepository {
     public function findAllForumNames() {
         $names = $this->createQueryBuilder('f')
             ->select('f.id')
+            ->where('f.id > 0')
             ->addSelect('f.name')
             ->orderBy('f.normalizedName', 'ASC')
             ->getQuery()
