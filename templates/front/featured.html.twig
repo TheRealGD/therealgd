@@ -4,8 +4,11 @@
 
 {% block sidebar %}
   <section class="sidebar__section sidebar__section--featured-forums">
-    <h1 class="sidebar__title">{{ 'front.featured_forums'|trans }}</h1>
+    {% block site_sidebar_actions %}
+      {{ include('_includes/site_sidebar_actions.html.twig', {forum_name: name ?? null}, with_context=false) }}
+    {% endblock %}
 
+    <h1 class="sidebar__title">{{ 'front.featured_forums'|trans }}</h1>
     {% if forums|length > 0 %}
       <ul>
         {% for name in forums %}

@@ -32,6 +32,15 @@
 {% endblock %}
 
 {%- macro submission_filter(choice, sort_by) -%}
+
+  {% with { active: choice == 'all' } %}
+    <li class="tabs__tab {{ active ? 'tabs__tab--active active' }}">
+      <a href="{{ path('all', {sortBy: sort_by, page: 1}) }}" class="tabs__link {{ active ? 'tabs__link--active' }}">
+        {{- 'front.all'|trans -}}
+      </a>
+    </li>
+  {% endwith %}
+
   {% with { active: choice == 'featured' } %}
     <li class="tabs__tab {{ active ? 'tabs__tab--active active' }}">
       <a href="{{ path('featured', {sortBy: sort_by, page: 1}) }}" class="tabs__link {{ active ? 'tabs__link--active' }}">
@@ -50,14 +59,6 @@
     {% endwith %}
   {% endif %}
 
-  {% with { active: choice == 'all' } %}
-    <li class="tabs__tab {{ active ? 'tabs__tab--active active' }}">
-      <a href="{{ path('all', {sortBy: sort_by, page: 1}) }}" class="tabs__link {{ active ? 'tabs__link--active' }}">
-        {{- 'front.all'|trans -}}
-      </a>
-    </li>
-  {% endwith %}
-
   {% if choice == 'moderated' or app.user and app.user.moderatorTokens|length > 0 %}
     {% with { active: choice == 'moderated' } %}
       <li class="tabs__tab {{ active ? 'tabs__tab--active active' }}">
@@ -67,4 +68,5 @@
       </li>
     {% endwith %}
   {% endif %}
+  
 {%- endmacro -%}
