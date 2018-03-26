@@ -27,7 +27,8 @@
   <h1 class="page-heading">{{ 'heading.category'|trans({'%category%': category.title}) }}</h1>
 
   {% for submission in submissions %}
-    {{ submission(submission) }}
+    {%- set options = { oddClass: (loop.index % 2 == 0) ? 'even' : 'odd' } -%}
+    {{ submission(submission, options) }}
   {% endfor %}
 
   {% include '_includes/pagination.html.twig' with {pager: submissions} %}

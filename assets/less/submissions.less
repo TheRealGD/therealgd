@@ -2,7 +2,22 @@
 @import (reference) 'settings';
 
 .submission {
-  margin-bottom: 1rem;
+  &.odd {
+    background: @submission-odd-row-color;
+    border-top: 1px dashed #ddd;
+    border-bottom: 1px dashed #ddd;
+  }
+  padding: 1rem;
+  &:last-of-type {
+    margin-bottom: 1rem;
+  }
+}
+
+// Desktop only
+@media screen and (min-width: @desktop-min-width) {
+  .submission {
+    margin-right: 1rem;
+  }
 }
 
 .submission-header > * {

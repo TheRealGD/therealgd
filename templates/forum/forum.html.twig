@@ -40,7 +40,11 @@
   {% endif %}
 
   {% for submission in submissions %}
-    {{ submission(submission, {show_forum_name: false}) }}
+    {%- set options = {
+        oddClass: (loop.index % 2 == 0) ? 'even' : 'odd',
+        show_forum_name: false
+    } -%}
+    {{ submission(submission, options) }}
   {% endfor %}
 
   {% include '_includes/pagination.html.twig' with {pager: submissions} %}

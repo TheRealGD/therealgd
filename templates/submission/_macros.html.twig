@@ -51,7 +51,7 @@
 {%- block submission -%}
   {%- from 'vote/_macros.html.twig' import vote -%}
   {%- set open_external = submission.url is not empty and (app.user.openExternalLinksInNewTab ?? false) -%}
-  <article class="submission {{ submission.url ? 'submission-has-url' }} {{ submission.body is not null ? 'submission-has-body' }} {{ not options.show_body ? 'submission-body-hidden' }} {{ submission.sticky ? 'submission-sticky' }} {{ submission.locked ? 'submission-locked' }}">
+  <article class="submission {{ options.oddClass | default("") }} {{ submission.url ? 'submission-has-url' }} {{ submission.body is not null ? 'submission-has-body' }} {{ not options.show_body ? 'submission-body-hidden' }} {{ submission.sticky ? 'submission-sticky' }} {{ submission.locked ? 'submission-locked' }}">
     <div class="submission-row">
       <div class="submission-vote">
         {{- vote(submission, 'submission_vote') -}}

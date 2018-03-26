@@ -168,9 +168,12 @@ forum_moderators:
     last_seen: Last seen
 
 front:
-    subscribed_forums: Subscribed forums
+    #subscribed_forums: Subscribed forums
+    subscribed_forums: Subscribed Deals
     no_subscriptions: You are not subscribed to any forum. Showing featured forums instead.
-    featured_forums: Featured forums
+    #featured_forums: Featured forums
+    featured_forums: Featured Deals
+    all_forums: All Deals
     no_forums: There are no featured forums to display.
     all: All
     featured: Featured
@@ -309,6 +312,9 @@ moderator_form:
     user: Username
     submit: Add as moderator
 
+sidebar:
+  submit_deal: Submit a new deal
+
 nav:
     appearance: Appearance
     create_theme: Create theme
@@ -321,7 +327,8 @@ nav:
     register: Sign up
     my_account: My account
     user_settings: User settings
-    forums: Forums
+    #forums: Forums
+    forums: Categories
     inbox_count: Inbox (%count%)
     messages: Messages
     wiki: Wiki

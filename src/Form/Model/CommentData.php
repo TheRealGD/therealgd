@@ -6,8 +6,13 @@ use App\Entity\Comment;
 use App\Entity\Submission;
 use App\Entity\User;
 use App\Entity\UserFlags;
+use App\Validator\Constraints\RateLimit;
 use Symfony\Component\Validator\Constraints as Assert;
 
+/**
+ * @RateLimit(period="1 hour", max="3", groups={"untrusted_user_comment"},
+ *     entityClass="App\Entity\Comment")
+ */
 class CommentData {
     /**
      * @Assert\NotBlank(message="The comment must not be empty.")
