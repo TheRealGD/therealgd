@@ -8,7 +8,6 @@
       {{ include('_includes/site_sidebar_actions.html.twig', {forum_name: name ?? null}, with_context=false) }}
     {% endblock %}
 
-
     <h1 class="sidebar__title">{{ 'front.all_forums'|trans }}</h1
     {% if forums|length > 0 %}
       <ul>
