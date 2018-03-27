@@ -105,10 +105,11 @@ class SubmissionRepository extends ServiceEntityRepository {
 
     /**
      * @param string $sortType one of 'hot' or 'new'
+     * @param bool $isAdmin to show/hide mod only threads
      *
      * @return QueryBuilder
      */
-    public function findSortedQb($sortType, ?bool $isAdmin = false) {
+    public function findSortedQb($sortType, ?bool $isMod = false) {
         $qb = $this->createQueryBuilder('s');
 
         switch ($sortType) {
@@ -126,7 +127,8 @@ class SubmissionRepository extends ServiceEntityRepository {
             throw new \InvalidArgumentException('Bad sort type');
         }
 
-        if (!$isAdmin) {
+        // This hides the mod only comments from being viewed
+        if (!$isMod) {
             $qb->andWhere('s.modThread = false');
         }
         return $qb;
