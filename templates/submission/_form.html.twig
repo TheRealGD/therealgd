@@ -1,4 +1,4 @@
-{{ form_start(form, {attr: {class: (app.user.autoFetchSubmissionTitles ?? true) ? 'auto-fetch-submission-titles'}}) }}
+{{ form_start(form, {attr: {id:"submission_form" ,class: (app.user.autoFetchSubmissionTitles ?? true) ? 'auto-fetch-submission-titles'}}) }}
   {{ form_errors(form) }}
 
   {{ form_row(form.url, {attr: {class: 'fetch-title'}}) }}
