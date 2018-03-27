@@ -95,7 +95,7 @@ final class ForumRepository extends ServiceEntityRepository {
         }
         $dql =
             'SELECT f.id, f.name FROM '.Forum::class.' f WHERE f IN ('.
-                'SELECT IDENTITY(fs.forum) FROM '.ForumSubscription::class.' fs WHERE fs.user = ?1 and' . ($showAdminForum) ? '' : ' f.id > 0' .
+                'SELECT IDENTITY(fs.forum) FROM '.ForumSubscription::class.' fs WHERE fs.user = ?1 ' . (($showAdminForum) ? '' : 'AND f.id > 0') .
             ') ORDER BY f.normalizedName ASC';
 
         $names = $this->getEntityManager()->createQuery($dql)
