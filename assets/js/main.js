@@ -14,6 +14,7 @@ import './forms';
 import './markdown';
 import './relative-time';
 import './select2';
+import './submit';
 import './subscribe';
 import './syntax';
 import './vote';
