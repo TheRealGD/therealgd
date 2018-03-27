@@ -1,0 +1,24 @@
+{% block site_footer %}
+  <footer class="site-footer">
+    <div class="site-footer-menu">
+      <ul>
+        <li><a href="{{ url('copyright') }}" class="site-footer__link">{{ 'nav.wiki_copyright'|trans }}</a></li>
+        <li><a href="{{ url('privacy') }}" class="site-footer__link">{{ 'nav.wiki_privacy'|trans }}</a></li>
+        <li><a href="{{ url('terms') }}" class="site-footer__link">{{ 'nav.wiki_terms'|trans }}</a></li>
+        <li><a href="{{ url('usepolicy') }}" class="site-footer__link">{{ 'nav.wiki_use_policy'|trans }}</a></li>
+      </ul>
+    </div>
+    <div class="site-footer-feedback">
+      <p>Bug reports or Feature requests? Please leave us some <a class="en-us" title="Leave us feedback" target="_blank" href="http://feedback.rgundeals.com">Feedback</a></p>
+    </div>
+    <div class="site-footer-tagline">
+      <p class="site-footer-version">
+        {{ 'site_footer.version'|trans({
+          '%branch%': app_branch(),
+          '%version%': app_version(),
+          '%app%': '<a href="https://github.com/TheRealGD/therealgd">TheRealGD</a>',
+        })|raw }}
+      </p>
+    </div>
+  </footer>
+{% endblock %}
