@@ -256,8 +256,10 @@ final class ForumController extends AbstractController {
      * @return Response
      */
     public function listCategories(ForumCategoryRepository $fcr, ForumRepository $fr) {
-        $forumCategories = $fcr->findBy([], ['name' => 'ASC']);
-        $uncategorizedForums = $fr->findBy(['category' => null], ['normalizedName' => 'ASC']);
+        $modForumCategory = $fr->getModForumCategory();
+        $isAdmin = (!is_null($this->getUser()) && $this->getUser()->isAdmin());
+        $forumCategories = $fcr->findCategories($isAdmin, $modForumCategory);
+        $uncategorizedForums = $fr->findUncategorizedForums($isAdmin);
 
         return $this->render('forum/list_by_category.html.twig', [
             'forum_categories' => $forumCategories,

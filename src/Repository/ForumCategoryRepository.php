@@ -29,4 +29,25 @@ class ForumCategoryRepository extends ServiceEntityRepository {
 
         return $pager;
     }
+
+    public function findCategories($isAdmin, $modForumId) {
+        $qb = $this->createQueryBuilder('fc')
+            ->orderBy('fc.name', 'ASC');
+        $categories = $qb->getQuery()->execute();
+        if (!$isAdmin && !is_null($modForumId)) {
+            foreach ($categories as $category) {
+                if ($category->getId() === $modForumId) {
+                    $forums = $category->getForums();
+                    foreach ($forums as $key => $forum) {
+                        if ($forum->getId() === 0) {
+                            unset($forums[$key]);
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        return $categories;
+    }
 }
