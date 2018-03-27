@@ -1,5 +1,5 @@
 {% extends 'user/user.html.twig' %}
-{% from 'comment/_macros.html.twig' import comment %}
+{% import "comment/_macros.html.twig" as commentMacros %}
 
 {% block head %}
   <link rel="canonical" href="{{ url('user_comments', {username: user.username}) }}">
@@ -20,7 +20,7 @@
   <h1 class="page-heading">{{ block('title') }}</h1>
 
   {% for comment in comments %}
-    {{ comment(comment, {recurse: false}) }}
+    {{ commentMacros.comment(comment, {recurse: false}) }}
   {% endfor %}
 
   {{ include('_includes/pagination.html.twig', { pager: comments }) }}

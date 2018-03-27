@@ -14,7 +14,7 @@
 
   @media screen and (min-width: @desktop-min-width) {
     & > .body {
-      border-right: 2px solid @page-color;
+      border-right: 2px solid @nav-background-color;
     }
   }
 
@@ -36,8 +36,10 @@
 }
 
 .site-footer {
-  margin-top: auto;
+  /* margin-top: auto; */
   padding: 1rem 1rem 0;
+  border-top: 5px solid @nav-background-color;
+  margin-top: 2rem;
 
   .site-footer-version {
     display: table;
