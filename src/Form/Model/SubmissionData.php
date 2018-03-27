@@ -52,6 +52,8 @@ class SubmissionData {
 
     private $sticky = false;
 
+    private $modThread = false;
+
     public function __construct(Forum $forum = null) {
         $this->forum = $forum;
     }
@@ -65,6 +67,7 @@ class SubmissionData {
         $self->userFlag = $submission->getUserFlag();
         $self->forum = $submission->getForum();
         $self->sticky = $submission->isSticky();
+        $self->modThread = $submission->isModThread();
 
         return $self;
     }
@@ -78,6 +81,7 @@ class SubmissionData {
             $user,
             $ip,
             $this->sticky,
+            $this->modThread,
             $this->userFlag
         );
     }
@@ -88,6 +92,7 @@ class SubmissionData {
         $submission->setBody($this->body);
         $submission->setUserFlag($this->userFlag);
         $submission->setSticky($this->sticky);
+        $submission->setModThread($this->modThread);
     }
 
     public function getEntityId() {
@@ -140,5 +145,13 @@ class SubmissionData {
 
     public function setSticky(bool $sticky) {
         $this->sticky = $sticky;
+    }
+
+    public function isModThread(): bool {
+        return $this->modThread;
+    }
+
+    public function setModThread(bool $modThread) {
+        $this->modThread = $modThread;
     }
 }

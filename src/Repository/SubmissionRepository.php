@@ -35,6 +35,7 @@ class SubmissionRepository extends ServiceEntityRepository {
             ->where('IDENTITY(s.forum) IN (:forums)')
             ->setParameter(':forums', array_keys($forums));
 
+        
         $submissions = $this->paginate($qb, $page);
 
         $this->hydrateAssociations($submissions);
@@ -66,6 +67,29 @@ class SubmissionRepository extends ServiceEntityRepository {
     }
 
     /**
+     * @param Forum  $forum
+     * @param string $sortBy
+     * @param int    $page
+     *
+     * @return Pagerfanta|Submission[]
+     */
+    public function findModForumSubmissions(Forum $forum, string $sortBy, int $page = 1) {
+        $qb = $this->findSortedQb($sortBy, true)
+            ->andWhere('s.forum = :forum')
+            ->setParameter('forum', $forum);
+
+        if ($sortBy === 'hot') {
+            PrependOrderBy::prepend($qb, 's.sticky', 'DESC');
+        }
+
+        $submissions = $this->paginate($qb, $page);
+
+        $this->hydrateAssociations($submissions);
+
+        return $submissions;
+    }
+
+    /**
      * @param string $sortBy
      * @param int    $page
      *
@@ -81,10 +105,11 @@ class SubmissionRepository extends ServiceEntityRepository {
 
     /**
      * @param string $sortType one of 'hot' or 'new'
+     * @param bool $isAdmin to show/hide mod only threads
      *
      * @return QueryBuilder
      */
-    public function findSortedQb($sortType) {
+    public function findSortedQb($sortType, ?bool $isMod = false) {
         $qb = $this->createQueryBuilder('s');
 
         switch ($sortType) {
@@ -102,6 +127,10 @@ class SubmissionRepository extends ServiceEntityRepository {
             throw new \InvalidArgumentException('Bad sort type');
         }
 
+        // This hides the mod only comments from being viewed
+        if (!$isMod) {
+            $qb->andWhere('s.modThread = false');
+        }
         return $qb;
     }
 

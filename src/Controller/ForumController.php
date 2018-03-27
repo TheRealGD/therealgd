@@ -40,12 +40,38 @@ final class ForumController extends AbstractController {
      * @return Response
      */
     public function front(SubmissionRepository $sr, Forum $forum, string $sortBy, int $page) {
+        $user = $this->getUser();
+        if ($forum->getId() === 0 && (is_null($user) || !$user->isAdmin())) {
+            return $this->redirectToRoute('login');
+        }
         $submissions = $sr->findForumSubmissions($forum, $sortBy, $page);
 
         return $this->render('forum/forum.html.twig', [
             'forum' => $forum,
             'sort_by' => $sortBy,
             'submissions' => $submissions,
+        ]);
+    }
+
+    /**
+     * @IsGranted("moderator", subject="forum")
+     * Show the list of mod posts of a given forum.
+     *
+     * @param SubmissionRepository $sr
+     * @param Forum                $forum
+     * @param string               $sortBy
+     * @param int                  $page
+     *
+     * @return Response
+     */
+    public function modFront(SubmissionRepository $sr, Forum $forum, string $sortBy, int $page) {
+        $submissions = $sr->findModForumSubmissions($forum, $sortBy, $page);
+
+        return $this->render('forum/forum.html.twig', [
+            'forum' => $forum,
+            'sort_by' => $sortBy,
+            'submissions' => $submissions,
+            'mod' => true
         ]);
     }
 
@@ -218,7 +244,7 @@ final class ForumController extends AbstractController {
      */
     public function list(ForumRepository $repository, int $page = 1, string $sortBy) {
         return $this->render('forum/list.html.twig', [
-            'forums' => $repository->findForumsByPage($page, $sortBy),
+            'forums' => $repository->findForumsByPage($page, $sortBy, $this->getUser()),
             'sortBy' => $sortBy,
         ]);
     }

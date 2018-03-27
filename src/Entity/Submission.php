@@ -147,6 +147,13 @@ class Submission extends Votable {
      */
     private $locked = false;
 
+    /**
+     * @ORM\Column(type="boolean", options={"default": false})
+     *
+     * @var bool
+     */
+    private $modThread = false;
+
     public function __construct(
         string $title,
         ?string $url,
@@ -155,6 +162,7 @@ class Submission extends Votable {
         User $user,
         ?string $ip,
         bool $sticky = false,
+        bool $modThread = false,
         int $userFlag = UserFlags::FLAG_NONE,
         \DateTime $timestamp = null
     ) {
@@ -173,6 +181,7 @@ class Submission extends Votable {
         $this->user = $user;
         $this->ip = $user->isTrustedOrAdmin() ? null : $ip;
         $this->sticky = $sticky;
+        $this->modThread = $modThread;
         $this->setUserFlag($userFlag);
         $this->timestamp = $timestamp ?: new \DateTime('@'.time());
         $this->comments = new ArrayCollection();
@@ -298,6 +307,14 @@ class Submission extends Votable {
 
     public function setSticky(bool $sticky) {
         $this->sticky = $sticky;
+    }
+
+    public function isModThread(): bool {
+        return $this->modThread;
+    }
+
+    public function setModThread(bool $modThread) {
+        $this->modThread = $modThread;
     }
 
     /**
