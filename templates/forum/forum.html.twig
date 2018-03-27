@@ -31,13 +31,11 @@
     </h1>
   {% endspaceless %}
 
-  {% if mod is not defined %}
   <nav class="tabs submission-sort">
     <ul class="tabs__bar">
       {{- submission_sort(sort_by) -}}
     </ul>
   </nav>
-  {% endif %}
 
   {% for submission in submissions %}
     {%- set options = {

@@ -64,12 +64,12 @@ final class ForumController extends AbstractController {
      *
      * @return Response
      */
-    public function modFront(SubmissionRepository $sr, Forum $forum, int $page) {
-        $submissions = $sr->findModForumSubmissions($forum, 'new', $page);
+    public function modFront(SubmissionRepository $sr, Forum $forum, string $sortBy, int $page) {
+        $submissions = $sr->findModForumSubmissions($forum, $sortBy, $page);
 
         return $this->render('forum/forum.html.twig', [
             'forum' => $forum,
-            'sort_by' => 'new',
+            'sort_by' => $sortBy,
             'submissions' => $submissions,
             'mod' => true
         ]);

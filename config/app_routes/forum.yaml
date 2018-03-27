@@ -22,10 +22,10 @@ forum_feed:
 
 mod_forum:
     controller: App\Controller\ForumController::modFront
-    defaults: { page: 1 }
-    path: /f/{forum_name}/mod/{page}
+    defaults: { sortBy: new, page: 1 }
+    path: /f/{forum_name}/mod/{sortBy}/{page}
     methods: [GET]
-    requirements: { page: \d+ }
+    requirements: { sortBy: hot|new, page: \d+ }
 
 edit_forum:
     controller: App\Controller\ForumController::editForum

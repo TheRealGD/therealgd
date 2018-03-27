@@ -89,17 +89,15 @@ final class ForumRepository extends ServiceEntityRepository {
      */
     public function findSubscribedForumNames(User $user) {
         /* @noinspection SqlDialectInspection */
+        $showAdminForum = false;
         if ($user->isAdmin()) {
-            $dql =
-                'SELECT f.id, f.name FROM '.Forum::class.' f WHERE f IN ('.
-                    'SELECT IDENTITY(fs.forum) FROM '.ForumSubscription::class.' fs WHERE fs.user = ?1'.
-                ') ORDER BY f.normalizedName ASC';
-        } else {
-            $dql =
-                'SELECT f.id, f.name FROM '.Forum::class.' f WHERE f IN ('.
-                    'SELECT IDENTITY(fs.forum) FROM '.ForumSubscription::class.' fs WHERE fs.user = ?1 and f.id > 0'.
-                ') ORDER BY f.normalizedName ASC';
+            $showAdminForum = true;
         }
+        $dql =
+            'SELECT f.id, f.name FROM '.Forum::class.' f WHERE f IN ('.
+                'SELECT IDENTITY(fs.forum) FROM '.ForumSubscription::class.' fs WHERE fs.user = ?1 andi' . ($showAdminForum) ? '' : ' f.id > 0' .
+            ') ORDER BY f.normalizedName ASC';
+
         $names = $this->getEntityManager()->createQuery($dql)
             ->setParameter(1, $user)
             ->getResult();
@@ -133,6 +131,7 @@ final class ForumRepository extends ServiceEntityRepository {
     public function findAllForumNames() {
         $names = $this->createQueryBuilder('f')
             ->select('f.id')
+            // This where removes the admin only forum from search
             ->where('f.id > 0')
             ->addSelect('f.name')
             ->orderBy('f.normalizedName', 'ASC')
@@ -162,6 +161,7 @@ final class ForumRepository extends ServiceEntityRepository {
 
     public function findForumNames($names) {
         /* @noinspection SqlDialectInspection */
+        // f.id > 0 removes the admin only forum from search
         $dql = 'SELECT f.id, f.name FROM '.Forum::class.' f '.
             'WHERE f.normalizedName IN (?1) and f.id > 0'.
             'ORDER BY f.normalizedName ASC';
@@ -175,6 +175,7 @@ final class ForumRepository extends ServiceEntityRepository {
 
     public function findForumsInCategory(ForumCategory $category) {
         /* @noinspection SqlDialectInspection */
+        // f.id > 0 removes the admin only forum from search
         $dql = 'SELECT f.id, f.name FROM '.Forum::class.' f '.
             'WHERE f.category = :category and f.id > 0'.
             'ORDER BY f.normalizedName ASC';

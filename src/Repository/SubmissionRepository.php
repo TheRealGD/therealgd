@@ -33,7 +33,6 @@ class SubmissionRepository extends ServiceEntityRepository {
 
         $qb = $this->findSortedQb($sortBy)
             ->where('IDENTITY(s.forum) IN (:forums)')
-            ->andWhere('s.modThread = false')
             ->setParameter(':forums', array_keys($forums));
 
         
@@ -54,7 +53,6 @@ class SubmissionRepository extends ServiceEntityRepository {
     public function findForumSubmissions(Forum $forum, string $sortBy, int $page = 1) {
         $qb = $this->findSortedQb($sortBy)
             ->andWhere('s.forum = :forum')
-            ->andWhere('s.modThread = false')
             ->setParameter('forum', $forum);
 
         if ($sortBy === 'hot') {
@@ -76,9 +74,8 @@ class SubmissionRepository extends ServiceEntityRepository {
      * @return Pagerfanta|Submission[]
      */
     public function findModForumSubmissions(Forum $forum, string $sortBy, int $page = 1) {
-        $qb = $this->findSortedQb($sortBy)
+        $qb = $this->findSortedQb($sortBy, true)
             ->andWhere('s.forum = :forum')
-            ->andWhere('s.modThread = true')
             ->setParameter('forum', $forum);
 
         if ($sortBy === 'hot') {
@@ -111,7 +108,7 @@ class SubmissionRepository extends ServiceEntityRepository {
      *
      * @return QueryBuilder
      */
-    public function findSortedQb($sortType) {
+    public function findSortedQb($sortType, ?bool $isAdmin = false) {
         $qb = $this->createQueryBuilder('s');
 
         switch ($sortType) {
@@ -129,6 +126,9 @@ class SubmissionRepository extends ServiceEntityRepository {
             throw new \InvalidArgumentException('Bad sort type');
         }
 
+        if (!$isAdmin) {
+            $qb->andWhere('s.modThread = false');
+        }
         return $qb;
     }
 
