@@ -52,10 +52,10 @@ final class TokenVoter extends Voter {
         }
 
         switch ($attribute) {
-        case self::CREATE_FORUM:
-            return $this->canCreateForum($token);
-        default:
-            throw new \InvalidArgumentException('Unknown attribute '.$attribute);
+          case self::CREATE_FORUM:
+              return $this->canCreateForum($token);
+          default:
+              throw new \InvalidArgumentException('Unknown attribute '.$attribute);
         }
     }
 
@@ -69,12 +69,15 @@ final class TokenVoter extends Voter {
             return true;
         }
 
+        /* Disabled non-admin user forum creation
+           Uncomment to enable timelimited forum creation for non-admin users.
+
         if ($this->forumCreationInterval) {
             $now = new \DateTime('@'.time());
             $maxDate = (clone $now)->modify($this->forumCreationInterval);
             $maxDate = $now->sub($now->diff($maxDate, true));
 
-            /* @var User $user */
+            // @var User $user
             $user = $token->getUser();
 
             if ($user->getCreated() > $maxDate) {
@@ -83,5 +86,7 @@ final class TokenVoter extends Voter {
         }
 
         return true;
+        */
+        return false;
     }
 }

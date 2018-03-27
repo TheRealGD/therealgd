@@ -1,0 +1,40 @@
+/*
+@name: CSS3 Feedback Button
+@description: Both EN&ZH feedback button style and animation with CSS3.
+@author: hzlzh <hzlzh.dev@gmail.com>
+@link: https://gist.github.com/3296306
+@demo: http://jsbin.com/css3-feedback-button/latest/
+*/
+.feedback-btn {
+	display: block;
+	left: 0;
+	position: fixed;
+	top: 85px;
+	a.en-us {
+		display: block;
+		border-radius: 0 0 4px 4px;
+		border: 1px solid #75a3d;
+		background-color: @nav-background-color;
+		color: @nav-link-color;
+		font-size: 14px;
+		font-weight: normal;
+		line-height: 16px;
+		margin-left: -40px;
+		padding: 20px 10px 10px 16px;
+		text-decoration: none;
+		-webkit-transform: rotate(-90deg);
+		-moz-transform: rotate(-90deg);
+		-ms-transform: rotate(-90deg);
+		-o-transform: rotate(-90deg);
+		transform: rotate(-90deg);
+		-webkit-transition: all 0.15s ease-in-out;
+		-moz-transition: all 0.15s ease-in-out;
+		transition: all 0.15s ease-in-out;
+		&:hover {
+			margin-left: -30px;
+			text-decoration: none;
+			border: 1px solid #75a3d;
+			background-color: @nav-background-color;
+		}
+	}
+}
