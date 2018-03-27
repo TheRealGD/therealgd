@@ -60,6 +60,7 @@ class SubmissionData {
 
     public static function createFromSubmission(Submission $submission): self {
         $self = new self();
+        echo $submission->getForum()->getId();die;
         $self->entityId = $submission->getId();
         $self->title = $submission->getTitle();
         $self->url = $submission->getUrl();
@@ -72,7 +73,7 @@ class SubmissionData {
         return $self;
     }
 
-    public function toSubmission(User $user, $ip): Submission {
+    public function toSubmission(User $user, $ip, $modThread = false): Submission {
         return new Submission(
             $this->title,
             $this->url,
@@ -81,7 +82,7 @@ class SubmissionData {
             $user,
             $ip,
             $this->sticky,
-            $this->modThread,
+            $modThread,
             $this->userFlag
         );
     }
@@ -92,7 +93,6 @@ class SubmissionData {
         $submission->setBody($this->body);
         $submission->setUserFlag($this->userFlag);
         $submission->setSticky($this->sticky);
-        $submission->setModThread($this->modThread);
     }
 
     public function getEntityId() {

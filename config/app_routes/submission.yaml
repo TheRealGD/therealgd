@@ -5,6 +5,13 @@ submission:
     methods: [GET]
     requirements: { submission_id: \d+ }
 
+mod_submission:
+    controller: App\Controller\SubmissionController::modSubmission
+    defaults: { slug: ~ }
+    path: /f/{forum_name}/mod/{submission_id}/{slug}
+    methods: [GET]
+    requirements: { submission_id: \d+ }
+
 submission_shortcut:
     controller: App\Controller\SubmissionController::shortcut
     path: /{id}
@@ -48,6 +55,11 @@ submit:
     controller: App\Controller\SubmissionController::submit
     defaults: { forum_name: null }
     path: /submit/{forum_name}
+    methods: [GET, POST]
+
+mod_submit:
+    controller: App\Controller\SubmissionController::modSubmit
+    path: /f/{forum_name}/mod/submit
     methods: [GET, POST]
 
 submission_vote:

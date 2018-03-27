@@ -95,8 +95,9 @@ final class FrontController extends AbstractController {
      */
     public function all(ForumRepository $fr, SubmissionRepository $sr, string $sortBy, int $page) {
         # Added for v1.
+        $admin = !is_null($this->getUser()) && $this->getUser()->isAdmin();
         $forums = $fr->findAllForumNames();
-        $submissions = $sr->findAllSubmissions($sortBy, $page);
+        $submissions = $sr->findAllSubmissions($sortBy, $page, $admin);
 
         return $this->render('front/all.html.twig', [
             'forums' => $forums, # Added for v1.
