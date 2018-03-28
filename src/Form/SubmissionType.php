@@ -66,7 +66,9 @@ final class SubmissionType extends AbstractType {
                 'choice_label' => 'name',
                 'query_builder' => function (EntityRepository $repository) {
                     return $repository->createQueryBuilder('f')
-                        ->orderBy('f.name', 'ASC');
+                        ->orderBy('f.name', 'ASC')
+                        // This where removes the admin only forum from search
+                        ->where('f.id > 0');
                 },
                 'placeholder' => 'placeholder.choose_one',
                 'required' => false, // enable a blank choice
