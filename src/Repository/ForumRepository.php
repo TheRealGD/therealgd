@@ -206,6 +206,9 @@ final class ForumRepository extends ServiceEntityRepository {
             ->getQuery()
             ->execute();
 
+        if (is_null($modForum[0]->getCategory())) {
+            return null;
+        }
         return $modForum[0]->getCategory()->getId();
     }
 
