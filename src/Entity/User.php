@@ -450,6 +450,22 @@ class User implements UserInterface, EquatableInterface {
         }
     }
 
+    private function _unreadNotificationsCriteria(Criteria $existingCriteria = null):Criteria 
+    {
+      $criteria = ($existingCriteria !== null) ? $existingCriteria : Criteria::create();
+      $expr = Criteria::expr();
+      $criteria = $criteria->where($expr->eq('read', false));
+      return $criteria;
+    }
+
+    /**
+     * @return Collection|Selectable|Notification[]
+     */
+    public function getUnreadNotifications(): Collection {
+        $notifs = $this->notifications;
+        return $notifs->matching($this->_unreadNotificationsCriteria());
+    }
+
     /**
      * @param int $page
      * @param int $maxPerPage
