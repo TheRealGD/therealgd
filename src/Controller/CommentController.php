@@ -100,6 +100,16 @@ final class CommentController extends AbstractController {
             $em->persist($reply);
             $em->flush();
 
+            // Nested comment - go to parent comment
+            if ($reply->getParent() !== null) {
+              return $this->redirectToRoute('comment', [
+                  'forum_name' => $forum->getName(),
+                  'submission_id' => $submission->getId(),
+                  'comment_id' => $reply->getParent()->getId(),
+              ]);
+            }
+
+            // By default - go to post
             return $this->redirectToRoute('submission', [
                 'forum_name' => $forum->getName(),
                 'submission_id' => $submission->getId(),
