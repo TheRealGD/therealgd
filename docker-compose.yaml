@@ -1,0 +1,34 @@
+version: "3.3"
+services:
+  nginx:
+    build: docker/nginx
+    image: gundeals-nginx:latest
+    networks:
+      - gundealsnet
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/var/www/html
+  php:
+    build: docker/php
+    image: gundeals-php:latest
+    ports:
+      - 9000:9000
+    networks:
+      - gundealsnet
+    volumes:
+      - ./:/var/www/html:cached
+      - ./docker/php/php-overrides.ini:/etc/php/7.2/fpm/conf.d/99-overrides.ini
+      - ./.env.dev:/var/www/html/.env
+    working_dir: /var/www/html
+  postgres:
+    image: postgres:9.6.8
+    networks:
+      - gundealsnet
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: dev
+      POSTGRES_PASSWORD: dev
+networks:
+  gundealsnet:
