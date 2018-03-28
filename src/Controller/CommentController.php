@@ -100,11 +100,28 @@ final class CommentController extends AbstractController {
             $em->persist($reply);
             $em->flush();
 
+            /*
             return $this->redirectToRoute('comment', [
                 'forum_name' => $forum->getName(),
                 'submission_id' => $submission->getId(),
                 'comment_id' => $reply->getId(),
             ]);
+            */
+
+            if ($reply->getParent() != null){
+              return $this->redirectToRoute('comment', [
+                  'forum_name' => $forum->getName(),
+                  'submission_id' => $submission->getId(),
+                  'comment_id' => $reply->getParent()->getId(),
+              ]);
+            } else {
+              return $this->redirectToRoute('submission', [
+                  'forum_name' => $forum->getName(),
+                  'submission_id' => $submission->getId(),
+                  'slug' => Slugger::slugify($submission->getTitle()),
+              ]);
+            }
+
         }
 
         return $this->render('comment/form_errors.html.twig', [
