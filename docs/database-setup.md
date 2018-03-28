@@ -60,8 +60,7 @@ Still here? Awesome. Get Some!
      \connect youwish_prod
      CREATE SCHEMA schma AUTHORIZATION youwish_prodadmin;
      SET search_path = schma,public;
-     ALTER ROLE youwish_prodadmin IN DATABASE youwish_prod SET search_path = schma,public;
-     ALTER ROLE youwish_produser IN DATABASE youwish_prod SET search_path = schma,public;
+     ALTER DATABASE youwish_prod SET search_path = "$user",schma,public;
      GRANT USAGE ON SCHEMA schma TO youwish_produser;
      GRANT CREATE ON SCHEMA schma TO youwish_prodadmin;
      ALTER DEFAULT PRIVILEGES FOR ROLE youwish_prodadmin GRANT INSERT, UPDATE, DELETE, TRUNCATE ON TABLES TO youwish_prod;

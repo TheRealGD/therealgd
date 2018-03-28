@@ -1,3 +1,7 @@
+{# 
+  Site-wide sidebar actions.
+  @param forum - forum object with name, subsribed() etc.
+ #}
 {% block site_sidebar_actions %}
   <div  class="sidebar__actions">
     <a href="{{ path('submit', {forum_name: forum.name ?? null}) }}" class="sidebar__button">
