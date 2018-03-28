@@ -467,13 +467,17 @@ class User implements UserInterface, EquatableInterface {
     }
 
     /**
+     * @param string $filter unread|all
      * @param int $page
      * @param int $maxPerPage
      *
      * @return Pagerfanta|Notification[]
      */
-    public function getPaginatedNotifications(int $page, int $maxPerPage = 25): Pagerfanta {
+    public function getPaginatedNotifications(string $filter, int $page, int $maxPerPage = 25): Pagerfanta {
         $criteria = Criteria::create()->orderBy(['id' => 'DESC']);
+        if ($filter === 'unread') {
+          $criteria = $this->_unreadNotificationsCriteria($criteria);
+        }
 
         $notifications = new Pagerfanta(new DoctrineSelectableAdapter($this->notifications, $criteria));
         $notifications->setMaxPerPage($maxPerPage);

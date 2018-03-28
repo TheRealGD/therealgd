@@ -76,10 +76,12 @@ mark_user_trusted:
 
 inbox:
     controller: App\Controller\UserController::inbox
-    defaults: { page: 1 }
-    path: /inbox/{page}
+    defaults: { filter: unread, page: 1 }
+    path: /inbox/{filter}/{page}
     methods: [GET]
-    requirements: { page: \d+ }
+    requirements: 
+        page: \d+
+        filter: all|unread
 
 clear_inbox:
     controller: App\Controller\UserController::clearInbox
