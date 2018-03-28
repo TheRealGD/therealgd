@@ -1,6 +1,6 @@
 {% from '_macros/icon.html.twig' import icon %}
 {% spaceless %}
-  {%- set notification_count = is_granted('ROLE_USER') ? app.user.notifications|length : 0 -%}
+  {%- set notification_count = is_granted('ROLE_USER') ? app.user.unreadnotifications|length : 0 -%}
 
   <nav class="site-nav">
 
