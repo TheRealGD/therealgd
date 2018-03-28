@@ -25,8 +25,10 @@
       <a href="{{ path('create_forum') }}" class="button">{{ 'forum_list.create_forum'|trans }}</a>
     </p>
   {% elseif is_granted('ROLE_USER') %}
+    {#
     <div class="alert alert--notice">
       <p>{{ 'flash.you_cannot_create_forums_yet'|trans }}</p>
     </div>
+    #}
   {% endif %}
 {% endmacro %}
