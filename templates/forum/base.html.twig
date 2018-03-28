@@ -21,6 +21,9 @@
 
     {% if is_granted('ROLE_USER') %}
       {% from 'forum/_macros.html.twig' import subscribe_button %}
+      {% block site_sidebar_actions %}
+        {{ include('_includes/site_sidebar_actions.html.twig', {forum: forum ?? {}}, with_context=false) }}
+      {% endblock %}
       {% set subscribed = forum.subscribed(app.user) %}
       <form action="{{ path(subscribed ? 'unsubscribe' : 'subscribe', {forum_name: forum.name}) }}"
             method="POST"
