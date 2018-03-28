@@ -11,6 +11,7 @@ use App\Form\DeleteReasonType;
 use App\Form\Model\SubmissionData;
 use App\Form\SubmissionType;
 use App\Utils\Slugger;
+use App\Utils\PermissionsChecker;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
