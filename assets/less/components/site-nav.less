@@ -21,6 +21,9 @@
 
     &__logo {
       font-weight: bold;
+      &:not(.js):hover {
+        background: @nav-active-background-color;
+      }
     }
 
     &__inner {
@@ -42,7 +45,10 @@
         background: @nav-notifications-background-color;
       }
 
-      // todo: BEM
+      &:not(.js):hover {
+        background: @nav-active-background-color;
+      }
+
       &.dropdown-container {
         &.expanded,
         &:not(.js):hover {
