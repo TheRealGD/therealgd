@@ -322,7 +322,7 @@ final class SubmissionController extends AbstractController {
     }
 
     protected function checkAdminForum($forum) {
-        $admin = !is_null($this->getUser()) && $this->getUser()->isAdmin();
+        $admin = PermissionsChecker::isAdmin($this->getUser());
         if ($admin || $forum->getId() > 0) {
             return true;
         }
