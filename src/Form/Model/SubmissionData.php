@@ -60,7 +60,6 @@ class SubmissionData {
 
     public static function createFromSubmission(Submission $submission): self {
         $self = new self();
-        echo $submission->getForum()->getId();die;
         $self->entityId = $submission->getId();
         $self->title = $submission->getTitle();
         $self->url = $submission->getUrl();

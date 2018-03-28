@@ -18,6 +18,7 @@ use App\Repository\ForumCategoryRepository;
 use App\Repository\ForumLogEntryRepository;
 use App\Repository\ForumRepository;
 use App\Repository\SubmissionRepository;
+use App\Utils\PermissionsChecker;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -40,8 +41,7 @@ final class ForumController extends AbstractController {
      * @return Response
      */
     public function front(SubmissionRepository $sr, Forum $forum, string $sortBy, int $page) {
-        $user = $this->getUser();
-        if ($forum->getId() === 0 && (is_null($user) || !$user->isAdmin())) {
+        if (PermissionsChecker::isAdmin($this->getUser())) {
             return $this->redirectToRoute('login');
         }
         $submissions = $sr->findForumSubmissions($forum, $sortBy, $page);
@@ -257,7 +257,7 @@ final class ForumController extends AbstractController {
      */
     public function listCategories(ForumCategoryRepository $fcr, ForumRepository $fr) {
         $modForumCategory = $fr->getModForumCategory();
-        $isAdmin = (!is_null($this->getUser()) && $this->getUser()->isAdmin());
+        $isAdmin = PermissionsChecker::isAdmin($this->getUser());
         $forumCategories = $fcr->findCategories($isAdmin, $modForumCategory);
         $uncategorizedForums = $fr->findUncategorizedForums($isAdmin);
 
@@ -485,3 +485,4 @@ final class ForumController extends AbstractController {
         ]);
     }
 }
+

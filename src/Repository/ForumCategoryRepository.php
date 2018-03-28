@@ -30,6 +30,8 @@ class ForumCategoryRepository extends ServiceEntityRepository {
         return $pager;
     }
 
+
+    // TODO: If anyone can help rewrite this to be more efficient please feel free!
     public function findCategories($isAdmin, $modForumId) {
         $qb = $this->createQueryBuilder('fc')
             ->orderBy('fc.name', 'ASC');
