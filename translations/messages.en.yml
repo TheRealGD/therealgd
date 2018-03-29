@@ -199,8 +199,8 @@ help:
 
 inbox:
     title: Inbox
-    clear_inbox: Mark All As Read 
-    clear_notification: Mark As Read 
+    clear_inbox: Mark All As Read
+    clear_notification: Mark As Read
     empty: The inbox is empty.
     message_reply_head: 'Re: %title%'
     filter_all: 'All'
@@ -316,7 +316,7 @@ moderator_form:
     submit: Add as moderator
 
 sidebar:
-  submit_deal: Submit a new deal
+  submit_deal: Submit Deal
 
 nav:
     appearance: Appearance
@@ -410,10 +410,10 @@ submission_form:
     body: Body
     forum: Forum
     sticky: Sticky
-    create: Create submission
-    edit: Edit submission
-    delete: Delete submission
-    confirm_delete: Are you sure you want to delete this submission?
+    create: Submit Deal
+    edit: Edit Deal
+    delete: Delete Deal
+    confirm_delete: Are you sure you want to delete this deal?
     mod_thread: Post in Moderation section
 
 submissions:
@@ -441,7 +441,7 @@ title:
     forum_appearance: Appearance for %forum%
     showing_revision: 'Showing revision #%revision% of page %path%'
     editing_forum: Editing forum %forum%
-    create_submission: Create submission
+    create_submission: Submit a new Deal
     editing_submission: Editing submission %title%
     log_in: Log in
     sign_up: Sign up
