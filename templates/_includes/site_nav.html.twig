@@ -46,13 +46,11 @@
           </li>
         {% else %}
           {# notifications #}
-          {% if notification_count > 0 %}
-            <li class="site-nav__item site-nav__item--has-notifications">
-              <a href="{{ path('inbox') }}" class="site-nav__link">
-                {{- 'nav.inbox_count'|trans({'%count%': '<strong>%s</strong>'|format(notification_count|localizednumber)})|raw -}}
-              </a>
-            </li>
-          {% endif %}
+          <li class="site-nav__item site-nav__item--has-notifications">
+            <a href="{{ path('inbox') }}" class="site-nav__link">
+              {{- 'nav.inbox_count'|trans({'%count%': '<strong>%s</strong>'|format(notification_count|localizednumber)})|raw -}}
+            </a>
+          </li>
 
           {# submit button #}
           {#
