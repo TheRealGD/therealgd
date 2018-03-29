@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Repository\ForumRepository;
 use App\Repository\SubmissionRepository;
+use App\Utils\PermissionsChecker;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -95,8 +96,9 @@ final class FrontController extends AbstractController {
      */
     public function all(ForumRepository $fr, SubmissionRepository $sr, string $sortBy, int $page) {
         # Added for v1.
+        $admin = PermissionsChecker::isAdmin($this->getUser());
         $forums = $fr->findAllForumNames();
-        $submissions = $sr->findAllSubmissions($sortBy, $page);
+        $submissions = $sr->findAllSubmissions($sortBy, $page, $admin);
 
         return $this->render('front/all.html.twig', [
             'forums' => $forums, # Added for v1.

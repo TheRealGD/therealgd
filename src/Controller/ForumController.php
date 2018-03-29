@@ -18,6 +18,7 @@ use App\Repository\ForumCategoryRepository;
 use App\Repository\ForumLogEntryRepository;
 use App\Repository\ForumRepository;
 use App\Repository\SubmissionRepository;
+use App\Utils\PermissionsChecker;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -40,8 +41,7 @@ final class ForumController extends AbstractController {
      * @return Response
      */
     public function front(SubmissionRepository $sr, Forum $forum, string $sortBy, int $page) {
-        $user = $this->getUser();
-        if ($forum->getId() === 0 && (is_null($user) || !$user->isAdmin())) {
+        if ($forum->getId() === 0 && !PermissionsChecker::isAdmin($this->getUser())) {
             return $this->redirectToRoute('login');
         }
         $submissions = $sr->findForumSubmissions($forum, $sortBy, $page);
@@ -256,8 +256,10 @@ final class ForumController extends AbstractController {
      * @return Response
      */
     public function listCategories(ForumCategoryRepository $fcr, ForumRepository $fr) {
-        $forumCategories = $fcr->findBy([], ['name' => 'ASC']);
-        $uncategorizedForums = $fr->findBy(['category' => null], ['normalizedName' => 'ASC']);
+        $modForumCategory = $fr->getModForumCategory();
+        $isAdmin = PermissionsChecker::isAdmin($this->getUser());
+        $forumCategories = $fcr->findCategories($isAdmin, $modForumCategory);
+        $uncategorizedForums = $fr->findUncategorizedForums($isAdmin);
 
         return $this->render('forum/list_by_category.html.twig', [
             'forum_categories' => $forumCategories,
@@ -483,3 +485,4 @@ final class ForumController extends AbstractController {
         ]);
     }
 }
+
