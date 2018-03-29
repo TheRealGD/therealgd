@@ -450,8 +450,7 @@ class User implements UserInterface, EquatableInterface {
         }
     }
 
-    private function _unreadNotificationsCriteria(Criteria $existingCriteria = null):Criteria 
-    {
+    private function _unreadNotificationsCriteria(Criteria $existingCriteria = null):Criteria {
       $criteria = ($existingCriteria !== null) ? $existingCriteria : Criteria::create();
       $expr = Criteria::expr();
       $criteria = $criteria->where($expr->eq('read', false));
