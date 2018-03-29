@@ -323,6 +323,7 @@ final class UserController extends AbstractController {
 
         return $this->render('user/inbox.html.twig', [
             'notifications' => $user->getPaginatedNotifications($filter, $page),
+            'current_filter' => $filter,
         ]);
     }
 
