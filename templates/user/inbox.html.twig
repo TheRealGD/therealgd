@@ -84,7 +84,7 @@
   <form action="{{ path('clear_notification', { id: notification.id }) }}" method="POST">
     <input type="hidden" name="token" value="{{ csrf_token('clear_notification') }}">
       <div>
-        <button type="submit" class="clear-notification-button">Clear notification</button>
+        <button type="submit" class="clear-notification-button">{{ 'inbox.clear_notification'|trans }}</button>
       </div>
   </form>
 {% endblock %}
