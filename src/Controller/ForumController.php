@@ -41,7 +41,7 @@ final class ForumController extends AbstractController {
      * @return Response
      */
     public function front(SubmissionRepository $sr, Forum $forum, string $sortBy, int $page) {
-        if (!PermissionsChecker::isAdmin($this->getUser())) {
+        if ($forum->getId() === 0 && !PermissionsChecker::isAdmin($this->getUser())) {
             return $this->redirectToRoute('login');
         }
         $submissions = $sr->findForumSubmissions($forum, $sortBy, $page);

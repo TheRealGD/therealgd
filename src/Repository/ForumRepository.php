@@ -203,6 +203,7 @@ final class ForumRepository extends ServiceEntityRepository {
     public function getModForumCategory() {
         $modForum = $this->createQueryBuilder('f')
             ->where('f.id = 0')
+            ->setMaxResults(1)
             ->getQuery()
             ->execute();
 

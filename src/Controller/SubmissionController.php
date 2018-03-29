@@ -33,7 +33,7 @@ final class SubmissionController extends AbstractController {
      * @return Response
      */
     public function submission(Forum $forum, Submission $submission) {
-        if (!$this->checkAdminForum($forum)) { return $this->rerouteAwayFromAdmin(); }
+        if (!$this->hasRightsToViewForum($forum)) { return $this->rerouteAwayFromAdmin(); }
         if ($submission->isModThread()) {
             return $this->redirectToRoute('mod_submission', array('forum_name' => $forum->getName(), 'submission_id' => $submission->getId()));
         }
@@ -49,7 +49,7 @@ final class SubmissionController extends AbstractController {
      * @IsGranted("moderator", subject="forum")
      */
      public function modSubmission(Forum $forum, Submission $submission) {
-        if (!$this->checkAdminForum($forum)) { return $this->rerouteAwayFromAdmin(); }
+        if (!$this->hasRightsToViewForum($forum)) { return $this->rerouteAwayFromAdmin(); }
         if (!$submission->isModThread()) {
             return $this->redirectToRoute('submission', array('forum_name' => $forum->getName(), 'submission_id' => $submission->getId()));
         }
@@ -73,7 +73,7 @@ final class SubmissionController extends AbstractController {
         Submission $submission,
         Comment $comment
     ) {
-        if (!$this->checkAdminForum($forum)) { return $this->rerouteAwayFromAdmin(); }
+        if (!$this->hasRightsToViewForum($forum)) { return $this->rerouteAwayFromAdmin(); }
         return $this->render('submission/comment.html.twig', [
             'comment' => $comment,
             'forum' => $forum,
@@ -89,7 +89,7 @@ final class SubmissionController extends AbstractController {
      * @return Response
      */
     public function shortcut(Submission $submission) {
-        if (!$this->checkAdminForum($forum)) { return $this->rerouteAwayFromAdmin(); }
+        if (!$this->hasRightsToViewForum($forum)) { return $this->rerouteAwayFromAdmin(); }
         return $this->redirectToRoute('submission', [
             'forum_name' => $submission->getForum()->getName(),
             'submission_id' => $submission->getId(),
@@ -322,7 +322,7 @@ final class SubmissionController extends AbstractController {
         return $this->redirectToRoute('front');
     }
 
-    protected function checkAdminForum($forum) {
+    protected function hasRightsToViewForum($forum) {
         $admin = PermissionsChecker::isAdmin($this->getUser());
         if ($admin || $forum->getId() > 0) {
             return true;
