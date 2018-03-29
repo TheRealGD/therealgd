@@ -25,21 +25,21 @@ class UserGroup {
     private $id;
 
     /**
-     * @ORM\Column(type="text", unique=true)
+     * @ORM\Column(type="string", unique=true, length=50)
      *
      * @var string
      */
     private $name;
 
     /**
-     * @ORM\Column(type="text", unique=true)
+     * @ORM\Column(type="string", unique=true, length=50)
      *
      * @var string
      */
     private $normalizedName;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="string", length=50)
      *
      * @var string
      */
