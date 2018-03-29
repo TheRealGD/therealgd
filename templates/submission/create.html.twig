@@ -7,4 +7,19 @@
   <h1 class="page-heading">{{ block('title') }}</h1>
 
   {{ include('submission/_form.html.twig', {form: form}, with_context=false) }}
+
+  <script>
+    $(document).ready(function(){
+      var i = 0;
+      $('#submission_forum option').each(function(){
+        if (i==0) $(this).remove();
+        var htmlText = $(this).html();
+        if (htmlText != 'GunDeals') {
+            $(this).html($(this).html().replace('Deals', ''));
+        }
+        i++;
+      });
+      $('#submission_forum').val(1);
+    });
+  </script>
 {% endblock %}

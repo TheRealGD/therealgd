@@ -32,13 +32,19 @@ final class SubmissionController extends AbstractController {
      *
      * @return Response
      */
-    public function submission(Forum $forum, Submission $submission) {
+    public function submission(Forum $forum, Submission $submission, Request $request) {
         if (!$this->hasRightsToViewForum($forum)) { return $this->rerouteAwayFromAdmin(); }
         if ($submission->isModThread()) {
             return $this->redirectToRoute('mod_submission', array('forum_name' => $forum->getName(), 'submission_id' => $submission->getId()));
         }
+        $refererPath = $request->headers->get('Referer');
+        $fullPath = parse_url($refererPath);
+        $shortPath = ($fullPath['path'] == "/") ? "Home" : $fullPath['path'];
+
         return $this->render('submission/submission.html.twig', [
             'forum' => $forum,
+            'refererLong' => $refererPath,
+            'refererShort' => $shortPath,
             'submission' => $submission,
         ]);
     }

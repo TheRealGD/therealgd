@@ -44,8 +44,8 @@
   <nav class="submission-permalink-nav">
     <ul>
       <li>
-        <a href="{{ path('forum', {forum_name: forum.name}) }}">
-          {{ 'comments.return_to_forum'|trans({'%forum%': '/f/<strong>'~forum.name~'</strong>'})|raw -}}
+        <a href="{{refererLong}}">
+          {{ 'comments.return_to_forum'|trans({'%forum%': '<strong>'~refererShort~'</strong>'})|raw -}}
         </a>
       </li>
     </ul>

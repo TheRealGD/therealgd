@@ -33,8 +33,17 @@ abstract class Notification {
      */
     private $user;
 
+
+    /**
+     * @ORM\Column(name="read", type="boolean", options={"default":false}, nullable=false)
+     *
+     * @var bool 
+     */
+    private $read;
+
     public function __construct(User $receiver) {
         $this->user = $receiver;
+        $this->read = false;
     }
 
     abstract public function getType(): string;
@@ -45,5 +54,9 @@ abstract class Notification {
 
     public function getUser(): User {
         return $this->user;
+    }
+
+    public function getRead(): bool {
+      return $this->read;
     }
 }

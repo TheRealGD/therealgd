@@ -100,10 +100,19 @@ final class CommentController extends AbstractController {
             $em->persist($reply);
             $em->flush();
 
-            return $this->redirectToRoute('comment', [
+            // Nested comment - go to parent comment
+            if ($reply->getParent() !== null) {
+              return $this->redirectToRoute('comment', [
+                  'forum_name' => $forum->getName(),
+                  'submission_id' => $submission->getId(),
+                  'comment_id' => $reply->getParent()->getId(),
+              ]);
+            }
+            // By default - go to post
+            return $this->redirectToRoute('submission', [
                 'forum_name' => $forum->getName(),
                 'submission_id' => $submission->getId(),
-                'comment_id' => $reply->getId(),
+                'slug' => Slugger::slugify($submission->getTitle()),
             ]);
         }
 
@@ -207,9 +216,11 @@ final class CommentController extends AbstractController {
             ], UrlGeneratorInterface::ABSOLUTE_URL);
 
             if (strpos($request->headers->get('Referer'), $commentUrl) === 0) {
-                // redirect to forum since redirect to referrer will 404
-                return $this->redirectToRoute('forum', [
-                    'forum_name' => $forum->getName()
+                // Redirect to original submission comment page.
+                return $this->redirectToRoute('submission',[
+                  'forum_name' => $forum->getName(),
+                  'submission_id' => $submission->getId(),
+                  'slug' => Slugger::slugify($submission->getTitle())
                 ]);
             }
         }
