@@ -59,7 +59,7 @@
 {% block notification_message_thread %}
   {% from 'message/_macros.html.twig' import message_thread %}
 
-  <h1 class="notification-head">
+  <h1 class="notification-head {{ (notification.read != true) ? 'notification-head-active' : 'notification-head-inactive' }}">
     <a href="{{ path('message', {id: notification.thread.id}) }}">
       {{- notification.thread.title -}}
     </a>
@@ -71,7 +71,7 @@
 {% block notification_message_reply %}
   {% from 'message/_macros.html.twig' import message_reply %}
 
-  <h1 class="notification-head">
+  <h1 class="notification-head {{ (notification.read != true) ? 'notification-head-active' : 'notification-head-inactive' }}">
     <a href="{{ path('message', {id: notification.reply.thread.id}) }}#mr{{ notification.reply.id }}">
       {{ 'inbox.message_reply_head'|trans({'%title%': notification.reply.thread.title}) -}}
     </a>
