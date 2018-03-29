@@ -55,4 +55,8 @@ abstract class Notification {
     public function getUser(): User {
         return $this->user;
     }
+
+    public function getRead(): bool {
+      return $this->read;
+    }
 }

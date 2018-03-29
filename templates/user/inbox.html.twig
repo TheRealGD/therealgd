@@ -41,7 +41,9 @@
   {% endif %}
 
   {% for notification in notifications %}
-    {{ block('clear_notification_button') }}
+    {% if notification.read != true %}
+      {{ block('clear_notification_button') }}
+    {% endif %}
     {{ block('notification_'~notification.type) }}
   {% endfor %}
 
