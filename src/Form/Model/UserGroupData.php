@@ -53,7 +53,7 @@ final class UserGroupData {
     }
 
     public function toUserGroup(): UserGroup {
-        return new UserGroup($this->name, $this->title);
+        return new UserGroup($this->name, $this->title, $this->displayTitle);
     }
 
     public function updateUserGroup(UserGroup $userGroup): void {

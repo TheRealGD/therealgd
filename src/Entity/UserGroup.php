@@ -58,9 +58,10 @@ class UserGroup {
      */
     private $displayTitle = false;
 
-    public function __construct(string $name, string $title) {
+    public function __construct(string $name, string $title, bool $displayTitle) {
         $this->setName($name);
         $this->title = $title;
+        $this->displayTitle = $displayTitle;
         $this->users = new ArrayCollection();
     }
 
