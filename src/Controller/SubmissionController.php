@@ -31,9 +31,15 @@ final class SubmissionController extends AbstractController {
      *
      * @return Response
      */
-    public function submission(Forum $forum, Submission $submission) {
+    public function submission(Forum $forum, Submission $submission, Request $request) {
+        $refererPath = $request->headers->get('Referer');
+        $fullPath = parse_url($refererPath);
+        $shortPath = ($fullPath['path'] == "/") ? "Home" : $fullPath['path'];
+
         return $this->render('submission/submission.html.twig', [
             'forum' => $forum,
+            'refererLong' => $refererPath,
+            'refererShort' => $shortPath,
             'submission' => $submission,
         ]);
     }
