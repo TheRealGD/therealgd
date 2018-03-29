@@ -217,9 +217,11 @@ final class CommentController extends AbstractController {
             ], UrlGeneratorInterface::ABSOLUTE_URL);
 
             if (strpos($request->headers->get('Referer'), $commentUrl) === 0) {
-                // redirect to forum since redirect to referrer will 404
-                return $this->redirectToRoute('forum', [
-                    'forum_name' => $forum->getName()
+                // Redirect to original submission comment page.
+                return $this->redirectToRoute('submission',[
+                  'forum_name' => $forum->getName(),
+                  'submission_id' => $submission->getId(),
+                  'slug' => Slugger::slugify($submission->getTitle())
                 ]);
             }
         }
