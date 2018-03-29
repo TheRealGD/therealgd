@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block page_classes 'forum-category-create-page' %}
+{% block title 'title.add_to_group'|trans({'%user%': user.username}) %}
+
+{% block body %}
+  <h1 class="page-heading">{{ block('title') }}</h1>
+
+  {{ form_start(form) }}
+
+    {{ form_row(form.group) }}
+
+    <div class="form__row form__button-row">
+      {{ form_widget(form.submit) }}
+    </div>
+  {{ form_end(form) }}
+{% endblock %}

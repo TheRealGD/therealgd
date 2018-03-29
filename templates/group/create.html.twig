@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block page_classes 'forum-category-create-page' %}
+{% block title 'title.create_forum_category'|trans %}
+
+{% block body %}
+  <h1 class="page-heading">{{ block('title') }}</h1>
+
+  {{ include('forum_category/_form.html.twig', {editing: false, form: form}, with_context=false) }}
+{% endblock %}

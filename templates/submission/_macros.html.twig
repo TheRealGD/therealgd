@@ -26,6 +26,13 @@
     class: 'submission-submitter',
     flag: submission.userFlag,
   }) }}
+  {% if submission.user.group is defined %}
+    {% if submission.user.group is not null %}
+      {% if submission.user.group.displayTitle %}
+        <span class="{{ submission.user.group.normalizedname }}">{{ submission.user.group.title }}</span>
+      {% endif %}
+    {% endif %}
+  {% endif %}
 {%- endblock -%}
 
 {%- block submission_info_timestamp -%}
