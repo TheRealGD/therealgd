@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block page_classes 'forum-category-edit-page' %}
+{% block title 'title.editing_group'|trans({
+  '%group%': group.title
+}) %}
+
+{% block body %}
+  <h1>{{ 'title.editing_group'|trans({
+    '%group%': '<a href="%s">%s</a>'|format(
+      path('group', {name: group.name})|e,
+      group.title|e
+    )})|raw }}</h1>
+
+  {{ include('group/_form.html.twig', {form: form, editing: true}, with_context=false) }}
+{% endblock %}

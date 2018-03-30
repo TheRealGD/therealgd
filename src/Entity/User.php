@@ -229,6 +229,13 @@ class User implements UserInterface, EquatableInterface {
      */
     private $autoFetchSubmissionTitles = true;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="UserGroup", inversedBy="users")
+     *
+     * @var UserGroup|null
+     */
+    private $group = null;
+
     public function __construct(string $username, string $password, \DateTime $created = null) {
         $this->setUsername($username);
         $this->password = $password;
@@ -582,6 +589,14 @@ class User implements UserInterface, EquatableInterface {
 
     public function setBiography(?string $biography) {
         $this->biography = $biography;
+    }
+
+    public function getGroup(): ?UserGroup {
+        return $this->group;
+    }
+
+    public function setGroup(?UserGroup $group) {
+        $this->group = $group;
     }
 
     public function autoFetchSubmissionTitles(): bool {

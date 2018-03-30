@@ -37,6 +37,9 @@ _user:
 _wiki:
     resource: app_routes/wiki.yaml
 
+_group:
+    resource: app_routes/group.yaml
+
 _static_pages:
     resource: app_routes/static_pages.yaml
 

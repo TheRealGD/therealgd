@@ -96,6 +96,13 @@
       flag: comment.userFlag,
       submitter: comment.user is same as(comment.submission.user),
     }) -}}
+    {% if comment.user.group is defined %}
+      {% if comment.user.group is not null %}
+        {% if comment.user.group.displayTitle %}
+          <span class="{{ comment.user.group.normalizedname }}">{{ comment.user.group.title }}</span>
+        {% endif %}
+      {% endif %}
+    {% endif %}
   {%- else -%}
     {{- 'comments.author_deleted'|trans -}}
   {%- endif -%}

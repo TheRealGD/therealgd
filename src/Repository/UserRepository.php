@@ -5,12 +5,14 @@ namespace App\Repository;
 use App\Entity\Comment;
 use App\Entity\Submission;
 use App\Entity\User;
+use App\Entity\UserGroup;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Pagerfanta\Adapter\DoctrineSelectableAdapter;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -194,4 +196,16 @@ EOSQL;
             yield $ip;
         }
     }
+
+    public function getPaginatedUsersInGroup(UserGroup $userGroup, $page) {
+        $qb = $this->createQueryBuilder('u')
+            ->where('u.group = :group')
+            ->setParameter('group', $userGroup);
+        $pager = new Pagerfanta(new DoctrineORMAdapter($qb, false, false));
+        $pager->setMaxPerPage(25);
+        $pager->setCurrentPage($page);
+        return $pager;
+    }
+
+
 }
