@@ -34,7 +34,6 @@ class SubmissionRepository extends ServiceEntityRepository {
         $qb = $this->findSortedQb($sortBy)
             ->where('IDENTITY(s.forum) IN (:forums)')
             ->setParameter(':forums', array_keys($forums));
-
         
         $submissions = $this->paginate($qb, $page);
 
@@ -95,8 +94,12 @@ class SubmissionRepository extends ServiceEntityRepository {
      *
      * @return Pagerfanta|Submission[]
      */
-    public function findAllSubmissions(string $sortBy, int $page = 1) {
-        $submissions = $this->paginate($this->findSortedQb($sortBy), $page);
+    public function findAllSubmissions(string $sortBy, int $page = 1, $admin = false) {
+        $qb = $this->findSortedQb($sortBy);
+        if (!$admin) {
+            $qb->andWhere('s.forum > 0');
+        }
+        $submissions = $this->paginate($qb, $page);
 
         $this->hydrateAssociations($submissions);
 

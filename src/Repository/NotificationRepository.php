@@ -20,7 +20,8 @@ class NotificationRepository extends ServiceEntityRepository {
      */
     public function clearInbox(User $user, int $max = null) {
         $qb = $this->getEntityManager()->createQueryBuilder()
-            ->delete(Notification::class, 'n')
+            ->update(Notification::class, 'n')
+            ->set('n.read', true)
             ->where('n.user = ?1')
             ->setParameter(1, $user);
 
@@ -39,7 +40,8 @@ class NotificationRepository extends ServiceEntityRepository {
      */
     public function clearNotification(User $user, int $notificationId = null) {
         $qb = $this->getEntityManager()->createQueryBuilder()
-            ->delete(Notification::class, 'n')
+            ->update(Notification::class, 'n')
+            ->set('n.read', 'true')
             ->where('n.user = ?1')
             ->setParameter(1, $user)
             ->andWhere('n.id = ?2')

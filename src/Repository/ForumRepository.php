@@ -173,6 +173,19 @@ final class ForumRepository extends ServiceEntityRepository {
         return array_column($names, 'name', 'id');
     }
 
+    public function findUncategorizedForums($isAdmin) {
+        $qb = $this->createQueryBuilder('f')
+            ->select('f.id')
+            ->addSelect('f.name')
+            ->where('f.category IS NULL')
+            ->orderBy('f.normalizedName', 'ASC');
+        if (!$isAdmin) {
+            $qb->andWhere('f.id > 0');
+        }
+        $forums = $qb->getQuery()->execute();
+        return $forums;
+    }
+
     public function findForumsInCategory(ForumCategory $category) {
         /* @noinspection SqlDialectInspection */
         // f.id > 0 removes the admin only forum from search
@@ -185,6 +198,19 @@ final class ForumRepository extends ServiceEntityRepository {
             ->getResult();
 
         return array_column($names, 'name', 'id');
+    }
+
+    public function getModForumCategory() {
+        $modForum = $this->createQueryBuilder('f')
+            ->where('f.id = 0')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->execute();
+
+        if (is_null($modForum[0]->getCategory())) {
+            return null;
+        }
+        return $modForum[0]->getCategory()->getId();
     }
 
     public function findOneByCaseInsensitiveName(?string $name): ?Forum {

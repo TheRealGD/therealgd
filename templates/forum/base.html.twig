@@ -21,6 +21,9 @@
 
     {% if is_granted('ROLE_USER') %}
       {% from 'forum/_macros.html.twig' import subscribe_button %}
+      {% block site_sidebar_actions %}
+        {{ include('_includes/site_sidebar_actions.html.twig', {forum: forum ?? {}}, with_context=false) }}
+      {% endblock %}
       {% set subscribed = forum.subscribed(app.user) %}
       <form action="{{ path(subscribed ? 'unsubscribe' : 'subscribe', {forum_name: forum.name}) }}"
             method="POST"
@@ -57,6 +60,11 @@
       {% if is_granted('moderator', forum) %}
         {% set item %}
           <li><a href="{{ path('mod_forum', {forum_name: forum.name}) }}">{{ 'forum.mod_page'|trans }}</a></li>
+        {% endset %}
+        {% set items = items|merge({('forum.mod_page'|trans): item}) %}
+
+        {% set item %}
+          <li><a href="{{ path('mod_submit', {forum_name: forum.name}) }}">{{ 'forum.mod_submit'|trans }}</a></li>
         {% endset %}
         {% set items = items|merge({('forum.mod_page'|trans): item}) %}
 
