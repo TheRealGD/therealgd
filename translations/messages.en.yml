@@ -25,6 +25,7 @@ action:
     filter: Filter
     create: Create
     compare: Compare
+    create_group: Create new group
 
 add_moderator:
     title: Add moderator to %forum%
@@ -287,6 +288,7 @@ label:
     posting: Posting
     auto_fetch_submission_titles: Auto-fetch submission titles
     compare: Compare
+    members: Members
 
 log:
     comment_deletion: '%user% deleted comment by %author% in "%submission%"'
@@ -336,6 +338,8 @@ nav:
     inbox_count: Inbox (%count%)
     messages: Messages
     wiki: Wiki
+    groups: Groups
+    add_to_group: Add user to group
 
     # <New Strings>
     wiki_copyright: Copyright
@@ -469,11 +473,15 @@ title:
     global_moderation_log: Global moderation log
     delete_submission: Delete submission
     list_of_users: 'List of users, page #%page%'
+    list_of_groups: 'List of groups, page #%page%'
+    list_of_users_in_group: 'List of users in %group%, page #%page%'
     user_forum_bans: "%user%'s forum bans"
     manage_forum_categories: Manage forum categories
     create_forum_category: Create forum category
     editing_forum_category: 'Editing forum category: %category%'
+    editing_group: 'Editing user group: %group%'
     wiki_diff: Showing difference between revisions %from% and %to%
+    add_to_group: 'Add %user% to group'
 
 user:
     submissions: Submissions
@@ -503,6 +511,7 @@ user_form:
     register: Register
     verification: Verification
     save: Save changes
+    group: Group
 
 user_settings:
     title: Editing user settings for %username%
