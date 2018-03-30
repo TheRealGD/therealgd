@@ -262,7 +262,7 @@ label:
     overview: Overview
     open_external_links_in_new_tab: Open external links in new tab
     biography: Biography
-    toolbox: Toolbox
+    toolbox: Admin Toolbox
     banned_by: Banned by
     unban_associated_ips: Remove associated IP bans
     ban_ip_addresses: Ban IP address(es)?

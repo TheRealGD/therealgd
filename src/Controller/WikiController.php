@@ -42,7 +42,7 @@ final class WikiController extends AbstractController {
     /**
      * Creates a wiki page.
      *
-     * @IsGranted("ROLE_USER")
+     * @IsGranted("ROLE_ADMIN")
      *
      * @param Request       $request
      * @param string        $path
@@ -137,6 +137,7 @@ final class WikiController extends AbstractController {
 
     /**
      * @Entity("wikiPage", expr="repository.findOneCaseInsensitively(path)")
+     * @IsGranted("ROLE_ADMIN")
      *
      * @param WikiPage $wikiPage
      * @param int      $page
@@ -150,6 +151,9 @@ final class WikiController extends AbstractController {
         ]);
     }
 
+    /**
+    * @IsGranted("ROLE_ADMIN")
+    */
     public function diff(Request $request, WikiRevisionRepository $repository) {
         /* @var WikiRevision $from
          * @var WikiRevision $to */
@@ -177,6 +181,7 @@ final class WikiController extends AbstractController {
     }
 
     /**
+    * @IsGranted("ROLE_ADMIN")
      * @param WikiRevision $revision
      *
      * @return Response
@@ -202,6 +207,9 @@ final class WikiController extends AbstractController {
         ]);
     }
 
+    /**
+    * @IsGranted("ROLE_ADMIN")
+    */
     public function recentChanges(WikiRevisionRepository $repository, int $page) {
         return $this->render('wiki/recent.html.twig', [
             'revisions' => $repository->findRecent($page),
