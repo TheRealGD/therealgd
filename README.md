@@ -1,23 +1,7 @@
-**Notice**: Now that the community Postmill was created for has become
-unpalatable for me, the future of this project is uncertain. Previously, I
-could spend time implementing a feature or improving something, and see the
-community embrace (or, on occasion, deride) my hard work. Now that I have no
-community, this is no longer the case, and I cannot imagine what motivation I
-could have to keep working on this project.
-
-For now, if you want to report issues or submit pull requests, I'll take a look
-at them. Any security holes I become aware of (either in Postmill itself or in
-its dependencies) will be fixed. But active development probably won't happen
-unless someone steps up. Consider Postmill to be on life support.
-
-I'm passionate about building communities, and I will probably make another
-effort to build something cool in the future, using the experience I made from
-Postmill. Until then, I'm taking a break.
-
-Thanks to everyone who contributed to Postmill, or merely sent kind words my
-way. You made it all worth it.
-
--- Emma
+Thanks to continued interest in Postmill, as well as some community efforts to
+improve it, I feel a bit more motivated to work on this project again. A
+[website][website] and new [support forums][support] have been set up. We'll see
+where things go from here.
 
 ***
 
@@ -75,7 +59,8 @@ Clone the repository somewhere and navigate there with the command line.
 ## Reporting issues
 
 * Bugs and feature requests should be reported on the [issue tracker][issues].
-* Get support on Postmill's Matrix channel: [#postmill:matrix.org][matrix].
+* Get support on Postmill's [support board][support] or
+  [Matrix channel][matrix].
 
 You can email emma1312@protonmail.ch to disclose or discuss something in private
 with the creator of the software.
@@ -98,3 +83,5 @@ details.
 
 [issues]: https://gitlab.com/edgyemma/Postmill/issues
 [matrix]: https://matrix.to/#/#postmill:matrix.org
+[support]: https://community.postmill.xyz/f/Support
+[website]: https://postmill.xyz/
