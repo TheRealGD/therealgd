@@ -16,6 +16,9 @@ _forum_category:
 _front:
     resource: app_routes/front.yaml
 
+_frontpageconfig:
+    resource: app_routes/frontpageconfig.yaml
+
 _message:
     resource: app_routes/message.yaml
 

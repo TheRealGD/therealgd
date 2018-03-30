@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+
+{% block page_classes 'frontpage-config-page' %}
+{% block title 'Front Page Configuration' %}
+
+{% block body %}
+  <h1 class="page-heading">{{ block('title') }}</h1>
+
+  {% if message != "" %}<div class='form-message form-message--success'><p>{{ message|trans }}</p></div>{% endif %}
+  {{ form(form) }}
+{% endblock %}

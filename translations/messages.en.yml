@@ -532,3 +532,8 @@ wiki_form:
     title: Title
     body: Body
     submit: Submit
+
+front_page_configuration_form:
+    announcement: Announcement
+    save: Save Changes
+    message_saved: The changes have been saved.
