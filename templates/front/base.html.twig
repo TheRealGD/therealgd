@@ -18,6 +18,8 @@
 {% endblock %}
 
 {% block body %}
+  {% if announcement != null %}<div class="form-message form-message--primary text-center">{{ announcement|cached_markdown(markdown_context())|raw }}</div>{% endif %}
+
   <nav class="tabs submission-sort">
     <ul class="tabs__bar">{{ submission_sort(sort_by) }}</ul>
     <ul class="tabs__bar">{{ submission_filter(listing, sort_by) }}</ul>
@@ -68,5 +70,5 @@
       </li>
     {% endwith %}
   {% endif %}
-  
+
 {%- endmacro -%}

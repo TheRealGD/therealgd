@@ -1,0 +1,4 @@
+frontpageconfig:
+    controller: App\Controller\FrontPageConfigurationController::frontPageConfig
+    path: /frontpageconfig
+    methods: [GET, POST]
