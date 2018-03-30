@@ -137,6 +137,7 @@ forum:
     subscriber_count: '{0} No subscribers|{1} %count% subscriber|[1,Inf[ %count% subscribers'
     add_moderator: Add moderator
     mod_page: Moderation Posts
+    mod_submit: Create new mod post
 
 forum_form:
     name: Name

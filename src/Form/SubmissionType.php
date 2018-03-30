@@ -47,6 +47,8 @@ final class SubmissionType extends AbstractType {
         if ($options['honeypot']) {
             $builder->add('email', HoneypotType::class);
         }
+        $this->user = $options['user'];
+        $this->modSubmit = $options['is_mod_submit'];
 
         /** @var SubmissionData $data */
         $data = $builder->getData();
@@ -65,11 +67,18 @@ final class SubmissionType extends AbstractType {
                 'class' => Forum::class,
                 'choice_label' => 'name',
                 'query_builder' => function (EntityRepository $repository) {
-                    return $repository->createQueryBuilder('f')
-                        ->orderBy('f.name', 'ASC')
-                        // This where removes the admin only forum from search
-                        ->where('f.id > 0');
+                    $qb = $repository->createQueryBuilder('f')
+                        ->orderBy('f.name', 'ASC');
+                    if (!$this->authorizationChecker->isGranted('ROLE_ADMIN')) {
+                        $qb->where('f.id > 0');
+                    }
+                    if ($this->modSubmit && !$this->authorizationChecker->isGranted('ROLE_ADMIN')) {
+                        $qb->where(":user MEMBER OF f.moderators")
+                           ->setParameter("user", $this->user->getModeratorTokens());
+                    }
+                    return $qb;
                 },
+                'data' => $forum,
                 'placeholder' => 'placeholder.choose_one',
                 'required' => false, // enable a blank choice
             ]);
@@ -80,7 +89,6 @@ final class SubmissionType extends AbstractType {
             $this->authorizationChecker->isGranted('ROLE_ADMIN')
         ) {
             $builder->add('sticky', CheckboxType::class, ['required' => false]);
-            $builder->add('mod_thread', CheckboxType::class, ['required' => false]);
 
             $this->addUserFlagOption($builder, $forum);
         }
@@ -95,6 +103,8 @@ final class SubmissionType extends AbstractType {
      */
     public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults([
+            'is_mod_submit' => false,
+            'user' => null,
             'data_class' => SubmissionData::class,
             'label_format' => 'submission_form.%name%',
             'honeypot' => true,

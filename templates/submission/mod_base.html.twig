@@ -1,0 +1,53 @@
+{% extends 'forum/base.html.twig' %}
+
+{% block title %}
+  {{ submission.title }}
+{% endblock %}
+
+{# deprecated classes:
+   - sidebar__section--submission-meta
+   - sidebar-submission-meta
+   - sidebar-submission-meta-score
+   - vote-total
+   - vote-stats
+#}
+{% block sidebar %}
+  <section class="sidebar__section sidebar__section--submission-meta sidebar-submission-meta submission-meta">
+    <p class="sidebar-submission-meta-score submission-meta__score">
+      <strong class="vote-total submission-meta__vote-total">
+        {{- 'submissions.total_votes'|transchoice(submission.votes|length) -}}
+      </strong>
+
+      <span class="vote-stats submission-meta__vote-stats">{{ 'submissions.vote_stats'|trans({
+          '%up%': submission.upvotes,
+          '%down%': submission.downvotes,
+        }) }}</span>
+    </p>
+
+    <p class="submission-meta__short-url">{{ 'item.short_url'|trans({
+      '%url%': '<a href="%s" rel="nofollow"><kbd>%s</kbd></a>'|format(
+        url('submission_shortcut', {id: submission.id})|e,
+        url('submission_shortcut', {id: submission.id})|replace({
+          'https://www.': '',
+          'https://': '',
+          'http://www.': '',
+          'http://': ''
+        })|e
+      )})|raw
+    }}</p>
+  </section>
+
+  {{ parent() }}
+{% endblock %}
+
+{% block body %}
+  <nav class="submission-permalink-nav">
+    <ul>
+      <li>
+        <a href="{{ path('mod_forum', {forum_name: forum.name}) }}">
+          {{ 'comments.return_to_forum'|trans({'%forum%': '/f/<strong>'~forum.name~'/mod</strong>'})|raw -}}
+        </a>
+      </li>
+    </ul>
+  </nav>
+{% endblock %}
