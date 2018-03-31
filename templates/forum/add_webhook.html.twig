@@ -1,0 +1,15 @@
+{% extends 'forum/base.html.twig' %}
+
+{% block page_classes 'add-forum-webhook-page' %}
+{% block title 'title.add_forum_webhook'|trans({'%forum%': '/f/'~forum.name}) %}
+
+{% block body %}
+  <h1 class="page-heading">
+    {{ 'title.add_forum_webhook'|trans({'%forum%': '<a href="%s">/f/%s</a>'|format(
+        path('forum', {forum_name: forum.name})|e,
+        forum.name|e
+    ) })|raw }}
+  </h1>
+
+  {{ include('forum/_webhook_form.html.twig', {form: form}, with_context=false) }}
+{% endblock %}

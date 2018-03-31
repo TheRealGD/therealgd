@@ -1,0 +1,9 @@
+{{ form_start(form) }}
+  {{ form_row(form.event) }}
+  {{ form_row(form.url) }}
+  {{ form_row(form.secretToken) }}
+
+  <div class="form__row form__button-row">
+    {{ form_widget(form.submit) }}
+  </div>
+{{ form_end(form) }}

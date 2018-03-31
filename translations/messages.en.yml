@@ -25,6 +25,8 @@ action:
     filter: Filter
     create: Create
     compare: Compare
+    add: Add
+    save: Save
 
 add_moderator:
     title: Add moderator to %forum%
@@ -127,6 +129,8 @@ flash:
     page_unlocked: The page was unlocked.
     no_cookies_verification: Does the image not load correctly? Please make sure you aren't blocking cookies and try again.
     no_password_resets: Password resets have been disabled by the administrator.
+    webhook_added: The webhook was added successfully.
+    webhook_edited: The webhook was edited successfully.
 
 forum:
     moderators: Moderators
@@ -279,6 +283,13 @@ label:
     posting: Posting
     auto_fetch_submission_titles: Auto-fetch submission titles
     compare: Compare
+    url: URL
+    secret_token: Secret token
+    event: Event
+    event.new_submission: New submission
+    event.edit_submission: Edit submission
+    event.new_comment: New comment
+    event.edit_comment: Edit comment
 
 log:
     comment_deletion: '%user% deleted comment by %author% in "%submission%"'
@@ -343,6 +354,8 @@ nav:
     forum_bans: Forum bans
     forum_categories: Forum categories
     new_category: New category
+    webhooks: Webhooks
+    add_webhook: Add webhook
 
 placeholder:
     default: (default)
@@ -452,6 +465,9 @@ title:
     create_forum_category: Create forum category
     editing_forum_category: 'Editing forum category: %category%'
     wiki_diff: Showing difference between revisions %from% and %to%
+    add_forum_webhook: Adding webhook for %forum%
+    editing_forum_webhook: Editing webhook in %forum%
+    forum_webhooks: Webhooks for %forum%
 
 user:
     submissions: Submissions

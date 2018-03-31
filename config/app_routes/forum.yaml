@@ -119,6 +119,26 @@ forum_list:
     methods: [GET]
     requirements: { forums: \d+, sortBy: by_name|by_title|by_subscribers|by_submissions }
 
+forum_webhooks:
+    controller: App\Controller\ForumController::webhooks
+    methods: [GET]
+    path: /f/{forum_name}/webhooks
+
+forum_add_webhook:
+    controller: App\Controller\ForumController::addWebhook
+    methods: [GET, POST]
+    path: /f/{forum_name}/add_webhook
+
+forum_edit_webhook:
+    controller: App\Controller\ForumController::editWebhook
+    methods: [GET, POST]
+    path: /f/{forum_name}/edit_webhook/{webhook_id}
+
+forum_remove_webhook:
+    controller: App\Controller\ForumController::removeWebhook
+    methods: [POST]
+    path: /f/{forum_name}/remove_webhook
+
 forums_by_category:
     controller: App\Controller\ForumController::listCategories
     path: /forums/by_category

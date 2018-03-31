@@ -5,6 +5,7 @@ parameters:
     user_forum_creation_interval: 1 day
     uuid_regex:      '[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}'
     wiki_page_regex: '[A-Za-z][A-Za-z0-9_-]*(/[A-Za-z][A-Za-z0-9_-]*)*'
+    env(APP_ENABLE_WEBHOOKS): false
 
 services:
     _defaults:
@@ -40,6 +41,10 @@ services:
         arguments:
             $defaultLocale: "%env(APP_LOCALE)%"
 
+    App\Controller\ForumController:
+        arguments:
+            $enableWebhooks: "%env(bool:APP_ENABLE_WEBHOOKS)%"
+
     App\Controller\UserController:
         arguments:
             $defaultLocale: "%env(APP_LOCALE)%"
@@ -63,6 +68,11 @@ services:
             - { name: doctrine.event_listener, event: postPersist }
             - { name: kernel.event_listener, event: kernel.terminate }
 
+    App\EventListener\WebhookListener:
+        arguments:
+            $client: "@eight_points_guzzle.client.webhook_client"
+            $webhooksEnabled: "%env(bool:APP_ENABLE_WEBHOOKS)%"
+
     App\Form\RequestPasswordResetType:
         arguments:
             $bypass: "@=parameter('kernel.environment') === 'test'"
@@ -80,6 +90,7 @@ services:
     App\Twig\AppExtension:
         arguments:
             $siteName: "%env(SITE_NAME)%"
+            $enableWebhooks: "%env(bool:APP_ENABLE_WEBHOOKS)%"
 
     App\Utils\CachedMarkdownConverter:
         arguments:

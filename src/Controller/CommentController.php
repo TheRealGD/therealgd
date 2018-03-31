@@ -7,6 +7,8 @@ use App\Entity\Forum;
 use App\Entity\ForumLogCommentDeletion;
 use App\Entity\Submission;
 use App\Entity\User;
+use App\Event\EntityModifiedEvent;
+use App\Events;
 use App\Form\CommentType;
 use App\Form\Model\CommentData;
 use App\Repository\CommentRepository;
@@ -15,6 +17,8 @@ use App\Utils\Slugger;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -72,11 +76,12 @@ final class CommentController extends AbstractController {
      *
      * @IsGranted("ROLE_USER")
      *
-     * @param EntityManager $em
-     * @param Forum         $forum
-     * @param Submission    $submission
-     * @param Request       $request
-     * @param Comment|null  $comment
+     * @param EntityManager            $em
+     * @param Forum                    $forum
+     * @param Submission               $submission
+     * @param Request                  $request
+     * @param EventDispatcherInterface $dispatcher
+     * @param Comment|null             $comment
      *
      * @return Response
      */
@@ -85,6 +90,7 @@ final class CommentController extends AbstractController {
         Forum $forum,
         Submission $submission,
         Request $request,
+        EventDispatcherInterface $dispatcher,
         Comment $comment = null
     ) {
         $data = new CommentData();
@@ -99,6 +105,8 @@ final class CommentController extends AbstractController {
 
             $em->persist($reply);
             $em->flush();
+
+            $dispatcher->dispatch(Events::NEW_COMMENT, new GenericEvent($reply));
 
             return $this->redirectToRoute('comment', [
                 'forum_name' => $forum->getName(),
@@ -121,11 +129,12 @@ final class CommentController extends AbstractController {
      *
      * @IsGranted("edit", subject="comment")
      *
-     * @param EntityManager $em
-     * @param Forum         $forum
-     * @param Submission    $submission
-     * @param Comment       $comment
-     * @param Request       $request
+     * @param EntityManager            $em
+     * @param Forum                    $forum
+     * @param Submission               $submission
+     * @param Comment                  $comment
+     * @param Request                  $request
+     * @param EventDispatcherInterface $dispatcher
      *
      * @return Response
      */
@@ -134,7 +143,8 @@ final class CommentController extends AbstractController {
         Forum $forum,
         Submission $submission,
         Comment $comment,
-        Request $request
+        Request $request,
+        EventDispatcherInterface $dispatcher
     ) {
         $data = CommentData::createFromComment($comment);
 
@@ -142,9 +152,13 @@ final class CommentController extends AbstractController {
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $before = clone $comment;
             $data->updateComment($comment);
 
             $em->flush();
+
+            $event = new EntityModifiedEvent($before, $comment);
+            $dispatcher->dispatch(Events::EDIT_COMMENT, $event);
 
             return $this->redirectToRoute('comment', [
                 'forum_name' => $forum->getName(),

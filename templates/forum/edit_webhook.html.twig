@@ -1,0 +1,17 @@
+{% extends 'forum/base.html.twig' %}
+
+{% block page_classes 'edit-forum-webhook-page' %}
+{% block title 'title.editing_forum_webhook'|trans({'%forum%': '/f/'~forum.name}) %}
+
+{% block body %}
+  <h1>
+    {{ 'title.editing_forum_webhook'|trans({
+      '%forum%': '<a href="%s">%s</a>'|format(
+        path('forum', {forum_name: forum.name})|e,
+        '/f/'~forum.name|e
+    )})|raw }}
+  </h1>
+
+  {{ include('forum/_webhook_form.html.twig', {form: form}, with_context=false) }}
+{% endblock %}
+

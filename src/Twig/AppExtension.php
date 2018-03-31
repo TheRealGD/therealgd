@@ -25,10 +25,16 @@ final class AppExtension extends AbstractExtension {
      */
     private $version;
 
-    public function __construct(string $siteName, ?string $branch, ?string $version) {
+    /**
+     * @var bool
+     */
+    private $enableWebhooks;
+
+    public function __construct(string $siteName, ?string $branch, ?string $version, bool $enableWebhooks) {
         $this->siteName = $siteName;
         $this->branch = $branch;
         $this->version = $version;
+        $this->enableWebhooks = $enableWebhooks;
     }
 
     public function getFunctions(): array {
@@ -41,6 +47,9 @@ final class AppExtension extends AbstractExtension {
             }),
             new TwigFunction('app_version', function () {
                 return $this->version;
+            }),
+            new TwigFunction('app_webhooks_enabled', function () {
+                return $this->enableWebhooks;
             }),
         ];
     }

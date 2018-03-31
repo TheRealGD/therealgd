@@ -20,6 +20,7 @@
         "ext-iconv": "*",
         "ext-pdo_pgsql": "*",
         "doctrine/doctrine-migrations-bundle": "^1.2",
+        "eightpoints/guzzle-bundle": "^7.3",
         "embed/embed": "^3.0",
         "ezyang/htmlpurifier": "^4.8",
         "friendsofsymfony/jsrouting-bundle": "^2.1",

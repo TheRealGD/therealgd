@@ -3,13 +3,16 @@
 namespace App\Controller;
 
 use App\Entity\Forum;
+use App\Entity\ForumWebhook;
 use App\Entity\Moderator;
 use App\Entity\User;
 use App\Form\ForumAppearanceType;
 use App\Form\ForumBanType;
 use App\Form\ForumType;
+use App\Form\ForumWebhookType;
 use App\Form\Model\ForumBanData;
 use App\Form\Model\ForumData;
+use App\Form\Model\ForumWebhookData;
 use App\Form\Model\ModeratorData;
 use App\Form\ModeratorType;
 use App\Form\PasswordConfirmType;
@@ -17,8 +20,10 @@ use App\Repository\ForumBanRepository;
 use App\Repository\ForumCategoryRepository;
 use App\Repository\ForumLogEntryRepository;
 use App\Repository\ForumRepository;
+use App\Repository\ForumWebhookRepository;
 use App\Repository\SubmissionRepository;
 use Doctrine\ORM\EntityManager;
+use Ramsey\Uuid\Uuid;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,6 +34,15 @@ use Symfony\Component\HttpFoundation\Response;
  * @Entity("user", expr="repository.findOneOrRedirectToCanonical(username, 'username')")
  */
 final class ForumController extends AbstractController {
+    /**
+     * @var bool
+     */
+    private $enableWebhooks;
+
+    public function __construct(bool $enableWebhooks) {
+        $this->enableWebhooks = $enableWebhooks;
+    }
+
     /**
      * Show the front page of a given forum.
      *
@@ -384,6 +398,135 @@ final class ForumController extends AbstractController {
             'bans' => $forum->getPaginatedBansByUser($user, $page),
             'forum' => $forum,
             'user' => $user,
+        ]);
+    }
+
+    /**
+     * @IsGranted("moderator", subject="forum")
+     *
+     * @param Forum $forum
+     *
+     * @return Response
+     */
+    public function webhooks(Forum $forum) {
+        if (!$this->enableWebhooks) {
+            throw $this->createNotFoundException('Webhooks are not enabled');
+        }
+
+        return $this->render('forum/webhooks.html.twig', [
+            'forum' => $forum,
+        ]);
+    }
+
+    /**
+     * @IsGranted("moderator", subject="forum")
+     *
+     * @param Forum         $forum
+     * @param Request       $request
+     * @param EntityManager $em
+     *
+     * @return Response
+     */
+    public function addWebhook(Forum $forum, Request $request, EntityManager $em) {
+        if (!$this->enableWebhooks) {
+            throw $this->createNotFoundException('Webhooks are not enabled');
+        }
+
+        $data = new ForumWebhookData();
+
+        $form = $this->createForm(ForumWebhookType::class, $data);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $webhook = $data->toWebhook($forum);
+
+            $em->persist($webhook);
+            $em->flush();
+
+            $this->addFlash('success', 'flash.webhook_added');
+
+            return $this->redirectToRoute('forum_webhooks', [
+                'forum_name' => $forum->getName(),
+            ]);
+        }
+
+        return $this->render('forum/add_webhook.html.twig', [
+            'form' => $form->createView(),
+            'forum' => $forum,
+        ]);
+    }
+
+    /**
+     * @Entity("webhook", expr="repository.findOneBy({forum: forum, id: webhook_id})")
+     * @IsGranted("moderator", subject="forum")
+     *
+     * @param Forum         $forum
+     * @param ForumWebhook  $webhook
+     * @param Request       $request
+     * @param EntityManager $em
+     *
+     * @return Response
+     */
+    public function editWebhook(Forum $forum, ForumWebhook $webhook, Request $request, EntityManager $em) {
+        if (!$this->enableWebhooks) {
+            throw $this->createNotFoundException('Webhooks are not enabled');
+        }
+
+        $data = new ForumWebhookData($webhook);
+
+        $form = $this->createForm(ForumWebhookType::class, $data);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data->updateWebhook($webhook);
+
+            $em->flush();
+
+            $this->addFlash('success', 'flash.webhook_edited');
+
+            return $this->redirectToRoute('forum_webhooks', [
+                'forum_name' => $forum->getName(),
+            ]);
+        }
+
+        return $this->render('forum/edit_webhook.html.twig', [
+            'form' => $form->createView(),
+            'forum' => $forum,
+        ]);
+    }
+
+    /**
+     * @IsGranted("moderator", subject="forum")
+     *
+     * @param Forum                  $forum
+     * @param Request                $request
+     * @param ForumWebhookRepository $repository
+     * @param EntityManager          $em
+     *
+     * @return Response
+     */
+    public function removeWebhook(Forum $forum, Request $request, ForumWebhookRepository $repository, EntityManager $em) {
+        if (!$this->enableWebhooks) {
+            throw $this->createNotFoundException('Webhooks are not enabled');
+        }
+
+        $this->validateCsrf('remove_webhook', $request->request->get('token'));
+
+        $ids = (array) $request->request->get('webhook');
+        $ids = \array_filter($ids, function ($id) {
+            return \is_string($id) && Uuid::isValid($id);
+        });
+
+        $webhooks = $repository->findBy(['id' => $ids, 'forum' => $forum]);
+
+        foreach ($webhooks as $webhook) {
+            $em->remove($webhook);
+        }
+
+        $em->flush();
+
+        return $this->redirectToRoute('forum_webhooks', [
+            'forum_name' => $forum->getName(),
         ]);
     }
 

@@ -64,6 +64,13 @@
           <li><a href="{{ path('forum_appearance', {forum_name: forum.name}) }}">{{ 'nav.appearance'|trans }}</a></li>
         {% endset %}
         {% set items = items|merge({('nav.appearance'|trans): item}) %}
+
+        {% if app_webhooks_enabled() %}
+          {% set item %}
+            <li><a href="{{ path('forum_webhooks', {forum_name: forum.name}) }}">{{ 'nav.webhooks'|trans }}</a></li>
+          {% endset %}
+          {% set items = items|merge({('nav.webhooks'|trans): item}) %}
+        {% endif %}
       {% endif %}
 
       {% if is_granted('ROLE_ADMIN') %}

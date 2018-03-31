@@ -7,6 +7,8 @@ use App\Entity\Forum;
 use App\Entity\ForumLogSubmissionDeletion;
 use App\Entity\ForumLogSubmissionLock;
 use App\Entity\Submission;
+use App\Event\EntityModifiedEvent;
+use App\Events;
 use App\Form\DeleteReasonType;
 use App\Form\Model\SubmissionData;
 use App\Form\SubmissionType;
@@ -14,6 +16,8 @@ use App\Utils\Slugger;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -79,13 +83,19 @@ final class SubmissionController extends AbstractController {
      *
      * @IsGranted("ROLE_USER")
      *
-     * @param EntityManager $em
-     * @param Request       $request
-     * @param Forum         $forum
+     * @param Forum|null               $forum
+     * @param EntityManager            $em
+     * @param Request                  $request
+     * @param EventDispatcherInterface $dispatcher
      *
      * @return Response
      */
-    public function submit(EntityManager $em, Request $request, Forum $forum = null) {
+    public function submit(
+        Forum $forum = null,
+        EntityManager $em,
+        Request $request,
+        EventDispatcherInterface $dispatcher
+    ) {
         $data = new SubmissionData($forum);
 
         $form = $this->createForm(SubmissionType::class, $data);
@@ -96,6 +106,8 @@ final class SubmissionController extends AbstractController {
 
             $em->persist($submission);
             $em->flush();
+
+            $dispatcher->dispatch(Events::NEW_SUBMISSION, new GenericEvent($submission));
 
             return $this->redirectToRoute('submission', [
                 'forum_name' => $submission->getForum()->getName(),
@@ -113,25 +125,36 @@ final class SubmissionController extends AbstractController {
     /**
      * @IsGranted("edit", subject="submission")
      *
-     * @param EntityManager $em
-     * @param Forum         $forum
-     * @param Submission    $submission
-     * @param Request       $request
+     * @param Forum                    $forum
+     * @param Submission               $submission
+     * @param EntityManager            $em
+     * @param Request                  $request
+     * @param EventDispatcherInterface $dispatcher
      *
      * @return Response
      */
-    public function editSubmission(EntityManager $em, Forum $forum, Submission $submission, Request $request) {
+    public function editSubmission(
+        Forum $forum,
+        Submission $submission,
+        EntityManager $em,
+        Request $request,
+        EventDispatcherInterface $dispatcher
+    ) {
         $data = SubmissionData::createFromSubmission($submission);
 
         $form = $this->createForm(SubmissionType::class, $data);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $before = clone $submission;
             $data->updateSubmission($submission);
 
             $em->flush();
 
             $this->addFlash('notice', 'flash.submission_edited');
+
+            $event = new EntityModifiedEvent($before, $submission);
+            $dispatcher->dispatch(Events::EDIT_SUBMISSION, $event);
 
             return $this->redirectToRoute('submission', [
                 'forum_name' => $forum->getName(),

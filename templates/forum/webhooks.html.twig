@@ -1,0 +1,57 @@
+{% extends 'forum/base.html.twig' %}
+
+{% block page_classes 'forum-webhooks-page' %}
+{% block title 'title.forum_webhooks'|trans({'%forum%': '/f/'~forum.name}) %}
+
+{% block body %}
+  <h1 class="page-heading">
+    {{ 'title.forum_webhooks'|trans({'%forum%': '<a href="%s">/f/%s</a>'|format(
+        path('forum', {forum_name: forum.name})|e,
+        forum.name|e
+    ) })|raw }}
+  </h1>
+
+  <p>
+    <a href="{{ path('forum_add_webhook', {forum_name: forum.name}) }}" class="button">
+      {{ 'nav.add_webhook'|trans }}
+    </a>
+  </p>
+
+  {% if forum.webhooks|length > 0 %}
+    <form action="{{ path('forum_remove_webhook', {forum_name: forum.name}) }}" method="POST">
+      <input type="hidden" name="token" value="{{ csrf_token('remove_webhook') }}">
+      <table class="table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>{{ 'label.event'|trans }}</th>
+            <th>{{ 'label.url'|trans }}</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for webhook in forum.webhooks %}
+            <tr>
+              <td><input type="checkbox" name="webhook[]" value="{{ webhook.id }}"></td>
+              <td>{{ ('label.event.'~webhook.event)|trans }}</td>
+              <td><kbd>{{ webhook.url }}</kbd></td>
+              <td>
+                <a href="{{ path('forum_edit_webhook', {forum_name: forum.name, webhook_id: webhook.id}) }}"
+                   class="button button--inline">{{ 'action.edit'|trans }}</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <div class="form__row form__button-row">
+        <button class="button">{{ 'action.remove'|trans }}</button>
+      </div>
+    </form>
+  {% else %}
+    <div class="alert alert--notice">
+      <p>{{ 'flash.no_entries_to_display'|trans }}</p>
+    </div>
+  {% endif %}
+{% endblock %}
+

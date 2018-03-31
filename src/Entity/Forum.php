@@ -130,6 +130,13 @@ class Forum {
      */
     private $logEntries;
 
+    /**
+     * @ORM\OneToMany(targetEntity="ForumWebhook", mappedBy="forum")
+     *
+     * @var ForumWebhook[]|Collection
+     */
+    private $webhooks;
+
     public function __construct(
         string $name,
         string $title,
@@ -148,6 +155,7 @@ class Forum {
         $this->submissions = new ArrayCollection();
         $this->subscriptions = new ArrayCollection();
         $this->logEntries = new ArrayCollection();
+        $this->webhooks = new ArrayCollection();
 
         if ($user) {
             $this->addModerator(new Moderator($this, $user));
@@ -388,6 +396,25 @@ class Forum {
         if (!$this->logEntries->contains($entry)) {
             $this->logEntries->add($entry);
         }
+    }
+
+    /**
+     * @return ForumWebhook[]|Collection
+     */
+    public function getWebhooks(): Collection {
+        return $this->webhooks;
+    }
+
+    /**
+     * @param string $event
+     *
+     * @return ForumWebhook[]
+     */
+    public function getWebhooksByEvent(string $event): array {
+        $criteria = Criteria::create()
+            ->where(Criteria::expr()->eq('event', $event));
+
+        return $this->webhooks->matching($criteria)->toArray();
     }
 
     public static function normalizeName(string $name): string {
