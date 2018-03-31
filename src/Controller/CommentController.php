@@ -261,7 +261,8 @@ final class CommentController extends AbstractController {
 
     /**
      *
-     * @IsGranted("ROLE_USER")
+     * @IsGranted("moderator", subject="forum")
+     * @todo - updated is granted to being a forum mod or role_admin, possibly need to use security annotation
      *
      * @param EntityManager $em
      * @param Forum         $forum
