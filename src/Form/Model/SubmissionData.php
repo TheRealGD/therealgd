@@ -82,10 +82,22 @@ class SubmissionData {
         );
     }
 
-    public function updateSubmission(Submission $submission) {
-        $submission->setTitle($this->title);
-        $submission->setUrl($this->url);
-        $submission->setBody($this->body);
+    public function updateSubmission(Submission $submission, User $editingUser) {
+        if (
+            $this->url !== $submission->getUrl() ||
+            $this->title !== $submission->getTitle() ||
+            $this->body !== $submission->getBody()
+        ) {
+            $submission->setTitle($this->title);
+            $submission->setUrl($this->url);
+            $submission->setBody($this->body);
+            $submission->setEditedAt(new \DateTime('@'.time()));
+
+            if (!$submission->isModerated()) {
+                $submission->setModerated($submission->getUser() !== $editingUser);
+            }
+        }
+
         $submission->setUserFlag($this->userFlag);
         $submission->setSticky($this->sticky);
     }

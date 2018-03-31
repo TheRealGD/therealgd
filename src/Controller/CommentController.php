@@ -153,7 +153,7 @@ final class CommentController extends AbstractController {
 
         if ($form->isSubmitted() && $form->isValid()) {
             $before = clone $comment;
-            $data->updateComment($comment);
+            $data->updateComment($comment, $this->getUser());
 
             $em->flush();
 

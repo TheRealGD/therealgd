@@ -47,9 +47,17 @@ class CommentData {
         );
     }
 
-    public function updateComment(Comment $comment) {
-        $comment->setBody($this->body);
+    public function updateComment(Comment $comment, User $editingUser) {
         $comment->setUserFlag($this->userFlag);
+
+        if ($this->body !== $comment->getBody()) {
+            $comment->setBody($this->body);
+            $comment->setEditedAt(new \DateTime('@'.time()));
+
+            if (!$comment->isModerated()) {
+                $comment->setModerated($comment->getUser() !== $editingUser);
+            }
+        }
     }
 
     /**

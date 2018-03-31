@@ -147,7 +147,7 @@ final class SubmissionController extends AbstractController {
 
         if ($form->isSubmitted() && $form->isValid()) {
             $before = clone $submission;
-            $data->updateSubmission($submission);
+            $data->updateSubmission($submission, $this->getUser());
 
             $em->flush();
 
