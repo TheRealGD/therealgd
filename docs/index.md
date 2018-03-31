@@ -2,6 +2,10 @@
 
 * **[Getting started](../README.md#getting-started)**
 
+* **Reference**
+
+    * [Webhooks](webhooks.md)
+
 * **Configuration & administration**
 
     * [Database setup](database-setup.md)
