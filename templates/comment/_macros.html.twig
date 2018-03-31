@@ -239,6 +239,7 @@
   {%- if is_granted('moderator', comment.submission.forum) or is_granted('ROLE_ADMIN') -%}
   {%- if not comment.parent %}
     {%- spaceless -%}
+    {%- if not comment.isStickied -%}
     <li class="comment-nav-sticky-thread">
       <form action="{{ path('sticky_comment', {
         forum_name: comment.submission.forum.name,
@@ -249,6 +250,18 @@
         <button type="submit" class="confirm-comment-sticky">{{ 'action.sticky' | trans}}</button>
       </form>
     </li>
+    {% else %}
+    <li class="comment-nav-unsticky-thread">
+      <form action="{{ path('unsticky_comment', {
+        forum_name: comment.submission.forum.name,
+        submission_id: comment.submission.id,
+        comment_id: comment.id,
+      }) }}" method="POST">
+        <input type="hidden" name="token" value="{{ csrf_token('unsticky_comment') }}">
+        <button type="submit" class="confirm-comment-sticky">{{ 'action.unsticky' | trans}}</button>
+      </form>
+    </li>
+    {%- endif -%}
     {%- endspaceless -%}
   {%- endif -%}
   {%- endif -%}

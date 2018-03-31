@@ -15,6 +15,7 @@ action:
     go_to_home_page: Go to home page
     ban: Ban
     sticky: Sticky comment
+    unsticky: Unsticky comment
     unban: Unban
     block: Block
     unblock: Unblock

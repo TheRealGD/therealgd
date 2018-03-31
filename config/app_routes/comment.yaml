@@ -28,6 +28,11 @@ sticky_comment:
     path: /f/{forum_name}/{submission_id}/sticky_comment/{comment_id}
     methods: [POST]
 
+unsticky_comment:
+    controller: App\Controller\CommentController::unstickyComment
+    path: /f/{forum_name}/{submission_id}/unsticky_comment/{comment_id}
+    methods: [POST]
+
 
 softdelete_comment:
     controller: App\Controller\CommentController::softDeleteComment
