@@ -43,3 +43,4 @@ tags
 ###< symfony/web-server-bundle ###
 
 symfony.lock
+package-lock.json

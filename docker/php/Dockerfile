@@ -1,10 +1,73 @@
 FROM php:7.2-fpm-stretch
 
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
-  libpq-dev libcurl4-openssl-dev libpng-dev zlib1g-dev && \
-  pecl install apcu_bc-1.0.4 && \
-  docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql && \
-  docker-php-ext-install pdo pdo_pgsql pgsql && \
-  docker-php-ext-enable apcu && \
-  docker-php-ext-install curl iconv gd opcache && \
-  rm -r /var/lib/apt/lists/* /tmp/*
+ARG log_errors
+ARG display_errors
+ARG site_name
+ARG app_env
+ARG app_secret
+ARG trusted_proxies
+ARG trusted_hosts
+ARG no_reply_address
+ARG mailer_url
+ARG database_url
+ARG aws_ssm_name_db_url
+ARG aws_ssm_region
+
+
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update
+RUN apt-get install -y libpq-dev libcurl4-openssl-dev libpng-dev zlib1g-dev
+RUN pecl install apcu_bc-1.0.4
+#RUN  docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql && \
+RUN  docker-php-ext-install curl iconv gd opcache
+RUN  docker-php-ext-install pdo pdo_pgsql pgsql
+RUN  docker-php-ext-enable apcu
+RUN apt-get install -y ruby
+
+# install node
+RUN apt-get install -y gnupg
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
+RUN apt-get install -y nodejs
+
+# install composer
+RUN apt-get install -y zip git
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+RUN php composer-setup.php --install-dir=/usr/bin --filename=composer
+RUN php -r "unlink('composer-setup.php');"
+
+RUN  rm -r /var/lib/apt/lists/* /tmp/*
+
+ADD /devlocal.sh /
+
+# all this shit to run aws-cli inside of container
+RUN apt-get update
+RUN apt-get install -y software-properties-common
+RUN apt-get update
+RUN apt-get install -y python-pip
+RUN apt-get install -y python python-pip
+RUN pip install awscli
+
+
+ADD ./.env.erb /tmp
+RUN erb -T - site_name=$site_name                           \
+    app_env=$app_env                                        \
+    app_secret=$app_secret                                  \
+    trusted_proxies=$trusted_proxies                        \
+    trusted_hosts=$trusted_hosts                            \
+    database_url=$database_url                              \
+    aws_ssm_name_db_url=$aws_ssm_name_db_url                \
+    aws_ssm_region=$aws_ssm_region                          \
+    no_reply_address=$no_reply_address                      \
+    mailer_url=$mailer_url                                  \
+    /tmp/.env.erb > /var/www/.env
+
+RUN mkdir -p /etc/php/7.2/fpm/conf.d/
+RUN echo "\n opcache.max_accelerated_files = 20000         \
+          \n realpath_cache_size=4096K                     \
+          \n realpath_cache_ttl=600                        \
+          \n php_admin_flag[log_errors] = ${log_errors}    \
+          \n php_flag[display_errors] = ${display_errors}" >> /etc/php/7.2/fpm/conf.d/99-overrides.ini
+
+# uncomment me for lighter container and slower build
+# RUN apt-get purge   -y ruby
+
