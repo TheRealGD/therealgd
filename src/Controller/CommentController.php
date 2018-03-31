@@ -273,7 +273,7 @@ final class CommentController extends AbstractController {
      * @return Response
      */
     public function stickyComment(
-	EntityManager $em,
+        EntityManager $em,
         Forum $forum,
         Submission $submission,
         Comment $comment,
@@ -300,7 +300,7 @@ final class CommentController extends AbstractController {
      * @return Response
      */
     public function unstickyComment(
-	EntityManager $em,
+        EntityManager $em,
         Forum $forum,
         Submission $submission,
         Comment $comment,
