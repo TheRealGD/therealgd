@@ -1,0 +1,5 @@
+Dockerfile
+.git
+.env.dev
+.gitlab-ci.yml
+*.md

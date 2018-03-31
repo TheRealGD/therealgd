@@ -21,7 +21,7 @@ class NotificationRepository extends ServiceEntityRepository {
     public function clearInbox(User $user, int $max = null) {
         $qb = $this->getEntityManager()->createQueryBuilder()
             ->update(Notification::class, 'n')
-            ->set('n.read', true)
+            ->set('n.read', 'true')
             ->where('n.user = ?1')
             ->setParameter(1, $user);
 
