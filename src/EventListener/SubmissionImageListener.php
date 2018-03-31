@@ -3,19 +3,23 @@
 namespace App\EventListener;
 
 use App\Entity\Submission;
-use Doctrine\Common\Persistence\ManagerRegistry;
-use Doctrine\ORM\Event\LifecycleEventArgs;
+use App\Events;
+use Doctrine\ORM\EntityManagerInterface;
 use Embed\Embed;
 use Embed\Exceptions\EmbedException;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use League\Flysystem\FileExistsException;
 use League\Flysystem\FilesystemInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpFoundation\File\MimeType\ExtensionGuesser;
 use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesser;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpKernel\Event\KernelEvent;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Symfony\Component\HttpKernel\Event\PostResponseEvent;
+use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -23,13 +27,18 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 /**
  * Download related image after submission.
  */
-final class SubmissionImageListener {
+final class SubmissionImageListener implements EventSubscriberInterface {
     const QUEUE_KEY = 'submission_thumbnail_queue';
 
     /**
-     * @var ManagerRegistry
+     * @var Client
      */
-    private $registry;
+    private $client;
+
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
 
     /**
      * @var FilesystemInterface
@@ -46,16 +55,21 @@ final class SubmissionImageListener {
      */
     private $validator;
 
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
     public function __construct(
-        ManagerRegistry $registry,
+        Client $client,
+        EntityManagerInterface $entityManager,
         FilesystemInterface $filesystem,
         RequestStack $requestStack,
         ValidatorInterface $validator,
         LoggerInterface $logger = null
     ) {
-        // we must inject the registry rather than the manager because of a
-        // nasty infinite loop bug that would occur in the container
-        $this->registry = $registry;
+        $this->client = $client;
+        $this->entityManager = $entityManager;
         $this->filesystem = $filesystem;
         $this->requestStack = $requestStack;
         $this->validator = $validator;
@@ -65,18 +79,20 @@ final class SubmissionImageListener {
     /**
      * Stick every submission with a URL in a queue.
      *
-     * @param LifecycleEventArgs $args
+     * @param GenericEvent $event
      */
-    public function postPersist(LifecycleEventArgs $args) {
+    public function onNewSubmission(GenericEvent $event) {
         $request = $this->requestStack->getMasterRequest();
-        $entity = $args->getEntity();
 
-        if (!$request || !$entity instanceof Submission || !$entity->getUrl() || $entity->getImage()) {
+        /* @var Submission $submission */
+        $submission = $event->getSubject();
+
+        if (!$request || !$submission->getUrl() || $submission->getImage()) {
             return;
         }
 
         $queue = $request->attributes->get(self::QUEUE_KEY, []);
-        $queue[] = $entity;
+        $queue[] = $submission;
 
         $request->attributes->set(self::QUEUE_KEY, $queue);
     }
@@ -84,20 +100,16 @@ final class SubmissionImageListener {
     /**
      * Loop through the queue at the end of the request and download the images.
      *
-     * @param KernelEvent $event
+     * @param PostResponseEvent $event
      */
-    public function onKernelTerminate(KernelEvent $event) {
-        if ($event->getRequestType() !== HttpKernelInterface::MASTER_REQUEST) {
-            return;
-        }
-
+    public function onKernelTerminate(PostResponseEvent $event) {
         $queue = $event->getRequest()->attributes->get(self::QUEUE_KEY, []);
 
         if (!$queue) {
             return;
         }
 
-        /** @var Submission $submission */
+        /* @var Submission $submission */
         foreach ($queue as $submission) {
             try {
                 $embed = Embed::create($submission->getUrl());
@@ -111,7 +123,7 @@ final class SubmissionImageListener {
             }
         }
 
-        $this->registry->getManager()->flush();
+        $this->entityManager->flush();
     }
 
     /**
@@ -121,45 +133,21 @@ final class SubmissionImageListener {
      *
      * @return string|null the final file name, or null if the download failed
      */
-    private function getFilename(string $imageUrl) {
-        error_clear_last();
+    private function getFilename(string $imageUrl): ?string {
+        $oldExceptionHandler = \set_error_handler(__NAMESPACE__.'\error_handler');
 
         try {
-            // fixme: don't create temporary files
-            $tempFile = @tempnam(sys_get_temp_dir(), 'postmill');
-            $fh = @fopen($tempFile, 'wb+');
+            $tempFile = \tempnam(\sys_get_temp_dir(), 'pml');
 
-            if (!$fh) {
-                $this->logger->warning('Could not open file for writing', [
-                    'error' => error_get_last(),
-                ]);
+            $this->client->get($imageUrl, ['sink' => $tempFile]);
 
-                return null;
-            }
-
-            // todo: refactor to use guzzle or something
-            $ch = curl_init($imageUrl);
-            curl_setopt($ch, CURLOPT_FILE, $fh);
-            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-            curl_setopt($ch, CURLOPT_MAXREDIRS, 5);
-            curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-
-            $success = curl_exec($ch) && curl_getinfo($ch, CURLINFO_RESPONSE_CODE) == 200;
-
-            if (!$success) {
-                $this->logger->info('Bad HTTP response', [
-                    'curl' => curl_getinfo($ch),
-                ]);
-
-                return null;
-            }
-
-            $imageConstraint = new Image(['detectCorrupted' => true]);
-
-            $violations = $this->validator->validate($tempFile, $imageConstraint);
+            $violations = $this->validator->validate(
+                $tempFile,
+                new Image(['detectCorrupted' => true])
+            );
 
             if (count($violations) > 0) {
-                /** @var ConstraintViolationInterface $violation */
+                /* @var ConstraintViolationInterface $violation */
                 foreach ($violations as $violation) {
                     $message = $violation->getMessageTemplate();
                     $params = $violation->getParameters();
@@ -176,19 +164,45 @@ final class SubmissionImageListener {
             $filename = sprintf('%s.%s', hash_file('sha256', $tempFile), $ext);
 
             try {
+                $fh = fopen($tempFile, 'rb');
                 $success = $this->filesystem->writeStream($filename, $fh);
             } catch (FileExistsException $e) {
                 $success = true;
             }
 
-            return $success ? $filename : null;
-        } finally {
-            if (isset($ch)) {
-                @curl_close($ch);
+            if ($success) {
+                return $filename;
             }
-
-            @fclose($fh);
-            @unlink($tempFile);
         }
+        catch (GuzzleException $e) {
+            $this->logger->notice('Failed to download submission image', [
+                'exception' => $e,
+            ]);
+        } catch (\ErrorException $e) {
+            $this->logger->warning($e->getMessage(), [
+                'exception' => $e,
+            ]);
+        } finally {
+            \set_exception_handler($oldExceptionHandler);
+            @\unlink($tempFile);
+            @\fclose($fh);
+        }
+
+        return null;
     }
+
+    public static function getSubscribedEvents() {
+        return [
+            Events::NEW_SUBMISSION => 'onNewSubmission',
+            KernelEvents::TERMINATE => 'onKernelTerminate',
+        ];
+    }
+}
+
+function error_handler($severity, $message, $file, $line) {
+    if (!(error_reporting() & $severity)) {
+        return;
+    }
+
+    throw new \ErrorException($message, 0, $severity, $file, $line);
 }

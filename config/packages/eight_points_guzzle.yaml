@@ -14,3 +14,10 @@ eight_points_guzzle:
             # Find plugins here:
             # https://github.com/8p/EightPointsGuzzleBundle#known-and-supported-plugins
             plugin: ~
+
+        submission_image_client:
+            options:
+                timeout: 10
+                headers:
+                    User-Agent: "Postmill/0.6 (https://postmill.xyz/)"
+                    Accept: image/png, image/jpeg, image/gif

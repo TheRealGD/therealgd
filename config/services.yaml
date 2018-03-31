@@ -62,11 +62,8 @@ services:
 
     App\EventListener\SubmissionImageListener:
         arguments:
+            $client: "@eight_points_guzzle.client.submission_image_client"
             $filesystem: "@oneup_flysystem.submission_images_filesystem"
-        public: true
-        tags:
-            - { name: doctrine.event_listener, event: postPersist }
-            - { name: kernel.event_listener, event: kernel.terminate }
 
     App\EventListener\WebhookListener:
         arguments:
