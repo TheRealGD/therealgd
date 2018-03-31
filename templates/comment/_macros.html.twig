@@ -131,6 +131,7 @@
   {{- block('comment_nav_parent') -}}
   {{- block('comment_nav_delete') -}}
   {{- block('comment_nav_edit') }}
+  {{- block('comment_nav_sticky') }}
   {{- block('comment_nav_ban') -}}
   {{- block('comment_nav_ip_ban') -}}
 {%- endblock -%}
@@ -233,6 +234,24 @@
     {%- endif -%}
   {%- endspaceless -%}
 {%- endblock -%}
+
+{%- block comment_nav_sticky -%}
+  {%- if is_granted('moderator', comment.submission.forum)or is_granted('ROLE_ADMIN') -%}
+    {%- spaceless -%}
+    <li class="comment-nav-sticky-thread">
+      <form action="{{ path('sticky_comment', {
+        forum_name: comment.submission.forum.name,
+        submission_id: comment.submission.id,
+        comment_id: comment.id,
+      }) }}" method="POST">
+        <input type="hidden" name="token" value="{{ csrf_token('sticky_comment') }}">
+        <button type="submit" class="confirm-comment-sticky">{{ 'action.sticky' | trans}}</button>
+      </form>
+    </li>
+    {%- endspaceless -%}
+  {%- endif -%}
+{%- endblock -%}
+
 
 {%- block comment_nav_ban -%}
   {%- if is_granted('moderator', comment.submission.forum) -%}

@@ -23,6 +23,12 @@ delete_comment:
     path: /f/{forum_name}/{submission_id}/delete_comment/{comment_id}
     methods: [POST]
 
+sticky_comment:
+    controller: App\Controller\CommentController::stickyComment
+    path: /f/{forum_name}/{submission_id}/sticky_comment/{comment_id}
+    methods: [POST]
+
+
 softdelete_comment:
     controller: App\Controller\CommentController::softDeleteComment
     path: /f/{forum_name}/{submission_id}/soft_delete_comment/{comment_id}

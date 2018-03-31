@@ -259,6 +259,33 @@ final class CommentController extends AbstractController {
         return $this->redirectAfterAction($comment, $request);
     }
 
+    /**
+     *
+     * @IsGranted("ROLE_USER")
+     *
+     * @param EntityManager $em
+     * @param Forum         $forum
+     * @param Submission    $submission
+     * @param Comment       $comment
+     * @param Request       $request
+     *
+     * @return Response
+     */
+    public function stickyComment(
+	EntityManager $em,
+        Forum $forum,
+        Submission $submission,
+        Comment $comment,
+        Request $request
+
+    ) {
+        $comment->setStickied(true);
+        $em->flush();
+
+        return $this->redirectAfterAction($comment, $request);
+    }
+
+
     private function logDeletion(Forum $forum, Comment $comment) {
         /* @var User $user */
         $user = $this->getUser();
