@@ -23,7 +23,7 @@ class CommentRepository extends ServiceEntityRepository {
     public function findRecentPaginated(int $page, int $maxPerPage = 25) {
         $criteria = Criteria::create()
             ->where(Criteria::expr()->eq('softDeleted', false))
-            ->orderBy(['timestamp' => 'DESC']);
+            ->orderBy(['stickied' => 'ASC']);
 
         $pager = new Pagerfanta(new DoctrineSelectableAdapter($this, $criteria));
         $pager->setMaxPerPage($maxPerPage);
