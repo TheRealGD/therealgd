@@ -14,14 +14,13 @@ class Version20180331122927 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'postgresql', 'Migration can only be executed safely on \'postgresql\'.');
-
-	$this->addSql('ALTER TABLE comments ADD COLUMN "stickied" BOOLEAN NOT NULL DEFAULT FALSE');
+        $this->addSql('ALTER TABLE comments ADD COLUMN "stickied" BOOLEAN NOT NULL DEFAULT FALSE');
     }
 
     public function down(Schema $schema)
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'postgresql', 'Migration can only be executed safely on \'postgresql\'.');
-	$this->addSql('ALTER TABLE comments DROP COLUMN "stickied"');
+        $this->addSql('ALTER TABLE comments DROP COLUMN "stickied"');
     }
 }

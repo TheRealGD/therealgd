@@ -231,11 +231,10 @@ class Submission extends Votable {
      */
     public function getTopLevelComments(): array {
         $criteria = Criteria::create();
-	$criteria->where(Criteria::expr()->isNull('parent'))
+        $criteria->where(Criteria::expr()->isNull('parent'))
 		 ->andWhere(Criteria::expr()->eq('stickied', false));
 
         $comments = $this->comments->matching($criteria)->toArray();
-
 
         if ($comments) {
             usort($comments, [$this, 'descendingNetScoreCmp']);
@@ -251,15 +250,13 @@ class Submission extends Votable {
      */
     public function getStickyComments(): array {
         $criteria = Criteria::create();
-	$criteria->where(Criteria::expr()->isNull('parent'))
-		 ->andWhere(Criteria::expr()->eq('stickied', true));
+        $criteria->where(Criteria::expr()->isNull('parent'))
+                 ->andWhere(Criteria::expr()->eq('stickied', true));
 
         $comments = $this->comments->matching($criteria)->toArray();
 
         return $comments;
     }
-
-
 
     public function addComment(Comment $comment) {
         if (!$this->comments->contains($comment)) {
