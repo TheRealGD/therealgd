@@ -236,7 +236,8 @@
 {%- endblock -%}
 
 {%- block comment_nav_sticky -%}
-  {%- if is_granted('moderator', comment.submission.forum)or is_granted('ROLE_ADMIN') -%}
+  {%- if is_granted('moderator', comment.submission.forum) or is_granted('ROLE_ADMIN') -%}
+  {%- if not comment.parent %}
     {%- spaceless -%}
     <li class="comment-nav-sticky-thread">
       <form action="{{ path('sticky_comment', {
@@ -249,6 +250,7 @@
       </form>
     </li>
     {%- endspaceless -%}
+  {%- endif -%}
   {%- endif -%}
 {%- endblock -%}
 
