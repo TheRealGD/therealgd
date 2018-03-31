@@ -8,7 +8,7 @@ action:
     downvote: Downvote
     retract_upvote: Retract upvote
     retract_downvote: Retract downvote
-    edit: Save Changes
+    edit: Save changes
     create_theme: Create theme
     edit_theme: Edit theme
     new_theme: New theme
