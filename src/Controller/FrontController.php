@@ -4,11 +4,13 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\ForumConfiguration;
+use App\Entity\Submission;
 use App\Repository\ForumRepository;
 use App\Repository\ForumConfigurationRepository;
 use App\Repository\SubmissionRepository;
 use App\Utils\PermissionsChecker;
 use Symfony\Component\HttpFoundation\Response;
+use Doctrine\ORM\EntityManager;
 
 /**
  * Actions that list submissions across many forums.
@@ -28,10 +30,14 @@ use Symfony\Component\HttpFoundation\Response;
  *   instead.
  */
 final class FrontController extends AbstractController {
-    public function front(ForumRepository $fr, SubmissionRepository $sr, ForumConfigurationRepository $fcr, string $sortBy, int $page) {
+    public function front(ForumRepository $fr, SubmissionRepository $sr, ForumConfigurationRepository $fcr, string $sortBy, int $page, EntityManager $em) {
         $user = $this->getUser();
 
         $siteConfig = $fcr->findSitewide();
+        $announcementSubmission = null;
+        if($siteConfig->getAnnouncementSubmissionId() != null) {
+            $announcementSubmission = $em->find("App\\Entity\\Submission", $siteConfig->getAnnouncementSubmissionId());
+        }
 
         if (!$user instanceof User) {
             //$listing = User::FRONT_FEATURED;
@@ -45,20 +51,20 @@ final class FrontController extends AbstractController {
 
         switch ($listing) {
           case User::FRONT_SUBSCRIBED:
-              return $this->subscribed($fr, $sr, $sortBy, $page, $siteConfig);
+              return $this->subscribed($fr, $sr, $sortBy, $page, $siteConfig, $announcementSubmission);
           case User::FRONT_FEATURED:
-              return $this->featured($fr, $sr, $sortBy, $page, $siteConfig);
+              return $this->featured($fr, $sr, $sortBy, $page, $siteConfig, $announcementSubmission);
           case User::FRONT_ALL:
               //return $this->all($sr, $sortBy, $page, $siteConfig);
-              return $this->all($fr, $sr, $sortBy, $page, $siteConfig);
+              return $this->all($fr, $sr, $sortBy, $page, $siteConfig, $announcementSubmission);
           case User::FRONT_MODERATED:
-              return $this->moderated($fr, $sr, $sortBy, $page, $siteConfig);
+              return $this->moderated($fr, $sr, $sortBy, $page, $siteConfig, $announcementSubmission);
           default:
               throw new \InvalidArgumentException('bad front page selection');
         }
     }
 
-    public function featured(ForumRepository $fr, SubmissionRepository $sr, string $sortBy, int $page, ForumConfiguration $siteConfig) {
+    public function featured(ForumRepository $fr, SubmissionRepository $sr, string $sortBy, int $page, ForumConfiguration $siteConfig, Submission $announcementSubmission) {
         $forums = $fr->findFeaturedForumNames();
         $submissions = $sr->findFrontPageSubmissions($forums, $sortBy, $page);
 
@@ -68,10 +74,11 @@ final class FrontController extends AbstractController {
             'submissions' => $submissions,
             'sort_by' => $sortBy,
             'announcement' => $siteConfig->getAnnouncement(),
+            'announcementSubmission' => $announcementSubmission,
         ]);
     }
 
-    public function subscribed(ForumRepository $fr, SubmissionRepository $sr, string $sortBy, int $page, ForumConfiguration $siteConfig) {
+    public function subscribed(ForumRepository $fr, SubmissionRepository $sr, string $sortBy, int $page, ForumConfiguration $siteConfig, Submission $announcementSubmission) {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
         $forums = $fr->findSubscribedForumNames($this->getUser());
@@ -90,6 +97,7 @@ final class FrontController extends AbstractController {
             'sort_by' => $sortBy,
             'submissions' => $submissions,
             'announcement' => $siteConfig->getAnnouncement(),
+            'announcementSubmission' => $announcementSubmission,
         ]);
     }
 
@@ -100,7 +108,7 @@ final class FrontController extends AbstractController {
      *
      * @return Response
      */
-    public function all(ForumRepository $fr, SubmissionRepository $sr, string $sortBy, int $page, ForumConfiguration $siteConfig) {
+    public function all(ForumRepository $fr, SubmissionRepository $sr, string $sortBy, int $page, ForumConfiguration $siteConfig, Submission $announcementSubmission) {
         # Added for v1.
         $admin = PermissionsChecker::isAdmin($this->getUser());
         $forums = $fr->findAllForumNames();
@@ -112,10 +120,11 @@ final class FrontController extends AbstractController {
             'sort_by' => $sortBy,
             'submissions' => $submissions,
             'announcement' => $siteConfig->getAnnouncement(),
+            'announcementSubmission' => $announcementSubmission,
         ]);
     }
 
-    public function moderated(ForumRepository $fr, SubmissionRepository $sr, string $sortBy, int $page, ForumConfiguration $siteConfig) {
+    public function moderated(ForumRepository $fr, SubmissionRepository $sr, string $sortBy, int $page, ForumConfiguration $siteConfig, Submission $announcementSubmission) {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
         $forums = $fr->findModeratedForumNames($this->getUser());
@@ -127,6 +136,7 @@ final class FrontController extends AbstractController {
             'sort_by' => $sortBy,
             'submissions' => $submissions,
             'announcement' => $siteConfig->getAnnouncement(),
+            'announcementSubmission' => $announcementSubmission,
         ]);
     }
 

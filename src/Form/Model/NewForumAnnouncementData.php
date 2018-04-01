@@ -5,7 +5,7 @@ namespace App\Form\Model;
 use App\Entity\ForumConfiguration;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class ForumConfigurationData {
+class NewForumAnnouncementData {
     /**
      * @var int
      */
@@ -21,10 +21,22 @@ class ForumConfigurationData {
      */
     public $announcement;
 
-    public function __construct(ForumConfiguration $fc) {
-        $this->id = $fc->getId();
-        $this->forumId = $fc->getForumId();
-        $this->announcement = $fc->getAnnouncement();
+    /**
+     * @var string
+     */
+    public $threadTitle;
+
+     /**
+      * @var string
+      */
+    public $threadContent;
+
+    public function __construct(ForumConfiguration $fc = null) {
+        if($fc != null) {
+            $this->id = $fc->getId();
+            $this->forumId = $fc->getForumId();
+            $this->announcement = $fc->getAnnouncement();
+        }
     }
 
     public function toForumConfiguration(): ForumConfiguration {

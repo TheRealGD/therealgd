@@ -547,6 +547,10 @@ wiki_form:
     submit: Submit
 
 front_page_configuration_form:
-    announcement: Announcement
-    save: Save Changes
-    message_saved: The changes have been saved.
+    announcement: Global Header
+    save: Add new announcement
+    announcement_saved: Your announcement has been posted.
+    announcement_forum_error: Could not find the announcements forum.
+    remove_announcement: Remove current announcement
+    thread_title: Announcement Title
+    thread_content: Global Announcement
