@@ -255,4 +255,23 @@ final class SubmissionController extends AbstractController {
             'slug' => Slugger::slugify($submission->getTitle()),
         ]);
     }
+
+    /**
+     * @IsGranted("ROLE_USER")
+     *
+     * @param EntityManager $em
+     * @param Request       $request
+     * @param Forum         $forum
+     * @param Submission    $submission
+     *
+     * @return Response
+     */
+    public function report(
+        EntityManager $em,
+        Request $request,
+        Forum $forum,
+        Submission $submission
+    ) {
+        return $this->redirectToRoute('', []);
+    }
 }

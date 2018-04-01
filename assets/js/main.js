@@ -13,6 +13,7 @@ import './fetch_titles';
 import './forms';
 import './markdown';
 import './relative-time';
+import './report';
 import './select2';
 import './submit';
 import './subscribe';
