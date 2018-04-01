@@ -2,3 +2,8 @@ frontpageconfig:
     controller: App\Controller\FrontPageConfigurationController::frontPageConfig
     path: /frontpageconfig
     methods: [GET, POST]
+
+frontpageconfig_removeannouncement:
+    controller: App\Controller\FrontPageConfigurationController::removeAnnouncement
+    path: /frontpageconfig/remove_announcement
+    methods: [POST]

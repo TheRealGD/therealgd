@@ -39,6 +39,13 @@ class ForumConfiguration {
      */
     private $announcement;
 
+    /**
+     * @ORM\Column(type="bigint", nullable=true)
+     *
+     * @var int|null
+     */
+    private $announcementSubmissionId;
+
     public function __construct($forumId) {
         $this->forumId = $forumId;
     }
@@ -65,5 +72,13 @@ class ForumConfiguration {
 
     public function setAnnouncement($announcement) {
         $this->announcement = $announcement;
+    }
+
+    public function getAnnouncementSubmissionId() {
+        return $this->announcementSubmissionId;
+    }
+
+    public function setAnnouncementSubmissionId($id) {
+        $this->announcementSubmissionId = $id;
     }
 }
