@@ -41,8 +41,6 @@ final class FrontPageConfigurationController extends AbstractController {
         $messageClass = "";
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $fc = $data->toForumConfiguration();
-
             // Find the user and forum for submission.
             $user = $ur->loadUserByUsername($this->get('security.token_storage')->getToken()->getUser()->getUsername());
             $forum = $fr->findOneByCaseInsensitiveName($announcementForumName);
@@ -61,15 +59,12 @@ final class FrontPageConfigurationController extends AbstractController {
                 $em->flush();
 
                 // Load the current announcement's row id. Sitewide announcemnts have null forum id.
-                $fc->setId($fcr->findSitewide()->getId());
+                $fc = $fcr->findSitewide();
                 $fc->setAnnouncementSubmissionId($submission->getId());
+                $fc->setAnnouncement($data->announcement);
                 $fc->setForumId(null);
 
-                if($fc->getId() == null || trim($fc->getId()) == "")
-                    $em->persist($fc);
-                else
-                    $em->merge($fc);
-
+                $em->persist($fc);
                 $em->flush();
 
                 // After saving, pull the data back down again.
