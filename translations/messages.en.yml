@@ -26,6 +26,7 @@ action:
     create: Create
     compare: Compare
     create_group: Create new group
+    report: Report
 
 add_moderator:
     title: Add moderator to %forum%

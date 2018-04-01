@@ -186,6 +186,11 @@
                   <a href="{{ path('ban_user', {'username': submission.user.username}) }}">{{ 'action.global_ban'|trans }}</a>
                 </li>
               {%- endif -%}
+              {%- if is_granted('ROLE_USER') -%}
+                <li>
+                  <a href="#">{{ 'action.report'|trans }}</a>
+                </li>
+              {%- endif -%}
             </ul>
           </nav>
         {%- endspaceless -%}
