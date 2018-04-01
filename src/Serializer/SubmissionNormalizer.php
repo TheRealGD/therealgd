@@ -6,7 +6,6 @@ use App\Entity\Submission;
 use App\Entity\UserFlags;
 use App\Utils\Slugger;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactoryInterface;
 use Symfony\Component\Serializer\NameConverter\NameConverterInterface;
@@ -23,15 +22,9 @@ class SubmissionNormalizer extends AbstractNormalizer {
      */
     private $cacheManager;
 
-    /**
-     * @var RequestStack
-     */
-    private $requestStack;
-
     public function __construct(
         UrlGeneratorInterface $urlGenerator,
         CacheManager $liipCacheManager,
-        RequestStack $requestStack,
         ClassMetadataFactoryInterface $classMetadataFactory = null,
         NameConverterInterface $nameConverter = null
     ) {
@@ -39,7 +32,6 @@ class SubmissionNormalizer extends AbstractNormalizer {
 
         $this->urlGenerator = $urlGenerator;
         $this->cacheManager = $liipCacheManager;
-        $this->requestStack = $requestStack;
     }
 
     public function denormalize($data, $class, $format = null, array $context = []) {
