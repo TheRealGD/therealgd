@@ -6,7 +6,24 @@
 
 {% block body %}
   <h1 class="page-heading">{{ block('title') }}</h1>
+  {% if message != "" %}<div class='form-message form-message--{{messageClass}}'>
+    <p>{{ message|trans }}</p></div>
+  {% endif %}
 
-  {% if message != "" %}<div class='form-message form-message--success'><p>{{ message|trans }}</p></div>{% endif %}
-  {{ form(form) }}
+  {% if current_announcement != "" %}
+    <p>
+      <h2>Current announcement</h2>
+      <form action="/frontpageconfig/remove_announcement" method="POST">        
+        <div class="form-message form-message--primary text-center">
+          <p><a href="{{ path('submission', {forum_name: announcementSubmission.forum.name, submission_id: announcementSubmission.id, slug: announcementSubmission.title|slugify}) }}" target="_blank">{{current_announcement}}</a></p>
+        </div>
+        <button class="button">{{ "front_page_configuration_form.remove_announcement"|trans }}</button>
+      </form>
+    </p>
+  {% endif %}
+
+  <p>
+    <h2>Post new announcement</h2>
+    {{ form(form) }}
+  </p>
 {% endblock %}
