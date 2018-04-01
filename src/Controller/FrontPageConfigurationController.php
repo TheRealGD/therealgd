@@ -42,7 +42,7 @@ final class FrontPageConfigurationController extends AbstractController {
 
         if ($form->isSubmitted() && $form->isValid()) {
             // Find the user and forum for submission.
-            $user = $ur->loadUserByUsername($this->get('security.token_storage')->getToken()->getUser()->getUsername());
+            $user = $ur->loadUserByUsername($this->getUser()->getUsername());
             $forum = $fr->findOneByCaseInsensitiveName($announcementForumName);
 
             if($forum != null) {
