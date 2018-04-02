@@ -51,14 +51,14 @@ final class FrontController extends AbstractController {
 
         switch ($listing) {
           case User::FRONT_SUBSCRIBED:
-              return $this->subscribed($fr, $sr, $fcr, $sortBy, $page);
+              return $this->subscribed($fr, $sr, $fcr, $em, $sortBy, $page);
           case User::FRONT_FEATURED:
-              return $this->featured($fr, $sr, $fcr, $sortBy, $page);
+              return $this->featured($fr, $sr, $fcr, $em, $sortBy, $page);
           case User::FRONT_ALL:
               //return $this->all($sr, $sortBy, $page, $siteConfig);
-              return $this->all($fr, $sr, $fcr, $sortBy, $page);
+              return $this->all($fr, $sr, $fcr, $em, $sortBy, $page);
           case User::FRONT_MODERATED:
-              return $this->moderated($fr, $sr, $fcr, $sortBy, $page);
+              return $this->moderated($fr, $sr, $fcr, $em, $sortBy, $page);
           default:
               throw new \InvalidArgumentException('bad front page selection');
         }
