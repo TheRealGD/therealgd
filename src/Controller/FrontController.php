@@ -64,7 +64,7 @@ final class FrontController extends AbstractController {
         }
     }
 
-    public function featured(ForumRepository $fr, SubmissionRepository $sr, string $sortBy, int $page, ForumConfiguration $siteConfig, Submission $announcementSubmission) {
+    public function featured(ForumRepository $fr, SubmissionRepository $sr, string $sortBy, int $page, ForumConfiguration $siteConfig, ?Submission $announcementSubmission) {
         $forums = $fr->findFeaturedForumNames();
         $submissions = $sr->findFrontPageSubmissions($forums, $sortBy, $page);
 
@@ -78,7 +78,7 @@ final class FrontController extends AbstractController {
         ]);
     }
 
-    public function subscribed(ForumRepository $fr, SubmissionRepository $sr, string $sortBy, int $page, ForumConfiguration $siteConfig, Submission $announcementSubmission) {
+    public function subscribed(ForumRepository $fr, SubmissionRepository $sr, string $sortBy, int $page, ForumConfiguration $siteConfig, ?Submission $announcementSubmission) {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
         $forums = $fr->findSubscribedForumNames($this->getUser());
@@ -108,7 +108,7 @@ final class FrontController extends AbstractController {
      *
      * @return Response
      */
-    public function all(ForumRepository $fr, SubmissionRepository $sr, string $sortBy, int $page, ForumConfiguration $siteConfig, Submission $announcementSubmission) {
+    public function all(ForumRepository $fr, SubmissionRepository $sr, string $sortBy, int $page, ForumConfiguration $siteConfig, ?Submission $announcementSubmission) {
         # Added for v1.
         $admin = PermissionsChecker::isAdmin($this->getUser());
         $forums = $fr->findAllForumNames();
@@ -124,7 +124,7 @@ final class FrontController extends AbstractController {
         ]);
     }
 
-    public function moderated(ForumRepository $fr, SubmissionRepository $sr, string $sortBy, int $page, ForumConfiguration $siteConfig, Submission $announcementSubmission) {
+    public function moderated(ForumRepository $fr, SubmissionRepository $sr, string $sortBy, int $page, ForumConfiguration $siteConfig, ?Submission $announcementSubmission) {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
         $forums = $fr->findModeratedForumNames($this->getUser());
