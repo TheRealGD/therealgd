@@ -18,7 +18,7 @@
 {% endblock %}
 
 {% block body %}
-  {% if announcement != null %}
+  {% if announcementSubmission != null %}
       <div class="form-message form-message--primary text-center">
           <a href="{{ path('submission', {forum_name: announcementSubmission.forum.name, submission_id: announcementSubmission.id, slug: announcementSubmission.title|slugify}) }}">{{ announcement|cached_markdown(markdown_context())|raw }}</a>
       </div>
