@@ -51,22 +51,25 @@ final class FrontController extends AbstractController {
 
         switch ($listing) {
           case User::FRONT_SUBSCRIBED:
-              return $this->subscribed($fr, $sr, $sortBy, $page, $siteConfig, $announcementSubmission);
+              return $this->subscribed($fr, $sr, $fcr, $sortBy, $page);
           case User::FRONT_FEATURED:
-              return $this->featured($fr, $sr, $sortBy, $page, $siteConfig, $announcementSubmission);
+              return $this->featured($fr, $sr, $fcr, $sortBy, $page);
           case User::FRONT_ALL:
               //return $this->all($sr, $sortBy, $page, $siteConfig);
-              return $this->all($fr, $sr, $sortBy, $page, $siteConfig, $announcementSubmission);
+              return $this->all($fr, $sr, $fcr, $sortBy, $page);
           case User::FRONT_MODERATED:
-              return $this->moderated($fr, $sr, $sortBy, $page, $siteConfig, $announcementSubmission);
+              return $this->moderated($fr, $sr, $fcr, $sortBy, $page);
           default:
               throw new \InvalidArgumentException('bad front page selection');
         }
     }
 
-    public function featured(ForumRepository $fr, SubmissionRepository $sr, string $sortBy, int $page, ForumConfiguration $siteConfig, ?Submission $announcementSubmission) {
+    public function featured(ForumRepository $fr, SubmissionRepository $sr, ForumConfigurationRepository $fcr, EntityManager $em, string $sortBy, int $page) {
         $forums = $fr->findFeaturedForumNames();
         $submissions = $sr->findFrontPageSubmissions($forums, $sortBy, $page);
+
+        $siteConfig = $fcr->findSitewide();
+        $announcementSubmission = ($siteConfig->getAnnouncementSubmissionId() == null) ? null : $em->find("App\\Entity\\Submission", $siteConfig->getAnnouncementSubmissionId());
 
         return $this->render('front/featured.html.twig', [
             'forums' => $forums,
@@ -78,8 +81,11 @@ final class FrontController extends AbstractController {
         ]);
     }
 
-    public function subscribed(ForumRepository $fr, SubmissionRepository $sr, string $sortBy, int $page, ForumConfiguration $siteConfig, ?Submission $announcementSubmission) {
+    public function subscribed(ForumRepository $fr, SubmissionRepository $sr, ForumConfigurationRepository $fcr, EntityManager $em, string $sortBy, int $page) {
         $this->denyAccessUnlessGranted('ROLE_USER');
+
+        $siteConfig = $fcr->findSitewide();
+        $announcementSubmission = ($siteConfig->getAnnouncementSubmissionId() == null) ? null : $em->find("App\\Entity\\Submission", $siteConfig->getAnnouncementSubmissionId());
 
         $forums = $fr->findSubscribedForumNames($this->getUser());
         $hasSubscriptions = count($forums) > 0;
@@ -108,11 +114,14 @@ final class FrontController extends AbstractController {
      *
      * @return Response
      */
-    public function all(ForumRepository $fr, SubmissionRepository $sr, string $sortBy, int $page, ForumConfiguration $siteConfig, ?Submission $announcementSubmission) {
+    public function all(ForumRepository $fr, SubmissionRepository $sr, ForumConfigurationRepository $fcr, EntityManager $em, string $sortBy, int $page) {
         # Added for v1.
         $admin = PermissionsChecker::isAdmin($this->getUser());
         $forums = $fr->findAllForumNames();
         $submissions = $sr->findAllSubmissions($sortBy, $page, $admin);
+
+        $siteConfig = $fcr->findSitewide();
+        $announcementSubmission = ($siteConfig->getAnnouncementSubmissionId() == null) ? null : $em->find("App\\Entity\\Submission", $siteConfig->getAnnouncementSubmissionId());
 
         return $this->render('front/all.html.twig', [
             'forums' => $forums, # Added for v1.
@@ -124,8 +133,11 @@ final class FrontController extends AbstractController {
         ]);
     }
 
-    public function moderated(ForumRepository $fr, SubmissionRepository $sr, string $sortBy, int $page, ForumConfiguration $siteConfig, ?Submission $announcementSubmission) {
+    public function moderated(ForumRepository $fr, SubmissionRepository $sr, ForumConfigurationRepository $fcr, EntityManager $em, string $sortBy, int $page) {
         $this->denyAccessUnlessGranted('ROLE_USER');
+
+        $siteConfig = $fcr->findSitewide();
+        $announcementSubmission = ($siteConfig->getAnnouncementSubmissionId() == null) ? null : $em->find("App\\Entity\\Submission", $siteConfig->getAnnouncementSubmissionId());
 
         $forums = $fr->findModeratedForumNames($this->getUser());
         $submissions = $sr->findFrontPageSubmissions($forums, $sortBy, $page);
