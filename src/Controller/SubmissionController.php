@@ -272,6 +272,31 @@ final class SubmissionController extends AbstractController {
         Forum $forum,
         Submission $submission
     ) {
-        return $this->redirectToRoute('', []);
+        $this->validateCsrf('report_submission', $request->request->get('token'));
+
+        $reportSubmission = new Submission(
+            "Report: " . $submission->getTitle(),
+            "/f/" . $forum->getName() . "/" . $submission->getId() . "/" . Slugger::slugify($submission->getTitle()),
+            null,
+            $forum,
+            $this->getUser(),
+            $request->getClientIp()
+        );
+        $reportSubmission->setModThread(true);
+
+        $em->persist($reportSubmission);
+        $em->flush();
+
+        $this->addFlash('success', 'flash.thread_reported');
+
+        if ($request->headers->has('Referer')) {
+            return $this->redirect($request->headers->get('Referer'));
+        }
+
+        return $this->redirectToRoute('submission', [
+            'forum_name' => $forum->getName(),
+            'submission_id' => $submission->getId(),
+            'slug' => Slugger::slugify($submission->getTitle()),
+        ]);
     }
 }
