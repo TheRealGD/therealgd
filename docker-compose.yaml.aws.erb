@@ -5,9 +5,9 @@ services:
     build:
       context: ./docker/nginx
       args:
-        - HTTPS_CERT_NAME=rgundeals.com
-        - SERVER_NAME=dev.rgundeals.com
-        - REDIRECT_DOMAINS=rgundeals.com,www.rgundeals.com,gundeals.io,www.gundeals.io
+        - HTTPS_CERT_NAME=<%=https_cert_name%>
+        - SERVER_NAME=<%=server_name%>
+        - REDIRECT_DOMAINS=<%=redirect_server_names%>
     ports:
       - "80:80"
       - "443:443"
@@ -24,11 +24,16 @@ services:
       context: ./docker/php
       dockerfile: Dockerfile-prod
       args:
+        - database_url=<%='pgsql://gundealsdev:EF_XLv_aNr5LFRhcvG@therealgddb.c0hg0bnhks7t.us-west-2.rds.amazonaws.com:5432/therealgd_dev?serverVersion=9.6'-%>
         - display_errors=off
-        - log_errors=off
-        - site_name=dev.rgundeals.com
-        - app_env=dev
+        - log_errors=on
+        - site_name=<%=site_name%>
+        - app_env=<%app_env%>
+        # TODO: app_secret from AWS
         - app_secret="devsecretdevsecret_DO_NOT_USE_IN_PROD"
+        #- trusted_hosts=localhost
+        - trusted_proxies=nginx-dev-local
+        - database_url=pgsql://developer:devdevdev@db-dev-local:5432/devdb?serverVersion=9.6
         - no_reply_address="no-reply@example.com"
         - mailer_url="null://localhost"
     working_dir: /var/www/public
