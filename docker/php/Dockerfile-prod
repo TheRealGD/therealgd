@@ -13,10 +13,15 @@ ARG database_url
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update
-RUN apt-get install -y libpq-dev libcurl4-openssl-dev libpng-dev zlib1g-dev ruby gnupg
+RUN apt-get install -y libpq-dev libcurl4-openssl-dev libpng-dev libjpeg-dev zlib1g-dev ruby gnupg libfreetype6-dev
 RUN pecl install apcu_bc-1.0.4
-RUN docker-php-ext-install curl iconv gd opcache pdo pdo_pgsql pgsql
-RUN docker-php-ext-enable apcu
+RUN docker-php-ext-install mbstring curl iconv opcache pdo pdo_pgsql pgsql
+RUN docker-php-ext-configure gd \
+          --with-freetype-dir=/usr/include/ \
+          --with-png-dir=/usr/include \
+          --with-jpeg-dir=/usr/include
+RUN docker-php-ext-install gd
+RUN docker-php-ext-enable apcu opcache gd
 
 # install node
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -

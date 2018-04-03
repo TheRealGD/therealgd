@@ -13,19 +13,19 @@ ARG database_url
 ARG aws_ssm_name_db_url
 ARG aws_ssm_region
 
-
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update
-RUN apt-get install -y libpq-dev libcurl4-openssl-dev libpng-dev zlib1g-dev
+RUN apt-get install -y libpq-dev libcurl4-openssl-dev libpng-dev libjpeg-dev zlib1g-dev ruby gnupg libfreetype6-dev
 RUN pecl install apcu_bc-1.0.4
-#RUN  docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql && \
-RUN  docker-php-ext-install curl iconv gd opcache
-RUN  docker-php-ext-install pdo pdo_pgsql pgsql
-RUN  docker-php-ext-enable apcu
-RUN apt-get install -y ruby
+RUN docker-php-ext-install mbstring curl iconv opcache pdo pdo_pgsql pgsql
+RUN docker-php-ext-configure gd \
+          --with-freetype-dir=/usr/include/ \
+          --with-png-dir=/usr/include \
+          --with-jpeg-dir=/usr/include
+RUN docker-php-ext-install gd
+RUN docker-php-ext-enable apcu opcache gd
 
 # install node
-RUN apt-get install -y gnupg
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 RUN apt-get install -y nodejs
 
