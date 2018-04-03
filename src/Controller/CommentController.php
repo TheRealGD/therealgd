@@ -250,20 +250,27 @@ final class CommentController extends AbstractController {
     ) {
         $this->validateCsrf('report_comment', $request->request->get('token'));
 
-        $reportComment = new Submission(
-            "Comment Report: " . $submission->getTitle(),
-            "/f/" . $forum->getName() . "/" . $submission->getId() . "/comment/" . $comment->getId(),
-            null,
-            $forum,
-            $this->getUser(),
-            $request->getClientIp()
-        );
-        $reportComment->setModThread(true);
+        // Find nautbot.
+        $nautbot = $em->find("App\\Entity\\User", 0);
 
-        $em->persist($reportComment);
-        $em->flush();
+        if($nautbot != null) {
+            $reportComment = new Submission(
+                "Comment Report: " . $submission->getTitle(),
+                "/f/" . $forum->getName() . "/" . $submission->getId() . "/comment/" . $comment->getId(),
+                null,
+                $forum,
+                $nautbot,
+                $request->getClientIp()
+            );
+            $reportComment->setModThread(true);
 
-        $this->addFlash('success', 'flash.comment_reported');
+            $em->persist($reportComment);
+            $em->flush();
+
+            $this->addFlash('success', 'flash.comment_reported');
+        } else {
+            $this->addFlash('success', 'flash.generic_error');
+        }
 
         if ($request->headers->has('Referer')) {
             return $this->redirect($request->headers->get('Referer'));

@@ -274,20 +274,27 @@ final class SubmissionController extends AbstractController {
     ) {
         $this->validateCsrf('report_submission', $request->request->get('token'));
 
-        $reportSubmission = new Submission(
-            "Submission Report: " . $submission->getTitle(),
-            "/f/" . $forum->getName() . "/" . $submission->getId() . "/" . Slugger::slugify($submission->getTitle()),
-            null,
-            $forum,
-            $this->getUser(),
-            $request->getClientIp()
-        );
-        $reportSubmission->setModThread(true);
+        // Find nautbot.
+        $nautbot = $em->find("App\\Entity\\User", 0);
 
-        $em->persist($reportSubmission);
-        $em->flush();
+        if($nautbot != null) {
+            $reportSubmission = new Submission(
+                "Submission Report: " . $submission->getTitle(),
+                "/f/" . $forum->getName() . "/" . $submission->getId() . "/" . Slugger::slugify($submission->getTitle()),
+                null,
+                $forum,
+                $nautbot,
+                $request->getClientIp()
+            );
+            $reportSubmission->setModThread(true);
 
-        $this->addFlash('success', 'flash.thread_reported');
+            $em->persist($reportSubmission);
+            $em->flush();
+
+            $this->addFlash('success', 'flash.thread_reported');
+        } else {
+            $this->addFlash('success', 'flash.generic_error');
+        }
 
         if ($request->headers->has('Referer')) {
             return $this->redirect($request->headers->get('Referer'));
