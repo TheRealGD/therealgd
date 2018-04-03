@@ -293,7 +293,7 @@ final class SubmissionController extends AbstractController {
 
             $this->addFlash('success', 'flash.thread_reported');
         } else {
-            $this->addFlash('success', 'flash.generic_error');
+            $this->addFlash('notice', 'flash.generic_error');
         }
 
         if ($request->headers->has('Referer')) {
