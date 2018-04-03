@@ -275,7 +275,7 @@ final class SubmissionController extends AbstractController {
         $this->validateCsrf('report_submission', $request->request->get('token'));
 
         $reportSubmission = new Submission(
-            "Report: " . $submission->getTitle(),
+            "Submission Report: " . $submission->getTitle(),
             "/f/" . $forum->getName() . "/" . $submission->getId() . "/" . Slugger::slugify($submission->getTitle()),
             null,
             $forum,

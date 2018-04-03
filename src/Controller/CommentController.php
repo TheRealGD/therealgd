@@ -229,6 +229,54 @@ final class CommentController extends AbstractController {
     }
 
     /**
+     * Reports a comment.
+     *
+     * @IsGranted("ROLE_USER")
+     *
+     * @param EntityManager $em
+     * @param Submission    $submission
+     * @param Forum         $forum
+     * @param Comment       $comment
+     * @param Request       $request
+     *
+     * @return Response
+     */
+    public function reportComment(
+        EntityManager $em,
+        Submission $submission,
+        Forum $forum,
+        Comment $comment,
+        Request $request
+    ) {
+        $this->validateCsrf('report_comment', $request->request->get('token'));
+
+        $reportComment = new Submission(
+            "Comment Report: " . $submission->getTitle(),
+            "/f/" . $forum->getName() . "/" . $submission->getId() . "/comment/" . $comment->getId(),
+            null,
+            $forum,
+            $this->getUser(),
+            $request->getClientIp()
+        );
+        $reportComment->setModThread(true);
+
+        $em->persist($reportComment);
+        $em->flush();
+
+        $this->addFlash('success', 'flash.comment_reported');
+
+        if ($request->headers->has('Referer')) {
+            return $this->redirect($request->headers->get('Referer'));
+        }
+
+        return $this->redirectToRoute('submission', [
+            'forum_name' => $forum->getName(),
+            'submission_id' => $submission->getId(),
+            'slug' => Slugger::slugify($submission->getTitle()),
+        ]);
+    }
+
+    /**
      * "Soft deletes" a comment by blanking its body.
      *
      * @IsGranted("softdelete", subject="comment")
