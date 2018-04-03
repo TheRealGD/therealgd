@@ -10,8 +10,6 @@ ARG trusted_hosts
 ARG no_reply_address
 ARG mailer_url
 ARG database_url
-ARG aws_ssm_name_db_url
-ARG aws_ssm_region
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update
