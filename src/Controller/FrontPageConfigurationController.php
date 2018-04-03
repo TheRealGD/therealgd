@@ -86,10 +86,13 @@ final class FrontPageConfigurationController extends AbstractController {
             $announcementSubmission = $em->find("App\\Entity\\Submission", $frontpageconfig->getAnnouncementSubmissionId());
         }
 
+        $hasAnnouncement = !($announcementSubmission == null || empty($frontpageconfig->getAnnouncement()));
+
         return $this->render('frontpageconfig/frontpageconfig.html.twig', [
             'form' => $form->createView(),
             'message' => $message,
             'messageClass' => $messageClass,
+            'has_announcement' => $hasAnnouncement,
             'current_announcement' => $frontpageconfig->getAnnouncement(),
             'announcementSubmission' => $announcementSubmission,
         ]);
