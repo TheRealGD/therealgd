@@ -10,22 +10,15 @@ ARG trusted_hosts
 ARG no_reply_address
 ARG mailer_url
 ARG database_url
-ARG aws_ssm_name_db_url
-ARG aws_ssm_region
-
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update
-RUN apt-get install -y libpq-dev libcurl4-openssl-dev libpng-dev zlib1g-dev
+RUN apt-get install -y libpq-dev libcurl4-openssl-dev libpng-dev zlib1g-dev ruby gnupg
 RUN pecl install apcu_bc-1.0.4
-#RUN  docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql && \
-RUN  docker-php-ext-install curl iconv gd opcache
-RUN  docker-php-ext-install pdo pdo_pgsql pgsql
-RUN  docker-php-ext-enable apcu
-RUN apt-get install -y ruby
+RUN docker-php-ext-install curl iconv gd opcache pdo pdo_pgsql pgsql
+RUN docker-php-ext-enable apcu
 
 # install node
-RUN apt-get install -y gnupg
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 RUN apt-get install -y nodejs
 
@@ -51,6 +44,7 @@ RUN erb -T - site_name=$site_name                           \
     mailer_url=$mailer_url                                  \
     /tmp/.env.erb > /var/www/.env
 
+# PHP-FPM Config
 RUN mkdir -p /etc/php/7.2/fpm/conf.d/
 RUN echo "\n opcache.max_accelerated_files = 20000         \
           \n realpath_cache_size=4096K                     \
@@ -58,9 +52,25 @@ RUN echo "\n opcache.max_accelerated_files = 20000         \
           \n php_admin_flag[log_errors] = ${log_errors}    \
           \n php_flag[display_errors] = ${display_errors}" >> /etc/php/7.2/fpm/conf.d/99-overrides.ini
 
-# uncomment me for lighter container and slower build
+// build prod-like stuff
+ADD ../assets/*          /var/www/assets/
+ADD ../config/*          /var/www/config/
+ADD ../lib/*             /var/www/lib/
+ADD ../public/*          /var/www/public/
+ADD ../templates/*       /var/www/templates/
+ADD ../translations/*    /var/www/translations/
+ADD ../composer.json     /var/www/
+ADD ../fontello.json     /var/www/
+ADD ../package.json      /var/www/
+ADD ../phpunit.xml.dist  /var/www/
+ADD ../webpack.config.js /var/www
+RUN "cd /var/www/ && npm install && npm run build-prod"
+RUN "cd /var/www/ && composer install"
+
+WORKDIR: /var/www/public
+CMD ["php-fpm"]
+
+# uncomment for lighter container and slower incremental build
+# RUN apt-get purge   -y nodejs
 # RUN apt-get purge   -y ruby
 
-CMD ["sh", "-c", "cd /var/www; npm install; npm run build-dev; composer install; \
-                 bin/console doctrine:migrations:migrate --no-interaction; \
-                 cd /var/www/public; php-fpm "]

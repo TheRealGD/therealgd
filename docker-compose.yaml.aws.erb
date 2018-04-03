@@ -1,0 +1,36 @@
+version: "2"
+services:
+
+  nginx:
+    build:
+      context: ./docker/nginx
+      args:
+        - HTTPS_CERT_NAME=rgundeals.com
+        - SERVER_NAME=dev.rgundeals.com
+        - REDIRECT_DOMAINS=rgundeals.com,www.rgundeals.com,gundeals.io,www.gundeals.io
+    ports:
+      - "80:80"
+      - "443:443"
+    links:
+      - php
+    volumes:
+      - "./docker/nginx/letsencrypt:/etc/letsencrypt/:rw"
+      - "./docker/nginx/nginxlogs/:/var/log/nginx/:rw"
+      - "./public:/var/www/public:rw"
+      - "./lib/vendor/symfony/data/web/sf:/var/www/lib/vendor/symfony:ro"
+
+  php:
+    build:
+      context: ./docker/php
+      dockerfile: Dockerfile-prod
+      args:
+        - display_errors=off
+        - log_errors=off
+        - site_name=dev.rgundeals.com
+        - app_env=dev
+        - app_secret="devsecretdevsecret_DO_NOT_USE_IN_PROD"
+        - no_reply_address="no-reply@example.com"
+        - mailer_url="null://localhost"
+    working_dir: /var/www/public
+    expose:
+      - '9000'
