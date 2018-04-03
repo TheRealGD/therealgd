@@ -154,11 +154,11 @@ forum_form:
 
 forum_list:
     name: Name
-    title: Title
+    title: Deal category
     subscribers: Subscribers
-    page_title: List of forums
-    create_forum: Create forum
-    submission_count: Submissions
+    page_title: List of deal categories
+    create_forum: Create deal category
+    submission_count: Deal Submissions
     list_view: List view
     category_view: Category view
     uncategorized: Uncategorized
