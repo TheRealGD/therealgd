@@ -10,20 +10,10 @@ ARG REDIRECT_DOMAINS
 ARG HTTPS_CERT_NAME
 ARG FAKE_HOSTS
 
+# 3rd line - Instructions from https://github.com/staticfloat/docker-nginx-certbot/blob/master/Dockerfile
 RUN apt-get update && \
-    apt-get -y install software-properties-common
-
-RUN apt-get install -y gnupg && \
-    apt-get install -y cron && \
-    apt-get install -y inetutils-ping && \
-    apt-get install -y inetutils-telnet && \
-    apt-get install -y rsyslog && \
-    apt-get install -y sudo && \
-    apt-get install -y curl
-RUN apt-get install -y ruby
-
-# Instructions from https://github.com/staticfloat/docker-nginx-certbot/blob/master/Dockerfile
-RUN apt update && \
+    apt-get -y install software-properties-common gnupg cron inetutils-ping inetutils-telnet rsyslog sudo curl ruby && \
+    apt update && \
       apt install -y cron python python-dev libffi6 libffi-dev libssl-dev curl build-essential && \
       curl -L 'https://bootstrap.pypa.io/get-pip.py' | python && \
       pip install -U cffi certbot && \

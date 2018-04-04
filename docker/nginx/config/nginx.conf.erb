@@ -4,10 +4,10 @@
 <%# - redirect_server_names string[] - all domains that will redirect to server_name and server_name (to redirect http->https) -%>
 <%# - https_cert_name       string   - used in /etc/letsencrypt/NAME, if null - only http will be enabled -%>
 <%
-  fake_hosts             = (fake_hosts            or ENV['FAKE_HOSTS']);
-  server_name            = (server_name           or ENV['SERVER_NAME']);
-  redirect_server_names  = (redirect_server_names or ENV['REDIRECT_SERVER_NAMES']);
-  https_cert_name        = (https_cert_name       or ENV['HTTPS_CERT_NAME']);
+  fake_hosts             ||= ENV['FAKE_HOSTS'];
+  server_name            ||= ENV['SERVER_NAME'];
+  redirect_server_names  ||= ENV['REDIRECT_SERVER_NAMES'];
+  https_cert_name        ||= ENV['HTTPS_CERT_NAME'];
   if fake_hosts then
     fake_hosts = fake_hosts.split ','
   end
@@ -17,7 +17,7 @@
   if https_cert_name and https_cert_name.length == 0 then
     https_cert_name = nil
   end
-  redirect_server_names = (redirect_server_names or []);
+  redirect_server_names ||= [];
   redirect_server_names.push(server_name);
   redirect_server_names = redirect_server_names.uniq;
 -%>
