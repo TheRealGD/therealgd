@@ -55,13 +55,6 @@ RUN erb -T - site_name=$site_name                           \
     mailer_url=$mailer_url                                  \
     /tmp/.env.erb > /tmp/.env
 
-RUN mkdir -p /etc/php/7.2/fpm/conf.d/
-RUN echo "\n opcache.max_accelerated_files = 20000         \
-          \n realpath_cache_size=4096K                     \
-          \n realpath_cache_ttl=600                        \
-          \n php_admin_flag[log_errors] = ${log_errors}    \
-          \n php_flag[display_errors] = ${display_errors}" >> /etc/php/7.2/fpm/conf.d/99-overrides.ini
-
 # build prod-like stuff
 ADD assets/           /var/www/assets/
 ADD config/           /var/www/config/
@@ -79,8 +72,7 @@ ADD webpack.config.js /var/www
 # uncomment me for lighter container and slower build
 # RUN apt-get purge   -y ruby
 
-WORKDIR /var/www
-RUN npm install
+RUN cd /var/www && npm install
 
 WORKDIR /var/www/public
 CMD ["sh", "-c", "cd /var/www; \
