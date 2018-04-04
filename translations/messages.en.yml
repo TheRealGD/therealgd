@@ -132,6 +132,7 @@ flash:
     thread_reported: The submission has been reported.
     comment_reported: The comment has been reported.
     generic_error: An error had occurred, please try again later.
+    report_fail: The reporting system is unavailable, please contact Moderators directly.
 
 forum:
     moderators: Moderators

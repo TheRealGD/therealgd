@@ -11,6 +11,7 @@ use App\Form\DeleteReasonType;
 use App\Form\Model\SubmissionData;
 use App\Form\SubmissionType;
 use App\Utils\Slugger;
+use App\Utils\ReportHelper;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -274,27 +275,14 @@ final class SubmissionController extends AbstractController {
     ) {
         $this->validateCsrf('report_submission', $request->request->get('token'));
 
-        // Find nautbot.
-        $nautbot = $em->find("App\\Entity\\User", 0);
+        $reportTitle = "Submission Report: " . $submission->getTitle();
+        $reportUrl = "/f/" . $forum->getName() . "/" . $submission->getId() . "/" . Slugger::slugify($submission->getTitle());
+        $reportSuccess = ReportHelper::createReport($em, $forum, $request, $reportTitle, $reportUrl);
 
-        if($nautbot != null) {
-            $reportSubmission = new Submission(
-                "Submission Report: " . $submission->getTitle(),
-                "/f/" . $forum->getName() . "/" . $submission->getId() . "/" . Slugger::slugify($submission->getTitle()),
-                null,
-                $forum,
-                $nautbot,
-                $request->getClientIp()
-            );
-            $reportSubmission->setModThread(true);
-
-            $em->persist($reportSubmission);
-            $em->flush();
-
-            $this->addFlash('success', 'flash.thread_reported');
-        } else {
-            $this->addFlash('notice', 'flash.generic_error');
-        }
+        if($reportSuccess)
+            $this->addFlash('success', 'flash.comment_reported');
+        else
+            $this->addFlash('notice', 'flash.report_fail');
 
         if ($request->headers->has('Referer')) {
             return $this->redirect($request->headers->get('Referer'));

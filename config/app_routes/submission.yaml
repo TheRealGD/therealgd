@@ -73,4 +73,3 @@ report_submission:
     controller: App\Controller\SubmissionController::report
     path: /f/{forum_name}/{submission_id}/report
     methods: [POST]
-    requirements: { id: \d+ }

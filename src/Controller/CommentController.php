@@ -12,6 +12,7 @@ use App\Form\Model\CommentData;
 use App\Repository\CommentRepository;
 use App\Repository\ForumRepository;
 use App\Utils\Slugger;
+use App\Utils\ReportHelper;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -250,27 +251,14 @@ final class CommentController extends AbstractController {
     ) {
         $this->validateCsrf('report_comment', $request->request->get('token'));
 
-        // Find nautbot.
-        $nautbot = $em->find("App\\Entity\\User", 0);
+        $reportTitle = "Comment Report: " . $submission->getTitle();
+        $reportUrl = "/f/" . $forum->getName() . "/" . $submission->getId() . "/comment/" . $comment->getId();
+        $reportSuccess = ReportHelper::createReport($em, $forum, $request, $reportTitle, $reportUrl);
 
-        if($nautbot != null) {
-            $reportComment = new Submission(
-                "Comment Report: " . $submission->getTitle(),
-                "/f/" . $forum->getName() . "/" . $submission->getId() . "/comment/" . $comment->getId(),
-                null,
-                $forum,
-                $nautbot,
-                $request->getClientIp()
-            );
-            $reportComment->setModThread(true);
-
-            $em->persist($reportComment);
-            $em->flush();
-
+        if($reportSuccess)
             $this->addFlash('success', 'flash.comment_reported');
-        } else {
-            $this->addFlash('notice', 'flash.generic_error');
-        }
+        else
+            $this->addFlash('notice', 'flash.report_fail');
 
         if ($request->headers->has('Referer')) {
             return $this->redirect($request->headers->get('Referer'));
