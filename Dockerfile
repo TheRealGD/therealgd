@@ -84,11 +84,11 @@ RUN npm install
 
 WORKDIR /var/www/public
 CMD ["sh", "-c", "cd /var/www; \
-                 cp /tmp/.env /var/www/.env \
-                 chown 1000:1000 /var/www/.env \
+                 cp /tmp/.env /var/www/.env; \
+                 chown 1000:1000 /var/www/.env; \
                  composer install; npm run build-dev; \
                  cp /tmp/.env /var/www/.env && rm /tmp/.env && rm /tmp/env.erb;\
                  chown 1000:1000 /var/www/.env; \
                  bin/console doctrine:migrations:migrate --no-interaction; \
-                 bin/console app:user:add -a -p devdevdev dev \
+                 bin/console app:user:add -a -p devdevdev dev; \
                  cd /var/www/public; php-fpm"]

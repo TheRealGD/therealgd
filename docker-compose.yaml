@@ -43,6 +43,7 @@ services:
       - db-dev-local
     volumes:
       - "wwwdir:/var/www:rw"
+      - "./bin:/var/www/bin:ro"
     working_dir: /var/www/public
 
   db-dev-local:
