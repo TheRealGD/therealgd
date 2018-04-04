@@ -58,7 +58,6 @@ RUN erb -T - site_name=$site_name                           \
 # build prod-like stuff
 ADD assets/           /var/www/assets/
 ADD config/           /var/www/config/
-ADD lib/              /var/www/lib/
 ADD public/           /var/www/public/
 ADD src/              /var/www/src/
 ADD templates/        /var/www/templates/

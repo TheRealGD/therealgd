@@ -44,7 +44,6 @@ RUN echo "\n opcache.max_accelerated_files = 20000         \
 # build prod-like stuff
 ADD assets/           /var/www/assets/
 ADD config/           /var/www/config/
-ADD lib/              /var/www/lib/
 ADD public/           /var/www/public/
 ADD src/              /var/www/src/
 ADD templates/        /var/www/templates/
