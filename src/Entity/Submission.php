@@ -231,13 +231,29 @@ class Submission extends Votable {
      */
     public function getTopLevelComments(): array {
         $criteria = Criteria::create();
-        $criteria->where(Criteria::expr()->isNull('parent'));
+        $criteria->where(Criteria::expr()->isNull('parent'))
+		 ->andWhere(Criteria::expr()->eq('stickied', false));
 
         $comments = $this->comments->matching($criteria)->toArray();
 
         if ($comments) {
             usort($comments, [$this, 'descendingNetScoreCmp']);
         }
+
+        return $comments;
+    }
+
+    /**
+     * Get stickied comments,
+     *
+     * @return Comment[]
+     */
+    public function getStickyComments(): array {
+        $criteria = Criteria::create();
+        $criteria->where(Criteria::expr()->isNull('parent'))
+                 ->andWhere(Criteria::expr()->eq('stickied', true));
+
+        $comments = $this->comments->matching($criteria)->toArray();
 
         return $comments;
     }
