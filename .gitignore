@@ -44,3 +44,8 @@ tags
 
 symfony.lock
 package-lock.json
+
+docker-compose.yaml.dev
+docker-compose.yaml.dev2
+docker-compose.yaml.prod
+docker-compose.yaml.staging
