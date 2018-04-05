@@ -69,7 +69,7 @@ class Submission extends Votable {
 
     /**
      * @ORM\JoinColumn(nullable=false)
-     * @ORM\ManyToOne(targetEntity="Forum", inversedBy="submissions")
+     * @ORM\ManyToOne(targetEntity="Forum", inversedBy="submissions", fetch="EAGER")
      *
      * @var Forum
      */
