@@ -101,7 +101,7 @@ class User implements UserInterface, EquatableInterface {
     private $admin = false;
 
     /**
-     * @ORM\OneToMany(targetEntity="Moderator", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="Moderator", mappedBy="user", fetch="EAGER")
      *
      * @var Moderator[]|Collection
      */
