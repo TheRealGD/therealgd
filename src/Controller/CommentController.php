@@ -305,6 +305,61 @@ final class CommentController extends AbstractController {
         return $this->redirectAfterAction($comment, $request);
     }
 
+    /**
+     *
+     * @IsGranted("moderator", subject="forum")
+     * @todo - updated is granted to being a forum mod or role_admin, possibly need to use security annotation
+     *
+     * @param EntityManager $em
+     * @param Forum         $forum
+     * @param Submission    $submission
+     * @param Comment       $comment
+     * @param Request       $request
+     *
+     * @return Response
+     */
+    public function stickyComment(
+        EntityManager $em,
+        Forum $forum,
+        Submission $submission,
+        Comment $comment,
+        Request $request
+
+    ) {
+        $comment->setStickied(true);
+        $em->flush();
+
+        return $this->redirectAfterAction($comment, $request);
+    }
+
+    /**
+     *
+     * @IsGranted("moderator", subject="forum")
+     * @todo - updated is granted to being a forum mod or role_admin, possibly need to use security annotation
+     *
+     * @param EntityManager $em
+     * @param Forum         $forum
+     * @param Submission    $submission
+     * @param Comment       $comment
+     * @param Request       $request
+     *
+     * @return Response
+     */
+    public function unstickyComment(
+        EntityManager $em,
+        Forum $forum,
+        Submission $submission,
+        Comment $comment,
+        Request $request
+
+    ) {
+        $comment->setStickied(false);
+        $em->flush();
+
+        return $this->redirectAfterAction($comment, $request);
+    }
+
+
     private function logDeletion(Forum $forum, Comment $comment) {
         /* @var User $user */
         $user = $this->getUser();

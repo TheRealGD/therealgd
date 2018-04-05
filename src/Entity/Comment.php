@@ -115,6 +115,13 @@ class Comment extends Votable {
     private $notifications;
 
     /**
+     * @ORM\Column(type="boolean", options={"default": false})
+     *
+     * @var bool
+     */
+    private $stickied = false;
+
+    /**
      * @ORM\Column(type="bigint", options={"default": 0})
      *
      * @var int
@@ -259,6 +266,14 @@ class Comment extends Votable {
 
     public function setModerated(bool $moderated) {
         $this->moderated = $moderated;
+    }
+
+    public function isStickied(): bool {
+        return $this->stickied;
+    }
+
+    public function setStickied(bool $stickied) {
+        $this->stickied = $stickied;
     }
 
     public function getUserFlag(): int {

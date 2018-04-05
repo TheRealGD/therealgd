@@ -58,6 +58,8 @@
               })|raw }}
             </span>
           {% endif %}
+
+          {% if comment.isStickied %}stickied comment{% endif %}
         </h1>
 
         <div class="comment-body">
@@ -91,8 +93,9 @@
   {%- from 'user/_macros.html.twig' import user_link -%}
 
   {%- if not comment.softDeleted -%}
+    {% set userCommentClass = comment.isStickied ? 'comment-sticky' : 'comment-user' %}
     {{- user_link(comment.user, {
-      class: 'comment-user',
+      class: userCommentClass,
       flag: comment.userFlag,
       submitter: comment.user is same as(comment.submission.user),
     }) -}}
@@ -128,6 +131,7 @@
   {{- block('comment_nav_parent') -}}
   {{- block('comment_nav_delete') -}}
   {{- block('comment_nav_edit') }}
+  {{- block('comment_nav_sticky') }}
   {{- block('comment_nav_ban') -}}
   {{- block('comment_nav_ip_ban') -}}
   {{- block('comment_report') -}}
@@ -231,6 +235,39 @@
     {%- endif -%}
   {%- endspaceless -%}
 {%- endblock -%}
+
+{%- block comment_nav_sticky -%}
+  {%- if is_granted('moderator', comment.submission.forum) or is_granted('ROLE_ADMIN') -%}
+  {%- if not comment.parent %}
+    {%- spaceless -%}
+    {%- if not comment.isStickied -%}
+    <li class="comment-nav-sticky-thread">
+      <form action="{{ path('sticky_comment', {
+        forum_name: comment.submission.forum.name,
+        submission_id: comment.submission.id,
+        comment_id: comment.id,
+      }) }}" method="POST">
+        <input type="hidden" name="token" value="{{ csrf_token('sticky_comment') }}">
+        <button type="submit" class="confirm-comment-sticky">{{ 'action.sticky' | trans}}</button>
+      </form>
+    </li>
+    {% else %}
+    <li class="comment-nav-unsticky-thread">
+      <form action="{{ path('unsticky_comment', {
+        forum_name: comment.submission.forum.name,
+        submission_id: comment.submission.id,
+        comment_id: comment.id,
+      }) }}" method="POST">
+        <input type="hidden" name="token" value="{{ csrf_token('unsticky_comment') }}">
+        <button type="submit" class="confirm-comment-sticky">{{ 'action.unsticky' | trans}}</button>
+      </form>
+    </li>
+    {%- endif -%}
+    {%- endspaceless -%}
+  {%- endif -%}
+  {%- endif -%}
+{%- endblock -%}
+
 
 {%- block comment_nav_ban -%}
   {%- if is_granted('moderator', comment.submission.forum) -%}

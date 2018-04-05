@@ -3,22 +3,11 @@
 .DS_Store
 *.phar
 *.sw[a-z]
-*~
-tags
 /node_modules/
 /public/build/
 /public/js/
 /public/media/
 /public/submission_images/
-/templates/overrides/*
-!/templates/overrides/.gitignore
-/translations/overrides/*
-!/translations/overrides/.gitignore
-
-## legacy
-
-/app/
-/web/
 
 ###> symfony/framework-bundle ###
 .env
