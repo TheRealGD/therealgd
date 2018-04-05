@@ -130,7 +130,7 @@ final class SubmissionController extends AbstractController {
         $form->handleRequest($request);
         $data->setForum($forum);
         if ($form->isSubmitted() && $form->isValid()) {
-            $submission = $data->toSubmission($this->getUser(), $request->getClientIp(), true);
+            $submission = $data->toSubmission($this->getUser(), $request->getClientIp(), true /* $modThread */);
             $em->persist($submission);
             $em->flush();
             return $this->redirectToRoute('submission', [
