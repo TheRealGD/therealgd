@@ -46,13 +46,13 @@ class UserGroupRepository extends ServiceEntityRepository {
             return null;
         }
 
-        return $this->findOneByNormalizednName(UserGroup::normalizeName($name));
+        return $this->findOneByNormalizedName(UserGroup::normalizeName($name));
     }
 
-    public function findOneOrRedirectToCanonical(?string $name, string $param): ?Group {
+    public function findOneOrRedirectToCanonical(?string $name, string $param): ?UserGroup {
         $group = $this->loadGroupByName($name);
 
-        if ($group && $user->getName() !== $name) {
+        if ($group && $group->getName() !== $name) {
             $request = $this->requestStack->getCurrentRequest();
 
             if (
