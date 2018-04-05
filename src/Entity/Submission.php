@@ -99,6 +99,14 @@ class Submission extends Votable {
     private $image;
 
     /**
+     * URL to remote website's image
+     * @ORM\Column(type="text", nullable=true)
+     *
+     * @var string
+     */
+    private $originalImage;
+
+    /**
      * @ORM\Column(type="inet", nullable=true)
      *
      * @var string|null
@@ -171,7 +179,8 @@ class Submission extends Votable {
         bool $sticky = false,
         bool $modThread = false,
         int $userFlag = UserFlags::FLAG_NONE,
-        \DateTime $timestamp = null
+        \DateTime $timestamp = null,
+        ?string $originalImage = null
     ) {
         if ($ip !== null && !filter_var($ip, FILTER_VALIDATE_IP)) {
             throw new \InvalidArgumentException('Invalid IP address');
@@ -194,6 +203,7 @@ class Submission extends Votable {
         $this->comments = new ArrayCollection();
         $this->votes = new ArrayCollection();
         $this->vote($user, $ip, Votable::VOTE_UP);
+        $this->originalImage = $originalImage;
     }
 
     public function getId(): ?int {
@@ -318,6 +328,14 @@ class Submission extends Votable {
 
     public function setImage(?string $image) {
         $this->image = $image;
+    }
+
+    public function getOriginalImage(): ?string {
+        return $this->originalImage;
+    }
+
+    public function setOriginalImage(?string $image) {
+        $this->originalImage = $image;
     }
 
     public function getIp(): ?string {

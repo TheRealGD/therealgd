@@ -31,13 +31,15 @@ class AjaxController {
     public function fetchTitle(Request $request) {
         $url = $request->request->get('url');
         try {
-            $title = Embed::create($url)->getTitle();
+            $info = Embed::create($url);
+            $title = $info->getTitle();
+            $image = $info->getImage();
 
             if (!strlen($title)) {
                 return new JsonResponse(null, 404);
             }
 
-            return new JsonResponse(['title' => $title]);
+            return new JsonResponse(['title' => $title, 'image' => $image]);
         } catch (InvalidUrlException $e) {
             return new JsonResponse(['error' => $e->getMessage()], 400);
         }
