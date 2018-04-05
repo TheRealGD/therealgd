@@ -115,7 +115,7 @@ class UserRepository extends ServiceEntityRepository implements UserLoaderInterf
 SELECT JSON_AGG(id) AS ids, type FROM (
         SELECT id, timestamp, 'comment'::TEXT AS type FROM comments WHERE user_id = :user_id
     UNION ALL
-        SELECT id, timestamp, 'submission'::TEXT AS type FROM submissions WHERE user_id = :user_id
+        SELECT id, timestamp, 'submission'::TEXT AS type FROM submissions WHERE user_id = :user_id AND mod_thread = false
     ORDER BY timestamp DESC
     LIMIT :limit
 ) q
