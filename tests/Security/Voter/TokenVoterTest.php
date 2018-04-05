@@ -4,6 +4,7 @@ namespace App\Tests\Security\Voter;
 
 use App\Entity\User;
 use App\Security\Voter\TokenVoter;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
@@ -57,7 +58,7 @@ class TokenVoterTest extends TestCase {
         $user->method('getCreated')
             ->willReturn((new \DateTime('@'.time()))->modify($createdAt));
 
-        /* @var TokenInterface|\PHPUnit_Framework_MockObject_MockObject $token */
+        /* @var TokenInterface|MockObject $token */
         $token = $this->createMock(TokenInterface::class);
 
         $token->method('getRoles')->willReturn($roles);
