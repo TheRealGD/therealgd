@@ -10,10 +10,10 @@
     <p>{{ message|trans }}</p></div>
   {% endif %}
 
-  {% if current_announcement != "" %}
+  {% if has_announcement %}
     <p>
       <h2>Current announcement</h2>
-      <form action="/frontpageconfig/remove_announcement" method="POST">        
+      <form action="/frontpageconfig/remove_announcement" method="POST">
         <div class="form-message form-message--primary text-center">
           <p><a href="{{ path('submission', {forum_name: announcementSubmission.forum.name, submission_id: announcementSubmission.id, slug: announcementSubmission.title|slugify}) }}" target="_blank">{{current_announcement}}</a></p>
         </div>

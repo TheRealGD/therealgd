@@ -15,8 +15,8 @@ class SubmissionTest extends TestCase {
     /**
      * @dataProvider constructorArgsProvider
      */
-    public function testConstructor($title, $url, $body, $forum, $user, $ip, $sticky, $userFlag) {
-        $submission = new Submission($title, $url, $body, $forum, $user, $ip, $sticky, $userFlag);
+    public function testConstructor($title, $url, $body, $forum, $user, $ip, $sticky, $modThread, $userFlag) {
+        $submission = new Submission($title, $url, $body, $forum, $user, $ip, $sticky, $modThread, $userFlag);
 
         $this->assertSame($title, $submission->getTitle());
         $this->assertSame($url, $submission->getUrl());
@@ -60,9 +60,9 @@ class SubmissionTest extends TestCase {
         $user = $this->createMock(User::class);
         $url = 'http://example.com';
 
-        yield ['title', $url, 'body', $forum, $user, '::1', false, UserFlags::FLAG_NONE];
-        yield ['title', null, 'body', $forum, $user, '::1', false, UserFlags::FLAG_NONE];
-        yield ['title', $url, null, $forum, $user, '::1', false, UserFlags::FLAG_NONE];
-        yield ['title', null, null, $forum, $user, null, true, UserFlags::FLAG_ADMIN];
+        yield ['title', $url, 'body', $forum, $user, '::1', false, false, UserFlags::FLAG_NONE];
+        yield ['title', null, 'body', $forum, $user, '::1', false, false, UserFlags::FLAG_NONE];
+        yield ['title', $url, null, $forum, $user, '::1', false, false, UserFlags::FLAG_NONE];
+        yield ['title', null, null, $forum, $user, null, true, false, UserFlags::FLAG_ADMIN];
     }
 }

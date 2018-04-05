@@ -27,8 +27,12 @@
   <h2>{{ 'comments.comments'|trans }}</h2>
 
   {{ comment_form(submission) }}
-
   <div class="submission-comments">
+
+    {% for comment in submission.stickyComments %}
+      {{ comment(comment) }}
+    {% endfor %}
+
     {% for comment in submission.topLevelComments %}
       {{ comment(comment) }}
     {% endfor %}
