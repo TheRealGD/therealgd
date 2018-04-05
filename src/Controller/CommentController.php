@@ -251,7 +251,10 @@ final class CommentController extends AbstractController {
     ) {
         $this->validateCsrf('report_comment', $request->request->get('token'));
 
-        $reportTitle = "Comment Report: " . $submission->getTitle();
+        $comment->incrementReportCount();
+        $em->persist($comment);
+
+        $reportTitle = "Comment Report: " . $comment->getId() . " - Report Count: " . $comment->getReportCount();;
         $reportUrl = "/f/" . $forum->getName() . "/" . $submission->getId() . "/comment/" . $comment->getId();
         $reportSuccess = ReportHelper::createReport($em, $forum, $request, $reportTitle, $reportUrl);
 

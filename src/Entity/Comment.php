@@ -114,6 +114,13 @@ class Comment extends Votable {
      */
     private $notifications;
 
+    /**
+     * @ORM\Column(type="bigint", options={"default": 0})
+     *
+     * @var int
+     */
+     private $reportCount = 0;
+
     public function __construct(
         string $body,
         User $user,
@@ -275,5 +282,13 @@ class Comment extends Votable {
         }
 
         $receiver->sendNotification(new CommentNotification($receiver, $this));
+    }
+
+    public function getReportCount(): int {
+      return $this->reportCount;
+    }
+
+    public function incrementReportCount() {
+      $this->reportCount++;
     }
 }

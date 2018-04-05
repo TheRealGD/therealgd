@@ -275,7 +275,10 @@ final class SubmissionController extends AbstractController {
     ) {
         $this->validateCsrf('report_submission', $request->request->get('token'));
 
-        $reportTitle = "Submission Report: " . $submission->getTitle();
+        $submission->incrementReportCount();
+        $em->persist($submission);
+
+        $reportTitle = "Submission Report: " . $submission->getId() . " - Report Count: " . $submission->getReportCount();
         $reportUrl = "/f/" . $forum->getName() . "/" . $submission->getId() . "/" . Slugger::slugify($submission->getTitle());
         $reportSuccess = ReportHelper::createReport($em, $forum, $request, $reportTitle, $reportUrl);
 
