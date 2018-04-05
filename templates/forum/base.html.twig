@@ -57,7 +57,7 @@
       {% endset %}
       {% set items = items|merge({('nav.moderation_log'|trans): item}) %}
 
-      {% if is_granted('moderator', forum) or is_granted('ROLE_ADMIN') %}
+      {% if is_granted('moderator', forum) %}
         {% set item %}
           <li><a href="{{ path('mod_forum', {forum_name: forum.name}) }}">{{ 'forum.mod_page'|trans }}</a></li>
         {% endset %}
