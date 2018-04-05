@@ -53,6 +53,7 @@ final class SubmissionController extends AbstractController {
         Submission $submission,
         Comment $comment
     ) {
+        if (!$this->hasRightsToViewForum($forum)) { return $this->rerouteAwayFromAdmin(); }
         return $this->render('submission/comment.html.twig', [
             'comment' => $comment,
             'forum' => $forum,
@@ -68,6 +69,7 @@ final class SubmissionController extends AbstractController {
      * @return Response
      */
     public function shortcut(Submission $submission) {
+        if (!$this->hasRightsToViewForum($forum)) { return $this->rerouteAwayFromAdmin(); }
         return $this->redirectToRoute('submission', [
             'forum_name' => $submission->getForum()->getName(),
             'submission_id' => $submission->getId(),
@@ -105,6 +107,38 @@ final class SubmissionController extends AbstractController {
             ]);
         }
 
+        return $this->render('submission/create.html.twig', [
+            'form' => $form->createView(),
+            'forum' => $forum,
+        ]);
+    }
+
+    /**
+     * Create a new submission.
+     *
+     * @IsGranted("moderator", subject="forum")
+     *
+     * @param EntityManager $em
+     * @param Request       $request
+     * @param Forum         $forum
+     *
+     * @return Response
+     */
+    public function modSubmit(EntityManager $em, Request $request, Forum $forum = null) {
+        $data = new SubmissionData($forum);
+        $form = $this->createForm(SubmissionType::class, $data, array('user' => $this->getUser(), 'is_mod_submit' => true));
+        $form->handleRequest($request);
+        $data->setForum($forum);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $submission = $data->toSubmission($this->getUser(), $request->getClientIp(), true /* $modThread */);
+            $em->persist($submission);
+            $em->flush();
+            return $this->redirectToRoute('submission', [
+                'forum_name' => $submission->getForum()->getName(),
+                'submission_id' => $submission->getId(),
+                'slug' => Slugger::slugify($submission->getTitle()),
+            ]);
+        }
         return $this->render('submission/create.html.twig', [
             'form' => $form->createView(),
             'forum' => $forum,
@@ -254,5 +288,19 @@ final class SubmissionController extends AbstractController {
             'submission_id' => $submission->getId(),
             'slug' => Slugger::slugify($submission->getTitle()),
         ]);
+    }
+
+    protected function rerouteAwayFromAdmin() {
+        if (is_null($this->getUser())) {
+            return $this->redirectToRoute('login');
+        }
+        return $this->redirectToRoute('front');
+    }
+    protected function hasRightsToViewForum($forum) {
+        $admin = PermissionsChecker::isAdmin($this->getUser());
+        if ($admin || $forum->getId() > 0) {
+            return true;
+        }
+        return false;
     }
 }

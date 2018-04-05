@@ -112,19 +112,21 @@ class UserRepository extends ServiceEntityRepository implements UserLoaderInterf
      */
     public function findLatestContributions(User $user, int $limit = 25) {
         $sql = <<<EOSQL
-SELECT JSON_AGG(id) AS ids, type FROM (
-        SELECT id, timestamp, 'comment'::TEXT AS type FROM comments WHERE user_id = :user_id
+SELECT JSON_AGG(id) AS ids, entry_type FROM (
+        SELECT c.id, c.timestamp, 'comment'::TEXT AS entry_type FROM comments c
+            INNER JOIN submissions s on c.submission_id = s.id
+        WHERE c.user_id = :user_id and s.mod_thread = false
     UNION ALL
-        SELECT id, timestamp, 'submission'::TEXT AS type FROM submissions WHERE user_id = :user_id
+        SELECT id, timestamp, 'submission'::TEXT AS entry_type FROM submissions WHERE user_id = :user_id AND mod_thread = false
     ORDER BY timestamp DESC
     LIMIT :limit
 ) q
-GROUP BY type
+GROUP BY entry_type
 EOSQL;
 
         $rsm = new ResultSetMapping();
         $rsm->addScalarResult('ids', 'ids', 'json_array'); // not really scalar
-        $rsm->addIndexByScalar('type');
+        $rsm->addIndexByScalar('entry_type');
 
         $contributions = $this->_em->createNativeQuery($sql, $rsm)
             ->setParameter(':user_id', $user->getId())
@@ -135,7 +137,7 @@ EOSQL;
             $comments = $this->_em->createQueryBuilder()
                 ->select('c AS comment')
                 ->addSelect('c.timestamp AS timestamp')
-                ->addSelect("'comment' AS type")
+                ->addSelect("'comment' AS entry_type")
                 ->from(Comment::class, 'c')
                 ->where('c.id IN (?1)')
                 ->getQuery()
@@ -147,7 +149,7 @@ EOSQL;
             $submissions = $this->_em->createQueryBuilder()
                 ->select('s AS submission')
                 ->addSelect('s.timestamp AS timestamp')
-                ->addSelect("'submission' AS type")
+                ->addSelect("'submission' AS entry_type")
                 ->from(Submission::class, 's')
                 ->where('s.id IN (?1)')
                 ->getQuery()
