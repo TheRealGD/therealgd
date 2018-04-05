@@ -1,0 +1,152 @@
+<%# params: -%>
+<%# - fake_hosts            string[] - when set only fake vhosts will be created - used for certbot initial run-%>
+<%# - server_name           string   - main domain/server_name for the wewbie -%>
+<%# - redirect_server_names string[] - all domains that will redirect to server_name and server_name (to redirect http->https) -%>
+<%# - https_cert_name       string   - used in /etc/letsencrypt/NAME, if null - only http will be enabled -%>
+<%
+  fake_hosts             ||= ENV['FAKE_HOSTS'];
+  server_name            ||= ENV['SERVER_NAME'];
+  redirect_server_names  ||= ENV['REDIRECT_SERVER_NAMES'];
+  https_cert_name        ||= ENV['HTTPS_CERT_NAME'];
+  if fake_hosts then
+    fake_hosts = fake_hosts.split ','
+  end
+  if redirect_server_names then
+    redirect_server_names = redirect_server_names.split ','
+  end
+  if https_cert_name and https_cert_name.length == 0 then
+    https_cert_name = nil
+  end
+  redirect_server_names ||= [];
+  redirect_server_names.push(server_name);
+  redirect_server_names = redirect_server_names.uniq;
+-%>
+
+user www-data;
+worker_processes auto;
+pid /run/nginx.pid;
+
+events {
+  worker_connections 4096;
+  multi_accept on;
+}
+
+http {
+  sendfile on;
+  tcp_nopush on;
+  tcp_nodelay on;
+  #keepalive_timeout 65; #TODO: might want to lower this
+  types_hash_max_size 2048;
+  server_tokens off;
+
+  include /etc/nginx/mime.types;
+  default_type application/octet-stream;
+  access_log /var/log/nginx/access.log;
+  error_log /var/log/nginx/error.log;
+
+  gzip on;
+  gzip_vary on;
+  gzip_proxied any;
+  gzip_comp_level 6;
+  gzip_buffers 16 8k;
+  gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+  open_file_cache max=10000 inactive=10m;
+  open_file_cache_valid 2m;
+  open_file_cache_min_uses 1;
+  open_file_cache_errors on;
+
+  include /etc/nginx/snippets/*.conf;
+<% if (fake_hosts.length > 0) then -%>
+  <% for fake_host in fake_hosts-%>
+    server {
+      server_name <%= fake_host -%>;
+      listen 80;
+      root /var/wwwnossl/;
+      location / {
+        return 200 "Fake NGINX";
+      }
+      location ~ /.well-known {
+        allow all;
+      }
+    }
+  <% end -%>
+<% else -%>
+
+  server {
+      set $website_host <%= server_name -%>;
+      server_name "$website_host";
+      access_log "/var/log/nginx/$website_host.access.log";
+      access_log "/var/log/nginx/$website_host.error.log";
+
+      set $default_controller "index.php";
+      index $default_controller;
+
+      set $website_root "/var/www/public";
+      root $website_root;
+      charset utf-8;
+
+
+    <% if https_cert_name -%>
+      listen 443 ssl http2;
+      ssl_certificate     "/etc/letsencrypt/live/<%=https_cert_name-%>/fullchain.pem";
+      ssl_certificate_key "/etc/letsencrypt/live/<%=https_cert_name-%>/privkey.pem";
+    <% else -%>
+      listen 80;
+      listen [::]:80;
+    <% end -%>
+
+      # Security headers
+      #TODO: fix app and enable: add_header Referrer-Policy: strict-origin-when-cross-origin;
+      add_header X-Frame-Options DENY;
+      add_header X-Content-Type-Options nosniff;
+      add_header X-XSS-Protection "1; mode=block" always;
+      add_header X-Permitted-Cross-Domain-Policies none;
+      add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+
+      location /sf {
+          alias /var/www/lib/vendor/symfony/data/web/sf;
+          expires max;
+      }
+
+      location / {
+          # If the file exists as a static file serve it directly without
+          # running all the other rewrite tests on it
+          if (-f $request_filename) {
+              expires max;
+              break;
+          }
+
+          if ($request_filename !~ "\.(js|htc|ico|gif|jpg|png|css)$") {
+              rewrite ^(.*) /$default_controller$1 last;
+          }
+      }
+
+      location ~ "^(.+\.php)($|/)" {
+          set $script $uri;
+          set $path_info "/";
+          if ($uri ~ "^(.+\.php)($|/)") {
+              set $script $1;
+          }
+          if ($uri ~ "^(.+\.php)(/.+)") {
+              set $script $1;
+              set $path_info $2;
+          }
+
+          include /etc/nginx/fastcgi_params;
+          fastcgi_pass php:9000;
+          fastcgi_param SCRIPT_FILENAME $website_root$script;
+          fastcgi_param SCRIPT_NAME $script;
+          fastcgi_param PATH_INFO $path_info;
+      }
+  }
+
+  # redirect with 302 (Moved Temporarily) to
+  # avoid caching URLs that we might change (prod, staging, etc)
+  server {
+    listen 80;
+    listen [::]:80;
+    server_name <%=redirect_server_names.join(' ')-%>;
+    return 302 "https://<%=server_name-%>$request_uri";
+  }
+<% end -%>
+}
