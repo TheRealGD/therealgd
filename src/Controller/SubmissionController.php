@@ -357,7 +357,7 @@ final class SubmissionController extends AbstractController {
                   $data = new SubmissionData($forum);
                     $data->setTitle($title);
                     $data->setUrl($url);
-                    $data->setBody("Imported From /r/gundeals. | " & $permalink);
+                    $data->setBody("Imported From /r/gundeals. | " . $permalink);
                     $data->setSticky(false);
                     $data->setModThread(false);
 
