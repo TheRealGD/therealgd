@@ -383,7 +383,7 @@ final class SubmissionController extends AbstractController {
         }
 
         $textResponse = new Response(json_encode($successReport), 200);
-        $textResponse->headers->set('Content-Type', 'text/plain');
+        $textResponse->headers->set('Content-Type', 'application/json');
         return $textResponse;
     }
 }
