@@ -16,9 +16,9 @@
   <h1 class="page-heading">{{ user.username }}</h1>
 
   {% for contribution in contributions %}
-    {% if contribution.type == 'submission' %}
+    {% if contribution.entry_type == 'submission' %}
       {{ submission(contribution.submission) }}
-    {% elseif contribution.type == 'comment' %}
+    {% elseif contribution.entry_type == 'comment' %}
       {{ comment(contribution.comment, {recurse: false}) }}
     {% endif %}
   {% endfor %}

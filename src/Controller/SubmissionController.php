@@ -10,6 +10,9 @@ use App\Entity\Submission;
 use App\Form\DeleteReasonType;
 use App\Form\Model\SubmissionData;
 use App\Form\SubmissionType;
+use App\Repository\SubmissionRepository;
+use App\Repository\ForumRepository;
+use App\Repository\UserRepository;
 use App\Utils\Slugger;
 use App\Utils\ReportHelper;
 use Doctrine\ORM\EntityManager;
@@ -17,6 +20,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Translation\Translator;
+use Symfony\Component\Translation\Loader\ArrayLoader;
 
 /**
  * @Entity("forum", expr="repository.findOneOrRedirectToCanonical(forum_name, 'forum_name')")
@@ -54,6 +59,7 @@ final class SubmissionController extends AbstractController {
         Submission $submission,
         Comment $comment
     ) {
+        if (!$this->hasRightsToViewForum($forum)) { return $this->rerouteAwayFromAdmin(); }
         return $this->render('submission/comment.html.twig', [
             'comment' => $comment,
             'forum' => $forum,
@@ -69,6 +75,7 @@ final class SubmissionController extends AbstractController {
      * @return Response
      */
     public function shortcut(Submission $submission) {
+        if (!$this->hasRightsToViewForum($forum)) { return $this->rerouteAwayFromAdmin(); }
         return $this->redirectToRoute('submission', [
             'forum_name' => $submission->getForum()->getName(),
             'submission_id' => $submission->getId(),
@@ -106,6 +113,38 @@ final class SubmissionController extends AbstractController {
             ]);
         }
 
+        return $this->render('submission/create.html.twig', [
+            'form' => $form->createView(),
+            'forum' => $forum,
+        ]);
+    }
+
+    /**
+     * Create a new submission.
+     *
+     * @IsGranted("moderator", subject="forum")
+     *
+     * @param EntityManager $em
+     * @param Request       $request
+     * @param Forum         $forum
+     *
+     * @return Response
+     */
+    public function modSubmit(EntityManager $em, Request $request, Forum $forum = null) {
+        $data = new SubmissionData($forum);
+        $form = $this->createForm(SubmissionType::class, $data, array('user' => $this->getUser(), 'is_mod_submit' => true));
+        $form->handleRequest($request);
+        $data->setForum($forum);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $submission = $data->toSubmission($this->getUser(), $request->getClientIp(), true /* $modThread */);
+            $em->persist($submission);
+            $em->flush();
+            return $this->redirectToRoute('submission', [
+                'forum_name' => $submission->getForum()->getName(),
+                'submission_id' => $submission->getId(),
+                'slug' => Slugger::slugify($submission->getTitle()),
+            ]);
+        }
         return $this->render('submission/create.html.twig', [
             'form' => $form->createView(),
             'forum' => $forum,
@@ -296,5 +335,97 @@ final class SubmissionController extends AbstractController {
             'submission_id' => $submission->getId(),
             'slug' => Slugger::slugify($submission->getTitle()),
         ]);
+    }
+
+    protected function rerouteAwayFromAdmin() {
+        if (is_null($this->getUser())) {
+            return $this->redirectToRoute('login');
+        }
+        return $this->redirectToRoute('front');
+    }
+    protected function hasRightsToViewForum($forum) {
+        $admin = PermissionsChecker::isAdmin($this->getUser());
+        if ($admin || $forum->getId() > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public function importFromReddit(EntityManager $em, Request $request, SubmissionRepository $sr, UserRepository $ur, ForumRepository $fr, Translator $tr = null) {
+        // LOCAL ONLY BRUH
+        if ($request->getClientIp() != "127.0.0.1") return;
+
+        // Prime Response
+        $successReport = [
+          "success" => 'false',
+          "imported" => array(),
+          "ignored" => array()
+        ];
+
+        // Check top 10 every time.
+        $redditUrl = "https://www.reddit.com/r/gundeals/new.json?sort=new&limit=10";
+
+        try {
+          $ch = curl_init();
+          curl_setopt($ch, CURLOPT_URL, $redditUrl);
+          curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json')); // Assuming you're requesting JSON
+          curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+          $response = curl_exec($ch);
+
+          // The goods.
+          $data = json_decode($response);
+          foreach ($data->data->children as $posting)
+          {
+            $url = $posting->data->url;
+            $title = $posting->data->title;
+            $permalink = $posting->data->permalink;
+            $hidden = $posting->data->hidden;
+            $pinned = $posting->data->pinned;
+            $modbanned = $posting->data->banned_by;
+
+            // Only import non banned and non hidden and non pinned posts
+            if ($hidden == false && $modbanned == null && $pinned == false){
+              // We got that url? YAAA BOY!
+              if ($url != null && $title != null)
+              {
+
+                /* Check for submission with url of incoming url */
+                $foundEntry = $sr->findOneByUrl($url);
+                if ($foundEntry == null){
+                  /* If not, create submission */
+                  $forum = $fr->findOneByCaseInsensitiveName("gundeals");
+
+                  $data = new SubmissionData($forum);
+                    $data->setTitle($title);
+                    $data->setUrl($url);
+                    $data->setBody("Imported From /r/gundeals. | " . $permalink);
+                    $data->setSticky(false);
+                    $data->setModThread(false);
+
+                  $user = $ur->loadUserByUsername("gundeals");
+                  $submission = $data->toSubmission($user, $request->getClientIp());
+
+                  $em->persist($submission);
+                  $em->flush();
+
+                  array_push($successReport['imported'], $url);
+                  $successReport['success'] = 'true';
+                } else {
+                  array_push($successReport['ignored'], $url);
+                  $successReport['success'] = 'true';
+                }
+              } else {
+
+              }
+            }
+          }
+        } catch (Exception $e){
+          // fuk.
+        }
+
+        $textResponse = new Response(json_encode($successReport), 200);
+        $textResponse->headers->set('Content-Type', 'application/json');
+        return $textResponse;
     }
 }

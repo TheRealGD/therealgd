@@ -165,7 +165,7 @@ forum_list:
     subscribers: Subscribers
     page_title: List of deal categories
     create_forum: Create deal category
-    submission_count: Deal Submissions
+    submission_count: Post Count
     list_view: List view
     category_view: Category view
     uncategorized: Uncategorized
@@ -563,3 +563,8 @@ front_page_configuration_form:
     remove_announcement: Remove current announcement
     thread_title: Announcement Title
     thread_content: Global Announcement
+
+import:
+    default_forum: gundeals
+    default_user: gundeals
+    default_body: Imported from /r/gundeals | %path%

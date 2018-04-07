@@ -1,34 +1,60 @@
-version: "3.3"
+version: "2"
 services:
-  nginx:
-    build: docker/nginx
-    image: gundeals-nginx:latest
-    networks:
-      - gundealsnet
+
+  ###############################################################################
+  ############################# -dev-local suffix - #############################
+  ##
+  ## nginx->php->pgsql
+  ## Run this for Easy Development without HTTPS on local machine OR your own AWS
+  ##
+  ###############################################################################
+
+  nginx-dev-local:
+    build:
+      context: ./docker/nginx
+      args:
+        - SERVER_NAME=_
     ports:
-      - "8080:80"
+      - "80:80"
+      - "443:443"
+    links:
+      - php-dev-local:php
     volumes:
-      - ./:/var/www/html
-  php:
-    build: docker/php
-    image: gundeals-php:latest
-    ports:
-      - 9000:9000
-    networks:
-      - gundealsnet
+      - "./docker/nginx/letsencrypt:/etc/letsencrypt/:rw"
+      - "./docker/nginx/nginxlogs/:/var/log/nginx/:rw"
+      - "wwwdir:/var/www/:ro"
+  php-dev-local:
+    build:
+      context: .
+      args:
+        - display_errors=off
+        - log_errors=on
+        - site_name=gundeals.local
+        - app_env=dev
+        - app_secret="devsecretdevsecret_DO_NOT_USE_IN_PROD"
+        #- trusted_hosts=localhost
+        - trusted_proxies=nginx-dev-local
+        - database_url=pgsql://developer:devdevdev@db-dev-local:5432/devdb?serverVersion=9.6
+        - no_reply_address="no-reply@example.com"
+        - mailer_url="null://localhost"
+    expose:
+      - '9000'
+    links:
+      - db-dev-local
     volumes:
-      - ./:/var/www/html:cached
-      - ./docker/php/php-overrides.ini:/etc/php/7.2/fpm/conf.d/99-overrides.ini
-      - ./.env.dev:/var/www/html/.env
-    working_dir: /var/www/html
-  postgres:
+      - "wwwdir:/var/www:rw"
+      - "./bin:/var/www/bin:ro"
+    working_dir: /var/www/public
+
+  db-dev-local:
     image: postgres:9.6.8
-    networks:
-      - gundealsnet
-    ports:
-      - 5432:5432
+    expose:
+      - '5432'
     environment:
-      POSTGRES_USER: dev
-      POSTGRES_PASSWORD: dev
-networks:
-  gundealsnet:
+      POSTGRES_USER: developer
+      POSTGRES_PASSWORD: devdevdev
+      POSTGRES_DB: devdb
+
+volumes:
+  wwwdir:
+

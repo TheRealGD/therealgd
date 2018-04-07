@@ -62,6 +62,11 @@ mod_submit:
     path: /f/{forum_name}/mod/submit
     methods: [GET, POST]
 
+import_reddit:
+    controller: App\Controller\SubmissionController::importFromReddit
+    path: /import_reddit
+    methods: [GET]
+
 submission_vote:
     controller: App\Controller\VoteController::vote
     defaults: { _format: html, entityClass: App\Entity\Submission }
