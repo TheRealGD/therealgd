@@ -3,6 +3,7 @@
 namespace App\Tests\Form\Model;
 
 use App\Entity\Comment;
+use App\Entity\Submission;
 use App\Entity\User;
 use App\Form\Model\CommentData;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -24,9 +25,13 @@ class CommentDataTest extends TestCase {
 
     protected function setUp() {
         $this->comment = $this->getMockBuilder(Comment::class)
-            ->setMethods(['getUser'])
+            ->setMethods(['getSubmission', 'getUser'])
             ->disableOriginalConstructor()
             ->getMock();
+
+        $this->comment
+            ->method('getSubmission')
+            ->willReturn($this->createMock(Submission::class));
 
         $this->comment
             ->method('getUser')
