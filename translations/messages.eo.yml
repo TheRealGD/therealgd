@@ -1,27 +1,27 @@
 action:
     upvote: Porvoĉdoni
     downvote: Kontraŭvoĉdoni
-    retract_upvote: Retract porvoĉdono
-    retract_downvote: Retract kontraŭvoĉdono
+    retract_upvote: Repreni porvoĉdonon
+    retract_downvote: Repreni kontraŭvoĉdonon
 
 add_moderator:
     title: Aldoni kontrolanton al %forum%
 
 ban_add:
-    title: Forbari IP adreson
+    title: Forbari IP-adreson
 
 ban_form:
-    ip: IP adreso
-    reason: Kialo por forbari
-    expiry_date: Expires at (YYYY-MM-DD hh:mm)
+    ip: IP-adreso
+    reason: Kialo forbari
+    expiry_date: Finiĝos je (YYYY-MM-DD hh:mm)
     ban: Forbari
     user: Uzanto de IP
 
 ban_list:
     title: Forbaroj
-    ip: IP adreso
+    ip: IP-adreso
     timestamp: Tempo
-    banned_by: Forbaris de
+    banned_by: Forbarita de
     reason: Kialo
     user: Uzanto
     user_none: nenio
@@ -31,7 +31,7 @@ ban_list:
 
 banned:
     title: Forbaris
-    message: Vi estas forbara!
+    message: Vi estas forbarita!
 
 comments:
     author_deleted: '[forigis]'
@@ -40,24 +40,24 @@ comments:
     delete_thread: Forigi kun respondoj
     edit: Redakti
     permalink: Konstanta ligilo
-    parent: Gepatro
+    parent: Gepatra afiŝo
     reply: Respondi
-    admin_ban: IP forbaro
-    form_load_error: Eraro ŝarĝis formon. Bonvolu, denove provi.
+    admin_ban: IP-forbaro
+    form_load_error: Eraro pri enlego de formo. Bonvolu denove provi.
     info: '%user% skribis %timestamp%'
     info_at_timestamp: je %timestamp%
     not_logged_in: Vi devas %login_link% aŭ %register_link% por komenti.
-    not_logged_in_login_link_label: ensaluti
-    not_logged_in_register_link_label: registri
+    not_logged_in_login_link_label: saluti
+    not_logged_in_register_link_label: registriĝi
     viewing_thread: Vidi unu komentan fadenon.
     thread_return: Vidi ĉiujn komentojn
     return_to_forum: ← Reveni al %forum%
-    edit_info: (redaktis %edited_at%)
-    moderator_info: (kontrolanto redaktis %edited_at%)
+    edit_info: (redaktita je %edited_at%)
+    moderator_info: (kontrolanto redaktis je %edited_at%)
 
 comment_form:
     comment: Komento
-    submit: Afiŝis
+    submit: Afiŝi
     edit_title: Redaktas komenton
     create_title: Skribas komenton
 
@@ -65,7 +65,7 @@ compose_message:
     title: Kreas mesaĝon por %username%
 
 create_forum:
-    create_new_forum: Kreas novan forumon
+    create_new_forum: Kreas novan diskutejon
 
 edit_forum:
     title: Redaktas %forum%
@@ -74,46 +74,46 @@ edit_user:
     title: Redaktas uzanton %username%
 
 flash:
-    ban_added: La IP adreso estas forbara.
-    forum_deleted: La forumojn kaj ĉiujn enhavojn savis.
-    forum_updated: La redaktojn savis.
-    forum_moderator_added: La uzanto levigis al kontrolanto
-    inbox_cleared: La enirkeston vakigis.
-    reset_password_email_sent: Reŝargan retpoŝton sendis al specifita adreso.
-    submission_deleted: La sendadon savis.
-    submission_edited: La sendadon redaktis.
-    user_password_updated: Via pasvorto ĝisdatigis.
+    ban_added: La IP adreso estas forbarita.
+    forum_deleted: La diskutejo kaj ties enhavo foriĝis.
+    forum_updated: La redaktoj konserviĝis.
+    forum_moderator_added: La uzanto fariĝis kontrolanto
+    inbox_cleared: La enirkesto vakiĝis.
+    reset_password_email_sent: Restariga retletero sendiĝis al la adreso, kiun vi specifis.
+    submission_deleted: La afiŝo foriĝis.
+    submission_edited: La afiŝo redaktiĝis.
+    user_password_updated: Via pasvorto ĝisdatiĝis.
     user_settings_updated: Uzanto-agordoj ĝisdatigis.
-    no_messages: Sen mesaĝoj montri.
+    no_messages: Sen mesaĝoj montreblaj.
 
 forum:
     moderators: Kontrolantoj
     manage: Administri
-    edit: Redakti fourmon
+    edit: Redakti diskutejon
     subscribe: Aboni
     unsubscribe: Malaboni
     subscriber_count: '{0} Sen abonantoj|{1} %count% abonanto|[1,Inf[ %count% abonantoj'
-    add_moderator: Aldoni kontrolanto
+    add_moderator: Aldoni kontrolanton
 
 forum_form:
     name: Nomo
     title: Titolo
     description: Priskribo
     category: Kategorio
-    create: Krei forumon
+    create: Krei diskutejon
     save: Konservi ŝanĝojn
-    delete: Savi forumon
-    confirm_delete: Ĉu vi certe volas savi ĉi-tion forumon kaj ĉiujn komentojn kaj ĉiujn sendadojn?
-    featured: Malfonen porti
-    uncategorized_placeholder: (senkategorio)
+    delete: Forigi fdiskutejon
+    confirm_delete: Ĉu vi certe volas forigi ĉi tiun diskutejon kaj ĉiujn afiŝojn kun komentoj?
+    featured: Montri ĉefpaĝe
+    uncategorized_placeholder: (sen kategorio)
 
 forum_list:
     name: Nomo
     title: Titolo
     subscribers: Abonantoj
-    page_title: Listo de forumoj
-    create_forum: Krei forumon
-    submission_count: Afiŝonombro
+    page_title: Listo de diskutejoj
+    create_forum: Krei diskutejon
+    submission_count: Da afiŝoj
     list_view: Lista vido
     category_view: Kategoria vido
     uncategorized: Senkategoria vido
@@ -122,21 +122,21 @@ forum_moderators:
     title: Kontrolantoj de /%forum_name%
     username: Uzantonomo
     since: Ekde
-    last_seen: Laste vidis
+    last_seen: Laste vidita
 
 front:
-    subscribed_forums: Abonaj forumoj
-    no_subscriptions: Vi ne havas neniun albonajn forumojn. Anstataŭe montras priatentitajn forumojn.
-    featured_forums: Priatentitaj Forumoj
-    no_forums: Estas neniuj priatentitaj forumoj por montri.
+    subscribed_forums: Abonitaj diskutejoj
+    no_subscriptions: Vi abonas neniun diskutejon. Anstataŭe montriĝas elstarigitaj diskutejoj.
+    featured_forums: Elstarigitaj diskutejoj
+    no_forums: Estas neniuj elstarigitaj diskutejoj montreblaj.
     all: Ĉiuj
-    featured: Priatentitaj
-    subscribed: Abonaj
+    featured: Elstarigitaj
+    subscribed: Abonataj
 
 inbox:
     title: Enirkesto
-    clear_inbox: Vakigi enirkeston
-    empty: La enirkesto estas vakiga
+    clear_inbox: Malplenigi enirkeston
+    empty: La enirkesto estas malplena.
     message_reply_head: 'Re: %title%'
 
 label:
@@ -148,10 +148,10 @@ label:
     toolbox: Ilaro
 
 login_form:
-    log_in: Ensaluti
+    log_in: Saluti
     username: Uzantonomo
     password: Pasvorto
-    reset_password: Reŝargi pasvorton?
+    reset_password: Ĉu restarigi pasvorton?
 
 markdown_type:
     help: Sintaksa referenco
@@ -164,17 +164,17 @@ message_form:
 
 moderator_form:
     user: Uzantonomo
-    submit: Aldoni tiel kontrolanto
+    submit: Aldoni kiel kontrolanton
 
 nav:
     submit: Afiŝi
-    log_in: Ensaluti
-    log_out: Elsaluti
+    log_in: Saluti
+    log_out: Adiaŭi
     profile: Profilo
     register: Registri
     my_account: Mia konto
     user_settings: Uzanto-agordoj
-    forums: Forumoj
+    forums: Diskutejoj
     inbox_count: Enirkesto (%count%)
     messages: Mesaĝoj
     wiki: Vikio
@@ -182,65 +182,65 @@ nav:
     previous: Antaŭa
 
 request_password_reset:
-    title: Peti pasvortan reŝargon ligilon
+    title: Peti ligilon al pasvorta restarigo
     multiple_accounts_notice: >
-        Se vi havas multaj kontoj estas registra kun unu retpoŝtadreso vi ricevos unu retpoŝto po konto.
+        Se vi havas multaj kontoj estas registritajn kun unu retpoŝtadreso, vi ricevos unu retleteron po konto.
     no_confirmation_notice: >
-        Se vi neniam ricevos retpoŝton, la adreso vi tajpis eble estas malprava.
-        Por privateca kialoj, ni ne konfirmos se uzanto kun retpoŝto ekzistas.
+        Se vi neniam ricevos retleteron, la adreso kiun vi donis eble estas malĝusta.
+        Por privatecaj kialoj, ni ne konfirmos ĉu uzanto kun retpoŝtadreso ekzistas.
 
 request_password_reset_form:
     email: Retpoŝtadreso
     submit: Sendi
 
 reset_password:
-    email_subject: '%site_name% - Reŝargi pasvorton por uzanto %username%'
+    email_subject: '%site_name% - Restarigi pasvorton por uzanto %username%'
 
     # this should be kept at 76 columns --------------------------------------------
     email_body: |
-        Iu petis pasvortan reŝargon por via %site_name% konto. Por reŝargi pasvoton,
-        klicku la ligilo sub:
+        Iu petis pasvortan restarigon por via konto ĉe %site_name%. Por
+        restarigi pasvorton, alklaku la ĉi-suban ligilon:
 
         %reset_link%
 
-        Se vi ne petis pasvortan reŝargon, vi povas sendanĝere malatenti ĉi-tion
-        mesaĝon.
+        Se vi ne petis pasvortan restarigon, vi povas sendanĝere malatenti
+        ĉi tiun mesaĝon.
 
-    title: Reŝargi pasvorton
+    title: Restarigi pasvorton
 
 site_footer:
-    version: Uzanta %app% %version% (%branch%). Farita kun ☭.
+    version: Povigita de %app% %version% (%branch%). Farita kun ☭.
 
 submission_form:
     title: Titolo
     url: URL
     body: Korpo
-    forum: Forumo
+    forum: Diskutejo
     sticky: Gluita
-    create: Krei submission
-    edit: Rekonti submission
-    delete: Savi submission
-    confirm_delete: Ĉu vi certe volas savi ĉi-tion submission?
+    create: Krei afiŝon
+    edit: Redakti afiŝon
+    delete: Forigi afiŝon
+    confirm_delete: Ĉu vi certe volas forigi ĉi tiun afiŝon?
 
 submissions:
     comments: '{0} Sen komentoj|{1} %count% komento|[1,Inf[ %count% komentoj'
     edit: Redakti
-    info_with_forum_name: Afiŝis de %submitter% %timestamp% en %forum%
-    info_without_forum_name: Afiŝis de %submitter% %timestamp%
+    info_with_forum_name: Afiŝis %submitter% %timestamp% en %forum%
+    info_without_forum_name: Afiŝis %submitter% %timestamp%
     info_at_timestamp: je %timestamp%
-    sort_by_hot: Varma
-    sort_by_new: Nova
-    sort_by_top: Supra
-    sort_by_controversial: Polemika
+    sort_by_hot: Furoraj
+    sort_by_new: Novaj
+    sort_by_top: Supraj
+    sort_by_controversial: Disputigaj
     total_votes: '{1} %count% voĉdono|[0,Inf[ %count% voĉdonoj'
     vote_stats: (+%up%, −%down%)
-    ip_ban: IP forbaro
+    ip_ban: IP-forbaro
     edit_info: (redaktis %edited_at%)
     moderator_info: (kontrolanto redaktis %edit_at%)
 
 time:
     on_timestamp: je %timestamp%
-    earlier_format: '%relative_time% frue'
+    earlier_format: '%relative_time% antaŭe'
     later_format: '%relative_time% poste'
 
 title:
@@ -250,14 +250,14 @@ user:
     submissions: Afiŝoj
     comments: Komentoj
     moderates: '%username% estas kontrolanto por:'
-    username_rules: Permesita karakteroj estas A ĝis Z, a ĝis z, 0 ĝis 9, kaj substrekas.
-    password_rules: Minimuma de 8 karakteroj; maksimuma de 72 ĉar limigoj de la «bcrypt» algoritmo.
-    email_optional: Provizi retpoŝton nedevigas. Ni nur uzos ĝin por reagordi pasvortojn kaj retpoŝti du-faktorajn identokontrolojn.
+    username_rules: Permesitaj signoj estas A ĝis Z, a ĝis z, 0 ĝis 9, kaj substrekoj.
+    password_rules: Minimume 8 signoj; maksimume 72 pro limigoj de la algoritmo «bcrypt».
+    email_optional: Retpoŝtadreso malnepras. Ni nur uzos ĝin por reagordi pasvortojn kaj retpoŝti du-fazajn identokontrolojn.
     message: Sendi mesaĝon
-    registered: Registris %timestamp%
+    registered: Registriĝis %timestamp%
 
 user_flag:
-    post_as_label: Afiŝi tiel
+    post_as_label: Afiŝi kiel
     none_label: (sen)
     admin: administranto
     admin_label: Administranto
@@ -270,37 +270,37 @@ user_form:
     repeat_password: Pasvorto (ripetu)
     new_password: Nova pasvorto
     repeat_new_password: Nova pasvorto (ripetu)
-    email: Retpoŝto
-    register: Registri
+    email: Retpoŝtadreso
+    register: Registriĝi
     verification: Certigo
-    save: Konservi modifiĝojn
+    save: Konservi ŝanĝojn
 
 user_settings:
-    title: Redaktante uzanton-agordojn por %username%
+    title: Redaktante uzanto-agordojn por %username%
 
 user_settings_form:
     locale: Lingvo
     night_mode: Nokta reĝimo
-    save: Konservi modifiĝojn
+    save: Konservi ŝanĝojn
 
 wiki:
     not_found_title: Ne trovis paĝon.
-    not_found_message: La petitis paĝon ne trovitis.
-    create_this_page: Krei ĉi-tiun paĝon
+    not_found_message: Petita paĝo ne troviĝis.
+    create_this_page: Krei ĉi tiun paĝon
     editing_title: Redaktas "%path%"
     create_title: Kreas "%path%"
     history_title: Montras historion de "%path%"
-    revision_time: Redaktis
+    revision_time: Redaktita
     user: Uzanto
-    id_label: ID
-    locked_notice: La paĝon ŝlositis. Nur administrantoj povas redakti ĝin.
+    id_label: Identigilo
+    locked_notice: La paĝo estas ŝlosita. Nur administrantoj povas redakti ĝin.
     page_title: Paĝa Titolo
     path: Dosierindiko
     all_pages: Ĉiuj paĝoj
     page_history: Paĝa historio
     edit_page: Redakti paĝon
     navigation: Navigado
-    last_edited: Laste redaktis de %username% %timestamp%
+    last_edited: Laste redaktis %username% %timestamp%
 
 wiki_form:
     title: Titolo
