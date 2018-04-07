@@ -93,15 +93,13 @@ final class CommentController extends AbstractController {
         EventDispatcherInterface $dispatcher,
         Comment $comment = null
     ) {
-        $data = new CommentData();
+        $data = new CommentData($submission);
 
         $form = $this->createForm(CommentType::class, $data, ['forum' => $forum]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user = $this->getUser();
-            $ip = $request->getClientIp();
-            $reply = $data->toComment($submission, $user, $comment, $ip);
+            $reply = $data->toComment($this->getUser(), $comment, $request->getClientIp());
 
             $em->persist($reply);
             $em->flush();

@@ -6,6 +6,7 @@ use App\Entity\Forum;
 use App\Entity\Submission;
 use App\Entity\User;
 use App\Entity\UserFlags;
+use App\Validator\Constraints\NotForumBanned;
 use App\Validator\Constraints\RateLimit;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -44,6 +45,7 @@ class SubmissionData {
     private $userFlag = UserFlags::FLAG_NONE;
 
     /**
+     * @NotForumBanned()
      * @Assert\NotBlank(groups={"create", "edit"})
      *
      * @var Forum|null

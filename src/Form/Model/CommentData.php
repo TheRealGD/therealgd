@@ -6,9 +6,18 @@ use App\Entity\Comment;
 use App\Entity\Submission;
 use App\Entity\User;
 use App\Entity\UserFlags;
+use App\Validator\Constraints\NotForumBanned;
 use Symfony\Component\Validator\Constraints as Assert;
 
+/**
+ * @NotForumBanned(forumPath="submission.forum", errorPath="body")
+ */
 class CommentData {
+    /**
+     * @var Submission
+     */
+    private $submission;
+
     /**
      * @Assert\NotBlank(message="The comment must not be empty.")
      * @Assert\Regex("/[[:graph:]]/u", message="The comment must not be empty.")
@@ -24,23 +33,23 @@ class CommentData {
     private $userFlag = UserFlags::FLAG_NONE;
 
     public static function createFromComment(Comment $comment): self {
-        $self = new self();
+        $self = new self($comment->getSubmission());
+        $self->submission = $comment->getSubmission();
         $self->body = $comment->getBody();
         $self->userFlag = $comment->getUserFlag();
 
         return $self;
     }
 
-    public function toComment(
-        Submission $submission,
-        User $user,
-        Comment $parent = null,
-        $ip = null
-    ): Comment {
+    public function __construct(Submission $submission) {
+        $this->submission = $submission;
+    }
+
+    public function toComment(User $user, Comment $parent = null, $ip = null): Comment {
         return new Comment(
             $this->body,
             $user,
-            $submission,
+            $this->submission,
             $this->userFlag,
             $parent,
             $ip
@@ -60,31 +69,23 @@ class CommentData {
         }
     }
 
-    /**
-     * @return string|null
-     */
-    public function getBody() {
+    public function getBody(): ?string {
         return $this->body;
     }
 
-    /**
-     * @param string|null $body
-     */
-    public function setBody($body) {
+    public function setBody($body): void {
         $this->body = $body;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getUserFlag() {
+    public function getUserFlag(): ?int {
         return $this->userFlag;
     }
 
-    /**
-     * @param int|null $userFlag
-     */
-    public function setUserFlag($userFlag) {
+    public function setUserFlag($userFlag): void {
         $this->userFlag = $userFlag;
+    }
+
+    public function getSubmission(): Submission {
+        return $this->submission;
     }
 }
