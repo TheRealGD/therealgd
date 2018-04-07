@@ -15,6 +15,7 @@ use App\Repository\ForumRepository;
 use App\Repository\UserRepository;
 use App\Utils\Slugger;
 use App\Utils\ReportHelper;
+use App\Utils\PermissionsChecker;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
