@@ -11,6 +11,7 @@ use App\Repository\SubmissionRepository;
 use App\Utils\PermissionsChecker;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityManager;
+use Psr\Log\LoggerInterface;
 
 /**
  * Actions that list submissions across many forums.
@@ -30,7 +31,9 @@ use Doctrine\ORM\EntityManager;
  *   instead.
  */
 final class FrontController extends AbstractController {
-    public function front(ForumRepository $fr, SubmissionRepository $sr, ForumConfigurationRepository $fcr, string $sortBy, int $page, EntityManager $em) {
+
+    public function front(ForumRepository $fr, SubmissionRepository $sr, ForumConfigurationRepository $fcr, string $sortBy, int $page, EntityManager $em, LoggerInterface $logger=null) {
+        #$this->logger->info('Front start');
         $user = $this->getUser();
 
         $siteConfig = $fcr->findSitewide();
