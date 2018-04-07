@@ -35,7 +35,7 @@ abstract class Votable {
      *
      * @throws \InvalidArgumentException if the vote is not a VOTE_* constant
      */
-    public function vote(User $user, ?string $ip, int $choice) {
+    public function vote(User $user, ?string $ip, int $choice): void {
         $vote = $this->getUserVote($user);
 
         if ($choice === self::VOTE_UP || $choice === self::VOTE_DOWN) {
@@ -100,7 +100,7 @@ abstract class Votable {
      * collection in advance speeds up things considerably when there are
      * multiple entities.
      */
-    private function hydrateVoteCollection() {
+    private function hydrateVoteCollection(): void {
         $this->getVotes()->getValues();
     }
 }

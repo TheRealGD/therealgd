@@ -28,7 +28,7 @@ class SubmissionVote extends Vote {
     /**
      * {@inheritdoc}
      */
-    public function __construct(User $user, ?string $ip, $choice, Submission $submission) {
+    public function __construct(User $user, ?string $ip, int $choice, Submission $submission) {
         parent::__construct($user, $ip, $choice);
 
         $this->submission = $submission;

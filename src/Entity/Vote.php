@@ -52,8 +52,10 @@ abstract class Vote {
      * @param User        $user
      * @param string|null $ip
      * @param bool|int    $choice
+     *
+     * @throws \InvalidArgumentException if $choice is bad
      */
-    public function __construct(User $user, ?string $ip, $choice) {
+    public function __construct(User $user, ?string $ip, int $choice) {
         $this->timestamp = new \DateTime('@'.time());
         $this->user = $user;
         $this->setIp($ip); // must be after $this->user is declared
@@ -69,13 +71,12 @@ abstract class Vote {
     }
 
     /**
-     * @param int|bool $choice true/Votable::VOTE_UP = upvote,
-     *                         false/Votable::VOTE_DOWN = downvote
+     * @param int $choice one of Votable::VOTE_UP or Votable::VOTE_DOWN
+     *
+     * @throws \InvalidArgumentException if $choice isn't a valid parameter
      */
-    public function setChoice($choice) {
-        if (is_bool($choice)) {
-            $this->upvote = $choice;
-        } elseif ($choice === Votable::VOTE_UP || $choice === Votable::VOTE_DOWN) {
+    public function setChoice(int $choice): void {
+        if ($choice === Votable::VOTE_UP || $choice === Votable::VOTE_DOWN) {
             $this->upvote = $choice === Votable::VOTE_UP;
         } elseif ($choice === Votable::VOTE_RETRACT) {
             throw new \InvalidArgumentException('A vote entity cannot have a "retracted" status');
@@ -96,7 +97,7 @@ abstract class Vote {
         return $this->ip;
     }
 
-    public function setIp(?string $ip) {
+    public function setIp(?string $ip): void {
         if ($ip !== null && !filter_var($ip, FILTER_VALIDATE_IP)) {
             throw new \InvalidArgumentException('Bad IP address');
         }

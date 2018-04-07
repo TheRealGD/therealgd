@@ -25,7 +25,7 @@ class CommentVote extends Vote {
      */
     private $comment;
 
-    public function __construct(User $user, ?string $ip, $choice, Comment $comment) {
+    public function __construct(User $user, ?string $ip, int $choice, Comment $comment) {
         parent::__construct($user, $ip, $choice);
 
         $this->comment = $comment;

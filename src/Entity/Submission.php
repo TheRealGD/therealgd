@@ -270,7 +270,7 @@ class Submission extends Votable {
     /**
      * {@inheritdoc}
      */
-    public function vote(User $user, ?string $ip, int $choice) {
+    public function vote(User $user, ?string $ip, int $choice): void {
         if ($this->forum->userIsBanned($user)) {
             throw new BannedFromForumException();
         }

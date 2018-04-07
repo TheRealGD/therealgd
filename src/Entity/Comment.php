@@ -210,7 +210,7 @@ class Comment extends Votable {
     /**
      * {@inheritdoc}
      */
-    public function vote(User $user, ?string $ip, int $choice) {
+    public function vote(User $user, ?string $ip, int $choice): void {
         if ($this->submission->getForum()->userIsBanned($user)) {
             throw new BannedFromForumException();
         }
