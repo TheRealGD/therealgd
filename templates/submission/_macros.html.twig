@@ -186,6 +186,14 @@
                   <a href="{{ path('ban_user', {'username': submission.user.username}) }}">{{ 'action.global_ban'|trans }}</a>
                 </li>
               {%- endif -%}
+              {%- if is_granted('ROLE_USER') -%}
+                <li>
+                  <form action="{{ path('report_submission', {'forum_name': submission.forum.name, 'submission_id': submission.id}) }}" method="POST">
+                    <input type="hidden" name="token" value="{{ csrf_token('report_submission') }}">
+                    <button class="confirm-submission-report">{{ 'action.report'|trans }}</button>
+                  </form>
+                </li>
+              {%- endif -%}
             </ul>
           </nav>
         {%- endspaceless -%}

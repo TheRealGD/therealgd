@@ -32,7 +32,11 @@ unsticky_comment:
     controller: App\Controller\CommentController::unstickyComment
     path: /f/{forum_name}/{submission_id}/unsticky_comment/{comment_id}
     methods: [POST]
-
+    
+report_comment:
+    controller: App\Controller\CommentController::reportComment
+    path: /f/{forum_name}/{submission_id}/report_comment/{comment_id}
+    methods: [POST]
 
 softdelete_comment:
     controller: App\Controller\CommentController::softDeleteComment
