@@ -7,12 +7,15 @@ use App\Entity\Forum;
 use App\Entity\ForumLogSubmissionDeletion;
 use App\Entity\ForumLogSubmissionLock;
 use App\Entity\Submission;
+use App\Entity\Report;
+use App\Entity\ReportEntry;
 use App\Form\DeleteReasonType;
 use App\Form\Model\SubmissionData;
 use App\Form\SubmissionType;
 use App\Repository\SubmissionRepository;
 use App\Repository\ForumRepository;
 use App\Repository\UserRepository;
+use App\Repository\ReportRepository;
 use App\Utils\Slugger;
 use App\Utils\ReportHelper;
 use App\Utils\PermissionsChecker;
@@ -311,21 +314,33 @@ final class SubmissionController extends AbstractController {
         EntityManager $em,
         Request $request,
         Forum $forum,
-        Submission $submission
+        Submission $submission,
+        ReportRepository $rr
     ) {
         $this->validateCsrf('report_submission', $request->request->get('token'));
 
         $submission->incrementReportCount();
         $em->persist($submission);
 
-        $reportTitle = "Submission Report: " . $submission->getId() . " - Report Count: " . $submission->getReportCount();
-        $reportUrl = "/f/" . $forum->getName() . "/" . $submission->getId() . "/" . Slugger::slugify($submission->getTitle());
-        $reportSuccess = ReportHelper::createReport($em, $forum, $request, $reportTitle, $reportUrl);
+        // Find a report for this submission. If it doesn't exist, create it.
+        $report = $rr->findOneBySubmission($submission);
+        if($report == null) {
+            $report = new Report();
+            $report->setSubmission($submission);
+            $report->setForum($forum);
+            $em->persist($report);
+            $em->flush();
+        }
 
-        if($reportSuccess)
-            $this->addFlash('success', 'flash.comment_reported');
-        else
-            $this->addFlash('notice', 'flash.report_fail');
+        // Add the report entry to the report.
+        $entry = new ReportEntry();
+        $entry->setReport($report);
+        $entry->setUser($this->getUser());
+        $entry->setBody("Test submission report");
+        $em->persist($entry);
+        $em->flush();
+
+        $this->addFlash('success', 'flash.submission_reported');
 
         if ($request->headers->has('Referer')) {
             return $this->redirect($request->headers->get('Referer'));

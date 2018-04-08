@@ -27,6 +27,13 @@ mod_forum:
     methods: [GET]
     requirements: { sortBy: hot|new, page: \d+ }
 
+moderation_queue:
+    controller: App\Controller\ForumController::moderationQueue
+    defaults: { sortBy: new, page: 1 }
+    path: /f/{forum_name}/moderation_queue/{sortBy}/{page}
+    methods: [GET]
+    requirements: { sortBy: hot|new, page: \d+ }
+
 edit_forum:
     controller: App\Controller\ForumController::editForum
     path: /f/{forum_name}/edit

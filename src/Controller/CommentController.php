@@ -7,10 +7,13 @@ use App\Entity\Forum;
 use App\Entity\ForumLogCommentDeletion;
 use App\Entity\Submission;
 use App\Entity\User;
+use App\Entity\Report;
+use App\Entity\ReportEntry;
 use App\Form\CommentType;
 use App\Form\Model\CommentData;
 use App\Repository\CommentRepository;
 use App\Repository\ForumRepository;
+use App\Repository\ReportRepository;
 use App\Utils\Slugger;
 use App\Utils\ReportHelper;
 use Doctrine\ORM\EntityManager;
@@ -247,21 +250,33 @@ final class CommentController extends AbstractController {
         Submission $submission,
         Forum $forum,
         Comment $comment,
-        Request $request
+        Request $request,
+        ReportRepository $rr
     ) {
         $this->validateCsrf('report_comment', $request->request->get('token'));
 
         $comment->incrementReportCount();
         $em->persist($comment);
 
-        $reportTitle = "Comment Report: " . $comment->getId() . " - Report Count: " . $comment->getReportCount();;
-        $reportUrl = "/f/" . $forum->getName() . "/" . $submission->getId() . "/comment/" . $comment->getId();
-        $reportSuccess = ReportHelper::createReport($em, $forum, $request, $reportTitle, $reportUrl);
+        // Find a report for this comment. If it doesn't exist, create it.
+        $report = $rr->findOneByComment($comment);
+        if($report == null) {
+            $report = new Report();
+            $report->setComment($comment);
+            $report->setForum($forum);
+            $em->persist($report);
+            $em->flush();
+        }
 
-        if($reportSuccess)
-            $this->addFlash('success', 'flash.comment_reported');
-        else
-            $this->addFlash('notice', 'flash.report_fail');
+        // Add the report entry to the report.
+        $entry = new ReportEntry();
+        $entry->setReport($report);
+        $entry->setUser($this->getUser());
+        $entry->setBody("Test comment report");
+        $em->persist($entry);
+        $em->flush();
+
+        $this->addFlash('success', 'flash.comment_reported');
 
         if ($request->headers->has('Referer')) {
             return $this->redirect($request->headers->get('Referer'));

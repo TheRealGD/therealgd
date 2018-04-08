@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% from 'submission/_macros.html.twig' import submission, submission_sort %}
+{% from 'comment/_macros.html.twig' import comment %}
+
+{% block page_classes 'forum-modqueue-page' %}
+{% block title 'Forum Modqueue' %}
+
+{% block body %}
+    {% for report in reports %}
+        {%- set options = { oddClass: (loop.index % 2 == 0) ? 'even' : 'odd' } -%}
+
+        {% if report.getSubmission() != null %}
+          {{ submission(report.getSubmission(), options) }}
+        {% endif %}
+
+        {% if report.getComment() != null %}
+          {{ comment(report.getComment()) }}
+        {% endif %}
+    {% endfor %}
+
+    {% include '_includes/pagination.html.twig' with {pager: reports} %}
+{% endblock %}

@@ -131,7 +131,7 @@ flash:
     page_unlocked: The page was unlocked.
     no_cookies_verification: Does the image not load correctly? Please make sure you aren't blocking cookies and try again.
     no_password_resets: Password resets have been disabled by the administrator.
-    thread_reported: The submission has been reported.
+    submission_reported: The submission has been reported.
     comment_reported: The comment has been reported.
     generic_error: An error had occurred, please try again later.
     report_fail: The reporting system is unavailable, please contact Moderators directly.
