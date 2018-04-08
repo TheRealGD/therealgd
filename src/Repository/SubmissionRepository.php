@@ -2,114 +2,196 @@
 
 namespace App\Repository;
 
-use App\Entity\Forum;
 use App\Entity\Submission;
-use App\Utils\PrependOrderBy;
+use App\Repository\Submission\NoSubmissionsException;
+use App\Repository\Submission\SubmissionPager;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Doctrine\ORM\QueryBuilder;
-use Pagerfanta\Adapter\DoctrineORMAdapter;
-use Pagerfanta\Pagerfanta;
+use Doctrine\DBAL\Query\QueryBuilder;
 
 class SubmissionRepository extends ServiceEntityRepository {
-    const MAX_PER_PAGE = 25;
+    public const SORT_HOT = 'hot';
+    public const SORT_NEW = 'new';
+    public const SORT_TOP = 'top';
+    public const SORT_CONTROVERSIAL = 'controversial';
+    public const SORT_MOST_COMMENTED = 'most_commented';
+
+    /**
+     * `$sortBy` -> ordered column name mapping
+     *
+     * @var array[]
+     */
+    public const SORT_COLUMN_MAP = [
+        self::SORT_HOT => ['ranking', 'id'],
+        self::SORT_NEW => ['id'],
+        self::SORT_TOP => ['net_score', 'id'],
+        self::SORT_CONTROVERSIAL => ['downvotes', 'id'],
+        self::SORT_MOST_COMMENTED => ['comment_count', 'id'],
+    ];
+
+    public const SORT_COLUMN_TYPES = [
+        'ranking' => 'bigint',
+        'id' => 'bigint',
+        'net_score' => 'integer',
+        'downvotes' => 'integer',
+        'comment_count' => 'integer',
+    ];
+
+    private const MAX_PER_PAGE = 25;
+
+    private const NET_SCORE_JOIN = '('.
+            'SELECT submission_id, '.
+                'COUNT(*) FILTER (WHERE upvote = TRUE) - '.
+                    'COUNT(*) FILTER (WHERE upvote = FALSE) AS net_score '.
+            'FROM submission_votes '.
+            'GROUP BY submission_id'.
+        ')';
+
+    // TODO: implement actually useful controversy metric
+    private const CONTROVERSIAL_JOIN = '('.
+            'SELECT submission_id, COUNT(*) AS downvotes '.
+            'FROM submission_votes '.
+            'WHERE NOT upvote = FALSE '.
+            'GROUP BY submission_id'.
+        ')';
+
+    private const COMMENT_COUNT_JOIN = '('.
+            'SELECT submission_id, COUNT(*) AS comment_count '.
+            'FROM comments '.
+            'GROUP BY submission_id'.
+        ')';
 
     public function __construct(ManagerRegistry $registry) {
         parent::__construct($registry, Submission::class);
     }
 
     /**
-     * @param string[] $forums array where keys are forum IDs
-     * @param string   $sortBy
-     * @param int      $page
+     * The amazing submission finder.
      *
-     * @return Pagerfanta|Submission[]
-     */
-    public function findFrontPageSubmissions(array $forums, string $sortBy, int $page = 1) {
-        if (isset($forums[0])) {
-            // make sure $forums is id => forum_name array
-            throw new \InvalidArgumentException('Keys in $forums must be IDs');
-        }
-
-        $qb = $this->findSortedQb($sortBy)
-            ->where('IDENTITY(s.forum) IN (:forums)')
-            ->setParameter(':forums', array_keys($forums));
-
-        $submissions = $this->paginate($qb, $page);
-
-        $this->hydrateAssociations($submissions);
-
-        return $submissions;
-    }
-
-    /**
-     * @param Forum  $forum
-     * @param string $sortBy
-     * @param int    $page
+     * @param string $sortBy    One of SORT_* constants
+     * @param array  $options   An array with the following keys:
+     *                          <ul>
+     *                          <li><kbd>forums</kbd>: IDs of forums to restrict
+     *                          to.
+     *                          <li><kbd>excluded_forums</kbd>: IDs of excluded
+     *                          (blacklisted) forums. Blacklisted forums will
+     *                          not be displayed even if they are included in
+     *                          <kbd>forums</kbd>.
+     *                          <li><kbd>users</kbd>: IDs of users to restrict to.
+     *                          <li><kbd>excluded_users</kbd>: IDs of excluded
+     *                          users. Again, blacklisting takes precedence.
+     *                          <li><kbd>stickies</kbd>: Put stickies first.
+     *                          <li><kbd>max_per_page</kbd>: Self-explanatory.
+     *                          </ul>
+     * @param array  $pager
      *
-     * @return Pagerfanta|Submission[]
-     */
-    public function findForumSubmissions(Forum $forum, string $sortBy, int $page = 1) {
-        $qb = $this->findSortedQb($sortBy)
-            ->andWhere('s.forum = :forum')
-            ->setParameter('forum', $forum);
-
-        if ($sortBy === 'hot') {
-            PrependOrderBy::prepend($qb, 's.sticky', 'DESC');
-        }
-
-        $submissions = $this->paginate($qb, $page);
-
-        $this->hydrateAssociations($submissions);
-
-        return $submissions;
-    }
-
-    /**
-     * @param string $sortBy
-     * @param int    $page
+     * @return Submission[]|SubmissionPager
      *
-     * @return Pagerfanta|Submission[]
+     * @throws \InvalidArgumentException if $sortBy is bad
+     * @throws NoSubmissionsException    if there are no submissions
      */
-    public function findAllSubmissions(string $sortBy, int $page = 1) {
-        $submissions = $this->paginate($this->findSortedQb($sortBy), $page);
+    public function findSubmissions(string $sortBy, array $options = [], array $pager = []) {
+        $maxPerPage = $options['max_per_page'] ?? self::MAX_PER_PAGE;
 
-        $this->hydrateAssociations($submissions);
+        $rsm = $this->createResultSetMappingBuilder('s');
 
-        return $submissions;
-    }
+        $qb = $this->_em->getConnection()->createQueryBuilder()
+            ->select($rsm->generateSelectClause())
+            ->from('submissions', 's')
+            ->setMaxResults($maxPerPage + 1);
 
-    /**
-     * @param string $sortType one of 'hot' or 'new'
-     *
-     * @return QueryBuilder
-     */
-    public function findSortedQb($sortType) {
-        $qb = $this->createQueryBuilder('s');
-
-        switch ($sortType) {
-        case 'hot':
-            $this->sortByHot($qb);
+        switch ($sortBy) {
+        case self::SORT_HOT:
+        case self::SORT_NEW:
             break;
-        case 'new':
-            $this->sortByNewest($qb);
+        case self::SORT_TOP:
+            $qb->join('s', self::NET_SCORE_JOIN, 'ns', 's.id = ns.submission_id');
             break;
-        case 'top':
-            throw new \InvalidArgumentException('Sorting by "top" is no longer supported');
-        case 'controversial':
-            throw new \InvalidArgumentException('Sorting by "controversial" is no longer supported');
+        case self::SORT_CONTROVERSIAL:
+            $qb->join('s', self::CONTROVERSIAL_JOIN, 'cn', 's.id = cn.submission_id');
+            break;
+        case self::SORT_MOST_COMMENTED:
+            $qb->join('s', self::COMMENT_COUNT_JOIN, 'cc', 's.id = cc.submission_id');
+            break;
         default:
-            throw new \InvalidArgumentException('Bad sort type');
+            throw new \InvalidArgumentException("Sort mode '$sortBy' not implemented");
         }
 
-        return $qb;
+        if (!$pager && !empty($options['stickies'])) {
+            // FIXME: won't work if there are >= $maxPerPage stickies (lol)
+            $qb->orderBy('sticky', 'DESC');
+        }
+
+        foreach (self::SORT_COLUMN_MAP[$sortBy] as $column) {
+            $qb->addOrderBy($column, 'DESC');
+        }
+
+        if ($pager) {
+            $qb->andWhere(sprintf('(%s) <= (:next_%s)',
+                implode(', ', self::SORT_COLUMN_MAP[$sortBy]),
+                implode(', :next_', self::SORT_COLUMN_MAP[$sortBy])
+            ));
+
+            foreach (self::SORT_COLUMN_MAP[$sortBy] as $column) {
+                $qb->setParameter('next_'.$column, $pager[$column]);
+            }
+        }
+
+        self::filterQuery($qb, $options);
+
+        $results = $this->_em
+            ->createNativeQuery($qb->getSQL(), $rsm)
+            ->setParameters($qb->getParameters())
+            ->execute();
+
+        if ($pager && \count($results) === 0) {
+            throw new NoSubmissionsException();
+        }
+
+        $submissions = new SubmissionPager($results, $maxPerPage, $sortBy);
+
+        $this->hydrateAssociations($submissions);
+
+        return $submissions;
     }
 
-    public function hydrateAssociations($submissions) {
+    private static function filterQuery(QueryBuilder $qb, array $options): void {
+        if (!empty($options['forums'])) {
+            /* @noinspection NotOptimalIfConditionsInspection */
+            if (!empty($options['excluded_forums'])) {
+                $options['forums'] = array_diff(
+                    $options['forums'],
+                    $options['excluded_forums']
+                );
+            }
+
+            $qb->andWhere('s.forum_id IN (:forum_ids)');
+            $qb->setParameter('forum_ids', $options['forums']);
+        } elseif (!empty($options['excluded_forums'])) {
+            $qb->andWhere('s.forum_id NOT IN (:forum_ids)');
+            $qb->setParameter('forum_ids', $options['excluded_forums']);
+        }
+
+        if (!empty($options['users'])) {
+            /* @noinspection NotOptimalIfConditionsInspection */
+            if (!empty($options['excluded_users'])) {
+                $options['users'] = array_diff(
+                    $options['users'],
+                    $options['excluded_users']
+                );
+            }
+
+            $qb->andWhere('s.user_id IN (:user_ids)');
+            $qb->setParameter('user_ids', $options['users']);
+        } elseif (!empty($options['excluded_users'])) {
+            $qb->andWhere('s.user_id NOT IN (:user_ids)');
+            $qb->setParameter('user_ids', $options['excluded_users']);
+        }
+    }
+
+    private function hydrateAssociations(iterable $submissions): void {
         if ($submissions instanceof \Traversable) {
             $submissions = iterator_to_array($submissions);
-        } elseif (!is_array($submissions)) {
-            throw new \InvalidArgumentException('$submissions must be iterable');
         }
 
         $this->_em->createQueryBuilder()
@@ -143,24 +225,5 @@ class SubmissionRepository extends ServiceEntityRepository {
             ->setParameter(1, $submissions)
             ->getQuery()
             ->getResult();
-    }
-
-    private function sortByHot(QueryBuilder $qb) {
-        $qb->addOrderBy('s.ranking', 'DESC');
-        $qb->addOrderBy('s.id', 'DESC');
-    }
-
-    private function sortByNewest(QueryBuilder $qb) {
-        $qb->addOrderBy('s.id', 'DESC');
-    }
-
-    private function paginate($query, int $page): Pagerfanta {
-        // I don't think we need to fetch-join when joined entities aren't
-        // included in the result.
-        $pager = new Pagerfanta(new DoctrineORMAdapter($query, false, false));
-        $pager->setMaxPerPage(self::MAX_PER_PAGE);
-        $pager->setCurrentPage($page);
-
-        return $pager;
     }
 }

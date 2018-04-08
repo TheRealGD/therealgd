@@ -1,41 +1,48 @@
 front:
     controller: App\Controller\FrontController::front
-    defaults: { sortBy: hot, page: 1 }
-    path: /{sortBy}/{page}
+    defaults: { sortBy: hot }
+    path: /{sortBy}
     methods: [GET]
-    requirements: { sortBy: hot|new, page: \d+ }
+    requirements: { sortBy: "%submission_sort_modes%" }
 
 featured:
     controller: App\Controller\FrontController::featured
-    defaults: { sortBy: hot, page: 1}
-    path: /featured/{sortBy}/{page}
+    defaults: { sortBy: hot }
+    path: /featured/{sortBy}
     methods: [GET]
-    requirements: { sortBy: hot|new, page: \d+ }
+    requirements: { sortBy: "%submission_sort_modes%" }
 
 subscribed:
     controller: App\Controller\FrontController::subscribed
-    defaults: { sortBy: hot, page: 1 }
-    path: /subscribed/{sortBy}/{page}
+    defaults: { sortBy: hot }
+    path: /subscribed/{sortBy}
     methods: [GET]
-    requirements: { sortBy: hot|new, page: \d+ }
+    requirements: { sortBy: "%submission_sort_modes%" }
 
 all:
     controller: App\Controller\FrontController::all
-    defaults: { sortBy: hot, page: 1 }
-    path: /all/{sortBy}/{page}
+    defaults: { sortBy: hot }
+    path: /all/{sortBy}
     methods: [GET]
-    requirements: { sortBy: hot|new, page: \d+ }
+    requirements: { sortBy: "%submission_sort_modes%" }
 
 moderated:
     controller: App\Controller\FrontController::moderated
-    defaults: { sortBy: hot, page: 1 }
-    path: /moderated/{sortBy}/{page}
+    defaults: { sortBy: hot }
+    path: /moderated/{sortBy}
     methods: [GET]
-    requirements: { sortBy: hot|new, page: \d+ }
+    requirements: { sortBy: "%submission_sort_modes%" }
 
 featured_feed:
     controller: App\Controller\FrontController::featuredFeed
-    defaults: { sortBy: hot, page: 1, _format: xml }
-    path: /featured/{sortBy}/{page}.atom
+    defaults: { sortBy: hot, _format: xml }
+    path: /featured/{sortBy}.atom
     methods: [GET]
-    requirements: { sortBy: hot|new, page: \d+ }
+    requirements: { sortBy: "%submission_sort_modes%" }
+
+featured_feed_legacy_redirect:
+    controller: FrameworkBundle:Redirect:redirect
+    defaults: { route: featured_feed, ignoreAttributes: true }
+    methods: [GET]
+    path: /featured/{sortBy}/{_page}.atom
+    requirements: { sortBy: "%submission_sort_modes%", page: \d+ }

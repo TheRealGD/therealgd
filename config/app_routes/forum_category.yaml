@@ -6,10 +6,10 @@ manage_forum_categories:
 
 forum_category:
     controller: App\Controller\ForumCategoryController::category
-    defaults: { sortBy: hot, page: 1 }
-    path: /c/{name}/{sortBy}/{page}
+    defaults: { sortBy: hot }
+    path: /c/{name}/{sortBy}
     methods: [GET]
-    requirements: { sortBy: hot|new, page: \d+ }
+    requirements: { sortBy: "%submission_sort_modes%" }
 
 create_forum_category:
     controller: App\Controller\ForumCategoryController::create

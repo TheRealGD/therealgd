@@ -215,6 +215,10 @@ class Submission extends Votable {
         return $this->comments;
     }
 
+    public function getCommentCount(): int {
+        return \count($this->comments);
+    }
+
     /**
      * Get top-level comments, ordered by descending net score.
      *
