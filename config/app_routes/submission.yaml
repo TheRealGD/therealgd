@@ -73,3 +73,8 @@ submission_vote:
     path: /sv/{id}.{_format}
     methods: [POST]
     requirements: { _format: html|json }
+
+report_submission:
+    controller: App\Controller\SubmissionController::report
+    path: /f/{forum_name}/{submission_id}/report
+    methods: [POST]

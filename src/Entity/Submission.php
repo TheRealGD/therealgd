@@ -154,6 +154,13 @@ class Submission extends Votable {
      */
     private $modThread = false;
 
+    /**
+     * @ORM\Column(type="bigint", options={"default": 0})
+     *
+     * @var int
+     */
+     private $reportCount = 0;
+
     public function __construct(
         string $title,
         ?string $url,
@@ -389,5 +396,13 @@ class Submission extends Votable {
 
     public function setLocked(bool $locked) {
         $this->locked = $locked;
+    }
+
+    public function getReportCount(): int {
+      return $this->reportCount;
+    }
+
+    public function incrementReportCount() {
+      $this->reportCount++;
     }
 }

@@ -12,6 +12,7 @@ use App\Form\Model\CommentData;
 use App\Repository\CommentRepository;
 use App\Repository\ForumRepository;
 use App\Utils\Slugger;
+use App\Utils\ReportHelper;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -226,6 +227,51 @@ final class CommentController extends AbstractController {
         }
 
         return $this->redirectAfterAction($comment, $request);
+    }
+
+    /**
+     * Reports a comment.
+     *
+     * @IsGranted("ROLE_USER")
+     *
+     * @param EntityManager $em
+     * @param Submission    $submission
+     * @param Forum         $forum
+     * @param Comment       $comment
+     * @param Request       $request
+     *
+     * @return Response
+     */
+    public function reportComment(
+        EntityManager $em,
+        Submission $submission,
+        Forum $forum,
+        Comment $comment,
+        Request $request
+    ) {
+        $this->validateCsrf('report_comment', $request->request->get('token'));
+
+        $comment->incrementReportCount();
+        $em->persist($comment);
+
+        $reportTitle = "Comment Report: " . $comment->getId() . " - Report Count: " . $comment->getReportCount();;
+        $reportUrl = "/f/" . $forum->getName() . "/" . $submission->getId() . "/comment/" . $comment->getId();
+        $reportSuccess = ReportHelper::createReport($em, $forum, $request, $reportTitle, $reportUrl);
+
+        if($reportSuccess)
+            $this->addFlash('success', 'flash.comment_reported');
+        else
+            $this->addFlash('notice', 'flash.report_fail');
+
+        if ($request->headers->has('Referer')) {
+            return $this->redirect($request->headers->get('Referer'));
+        }
+
+        return $this->redirectToRoute('submission', [
+            'forum_name' => $forum->getName(),
+            'submission_id' => $submission->getId(),
+            'slug' => Slugger::slugify($submission->getTitle()),
+        ]);
     }
 
     /**

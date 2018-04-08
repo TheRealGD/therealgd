@@ -14,6 +14,8 @@ use App\Repository\SubmissionRepository;
 use App\Repository\ForumRepository;
 use App\Repository\UserRepository;
 use App\Utils\Slugger;
+use App\Utils\ReportHelper;
+use App\Utils\PermissionsChecker;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -283,6 +285,47 @@ final class SubmissionController extends AbstractController {
         } else {
             $this->addFlash('success', 'flash.submission_unlocked');
         }
+
+        if ($request->headers->has('Referer')) {
+            return $this->redirect($request->headers->get('Referer'));
+        }
+
+        return $this->redirectToRoute('submission', [
+            'forum_name' => $forum->getName(),
+            'submission_id' => $submission->getId(),
+            'slug' => Slugger::slugify($submission->getTitle()),
+        ]);
+    }
+
+    /**
+     * @IsGranted("ROLE_USER")
+     *
+     * @param EntityManager $em
+     * @param Request       $request
+     * @param Forum         $forum
+     * @param Submission    $submission
+     *
+     * @return Response
+     */
+    public function report(
+        EntityManager $em,
+        Request $request,
+        Forum $forum,
+        Submission $submission
+    ) {
+        $this->validateCsrf('report_submission', $request->request->get('token'));
+
+        $submission->incrementReportCount();
+        $em->persist($submission);
+
+        $reportTitle = "Submission Report: " . $submission->getId() . " - Report Count: " . $submission->getReportCount();
+        $reportUrl = "/f/" . $forum->getName() . "/" . $submission->getId() . "/" . Slugger::slugify($submission->getTitle());
+        $reportSuccess = ReportHelper::createReport($em, $forum, $request, $reportTitle, $reportUrl);
+
+        if($reportSuccess)
+            $this->addFlash('success', 'flash.comment_reported');
+        else
+            $this->addFlash('notice', 'flash.report_fail');
 
         if ($request->headers->has('Referer')) {
             return $this->redirect($request->headers->get('Referer'));
