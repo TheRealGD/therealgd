@@ -34,7 +34,7 @@
         </a>
       {% endif %}
 
-      <p>Don't have an account? <a href="">Sign up now.</a>
+      <a href="{{ path('registration') }}" class="button button--secondary"> {{ 'nav.register'|trans }}</a>
     </div>
   </form>
 {% endblock %}
