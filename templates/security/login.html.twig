@@ -33,7 +33,8 @@
           {{- 'login_form.reset_password'|trans -}}
         </a>
       {% endif %}
+
+      <a href="{{ path('registration') }}" class="button button--secondary"> {{ 'nav.register'|trans }}</a>
     </div>
   </form>
 {% endblock %}
-
