@@ -1,0 +1,17 @@
+add_rate_limit:
+    controller: App\Controller\NautBotController::addLimit
+    defaults: { group_name: null }
+    path: /f/{forum_name}/nautbot/limit/{group_name}
+    methods: [GET, POST]
+
+nautbot:
+    controller: App\Controller\NautBotController::info
+    defaults: { page: 1 }
+    path: /f/{forum_name}/nautbot/{page}
+    methods: [GET]
+    requirements: { page: \d+ }
+
+remove_rate_limit:
+    controller: App\Controller\NautBotController::removeLimit
+    path: /f/{forum_name}/nautbot/limit/remove/{group_name}
+    methods: [POST]

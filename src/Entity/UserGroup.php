@@ -58,6 +58,14 @@ class UserGroup {
      */
     private $displayTitle = false;
 
+    /**
+     * @ORM\OneToMany(targetEntity="RateLimit", mappedBy="forum_id")
+     * @ORM\OrderBy({"forum_id": "ASC"})
+     *
+     * @var RateLimit[]|Collection|Selectable
+     */
+    public $rateLimits;
+
     public function __construct(string $name, string $title, bool $displayTitle) {
         $this->setName($name);
         $this->title = $title;
@@ -108,6 +116,10 @@ class UserGroup {
 
     public function setDisplayTitle($displayTitle) {
         $this->displayTitle =  $displayTitle;
+    }
+
+    public function getRateLimits() {
+        return $this->rateLimits;
     }
 }
 

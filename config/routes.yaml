@@ -10,6 +10,9 @@ _comment:
 _forum:
     resource: app_routes/forum.yaml
 
+_naut_bot:
+    resource: app_routes/naut_bot.yaml
+
 _forum_category:
     resource: app_routes/forum_category.yaml
 
