@@ -33,6 +33,8 @@ class RateLimitRepository extends ServiceEntityRepository {
 
     private $nautBot;
 
+    private $adminForum;
+
     public function __construct(
         ManagerRegistry $registry,
         UrlGeneratorInterface $urlGenerator,
@@ -43,6 +45,7 @@ class RateLimitRepository extends ServiceEntityRepository {
         $this->urlGenerator = $urlGenerator;
         $this->requestStack = $requestStack;
         $this->nautBot = $this->getEntityManager()->find("App\\Entity\\User", 0);
+        $this->adminForum = $this->getEntityManager()->find("App\\Entity\\Forum", 0);
     }
 
     public function findOneOrRedirectToCanonical(Forum $forum, UserGroup $group): ?RateLimit {
@@ -96,7 +99,7 @@ class RateLimitRepository extends ServiceEntityRepository {
 
     public function getRateLimit(UserGroup $group = null, Forum $forum) {
         if (is_null($group)) {
-            return false;
+            return null;
         }
         $rate = $this->createQueryBuilder('rl')
             ->where('rl.group = :group')
@@ -106,9 +109,13 @@ class RateLimitRepository extends ServiceEntityRepository {
             ->getQuery()
             ->execute();
         if (is_null($rate) || count($rate) <= 0) {
-            return false;
+            return null;
         }
         return $rate[0];
+    }
+
+    public function getGlobalRateLimit(UserGroup $group = null) {
+        return $this->getRateLimit($group, $this->adminForum);
     }
 
     /**
@@ -118,7 +125,9 @@ class RateLimitRepository extends ServiceEntityRepository {
      * @return RateLimit[]|Pagerfanta
      */
     public function findPaginated($forum, int $page) {
-        $qb = $this->createQueryBuilder('rl');
+        $qb = $this->createQueryBuilder('rl')
+            ->where('rl.forum = :forum')
+            ->setParameter(':forum', $forum);
         $pager = new Pagerfanta(new DoctrineORMAdapter($qb));
         $pager->setMaxPerPage(25);
         $pager->setCurrentPage($page);
@@ -129,24 +138,26 @@ class RateLimitRepository extends ServiceEntityRepository {
     public function verifyPost(User $user, Forum $forum, Submission $new, Submission $old = null) {
         $group = $user->getGroup();
         $rate = $this->getRateLimit($group, $forum);
-        if (is_null($group) || is_null($old) || $rate === false) {
-echo 'failing first check';die;
+        if (is_null($group) || is_null($old)) {
             return false;
         }
-        $lastPostTime = $this->getPostTimeStamp($old);
-        $newPostTime = $this->getPostTimeStamp($new);
-        $earliestAllowed = $lastPostTime + ($rate->getRate() * 60 * 60);
-        if ($newPostTime < $earliestAllowed) {
-            return $this->rateLimitViolation($new, $old, $newPostTime - $lastPostTime);
+        $violations = [];
+        $forumViolation = $this->checkRate($rate, $new, $old);
+        if ($forumViolation !== false) {
+            array_push($violations, $forumViolation);
         }
-        return false;
+        $globalViolation = $this->checkRate($this->getGlobalRateLimit($group), $new, $old);
+        if ($globalViolation !== false) {
+            array_push($violations, $globalViolation);
+        }
+        return count($violations) >= 1 ? $violations : false;
     }
 
-    public function rateLimitViolation(Submission $new, Submission $old, int $delta) {
+    public function rateLimitViolation(Submission $new, Submission $old, RateLimit $rate, int $delta) {
         $break = "  \r";
         $user = $new->getUser();
         $group = $user->getGroup();
-        $forum = $new->getForum();
+        $forum = $rate->getForum();
 
         $title = $user->getGroup()->getName() . ' Submission Rule Violation';
 
@@ -156,7 +167,7 @@ echo 'failing first check';die;
         $content .= 'New Post: [' . $new->getTitle() . '](/f/' . $forum->getName() . '/' . $new->getId() . ')' . $break;
         $content .= 'Old Post: [' . $old->getTitle() . '](/f/' . $forum->getName() . '/' . $old->getId() . ')' . $break;
         $content .= 'Time between posts: ' . round($delta / 60 / 60, 2) . ' hour(s)' .  $break;
-        $content .= 'Group\'s limit: 1 post every ' . $this->getRateLimit($group, $forum)->getRate() . ' hour(s)';
+        $content .= 'Group\'s limit: 1 post every ' . $rate->getRate() . ' hour(s)';
         return new Submission(
             $title,
             null,
@@ -167,6 +178,19 @@ echo 'failing first check';die;
             false,
             true
         );
+    }
+
+    private function checkRate(RateLimit $rate = null, Submission $new, Submission $old = null) {
+        if (is_null($rate) || is_null($old) || $rate === false) {
+            return false;
+        }
+        $lastPostTime = $this->getPostTimeStamp($old);
+        $newPostTime = $this->getPostTimeStamp($new);
+        $earliestAllowed = $lastPostTime + ($rate->getRate() * 60 * 60);
+        if ($newPostTime < $earliestAllowed) {
+            return $this->rateLimitViolation($new, $old, $rate, $newPostTime - $lastPostTime);
+        }
+        return false;
     }
 
     private function getPostTimeStamp(Submission $post) {

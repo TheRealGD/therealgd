@@ -76,6 +76,7 @@ class SubmissionRepository extends ServiceEntityRepository {
     public function findModForumSubmissions(Forum $forum, string $sortBy, int $page = 1) {
         $qb = $this->findSortedQb($sortBy, true)
             ->andWhere('s.forum = :forum')
+            ->andWhere('s.modThread = true')
             ->setParameter('forum', $forum);
 
         if ($sortBy === 'hot') {
