@@ -10,9 +10,9 @@
 {%- macro submission_sort(current) -%}
   {%- set attr = app.request.attributes -%}
   {%- spaceless -%}
-    {%- for type in ['hot', 'new'] -%}
+    {%- for type in ['hot', 'new', 'top', 'controversial', 'most_commented'] -%}
       <li class="tabs__tab {{ type == current ? 'tabs__tab--active active' }}">
-        <a href="{{ path(attr.get('_route'), (attr.get('_route_params') ?? [])|merge({page: 1, sortBy: type})) }}" class="tabs__link {{ type == current ? 'tabs__link--active' }}">
+        <a href="{{ path(attr.get('_route'), (attr.get('_route_params') ?? [])|merge({sortBy: type})) }}" class="tabs__link {{ type == current ? 'tabs__link--active' }}">
           {{- ('submissions.sort_by_'~type)|trans -}}
         </a>
       </li>

@@ -1,24 +1,30 @@
 multi:
     controller: App\Controller\ForumController::multi
-    defaults: { sortBy: hot, page: 1 }
-    path: /f/{names}/{sortBy}/{page}
+    defaults: { sortBy: hot }
+    path: /f/{names}/{sortBy}
     requirements:
         names: '(?:\w{3,25}\+){1,70}\w{3,25}'
-        sortBy: hot|new
+        sortBy: "%submission_sort_modes%"
 
 forum:
     controller: App\Controller\ForumController::front
-    defaults: { sortBy: hot, page: 1 }
-    path: /f/{forum_name}/{sortBy}/{page}
+    defaults: { sortBy: hot }
+    path: /f/{forum_name}/{sortBy}
     methods: [GET]
-    requirements: { sortBy: hot|new, page: \d+ }
+    requirements: { sortBy: "%submission_sort_modes%" }
 
 forum_feed:
     controller: App\Controller\ForumController::feed
-    defaults: { sortBy: hot, page: 1, _format: xml }
-    path: /f/{forum_name}/{sortBy}/{page}.atom
+    defaults: { sortBy: hot, _format: xml }
+    path: /f/{forum_name}/{sortBy}.atom
     methods: [GET]
-    requirements: { sortBy: hot|new, page: \d+ }
+    requirements: { sortBy: "%submission_sort_modes%" }
+
+forum_feed_legacy_redirect:
+    controller: FrameworkBundle:Redirect:redirect
+    defaults: { route: forum_feed, ignoreAttributes: [page] }
+    path: /f/{forum_name}/{sortBy}/{page}.atom
+    requirements: { page: \d+ }
 
 edit_forum:
     controller: App\Controller\ForumController::editForum

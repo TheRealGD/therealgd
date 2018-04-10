@@ -16,13 +16,16 @@ use Symfony\Component\HttpFoundation\Response;
 class ForumCategoryController extends AbstractController {
     public function category(
         ForumCategory $category,
-        string $sortBy, int $page,
+        string $sortBy,
         ForumRepository $fr,
-        SubmissionRepository $sr
+        SubmissionRepository $sr,
+        Request $request
     ): Response {
         $forums = $fr->findForumsInCategory($category);
 
-        $submissions = $sr->findFrontPageSubmissions($forums, $sortBy, $page);
+        $submissions = $sr->findSubmissions($sortBy, [
+            'forums' => array_keys($forums),
+        ], $this->submissionPage($sortBy, $request));
 
         return $this->render('forum_category/category.html.twig', [
             'category' => $category,

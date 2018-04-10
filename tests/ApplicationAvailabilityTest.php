@@ -14,7 +14,7 @@ class ApplicationAvailabilityTest extends WebTestCase {
      * @param string $url
      */
     public function testCanAccessPublicPages($url) {
-        $client = $this->createClient();
+        $client = self::createClient();
         $client->request('GET', $url);
 
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -26,7 +26,7 @@ class ApplicationAvailabilityTest extends WebTestCase {
      * @param string $url
      */
     public function testCanAccessPagesThatNeedAuthentication($url) {
-        $client = $this->createClient([], [
+        $client = self::createClient([], [
             'PHP_AUTH_USER' => 'emma',
             'PHP_AUTH_PW' => 'goodshit',
         ]);
@@ -41,7 +41,7 @@ class ApplicationAvailabilityTest extends WebTestCase {
      * @param string $url
      */
     public function testCannotAccessPagesThatNeedAuthenticationWhenNotAuthenticated($url) {
-        $client = $this->createClient();
+        $client = self::createClient();
         $client->request('GET', $url);
 
         $this->assertTrue($client->getResponse()->isRedirect());
@@ -55,9 +55,11 @@ class ApplicationAvailabilityTest extends WebTestCase {
      * @param string $url
      */
     public function testRedirectedUrlsGoToExpectedLocation($expectedLocation, $url) {
-        $client = $this->createClient();
+        $client = self::createClient();
         $client->followRedirects();
         $client->request('GET', $url);
+
+        $this->assertTrue($client->getResponse()->isSuccessful());
 
         $this->assertEquals(
             "http://localhost{$expectedLocation}",
@@ -73,29 +75,37 @@ class ApplicationAvailabilityTest extends WebTestCase {
         yield ['/'];
         yield ['/hot'];
         yield ['/new'];
-        yield ['/hot/1'];
-        yield ['/new/1'];
+        yield ['/top'];
+        yield ['/controversial'];
+        yield ['/most_commented'];
         yield ['/all/hot'];
         yield ['/all/new'];
-        yield ['/all/hot/1'];
-        yield ['/all/new/1'];
+        yield ['/all/top'];
+        yield ['/all/controversial'];
+        yield ['/all/most_commented'];
         yield ['/featured/hot'];
         yield ['/featured/new'];
-        yield ['/featured/hot/1'];
-        yield ['/featured/new/1'];
-        yield ['/featured/hot/1.atom'];
-        yield ['/featured/new/1.atom'];
+        yield ['/featured/top'];
+        yield ['/featured/controversial'];
+        yield ['/featured/most_commented'];
+        yield ['/featured/hot.atom'];
+        yield ['/featured/new.atom'];
+        yield ['/featured/top.atom'];
+        yield ['/featured/controversial.atom'];
+        yield ['/featured/most_commented.atom'];
         yield ['/f/news/hot'];
         yield ['/f/news/new'];
-        yield ['/f/news/hot/1'];
-        yield ['/f/news/new/1'];
-        yield ['/f/news/hot/1.atom'];
-        yield ['/f/news/new/1.atom'];
-        yield ['/f/news/1'];
+        yield ['/f/news/top'];
+        yield ['/f/news/controversial'];
+        yield ['/f/news/most_commented'];
+        yield ['/f/news/hot.atom'];
+        yield ['/f/news/new.atom'];
+        yield ['/f/news/top.atom'];
+        yield ['/f/news/controversial.atom'];
+        yield ['/f/news/most_commented.atom'];
         yield ['/f/news/1/comment/1'];
         yield ['/f/news/bans'];
         yield ['/f/news/moderation_log'];
-        yield ['/f/cats/2'];
         yield ['/forums'];
         yield ['/forums/by_name'];
         yield ['/forums/by_title'];
@@ -112,16 +122,15 @@ class ApplicationAvailabilityTest extends WebTestCase {
     }
 
     public function redirectUrlProvider() {
-        yield ['/f/cats/2', '/f/cats/2/'];
         yield ['/f/cats', '/f/cats/'];
-        yield ['/f/cats/2', '/f/CATS/2/'];
-        yield ['/f/cats/2', '/f/CATS/2'];
         yield ['/f/news', '/f/NeWs/hot'];
         yield ['/f/news/new', '/f/NeWs/new'];
-        yield ['/f/news', '/f/NeWs/hot/1'];
-        yield ['/f/news/new', '/f/NeWs/new/1'];
-        yield ['/f/news/1', '/f/NeWs/1'];
+        yield ['/f/news/top', '/f/NeWs/top'];
+        yield ['/f/news/controversial', '/f/NeWs/controversial'];
+        yield ['/f/news/most_commented', '/f/NeWs/most_commented'];
         yield ['/f/news/1/comment/1', '/f/NeWs/1/comment/1'];
+        yield ['/f/news/hot.atom', '/f/news/hot/1.atom'];
+        yield ['/f/news/new.atom', '/f/news/new/1.atom'];
     }
 
     /**
@@ -130,12 +139,14 @@ class ApplicationAvailabilityTest extends WebTestCase {
     public function authUrlProvider() {
         yield ['/subscribed/hot'];
         yield ['/subscribed/new'];
-        yield ['/subscribed/hot/1'];
-        yield ['/subscribed/new/1'];
+        yield ['/subscribed/top'];
+        yield ['/subscribed/controversial'];
+        yield ['/subscribed/most_commented'];
         yield ['/moderated/hot'];
         yield ['/moderated/new'];
-        yield ['/moderated/hot/1'];
-        yield ['/moderated/new/1'];
+        yield ['/moderated/top'];
+        yield ['/moderated/controversial'];
+        yield ['/moderated/most_commented'];
         yield ['/create_forum'];
         yield ['/f/news/edit'];
         yield ['/f/news/appearance'];

@@ -6,6 +6,7 @@ parameters:
     uuid_regex:      '[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}'
     wiki_page_regex: '[A-Za-z][A-Za-z0-9_-]*(/[A-Za-z][A-Za-z0-9_-]*)*'
     env(APP_ENABLE_WEBHOOKS): false
+    submission_sort_modes: hot|new|top|controversial|most_commented
 
 services:
     _defaults:

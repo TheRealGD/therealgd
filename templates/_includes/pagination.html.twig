@@ -1,7 +1,7 @@
 {% with {
   attr: app.request.attributes,
   get: app.request.query.all,
-  hasPrev: pager.hasPreviousPage,
+  hasPrev: pager.hasPreviousPage ?? false,
   hasNext: pager.hasNextPage,
 } %}
   {% if hasPrev or hasNext %}
@@ -16,7 +16,7 @@
         {% endif %}
         {% if hasNext %}
           <li class="next">
-            <a href="{{ path(attr.get('_route'), (attr.get('_route_params') ?? {})|merge(get)|merge({page: pager.nextPage})) }}">
+            <a href="{{ path(attr.get('_route'), (attr.get('_route_params') ?? {})|merge(get)|merge(pager.nextPageParams ?? {page: pager.nextPage})) }}">
               {{ 'nav.next'|trans }}
             </a>
           </li>
