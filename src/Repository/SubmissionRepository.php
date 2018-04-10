@@ -51,7 +51,7 @@ class SubmissionRepository extends ServiceEntityRepository {
     private const CONTROVERSIAL_JOIN = '('.
             'SELECT submission_id, COUNT(*) AS downvotes '.
             'FROM submission_votes '.
-            'WHERE NOT upvote = FALSE '.
+            'WHERE upvote = FALSE '.
             'GROUP BY submission_id'.
         ')';
 
