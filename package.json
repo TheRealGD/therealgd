@@ -19,7 +19,10 @@
         "jquery": "^3.3.1",
         "lodash.debounce": "^4.0.8",
         "normalize.css": "^6.0.0",
-        "select2": "^4.0.5"
+        "select2": "^4.0.5",
+        "vue": "^2.5.16",
+        "vue-loader": "^14.2.2",
+        "vue-template-compiler": "^2.5.16"
     },
     "scripts": {
         "build-dev": "node_modules/.bin/encore dev",

@@ -319,38 +319,37 @@ final class SubmissionController extends AbstractController {
     ) {
         $this->validateCsrf('report_submission', $request->request->get('token'));
 
-        $submission->incrementReportCount();
-        $em->persist($submission);
+        $reportBody = $request->request->get('reportBody');
+        $result = array('success' => false);
 
-        // Find a report for this submission. If it doesn't exist, create it.
-        $report = $rr->findOneBySubmission($submission);
-        if($report == null) {
-            $report = new Report();
-            $report->setSubmission($submission);
-            $report->setForum($forum);
-            $em->persist($report);
+        if(trim($reportBody != "")) {
+            $submission->incrementReportCount();
+            $em->persist($submission);
+
+            // Find a report for this submission. If it doesn't exist, create it.
+            $report = $rr->findOneBySubmission($submission);
+            if($report == null) {
+                $report = new Report();
+                $report->setSubmission($submission);
+                $report->setForum($forum);
+                $em->persist($report);
+                $em->flush();
+            }
+
+            // Add the report entry to the report.
+            $entry = new ReportEntry();
+            $entry->setReport($report);
+            $entry->setUser($this->getUser());
+            $entry->setBody($reportBody);
+            $em->persist($entry);
             $em->flush();
+
+            $result['success'] = true;
         }
 
-        // Add the report entry to the report.
-        $entry = new ReportEntry();
-        $entry->setReport($report);
-        $entry->setUser($this->getUser());
-        $entry->setBody("Test submission report");
-        $em->persist($entry);
-        $em->flush();
-
-        $this->addFlash('success', 'flash.submission_reported');
-
-        if ($request->headers->has('Referer')) {
-            return $this->redirect($request->headers->get('Referer'));
-        }
-
-        return $this->redirectToRoute('submission', [
-            'forum_name' => $forum->getName(),
-            'submission_id' => $submission->getId(),
-            'slug' => Slugger::slugify($submission->getTitle()),
-        ]);
+        $response = new Response(json_encode($result));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
     }
 
     protected function rerouteAwayFromAdmin() {

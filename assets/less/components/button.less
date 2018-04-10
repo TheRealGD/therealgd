@@ -28,6 +28,10 @@
     padding: 0.25rem 0.5rem;
   }
 
+  &[disabled] {
+    background-color: desaturate(lighten(@button-background-color, 35%), 50%);
+  }
+
   // inverted button
   &--secondary {
     background: transparent;
@@ -43,6 +47,12 @@
       background: transparent;
       color: @button-hover-background-color;
       border-color: @button-hover-background-color;
+    }
+
+    &[disabled] {
+      border-color: desaturate(lighten(@button-background-color, 35%), 50%);
+      color: desaturate(lighten(@button-background-color, 35%), 50%);
+
     }
   }
 }

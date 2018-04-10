@@ -57,6 +57,11 @@ block_user:
     path: /block/{username}
     methods: [GET, POST]
 
+block_user_json:
+    controller: App\Controller\UserController::blockJSON
+    path: /block_json/{username}
+    methods: [POST]
+
 unblock_user:
     controller: App\Controller\UserController::unblock
     path: /unblock/{id}
@@ -79,7 +84,7 @@ inbox:
     defaults: { filter: unread, page: 1 }
     path: /inbox/{filter}/{page}
     methods: [GET]
-    requirements: 
+    requirements:
         page: \d+
         filter: all|unread
 

@@ -1,5 +1,3 @@
-'use strict';
-
 // set up some global variables
 window.$ = require('jquery');
 window.Translator = require('bazinga-translator');
@@ -19,3 +17,13 @@ import './submit';
 import './subscribe';
 import './syntax';
 import './vote';
+
+import Vue from 'vue';
+
+import TranslatedText from './components/translatedtext';
+import ReportLink from './components/reportlink';
+
+new Vue({
+  el: '#vue-app',
+  components: {TranslatedText, ReportLink}
+});

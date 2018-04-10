@@ -291,6 +291,40 @@ final class UserController extends AbstractController {
     }
 
     /**
+     * @IsGranted("ROLE_USER")
+     * @Entity("blockee", expr="repository.findOneOrRedirectToCanonical(username, 'username')")
+     *
+     * @param User          $blockee
+     * @param Request       $request
+     * @param EntityManager $em
+     *
+     * @return Response
+     */
+    public function blockJSON(User $blockee, Request $request, EntityManager $em) {
+        /* @var User $blocker */
+        $blocker = $this->getUser();
+        $result = array("message" => "", "status" => "success");
+
+        if ($blocker->isBlocking($blockee)) {
+            $result['status'] = "error";
+            $result['message'] = $blockee->getUsername() . " is already blocked.";
+        } else if($blocker->getId() == $blockee->getId()) {
+            $result['status'] = "error";
+            $result['message'] = "You can not block yourself.";
+        } else {
+            $block = new UserBlock($blocker, $blockee, "");
+            $em->persist($block);
+            $em->flush();
+            $result['message'] = $blockee->getUsername() . " has been blocked.";
+        }
+
+        $response = new Response(json_encode($result));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+    }
+
+
+    /**
      * @Security("is_granted('ROLE_USER') and user === block.getBlocker()")
      *
      * @param UserBlock     $block

@@ -568,3 +568,10 @@ import:
     default_forum: gundeals
     default_user: gundeals
     default_body: Imported from /r/gundeals | %path%
+
+report_modal:
+    initial_header: We're sorry something's wrong. How can we help?
+    rule_select_header: Which rule does it break?
+    other_select_header: What issue?
+    finished_header: Thanks for letting us know!
+    additional_info: Read the <a href="/policy">GunDeals Content Policy</a> and <a href="/f/{0}/rules">f/{0}'s rules</a>.
