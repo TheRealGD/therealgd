@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Forum;
+use App\Entity\User;
 use App\Entity\Submission;
 use App\Utils\PrependOrderBy;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -75,6 +76,7 @@ class SubmissionRepository extends ServiceEntityRepository {
     public function findModForumSubmissions(Forum $forum, string $sortBy, int $page = 1) {
         $qb = $this->findSortedQb($sortBy, true)
             ->andWhere('s.forum = :forum')
+            ->andWhere('s.modThread = true')
             ->setParameter('forum', $forum);
 
         if ($sortBy === 'hot') {
@@ -135,6 +137,22 @@ class SubmissionRepository extends ServiceEntityRepository {
             $qb->andWhere('s.modThread = false');
         }
         return $qb;
+    }
+
+    public function getLastPostByUser(User $user, Forum $forum) {
+        $qb = $this->createQueryBuilder('s');
+        $post = $qb
+          ->where('s.user = :user')
+          ->andWhere('s.forum = :forum')
+          ->setParameter('user', $user)
+          ->setParameter('forum', $forum)
+          ->addOrderBy('s.id', 'desc')
+          ->getQuery()
+          ->execute();
+        if (is_null($post) || count($post) <= 0) {
+            return null;
+        }
+        return $post[0];
     }
 
     public function hydrateAssociations($submissions) {

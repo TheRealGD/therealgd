@@ -16,6 +16,7 @@ use App\Repository\SubmissionRepository;
 use App\Repository\ForumRepository;
 use App\Repository\UserRepository;
 use App\Repository\ReportRepository;
+use App\Repository\RateLimitRepository;
 use App\Utils\Slugger;
 use App\Utils\ReportHelper;
 use App\Utils\PermissionsChecker;
@@ -98,7 +99,8 @@ final class SubmissionController extends AbstractController {
      *
      * @return Response
      */
-    public function submit(EntityManager $em, Request $request, Forum $forum = null) {
+    public function submit(SubmissionRepository $sr, RateLimitRepository $rlr, EntityManager $em, Request $request, Forum $forum = null) {
+        $user = $this->getUser();
         $data = new SubmissionData($forum);
 
         $form = $this->createForm(SubmissionType::class, $data);
@@ -106,8 +108,18 @@ final class SubmissionController extends AbstractController {
 
         if ($form->isSubmitted() && $form->isValid()) {
             $submission = $data->toSubmission($this->getUser(), $request->getClientIp());
+            $forum = $submission->getForum();
 
             $em->persist($submission);
+
+            $lastPost = $sr->getLastPostByUser($user, $forum);
+            $violations = $rlr->verifyPost($user, $forum, $submission, $lastPost);
+            if ($violations !== false) {
+                foreach ($violations as $violation) {
+                    $em->persist($violation);
+                }
+            }
+
             $em->flush();
 
             return $this->redirectToRoute('submission', [
