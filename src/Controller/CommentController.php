@@ -255,38 +255,37 @@ final class CommentController extends AbstractController {
     ) {
         $this->validateCsrf('report_comment', $request->request->get('token'));
 
-        $comment->incrementReportCount();
-        $em->persist($comment);
+        $reportBody = $request->request->get('reportBody');
+        $result = array('success' => false);
 
-        // Find a report for this comment. If it doesn't exist, create it.
-        $report = $rr->findOneByComment($comment);
-        if($report == null) {
-            $report = new Report();
-            $report->setComment($comment);
-            $report->setForum($forum);
-            $em->persist($report);
+        if(trim($reportBody != "")) {
+            $comment->incrementReportCount();
+            $em->persist($comment);
+
+            // Find a report for this comment. If it doesn't exist, create it.
+            $report = $rr->findOneByComment($comment);
+            if($report == null) {
+                $report = new Report();
+                $report->setComment($comment);
+                $report->setForum($forum);
+                $em->persist($report);
+                $em->flush();
+            }
+
+            // Add the report entry to the report.
+            $entry = new ReportEntry();
+            $entry->setReport($report);
+            $entry->setUser($this->getUser());
+            $entry->setBody($reportBody);
+            $em->persist($entry);
             $em->flush();
+
+            $result['success'] = true;
         }
 
-        // Add the report entry to the report.
-        $entry = new ReportEntry();
-        $entry->setReport($report);
-        $entry->setUser($this->getUser());
-        $entry->setBody("Test comment report");
-        $em->persist($entry);
-        $em->flush();
-
-        $this->addFlash('success', 'flash.comment_reported');
-
-        if ($request->headers->has('Referer')) {
-            return $this->redirect($request->headers->get('Referer'));
-        }
-
-        return $this->redirectToRoute('submission', [
-            'forum_name' => $forum->getName(),
-            'submission_id' => $submission->getId(),
-            'slug' => Slugger::slugify($submission->getTitle()),
-        ]);
+        $response = new Response(json_encode($result));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
     }
 
     /**

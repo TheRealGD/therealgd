@@ -8,6 +8,8 @@
   left: 0;
 
   background-color: rgba(0, 0, 0, 0.4);
+
+  display: none;
 }
 
 .modal-pane {
@@ -18,7 +20,16 @@
   width: 100%;
   max-width: 700px;
   margin: 100px auto;
+
+  @media @mq-mobile {
+    margin: 10px auto;
+  }
+
+  transform: translateY(25px);
+  transition: transform 0.1s ease-in-out;
 }
+
+.modal-pane-shown { transform: translateY(0px); }
 
 .modal-header {
   background-color: #f5f5f5;

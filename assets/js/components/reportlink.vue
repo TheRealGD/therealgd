@@ -1,12 +1,14 @@
 <template>
     <span>
-        <a class="submission-nav-link" href="javascript:void(0)" v-on:click="showModal">Report</a>
+        <a class="submission-nav-link" href="javascript:void(0)" v-on:click="showModal"><translated-text :message="'action.report'" /></a>
 
         <template v-if="modalShown">
             <div class="modal-container" v-on:click="closeModal">
                 <div class="modal-pane" v-on:click.stop>
                     <div class="modal-header">
                           <translated-text :message="currentHeader" />
+
+                          <div style="float: right;"><a href="javascript:void0)" class="text-accent" v-on:click="closeModal"><i class="fas fa-times"></i></a></div>
                     </div>
 
                     <div class="modal-content">
@@ -120,11 +122,11 @@
                         </template>
                     </div>
 
-                    <div class="modal-foot flex-no-wrap flex-align-end">
-                        <div class="flex-grow-5 text-smaller text-accent">
+                    <div class="modal-foot desk-flex desk-flex-no-wrap desk-flex-align-end">
+                        <div class="desk-flex desk-flex-grow-5 text-smaller text-accent">
                             <translated-text message="report_modal.additional_info" v-bind:ishtml="true" v-bind:params="[forum]" />
                         </div>
-                        <div class="flex-grow-1 text-right" v-if="!isLoading">
+                        <div class="desk-flex desk-flex-grow-1 text-right" style="padding-top: 5px;" v-if="!isLoading">
                             <button type="button" class="button button--secondary" v-if="cancelVisible" v-on:click="closeModal">Cancel</button>
                             <button type="button" class="button button--secondary" v-if="backVisible" v-on:click="backStep">Back</button>
                             <button type="button" class="button button--secondary" v-if="closeVisible" v-on:click="closeModal">Close</button>
@@ -161,16 +163,23 @@ export default {
     props: {
         forum: { type: String },
         submissionId: { type: String },
+        commentId: { type: String, default: null },
         csrfToken: { type: String },
         userName: { type: String }
     },
     methods: {
         showModal: function() {
             this.$data.modalShown = true;
+            setTimeout(function() {
+              $(".modal-container").fadeIn(100);
+              $(".modal-pane").addClass('modal-pane-shown');
+            }, 0);
         },
         closeModal: function() {
             // Reset the boject state.
-            Object.assign(this.$data, this.$options.data.call(this));
+            var self = this;
+            $(".modal-pane").removeClass('modal-pane-shown')
+            $(".modal-container").fadeOut(100, function() { Object.assign(self.$data, self.$options.data.call(self)); });
         },
         nextStep: function() {
             if(this.$data.reportBody == "rules") {
@@ -193,7 +202,12 @@ export default {
             this.$data.reportStep = "loading";
             this.$data.isLoading = true;
 
-            var reportLink = "/f/" + this.forum + "/" + this.submissionId + "/report";
+            var reportLink;
+            if(this.commentId == null)
+                reportLink = "/f/" + this.forum + "/" + this.submissionId + "/report";
+            else
+                reportLink = "/f/" + this.forum + "/" + this.submissionId + "/report_comment/" + this.commentId;
+
             $.post(reportLink, { reportBody: this.$data.reportBody, token: this.csrfToken }, function() {
                 self.$data.reportStep = "finished";
                 self.$data.isLoading = false;

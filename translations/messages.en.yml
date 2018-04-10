@@ -583,9 +583,9 @@ import:
     default_body: Imported from /r/gundeals | %path%
 
 rate_limit_form:
-	group: Group:
+    group: Group:
     rate: Rate limit in hours
-    
+
 report_modal:
     initial_header: We're sorry something's wrong. How can we help?
     rule_select_header: Which rule does it break?
