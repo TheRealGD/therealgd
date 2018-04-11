@@ -52,7 +52,7 @@ services:
     volumes:
       - ./src:/var/www/src
       - ./templates:/var/www/templates
-      - ./config:/var/www/config
+      - "./config:/var/www/config:rw"
       - "./public:/var/www/public:rw"
       - "./assets:/var/www/assets:ro"
       - "./bin:/var/www/bin:ro"

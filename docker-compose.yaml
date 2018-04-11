@@ -22,7 +22,9 @@ services:
     volumes:
       - "./docker/nginx/letsencrypt:/etc/letsencrypt/:rw"
       - "./docker/nginx/nginxlogs/:/var/log/nginx/:rw"
-      - "wwwdir:/var/www/:ro"
+      - "./public:/var/www/public:ro"
+      - "./vendor:/var/www/vendor:ro"
+
   php-dev-local:
     build:
       context: .
@@ -42,8 +44,16 @@ services:
     links:
       - db-dev-local
     volumes:
-      - "wwwdir:/var/www:rw"
+      - "./public:/var/www/public:rw"
+      - "./lib:/var/www/lib:rw"
+      - "./var:/var/www/var:rw"
+      - "./vendor:/var/www/vendor:rw"
+      - "./assets:/var/www/assets:ro"
       - "./bin:/var/www/bin:ro"
+      - "./config:/var/www/config:rw"
+      - "./src:/var/www/src:ro"
+      - "./templates:/var/www/templates:ro"
+      - "./translations:/var/www/translations:ro"
     working_dir: /var/www/public
 
   db-dev-local:
