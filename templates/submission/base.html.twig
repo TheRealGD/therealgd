@@ -4,24 +4,19 @@
   {{ submission.title }}
 {% endblock %}
 
-{# deprecated classes:
-   - sidebar__section--submission-meta
-   - sidebar-submission-meta
-   - sidebar-submission-meta-score
-   - vote-total
-   - vote-stats
-#}
 {% block sidebar %}
-  <section class="sidebar__section sidebar__section--submission-meta sidebar-submission-meta submission-meta">
-    <p class="sidebar-submission-meta-score submission-meta__score">
-      <strong class="vote-total submission-meta__vote-total">
+  <section class="sidebar__section submission-meta">
+    <p class="submission-meta__score">
+      <strong class="submission-meta__vote-total">
         {{- 'submissions.total_votes'|transchoice(submission.votes|length) -}}
       </strong>
 
-      <span class="vote-stats submission-meta__vote-stats">{{ 'submissions.vote_stats'|trans({
+      <span class="submission-meta__vote-stats">
+        {{- 'submissions.vote_stats'|trans({
           '%up%': submission.upvotes,
           '%down%': submission.downvotes,
-        }) }}</span>
+        }) -}}
+      </span>
     </p>
 
     <p class="submission-meta__short-url">{{ 'item.short_url'|trans({
