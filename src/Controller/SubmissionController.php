@@ -105,13 +105,16 @@ final class SubmissionController extends AbstractController {
 
         if ($form->isSubmitted() && $form->isValid()) {
             $submission = $data->toSubmission($this->getUser(), $request->getClientIp());
+            $forum = $submission->getForum();
 
             $em->persist($submission);
 
             $lastPost = $sr->getLastPostByUser($user, $forum);
-            $violation = $rlr->verifyPost($user, $forum, $submission, $lastPost);
-            if ($violation !== false) {
-                $em->persist($violation);
+            $violations = $rlr->verifyPost($user, $forum, $submission, $lastPost);
+            if ($violations !== false) {
+                foreach ($violations as $violation) {
+                    $em->persist($violation);
+                }
             }
 
             $em->flush();

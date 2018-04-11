@@ -66,7 +66,7 @@ class Forum {
     private $sidebar;
 
     /**
-     * @ORM\OneToMany(targetEntity="Moderator", mappedBy="forum", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Moderator", mappedBy="forum", cascade={"persist", "remove"},fetch="EAGER")
      *
      * @var Moderator[]|Collection
      */
