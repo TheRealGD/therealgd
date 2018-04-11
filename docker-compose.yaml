@@ -64,7 +64,3 @@ services:
       POSTGRES_USER: developer
       POSTGRES_PASSWORD: devdevdev
       POSTGRES_DB: devdb
-
-volumes:
-  wwwdir:
-
