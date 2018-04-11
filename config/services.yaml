@@ -38,6 +38,10 @@ services:
         arguments:
             $defaultLocale: "%env(APP_LOCALE)%"
 
+    App\CommonMark\CachedMarkdownConverter:
+        arguments:
+            $cacheItemPool: "@cache.markdown"
+
     App\Controller\ForumController:
         arguments:
             $enableWebhooks: "%env(bool:APP_ENABLE_WEBHOOKS)%"
@@ -77,6 +81,11 @@ services:
             $noReplyAddress: "%env(NO_REPLY_ADDRESS)%"
             $salt: "%env(APP_SECRET)%"
 
+    App\Security\AuthenticationHelper:
+        arguments:
+            $rememberMeServices: "@security.authentication.rememberme.services.simplehash.main"
+            $secret: "%env(APP_SECRET)%"
+
     App\Security\Voter\TokenVoter:
         arguments:
             $forumCreationInterval: "%user_forum_creation_interval%"
@@ -85,15 +94,6 @@ services:
         arguments:
             $siteName: "%env(SITE_NAME)%"
             $enableWebhooks: "%env(bool:APP_ENABLE_WEBHOOKS)%"
-
-    App\Utils\CachedMarkdownConverter:
-        arguments:
-            $cacheItemPool: "@cache.markdown"
-
-    App\Utils\AuthenticationHelper:
-        arguments:
-            $rememberMeServices: "@security.authentication.rememberme.services.simplehash.main"
-            $secret: "%env(APP_SECRET)%"
 
 
     ## Misc

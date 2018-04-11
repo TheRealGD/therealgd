@@ -2,9 +2,9 @@
 
 namespace App\Twig;
 
-use App\Utils\CachedMarkdownConverter;
-use App\Utils\MarkdownContext;
-use App\Utils\MarkdownConverter;
+use App\CommonMark\CachedMarkdownConverter;
+use App\CommonMark\MarkdownContext;
+use App\CommonMark\MarkdownConverter;
 use App\Utils\Slugger;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;

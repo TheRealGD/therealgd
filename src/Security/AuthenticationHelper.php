@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Utils;
+namespace App\Security;
 
 use App\Entity\User;
 use Symfony\Bundle\SecurityBundle\Security\FirewallMap;

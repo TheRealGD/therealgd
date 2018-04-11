@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Utils;
+namespace App\CommonMark;
 
 use App\Entity\User;
 use Symfony\Component\HttpFoundation\RequestStack;

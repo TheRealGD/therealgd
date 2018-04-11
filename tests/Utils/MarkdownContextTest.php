@@ -2,8 +2,8 @@
 
 namespace App\Tests\Utils;
 
+use App\CommonMark\MarkdownContext;
 use App\Entity\User;
-use App\Utils\MarkdownContext;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;

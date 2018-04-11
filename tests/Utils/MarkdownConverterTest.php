@@ -2,7 +2,7 @@
 
 namespace App\Tests\Utils;
 
-use App\Utils\MarkdownConverter;
+use App\CommonMark\MarkdownConverter;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;

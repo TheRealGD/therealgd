@@ -15,7 +15,7 @@ use App\Form\UserType;
 use App\Repository\ForumBanRepository;
 use App\Repository\NotificationRepository;
 use App\Repository\UserRepository;
-use App\Utils\AuthenticationHelper;
+use App\Security\AuthenticationHelper;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;

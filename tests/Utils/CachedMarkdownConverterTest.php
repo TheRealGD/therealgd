@@ -2,8 +2,8 @@
 
 namespace App\Tests\Utils;
 
-use App\Utils\CachedMarkdownConverter;
-use App\Utils\MarkdownConverter;
+use App\CommonMark\CachedMarkdownConverter;
+use App\CommonMark\MarkdownConverter;
 use PHPUnit\Framework\TestCase;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
@@ -42,7 +42,7 @@ class CachedMarkdownConverterTest extends TestCase {
             ->expects($this->never())
             ->method('convertToHtml');
 
-        /* @var \App\Utils\CachedMarkdownConverter $cachedConverter */
+        /* @var \App\CommonMark\CachedMarkdownConverter $cachedConverter */
         $cachedConverter = $this->getMockBuilder(CachedMarkdownConverter::class)
             ->setConstructorArgs([$cacheItemPool, $converter])
             ->enableProxyingToOriginalMethods()
@@ -96,7 +96,7 @@ class CachedMarkdownConverterTest extends TestCase {
             )
             ->willReturn('html output');
 
-        /* @var \App\Utils\CachedMarkdownConverter $cachedConverter */
+        /* @var \App\CommonMark\CachedMarkdownConverter $cachedConverter */
         $cachedConverter = $this->getMockBuilder(CachedMarkdownConverter::class)
             ->setConstructorArgs([$cacheItemPool, $converter])
             ->enableProxyingToOriginalMethods()

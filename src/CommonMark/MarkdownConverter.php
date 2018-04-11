@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Utils;
+namespace App\CommonMark;
 
-use App\CommonMark\AppExtension;
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;

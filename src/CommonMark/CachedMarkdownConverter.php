@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Utils;
+namespace App\CommonMark;
 
 use Psr\Cache\CacheItemPoolInterface;
 
