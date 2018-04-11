@@ -28,7 +28,7 @@ class SubmissionPager implements \IteratorAggregate {
             $value = $request->query->get('next_'.$column);
             $type = SubmissionRepository::SORT_COLUMN_TYPES[$column];
 
-            if ($value === null || !self::valueIsOfType($type, $value)) {
+            if (!\is_string($value) || !self::valueIsOfType($type, $value)) {
                 // missing columns - no pagination
                 return [];
             }
@@ -93,11 +93,11 @@ class SubmissionPager implements \IteratorAggregate {
         return 'get'.str_replace('_', '', ucwords($columnName, '_'));
     }
 
-    private static function valueIsOfType(string $type, $value): bool {
+    private static function valueIsOfType(string $type, string $value): bool {
         switch ($type) {
         case 'integer':
             return ctype_digit($value) && \is_int(+$value) &&
-                $value >= 0x80000000 && $value <= 0x7fffffff;
+                $value >= -0x80000000 && $value <= 0x7fffffff;
         case 'bigint':
             // if this causes problems on 32-bit systems, the site operators
             // deserved it.
