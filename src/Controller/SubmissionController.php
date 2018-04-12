@@ -346,6 +346,15 @@ final class SubmissionController extends AbstractController {
                 $report->setForum($forum);
                 $em->persist($report);
                 $em->flush();
+            } else if($report->getIsResolved()) {
+                // Reset the isResolved flag if it is re-reported and remove all previous reports.
+                foreach($report->getEntries() as $entry) { $em->remove($entry); }
+                $em->flush();
+
+                $em->refresh($report);
+                $report->setIsResolved(false);
+
+                $em->persist($report);
             }
 
             // Add the report entry to the report.

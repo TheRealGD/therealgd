@@ -126,7 +126,12 @@ class Comment extends Votable {
      *
      * @var int
      */
-     private $reportCount = 0;
+    private $reportCount = 0;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Report", mappedBy="comment")
+     */
+    private $reportEntries;
 
     public function __construct(
         string $body,

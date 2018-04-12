@@ -42,7 +42,7 @@ class Report {
     /**
      * One report may have one comment.
      * @ORM\OneToOne(targetEntity="Comment")
-     * @ORM\JoinColumn(name="comment_id", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="comment_id", referencedColumnName="id", nullable=true, onDelete="CASCADE")
      */
     private $comment;
 

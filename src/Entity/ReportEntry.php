@@ -26,7 +26,7 @@ class ReportEntry {
     /**
      * Many report entries have one report.
      * @ORM\ManyToOne(targetEntity="Report", inversedBy="reportEntries")
-     * @ORM\JoinColumn(name="report_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="report_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $report;
 

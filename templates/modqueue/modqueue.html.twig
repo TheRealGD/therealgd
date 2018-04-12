@@ -4,7 +4,7 @@
 {% from 'comment/_macros.html.twig' import comment %}
 
 {% block page_classes 'forum-modqueue-page' %}
-{% block title 'Forum Modqueue' %}
+{% block title %}Moderation Queue for /f/{{forum.name}}{% endblock %}
 
 {% block body %}
     <h1 class="page-heading forum-name-heading">Moderation Queue for: <span class="forum-name-heading__prefix">/f/</span><strong class="forum-name-heading__name">{{forum.name}}</strong></h1>
