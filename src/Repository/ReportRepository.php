@@ -38,7 +38,10 @@ class ReportRepository extends ServiceEntityRepository {
     public function findForumModQueueReports(Forum $forum, $sortBy, $page) {
       $qb = $this->createQueryBuilder('s')
           ->andWhere('s.forum = :forum')
-          ->setParameter('forum', $forum);
+          ->andWhere('s.isResolved = :isResolved')
+          ->orderBy('s.id', 'DESC')
+          ->setParameter('forum', $forum)
+          ->setParameter('isResolved', false);
 
       $reports = $this->paginate($qb, $page);
 

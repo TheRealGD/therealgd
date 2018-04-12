@@ -32,7 +32,7 @@ moderation_queue:
     defaults: { sortBy: new, page: 1 }
     path: /f/{forum_name}/moderation_queue/{sortBy}/{page}
     methods: [GET]
-    requirements: { sortBy: hot|new, page: \d+ }
+    requirements: { sortBy: new, page: \d+ }
 
 edit_forum:
     controller: App\Controller\ForumController::editForum

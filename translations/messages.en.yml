@@ -150,6 +150,7 @@ forum:
     mod_page: Moderation Posts
     mod_submit: Create new mod post
     nautbot_page: Edit NautBot settings
+    moderation_queue: Moderation Queue
 
 forum_form:
     name: Name

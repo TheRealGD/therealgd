@@ -324,7 +324,7 @@ final class CommentController extends AbstractController {
     }
 
     /**
-     * Get the entries for a given comment.
+     * Process a report action for a given comment..
      *
      * @IsGranted("moderator", subject="forum")
      *

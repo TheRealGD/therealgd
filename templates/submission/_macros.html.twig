@@ -193,6 +193,10 @@
               {%- endif -%}
             </ul>
           </nav>
+
+          {% if is_granted('moderator', submission.forum) and submission.reportCount > 0 %}
+            <mod-links forum="{{submission.forum.name}}" report-count="{{submission.reportCount}}" submission-id="{{submission.id}}"></mod-links>
+          {% endif %}
         {%- endspaceless -%}
       </div>
     </div>

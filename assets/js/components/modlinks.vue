@@ -76,9 +76,11 @@ export default {
             if(this.$data.isRunningRemove) return;
             this.$data.isRunningRemove = true;
 
-            // Remove the comment from the DOM.
+            // Remove the comment/submission from the DOM.
             if(this.commentId == null) {
-
+                $.post("/f/" + this.forum + "/" + this.submissionId + "/report_action", { reportAction: 'remove' }, function(data) {
+                    $(self.$refs['root-ele']).parent().parent().parent().slideUp(100);
+                });
             } else {
                 $.post("/f/" + this.forum + "/" + this.submissionId + "/comment/" + this.commentId + "/report_action", { reportAction: 'remove' }, function(data) {
                     $(self.$refs['root-ele']).parent().parent().parent().slideUp(100);
@@ -91,9 +93,11 @@ export default {
             if(this.$data.isRunningApprove) return;
             this.$data.isRunningApprove = true;
 
-            // Remove the comment from the DOM.
+            // Remove the comment/submission links from the DOM.
             if(this.commentId == null) {
-
+                $.post("/f/" + this.forum + "/" + this.submissionId + "/report_action", { reportAction: 'approve' }, function(data) {
+                    $(self.$refs['root-ele']).fadeOut(100);
+                });
             } else {
                 $.post("/f/" + this.forum + "/" + this.submissionId + "/comment/" + this.commentId + "/report_action", { reportAction: 'approve' }, function(data) {
                     $(self.$refs['root-ele']).fadeOut(100);

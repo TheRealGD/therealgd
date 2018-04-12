@@ -64,6 +64,11 @@
         {% set items = items|merge({('forum.mod_page'|trans): item}) %}
 
         {% set item %}
+          <li><a href="{{ path('moderation_queue', {forum_name: forum.name}) }}">{{ 'forum.moderation_queue'|trans }}</a></li>
+        {% endset %}
+        {% set items = items|merge({('forum.moderation_queue'|trans): item}) %}
+
+        {% set item %}
           <li><a href="{{ path('nautbot', {forum_name: forum.name}) }}">{{ 'forum.nautbot_page'|trans }}</a></li>
         {% endset %}
         {% set items = items|merge({('forum.nautbot_page'|trans): item}) %}

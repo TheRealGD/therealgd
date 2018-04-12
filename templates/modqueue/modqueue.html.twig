@@ -7,6 +7,8 @@
 {% block title 'Forum Modqueue' %}
 
 {% block body %}
+    <h1 class="page-heading forum-name-heading">Moderation Queue for: <span class="forum-name-heading__prefix">/f/</span><strong class="forum-name-heading__name">{{forum.name}}</strong></h1>
+
     {% for report in reports %}
         {%- set options = { oddClass: (loop.index % 2 == 0) ? 'even' : 'odd' } -%}
 
@@ -20,4 +22,114 @@
     {% endfor %}
 
     {% include '_includes/pagination.html.twig' with {pager: reports} %}
+{% endblock %}
+
+{% block sidebar %}
+  <section class="sidebar__section sidebar__section--forum-meta forum-meta">
+    <h1 class="sidebar__title forum-title"><a href="{{ path('forum', {forum_name: forum.name}) }}">{{ forum.title }}</a></h1>
+
+    {% if is_granted('ROLE_USER') %}
+      {% from 'forum/_macros.html.twig' import subscribe_button %}
+      {% block site_sidebar_actions %}
+        {{ include('_includes/site_sidebar_actions.html.twig', {forum: forum ?? {}}, with_context=false) }}
+      {% endblock %}
+      {% set subscribed = forum.subscribed(app.user) %}
+      <form action="{{ path(subscribed ? 'unsubscribe' : 'subscribe', {forum_name: forum.name}) }}"
+            method="POST"
+            class="form subscribe-form"
+            data-forum="{{ forum.name }}">
+        <input type="hidden" name="token" value="{{ csrf_token('subscribe') }}">
+
+        <div class="form__row">
+          {{ subscribe_button(forum, subscribed, false) }}
+        </div>
+      </form>
+    {% endif %}
+
+    {% if forum.sidebar is not empty %}
+      <div class="forum-sidebar-content">{{ forum.sidebar|cached_markdown(markdown_context())|raw }}</div>
+    {% endif %}
+  </section>
+
+  <section class="sidebar__section sidebar__section--forum-manage forum-manage">
+    <h1 class="sidebar__title">{{ 'label.toolbox'|trans }}</h1>
+
+    {# sorted nav items #}
+    {% with { items: {} } %}
+      {% set item %}
+        <li><a href="{{ path('forum_bans', {forum_name: forum.name}) }}">{{ 'nav.bans'|trans }}</a></li>
+      {% endset %}
+      {% set items = items|merge({('nav.bans'|trans): item}) %}
+
+      {% set item %}
+        <li><a href="{{ path('moderation_log', {forum_name: forum.name}) }}">{{ 'nav.moderation_log'|trans }}</a></li>
+      {% endset %}
+      {% set items = items|merge({('nav.moderation_log'|trans): item}) %}
+
+      {% if is_granted('moderator', forum) %}
+        {% set item %}
+          <li><a href="{{ path('mod_forum', {forum_name: forum.name}) }}">{{ 'forum.mod_page'|trans }}</a></li>
+        {% endset %}
+        {% set items = items|merge({('forum.mod_page'|trans): item}) %}
+
+        {% set item %}
+          <li><a href="{{ path('moderation_queue', {forum_name: forum.name}) }}">{{ 'forum.moderation_queue'|trans }}</a></li>
+        {% endset %}
+        {% set items = items|merge({('forum.moderation_queue'|trans): item}) %}
+
+        {% set item %}
+          <li><a href="{{ path('nautbot', {forum_name: forum.name}) }}">{{ 'forum.nautbot_page'|trans }}</a></li>
+        {% endset %}
+        {% set items = items|merge({('forum.nautbot_page'|trans): item}) %}
+
+        {% set item %}
+          <li><a href="{{ path('mod_submit', {forum_name: forum.name}) }}">{{ 'forum.mod_submit'|trans }}</a></li>
+        {% endset %}
+        {% set items = items|merge({('forum.mod_submit'|trans): item}) %}
+
+        {% set item %}
+          <li><a href="{{ path('edit_forum', {forum_name: forum.name}) }}">{{ 'forum.edit'|trans }}</a></li>
+        {% endset %}
+        {% set items = items|merge({('forum.edit'|trans): item}) %}
+
+        {% set item %}
+          <li><a href="{{ path('forum_appearance', {forum_name: forum.name}) }}">{{ 'nav.appearance'|trans }}</a></li>
+        {% endset %}
+        {% set items = items|merge({('nav.appearance'|trans): item}) %}
+      {% endif %}
+
+      {% if is_granted('ROLE_ADMIN') %}
+        {% set item %}
+          <li><a href="{{ path('add_moderator', {forum_name: forum.name}) }}">{{ 'forum.add_moderator'|trans }}</a></li>
+        {% endset %}
+        {% set items = items|merge({('forum.add_moderator'|trans): item}) %}
+
+        {% set item %}
+          <li><a href="{{ path('delete_forum', {forum_name: forum.name}) }}">{{ 'nav.delete_forum'|trans }}</a></li>
+        {% endset %}
+        {% set items = items|merge({('nav.delete_forum'|trans): item}) %}
+      {% endif %}
+
+      <ul>
+        {% for key in items|keys|sort %}
+          {{ items[key] }}
+        {% endfor %}
+      </ul>
+    {% endwith %}
+  </section>
+
+  {% if forum.moderators|length > 0 %}
+    <section class="sidebar__section sidebar__section--forum-moderators forum-moderators">
+      <h1 class="sidebar__title"><a href="{{ path('forum_moderators', {forum_name: forum.name}) }}">{{ 'forum.moderators'|trans }}</a></h1>
+      <ul>
+        {% for moderator in forum.moderators %}
+          <li>
+            <a href="{{ path('user', {username: moderator.user.username}) }}">
+              {{- moderator.user.username -}}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
 {% endblock %}

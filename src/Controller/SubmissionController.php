@@ -364,6 +364,100 @@ final class SubmissionController extends AbstractController {
         return $response;
     }
 
+    /**
+     * Get the entries for a given submission.
+     *
+     * @IsGranted("moderator", subject="forum")
+     *
+     * @param EntityManager $em
+     * @param Submission    $submission
+     * @param Forum         $forum
+     * @param Request       $request
+     *
+     * @return Response
+     */
+    public function reportEntries(
+        EntityManager $em,
+        Submission $submission,
+        Forum $forum,
+        Request $request,
+        ReportRepository $rr
+    ) {
+        $result = [];
+        $report = $rr->findOneBySubmission($submission);
+
+        if($report != null) {
+            foreach($report->getEntries() as $entry) {
+                $result[] = array("body" => $entry->getBody());
+            }
+        }
+
+        $response = new Response(json_encode($result));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+    }
+
+    /**
+     * Process a report action for a given submission.
+     *
+     * @IsGranted("moderator", subject="forum")
+     *
+     * @param EntityManager $em
+     * @param Submission    $submission
+     * @param Forum         $forum
+     * @param Request       $request
+     *
+     * @return Response
+     */
+    public function reportAction(
+        EntityManager $em,
+        Submission $submission,
+        Forum $forum,
+        Request $request,
+        ReportRepository $rr
+    ) {
+        $action = $request->request->get('reportAction');
+        $report = $rr->findOneBySubmission($submission);
+        $result = [];
+
+        if($report != null) {
+            // Removal action.
+            if($action == "remove") {
+                foreach($report->getEntries() as $entry) { $em->remove($entry); }
+                $em->remove($report);
+                $em->refresh($submission);
+                $em->remove($submission);
+
+                $forum->addLogEntry(new ForumLogSubmissionDeletion(
+                    $submission,
+                    $this->getUser(),
+                    "Deleted via moderation action"
+                ));
+
+                $result["status"] = "success";
+                $em->flush();
+            }
+
+            // Approval action.
+            if($action == "approve") {
+                $report->setIsResolved(true);
+                $em->persist($report);
+
+                $submission->setReportCount(0);
+                $em->persist($submission);
+
+                $result["status"] = "success";
+                $em->flush();
+            }
+        } else {
+            $result["status"] = "error";
+        }
+
+        $response = new Response(json_encode($result));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+    }
+
     protected function rerouteAwayFromAdmin() {
         if (is_null($this->getUser())) {
             return $this->redirectToRoute('login');

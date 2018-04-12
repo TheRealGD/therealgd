@@ -38,12 +38,12 @@ report_comment:
     path: /f/{forum_name}/{submission_id}/report_comment/{comment_id}
     methods: [POST]
 
-report_entries:
+comment_report_entries:
     controller: App\Controller\CommentController::reportEntries
     path: /f/{forum_name}/{submission_id}/comment/{comment_id}/report_entries
     methods: [GET]
 
-report_action:
+comment_report_action:
     controller: App\Controller\CommentController::reportAction
     path: /f/{forum_name}/{submission_id}/comment/{comment_id}/report_action
     methods: [POST]
