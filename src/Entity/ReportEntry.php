@@ -61,6 +61,10 @@ class ReportEntry {
     }
 
     public function setBody($body) {
-      $this->body = $body;
+        $this->body = $body;
+    }
+
+    public function getBody() {
+        return $this->body;
     }
 }

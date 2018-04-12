@@ -53,6 +53,11 @@ class Report {
     private $reportEntries;
 
     /**
+     * @ORM\Column(type="boolean", options={"default": false})
+     */
+    private $isResolved = false;
+
+    /**
      *
      */
     public function __construct() {
@@ -83,5 +88,17 @@ class Report {
 
     public function setComment(Comment $comment) {
         $this->comment = $comment;
+    }
+
+    public function getEntries() {
+        return $this->reportEntries;
+    }
+
+    public function getIsResolved() {
+        return $this->isResolved;
+    }
+
+    public function setIsResolved($isResolved) {
+        $this->isResolved = $isResolved;
     }
 }

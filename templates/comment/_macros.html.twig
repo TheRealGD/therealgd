@@ -68,11 +68,16 @@
 
         <nav class="comment-nav">
           <ul class="comment-nav-ul">{{ block('comment_nav') }}</ul>
+
         </nav>
 
         {% if options.show_form ?? false and is_granted('ROLE_USER') %}
           {% from _self import comment_form %}
           {{ comment_form(comment.submission, comment) }}
+        {% endif %}
+
+        {% if is_granted('moderator', comment.submission.forum) and comment.reportCount > 0 %}
+          <mod-links forum="{{comment.submission.forum.name}}" report-count="{{comment.reportCount}}" comment-id="{{comment.id}}" submission-id="{{comment.submission.id}}"></mod-links>
         {% endif %}
       </div>
     </div>
@@ -297,7 +302,7 @@
   {%- if is_granted('ROLE_USER') %}
     {%- spaceless -%}
     <li class="comment-nav-report comment-nav-li">
-      <report-link forum="{{comment.submission.forum.name}}" comment-id="{{comment.id}}" submission-id="{{comment.submission.id}}" user-name="{{comment.submission.user.username}}" csrf-token="{{csrf_token('report_comment')}}" />
+      <report-link forum="{{comment.submission.forum.name}}" comment-id="{{comment.id}}" submission-id="{{comment.submission.id}}" user-name="{{comment.submission.user.username}}" csrf-token="{{csrf_token('report_comment')}}"></report-link>
     </li>
     {%- endspaceless -%}
   {%- endif -%}

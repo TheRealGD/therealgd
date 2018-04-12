@@ -1,0 +1,52 @@
+@modlink-reportcount: #ffff99;
+@modlink-spam: #ff6666;
+@modlink-approve: #99ff99;
+@modlink-remove: #BEBEBE;
+
+.mod-links {
+}
+
+.mod-label {
+  display: inline-block;
+  cursor: pointer;
+
+  font-size: 11px;
+  border-radius: 3px;
+
+  padding: 4px;
+
+  &-reportcount {
+    background-color: @modlink-reportcount;
+    border: 1px solid desaturate(darken(@modlink-reportcount, 40%), 30%);
+  }
+
+  &-spam {
+    background-color: @modlink-spam;
+    border: 1px solid desaturate(darken(@modlink-spam, 40%), 30%);
+  }
+
+  &-approve {
+    background-color: @modlink-approve;
+    border: 1px solid desaturate(darken(@modlink-approve, 40%), 30%);
+  }
+
+  &-remove {
+    background-color: @modlink-remove;
+    border: 1px solid desaturate(darken(@modlink-remove, 40%), 30%);
+  }
+
+  &-ignore {
+    background-color: @modlink-remove;
+    border: 1px solid desaturate(darken(@modlink-remove, 40%), 30%);
+  }
+}
+
+.mod-reports {
+  background-color: @modlink-reportcount;
+  border: 1px solid desaturate(darken(@modlink-reportcount, 40%), 30%);
+
+  padding: 5px;
+  border-radius: 3px;
+
+  margin: 5px 5px 5px 0;
+}

@@ -289,6 +289,97 @@ final class CommentController extends AbstractController {
     }
 
     /**
+     * Get the entries for a given comment.
+     *
+     * @IsGranted("moderator", subject="forum")
+     *
+     * @param EntityManager $em
+     * @param Submission    $submission
+     * @param Forum         $forum
+     * @param Comment       $comment
+     * @param Request       $request
+     *
+     * @return Response
+     */
+    public function reportEntries(
+        EntityManager $em,
+        Submission $submission,
+        Forum $forum,
+        Comment $comment,
+        Request $request,
+        ReportRepository $rr
+    ) {
+        $result = [];
+        $report = $rr->findOneByComment($comment);
+
+        if($report != null) {
+            foreach($report->getEntries() as $entry) {
+                $result[] = array("body" => $entry->getBody());
+            }
+        }
+
+        $response = new Response(json_encode($result));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+    }
+
+    /**
+     * Get the entries for a given comment.
+     *
+     * @IsGranted("moderator", subject="forum")
+     *
+     * @param EntityManager $em
+     * @param Submission    $submission
+     * @param Forum         $forum
+     * @param Comment       $comment
+     * @param Request       $request
+     *
+     * @return Response
+     */
+    public function reportAction(
+        EntityManager $em,
+        Submission $submission,
+        Forum $forum,
+        Comment $comment,
+        Request $request,
+        ReportRepository $rr
+    ) {
+        $action = $request->request->get('reportAction');
+        $report = $rr->findOneByComment($comment);
+
+        $result = [];
+
+        // Removal action.
+        if($action == "remove") {
+            $report->setIsResolved(true);
+            $em->persist($report);
+
+            $comment->setSoftDeleted(true);
+            $comment->setReportCount(0);
+            $em->persist($comment);
+
+            $result["status"] = "success";
+            $em->flush();
+        }
+
+        // Approval action.
+        if($action == "approve") {
+            $report->setIsResolved(true);
+            $em->persist($report);
+
+            $comment->setReportCount(0);
+            $em->persist($comment);
+
+            $result["status"] = "success";
+            $em->flush();
+        }
+
+        $response = new Response(json_encode($result));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+    }
+
+    /**
      * "Soft deletes" a comment by blanking its body.
      *
      * @IsGranted("softdelete", subject="comment")

@@ -22,8 +22,9 @@ import Vue from 'vue';
 
 import TranslatedText from './components/translatedtext';
 import ReportLink from './components/reportlink';
+import ModLinks from './components/modlinks';
 
 new Vue({
   el: '#vue-app',
-  components: {TranslatedText, ReportLink}
+  components: {TranslatedText, ReportLink, ModLinks}
 });
