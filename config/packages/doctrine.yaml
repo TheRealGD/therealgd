@@ -14,6 +14,9 @@ doctrine:
         types:
             inet: App\DBAL\Type\InetType
     orm:
+        metadata_cache_driver: apcu
+        result_cache_driver: apcu
+        query_cache_driver: apcu
         auto_generate_proxy_classes: '%kernel.debug%'
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true

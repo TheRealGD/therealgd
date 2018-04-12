@@ -96,6 +96,7 @@ class UserRepository extends ServiceEntityRepository implements UserLoaderInterf
             ->setParameter(1, $email)
             ->setParameter(2, User::normalizeEmail($email))
             ->getQuery()
+            ->useQueryCache(true)->useResultCache(true)
             ->execute();
     }
 
@@ -131,6 +132,7 @@ EOSQL;
         $contributions = $this->_em->createNativeQuery($sql, $rsm)
             ->setParameter(':user_id', $user->getId())
             ->setParameter(':limit', $limit, 'integer')
+            ->useQueryCache(true)->useResultCache(true)
             ->execute();
 
         if (!empty($contributions['comment']['ids'])) {
@@ -142,6 +144,7 @@ EOSQL;
                 ->where('c.id IN (?1)')
                 ->getQuery()
                 ->setParameter(1, $contributions['comment']['ids'])
+                ->useQueryCache(true)->useResultCache(true)
                 ->execute();
         }
 
@@ -154,6 +157,7 @@ EOSQL;
                 ->where('s.id IN (?1)')
                 ->getQuery()
                 ->setParameter(1, $contributions['submission']['ids'])
+                ->useQueryCache(true)->useResultCache(true)
                 ->execute();
         }
 
@@ -192,6 +196,7 @@ EOSQL;
 
         $sth = $this->_em->getConnection()->prepare($sql);
         $sth->bindValue(':id', $user->getId());
+        $sth->useQueryCache(true)->useResultCache(true);
         $sth->execute();
 
         while ($ip = $sth->fetchColumn()) {
@@ -203,7 +208,8 @@ EOSQL;
         $qb = $this->createQueryBuilder('u')
             ->where('u.group = :group')
             ->setParameter('group', $userGroup);
-        $pager = new Pagerfanta(new DoctrineORMAdapter($qb, false, false));
+        $q = $qb->getQuery()->useQueryCache(true)->useResultCache(true);
+        $pager = new Pagerfanta(new DoctrineORMAdapter($q, false, false));
         $pager->setMaxPerPage(25);
         $pager->setCurrentPage($page);
         return $pager;

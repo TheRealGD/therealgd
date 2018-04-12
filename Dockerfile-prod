@@ -39,6 +39,15 @@ RUN echo "\n opcache.max_accelerated_files = 20000         \
           \n realpath_cache_size=4096K                     \
           \n realpath_cache_ttl=600                        \
           \n php_admin_flag[log_errors] = ${log_errors}    \
+          \n apc.enabled = yes                             \
+          \n extension=apcu.so                             \
+          \n apcu.enabled=1                                \
+          \n apcu.shm_segments=1                           \
+          \n apcu.shm_size=32M                             \
+          \n apcu.cache_by_default=1                       \
+          \n apcu.stat=1                                   \
+          \n apcu.rfc1867=1                                \
+          \n apcu.enable_cli=1                             \
           \n php_flag[display_errors] = ${display_errors}" >> /etc/php/7.2/fpm/conf.d/99-overrides.ini
 
 # build prod-like stuff
