@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block page_classes 'user-list-page' %}
+{% block title 'title.nautbot_info'|trans({'%forum%': forum.name}) %}
+
+{% block body %}
+  <h1 class="page-heading">{{ block('title') }}</h1>
+
+  {{ include('nautbot/rate_list.html.twig', {rates: rates, forum: forum, page: page}, with_context=false) }}
+{% endblock %}
+

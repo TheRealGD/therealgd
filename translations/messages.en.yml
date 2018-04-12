@@ -29,6 +29,9 @@ action:
     compare: Compare
     create_group: Create new group
     report: Report
+    edit_group: Edit group
+    create_rate_limit: Add new rate limit
+    edit_rate_limit: Edit rate
 
 add_moderator:
     title: Add moderator to %forum%
@@ -146,6 +149,7 @@ forum:
     add_moderator: Add moderator
     mod_page: Moderation Posts
     mod_submit: Create new mod post
+    nautbot_page: Edit NautBot settings
 
 forum_form:
     name: Name
@@ -205,6 +209,7 @@ help:
     parent_theme_input: Enter the <username>/<theme> of the theme you wish to extend. Alternatively, you can enter a UUID to extend a particular revision.
     append_to_default_style_inheritance_warning: Setting this has no effect when extending an existing theme.
     will_appear_in_the_url: Will appear in the URL.
+    only_visible_to_mods_admins: Only visible to mods/admins when creating/editing rate limits
 
 inbox:
     title: Inbox
@@ -296,6 +301,9 @@ label:
     auto_fetch_submission_titles: Auto-fetch submission titles
     compare: Compare
     members: Members
+    group: Group Name
+    rate: Rate Limit (in hours)
+    block: Block submission
 
 log:
     comment_deletion: '%user% deleted comment by %author% in "%submission%"'
@@ -491,6 +499,11 @@ title:
     editing_group: 'Editing user group: %group%'
     wiki_diff: Showing difference between revisions %from% and %to%
     add_to_group: 'Add %user% to group'
+    create_user_group: Create new user group
+    nautbot_info: 'NautBot Settings for %forum%'
+    list_of_rates: Current rate limits
+    create_rate_limit: Create new rate limit
+    edit_rate_limit: Edit rate limit
 
 user:
     submissions: Submissions
@@ -568,3 +581,7 @@ import:
     default_forum: gundeals
     default_user: gundeals
     default_body: Imported from /r/gundeals | %path%
+
+rate_limit_form:
+    group: Group:
+    rate: Rate limit in hours

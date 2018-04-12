@@ -50,6 +50,8 @@ services:
     working_dir: /var/www/public
     volumes:
       - "wwwdir:/var/www:rw"
+      - ./src:/var/www/src
+      - ./templates:/var/www/templates
     expose:
       - '9000'
 

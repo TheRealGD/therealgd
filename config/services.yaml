@@ -31,7 +31,9 @@ services:
     App\Controller\:
         resource: '../src/Controller'
         public: true
-        tags: ['controller.service_arguments']
+        tags:
+          - 'controller.service_arguments'
+          - { name: monolog.logger, channel: app }
 
     App\Command\ActivateMaintenanceMode:
         arguments:
