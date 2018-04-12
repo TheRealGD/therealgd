@@ -17,6 +17,7 @@ class ForumConfigurationRepository extends ServiceEntityRepository {
         $config = $this->createQueryBuilder('fc')
             ->where('fc.forumId is NULL')
             ->getQuery()
+            ->useQueryCache(true)->useResultCache(true, 3600, 'sitewide_forum_config')
             ->execute();
 
         if(count($config) == 0) {
