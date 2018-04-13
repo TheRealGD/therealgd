@@ -331,16 +331,16 @@ final class SubmissionController extends AbstractController {
     ) {
         $this->validateCsrf('report_submission', $request->request->get('token'));
 
-        $reportBody = $request->request->get('reportBody');
-        $result = array('success' => false);
+        $reportBody = trim($request->request->get('reportBody'));
+        $success = false;
 
-        if(trim($reportBody != "")) {
+        if(!empty($reportBody)) {
             $submission->incrementReportCount();
             $em->persist($submission);
 
             // Find a report for this submission. If it doesn't exist, create it.
             $report = $rr->findOneBySubmission($submission);
-            if($report == null) {
+            if(!$report) {
                 $report = new Report();
                 $report->setSubmission($submission);
                 $report->setForum($forum);
@@ -365,12 +365,10 @@ final class SubmissionController extends AbstractController {
             $em->persist($entry);
             $em->flush();
 
-            $result['success'] = true;
+            $success = true;
         }
 
-        $response = new Response(json_encode($result));
-        $response->headers->set('Content-Type', 'application/json');
-        return $response;
+        return $this->JSONResponse(array("success" => $success));
     }
 
     /**
@@ -395,15 +393,13 @@ final class SubmissionController extends AbstractController {
         $result = [];
         $report = $rr->findOneBySubmission($submission);
 
-        if($report != null) {
+        if($report) {
             foreach($report->getEntries() as $entry) {
                 $result[] = array("body" => $entry->getBody());
             }
         }
 
-        $response = new Response(json_encode($result));
-        $response->headers->set('Content-Type', 'application/json');
-        return $response;
+        return $this->JSONResponse($result);
     }
 
     /**
@@ -427,9 +423,9 @@ final class SubmissionController extends AbstractController {
     ) {
         $action = $request->request->get('reportAction');
         $report = $rr->findOneBySubmission($submission);
-        $result = [];
+        $success = false;
 
-        if($report != null) {
+        if($report) {
             // Removal action.
             if($action == "remove") {
                 foreach($report->getEntries() as $entry) { $em->remove($entry); }
@@ -443,7 +439,7 @@ final class SubmissionController extends AbstractController {
                     "Deleted via moderation action"
                 ));
 
-                $result["status"] = "success";
+                $success = true;
                 $em->flush();
             }
 
@@ -455,16 +451,12 @@ final class SubmissionController extends AbstractController {
                 $submission->setReportCount(0);
                 $em->persist($submission);
 
-                $result["status"] = "success";
+                $success = true;
                 $em->flush();
             }
-        } else {
-            $result["status"] = "error";
         }
 
-        $response = new Response(json_encode($result));
-        $response->headers->set('Content-Type', 'application/json');
-        return $response;
+        return $this->JSONResponse(array("success" => $success));
     }
 
     protected function rerouteAwayFromAdmin() {

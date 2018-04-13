@@ -255,16 +255,16 @@ final class CommentController extends AbstractController {
     ) {
         $this->validateCsrf('report_comment', $request->request->get('token'));
 
-        $reportBody = $request->request->get('reportBody');
-        $result = array('success' => false);
+        $reportBody = trim($request->request->get('reportBody'));
+        $success = false;
 
-        if(trim($reportBody != "")) {
+        if(!empty($reportBody)) {
             $comment->incrementReportCount();
             $em->persist($comment);
 
             // Find a report for this comment. If it doesn't exist, create it.
             $report = $rr->findOneByComment($comment);
-            if($report == null) {
+            if(!$report) {
                 $report = new Report();
                 $report->setComment($comment);
                 $report->setForum($forum);
@@ -289,12 +289,10 @@ final class CommentController extends AbstractController {
             $em->persist($entry);
             $em->flush();
 
-            $result['success'] = true;
+            $success = true;
         }
 
-        $response = new Response(json_encode($result));
-        $response->headers->set('Content-Type', 'application/json');
-        return $response;
+        return $this->JSONResponse(array("success" => $success));
     }
 
     /**
@@ -321,15 +319,13 @@ final class CommentController extends AbstractController {
         $result = [];
         $report = $rr->findOneByComment($comment);
 
-        if($report != null) {
+        if($report) {
             foreach($report->getEntries() as $entry) {
                 $result[] = array("body" => $entry->getBody());
             }
         }
 
-        $response = new Response(json_encode($result));
-        $response->headers->set('Content-Type', 'application/json');
-        return $response;
+        return $this->JSONResponse($result);
     }
 
     /**
@@ -355,37 +351,36 @@ final class CommentController extends AbstractController {
     ) {
         $action = $request->request->get('reportAction');
         $report = $rr->findOneByComment($comment);
+        $success = false;
 
-        $result = [];
+        if($report) {
+            // Removal action.
+            if($action == "remove") {
+                $report->setIsResolved(true);
+                $em->persist($report);
 
-        // Removal action.
-        if($action == "remove") {
-            $report->setIsResolved(true);
-            $em->persist($report);
+                $comment->setSoftDeleted(true);
+                $comment->setReportCount(0);
+                $em->persist($comment);
 
-            $comment->setSoftDeleted(true);
-            $comment->setReportCount(0);
-            $em->persist($comment);
+                $success = true;
+                $em->flush();
+            }
 
-            $result["status"] = "success";
-            $em->flush();
+            // Approval action.
+            if($action == "approve") {
+                $report->setIsResolved(true);
+                $em->persist($report);
+
+                $comment->setReportCount(0);
+                $em->persist($comment);
+
+                $success = true;
+                $em->flush();
+            }
         }
 
-        // Approval action.
-        if($action == "approve") {
-            $report->setIsResolved(true);
-            $em->persist($report);
-
-            $comment->setReportCount(0);
-            $em->persist($comment);
-
-            $result["status"] = "success";
-            $em->flush();
-        }
-
-        $response = new Response(json_encode($result));
-        $response->headers->set('Content-Type', 'application/json');
-        return $response;
+        return $this->JSONResponse(array("success" => $success));
     }
 
     /**

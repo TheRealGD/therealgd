@@ -318,9 +318,7 @@ final class UserController extends AbstractController {
             $result['message'] = $blockee->getUsername() . " has been blocked.";
         }
 
-        $response = new Response(json_encode($result));
-        $response->headers->set('Content-Type', 'application/json');
-        return $response;
+        return $this->JSONResponse($result);
     }
 
 

@@ -41,11 +41,5 @@ class Version20180412193841 extends AbstractMigration
         $this->addSql('DROP SEQUENCE report_entry_id_seq CASCADE');
         $this->addSql('DROP TABLE report');
         $this->addSql('DROP TABLE report_entry');
-        $this->addSql('ALTER TABLE moderators ALTER id TYPE UUID');
-        $this->addSql('ALTER TABLE moderators ALTER id DROP DEFAULT');
-        $this->addSql('ALTER TABLE forum_subscriptions ALTER id TYPE UUID');
-        $this->addSql('ALTER TABLE forum_subscriptions ALTER id DROP DEFAULT');
-        $this->addSql('ALTER TABLE wiki_revisions ALTER id TYPE UUID');
-        $this->addSql('ALTER TABLE wiki_revisions ALTER id DROP DEFAULT');
     }
 }
