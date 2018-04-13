@@ -1,3 +1,5 @@
+'use strict';
+
 // set up some global variables
 window.$ = require('jquery');
 window.Translator = require('bazinga-translator');
