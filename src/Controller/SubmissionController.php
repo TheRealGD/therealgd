@@ -340,7 +340,7 @@ final class SubmissionController extends AbstractController {
 
             // Find a report for this submission. If it doesn't exist, create it.
             $report = $rr->findOneBySubmission($submission);
-            if($report) {
+            if(!$report) {
                 $report = new Report();
                 $report->setSubmission($submission);
                 $report->setForum($forum);

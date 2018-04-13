@@ -264,7 +264,7 @@ final class CommentController extends AbstractController {
 
             // Find a report for this comment. If it doesn't exist, create it.
             $report = $rr->findOneByComment($comment);
-            if($report) {
+            if(!$report) {
                 $report = new Report();
                 $report->setComment($comment);
                 $report->setForum($forum);
