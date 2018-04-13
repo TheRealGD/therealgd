@@ -25,7 +25,9 @@ Encore
         babelConfig.presets.push(['es2015', { modules: false }]);
         babelConfig.plugins = ['syntax-dynamic-import'];
     })
-    .enableVersioning();
+    .enableVueLoader()
+    //.enableVersioning()
+    ;
 
 module.exports = merge(Encore.getWebpackConfig(), {
     externals: {

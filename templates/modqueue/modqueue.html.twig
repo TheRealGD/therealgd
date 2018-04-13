@@ -1,18 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block head %}
-  <link rel="alternate" type="application/atom+xml" href="{{ path('forum_feed', {forum_name: forum.name}) }}" title="{{ forum.name }}">
-{% endblock %}
+{% from 'submission/_macros.html.twig' import submission, submission_sort %}
+{% from 'comment/_macros.html.twig' import comment %}
 
-{% block stylesheets %}
-  {% if (app.user.showCustomStylesheets ?? true) and forum.theme %}
-    {{ include('_includes/stylesheets.html.twig', {
-      theme: forum.theme,
-      night_mode: app.user.nightMode ?? false
-    }, with_context=false) }}
-  {% else %}
-    {{ parent() }}
-  {% endif %}
+{% block page_classes 'forum-modqueue-page' %}
+{% block title %}Moderation Queue for /f/{{forum.name}}{% endblock %}
+
+{% block body %}
+    <h1 class="page-heading forum-name-heading">Moderation Queue for: <span class="forum-name-heading__prefix">/f/</span><strong class="forum-name-heading__name">{{forum.name}}</strong></h1>
+
+    {% for report in reports %}
+        {%- set options = { oddClass: (loop.index % 2 == 0) ? 'even' : 'odd' } -%}
+
+        {% if report.getSubmission() != null %}
+          {{ submission(report.getSubmission(), options) }}
+        {% endif %}
+
+        {% if report.getComment() != null %}
+          {{ comment(report.getComment()) }}
+        {% endif %}
+    {% endfor %}
+
+    {% include '_includes/pagination.html.twig' with {pager: reports} %}
 {% endblock %}
 
 {% block sidebar %}

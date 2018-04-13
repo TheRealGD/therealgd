@@ -134,7 +134,7 @@ flash:
     page_unlocked: The page was unlocked.
     no_cookies_verification: Does the image not load correctly? Please make sure you aren't blocking cookies and try again.
     no_password_resets: Password resets have been disabled by the administrator.
-    thread_reported: The submission has been reported.
+    submission_reported: The submission has been reported.
     comment_reported: The comment has been reported.
     generic_error: An error had occurred, please try again later.
     report_fail: The reporting system is unavailable, please contact Moderators directly.
@@ -150,6 +150,7 @@ forum:
     mod_page: Moderation Posts
     mod_submit: Create new mod post
     nautbot_page: Edit NautBot settings
+    moderation_queue: Moderation Queue
 
 forum_form:
     name: Name
@@ -585,3 +586,10 @@ import:
 rate_limit_form:
     group: Group:
     rate: Rate limit in hours
+
+report_modal:
+    initial_header: We're sorry something's wrong. How can we help?
+    rule_select_header: Which rule does it break?
+    other_select_header: What issue?
+    finished_header: Thanks for letting us know!
+    additional_info: Read the <a href="/policy">GunDeals Content Policy</a> and <a href="/f/{0}/rules">f/{0}'s rules</a>.

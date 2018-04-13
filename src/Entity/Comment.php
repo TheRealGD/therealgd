@@ -126,7 +126,12 @@ class Comment extends Votable {
      *
      * @var int
      */
-     private $reportCount = 0;
+    private $reportCount = 0;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Report", mappedBy="comment")
+     */
+    private $reportEntries;
 
     public function __construct(
         string $body,
@@ -300,10 +305,14 @@ class Comment extends Votable {
     }
 
     public function getReportCount(): int {
-      return $this->reportCount;
+        return $this->reportCount;
+    }
+
+    public function setReportCount($reportCount) {
+        $this->reportCount = $reportCount;
     }
 
     public function incrementReportCount() {
-      $this->reportCount++;
+        $this->reportCount++;
     }
 }

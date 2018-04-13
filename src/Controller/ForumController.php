@@ -18,6 +18,7 @@ use App\Repository\ForumCategoryRepository;
 use App\Repository\ForumLogEntryRepository;
 use App\Repository\ForumRepository;
 use App\Repository\SubmissionRepository;
+use App\Repository\ReportRepository;
 use App\Utils\PermissionsChecker;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
@@ -72,6 +73,28 @@ final class ForumController extends AbstractController {
             'sort_by' => $sortBy,
             'submissions' => $submissions,
             'mod' => true
+        ]);
+    }
+
+    /**
+     * @IsGranted("moderator", subject="forum")
+     * Show the moderation queue for a given forum
+     *
+     * @param SubmissionRepository  $sr
+     * @param ReportRepository      $rr
+     * @param ForumController       $forum
+     * @param string                $sortBy
+     * @param int                   $page
+     *
+     * @return Response
+     */
+    public function moderationQueue(SubmissionRepository $sr, ReportRepository $rr, Forum $forum, string $sortBy, int $page) {
+        $modQueue = $rr->findForumModQueueReports($forum, $sortBy, $page);
+
+        return $this->render('modqueue/modqueue.html.twig', [
+            'forum' => $forum,
+            'sort_by' => $sortBy,
+            'reports' => $modQueue,
         ]);
     }
 
@@ -485,4 +508,3 @@ final class ForumController extends AbstractController {
         ]);
     }
 }
-

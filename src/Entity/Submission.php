@@ -399,10 +399,14 @@ class Submission extends Votable {
     }
 
     public function getReportCount(): int {
-      return $this->reportCount;
+        return $this->reportCount;
+    }
+
+    public function setReportCount($reportCount) {
+        $this->reportCount = $reportCount;
     }
 
     public function incrementReportCount() {
-      $this->reportCount++;
+        $this->reportCount++;
     }
 }

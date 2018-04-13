@@ -137,65 +137,66 @@
         {%- endif -%}
 
         {%- spaceless -%}
-          <nav class="submission-nav">
-            <ul>
-              <li>
-                <a href="{{ path('submission', {forum_name: submission.forum.name, submission_id: submission.id, slug: submission.title|slugify}) }}">
+          <nav>
+            <ul class="submission-nav-ul">
+              <li class="submission-nav-li">
+                <a class="submission-nav-link" href="{{ path('submission', {forum_name: submission.forum.name, submission_id: submission.id, slug: submission.title|slugify}) }}">
                   {{- 'submissions.comments'|transchoice(submission.comments|length) -}}
                 </a>
               </li>
               {%- if is_granted('edit', submission) -%}
-                <li>
-                  <a href="{{ path('edit_submission', {forum_name: submission.forum.name, submission_id: submission.id}) }}">
+                <li class="submission-nav-li">
+                  <a class="submission-nav-link" href="{{ path('edit_submission', {forum_name: submission.forum.name, submission_id: submission.id}) }}">
                     {{- 'submissions.edit'|trans -}}
                   </a>
                 </li>
               {%- endif -%}
               {%- if is_granted('delete_immediately', submission) %}
-                <li>
+                <li class="submission-nav-li">
                   <form action="{{ path('submission_delete_immediately', {forum_name: submission.forum.name, submission_id: submission.id}) }}" method="POST">
                     <input type="hidden" name="token" value="{{ csrf_token('delete_submission') }}">
-                    <button class="confirm-submission-delete">{{ 'action.delete'|trans }}</button>
+                    <button class="submission-nav-link confirm-submission-delete">{{ 'action.delete'|trans }}</button>
                   </form>
                 </li>
               {%- elseif is_granted('delete_with_reason', submission) %}
-                <li>
-                  <a href="{{ path('submission_delete_with_reason', {forum_name: submission.forum.name, submission_id: submission.id}) }}">
+                <li class="submission-nav-li">
+                  <a class="submission-nav-link" href="{{ path('submission_delete_with_reason', {forum_name: submission.forum.name, submission_id: submission.id}) }}">
                     {{- 'action.delete'|trans -}}
                   </a>
                 </li>
               {%- endif -%}
               {%- if is_granted('moderator', submission.forum) -%}
-                <li>
+                <li class="submission-nav-li">
                   <form action="{{ path(submission.locked ? 'unlock' : 'lock', {
                     forum_name: submission.forum.name,
                     submission_id: submission.id,
                   }) }}" method="post">
                     <input type="hidden" name="token" value="{{ csrf_token('lock') }}">
-                    <button>{{ submission.locked ? 'action.unlock'|trans : 'action.lock'|trans }}</button>
+                    <button  class="submission-nav-link">{{ submission.locked ? 'action.unlock'|trans : 'action.lock'|trans }}</button>
                   </form>
                 </li>
-                <li>
-                  <a href="{{ path('forum_ban', {forum_name: submission.forum.name, username: submission.user.username}) }}">
+                <li class="submission-nav-li">
+                  <a class="submission-nav-link" href="{{ path('forum_ban', {forum_name: submission.forum.name, username: submission.user.username}) }}">
                     {{- 'action.ban'|trans -}}
                   </a>
                 </li>
               {%- endif -%}
               {%- if is_granted('ROLE_ADMIN') -%}
-                <li>
-                  <a href="{{ path('ban_user', {'username': submission.user.username}) }}">{{ 'action.global_ban'|trans }}</a>
+                <li class="submission-nav-li">
+                  <a class="submission-nav-link" href="{{ path('ban_user', {'username': submission.user.username}) }}">{{ 'action.global_ban'|trans }}</a>
                 </li>
               {%- endif -%}
               {%- if is_granted('ROLE_USER') -%}
-                <li>
-                  <form action="{{ path('report_submission', {'forum_name': submission.forum.name, 'submission_id': submission.id}) }}" method="POST">
-                    <input type="hidden" name="token" value="{{ csrf_token('report_submission') }}">
-                    <button class="confirm-submission-report">{{ 'action.report'|trans }}</button>
-                  </form>
+                <li class="submission-nav-li">
+                  <report-link forum="{{submission.forum.name}}" submission-id="{{submission.id}}" user-name="{{submission.user.username}}" csrf-token="{{csrf_token('report_submission')}}" />
                 </li>
               {%- endif -%}
             </ul>
           </nav>
+
+          {% if is_granted('moderator', submission.forum) and submission.reportCount > 0 %}
+            <mod-links forum="{{submission.forum.name}}" report-count="{{submission.reportCount}}" submission-id="{{submission.id}}"></mod-links>
+          {% endif %}
         {%- endspaceless -%}
       </div>
     </div>

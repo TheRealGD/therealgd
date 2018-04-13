@@ -7,10 +7,13 @@ use App\Entity\Forum;
 use App\Entity\ForumLogCommentDeletion;
 use App\Entity\Submission;
 use App\Entity\User;
+use App\Entity\Report;
+use App\Entity\ReportEntry;
 use App\Form\CommentType;
 use App\Form\Model\CommentData;
 use App\Repository\CommentRepository;
 use App\Repository\ForumRepository;
+use App\Repository\ReportRepository;
 use App\Utils\Slugger;
 use App\Utils\ReportHelper;
 use Doctrine\ORM\EntityManager;
@@ -247,31 +250,142 @@ final class CommentController extends AbstractController {
         Submission $submission,
         Forum $forum,
         Comment $comment,
-        Request $request
+        Request $request,
+        ReportRepository $rr
     ) {
         $this->validateCsrf('report_comment', $request->request->get('token'));
 
-        $comment->incrementReportCount();
-        $em->persist($comment);
+        $reportBody = $request->request->get('reportBody');
+        $result = array('success' => false);
 
-        $reportTitle = "Comment Report: " . $comment->getId() . " - Report Count: " . $comment->getReportCount();;
-        $reportUrl = "/f/" . $forum->getName() . "/" . $submission->getId() . "/comment/" . $comment->getId();
-        $reportSuccess = ReportHelper::createReport($em, $forum, $request, $reportTitle, $reportUrl);
+        if(trim($reportBody != "")) {
+            $comment->incrementReportCount();
+            $em->persist($comment);
 
-        if($reportSuccess)
-            $this->addFlash('success', 'flash.comment_reported');
-        else
-            $this->addFlash('notice', 'flash.report_fail');
+            // Find a report for this comment. If it doesn't exist, create it.
+            $report = $rr->findOneByComment($comment);
+            if($report == null) {
+                $report = new Report();
+                $report->setComment($comment);
+                $report->setForum($forum);
+                $em->persist($report);
+                $em->flush();
+            } else if($report->getIsResolved()) {
+                // Reset the isResolved flag if it is re-reported and remove all previous reports.
+                foreach($report->getEntries() as $entry) { $em->remove($entry); }
+                $em->flush();
 
-        if ($request->headers->has('Referer')) {
-            return $this->redirect($request->headers->get('Referer'));
+                $em->refresh($report);
+                $report->setIsResolved(false);
+
+                $em->persist($report);
+            }
+
+            // Add the report entry to the report.
+            $entry = new ReportEntry();
+            $entry->setReport($report);
+            $entry->setUser($this->getUser());
+            $entry->setBody($reportBody);
+            $em->persist($entry);
+            $em->flush();
+
+            $result['success'] = true;
         }
 
-        return $this->redirectToRoute('submission', [
-            'forum_name' => $forum->getName(),
-            'submission_id' => $submission->getId(),
-            'slug' => Slugger::slugify($submission->getTitle()),
-        ]);
+        $response = new Response(json_encode($result));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+    }
+
+    /**
+     * Get the entries for a given comment.
+     *
+     * @IsGranted("moderator", subject="forum")
+     *
+     * @param EntityManager $em
+     * @param Submission    $submission
+     * @param Forum         $forum
+     * @param Comment       $comment
+     * @param Request       $request
+     *
+     * @return Response
+     */
+    public function reportEntries(
+        EntityManager $em,
+        Submission $submission,
+        Forum $forum,
+        Comment $comment,
+        Request $request,
+        ReportRepository $rr
+    ) {
+        $result = [];
+        $report = $rr->findOneByComment($comment);
+
+        if($report != null) {
+            foreach($report->getEntries() as $entry) {
+                $result[] = array("body" => $entry->getBody());
+            }
+        }
+
+        $response = new Response(json_encode($result));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+    }
+
+    /**
+     * Process a report action for a given comment..
+     *
+     * @IsGranted("moderator", subject="forum")
+     *
+     * @param EntityManager $em
+     * @param Submission    $submission
+     * @param Forum         $forum
+     * @param Comment       $comment
+     * @param Request       $request
+     *
+     * @return Response
+     */
+    public function reportAction(
+        EntityManager $em,
+        Submission $submission,
+        Forum $forum,
+        Comment $comment,
+        Request $request,
+        ReportRepository $rr
+    ) {
+        $action = $request->request->get('reportAction');
+        $report = $rr->findOneByComment($comment);
+
+        $result = [];
+
+        // Removal action.
+        if($action == "remove") {
+            $report->setIsResolved(true);
+            $em->persist($report);
+
+            $comment->setSoftDeleted(true);
+            $comment->setReportCount(0);
+            $em->persist($comment);
+
+            $result["status"] = "success";
+            $em->flush();
+        }
+
+        // Approval action.
+        if($action == "approve") {
+            $report->setIsResolved(true);
+            $em->persist($report);
+
+            $comment->setReportCount(0);
+            $em->persist($comment);
+
+            $result["status"] = "success";
+            $em->flush();
+        }
+
+        $response = new Response(json_encode($result));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
     }
 
     /**

@@ -40,40 +40,42 @@
   </head>
 
   <body class="{% block page_classes '' %} {{ app.user ? 'user-logged-in' : 'user-anonymous' }} {{ (app.user.nightMode ?? false) ? 'night-mode' }}">
-    {% block site_feedback %}
-      {{ include('_includes/site_feedback.html.twig', {forum: forum ?? null}, with_context=false) }}
-    {% endblock %}
+    <div id="vue-app">
+      {% block site_feedback %}
+        {{ include('_includes/site_feedback.html.twig', {forum: forum ?? null}, with_context=false) }}
+      {% endblock %}
 
-    {% block site_banner %}
-      {{ include('_includes/site_banner.html.twig', {forum: forum ?? null}, with_context=false) }}
-    {% endblock %}
+      {% block site_banner %}
+        {{ include('_includes/site_banner.html.twig', {forum: forum ?? null}, with_context=false) }}
+      {% endblock %}
 
-    {% block site_nav %}
-      {{ include('_includes/site_nav.html.twig', {forum: forum ?? null}, with_context=false) }}
-    {% endblock %}
+      {% block site_nav %}
+        {{ include('_includes/site_nav.html.twig', {forum: forum ?? null}, with_context=false) }}
+      {% endblock %}
 
-    {% block site_alerts %}
-      <div class="site-alerts">
-        {%- for type, notices in app.flashes -%}
-          {%- for notice in notices -%}
-            <div class="alert alert--{{ type }} alert--animate alert--dismissable" role="alert">
-              <p>{{ notice|trans }}</p>
-            </div>
+      {% block site_alerts %}
+        <div class="site-alerts">
+          {%- for type, notices in app.flashes -%}
+            {%- for notice in notices -%}
+              <div class="alert alert--{{ type }} alert--animate alert--dismissable" role="alert">
+                <p>{{ notice|trans }}</p>
+              </div>
+            {%- endfor -%}
           {%- endfor -%}
-        {%- endfor -%}
-      </div>
-    {% endblock %}
+        </div>
+      {% endblock %}
 
-    {% block site_main %}
-      <div class="content-wrapper">
-        <main class="body">{% block body %}{% endblock %}</main>
-        <aside class="sidebar">{% block sidebar %}{% endblock %}</aside>
-      </div>
-    {% endblock %}
+      {% block site_main %}
+        <div class="content-wrapper">
+          <main class="body">{% block body %}{% endblock %}</main>
+          <aside class="sidebar">{% block sidebar %}{% endblock %}</aside>
+        </div>
+      {% endblock %}
 
-    {% block site_footer %}
-      {{ include('_includes/site_footer.html.twig', {forum: forum ?? null}, with_context=false) }}
-    {% endblock %}
+      {% block site_footer %}
+        {{ include('_includes/site_footer.html.twig', {forum: forum ?? null}, with_context=false) }}
+      {% endblock %}
+    </div>
 
     {% block javascripts %}
       <script src="{{ preload(asset('bundles/fosjsrouting/js/router.js', 'static_asset')) }}"></script>
@@ -94,6 +96,8 @@
       {% else %}
         <script src="{{ path('bazinga_jstranslation_js') }}"></script>
       {% endif %}
+
+      <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous"></script>
     {% endblock %}
 
     {% block site_tracking %}

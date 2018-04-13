@@ -40,9 +40,11 @@
   {%- from 'vote/_macros.html.twig' import vote -%}
   <article class="comment comment-{{ level|default(0) ? 'level-'~level : 'top-level' }} {{ comment.softDeleted ? 'comment-soft-deleted' }}" id="comment_{{ comment.id }}">
     <div class="comment-row">
-      <div class="comment-vote">
-        {{ vote(comment, 'comment_vote') }}
-      </div>
+      {% if not comment.softDeleted %}
+        <div class="comment-vote">
+          {{ vote(comment, 'comment_vote') }}
+        </div>
+      {% endif %}
 
       <div class="comment-inner">
         <h1 class="comment-info">
@@ -62,17 +64,28 @@
           {% if comment.isStickied %}stickied comment{% endif %}
         </h1>
 
-        <div class="comment-body">
-          {{ comment.body|cached_markdown(markdown_context())|raw }}
-        </div>
+        {% if not comment.softDeleted %}
+          <div class="comment-body">
+            {{ comment.body|cached_markdown(markdown_context())|raw }}
+          </div>
+        {% endif %}
+        {% if comment.softDeleted %}
+          <div class="comment-body">
+            [deleted]
+          </div>
+        {% endif %}
 
         <nav class="comment-nav">
-          <ul>{{ block('comment_nav') }}</ul>
+          <ul class="comment-nav-ul">{{ block('comment_nav') }}</ul>
         </nav>
 
         {% if options.show_form ?? false and is_granted('ROLE_USER') %}
           {% from _self import comment_form %}
           {{ comment_form(comment.submission, comment) }}
+        {% endif %}
+
+        {% if is_granted('moderator', comment.submission.forum) and comment.reportCount > 0 %}
+          <mod-links forum="{{comment.submission.forum.name}}" report-count="{{comment.reportCount}}" comment-id="{{comment.id}}" submission-id="{{comment.submission.id}}"></mod-links>
         {% endif %}
       </div>
     </div>
@@ -138,8 +151,8 @@
 {%- endblock -%}
 
 {%- block comment_nav_reply -%}
-  <li class="comment-nav-reply">
-    <a href="{{ path('comment', {
+  <li class="comment-nav-reply comment-nav-li">
+    <a class="comment-nav-link" href="{{ path('comment', {
       forum_name: comment.submission.forum.name,
       submission_id: comment.submission.id,
       comment_id: comment.id
@@ -155,8 +168,8 @@
 
 {%- block comment_nav_permalink -%}
   {%- spaceless -%}
-    <li class="comment-nav-permalink">
-      <a href="{{ path('comment', {
+    <li class="comment-nav-permalink comment-nav-li">
+      <a class="comment-nav-link" href="{{ path('comment', {
         forum_name: comment.submission.forum.name,
         submission_id: comment.submission.id,
         comment_id: comment.id
@@ -168,8 +181,8 @@
 {%- block comment_nav_parent -%}
   {%- spaceless -%}
     {%- if comment.parent -%}
-      <li class="comment-nav-parent">
-        <a href="{{ path('comment', {
+      <li class="comment-nav-parent comment-nav-li">
+        <a class="comment-nav-link" href="{{ path('comment', {
           forum_name: comment.submission.forum.name,
           submission_id: comment.submission.id,
           comment_id: comment.parent.id
@@ -194,14 +207,14 @@
 
 {%- block comment_nav_delete_softdelete -%}
   {%- spaceless -%}
-    <li class="comment-nav-softdelete">
+    <li class="comment-nav-softdelete comment-nav-li">
       <form action="{{ path('softdelete_comment', {
         forum_name: comment.submission.forum.name,
         submission_id: comment.submission.id,
         comment_id: comment.id,
       }) }}" method="POST">
         <input type="hidden" name="token" value="{{ csrf_token('softdelete_comment') }}">
-        <button type="submit" class="confirm-comment-delete">{{ 'comments.delete'|trans }}</button>
+        <button class="comment-nav-link" type="submit" class="confirm-comment-delete">{{ 'comments.delete'|trans }}</button>
       </form>
     </li>
   {%- endspaceless -%}
@@ -209,14 +222,14 @@
 
 {%- block comment_nav_delete_thread -%}
   {%- spaceless -%}
-    <li class="comment-nav-delete-thread">
+    <li class="comment-nav-delete-thread comment-nav-li">
       <form action="{{ path('delete_comment', {
         forum_name: comment.submission.forum.name,
         submission_id: comment.submission.id,
         comment_id: comment.id,
       }) }}" method="POST">
         <input type="hidden" name="token" value="{{ csrf_token('delete_comment') }}">
-        <button type="submit" class="confirm-comment-delete">{{ delete_thread_label|trans }}</button>
+        <button class="comment-nav-link" type="submit" class="confirm-comment-delete">{{ delete_thread_label|trans }}</button>
       </form>
     </li>
   {%- endspaceless -%}
@@ -225,8 +238,8 @@
 {%- block comment_nav_edit -%}
   {%- spaceless -%}
     {%- if is_granted('edit', comment) -%}
-      <li class="comment-nav-edit">
-        <a href="{{ path('edit_comment', {
+      <li class="comment-nav-edit comment-nav-li">
+        <a class="comment-nav-link" href="{{ path('edit_comment', {
           forum_name: comment.submission.forum.name,
           submission_id: comment.submission.id,
           comment_id: comment.id,
@@ -241,25 +254,25 @@
   {%- if not comment.parent %}
     {%- spaceless -%}
     {%- if not comment.isStickied -%}
-    <li class="comment-nav-sticky-thread">
+    <li class="comment-nav-sticky-thread comment-nav-li">
       <form action="{{ path('sticky_comment', {
         forum_name: comment.submission.forum.name,
         submission_id: comment.submission.id,
         comment_id: comment.id,
       }) }}" method="POST">
         <input type="hidden" name="token" value="{{ csrf_token('sticky_comment') }}">
-        <button type="submit" class="confirm-comment-sticky">{{ 'action.sticky' | trans}}</button>
+        <button class="comment-nav-link" type="submit" class="confirm-comment-sticky">{{ 'action.sticky' | trans}}</button>
       </form>
     </li>
     {% else %}
-    <li class="comment-nav-unsticky-thread">
+    <li class="comment-nav-unsticky-thread comment-nav-li">
       <form action="{{ path('unsticky_comment', {
         forum_name: comment.submission.forum.name,
         submission_id: comment.submission.id,
         comment_id: comment.id,
       }) }}" method="POST">
         <input type="hidden" name="token" value="{{ csrf_token('unsticky_comment') }}">
-        <button type="submit" class="confirm-comment-sticky">{{ 'action.unsticky' | trans}}</button>
+        <button class="comment-nav-link" type="submit" class="confirm-comment-sticky">{{ 'action.unsticky' | trans}}</button>
       </form>
     </li>
     {%- endif -%}
@@ -272,8 +285,8 @@
 {%- block comment_nav_ban -%}
   {%- if is_granted('moderator', comment.submission.forum) -%}
     {%- spaceless -%}
-      <li>
-        <a href="{{ path('forum_ban', {forum_name: comment.submission.forum.name, username: comment.user.username}) }}">
+      <li class="comment-nav-li">
+        <a class="comment-nav-link" href="{{ path('forum_ban', {forum_name: comment.submission.forum.name, username: comment.user.username}) }}">
           {{- 'action.ban'|trans -}}
         </a>
       </li>
@@ -284,8 +297,8 @@
 {%- block comment_nav_ip_ban -%}
   {%- if is_granted('ROLE_ADMIN') %}
     {%- spaceless -%}
-      <li class="comment-nav-edit">
-        <a href="{{ path('ban_user', {'username': comment.user.username}) }}">
+      <li class="comment-nav-edit comment-nav-li">
+        <a class="comment-nav-link" href="{{ path('ban_user', {'username': comment.user.username}) }}">
           {{- 'action.global_ban'|trans -}}
         </a>
       </li>
@@ -294,17 +307,11 @@
 {%- endblock -%}
 
 {%- block comment_report -%}
-  {%- if is_granted('ROLE_USER') %}
+  {%- if is_granted('ROLE_USER') and not comment.softDeleted %}
     {%- spaceless -%}
-    <li class="comment-nav-report">
-      <form action="{{ path('report_comment', {
-        forum_name: comment.submission.forum.name,
-        submission_id: comment.submission.id,
-        comment_id: comment.id,
-      }) }}" method="POST">
-        <input type="hidden" name="token" value="{{ csrf_token('report_comment') }}">
-        <button type="submit" class="confirm-comment-report">{{ 'action.report'|trans }}</button>
-      </form>
+    <li class="comment-nav-report comment-nav-li">
+      <report-link forum="{{comment.submission.forum.name}}" comment-id="{{comment.id}}" submission-id="{{comment.submission.id}}" user-name="{{comment.submission.user.username}}" csrf-token="{{csrf_token('report_comment')}}"></report-link>
+    </li>
     {%- endspaceless -%}
   {%- endif -%}
 {%- endblock -%}
