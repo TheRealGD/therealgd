@@ -76,6 +76,8 @@ class UserData implements UserInterface {
 
     private $autoFetchSubmissionTitles;
 
+    private $admin = false;
+
     public static function fromUser(User $user): self {
         $self = new self();
         $self->entityId = $user->getId();
@@ -89,6 +91,7 @@ class UserData implements UserInterface {
         $self->openExternalLinksInNewTab = $user->openExternalLinksInNewTab();
         $self->biography = $user->getBiography();
         $self->autoFetchSubmissionTitles = $user->autoFetchSubmissionTitles();
+        $self->admin = $user->isAdmin();
 
         return $self;
     }
@@ -109,12 +112,14 @@ class UserData implements UserInterface {
         $user->setOpenExternalLinksInNewTab($this->openExternalLinksInNewTab);
         $user->setBiography($this->biography);
         $user->setAutoFetchSubmissionTitles($this->autoFetchSubmissionTitles);
+        $user->setAdmin($this->admin);
     }
 
     public function toUser(): User {
         $user = new User($this->username, $this->password);
         $user->setEmail($this->email);
         $user->setBiography($this->biography);
+        $user->setAdmin($this->admin);
 
         $settings = [
             'showCustomStylesheets',
@@ -241,6 +246,14 @@ class UserData implements UserInterface {
 
     public function setAutoFetchSubmissionTitles(?bool $autoFetchSubmissionTitles): void {
         $this->autoFetchSubmissionTitles = $autoFetchSubmissionTitles;
+    }
+
+    public function isAdmin(): bool {
+        return $this->admin;
+    }
+
+    public function setAdmin(bool $admin): void {
+        $this->admin = $admin;
     }
 
     /**
