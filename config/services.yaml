@@ -35,6 +35,10 @@ services:
           - 'controller.service_arguments'
           - { name: monolog.logger, channel: app }
 
+    App\Command\ImportFromReddit:
+        arguments:
+            $defaultLocale: "%env(APP_LOCALE)%"
+
     App\Command\ActivateMaintenanceMode:
         arguments:
             $siteName: "%env(SITE_NAME)%"
