@@ -15,11 +15,8 @@ use App\Form\SubmissionType;
 use App\Repository\SubmissionRepository;
 use App\Repository\ForumRepository;
 use App\Repository\UserRepository;
-<<<<<<< da8d7f7840595d11ec6702ca3f97303e50630659
 use App\Repository\ReportRepository;
 use App\Repository\RateLimitRepository;
-=======
->>>>>>> Created a function that gets reddit posts and imports them automctically, setup a wget to the address from local host
 use App\Utils\Slugger;
 use App\Utils\ReportHelper;
 use App\Utils\PermissionsChecker;
