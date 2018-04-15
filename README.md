@@ -1,10 +1,3 @@
-Thanks to continued interest in Postmill, as well as some community efforts to
-improve it, I feel a bit more motivated to work on this project again. A
-[website][website] and new [support forums][support] have been set up. We'll see
-where things go from here.
-
-***
-
 # ![](docs/assets/postmill-128.png) Postmill
 
 **Postmill** is a free, web-based, social link aggregator with voting and
@@ -15,7 +8,7 @@ by an alien logo are purely coincidental.
 ## Requirements
 
 * PHP >= 7.1 with the APCu, curl, gd, mbstring, PDO_PGSQL and xml extensions.
-* PostgreSQL >= 9.3
+* PostgreSQL >= 9.4
 * [Composer](https://getcomposer.org/)
 * [Node.js](https://nodejs.org/en/) (>= 8.x preferred)
 
@@ -56,24 +49,38 @@ Clone the repository somewhere and navigate there with the command line.
 7.  Navigate to <http://localhost:8000/>. Log in with the credentials you chose
     in step 2.
 
+## Support
+
+We have a [support board][support] and a [Matrix channel][matrix] where you can
+ask for help and support.
+
 ## Reporting issues
 
-* Bugs and feature requests should be reported on the [issue tracker][issues].
-* Get support on Postmill's [support board][support] or
-  [Matrix channel][matrix].
-
-You can email emma1312@protonmail.ch to disclose or discuss something in private
-with the creator of the software.
+* Bugs and suggestions on how to improve existing functionality should be
+  reported on the [issue tracker][issues].
+* Feature requests are no longer acceptable on the issue tracker--I will not do
+  free work for you.
+* Support questions do not belong on the issue tracker. Use the aforementioned
+  public support channels.
 
 ## Contributions
 
-You are always welcome to submit pull requests for things like bug fixes,
-documentation, and new translations. Pull requests for new/altered functionality
-are likely to be rejected, as this must be discussed with the community
-beforehand.
+You are always welcome to submit merge requests for bug fixes, improvements,
+documentation, translations, and so on.
+
+If you want to contribute a new feature, you should start an issue on the issue
+tracker to gauge the possibility of it being merged. A feature that's outside
+the scope of the software is likely to be rejected. We don't want hurt feelings,
+so please just ask beforehand.
 
 If you'd like to support me with money, you can send Bitcoins to
 `1AXAH2ZaHfVsq2xnbXRN9497FpUAri8x72`.
+
+## Contact
+
+You can email emma1312@protonmail.ch to discuss something in private with the
+creator of the software. **Do not email me for asking for support**--use the
+public support channels instead.
 
 ## License
 
@@ -84,4 +91,3 @@ details.
 [issues]: https://gitlab.com/edgyemma/Postmill/issues
 [matrix]: https://matrix.to/#/#postmill:matrix.org
 [support]: https://community.postmill.xyz/f/Support
-[website]: https://postmill.xyz/
