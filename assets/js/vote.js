@@ -95,13 +95,11 @@ function vote($form, isUp) {
 }
 
 $(function () {
-    $('.user-logged-in .vote').each(function () {
-        const $form = $(this);
+    $(document)
+        .on('submit', '.user-logged-in .vote', event => event.preventDefault())
+        .on('click', '.user-logged-in .vote-button', function () {
+            const $form = $(this).parents('.vote');
 
-        $form.submit(event => event.preventDefault());
-
-        $form.find('.vote-button').click(function () {
             vote($form, $(this).hasClass('vote-up'));
         });
-    });
 });
