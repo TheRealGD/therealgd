@@ -32,7 +32,8 @@ services:
     volumes:
       - "./docker/nginx/letsencrypt:/etc/letsencrypt/:rw"
       - "./docker/nginx/nginxlogs/:/var/log/nginx/:rw"
-      - "wwwdir:/var/www/:ro"
+      - "./public:/var/www/public:ro"
+      - "./vendor:/var/www/vendor:ro"
 
   php:
     build:
@@ -49,13 +50,15 @@ services:
         - mailer_url="<%=mailer_url.strip%>"
     working_dir: /var/www/public
     volumes:
-      - "wwwdir:/var/www:rw"
       - ./src:/var/www/src
       - ./templates:/var/www/templates
+      - "./config:/var/www/config:rw"
+      - "./public:/var/www/public:rw"
+      - "./assets:/var/www/assets:ro"
+      - "./bin:/var/www/bin:ro"
+      - "./lib:/var/www/lib:rw"
+      - "./translations:/var/www/translations:rw"
+      - "./var:/var/www/var:rw"
+      - "./vendor:/var/www/vendor:rw"
     expose:
       - '9000'
-
-volumes:
-  wwwdir:
-  publicdir:
-  libdir:

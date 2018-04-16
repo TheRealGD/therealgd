@@ -35,6 +35,14 @@ class SubmissionData {
     private $url;
 
     /**
+     * @Assert\Length(max=2000, charset="8bit", groups={"create", "edit"})
+     * @Assert\Url(protocols={"http", "https"}, groups={"create", "edit"})
+     *
+     * @var string|null
+     */
+    private $originalImage;
+
+    /**
      * @Assert\Length(max=25000, groups={"create", "edit"})
      *
      * @var string|null
@@ -63,6 +71,7 @@ class SubmissionData {
         $self->entityId = $submission->getId();
         $self->title = $submission->getTitle();
         $self->url = $submission->getUrl();
+        $self->originalImage= $submission->getOriginalImage();
         $self->body = $submission->getBody();
         $self->userFlag = $submission->getUserFlag();
         $self->forum = $submission->getForum();
@@ -82,7 +91,9 @@ class SubmissionData {
             $ip,
             $this->sticky,
             $modThread,
-            $this->userFlag
+            $this->userFlag,
+            null,
+            $this->originalImage
         );
     }
 
@@ -92,6 +103,7 @@ class SubmissionData {
         $submission->setBody($this->body);
         $submission->setUserFlag($this->userFlag);
         $submission->setSticky($this->sticky);
+        $submission->setOriginalImage($this->originalImage);
     }
 
     public function getEntityId() {
@@ -112,6 +124,14 @@ class SubmissionData {
 
     public function setUrl($url) {
         $this->url = $url;
+    }
+
+    public function getOriginalImage() {
+        return $this->originalImage;
+    }
+
+    public function setOriginalImage($url) {
+        $this->originalImage = $url;
     }
 
     public function getBody() {
