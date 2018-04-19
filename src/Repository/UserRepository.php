@@ -132,6 +132,7 @@ EOSQL;
         $contributions = $this->_em->createNativeQuery($sql, $rsm)
             ->setParameter(':user_id', $user->getId())
             ->setParameter(':limit', $limit, 'integer')
+            ->useResultCache(true)
             ->execute();
 
         if (!empty($contributions['comment']['ids'])) {
@@ -143,7 +144,6 @@ EOSQL;
                 ->where('c.id IN (?1)')
                 ->getQuery()
                 ->setParameter(1, $contributions['comment']['ids'])
-                ->useQueryCache(true)->useResultCache(true)
                 ->execute();
         }
 
