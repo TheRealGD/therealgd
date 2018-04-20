@@ -32,14 +32,29 @@ RUN  apt-get update \
   && php composer-setup.php --install-dir=/usr/bin --filename=composer \
   && php -r "unlink('composer-setup.php');" \
   && rm -r /var/lib/apt/lists/* /tmp/*
+RUN cd /var/www && npm install
 
 # PHP-FPM Config
-RUN mkdir -p /etc/php/7.2/fpm/conf.d/
-RUN echo "\n opcache.max_accelerated_files = 20000         \
-          \n realpath_cache_size=4096K                     \
-          \n realpath_cache_ttl=600                        \
-          \n php_admin_flag[log_errors] = ${log_errors}    \
-          \n php_flag[display_errors] = ${display_errors}" >> /etc/php/7.2/fpm/conf.d/99-overrides.ini
+          # prod only: opcache.validate_timestamps=0
+           # composer dump-autoload --optimize --no-dev --classmap-authoritative
+RUN echo "[www]                                        \n\
+          user = www-data                              \n\
+          group = www-data                             \n\
+          listen = 127.0.0.1:9000                      \n\
+          listen.backlog = 65536                       \n\
+          pm = static                                  \n\
+          pm.max_children = 2                          \n\
+          ;pm.max_requests = 0                         \n\
+          ;pm.status_path = /status                    \n\
+          php_admin_value[error_reporting]=0           \n\
+          php_admin_flag[log_errors] = ${log_errors}   \n\
+          php_flag[display_errors] = ${display_errors} \n\
+          php_value[memory_limit] = 256M               \n\
+          php_value[opcache.enable] = 1                           \n\
+          php_value[opcache.max_accelerated_files] = 20000        \n\
+          php_value[opcache.memory_consumption]=256               \n\
+          php_value[realpath_cache_size]=4096K                    \n\
+          php_value[realpath_cache_ttl]=600                       "  > /usr/local/etc/php-fpm.d/www.conf
 
 # Generate ENV
 ADD ./.env.erb /tmp
@@ -71,13 +86,12 @@ ADD webpack.config.js /var/www
 # uncomment me for lighter container and slower build
 # RUN apt-get purge   -y ruby
 
-RUN cd /var/www && npm install
 
 WORKDIR /var/www/public
 CMD ["sh", "-c", "cd /var/www; \
                  cp /tmp/.env /var/www/.env; \
                  chown www-data:www-data /var/www/.env; \
-                 composer install; npm run build-dev; \
+                 composer install; npm run build-${app_env}; \
                  cp /tmp/.env /var/www/.env && rm /tmp/.env && rm /tmp/env.erb;\
                  chown www-data:www-data /var/www/.env; \
                  mkdir -p ./public/media/; chown www-data:www-data public/media -R; \
