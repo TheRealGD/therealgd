@@ -86,18 +86,19 @@ ADD webpack.config.js /var/www
 # uncomment me for lighter container and slower build
 # RUN apt-get purge   -y ruby
 
+RUN echo "cd /var/www; \
+          cp /tmp/.env /var/www/.env; \
+          chown www-data:www-data /var/www/.env; \
+          composer install; npm run build-${app_env}; \
+          cp /tmp/.env /var/www/.env && rm /tmp/.env && rm /tmp/env.erb;\
+          chown www-data:www-data /var/www/.env; \
+          mkdir -p ./public/media/; chown www-data:www-data public/media -R; \
+          mkdir -p ./public/submission_images/; chown www-data:www-data public/submission_images -R; \
+          mkdir -p ./var/cache/; chown www-data:www-data ./var/cache/ -R; \
+          bin/console doctrine:migrations:migrate --no-interaction; \
+          bin/console app:user:add -a -p devdevdev dev; \
+          cd /var/www/public; php-fpm"> /start.sh && chmod +x /start.sh
 
 WORKDIR /var/www/public
-CMD ["sh", "-c", "cd /var/www; \
-                 cp /tmp/.env /var/www/.env; \
-                 chown www-data:www-data /var/www/.env; \
-                 composer install; npm run build-${app_env}; \
-                 cp /tmp/.env /var/www/.env && rm /tmp/.env && rm /tmp/env.erb;\
-                 chown www-data:www-data /var/www/.env; \
-                 mkdir -p ./public/media/; chown www-data:www-data public/media -R; \
-                 mkdir -p ./public/submission_images/; chown www-data:www-data public/submission_images -R; \
-                 mkdir -p ./var/cache/; chown www-data:www-data ./var/cache/ -R; \
-                 bin/console doctrine:migrations:migrate --no-interaction; \
-                 bin/console app:user:add -a -p devdevdev dev; \
-                 cd /var/www/public; php-fpm"]
+CMD /start.sh
 

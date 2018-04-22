@@ -101,6 +101,7 @@ CMD ["sh", "-c", "cd /var/www; \
                   mkdir -p ./public/media/; chown www-data:www-data public/media -R; \
                   composer install && composer dump-autoload --optimize --no-dev --classmap-authoritative; \
                   npm run build-${app_env}; cd /var/www/public; cp /tmp/.env /var/www/.env; rm /tmp/.env*; php-fpm"]
+CMD /start.sh
 
 # uncomment for lighter container and slower incremental build
 # RUN apt-get purge   -y nodejs
