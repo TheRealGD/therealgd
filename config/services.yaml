@@ -87,7 +87,9 @@ services:
 
     App\Twig\AppExtension:
         arguments:
-            $siteName: "%env(SITE_NAME)%"
+            $siteName: '%env(SITE_NAME)%'
+            $branch: '%env(GIT_BRANCH)%'
+            $version: "%env(GIT_SHA)%"
 
     App\Utils\CachedMarkdownConverter:
         arguments:

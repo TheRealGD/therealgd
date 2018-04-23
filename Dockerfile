@@ -10,6 +10,8 @@ ARG trusted_hosts
 ARG no_reply_address
 ARG mailer_url
 ARG database_url
+ARG git_sha
+ARG git_branch
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN  apt-get update \
@@ -68,6 +70,8 @@ RUN erb -T - site_name=$site_name                           \
     aws_ssm_region=$aws_ssm_region                          \
     no_reply_address=$no_reply_address                      \
     mailer_url=$mailer_url                                  \
+    git_sha=$git_sha                                        \
+    git_branch=$git_branch                                  \
     /tmp/.env.erb > /tmp/.env
 
 # build prod-like stuff

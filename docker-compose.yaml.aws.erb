@@ -48,6 +48,8 @@ services:
         - app_secret=<%=app_secret.strip%>
         - no_reply_address="noreply@<%=server_name.strip%>"
         - mailer_url="<%=mailer_url.strip%>"
+        - git_sha="${GIT_SHA}"
+        - git_branch="${GIT_BRANCH}"
     working_dir: /var/www/public
     volumes:
       - ./src:/var/www/src
