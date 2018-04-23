@@ -1,0 +1,18 @@
+{{ form_start(form) }}
+  <div class="form__row">
+    {{ form_label(form.name) }}
+    {{ form_errors(form.name) }}
+    {{ form_widget(form.name) }}
+    <div class="form__help">
+      <p>{{ 'help.only_visible_to_mods_admins'|trans }}</p>
+    </div>
+  </div>
+
+  {{ form_row(form.title) }}
+
+  {{ form_row(form.display_title) }}
+
+  <div class="form__row form__button-row">
+    <button class="button">{{ (editing ? 'action.edit' : 'action.create')|trans }}</button>
+  </div>
+{{ form_end(form) }}

@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block page_classes 'forum-category-create-page' %}
+{% block title %}
+  {% if editing %}
+    {{ 'title.edit_rate_limit'|trans }}
+  {% else %}
+    {{ 'title.create_rate_limit'|trans }}
+  {% endif %}
+{% endblock %}
+
+{% block body %}
+  <h1 class="page-heading">{{ block('title') }}</h1>
+
+  {{ include('nautbot/_rate_form.html.twig', {editing: editing, form: form}, with_context=false) }}
+{% endblock %}

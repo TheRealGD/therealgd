@@ -1,0 +1,14 @@
+Dockerfile
+.git
+.env.dev
+.gitlab-ci.yml
+*.md
+./public/build/
+./public/js/
+./public/media/
+./public/submission_images/
+./public/bundles/
+./node_modules/
+./scripts/
+./var/
+./vendor/

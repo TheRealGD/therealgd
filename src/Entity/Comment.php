@@ -114,6 +114,25 @@ class Comment extends Votable {
      */
     private $notifications;
 
+    /**
+     * @ORM\Column(type="boolean", options={"default": false})
+     *
+     * @var bool
+     */
+    private $stickied = false;
+
+    /**
+     * @ORM\Column(type="bigint", options={"default": 0})
+     *
+     * @var int
+     */
+    private $reportCount = 0;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Report", mappedBy="comment")
+     */
+    private $reportEntries;
+
     public function __construct(
         string $body,
         User $user,
@@ -254,6 +273,14 @@ class Comment extends Votable {
         $this->moderated = $moderated;
     }
 
+    public function isStickied(): bool {
+        return $this->stickied;
+    }
+
+    public function setStickied(bool $stickied) {
+        $this->stickied = $stickied;
+    }
+
     public function getUserFlag(): int {
         return $this->userFlag;
     }
@@ -275,5 +302,17 @@ class Comment extends Votable {
         }
 
         $receiver->sendNotification(new CommentNotification($receiver, $this));
+    }
+
+    public function getReportCount(): int {
+        return $this->reportCount;
+    }
+
+    public function setReportCount($reportCount) {
+        $this->reportCount = $reportCount;
+    }
+
+    public function incrementReportCount() {
+        $this->reportCount++;
     }
 }

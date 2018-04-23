@@ -76,6 +76,11 @@ class UserData implements UserInterface {
 
     private $autoFetchSubmissionTitles;
 
+    /**
+     * @var UserGroup|null
+     */
+    private $group;
+
     public static function fromUser(User $user): self {
         $self = new self();
         $self->entityId = $user->getId();
@@ -89,6 +94,7 @@ class UserData implements UserInterface {
         $self->openExternalLinksInNewTab = $user->openExternalLinksInNewTab();
         $self->biography = $user->getBiography();
         $self->autoFetchSubmissionTitles = $user->autoFetchSubmissionTitles();
+        $self->group = $user->getGroup();
 
         return $self;
     }
@@ -109,12 +115,14 @@ class UserData implements UserInterface {
         $user->setOpenExternalLinksInNewTab($this->openExternalLinksInNewTab);
         $user->setBiography($this->biography);
         $user->setAutoFetchSubmissionTitles($this->autoFetchSubmissionTitles);
+        $user->setGroup($this->getGroup());
     }
 
     public function toUser(): User {
         $user = new User($this->username, $this->password);
         $user->setEmail($this->email);
         $user->setBiography($this->biography);
+        $user->setGroup($this->group);
 
         $settings = [
             'showCustomStylesheets',
@@ -177,6 +185,14 @@ class UserData implements UserInterface {
 
     public function setEmail($email) {
         $this->email = $email;
+    }
+
+    public function getGroup() {
+        return $this->group;
+    }
+
+    public function setGroup($group) {
+        $this->group = $group;
     }
 
     public function getLocale() {

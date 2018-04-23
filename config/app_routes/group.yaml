@@ -1,0 +1,28 @@
+groups:
+    controller: App\Controller\GroupController::list
+    defaults: { page: 1 }
+    path: /groups/{page}
+    methods: [GET]
+    requirements: { page: \d+ }
+
+group:
+    controller: App\Controller\GroupController::group
+    defaults: { page: 1 }
+    path: /group/{name}/{page}
+    methods: [GET]
+    requirements: { page: \d+ }
+
+create_group:
+    controller: App\Controller\GroupController::create
+    path: /create_group
+    methods: [GET, POST]
+
+edit_group:
+    controller: App\Controller\GroupController::edit
+    methods: [GET, POST]
+    path: /edit_group/{name}
+
+add_to_group:
+    controller: App\Controller\GroupController::addToGroup
+    methods: [GET, POST]
+    path: /set_group/{username}

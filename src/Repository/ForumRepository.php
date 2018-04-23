@@ -47,12 +47,15 @@ final class ForumRepository extends ServiceEntityRepository {
      *
      * @return Pagerfanta|Forum[]
      */
-    public function findForumsByPage(int $page, string $sortBy) {
+    public function findForumsByPage(int $page, string $sortBy, ?User $user) {
         if (!preg_match('/^(?:by_)?(name|title|submissions|subscribers)$/', $sortBy, $matches)) {
             throw new \InvalidArgumentException('invalid sort type');
         }
 
         $qb = $this->createQueryBuilder('f');
+        if (is_null($user) || !$user->isAdmin()) {
+            $qb->where('f.id > 0');
+        }
 
         switch ($matches[1]) {
         case 'subscribers':
@@ -72,7 +75,8 @@ final class ForumRepository extends ServiceEntityRepository {
 
         $qb->addOrderBy('f.normalizedName', 'ASC')->groupBy('f.id');
 
-        $pager = new Pagerfanta(new DoctrineORMAdapter($qb));
+        $q = $qb->getQuery()->useQueryCache(true)->useResultCache(true);
+        $pager = new Pagerfanta(new DoctrineORMAdapter($q));
         $pager->setMaxPerPage(25);
         $pager->setCurrentPage($page);
 
@@ -86,13 +90,17 @@ final class ForumRepository extends ServiceEntityRepository {
      */
     public function findSubscribedForumNames(User $user) {
         /* @noinspection SqlDialectInspection */
+        $showAdminForum = false;
+        if ($user->isAdmin()) {
+            $showAdminForum = true;
+        }
         $dql =
             'SELECT f.id, f.name FROM '.Forum::class.' f WHERE f IN ('.
-                'SELECT IDENTITY(fs.forum) FROM '.ForumSubscription::class.' fs WHERE fs.user = ?1'.
+                'SELECT IDENTITY(fs.forum) FROM '.ForumSubscription::class.' fs WHERE fs.user = ?1 ' . (($showAdminForum) ? '' : 'AND f.id > 0') .
             ') ORDER BY f.normalizedName ASC';
 
         $names = $this->getEntityManager()->createQuery($dql)
-            ->setParameter(1, $user)
+            ->setParameter(1, $user)->useResultCache(true)
             ->getResult();
 
         return array_column($names, 'name', 'id');
@@ -108,8 +116,29 @@ final class ForumRepository extends ServiceEntityRepository {
             ->select('f.id')
             ->addSelect('f.name')
             ->where('f.featured = TRUE')
+            ->andWhere('f.id > 0')
             ->orderBy('f.normalizedName', 'ASC')
             ->getQuery()
+            ->useQueryCache(true)->useResultCache(true)
+            ->execute();
+
+        return array_column($names, 'name', 'id');
+    }
+
+    /**
+     * Get the names of all forums, this will get heavy if site is expanded.
+     *
+     * @return string[]
+     */
+    public function findAllForumNames() {
+        $names = $this->createQueryBuilder('f')
+            ->select('f.id')
+            // This where removes the admin only forum from search
+            ->where('f.id > 0')
+            ->addSelect('f.name')
+            ->orderBy('f.normalizedName', 'ASC')
+            ->getQuery()
+            ->useQueryCache(true)->useResultCache(true)
             ->execute();
 
         return array_column($names, 'name', 'id');
@@ -128,6 +157,7 @@ final class ForumRepository extends ServiceEntityRepository {
 
         $names = $this->getEntityManager()->createQuery($dql)
             ->setParameter(1, $user)
+            ->useResultCache(true)
             ->getResult();
 
         return array_column($names, 'name', 'id');
@@ -135,28 +165,60 @@ final class ForumRepository extends ServiceEntityRepository {
 
     public function findForumNames($names) {
         /* @noinspection SqlDialectInspection */
+        // f.id > 0 removes the admin only forum from search
         $dql = 'SELECT f.id, f.name FROM '.Forum::class.' f '.
-            'WHERE f.normalizedName IN (?1) '.
+            'WHERE f.normalizedName IN (?1) and f.id > 0'.
             'ORDER BY f.normalizedName ASC';
 
         $names = $this->_em->createQuery($dql)
             ->setParameter(1, $names)
+            ->useResultCache(true)
             ->getResult();
 
         return array_column($names, 'name', 'id');
     }
 
+    public function findUncategorizedForums($isAdmin) {
+        $qb = $this->createQueryBuilder('f')
+            ->select('f.id')
+            ->addSelect('f.name')
+            ->where('f.category IS NULL')
+            ->orderBy('f.normalizedName', 'ASC');
+        if (!$isAdmin) {
+            $qb->andWhere('f.id > 0');
+        }
+        $forums = $qb->getQuery()->useQueryCache(true)->useResultCache(true)->execute();
+        return $forums;
+    }
+
     public function findForumsInCategory(ForumCategory $category) {
         /* @noinspection SqlDialectInspection */
+        // f.id > 0 removes the admin only forum from search
         $dql = 'SELECT f.id, f.name FROM '.Forum::class.' f '.
-            'WHERE f.category = :category '.
+            'WHERE f.category = :category and f.id > 0'.
             'ORDER BY f.normalizedName ASC';
 
         $names = $this->_em->createQuery($dql)
             ->setParameter('category', $category)
+            ->useResultCache(true)
             ->getResult();
 
         return array_column($names, 'name', 'id');
+    }
+
+    public function getModForumCategory() {
+        $modForum = $this->createQueryBuilder('f')
+            ->where('f.id = 0')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->useQueryCache(true)
+            ->useResultCache(true)
+            ->execute();
+
+        if (is_null($modForum[0]->getCategory())) {
+            return null;
+        }
+        return $modForum[0]->getCategory()->getId();
     }
 
     public function findOneByCaseInsensitiveName(?string $name): ?Forum {

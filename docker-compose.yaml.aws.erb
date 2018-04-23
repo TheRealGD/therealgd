@@ -1,0 +1,64 @@
+version: "2"
+services:
+<%
+  aws_env ||= 'dev'
+  aws_region ||= 'us-west-2'
+
+  display_errors = 'no'
+  display_errors = 'yes' if aws_env == 'dev';
+
+  https_cert_name       = `aws ssm get-parameters --name /gundeals.io/#{aws_env}/https_cert_name       --region #{aws_region} --with-decryption --query "Parameters[*].Value" --output=text`
+  server_name           = `aws ssm get-parameters --name /gundeals.io/#{aws_env}/server_name           --region #{aws_region} --with-decryption --query "Parameters[*].Value" --output=text`
+  site_name             = `aws ssm get-parameters --name /gundeals.io/#{aws_env}/site_name             --region #{aws_region} --with-decryption --query "Parameters[*].Value" --output=text`
+  app_secret            = `aws ssm get-parameters --name /gundeals.io/#{aws_env}/app_secret            --region #{aws_region} --with-decryption --query "Parameters[*].Value" --output=text`
+  app_env               = `aws ssm get-parameters --name /gundeals.io/#{aws_env}/app_env               --region #{aws_region} --with-decryption --query "Parameters[*].Value" --output=text`
+  redirect_server_names = `aws ssm get-parameters --name /gundeals.io/#{aws_env}/redirect_server_names --region #{aws_region} --with-decryption --query "Parameters[*].Value" --output=text`
+  database_url          = `aws ssm get-parameters --name /gundeals.io/#{aws_env}/database_url          --region #{aws_region} --with-decryption --query "Parameters[*].Value" --output=text`
+  mailer_url            = `aws ssm get-parameters --name /gundeals.io/#{aws_env}/mailer_url            --region #{aws_region} --with-decryption --query "Parameters[*].Value" --output=text`
+-%>
+
+  nginx:
+    build:
+      context: ./docker/nginx
+      args:
+        - HTTPS_CERT_NAME=<%=https_cert_name-%>
+        - SERVER_NAME=<%=server_name-%>
+        - REDIRECT_DOMAINS=<%=redirect_server_names-%>
+    ports:
+      - "80:80"
+      - "443:443"
+    links:
+      - php
+    volumes:
+      - "./docker/nginx/letsencrypt:/etc/letsencrypt/:rw"
+      - "./docker/nginx/nginxlogs/:/var/log/nginx/:rw"
+      - "./public:/var/www/public:ro"
+      - "./vendor:/var/www/vendor:ro"
+
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile-prod
+      args:
+        - database_url=<%=database_url.strip%>
+        - display_errors=<%=display_errors.strip%>
+        - log_errors=on
+        - site_name=<%=site_name.strip%>
+        - app_env=<%=app_env.strip%>
+        - app_secret=<%=app_secret.strip%>
+        - no_reply_address="noreply@<%=server_name.strip%>"
+        - mailer_url="<%=mailer_url.strip%>"
+    working_dir: /var/www/public
+    volumes:
+      - ./src:/var/www/src
+      - ./templates:/var/www/templates
+      - "./config:/var/www/config:rw"
+      - "./public:/var/www/public:rw"
+      - "./assets:/var/www/assets:ro"
+      - "./bin:/var/www/bin:ro"
+      - "./lib:/var/www/lib:rw"
+      - "./translations:/var/www/translations:rw"
+      - "./var:/var/www/var:rw"
+      - "./vendor:/var/www/vendor:rw"
+    expose:
+      - '9000'

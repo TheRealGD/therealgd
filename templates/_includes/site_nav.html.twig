@@ -1,8 +1,9 @@
 {% from '_macros/icon.html.twig' import icon %}
 {% spaceless %}
-  {%- set notification_count = is_granted('ROLE_USER') ? app.user.notifications|length : 0 -%}
+  {%- set notification_count = is_granted('ROLE_USER') ? app.user.unreadnotifications|length : 0 -%}
 
   <nav class="site-nav">
+
     <div class="site-nav__header">
       <a href="{{ path('front') }}" class="site-nav__logo">{{ site_name() }}</a>
       {# todo: accessibility #}
@@ -12,6 +13,7 @@
     <div class="site-nav__inner">
       {# left portion of site nav #}
       <ul class="site-nav__menu">
+
         <li class="site-nav__item">
           <a href="{{ path('forum_list') }}" class="site-nav__link">{{ 'nav.forums'|trans }}</a>
         </li>
@@ -26,7 +28,9 @@
             <ul class="dropdown-menu">
               <li><a href="{{ path('user_bans') }}">{{ icon('hammer') }} {{ 'label.bans'|trans }}</a></li>
               <li><a href="{{ path('manage_forum_categories') }}">{{ icon('sitemap') }} {{ 'nav.forum_categories'|trans }}</a></li>
+              <li><a href="{{ path('groups') }}">{{ icon('sitemap') }} {{ 'nav.groups'|trans }}</a></li>
               <li><a href="{{ path('users') }}">{{ icon('user') }} {{ 'nav.users'|trans }}</a></li>
+              <li><a href="{{ path('frontpageconfig') }}">{{ icon('settings') }} Front Page Configuration</a></li>
             </ul>
           </li>
         {% endif %}
@@ -44,20 +48,20 @@
           </li>
         {% else %}
           {# notifications #}
-          {% if notification_count > 0 %}
-            <li class="site-nav__item site-nav__item--has-notifications">
-              <a href="{{ path('inbox') }}" class="site-nav__link">
-                {{- 'nav.inbox_count'|trans({'%count%': '<strong>%s</strong>'|format(notification_count|localizednumber)})|raw -}}
-              </a>
-            </li>
-          {% endif %}
+          <li class="site-nav__item site-nav__item--has-notifications">
+            <a href="{{ path('inbox') }}" class="site-nav__link">
+              {{- 'nav.inbox_count'|trans({'%count%': '<strong>%s</strong>'|format(notification_count|localizednumber)})|raw -}}
+            </a>
+          </li>
 
           {# submit button #}
+          {#
           <li class="site-nav__item">
             <a href="{{ path('submit', {forum_name: forum.name ?? null}) }}" class="site-nav__link">
               {{- 'nav.submit'|trans -}}
             </a>
           </li>
+          #}
 
           {# user menu #}
           <li class="site-nav__item dropdown-container">

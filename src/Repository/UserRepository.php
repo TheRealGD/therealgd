@@ -5,12 +5,14 @@ namespace App\Repository;
 use App\Entity\Comment;
 use App\Entity\Submission;
 use App\Entity\User;
+use App\Entity\UserGroup;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Pagerfanta\Adapter\DoctrineSelectableAdapter;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -94,6 +96,7 @@ class UserRepository extends ServiceEntityRepository implements UserLoaderInterf
             ->setParameter(1, $email)
             ->setParameter(2, User::normalizeEmail($email))
             ->getQuery()
+            ->useQueryCache(true)->useResultCache(true)
             ->execute();
     }
 
@@ -110,30 +113,33 @@ class UserRepository extends ServiceEntityRepository implements UserLoaderInterf
      */
     public function findLatestContributions(User $user, int $limit = 25) {
         $sql = <<<EOSQL
-SELECT JSON_AGG(id) AS ids, type FROM (
-        SELECT id, timestamp, 'comment'::TEXT AS type FROM comments WHERE user_id = :user_id
+SELECT JSON_AGG(id) AS ids, entry_type FROM (
+        SELECT c.id, c.timestamp, 'comment'::TEXT AS entry_type FROM comments c
+            INNER JOIN submissions s on c.submission_id = s.id
+        WHERE c.user_id = :user_id and s.mod_thread = false
     UNION ALL
-        SELECT id, timestamp, 'submission'::TEXT AS type FROM submissions WHERE user_id = :user_id
+        SELECT id, timestamp, 'submission'::TEXT AS entry_type FROM submissions WHERE user_id = :user_id AND mod_thread = false
     ORDER BY timestamp DESC
     LIMIT :limit
 ) q
-GROUP BY type
+GROUP BY entry_type
 EOSQL;
 
         $rsm = new ResultSetMapping();
         $rsm->addScalarResult('ids', 'ids', 'json_array'); // not really scalar
-        $rsm->addIndexByScalar('type');
+        $rsm->addIndexByScalar('entry_type');
 
         $contributions = $this->_em->createNativeQuery($sql, $rsm)
             ->setParameter(':user_id', $user->getId())
             ->setParameter(':limit', $limit, 'integer')
+            ->useResultCache(true)
             ->execute();
 
         if (!empty($contributions['comment']['ids'])) {
             $comments = $this->_em->createQueryBuilder()
                 ->select('c AS comment')
                 ->addSelect('c.timestamp AS timestamp')
-                ->addSelect("'comment' AS type")
+                ->addSelect("'comment' AS entry_type")
                 ->from(Comment::class, 'c')
                 ->where('c.id IN (?1)')
                 ->getQuery()
@@ -145,11 +151,12 @@ EOSQL;
             $submissions = $this->_em->createQueryBuilder()
                 ->select('s AS submission')
                 ->addSelect('s.timestamp AS timestamp')
-                ->addSelect("'submission' AS type")
+                ->addSelect("'submission' AS entry_type")
                 ->from(Submission::class, 's')
                 ->where('s.id IN (?1)')
                 ->getQuery()
                 ->setParameter(1, $contributions['submission']['ids'])
+                ->useQueryCache(true)->useResultCache(true)
                 ->execute();
         }
 
@@ -188,10 +195,24 @@ EOSQL;
 
         $sth = $this->_em->getConnection()->prepare($sql);
         $sth->bindValue(':id', $user->getId());
+        $sth->useQueryCache(true)->useResultCache(true);
         $sth->execute();
 
         while ($ip = $sth->fetchColumn()) {
             yield $ip;
         }
     }
+
+    public function getPaginatedUsersInGroup(UserGroup $userGroup, $page) {
+        $qb = $this->createQueryBuilder('u')
+            ->where('u.group = :group')
+            ->setParameter('group', $userGroup);
+        $q = $qb->getQuery()->useQueryCache(true)->useResultCache(true);
+        $pager = new Pagerfanta(new DoctrineORMAdapter($q, false, false));
+        $pager->setMaxPerPage(25);
+        $pager->setCurrentPage($page);
+        return $pager;
+    }
+
+
 }

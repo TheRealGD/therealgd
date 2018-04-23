@@ -5,13 +5,10 @@
 .dropdown-container {
   position: relative;
 
-  // toggle dropdown by hovering when JS isn't available
-  &:not(.js) {
     .dropdown-toggle:hover + .dropdown-menu,
     .dropdown-menu:hover {
       display: block;
     }
-  }
 
   // js toggle
   &.expanded .dropdown-menu {

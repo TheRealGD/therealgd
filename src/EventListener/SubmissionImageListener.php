@@ -101,13 +101,17 @@ final class SubmissionImageListener {
         foreach ($queue as $submission) {
             try {
                 $embed = Embed::create($submission->getUrl());
+                $info = $embed;
                 $imageUrl = $embed->getImage();
+                if ($imageUrl !== null) {
+                  $imageUrl = $submission->getOriginalImage();
+                }
 
                 if ($imageUrl) {
                     $submission->setImage($this->getFilename($imageUrl));
                 }
-            } catch (EmbedException $e) {
-                $this->logger->info($e->getMessage());
+            } catch (\Exception $e) {
+              $this->logger->error($e->getMessage());
             }
         }
 
@@ -130,7 +134,7 @@ final class SubmissionImageListener {
             $fh = @fopen($tempFile, 'wb+');
 
             if (!$fh) {
-                $this->logger->warning('Could not open file for writing', [
+                $this->logger->error('Could not open file for writing', [
                     'error' => error_get_last(),
                 ]);
 
@@ -147,7 +151,7 @@ final class SubmissionImageListener {
             $success = curl_exec($ch) && curl_getinfo($ch, CURLINFO_RESPONSE_CODE) == 200;
 
             if (!$success) {
-                $this->logger->info('Bad HTTP response', [
+                $this->logger->debug('Bad HTTP response', [
                     'curl' => curl_getinfo($ch),
                 ]);
 
@@ -155,16 +159,13 @@ final class SubmissionImageListener {
             }
 
             $imageConstraint = new Image(['detectCorrupted' => true]);
-
             $violations = $this->validator->validate($tempFile, $imageConstraint);
-
             if (count($violations) > 0) {
                 /** @var ConstraintViolationInterface $violation */
                 foreach ($violations as $violation) {
                     $message = $violation->getMessageTemplate();
                     $params = $violation->getParameters();
-
-                    $this->logger->info($message, $params);
+                    $this->logger->debug($message, $params);
                 }
 
                 return null;
@@ -177,12 +178,14 @@ final class SubmissionImageListener {
 
             try {
                 $success = $this->filesystem->writeStream($filename, $fh);
-            } catch (FileExistsException $e) {
+            } catch (\League\Flysystem\Exception $e) {
                 $success = true;
             }
 
             return $success ? $filename : null;
-        } finally {
+        } catch(\Exception $any) {
+            $this->logger->error('Unexpeced exception: '. $any->getMessage());
+        }finally {
             if (isset($ch)) {
                 @curl_close($ch);
             }

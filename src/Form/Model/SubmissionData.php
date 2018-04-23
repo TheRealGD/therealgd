@@ -35,6 +35,14 @@ class SubmissionData {
     private $url;
 
     /**
+     * @Assert\Length(max=2000, charset="8bit", groups={"create", "edit"})
+     * @Assert\Url(protocols={"http", "https"}, groups={"create", "edit"})
+     *
+     * @var string|null
+     */
+    private $originalImage;
+
+    /**
      * @Assert\Length(max=25000, groups={"create", "edit"})
      *
      * @var string|null
@@ -52,6 +60,8 @@ class SubmissionData {
 
     private $sticky = false;
 
+    private $modThread = false;
+
     public function __construct(Forum $forum = null) {
         $this->forum = $forum;
     }
@@ -61,15 +71,17 @@ class SubmissionData {
         $self->entityId = $submission->getId();
         $self->title = $submission->getTitle();
         $self->url = $submission->getUrl();
+        $self->originalImage= $submission->getOriginalImage();
         $self->body = $submission->getBody();
         $self->userFlag = $submission->getUserFlag();
         $self->forum = $submission->getForum();
         $self->sticky = $submission->isSticky();
+        $self->modThread = $submission->isModThread();
 
         return $self;
     }
 
-    public function toSubmission(User $user, $ip): Submission {
+    public function toSubmission(User $user, $ip, $modThread = false): Submission {
         return new Submission(
             $this->title,
             $this->url,
@@ -78,7 +90,10 @@ class SubmissionData {
             $user,
             $ip,
             $this->sticky,
-            $this->userFlag
+            $modThread,
+            $this->userFlag,
+            null,
+            $this->originalImage
         );
     }
 
@@ -88,6 +103,7 @@ class SubmissionData {
         $submission->setBody($this->body);
         $submission->setUserFlag($this->userFlag);
         $submission->setSticky($this->sticky);
+        $submission->setOriginalImage($this->originalImage);
     }
 
     public function getEntityId() {
@@ -108,6 +124,14 @@ class SubmissionData {
 
     public function setUrl($url) {
         $this->url = $url;
+    }
+
+    public function getOriginalImage() {
+        return $this->originalImage;
+    }
+
+    public function setOriginalImage($url) {
+        $this->originalImage = $url;
     }
 
     public function getBody() {
@@ -140,5 +164,13 @@ class SubmissionData {
 
     public function setSticky(bool $sticky) {
         $this->sticky = $sticky;
+    }
+
+    public function isModThread(): bool {
+        return $this->modThread;
+    }
+
+    public function setModThread(bool $modThread) {
+        $this->modThread = $modThread;
     }
 }

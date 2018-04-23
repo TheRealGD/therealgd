@@ -5,6 +5,8 @@
   border: solid 1px @comment-border-color;
   margin-bottom: 1rem;
   padding-top: 0.5rem;
+  margin-right: 1rem;
+  padding-left: 0.5rem;
 
   &:target > .comment-row {
     background: @comment-highlight-background;
@@ -31,11 +33,37 @@
   .vote-flex;
 }
 
-.comment-nav {
-  .meta-nav;
+.comment-nav-ul {
+  margin-bottom: 0.5rem;
+  margin-bottom: 0;
+  padding: 0;
+}
 
-  ul {
-    margin-bottom: 0.5rem;
+.comment-nav-li {
+  display: inline-block;
+  padding: 0;
+
+  &:not(:last-child) {
+    margin-right: 1rem;
+  }
+
+  form {
+    display: inline;
+  }
+}
+
+.comment-nav-link {
+  .unbuttonize();
+
+  cursor: pointer;
+  font-weight: bold;
+
+  color: @meta-color;
+  font-size: 0.85rem;
+  padding: 0.075rem 0;
+
+  &:hover {
+    text-decoration: underline;
   }
 }
 
@@ -50,5 +78,12 @@
   background: @comment-submitter-background-color;
   border-radius: 2px;
   color: @comment-submitter-color;
+  padding: 0 0.25rem;
+}
+
+.comment-info .comment-sticky {
+  background: @comment-sticky-background-color;
+  border-radius: 2px;
+  color: @comment-sticky-color;
   padding: 0 0.25rem;
 }

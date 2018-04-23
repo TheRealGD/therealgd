@@ -14,6 +14,20 @@
 
 {% block body %}
   <h1 class="page-heading">{{ 'inbox.title'|trans }}</h1>
+  <nav class="tabs submission-sort">
+      <ul class="tabs__bar">
+      {%- set attr = app.request.attributes -%}
+      {%- spaceless -%}
+        {%- for type in ['unread', 'all'] -%}
+          <li class="tabs__tab {{ type == current_filter ? 'tabs__tab--active active' }}">
+          <a href="{{ path(attr.get('_route'), (attr.get('_route_params') ?? [])|merge({page: 1, filter: type})) }}" class="tabs__link {{ type == current_filter ? 'tabs__link--active' }}">
+          {{- ('inbox.filter_'~type)|trans -}}
+          </a>
+        </li>
+        {%- endfor -%}
+      {%- endspaceless -%}
+      </ul>
+  </nav>
 
   {% if notifications|length > 0 %}
     <form action="{{ path('clear_inbox', { max: notifications|first.id }) }}" method="POST" class="form">
@@ -27,7 +41,9 @@
   {% endif %}
 
   {% for notification in notifications %}
-    {{ block('clear_notification_button') }}
+    {% if notification.read != true %}
+      {{ block('clear_notification_button') }}
+    {% endif %}
     {{ block('notification_'~notification.type) }}
   {% endfor %}
 
@@ -43,7 +59,7 @@
 {% block notification_message_thread %}
   {% from 'message/_macros.html.twig' import message_thread %}
 
-  <h1 class="notification-head">
+  <h1 class="notification-head {{ (notification.read != true) ? 'notification-head-active' : 'notification-head-inactive' }}">
     <a href="{{ path('message', {id: notification.thread.id}) }}">
       {{- notification.thread.title -}}
     </a>
@@ -55,7 +71,7 @@
 {% block notification_message_reply %}
   {% from 'message/_macros.html.twig' import message_reply %}
 
-  <h1 class="notification-head">
+  <h1 class="notification-head {{ (notification.read != true) ? 'notification-head-active' : 'notification-head-inactive' }}">
     <a href="{{ path('message', {id: notification.reply.thread.id}) }}#mr{{ notification.reply.id }}">
       {{ 'inbox.message_reply_head'|trans({'%title%': notification.reply.thread.title}) -}}
     </a>
@@ -68,7 +84,7 @@
   <form action="{{ path('clear_notification', { id: notification.id }) }}" method="POST">
     <input type="hidden" name="token" value="{{ csrf_token('clear_notification') }}">
       <div>
-        <button type="submit" class="clear-notification-button">Clear notification</button>
+        <button type="submit" class="clear-notification-button">{{ 'inbox.clear_notification'|trans }}</button>
       </div>
   </form>
 {% endblock %}

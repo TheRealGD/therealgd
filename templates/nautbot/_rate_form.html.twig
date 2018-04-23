@@ -1,0 +1,10 @@
+{{ form_start(form) }}
+  <div class="form__row">
+
+  {{ form_row(form.group) }}
+  {{ form_row(form.rate) }}
+
+  <div class="form__row form__button-row">
+    <button class="button">{{ (editing ? 'action.edit' : 'action.create')|trans }}</button>
+  </div>
+{{ form_end(form) }}

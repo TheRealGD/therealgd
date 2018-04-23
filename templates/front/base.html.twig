@@ -18,19 +18,35 @@
 {% endblock %}
 
 {% block body %}
+  {% if announcementSubmission != null %}
+      <div class="form-message form-message--primary text-center">
+          <a href="{{ path('submission', {forum_name: announcementSubmission.forum.name, submission_id: announcementSubmission.id, slug: announcementSubmission.title|slugify}) }}">{{ announcement|cached_markdown(markdown_context())|raw }}</a>
+      </div>
+  {% endif %}
+
   <nav class="tabs submission-sort">
     <ul class="tabs__bar">{{ submission_sort(sort_by) }}</ul>
     <ul class="tabs__bar">{{ submission_filter(listing, sort_by) }}</ul>
   </nav>
 
   {% for submission in submissions %}
-    {{ submission(submission) }}
+      {%- set options = { oddClass: (loop.index % 2 == 0) ? 'even' : 'odd' } -%}
+      {{ submission(submission, options) }}
   {% endfor %}
 
   {% include '_includes/pagination.html.twig' with {pager: submissions} %}
 {% endblock %}
 
 {%- macro submission_filter(choice, sort_by) -%}
+
+  {% with { active: choice == 'all' } %}
+    <li class="tabs__tab {{ active ? 'tabs__tab--active active' }}">
+      <a href="{{ path('all', {sortBy: sort_by, page: 1}) }}" class="tabs__link {{ active ? 'tabs__link--active' }}">
+        {{- 'front.all'|trans -}}
+      </a>
+    </li>
+  {% endwith %}
+
   {% with { active: choice == 'featured' } %}
     <li class="tabs__tab {{ active ? 'tabs__tab--active active' }}">
       <a href="{{ path('featured', {sortBy: sort_by, page: 1}) }}" class="tabs__link {{ active ? 'tabs__link--active' }}">
@@ -49,14 +65,6 @@
     {% endwith %}
   {% endif %}
 
-  {% with { active: choice == 'all' } %}
-    <li class="tabs__tab {{ active ? 'tabs__tab--active active' }}">
-      <a href="{{ path('all', {sortBy: sort_by, page: 1}) }}" class="tabs__link {{ active ? 'tabs__link--active' }}">
-        {{- 'front.all'|trans -}}
-      </a>
-    </li>
-  {% endwith %}
-
   {% if choice == 'moderated' or app.user and app.user.moderatorTokens|length > 0 %}
     {% with { active: choice == 'moderated' } %}
       <li class="tabs__tab {{ active ? 'tabs__tab--active active' }}">
@@ -66,4 +74,5 @@
       </li>
     {% endwith %}
   {% endif %}
+
 {%- endmacro -%}

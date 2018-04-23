@@ -18,6 +18,8 @@ use App\Repository\ForumCategoryRepository;
 use App\Repository\ForumLogEntryRepository;
 use App\Repository\ForumRepository;
 use App\Repository\SubmissionRepository;
+use App\Repository\ReportRepository;
+use App\Utils\PermissionsChecker;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -40,12 +42,59 @@ final class ForumController extends AbstractController {
      * @return Response
      */
     public function front(SubmissionRepository $sr, Forum $forum, string $sortBy, int $page) {
+        if ($forum->getId() === 0 && !PermissionsChecker::isAdmin($this->getUser())) {
+            return $this->redirectToRoute('login');
+        }
         $submissions = $sr->findForumSubmissions($forum, $sortBy, $page);
 
         return $this->render('forum/forum.html.twig', [
             'forum' => $forum,
             'sort_by' => $sortBy,
             'submissions' => $submissions,
+        ]);
+    }
+
+    /**
+     * @IsGranted("moderator", subject="forum")
+     * Show the list of mod posts of a given forum.
+     *
+     * @param SubmissionRepository $sr
+     * @param Forum                $forum
+     * @param string               $sortBy
+     * @param int                  $page
+     *
+     * @return Response
+     */
+    public function modFront(SubmissionRepository $sr, Forum $forum, string $sortBy, int $page) {
+        $submissions = $sr->findModForumSubmissions($forum, $sortBy, $page);
+
+        return $this->render('forum/forum.html.twig', [
+            'forum' => $forum,
+            'sort_by' => $sortBy,
+            'submissions' => $submissions,
+            'mod' => true
+        ]);
+    }
+
+    /**
+     * @IsGranted("moderator", subject="forum")
+     * Show the moderation queue for a given forum
+     *
+     * @param SubmissionRepository  $sr
+     * @param ReportRepository      $rr
+     * @param ForumController       $forum
+     * @param string                $sortBy
+     * @param int                   $page
+     *
+     * @return Response
+     */
+    public function moderationQueue(SubmissionRepository $sr, ReportRepository $rr, Forum $forum, string $sortBy, int $page) {
+        $modQueue = $rr->findForumModQueueReports($forum, $sortBy, $page);
+
+        return $this->render('modqueue/modqueue.html.twig', [
+            'forum' => $forum,
+            'sort_by' => $sortBy,
+            'reports' => $modQueue,
         ]);
     }
 
@@ -218,7 +267,7 @@ final class ForumController extends AbstractController {
      */
     public function list(ForumRepository $repository, int $page = 1, string $sortBy) {
         return $this->render('forum/list.html.twig', [
-            'forums' => $repository->findForumsByPage($page, $sortBy),
+            'forums' => $repository->findForumsByPage($page, $sortBy, $this->getUser()),
             'sortBy' => $sortBy,
         ]);
     }
@@ -230,8 +279,10 @@ final class ForumController extends AbstractController {
      * @return Response
      */
     public function listCategories(ForumCategoryRepository $fcr, ForumRepository $fr) {
-        $forumCategories = $fcr->findBy([], ['name' => 'ASC']);
-        $uncategorizedForums = $fr->findBy(['category' => null], ['normalizedName' => 'ASC']);
+        $modForumCategory = $fr->getModForumCategory();
+        $isAdmin = PermissionsChecker::isAdmin($this->getUser());
+        $forumCategories = $fcr->findCategories($isAdmin, $modForumCategory);
+        $uncategorizedForums = $fr->findUncategorizedForums($isAdmin);
 
         return $this->render('forum/list_by_category.html.twig', [
             'forum_categories' => $forumCategories,

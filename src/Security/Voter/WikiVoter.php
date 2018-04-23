@@ -59,6 +59,7 @@ final class WikiVoter extends Voter {
             return false;
         }
 
-        return !$page->isLocked();
+        //return !$page->isLocked();
+        return false;
     }
 }

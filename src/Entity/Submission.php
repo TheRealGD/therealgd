@@ -69,7 +69,7 @@ class Submission extends Votable {
 
     /**
      * @ORM\JoinColumn(nullable=false)
-     * @ORM\ManyToOne(targetEntity="Forum", inversedBy="submissions")
+     * @ORM\ManyToOne(targetEntity="Forum", inversedBy="submissions", fetch="EAGER")
      *
      * @var Forum
      */
@@ -97,6 +97,14 @@ class Submission extends Votable {
      * @var string
      */
     private $image;
+
+    /**
+     * URL to remote website's image
+     * @ORM\Column(type="text", nullable=true)
+     *
+     * @var string
+     */
+    private $originalImage;
 
     /**
      * @ORM\Column(type="inet", nullable=true)
@@ -147,6 +155,20 @@ class Submission extends Votable {
      */
     private $locked = false;
 
+    /**
+     * @ORM\Column(type="boolean", options={"default": false})
+     *
+     * @var bool
+     */
+    private $modThread = false;
+
+    /**
+     * @ORM\Column(type="bigint", options={"default": 0})
+     *
+     * @var int
+     */
+     private $reportCount = 0;
+
     public function __construct(
         string $title,
         ?string $url,
@@ -155,8 +177,10 @@ class Submission extends Votable {
         User $user,
         ?string $ip,
         bool $sticky = false,
+        bool $modThread = false,
         int $userFlag = UserFlags::FLAG_NONE,
-        \DateTime $timestamp = null
+        \DateTime $timestamp = null,
+        ?string $originalImage = null
     ) {
         if ($ip !== null && !filter_var($ip, FILTER_VALIDATE_IP)) {
             throw new \InvalidArgumentException('Invalid IP address');
@@ -173,11 +197,13 @@ class Submission extends Votable {
         $this->user = $user;
         $this->ip = $user->isTrustedOrAdmin() ? null : $ip;
         $this->sticky = $sticky;
+        $this->modThread = $modThread;
         $this->setUserFlag($userFlag);
         $this->timestamp = $timestamp ?: new \DateTime('@'.time());
         $this->comments = new ArrayCollection();
         $this->votes = new ArrayCollection();
         $this->vote($user, $ip, Votable::VOTE_UP);
+        $this->originalImage = $originalImage;
     }
 
     public function getId(): ?int {
@@ -222,13 +248,29 @@ class Submission extends Votable {
      */
     public function getTopLevelComments(): array {
         $criteria = Criteria::create();
-        $criteria->where(Criteria::expr()->isNull('parent'));
+        $criteria->where(Criteria::expr()->isNull('parent'))
+		 ->andWhere(Criteria::expr()->eq('stickied', false));
 
         $comments = $this->comments->matching($criteria)->toArray();
 
         if ($comments) {
             usort($comments, [$this, 'descendingNetScoreCmp']);
         }
+
+        return $comments;
+    }
+
+    /**
+     * Get stickied comments,
+     *
+     * @return Comment[]
+     */
+    public function getStickyComments(): array {
+        $criteria = Criteria::create();
+        $criteria->where(Criteria::expr()->isNull('parent'))
+                 ->andWhere(Criteria::expr()->eq('stickied', true));
+
+        $comments = $this->comments->matching($criteria)->toArray();
 
         return $comments;
     }
@@ -288,6 +330,14 @@ class Submission extends Votable {
         $this->image = $image;
     }
 
+    public function getOriginalImage(): ?string {
+        return $this->originalImage;
+    }
+
+    public function setOriginalImage(?string $image) {
+        $this->originalImage = $image;
+    }
+
     public function getIp(): ?string {
         return $this->ip;
     }
@@ -298,6 +348,14 @@ class Submission extends Votable {
 
     public function setSticky(bool $sticky) {
         $this->sticky = $sticky;
+    }
+
+    public function isModThread(): bool {
+        return $this->modThread;
+    }
+
+    public function setModThread(bool $modThread) {
+        $this->modThread = $modThread;
     }
 
     /**
@@ -356,5 +414,17 @@ class Submission extends Votable {
 
     public function setLocked(bool $locked) {
         $this->locked = $locked;
+    }
+
+    public function getReportCount(): int {
+        return $this->reportCount;
+    }
+
+    public function setReportCount($reportCount) {
+        $this->reportCount = $reportCount;
+    }
+
+    public function incrementReportCount() {
+        $this->reportCount++;
     }
 }

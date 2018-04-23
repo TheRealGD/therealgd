@@ -22,7 +22,7 @@ class Moderator {
 
     /**
      * @ORM\JoinColumn(nullable=false)
-     * @ORM\ManyToOne(targetEntity="Forum", inversedBy="moderators")
+     * @ORM\ManyToOne(targetEntity="Forum", inversedBy="moderators", fetch="EAGER")
      *
      * @var Forum
      */

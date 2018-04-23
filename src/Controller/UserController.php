@@ -291,6 +291,38 @@ final class UserController extends AbstractController {
     }
 
     /**
+     * @IsGranted("ROLE_USER")
+     * @Entity("blockee", expr="repository.findOneOrRedirectToCanonical(username, 'username')")
+     *
+     * @param User          $blockee
+     * @param Request       $request
+     * @param EntityManager $em
+     *
+     * @return Response
+     */
+    public function blockJSON(User $blockee, Request $request, EntityManager $em) {
+        /* @var User $blocker */
+        $blocker = $this->getUser();
+        $result = array("message" => "", "status" => "success");
+
+        if ($blocker->isBlocking($blockee)) {
+            $result['status'] = "error";
+            $result['message'] = $blockee->getUsername() . " is already blocked.";
+        } else if($blocker->getId() == $blockee->getId()) {
+            $result['status'] = "error";
+            $result['message'] = "You can not block yourself.";
+        } else {
+            $block = new UserBlock($blocker, $blockee, "");
+            $em->persist($block);
+            $em->flush();
+            $result['message'] = $blockee->getUsername() . " has been blocked.";
+        }
+
+        return $this->JSONResponse($result);
+    }
+
+
+    /**
      * @Security("is_granted('ROLE_USER') and user === block.getBlocker()")
      *
      * @param UserBlock     $block
@@ -317,12 +349,13 @@ final class UserController extends AbstractController {
      *
      * @return Response
      */
-    public function inbox(int $page) {
+    public function inbox(string $filter, int $page) {
         /* @var User $user */
         $user = $this->getUser();
 
         return $this->render('user/inbox.html.twig', [
-            'notifications' => $user->getPaginatedNotifications($page),
+            'notifications' => $user->getPaginatedNotifications($filter, $page),
+            'current_filter' => $filter,
         ]);
     }
 

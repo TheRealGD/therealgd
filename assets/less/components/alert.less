@@ -24,3 +24,36 @@
   from { opacity: 0; }
   to { opacity: 1; }
 }
+
+.form-message {
+
+  display: flex;
+  flex-direction: column;
+  margin: 1rem 1rem 1rem 0;
+  padding: 1rem 1rem 0;
+
+  &--primary {
+    color: @alert-primary-text-color;
+    border: 1px solid @alert-primary-border-color;
+    background: @alert-primary-color;
+  }
+
+  &--success {
+    color: @alert-success-text-color;
+    border: 1px solid @alert-success-border-color;
+    background: @alert-success-color;
+  }
+
+  &--error {
+    color: @alert-error-text-color;
+    border: 1px solid @alert-error-border-color;
+    background: @alert-error-color;
+  }
+}
+
+// mobile
+@media screen and (max-width: (@desktop-min-width - 1px)) {
+  .form-message {
+    margin: 1rem 0rem 1rem 0;
+  }
+}

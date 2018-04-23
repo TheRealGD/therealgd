@@ -27,7 +27,7 @@
   {% spaceless %}
     <h1 class="page-heading forum-name-heading">
       <span class="forum-name-heading__prefix">/f/</span>
-      <strong class="forum-name-heading__name">{{ forum.name }}</strong>
+      <strong class="forum-name-heading__name">{{ forum.name }}{% if mod is defined %}/mod{% endif %}</strong>
     </h1>
   {% endspaceless %}
 
@@ -38,7 +38,11 @@
   </nav>
 
   {% for submission in submissions %}
-    {{ submission(submission, {show_forum_name: false}) }}
+    {%- set options = {
+        oddClass: (loop.index % 2 == 0) ? 'even' : 'odd',
+        show_forum_name: false
+    } -%}
+    {{ submission(submission, options) }}
   {% endfor %}
 
   {% include '_includes/pagination.html.twig' with {pager: submissions} %}

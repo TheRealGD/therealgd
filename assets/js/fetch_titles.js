@@ -18,6 +18,9 @@ $(function () {
                 if ($receiver.val().trim() === '') {
                     $('.receive-title').val(data.title);
                 }
+                if (data.image) {
+                  $('#submission_originalImage').val(data.image);
+                }
             }).fail(err => {
                 console && console.log(err);
             });

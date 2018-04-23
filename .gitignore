@@ -3,22 +3,11 @@
 .DS_Store
 *.phar
 *.sw[a-z]
-*~
-tags
 /node_modules/
 /public/build/
 /public/js/
 /public/media/
 /public/submission_images/
-/templates/overrides/*
-!/templates/overrides/.gitignore
-/translations/overrides/*
-!/translations/overrides/.gitignore
-
-## legacy
-
-/app/
-/web/
 
 ###> symfony/framework-bundle ###
 .env
@@ -43,3 +32,9 @@ tags
 ###< symfony/web-server-bundle ###
 
 symfony.lock
+package-lock.json
+
+docker-compose.yaml.dev
+docker-compose.yaml.dev2
+docker-compose.yaml.prod
+docker-compose.yaml.staging

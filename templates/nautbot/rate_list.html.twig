@@ -1,0 +1,47 @@
+{% block head %}
+  {{ include('_includes/meta_pagination.html.twig', {pager: rates}, with_context=false) }}
+{% endblock %}
+
+{% block body %}
+  <h1 class="page-heading">{{ 'title.list_of_rates'|trans({'%page%': page|localizednumber, '%forum%': forum.name}) }}</h1>
+
+   <a href="{{ path('add_rate_limit', {forum_name: forum.name}) }}" class="button">
+     {{- 'action.create_rate_limit'|trans -}}
+   </a>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>{{ 'label.group'|trans }}</th>
+        <th>{{ 'label.rate'|trans }}</th>
+        <th>{{ 'label.block'|trans }}</th>
+        <th/>
+        <th/>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for rate in rates %}
+        <tr>
+          <td>{{ rate.group.name }}</td>
+          <td>{{ rate.rate }} hour(s)</td>
+          <td>{% if rate.block %}True{% else %}False{% endif %}</td>
+          <td>
+            <a href="{{ path('add_rate_limit', {forum_name: forum.name, group_name: rate.group.name}) }}" class="button button--inline">
+              {{- 'action.edit_rate_limit'|trans -}}
+            </a>
+          </td>
+          <td>
+            <form action="{{ path('remove_rate_limit', {forum_name: forum.name, group_name: rate.group.name}) }}" method="post">
+              <input type="hidden" name="token" value="{{ csrf_token('remove_rate_limit') }}">
+              <button class="button button--inline">{{ 'action.remove'|trans }}</button>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {{ include('_includes/pagination.html.twig', {pager: rates}, with_context=false) }}
+{% endblock %}
+

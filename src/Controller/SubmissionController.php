@@ -7,15 +7,26 @@ use App\Entity\Forum;
 use App\Entity\ForumLogSubmissionDeletion;
 use App\Entity\ForumLogSubmissionLock;
 use App\Entity\Submission;
+use App\Entity\Report;
+use App\Entity\ReportEntry;
 use App\Form\DeleteReasonType;
 use App\Form\Model\SubmissionData;
 use App\Form\SubmissionType;
+use App\Repository\SubmissionRepository;
+use App\Repository\ForumRepository;
+use App\Repository\UserRepository;
+use App\Repository\ReportRepository;
+use App\Repository\RateLimitRepository;
 use App\Utils\Slugger;
+use App\Utils\ReportHelper;
+use App\Utils\PermissionsChecker;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Translation\Translator;
+use Symfony\Component\Translation\Loader\ArrayLoader;
 
 /**
  * @Entity("forum", expr="repository.findOneOrRedirectToCanonical(forum_name, 'forum_name')")
@@ -31,9 +42,10 @@ final class SubmissionController extends AbstractController {
      *
      * @return Response
      */
-    public function submission(Forum $forum, Submission $submission) {
+    public function submission(Forum $forum, Submission $submission, Request $request) {
         return $this->render('submission/submission.html.twig', [
             'forum' => $forum,
+            'referer' => $request->headers->get('Referer'),
             'submission' => $submission,
         ]);
     }
@@ -52,6 +64,7 @@ final class SubmissionController extends AbstractController {
         Submission $submission,
         Comment $comment
     ) {
+        if (!$this->hasRightsToViewForum($forum)) { return $this->rerouteAwayFromAdmin(); }
         return $this->render('submission/comment.html.twig', [
             'comment' => $comment,
             'forum' => $forum,
@@ -67,6 +80,7 @@ final class SubmissionController extends AbstractController {
      * @return Response
      */
     public function shortcut(Submission $submission) {
+        if (!$this->hasRightsToViewForum($forum)) { return $this->rerouteAwayFromAdmin(); }
         return $this->redirectToRoute('submission', [
             'forum_name' => $submission->getForum()->getName(),
             'submission_id' => $submission->getId(),
@@ -85,7 +99,8 @@ final class SubmissionController extends AbstractController {
      *
      * @return Response
      */
-    public function submit(EntityManager $em, Request $request, Forum $forum = null) {
+    public function submit(SubmissionRepository $sr, RateLimitRepository $rlr, EntityManager $em, Request $request, Forum $forum = null) {
+        $user = $this->getUser();
         $data = new SubmissionData($forum);
 
         $form = $this->createForm(SubmissionType::class, $data);
@@ -93,8 +108,18 @@ final class SubmissionController extends AbstractController {
 
         if ($form->isSubmitted() && $form->isValid()) {
             $submission = $data->toSubmission($this->getUser(), $request->getClientIp());
+            $forum = $submission->getForum();
 
             $em->persist($submission);
+
+            $lastPost = $sr->getLastPostByUser($user, $forum);
+            $violations = $rlr->verifyPost($user, $forum, $submission, $lastPost);
+            if ($violations !== false) {
+                foreach ($violations as $violation) {
+                    $em->persist($violation);
+                }
+            }
+
             $em->flush();
 
             return $this->redirectToRoute('submission', [
@@ -104,6 +129,38 @@ final class SubmissionController extends AbstractController {
             ]);
         }
 
+        return $this->render('submission/create.html.twig', [
+            'form' => $form->createView(),
+            'forum' => $forum,
+        ]);
+    }
+
+    /**
+     * Create a new submission.
+     *
+     * @IsGranted("moderator", subject="forum")
+     *
+     * @param EntityManager $em
+     * @param Request       $request
+     * @param Forum         $forum
+     *
+     * @return Response
+     */
+    public function modSubmit(EntityManager $em, Request $request, Forum $forum = null) {
+        $data = new SubmissionData($forum);
+        $form = $this->createForm(SubmissionType::class, $data, array('user' => $this->getUser(), 'is_mod_submit' => true));
+        $form->handleRequest($request);
+        $data->setForum($forum);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $submission = $data->toSubmission($this->getUser(), $request->getClientIp(), true /* $modThread */);
+            $em->persist($submission);
+            $em->flush();
+            return $this->redirectToRoute('submission', [
+                'forum_name' => $submission->getForum()->getName(),
+                'submission_id' => $submission->getId(),
+                'slug' => Slugger::slugify($submission->getTitle()),
+            ]);
+        }
         return $this->render('submission/create.html.twig', [
             'form' => $form->createView(),
             'forum' => $forum,
@@ -253,5 +310,166 @@ final class SubmissionController extends AbstractController {
             'submission_id' => $submission->getId(),
             'slug' => Slugger::slugify($submission->getTitle()),
         ]);
+    }
+
+    /**
+     * @IsGranted("ROLE_USER")
+     *
+     * @param EntityManager $em
+     * @param Request       $request
+     * @param Forum         $forum
+     * @param Submission    $submission
+     *
+     * @return Response
+     */
+    public function report(
+        EntityManager $em,
+        Request $request,
+        Forum $forum,
+        Submission $submission,
+        ReportRepository $rr
+    ) {
+        $this->validateCsrf('report_submission', $request->request->get('token'));
+
+        $reportBody = trim($request->request->get('reportBody'));
+        $success = false;
+
+        if(!empty($reportBody)) {
+            $submission->incrementReportCount();
+            $em->persist($submission);
+
+            // Find a report for this submission. If it doesn't exist, create it.
+            $report = $rr->findOneBySubmission($submission);
+            if(!$report) {
+                $report = new Report();
+                $report->setSubmission($submission);
+                $report->setForum($forum);
+                $em->persist($report);
+                $em->flush();
+            } else if($report->getIsResolved()) {
+                // Reset the isResolved flag if it is re-reported and remove all previous reports.
+                foreach($report->getEntries() as $entry) { $em->remove($entry); }
+                $em->flush();
+
+                $em->refresh($report);
+                $report->setIsResolved(false);
+
+                $em->persist($report);
+            }
+
+            // Add the report entry to the report.
+            $entry = new ReportEntry();
+            $entry->setReport($report);
+            $entry->setUser($this->getUser());
+            $entry->setBody($reportBody);
+            $em->persist($entry);
+            $em->flush();
+
+            $success = true;
+        }
+
+        return $this->JSONResponse(array("success" => $success));
+    }
+
+    /**
+     * Get the entries for a given submission.
+     *
+     * @IsGranted("moderator", subject="forum")
+     *
+     * @param EntityManager $em
+     * @param Submission    $submission
+     * @param Forum         $forum
+     * @param Request       $request
+     *
+     * @return Response
+     */
+    public function reportEntries(
+        EntityManager $em,
+        Submission $submission,
+        Forum $forum,
+        Request $request,
+        ReportRepository $rr
+    ) {
+        $result = [];
+        $report = $rr->findOneBySubmission($submission);
+
+        if($report) {
+            foreach($report->getEntries() as $entry) {
+                $result[] = array("body" => $entry->getBody());
+            }
+        }
+
+        return $this->JSONResponse($result);
+    }
+
+    /**
+     * Process a report action for a given submission.
+     *
+     * @IsGranted("moderator", subject="forum")
+     *
+     * @param EntityManager $em
+     * @param Submission    $submission
+     * @param Forum         $forum
+     * @param Request       $request
+     *
+     * @return Response
+     */
+    public function reportAction(
+        EntityManager $em,
+        Submission $submission,
+        Forum $forum,
+        Request $request,
+        ReportRepository $rr
+    ) {
+        $action = $request->request->get('reportAction');
+        $report = $rr->findOneBySubmission($submission);
+        $success = false;
+
+        if($report) {
+            // Removal action.
+            if($action == "remove") {
+                foreach($report->getEntries() as $entry) { $em->remove($entry); }
+                $em->remove($report);
+                $em->refresh($submission);
+                $em->remove($submission);
+
+                $forum->addLogEntry(new ForumLogSubmissionDeletion(
+                    $submission,
+                    $this->getUser(),
+                    "Deleted via moderation action"
+                ));
+
+                $success = true;
+                $em->flush();
+            }
+
+            // Approval action.
+            if($action == "approve") {
+                $report->setIsResolved(true);
+                $em->persist($report);
+
+                $submission->setReportCount(0);
+                $em->persist($submission);
+
+                $success = true;
+                $em->flush();
+            }
+        }
+
+        return $this->JSONResponse(array("success" => $success));
+    }
+
+    protected function rerouteAwayFromAdmin() {
+        if (is_null($this->getUser())) {
+            return $this->redirectToRoute('login');
+        }
+        return $this->redirectToRoute('front');
+    }
+    protected function hasRightsToViewForum($forum) {
+        $admin = PermissionsChecker::isAdmin($this->getUser());
+        if ($admin || $forum->getId() > 0) {
+            return true;
+        }
+        return false;
     }
 }

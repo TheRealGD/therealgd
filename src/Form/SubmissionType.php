@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -47,6 +48,8 @@ final class SubmissionType extends AbstractType {
         if ($options['honeypot']) {
             $builder->add('email', HoneypotType::class);
         }
+        $this->user = $options['user'];
+        $this->modSubmit = $options['is_mod_submit'];
 
         /** @var SubmissionData $data */
         $data = $builder->getData();
@@ -56,6 +59,7 @@ final class SubmissionType extends AbstractType {
         $builder
             ->add('title', TextareaType::class)
             ->add('url', UrlType::class, ['required' => false])
+            ->add('originalImage', HiddenType::class, ['required' => false])
             ->add('body', MarkdownType::class, [
                 'required' => false,
             ]);
@@ -65,9 +69,18 @@ final class SubmissionType extends AbstractType {
                 'class' => Forum::class,
                 'choice_label' => 'name',
                 'query_builder' => function (EntityRepository $repository) {
-                    return $repository->createQueryBuilder('f')
+                    $qb = $repository->createQueryBuilder('f')
                         ->orderBy('f.name', 'ASC');
+                    if (!$this->authorizationChecker->isGranted('ROLE_ADMIN')) {
+                        $qb->where('f.id > 0');
+                    }
+                    if ($this->modSubmit && !$this->authorizationChecker->isGranted('ROLE_ADMIN')) {
+                        $qb->where(":user MEMBER OF f.moderators")
+                           ->setParameter("user", $this->user->getModeratorTokens());
+                    }
+                    return $qb;
                 },
+                'data' => $forum,
                 'placeholder' => 'placeholder.choose_one',
                 'required' => false, // enable a blank choice
             ]);
@@ -92,6 +105,8 @@ final class SubmissionType extends AbstractType {
      */
     public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults([
+            'is_mod_submit' => false,
+            'user' => null,
             'data_class' => SubmissionData::class,
             'label_format' => 'submission_form.%name%',
             'honeypot' => true,

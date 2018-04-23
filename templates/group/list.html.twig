@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block page_classes 'user-list-page' %}
+{% block title 'title.list_of_groups'|trans({'%page%': page|localizednumber}) %}
+
+{% block head %}
+  {{ include('_includes/meta_pagination.html.twig', {pager: groups}, with_context=false) }}
+{% endblock %}
+
+{% block body %}
+  <h1 class="page-heading">{{ block('title') }}</h1>
+
+   <a href="{{ path('create_group') }}" class="button">
+     {{- 'action.create_group'|trans -}}
+   </a>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>{{ 'label.id'|trans }}</th>
+        <th>{{ 'label.name'|trans }}</th>
+        <th>{{ 'label.members'|trans }}</th>
+        <th/>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for group in groups %}
+        <tr>
+          <td>{{ group.id }}</td>
+          <td><a href="{{ path('group', {name: group.name}) }}">{{ group.name }}</a></td>
+          <td>
+            {% with { count: group.users|length } %}
+              {{ count > 0 ? count|localizednumber : '-' }}
+            {% endwith %}
+          </td>
+          <td>
+            <a href="{{ path('edit_group', {name: group.name}) }}" class="button button--inline">
+              {{- 'action.edit_group'|trans -}}
+            </a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {{ include('_includes/pagination.html.twig', {pager: groups}, with_context=false) }}
+{% endblock %}
+

@@ -10,11 +10,17 @@ _comment:
 _forum:
     resource: app_routes/forum.yaml
 
+_naut_bot:
+    resource: app_routes/naut_bot.yaml
+
 _forum_category:
     resource: app_routes/forum_category.yaml
 
 _front:
     resource: app_routes/front.yaml
+
+_frontpageconfig:
+    resource: app_routes/frontpageconfig.yaml
 
 _message:
     resource: app_routes/message.yaml
@@ -36,6 +42,12 @@ _user:
 
 _wiki:
     resource: app_routes/wiki.yaml
+
+_group:
+    resource: app_routes/group.yaml
+
+_static_pages:
+    resource: app_routes/static_pages.yaml
 
 _trailing_slash_redirect:
     controller: App\Controller\RedirectingController::removeTrailingSlash

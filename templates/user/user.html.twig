@@ -16,9 +16,9 @@
   <h1 class="page-heading">{{ user.username }}</h1>
 
   {% for contribution in contributions %}
-    {% if contribution.type == 'submission' %}
+    {% if contribution.entry_type == 'submission' %}
       {{ submission(contribution.submission) }}
-    {% elseif contribution.type == 'comment' %}
+    {% elseif contribution.entry_type == 'comment' %}
       {{ comment(contribution.comment, {recurse: false}) }}
     {% endif %}
   {% endfor %}
@@ -68,6 +68,11 @@
 
       {% set item %}
         <li><a href="{{ path('user_forum_bans', {username: user.username}) }}">{{ 'nav.forum_bans'|trans }}</a></li>
+      {% endset %}
+      {% set toolbox_items = toolbox_items|merge([item]) %}
+
+      {% set item %}
+        <li><a href="{{ path('add_to_group', {username: user.username}) }}">{{ 'nav.add_to_group'|trans }}</a></li>
       {% endset %}
       {% set toolbox_items = toolbox_items|merge([item]) %}
     {% endif %}

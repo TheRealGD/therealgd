@@ -5,7 +5,7 @@
     background-color: @nav-background-color;
     display: flex;
     margin-bottom: 1rem;
-    padding: 0 1rem;
+    padding: 0 3rem;
 
     &__mobile-toggle {
       display: none;
@@ -21,6 +21,9 @@
 
     &__logo {
       font-weight: bold;
+      &:not(.js):hover {
+        background: @nav-active-background-color;
+      }
     }
 
     &__inner {
@@ -42,9 +45,11 @@
         background: @nav-notifications-background-color;
       }
 
-      // todo: BEM
+      &:not(.js):hover {
+        background: @nav-active-background-color;
+      }
+
       &.dropdown-container {
-        &.expanded,
         &:not(.js):hover {
           background: @nav-active-background-color;
         }
@@ -115,4 +120,3 @@
     }
   }
 }
-

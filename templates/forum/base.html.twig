@@ -21,6 +21,9 @@
 
     {% if is_granted('ROLE_USER') %}
       {% from 'forum/_macros.html.twig' import subscribe_button %}
+      {% block site_sidebar_actions %}
+        {{ include('_includes/site_sidebar_actions.html.twig', {forum: forum ?? {}}, with_context=false) }}
+      {% endblock %}
       {% set subscribed = forum.subscribed(app.user) %}
       <form action="{{ path(subscribed ? 'unsubscribe' : 'subscribe', {forum_name: forum.name}) }}"
             method="POST"
@@ -55,6 +58,26 @@
       {% set items = items|merge({('nav.moderation_log'|trans): item}) %}
 
       {% if is_granted('moderator', forum) %}
+        {% set item %}
+          <li><a href="{{ path('mod_forum', {forum_name: forum.name}) }}">{{ 'forum.mod_page'|trans }}</a></li>
+        {% endset %}
+        {% set items = items|merge({('forum.mod_page'|trans): item}) %}
+
+        {% set item %}
+          <li><a href="{{ path('moderation_queue', {forum_name: forum.name}) }}">{{ 'forum.moderation_queue'|trans }}</a></li>
+        {% endset %}
+        {% set items = items|merge({('forum.moderation_queue'|trans): item}) %}
+
+        {% set item %}
+          <li><a href="{{ path('nautbot', {forum_name: forum.name}) }}">{{ 'forum.nautbot_page'|trans }}</a></li>
+        {% endset %}
+        {% set items = items|merge({('forum.nautbot_page'|trans): item}) %}
+
+        {% set item %}
+          <li><a href="{{ path('mod_submit', {forum_name: forum.name}) }}">{{ 'forum.mod_submit'|trans }}</a></li>
+        {% endset %}
+        {% set items = items|merge({('forum.mod_submit'|trans): item}) %}
+
         {% set item %}
           <li><a href="{{ path('edit_forum', {forum_name: forum.name}) }}">{{ 'forum.edit'|trans }}</a></li>
         {% endset %}

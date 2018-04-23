@@ -3,11 +3,31 @@
   <head>
     <meta charset="UTF-8" />
     <title>{% block title %}{{ site_name() }}{% endblock %}</title>
-    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+
+    <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('favicon/apple-icon-57x57.png') }}">
+    <link rel="apple-touch-icon" sizes="60x60" href="{{ asset('favicon/apple-icon-60x60.png') }}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('favicon/apple-icon-72x72.png') }}">
+    <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('favicon/apple-icon-76x76.png') }}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('favicon/apple-icon-114x114.png') }}">
+    <link rel="apple-touch-icon" sizes="120x120" href="{{ asset('favicon/apple-icon-120x120.png') }}">
+    <link rel="apple-touch-icon" sizes="144x144" href="{{ asset('favicon/apple-icon-144x144.png') }}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{{ asset('favicon/apple-icon-152x152.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicon/apple-icon-180x180.png') }}">
+    <link rel="icon" type="image/png" sizes="192x192"  href="{{ asset('favicon/android-icon-192x192.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('favicon/favicon-96x96.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon/favicon-16x16.png') }}">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="{{ asset('favicon/ms-icon-144x144.png') }}">
+    <meta name="theme-color" content="#ffffff">
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="postmill {{ app_version() }}">
 
     <link rel="apple-touch-icon-precomposed" href="{{ asset('apple-touch-icon-precomposed.png') }}">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
     {% block stylesheets %}
       {{ include('_includes/stylesheets.html.twig', {
@@ -20,32 +40,42 @@
   </head>
 
   <body class="{% block page_classes '' %} {{ app.user ? 'user-logged-in' : 'user-anonymous' }} {{ (app.user.nightMode ?? false) ? 'night-mode' }}">
-    {% block site_nav %}
-      {{ include('_includes/site_nav.html.twig', {forum: forum ?? null}, with_context=false) }}
-    {% endblock %}
+    <div id="vue-app">
+      {% block site_feedback %}
+        {{ include('_includes/site_feedback.html.twig', {forum: forum ?? null}, with_context=false) }}
+      {% endblock %}
 
-    {% block site_alerts %}
-      <div class="site-alerts">
-        {%- for type, notices in app.flashes -%}
-          {%- for notice in notices -%}
-            <div class="alert alert--{{ type }} alert--animate alert--dismissable" role="alert">
-              <p>{{ notice|trans }}</p>
-            </div>
+      {% block site_banner %}
+        {{ include('_includes/site_banner.html.twig', {forum: forum ?? null}, with_context=false) }}
+      {% endblock %}
+
+      {% block site_nav %}
+        {{ include('_includes/site_nav.html.twig', {forum: forum ?? null}, with_context=false) }}
+      {% endblock %}
+
+      {% block site_alerts %}
+        <div class="site-alerts">
+          {%- for type, notices in app.flashes -%}
+            {%- for notice in notices -%}
+              <div class="alert alert--{{ type }} alert--animate alert--dismissable" role="alert">
+                <p>{{ notice|trans }}</p>
+              </div>
+            {%- endfor -%}
           {%- endfor -%}
-        {%- endfor -%}
-      </div>
-    {% endblock %}
+        </div>
+      {% endblock %}
 
-    {% block site_main %}
-      <div class="content-wrapper">
-        <main class="body">{% block body %}{% endblock %}</main>
-        <aside class="sidebar">{% block sidebar %}{% endblock %}</aside>
-      </div>
-    {% endblock %}
+      {% block site_main %}
+        <div class="content-wrapper">
+          <main class="body">{% block body %}{% endblock %}</main>
+          <aside class="sidebar">{% block sidebar %}{% endblock %}</aside>
+        </div>
+      {% endblock %}
 
-    {% block site_footer %}
-      {{ include('_includes/site_footer.html.twig', {forum: forum ?? null}, with_context=false) }}
-    {% endblock %}
+      {% block site_footer %}
+        {{ include('_includes/site_footer.html.twig', {forum: forum ?? null}, with_context=false) }}
+      {% endblock %}
+    </div>
 
     {% block javascripts %}
       <script src="{{ preload(asset('bundles/fosjsrouting/js/router.js', 'static_asset')) }}"></script>
@@ -65,6 +95,14 @@
         <script src="{{ preload(asset('js/translations/%s.js'|format(app.request.locale), 'static_asset')) }}"></script>
       {% else %}
         <script src="{{ path('bazinga_jstranslation_js') }}"></script>
+      {% endif %}
+
+      <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous"></script>
+    {% endblock %}
+
+    {% block site_tracking %}
+      {% if app.environment != 'dev' %}
+        {% include '_includes/site_tracking.html.twig' %}
       {% endif %}
     {% endblock %}
   </body>

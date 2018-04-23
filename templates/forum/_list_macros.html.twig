@@ -1,4 +1,5 @@
 {% macro forum_list_header() %}
+  {#
   <nav class="tabs forum-list-view-selector">
     <ul class="tabs__bar">
       {% with { active: app.request.attributes.get('_route') == 'forum_list' } %}
@@ -17,6 +18,7 @@
       {% endwith %}
     </ul>
   </nav>
+  #}
 
   <h1 class="page-heading">{{ 'forum_list.page_title'|trans }}</h1>
 
@@ -25,8 +27,10 @@
       <a href="{{ path('create_forum') }}" class="button">{{ 'forum_list.create_forum'|trans }}</a>
     </p>
   {% elseif is_granted('ROLE_USER') %}
+    {#
     <div class="alert alert--notice">
       <p>{{ 'flash.you_cannot_create_forums_yet'|trans }}</p>
     </div>
+    #}
   {% endif %}
 {% endmacro %}

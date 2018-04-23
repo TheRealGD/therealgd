@@ -66,7 +66,7 @@ class Forum {
     private $sidebar;
 
     /**
-     * @ORM\OneToMany(targetEntity="Moderator", mappedBy="forum", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Moderator", mappedBy="forum", cascade={"persist", "remove"},fetch="EAGER")
      *
      * @var Moderator[]|Collection
      */
@@ -130,6 +130,14 @@ class Forum {
      */
     private $logEntries;
 
+    /**
+     * @ORM\OneToMany(targetEntity="RateLimit", mappedBy="forum")
+     * @ORM\OrderBy({"group_id": "ASC"})
+     *
+     * @var RateLimit[]|Collection|Selectable
+     */
+    public $rateLimits;
+
     public function __construct(
         string $name,
         string $title,
@@ -148,6 +156,7 @@ class Forum {
         $this->submissions = new ArrayCollection();
         $this->subscriptions = new ArrayCollection();
         $this->logEntries = new ArrayCollection();
+        $this->rateLimits = new ArrayCollection();
 
         if ($user) {
             $this->addModerator(new Moderator($this, $user));
@@ -344,6 +353,10 @@ class Forum {
 
             $this->logEntries->add(new ForumLogBan($ban));
         }
+    }
+
+    public function getRateLimits() {
+        return $this->rateLimits;
     }
 
     public function isFeatured(): bool {

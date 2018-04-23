@@ -8,12 +8,14 @@ action:
     downvote: Downvote
     retract_upvote: Retract upvote
     retract_downvote: Retract downvote
-    edit: Edit
+    edit: Save changes
     create_theme: Create theme
     edit_theme: Edit theme
     new_theme: New theme
     go_to_home_page: Go to home page
     ban: Ban
+    sticky: Sticky comment
+    unsticky: Unsticky comment
     unban: Unban
     block: Block
     unblock: Unblock
@@ -25,6 +27,11 @@ action:
     filter: Filter
     create: Create
     compare: Compare
+    create_group: Create new group
+    report: Report
+    edit_group: Edit group
+    create_rate_limit: Add new rate limit
+    edit_rate_limit: Edit rate
 
 add_moderator:
     title: Add moderator to %forum%
@@ -98,8 +105,8 @@ flash:
     forum_deleted: The forum and all its contents have been deleted.
     forum_updated: The changes have been saved.
     forum_moderator_added: The user has been promoted to moderator.
-    inbox_cleared: The inbox was cleared.
-    notification_cleared: The notification was successfully cleared.
+    inbox_cleared: The inbox was marked as read.
+    notification_cleared: The notification was marked as read.
     reset_password_email_sent: A reset email has been sent to the address you specified.
     theme_created: Your theme has been created.
     theme_updated: The theme has been updated.
@@ -127,6 +134,10 @@ flash:
     page_unlocked: The page was unlocked.
     no_cookies_verification: Does the image not load correctly? Please make sure you aren't blocking cookies and try again.
     no_password_resets: Password resets have been disabled by the administrator.
+    submission_reported: The submission has been reported.
+    comment_reported: The comment has been reported.
+    generic_error: An error had occurred, please try again later.
+    report_fail: The reporting system is unavailable, please contact Moderators directly.
 
 forum:
     moderators: Moderators
@@ -136,6 +147,10 @@ forum:
     unsubscribe: Unsubscribe
     subscriber_count: '{0} No subscribers|{1} %count% subscriber|[1,Inf[ %count% subscribers'
     add_moderator: Add moderator
+    mod_page: Moderation Posts
+    mod_submit: Create new mod post
+    nautbot_page: Edit NautBot settings
+    moderation_queue: Moderation Queue
 
 forum_form:
     name: Name
@@ -151,11 +166,11 @@ forum_form:
 
 forum_list:
     name: Name
-    title: Title
+    title: Deal category
     subscribers: Subscribers
-    page_title: List of forums
-    create_forum: Create forum
-    submission_count: Submissions
+    page_title: List of deal categories
+    create_forum: Create deal category
+    submission_count: Post Count
     list_view: List view
     category_view: Category view
     uncategorized: Uncategorized
@@ -167,9 +182,12 @@ forum_moderators:
     last_seen: Last seen
 
 front:
-    subscribed_forums: Subscribed forums
+    #subscribed_forums: Subscribed forums
+    subscribed_forums: Subscribed Deals
     no_subscriptions: You are not subscribed to any forum. Showing featured forums instead.
-    featured_forums: Featured forums
+    #featured_forums: Featured forums
+    featured_forums: Featured Deals
+    all_forums: All Deals
     no_forums: There are no featured forums to display.
     all: All
     featured: Featured
@@ -192,12 +210,16 @@ help:
     parent_theme_input: Enter the <username>/<theme> of the theme you wish to extend. Alternatively, you can enter a UUID to extend a particular revision.
     append_to_default_style_inheritance_warning: Setting this has no effect when extending an existing theme.
     will_appear_in_the_url: Will appear in the URL.
+    only_visible_to_mods_admins: Only visible to mods/admins when creating/editing rate limits
 
 inbox:
     title: Inbox
-    clear_inbox: Clear inbox
+    clear_inbox: Mark All As Read
+    clear_notification: Mark As Read
     empty: The inbox is empty.
     message_reply_head: 'Re: %title%'
+    filter_all: 'All'
+    filter_unread: 'Unread'
 
 item:
     short_url: 'Short URL: %url%'
@@ -253,7 +275,7 @@ label:
     overview: Overview
     open_external_links_in_new_tab: Open external links in new tab
     biography: Biography
-    toolbox: Toolbox
+    toolbox: Admin Toolbox
     banned_by: Banned by
     unban_associated_ips: Remove associated IP bans
     ban_ip_addresses: Ban IP address(es)?
@@ -279,6 +301,10 @@ label:
     posting: Posting
     auto_fetch_submission_titles: Auto-fetch submission titles
     compare: Compare
+    members: Members
+    group: Group Name
+    rate: Rate Limit (in hours)
+    block: Block submission
 
 log:
     comment_deletion: '%user% deleted comment by %author% in "%submission%"'
@@ -308,6 +334,9 @@ moderator_form:
     user: Username
     submit: Add as moderator
 
+sidebar:
+  submit_deal: Submit Deal
+
 nav:
     appearance: Appearance
     create_theme: Create theme
@@ -320,10 +349,13 @@ nav:
     register: Sign up
     my_account: My account
     user_settings: User settings
-    forums: Forums
+    #forums: Forums
+    forums: Categories
     inbox_count: Inbox (%count%)
     messages: Messages
     wiki: Wiki
+    groups: Groups
+    add_to_group: Add user to group
 
     # <New Strings>
     wiki_copyright: Copyright
@@ -359,6 +391,8 @@ placeholder:
 prompt:
     confirm_comment_delete: Are you sure you want to delete this comment?
     confirm_submission_delete: Are you sure you want to delete this submission?
+    confirm_comment_report: Are you sure you want to report this comment?
+    confirm_submission_report: Are you sure you want to report this submission?
 
 request_password_reset:
     title: Request password reset link
@@ -399,10 +433,11 @@ submission_form:
     body: Body
     forum: Forum
     sticky: Sticky
-    create: Create submission
-    edit: Edit submission
-    delete: Delete submission
-    confirm_delete: Are you sure you want to delete this submission?
+    create: Submit Deal
+    edit: Edit Deal
+    delete: Delete Deal
+    confirm_delete: Are you sure you want to delete this deal?
+    mod_thread: Post in Moderation section
 
 submissions:
     comments: '{0} No comments|{1} %count% comment|[1,Inf[ %count% comments'
@@ -429,7 +464,7 @@ title:
     forum_appearance: Appearance for %forum%
     showing_revision: 'Showing revision #%revision% of page %path%'
     editing_forum: Editing forum %forum%
-    create_submission: Create submission
+    create_submission: Submit a new Deal
     editing_submission: Editing submission %title%
     log_in: Log in
     sign_up: Sign up
@@ -456,11 +491,20 @@ title:
     global_moderation_log: Global moderation log
     delete_submission: Delete submission
     list_of_users: 'List of users, page #%page%'
+    list_of_groups: 'List of groups, page #%page%'
+    list_of_users_in_group: 'List of users in %group%, page #%page%'
     user_forum_bans: "%user%'s forum bans"
     manage_forum_categories: Manage forum categories
     create_forum_category: Create forum category
     editing_forum_category: 'Editing forum category: %category%'
+    editing_group: 'Editing user group: %group%'
     wiki_diff: Showing difference between revisions %from% and %to%
+    add_to_group: 'Add %user% to group'
+    create_user_group: Create new user group
+    nautbot_info: 'NautBot Settings for %forum%'
+    list_of_rates: Current rate limits
+    create_rate_limit: Create new rate limit
+    edit_rate_limit: Edit rate limit
 
 user:
     submissions: Submissions
@@ -490,6 +534,7 @@ user_form:
     register: Register
     verification: Verification
     save: Save changes
+    group: Group
 
 user_settings:
     title: Editing user settings for %username%
@@ -523,3 +568,28 @@ wiki_form:
     title: Title
     body: Body
     submit: Submit
+
+front_page_configuration_form:
+    announcement: Global Header
+    save: Add new announcement
+    announcement_saved: Your announcement has been posted.
+    announcement_forum_error: Could not find the announcements forum.
+    remove_announcement: Remove current announcement
+    thread_title: Announcement Title
+    thread_content: Global Announcement
+
+import:
+    default_forum: gundeals
+    default_user: gundeals
+    default_body: Imported from /r/gundeals | %path%
+
+rate_limit_form:
+    group: Group:
+    rate: Rate limit in hours
+
+report_modal:
+    initial_header: We're sorry something's wrong. How can we help?
+    rule_select_header: Which rule does it break?
+    other_select_header: What issue?
+    finished_header: Thanks for letting us know!
+    additional_info: Read the <a href="/policy">GunDeals Content Policy</a> and <a href="/f/{0}/rules">f/{0}'s rules</a>.

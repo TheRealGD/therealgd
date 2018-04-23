@@ -1,7 +1,29 @@
+report_submission:
+    controller: App\Controller\SubmissionController::report
+    path: /f/{forum_name}/{submission_id}/report
+    methods: [POST]
+
+submission_report_entries:
+    controller: App\Controller\SubmissionController::reportEntries
+    path: /f/{forum_name}/{submission_id}/report_entries
+    methods: [GET]
+
+submission_report_action:
+    controller: App\Controller\SubmissionController::reportAction
+    path: /f/{forum_name}/{submission_id}/report_action
+    methods: [POST]
+
 submission:
     controller: App\Controller\SubmissionController::submission
     defaults: { slug: ~ }
     path: /f/{forum_name}/{submission_id}/{slug}
+    methods: [GET]
+    requirements: { submission_id: \d+ }
+
+mod_submission:
+    controller: App\Controller\SubmissionController::modSubmission
+    defaults: { slug: ~ }
+    path: /f/{forum_name}/mod/{submission_id}/{slug}
     methods: [GET]
     requirements: { submission_id: \d+ }
 
@@ -29,7 +51,6 @@ submission_delete_with_reason:
     controller: App\Controller\SubmissionController::deleteWithReason
     path: /f/{forum_name}/delete_submission_with_reason/{submission_id}
     methods: [GET, POST]
-
 lock:
     controller: App\Controller\SubmissionController::lock
     defaults: { lock: true }
@@ -49,6 +70,16 @@ submit:
     defaults: { forum_name: null }
     path: /submit/{forum_name}
     methods: [GET, POST]
+
+mod_submit:
+    controller: App\Controller\SubmissionController::modSubmit
+    path: /f/{forum_name}/mod/submit
+    methods: [GET, POST]
+
+import_reddit:
+    controller: App\Controller\SubmissionController::importFromReddit
+    path: /import_reddit
+    methods: [GET]
 
 submission_vote:
     controller: App\Controller\VoteController::vote

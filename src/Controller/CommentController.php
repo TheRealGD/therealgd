@@ -7,11 +7,15 @@ use App\Entity\Forum;
 use App\Entity\ForumLogCommentDeletion;
 use App\Entity\Submission;
 use App\Entity\User;
+use App\Entity\Report;
+use App\Entity\ReportEntry;
 use App\Form\CommentType;
 use App\Form\Model\CommentData;
 use App\Repository\CommentRepository;
 use App\Repository\ForumRepository;
+use App\Repository\ReportRepository;
 use App\Utils\Slugger;
+use App\Utils\ReportHelper;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -100,10 +104,19 @@ final class CommentController extends AbstractController {
             $em->persist($reply);
             $em->flush();
 
-            return $this->redirectToRoute('comment', [
+            // Nested comment - go to parent comment
+            if ($reply->getParent() !== null) {
+              return $this->redirectToRoute('comment', [
+                  'forum_name' => $forum->getName(),
+                  'submission_id' => $submission->getId(),
+                  'comment_id' => $reply->getParent()->getId(),
+              ]);
+            }
+            // By default - go to post
+            return $this->redirectToRoute('submission', [
                 'forum_name' => $forum->getName(),
                 'submission_id' => $submission->getId(),
-                'comment_id' => $reply->getId(),
+                'slug' => Slugger::slugify($submission->getTitle()),
             ]);
         }
 
@@ -207,14 +220,167 @@ final class CommentController extends AbstractController {
             ], UrlGeneratorInterface::ABSOLUTE_URL);
 
             if (strpos($request->headers->get('Referer'), $commentUrl) === 0) {
-                // redirect to forum since redirect to referrer will 404
-                return $this->redirectToRoute('forum', [
-                    'forum_name' => $forum->getName()
+                // Redirect to original submission comment page.
+                return $this->redirectToRoute('submission',[
+                  'forum_name' => $forum->getName(),
+                  'submission_id' => $submission->getId(),
+                  'slug' => Slugger::slugify($submission->getTitle())
                 ]);
             }
         }
 
         return $this->redirectAfterAction($comment, $request);
+    }
+
+    /**
+     * Reports a comment.
+     *
+     * @IsGranted("ROLE_USER")
+     *
+     * @param EntityManager $em
+     * @param Submission    $submission
+     * @param Forum         $forum
+     * @param Comment       $comment
+     * @param Request       $request
+     *
+     * @return Response
+     */
+    public function reportComment(
+        EntityManager $em,
+        Submission $submission,
+        Forum $forum,
+        Comment $comment,
+        Request $request,
+        ReportRepository $rr
+    ) {
+        $this->validateCsrf('report_comment', $request->request->get('token'));
+
+        $reportBody = trim($request->request->get('reportBody'));
+        $success = false;
+
+        if(!empty($reportBody)) {
+            $comment->incrementReportCount();
+            $em->persist($comment);
+
+            // Find a report for this comment. If it doesn't exist, create it.
+            $report = $rr->findOneByComment($comment);
+            if(!$report) {
+                $report = new Report();
+                $report->setComment($comment);
+                $report->setForum($forum);
+                $em->persist($report);
+                $em->flush();
+            } else if($report->getIsResolved()) {
+                // Reset the isResolved flag if it is re-reported and remove all previous reports.
+                foreach($report->getEntries() as $entry) { $em->remove($entry); }
+                $em->flush();
+
+                $em->refresh($report);
+                $report->setIsResolved(false);
+
+                $em->persist($report);
+            }
+
+            // Add the report entry to the report.
+            $entry = new ReportEntry();
+            $entry->setReport($report);
+            $entry->setUser($this->getUser());
+            $entry->setBody($reportBody);
+            $em->persist($entry);
+            $em->flush();
+
+            $success = true;
+        }
+
+        return $this->JSONResponse(array("success" => $success));
+    }
+
+    /**
+     * Get the entries for a given comment.
+     *
+     * @IsGranted("moderator", subject="forum")
+     *
+     * @param EntityManager $em
+     * @param Submission    $submission
+     * @param Forum         $forum
+     * @param Comment       $comment
+     * @param Request       $request
+     *
+     * @return Response
+     */
+    public function reportEntries(
+        EntityManager $em,
+        Submission $submission,
+        Forum $forum,
+        Comment $comment,
+        Request $request,
+        ReportRepository $rr
+    ) {
+        $result = [];
+        $report = $rr->findOneByComment($comment);
+
+        if($report) {
+            foreach($report->getEntries() as $entry) {
+                $result[] = array("body" => $entry->getBody());
+            }
+        }
+
+        return $this->JSONResponse($result);
+    }
+
+    /**
+     * Process a report action for a given comment..
+     *
+     * @IsGranted("moderator", subject="forum")
+     *
+     * @param EntityManager $em
+     * @param Submission    $submission
+     * @param Forum         $forum
+     * @param Comment       $comment
+     * @param Request       $request
+     *
+     * @return Response
+     */
+    public function reportAction(
+        EntityManager $em,
+        Submission $submission,
+        Forum $forum,
+        Comment $comment,
+        Request $request,
+        ReportRepository $rr
+    ) {
+        $action = $request->request->get('reportAction');
+        $report = $rr->findOneByComment($comment);
+        $success = false;
+
+        if($report) {
+            // Removal action.
+            if($action == "remove") {
+                $report->setIsResolved(true);
+                $em->persist($report);
+
+                $comment->setSoftDeleted(true);
+                $comment->setReportCount(0);
+                $em->persist($comment);
+
+                $success = true;
+                $em->flush();
+            }
+
+            // Approval action.
+            if($action == "approve") {
+                $report->setIsResolved(true);
+                $em->persist($report);
+
+                $comment->setReportCount(0);
+                $em->persist($comment);
+
+                $success = true;
+                $em->flush();
+            }
+        }
+
+        return $this->JSONResponse(array("success" => $success));
     }
 
     /**
@@ -247,6 +413,61 @@ final class CommentController extends AbstractController {
 
         return $this->redirectAfterAction($comment, $request);
     }
+
+    /**
+     *
+     * @IsGranted("moderator", subject="forum")
+     * @todo - updated is granted to being a forum mod or role_admin, possibly need to use security annotation
+     *
+     * @param EntityManager $em
+     * @param Forum         $forum
+     * @param Submission    $submission
+     * @param Comment       $comment
+     * @param Request       $request
+     *
+     * @return Response
+     */
+    public function stickyComment(
+        EntityManager $em,
+        Forum $forum,
+        Submission $submission,
+        Comment $comment,
+        Request $request
+
+    ) {
+        $comment->setStickied(true);
+        $em->flush();
+
+        return $this->redirectAfterAction($comment, $request);
+    }
+
+    /**
+     *
+     * @IsGranted("moderator", subject="forum")
+     * @todo - updated is granted to being a forum mod or role_admin, possibly need to use security annotation
+     *
+     * @param EntityManager $em
+     * @param Forum         $forum
+     * @param Submission    $submission
+     * @param Comment       $comment
+     * @param Request       $request
+     *
+     * @return Response
+     */
+    public function unstickyComment(
+        EntityManager $em,
+        Forum $forum,
+        Submission $submission,
+        Comment $comment,
+        Request $request
+
+    ) {
+        $comment->setStickied(false);
+        $em->flush();
+
+        return $this->redirectAfterAction($comment, $request);
+    }
+
 
     private function logDeletion(Forum $forum, Comment $comment) {
         /* @var User $user */

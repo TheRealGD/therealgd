@@ -24,6 +24,7 @@
 
 {% block sidebar %}
   <section class="sidebar__section sidebar__section--wiki-info">
+    {% if is_granted('ROLE_ADMIN') %}
     <h1 class="sidebar__title">{{ page.path }}</h1>
       <p>
         {{- 'wiki.last_edited'|trans({
@@ -34,6 +35,7 @@
           '%timestamp%': block('_last_edited_time'),
         })|raw -}}
       </p>
+    {% endif %}
 
     {% if page.locked %}
       <p>{{ 'wiki.locked_notice'|trans }}</p>
@@ -49,23 +51,24 @@
     {% endif %}
   </section>
 
-  <section class="sidebar__section sidebar__section--wiki-toolbox">
-    <h1 class="sidebar__title">{{ 'label.toolbox'|trans }}</h1>
+  {% if is_granted('ROLE_ADMIN') %}
+    <section class="sidebar__section sidebar__section--wiki-toolbox">
+      <h1 class="sidebar__title">{{ 'label.toolbox'|trans }}</h1>
 
-    <ul>
-      {% if is_granted('write', page) %}
-        <li><a href="{{ path('wiki_edit', {path: page.path}) }}">{{ 'wiki.edit_page'|trans }}</a></li>
-      {% endif %}
-      <li><a href="{{ path('wiki_history', {path: page.path}) }}">{{ 'wiki.page_history'|trans }}</a></li>
-    </ul>
-  </section>
+      <ul>
+        {% if is_granted('write', page) %}
+          <li><a href="{{ path('wiki_edit', {path: page.path}) }}">{{ 'wiki.edit_page'|trans }}</a></li>
+        {% endif %}
+        <li><a href="{{ path('wiki_history', {path: page.path}) }}">{{ 'wiki.page_history'|trans }}</a></li>
+        <li><a href="{{ path('wiki_recent_changes') }}">{{ 'label.recent_changes'|trans }}</a></li>
+      </ul>
+    </section>
+  {% endif %}
 
   <section class="sidebar__section sidebar__section--wiki-navigation">
     <h1 class="sidebar__title">{{ 'wiki.navigation'|trans }}</h1>
-
     <ul>
       <li><a href="{{ path('wiki_all') }}">{{ 'wiki.all_pages'|trans }}</a></li>
-      <li><a href="{{ path('wiki_recent_changes') }}">{{ 'label.recent_changes'|trans }}</a></li>
     </ul>
   </section>
 {% endblock %}

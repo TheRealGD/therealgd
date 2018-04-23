@@ -2,7 +2,22 @@
 @import (reference) 'settings';
 
 .submission {
-  margin-bottom: 1rem;
+  &.odd {
+    background: @submission-odd-row-color;
+    border-top: 1px dashed @submission-separator-color;
+    border-bottom: 1px dashed @submission-separator-color;
+  }
+  padding: 1rem;
+  &:last-of-type {
+    margin-bottom: 1rem;
+  }
+}
+
+// Desktop only
+@media screen and (min-width: @desktop-min-width) {
+  .submission {
+    margin-right: 1rem;
+  }
 }
 
 .submission-header > * {
@@ -50,11 +65,36 @@
   .meta;
 }
 
-.submission-nav {
-  .meta-nav;
+.submission-nav-ul {
+  margin-bottom: 0;
+  padding: 0;
+}
 
-  ul {
-    margin-bottom: 0;
+.submission-nav-li {
+  display: inline-block;
+  padding: 0;
+
+  &:not(:last-child) {
+    margin-right: 1rem;
+  }
+
+  form {
+    display: inline;
+  }
+}
+
+.submission-nav-link {
+  .unbuttonize();
+  
+  cursor: pointer;
+  font-weight: bold;
+
+  color: @meta-color;
+  font-size: 0.85rem;
+  padding: 0.075rem 0;
+
+  &:hover {
+    text-decoration: underline;
   }
 }
 

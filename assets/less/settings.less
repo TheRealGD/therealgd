@@ -5,14 +5,18 @@
 @page-font-size: 14px;
 @page-line-height: 1.5;
 @page-link-color: #0000ff;
-
 @desktop-min-width: 768px;
 
+@mq-desktop: ~"only screen and (min-width: 769px)";
+@mq-mobile: ~"only screen and (max-width: 768px)";
+
 // Navigation
-@nav-background-color: #85bc65;
-@nav-inner-background-color: #B3DF99;
-@nav-active-background-color: #D3EDC4;
-@nav-notifications-background-color: #3B7519;
+//@nav-background-color: #85bc65;
+@nav-background-color: #6600B6;
+//@nav-inner-background-color: #B3DF99;
+@nav-inner-background-color: #3B74AB;
+@nav-active-background-color: #b257ff;
+@nav-notifications-background-color: #3B74AB;
 @nav-link-color: #fff;
 @nav-font-size: 16px;
 
@@ -30,27 +34,47 @@
 @sidebar-background-color: @page-background-color;
 @comment-highlight-background: #fff0f0;
 @markdown-preview-background-color: #fff0f0;
+@banner-background-main: #eeeeff;
+@banner-background-gradient-top: #ccccff;
+@banner-background-gradient-bottom: #fff;
 
 // Submissions
 @submission-link-color: #0000ff;
 @submission-link-color-visited: multiply(@submission-link-color, darkgrey);
 @submission-sticky-link-color: #008000;
+@submission-odd-row-color: #efefef;
+@submission-separator-color: #ddd;
 
 // Comments
 @comment-border-color: lightgrey;
-@comment-submitter-background-color: #85bc65;
+//@comment-submitter-background-color: #85bc65;
+@comment-submitter-background-color: #6600B6;
 @comment-submitter-color: #fff;
+@comment-sticky-background-color: #02dd23;
+@comment-sticky-color: #fff;
 
 // Notices
 @alert-notice-color: aliceblue;
-@alert-success-color: palegreen;
+
+@alert-success-color: #c6f9d3;
+@alert-success-border-color: #a1dfb1;
+@alert-success-text-color: #002710;
+
+@alert-primary-color: #cfe5fb;
+@alert-primary-border-color: #b5cce3;
+@alert-primary-text-color: #172a3e;
+
+@alert-error-color: #f6d0d0;
+@alert-error-border-color: #d99797;
+@alert-error-text-color: #3a1d1d;
 
 // Forms
 @form-error-color: red;
 @form-text-input-background-color: #fff;
 @form-text-input-color: #000;
 @form-text-input-border-color: #aaa;
-@form-text-input-focus-border-color: #85bc65;
+//@form-text-input-focus-border-color: #85bc65;
+@form-text-input-focus-border-color: #6600B6;
 @form-text-input-disabled-background-color: #efefef;
 @form-text-input-disabled-color: #666;
 @form-help-text-color: dimgray;
@@ -60,13 +84,15 @@
 @dropdown-menu-background-color: @page-background-color;
 
 // Tables
-@table-header-separator-color: #aaa;
-@table-alternate-row-background-color: #f8f8f8;
+@table-header-separator-color: #ddd;
+@table-alternate-row-background-color: #efefef;
 
 // Buttons
-@button-background-color: #85bc65;
+//@button-background-color: #85bc65;
+@button-background-color: #6600B6;
 @button-text-color: #fff;
-@button-hover-background-color: darken(#85bc65, 5%);
+//@button-hover-background-color: darken(#85bc65, 5%);
+@button-hover-background-color: darken(#6600B6, 5%);
 @button-active-text-color: #efefef;
 
 // Messages
@@ -77,7 +103,8 @@
 
 // User flags
 @user-flag-moderator-color: mediumpurple;
-@user-flag-admin-color: #85bc65;
+//@user-flag-admin-color: #85bc65;
+@user-flag-admin-color: #6600B6;
 
 // Tabs
 @tab-color: #000;
@@ -91,3 +118,9 @@
 @diff-table-changed-background-color: #ddf;
 @diff-table-line-group-border-color: @page-background-color;
 @diff-table-line-no-background-color: lightgrey;
+
+// Text
+@text-accent-color: #888;
+@text-high-accent-color: #ccc;
+@text-error-color: #f00;
+@text-success-color: #090;
