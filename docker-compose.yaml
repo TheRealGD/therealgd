@@ -39,6 +39,8 @@ services:
         - database_url=pgsql://developer:devdevdev@db-dev-local:5432/devdb?serverVersion=9.6
         - no_reply_address="no-reply@example.com"
         - mailer_url="null://localhost"
+        - git_sha="${GIT_SHA}"
+        - git_branch="${GIT_BRANCH}"
     expose:
       - '9000'
     links:
