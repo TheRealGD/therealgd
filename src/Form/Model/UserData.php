@@ -107,7 +107,9 @@ class UserData implements UserInterface {
         }
 
         $user->setEmail($this->email);
-        $user->setLocale($this->locale);
+        if ($this->locale) {
+          $user->setLocale($this->locale);
+        }
         $user->setFrontPage($this->frontPage);
         $user->setNightMode($this->nightMode);
         $user->setShowCustomStylesheets($this->showCustomStylesheets);

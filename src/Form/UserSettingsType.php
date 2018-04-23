@@ -20,10 +20,6 @@ final class UserSettingsType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-            ->add('locale', ChoiceType::class, [
-                'choices' => $this->getLocaleChoices(),
-                'choice_translation_domain' => false,
-            ])
             ->add('front_page', ChoiceType::class, [
                 'choices' => [
                     'label.default' => User::FRONT_DEFAULT,
