@@ -79,7 +79,7 @@ class RateLimit {
         return $this->block;
     }
 
-    public function setBlock(boolean $block) {
+    public function setBlock(bool $block) {
         $this->block = $block;
     }
 }
