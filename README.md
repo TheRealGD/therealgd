@@ -19,7 +19,3 @@ For HTTPS with certbot & config from AWS SSM - `./dev-aws.sh`
 
 The software is released under the zlib license. See the `LICENSE` file for
 details.
-
-## GUNDEALS MAIN REPO:
-
-Please request access from @TKsM151 for this repo.
