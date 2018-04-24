@@ -15,6 +15,7 @@ services:
   redirect_server_names = `aws ssm get-parameters --name /gundeals.io/#{aws_env}/redirect_server_names --region #{aws_region} --with-decryption --query "Parameters[*].Value" --output=text`
   database_url          = `aws ssm get-parameters --name /gundeals.io/#{aws_env}/database_url          --region #{aws_region} --with-decryption --query "Parameters[*].Value" --output=text`
   mailer_url            = `aws ssm get-parameters --name /gundeals.io/#{aws_env}/mailer_url            --region #{aws_region} --with-decryption --query "Parameters[*].Value" --output=text`
+  admin_email           = 'admin@gundeals.io'
 -%>
 
   nginx:
@@ -34,6 +35,9 @@ services:
       - "./docker/nginx/nginxlogs/:/var/log/nginx/:rw"
       - "./public:/var/www/public:ro"
       - "./vendor:/var/www/vendor:ro"
+    environment:
+      - REDIRECT_DOMAINS=<%=redirect_server_names-%>
+      - ADMIN_EMAIL=<%=admin_email-%>
 
   php:
     build:

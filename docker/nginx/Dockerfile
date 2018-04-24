@@ -10,17 +10,7 @@ ARG REDIRECT_DOMAINS
 ARG HTTPS_CERT_NAME
 ARG FAKE_HOSTS
 
-# 3rd line - Instructions from https://github.com/staticfloat/docker-nginx-certbot/blob/master/Dockerfile
-RUN apt-get update && \
-    apt-get -y install software-properties-common gnupg cron inetutils-ping inetutils-telnet rsyslog sudo curl ruby && \
-    apt update && \
-      apt install -y cron python python-dev libffi6 libffi-dev libssl-dev curl build-essential && \
-      curl -L 'https://bootstrap.pypa.io/get-pip.py' | python && \
-      pip install -U cffi certbot && \
-      apt remove --purge -y python-dev build-essential libffi-dev libssl-dev curl && \
-      apt-get autoremove -y && \
-      apt-get clean && \
-      rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt install -y wget ruby cron && wget https://dl.eff.org/certbot-auto -O /certbot-auto && chmod +x ./certbot-auto
 
 ADD ./config/crontab /certcrontab
 ADD ./scripts/updatecerts.sh /
@@ -32,6 +22,8 @@ RUN SERVER_NAME=$SERVER_NAME \
     HTTPS_CERT_NAME=$HTTPS_CERT_NAME \
     FAKE_HOSTS=$FAKE_HOSTS \
     erb -T - /tmp/nginx.conf.erb > /etc/nginx/nginx.conf
+RUN FAKE_HOSTS=$REDIRECT_DOMAINS \
+    erb -T - /tmp/nginx.conf.erb > /etc/nginx/nginx.conf.fake
 
 RUN chmod +x /updatecerts.sh
 RUN chmod +x /entrypoint.sh
