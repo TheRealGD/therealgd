@@ -34,6 +34,7 @@ RUN  apt-get update \
   && php composer-setup.php --install-dir=/usr/bin --filename=composer \
   && php -r "unlink('composer-setup.php');" \
   && rm -r /var/lib/apt/lists/* /tmp/*
+ADD package.json      /var/www/
 RUN cd /var/www && npm install
 
 # PHP-FPM Config
@@ -83,7 +84,6 @@ ADD templates/        /var/www/templates/
 ADD translations/     /var/www/translations/
 ADD composer.json     /var/www/
 ADD fontello.json     /var/www/
-ADD package.json      /var/www/
 ADD phpunit.xml.dist  /var/www/
 ADD webpack.config.js /var/www
 
