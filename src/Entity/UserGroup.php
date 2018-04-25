@@ -59,8 +59,8 @@ class UserGroup {
     private $displayTitle = false;
 
     /**
-     * @ORM\OneToMany(targetEntity="RateLimit", mappedBy="forum_id")
-     * @ORM\OrderBy({"forum_id": "ASC"})
+     * @ORM\OneToMany(targetEntity="RateLimit", mappedBy="forum")
+     * @ORM\OrderBy({"forum": "ASC"})
      *
      * @var RateLimit[]|Collection|Selectable
      */
@@ -73,7 +73,7 @@ class UserGroup {
         $this->users = new ArrayCollection();
     }
 
-    public function getId(): ?int {
+    public function getId(): int {
         // todo: replace with UUID
         return $this->id;
     }

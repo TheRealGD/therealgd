@@ -26,7 +26,7 @@ class RateLimit {
     private $group;
 
     /**
-     * @ORM\OneToOne(targetEntity="Forum")
+     * @ORM\OneToOne(targetEntity="Forum", inversedBy="rateLimits")
      */
     private $forum;
 
@@ -47,7 +47,7 @@ class RateLimit {
         $this->block = $block;
     }
 
-    public function getId(): ?int {
+    public function getId(): int {
         return $this->id;
     }
 
