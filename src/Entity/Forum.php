@@ -131,7 +131,7 @@ class Forum {
     private $logEntries;
 
     /**
-     * @ORM\OneToOne(targetEntity="RateLimit", mappedBy="forum")
+     * @ORM\OneToMany(targetEntity="RateLimit", mappedBy="forum")
      * @ORM\OrderBy({"group": "ASC"})
      *
      * @var RateLimit[]|Collection|Selectable
