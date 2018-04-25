@@ -9,3 +9,6 @@
 ### Where to help
 - Look up issue for current upcoming milestone with 'upforgrabs' or 'helpneeded' tags
 
+### Code of Conduct
+See [CODE_OF_CONDUCT.md](/CODE_OF_CONDUCT.md) file for details.
+
