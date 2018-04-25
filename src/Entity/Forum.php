@@ -132,7 +132,7 @@ class Forum {
 
     /**
      * @ORM\OneToMany(targetEntity="RateLimit", mappedBy="forum")
-     * @ORM\OrderBy({"group_id": "ASC"})
+     * @ORM\OrderBy({"group": "ASC"})
      *
      * @var RateLimit[]|Collection|Selectable
      */

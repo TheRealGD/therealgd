@@ -26,7 +26,7 @@ class RateLimit {
     private $group;
 
     /**
-     * @ORM\OneToOne(targetEntity="Forum")
+     * @ORM\ManyToOne(targetEntity="Forum", inversedBy="rateLimits")
      */
     private $forum;
 
