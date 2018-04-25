@@ -54,6 +54,7 @@ services:
       - "./bin:/var/www/bin:ro"
       - "./config:/var/www/config:rw"
       - "./src:/var/www/src:ro"
+      - "./src/Migrations/:/var/www/src/Migrations:rw"
       - "./templates:/var/www/templates:ro"
       - "./translations:/var/www/translations:ro"
     working_dir: /var/www/public
