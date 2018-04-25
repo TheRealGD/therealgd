@@ -73,7 +73,7 @@ class UserGroup {
         $this->users = new ArrayCollection();
     }
 
-    public function getId(): int {
+    public function getId(): ?int {
         // todo: replace with UUID
         return $this->id;
     }
