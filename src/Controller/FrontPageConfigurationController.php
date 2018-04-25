@@ -106,6 +106,7 @@ final class FrontPageConfigurationController extends AbstractController {
         $fc->setAnnouncementSubmissionId(null);
         $em->merge($fc);
         $em->flush();
+        $em->getConfiguration()->getResultCacheImpl()->delete('sitewide_forum_config');
 
         return $this->redirectToRoute('frontpageconfig');
     }
