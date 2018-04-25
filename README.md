@@ -15,7 +15,15 @@ Recommended way to run this is on Ubuntu 16.04 - run `./install.sh` - this shoul
 Then: `./dev-local.sh` for no-HTTPS local development (will create containerized DB & one site admin account dev/devdevdev)
 For HTTPS with certbot & config from AWS SSM - `./dev-aws.sh`
 
+## Contributing
+
+See [CONTRIBUTING.md](/CONTRIBUTING.md) file for details.
+
 ## License
 
-The software is released under the zlib license. See the `LICENSE` file for
+The software is released under the zlib license. See the [LICENSE](/LICENSE) file for
 details.
+
+## Code of Conduct
+See [CODE_OF_CONDUCT.md](/CODE_OF_CONDUCT.md) file for details.
+
