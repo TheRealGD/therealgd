@@ -166,10 +166,10 @@ forum_form:
 
 forum_list:
     name: Name
-    title: Deal category
+    title: Title
     subscribers: Subscribers
-    page_title: List of deal categories
-    create_forum: Create deal category
+    page_title: Forums List
+    create_forum: Create Forum
     submission_count: Post Count
     list_view: List view
     category_view: Category view
@@ -182,12 +182,10 @@ forum_moderators:
     last_seen: Last seen
 
 front:
-    #subscribed_forums: Subscribed forums
-    subscribed_forums: Subscribed Deals
+    subscribed_forums: Subscribed Forums
     no_subscriptions: You are not subscribed to any forum. Showing featured forums instead.
-    #featured_forums: Featured forums
-    featured_forums: Featured Deals
-    all_forums: All Deals
+    featured_forums: Featured Forums
+    all_forums: All Forums
     no_forums: There are no featured forums to display.
     all: All
     featured: Featured
@@ -350,7 +348,7 @@ nav:
     my_account: My account
     user_settings: User settings
     #forums: Forums
-    forums: Categories
+    forums: Forums
     inbox_count: Inbox (%count%)
     messages: Messages
     wiki: Wiki
@@ -382,7 +380,7 @@ nav:
     users: Users
     forum_bans: Forum bans
     forum_categories: Forum categories
-    new_category: New category
+    new_category: New forum category
 
 placeholder:
     default: (default)
@@ -433,10 +431,10 @@ submission_form:
     body: Body
     forum: Forum
     sticky: Sticky
-    create: Submit Deal
-    edit: Edit Deal
-    delete: Delete Deal
-    confirm_delete: Are you sure you want to delete this deal?
+    create: Submit
+    edit: Edit
+    delete: Delete
+    confirm_delete: Are you sure you want to delete this post?
     mod_thread: Post in Moderation section
 
 submissions:
@@ -464,7 +462,7 @@ title:
     forum_appearance: Appearance for %forum%
     showing_revision: 'Showing revision #%revision% of page %path%'
     editing_forum: Editing forum %forum%
-    create_submission: Submit a new Deal
+    create_submission: Submit a new post
     editing_submission: Editing submission %title%
     log_in: Log in
     sign_up: Sign up
@@ -592,4 +590,4 @@ report_modal:
     rule_select_header: Which rule does it break?
     other_select_header: What issue?
     finished_header: Thanks for letting us know!
-    additional_info: Read the <a href="/policy">GunDeals Content Policy</a> and <a href="/f/{0}/rules">f/{0}'s rules</a>.
+    additional_info: Read the <a href="/policy">Content Policy</a> and <a href="/f/{0}/rules">f/{0}'s rules</a>.
