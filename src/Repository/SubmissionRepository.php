@@ -101,7 +101,7 @@ class SubmissionRepository extends ServiceEntityRepository {
         if (!$admin) {
             $qb->andWhere('s.forum > 0');
         }
-        $q = $qb->getQuery()->useQueryCache(true)->useResultCache(true);
+        $q = $qb->getQuery()->useQueryCache(true)->useResultCache(true, 30);
         $submissions = $this->paginate($q, $page);
 
         $this->hydrateAssociations($submissions);
