@@ -66,6 +66,7 @@ final class FrontPageConfigurationController extends AbstractController {
 
                 $em->persist($fc);
                 $em->flush();
+                $em->getConfiguration()->getResultCacheImpl()->delete('sitewide_forum_config');
 
                 // After saving, pull the data back down again.
                 $data = new NewForumAnnouncementData();
