@@ -75,7 +75,7 @@ final class ForumRepository extends ServiceEntityRepository {
 
         $qb->addOrderBy('f.normalizedName', 'ASC')->groupBy('f.id');
 
-        $q = $qb->getQuery()->useQueryCache(true)->useResultCache(true);
+        $q = $qb->getQuery()->useQueryCache(true)->useResultCache(true, 30);
         $pager = new Pagerfanta(new DoctrineORMAdapter($q));
         $pager->setMaxPerPage(25);
         $pager->setCurrentPage($page);
@@ -100,7 +100,7 @@ final class ForumRepository extends ServiceEntityRepository {
             ') ORDER BY f.normalizedName ASC';
 
         $names = $this->getEntityManager()->createQuery($dql)
-            ->setParameter(1, $user)->useResultCache(true)
+            ->setParameter(1, $user)->useResultCache(true, 30)
             ->getResult();
 
         return array_column($names, 'name', 'id');
@@ -119,7 +119,7 @@ final class ForumRepository extends ServiceEntityRepository {
             ->andWhere('f.id > 0')
             ->orderBy('f.normalizedName', 'ASC')
             ->getQuery()
-            ->useQueryCache(true)->useResultCache(true)
+            ->useQueryCache(true)->useResultCache(true, 30)
             ->execute();
 
         return array_column($names, 'name', 'id');
@@ -138,7 +138,7 @@ final class ForumRepository extends ServiceEntityRepository {
             ->addSelect('f.name')
             ->orderBy('f.normalizedName', 'ASC')
             ->getQuery()
-            ->useQueryCache(true)->useResultCache(true)
+            ->useQueryCache(true)->useResultCache(true, 30)
             ->execute();
 
         return array_column($names, 'name', 'id');
@@ -157,7 +157,7 @@ final class ForumRepository extends ServiceEntityRepository {
 
         $names = $this->getEntityManager()->createQuery($dql)
             ->setParameter(1, $user)
-            ->useResultCache(true)
+            ->useResultCache(true, 30)
             ->getResult();
 
         return array_column($names, 'name', 'id');
@@ -172,7 +172,7 @@ final class ForumRepository extends ServiceEntityRepository {
 
         $names = $this->_em->createQuery($dql)
             ->setParameter(1, $names)
-            ->useResultCache(true)
+            ->useResultCache(true, 30)
             ->getResult();
 
         return array_column($names, 'name', 'id');
@@ -187,7 +187,7 @@ final class ForumRepository extends ServiceEntityRepository {
         if (!$isAdmin) {
             $qb->andWhere('f.id > 0');
         }
-        $forums = $qb->getQuery()->useQueryCache(true)->useResultCache(true)->execute();
+        $forums = $qb->getQuery()->useQueryCache(true)->useResultCache(true, 30)->execute();
         return $forums;
     }
 
@@ -200,7 +200,7 @@ final class ForumRepository extends ServiceEntityRepository {
 
         $names = $this->_em->createQuery($dql)
             ->setParameter('category', $category)
-            ->useResultCache(true)
+            ->useResultCache(true, 30)
             ->getResult();
 
         return array_column($names, 'name', 'id');
@@ -212,7 +212,7 @@ final class ForumRepository extends ServiceEntityRepository {
             ->setMaxResults(1)
             ->getQuery()
             ->useQueryCache(true)
-            ->useResultCache(true)
+            ->useResultCache(true, 30)
             ->execute();
 
         if (is_null($modForum[0]->getCategory())) {
