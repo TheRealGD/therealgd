@@ -1,7 +1,7 @@
 
 # ![](docs/assets/postmill-gd-150.png) [Postmill-GD](https://github.com/TheRealGD/therealgd)
 
-Fork of [Postmill](https://gitlab.com/edgyemma/Postmill) - social link aggregator/forums-website with voting and threaded comments. 
+Fork of [Postmill](https://gitlab.com/edgyemma/Postmill) - social link aggregator/forums-website with voting and threaded comments.
  - Built with [Symfony](https://symfony.com/)
  - Original Project is merged back & tracked in PR #200
 
@@ -23,7 +23,3 @@ See [CONTRIBUTING.md](/CONTRIBUTING.md) file for details.
 
 The software is released under the zlib license. See the [LICENSE](/LICENSE) file for
 details.
-
-## Code of Conduct
-See [CODE_OF_CONDUCT.md](/CODE_OF_CONDUCT.md) file for details.
-
